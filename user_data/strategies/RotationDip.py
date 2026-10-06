@@ -22,7 +22,7 @@ Layers
        - RSI(14) < 30 and close < lower BB(20,2)  ("bb_flush")
      and no market-wide selloff (BTC 1h RSI >= 30): only idiosyncratic dips.
 4. Exits:
-     * ROI: +5 % any time, +2.5 % after 3 days, break-even after 5 days
+     * ROI: +3 % any time, +1.5 % after 3 days, break-even after 5 days
      * hard stoploss -10 %
      * time stop after 10 days (safety net)
      * regime off -> leave the market
@@ -50,7 +50,7 @@ class RotationDip(IStrategy):
     timeframe = "1h"
     startup_candle_count = 300
 
-    minimal_roi = {"0": 0.05, "4320": 0.025, "7200": 0.0}
+    minimal_roi = {"0": 0.03, "4320": 0.015, "7200": 0.0}
     stoploss = -0.10
     trailing_stop = False
     use_exit_signal = True
