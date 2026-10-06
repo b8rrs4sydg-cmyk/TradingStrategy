@@ -94,8 +94,14 @@ class RotationDip(IStrategy):
             },
         ]
 
+    @property
+    def btc_pair(self) -> str:
+        """BTC reference pair: BTC/USDT on spot, BTC/USDT:USDT on futures."""
+        stake = self.config["stake_currency"]
+        return f"BTC/{stake}:{stake}" if self.config.get("trading_mode") == "futures" else f"BTC/{stake}"
+
     def informative_pairs(self):
-        return [("BTC/USDT", "1d"), ("BTC/USDT", self.timeframe)]
+        return [(self.btc_pair, "1d"), (self.btc_pair, self.timeframe)]
 
     # ------------------------------------------------------------------ #
     # cross-sectional features (rotation + breadth), computed once per candle
@@ -135,6 +141,7 @@ class RotationDip(IStrategy):
             "key": key,
             "score": score,
             "rank": score.rank(axis=1, ascending=False),
+            "rank_low": score.rank(axis=1, ascending=True),
             "breadth": breadth,
             "breadth_fast": (score > 0).sum(axis=1) / score.notna().sum(axis=1).replace(0, np.nan),
         }
@@ -147,7 +154,7 @@ class RotationDip(IStrategy):
         dtype = dataframe["date"].dtype
 
         # --- BTC daily regime, shifted so only CLOSED daily candles are used
-        btc_d = self.dp.get_pair_dataframe("BTC/USDT", "1d")[["date", "close"]].copy()
+        btc_d = self.dp.get_pair_dataframe(self.btc_pair, "1d")[["date", "close"]].copy()
         btc_d["btc_bull"] = (btc_d["close"] > btc_d["close"].rolling(self.regime_sma).mean()).astype(int)
         btc_d["date"] = (btc_d["date"] + pd.Timedelta(days=1)).astype(dtype)
         dataframe = pd.merge_asof(
@@ -167,9 +174,11 @@ class RotationDip(IStrategy):
         if pair in cs["score"].columns:
             feat["mom_score"] = cs["score"][pair].values
             feat["mom_rank"] = cs["rank"][pair].values
+            feat["mom_rank_low"] = cs["rank_low"][pair].values
         else:
             feat["mom_score"] = np.nan
             feat["mom_rank"] = np.nan
+            feat["mom_rank_low"] = np.nan
         dataframe = dataframe.merge(feat, on="date", how="left")
 
         dataframe["regime_ok"] = (
@@ -182,7 +191,7 @@ class RotationDip(IStrategy):
         ).astype(int)
 
         # BTC short-term state (market-wide selloff guard)
-        btc = self.dp.get_pair_dataframe("BTC/USDT", self.timeframe)[["date", "close"]].copy()
+        btc = self.dp.get_pair_dataframe(self.btc_pair, self.timeframe)[["date", "close"]].copy()
         btc["btc_rsi"] = ta.RSI(btc["close"], timeperiod=14)
         btc["date"] = btc["date"].astype(dtype)
         dataframe = dataframe.merge(btc[["date", "btc_rsi"]], on="date", how="left")
@@ -196,6 +205,7 @@ class RotationDip(IStrategy):
         dataframe["atr_pct"] = ta.ATR(dataframe, timeperiod=14) / dataframe["close"]
         bb = ta.BBANDS(dataframe, timeperiod=20, nbdevup=2.0, nbdevdn=2.0)
         dataframe["bb_lower"] = bb["lowerband"]
+        dataframe["bb_upper"] = bb["upperband"]
         return dataframe
 
     def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
