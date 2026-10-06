@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+user_data/data/
+user_data/backtest_results/
+user_data/hyperopt_results/
+user_data/logs/
+user_data/plot/
+user_data/strategies/_sensitivity_variants.py
+*.sqlite
+configs/config_private.json
