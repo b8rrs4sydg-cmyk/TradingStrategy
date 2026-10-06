@@ -149,9 +149,12 @@ def main():
         import matplotlib.pyplot as plt
         fig, ax = plt.subplots(figsize=(11, 4.5))
         for n, r in res.items():
+            mtm = mtm_equity(r["stats"], r["trades"])
+            if mtm is not None:
+                ax.plot(mtm.index, mtm.values, label=f"{n} (mark-to-market)", lw=1.4)
             eq = closed_equity(r["stats"], r["trades"])
-            ax.plot(eq.index, eq.values, label=n, lw=1.4)
-        ax.set_title("Closed-trade equity (USDT)")
+            ax.step(eq.index, eq.values, where="post", label=f"{n} (closed trades)", lw=1.0, alpha=0.6)
+        ax.set_title("Equity (USDT)")
         ax.grid(alpha=0.3)
         ax.legend()
         fig.tight_layout()

@@ -1,3 +1,6 @@
+# freqtrade lookahead-analysis (2020-10..2021-10)
+# NOTE: false positive - the tool re-runs each slice with a single-pair whitelist, which changes the cross-sectional rank (rank 1 of 1 vs 2 of 50).
+# See research/results/carry_pit_check.txt for the full-universe point-in-time check (PASS).
                                                       Lookahead Analysis                                                      
 ┏━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
 ┃        filename ┃     strategy ┃ has_bias ┃ total_signals ┃ biased_entry_signals ┃ biased_exit_signals ┃ biased_indicators ┃

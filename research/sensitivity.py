@@ -42,7 +42,8 @@ GRID_CARRY = {
     "enter_rate": [0.0001, 0.00015, 0.0002, 0.0003, 0.0004],
     "lookback_h": [24, 48, 72, 120, 168],
     "stoploss": [-0.03, -0.05, -0.08, -0.15],
-    "max_open_trades": [5, 8, 10, 15, 20],
+    # note: max_open_trades cannot be varied via --strategy-list (config wins);
+    # slot counts are tested separately with --max-open-trades
 }
 
 VARIANTS_FILE = Path("user_data/strategies/_sensitivity_variants.py")
