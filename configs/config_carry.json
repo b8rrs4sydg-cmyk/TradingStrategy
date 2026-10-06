@@ -1,0 +1,128 @@
+{
+  "$schema": "https://schema.freqtrade.io/schema.json",
+  "max_open_trades": 10,
+  "timeframe": "1h",
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "fiat_display_currency": "USD",
+  "dry_run": true,
+  "dry_run_wallet": 10000,
+  "cancel_open_orders_on_exit": false,
+  "trading_mode": "spot",
+  "margin_mode": "",
+  "unfilledtimeout": {
+    "entry": 10,
+    "exit": 10,
+    "exit_timeout_count": 0,
+    "unit": "minutes"
+  },
+  "entry_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1,
+    "price_last_balance": 0.0,
+    "check_depth_of_market": {
+      "enabled": false,
+      "bids_to_ask_delta": 1
+    }
+  },
+  "exit_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+  "exchange": {
+    "name": "binance",
+    "key": "",
+    "secret": "",
+    "ccxt_config": {},
+    "ccxt_async_config": {},
+    "pair_whitelist": [
+      "BTCCARRY/USDT",
+      "ETHCARRY/USDT",
+      "BNBCARRY/USDT",
+      "SOLCARRY/USDT",
+      "XRPCARRY/USDT",
+      "ADACARRY/USDT",
+      "DOGECARRY/USDT",
+      "AVAXCARRY/USDT",
+      "LINKCARRY/USDT",
+      "DOTCARRY/USDT",
+      "TRXCARRY/USDT",
+      "LTCCARRY/USDT",
+      "BCHCARRY/USDT",
+      "ATOMCARRY/USDT",
+      "UNICARRY/USDT",
+      "NEARCARRY/USDT",
+      "FILCARRY/USDT",
+      "ETCCARRY/USDT",
+      "XLMCARRY/USDT",
+      "ICPCARRY/USDT",
+      "APTCARRY/USDT",
+      "ARBCARRY/USDT",
+      "OPCARRY/USDT",
+      "INJCARRY/USDT",
+      "SUICARRY/USDT",
+      "AAVECARRY/USDT",
+      "HBARCARRY/USDT",
+      "VETCARRY/USDT",
+      "ALGOCARRY/USDT",
+      "SANDCARRY/USDT",
+      "MANACARRY/USDT",
+      "AXSCARRY/USDT",
+      "EOSCARRY/USDT",
+      "THETACARRY/USDT",
+      "FTMCARRY/USDT",
+      "MATICCARRY/USDT",
+      "FTTCARRY/USDT",
+      "RUNECARRY/USDT",
+      "GRTCARRY/USDT",
+      "CRVCARRY/USDT",
+      "EGLDCARRY/USDT",
+      "XTZCARRY/USDT",
+      "CHZCARRY/USDT",
+      "SNXCARRY/USDT",
+      "ZECCARRY/USDT",
+      "DASHCARRY/USDT",
+      "NEOCARRY/USDT",
+      "KSMCARRY/USDT",
+      "WAVESCARRY/USDT",
+      "1INCHCARRY/USDT"
+    ],
+    "pair_blacklist": [
+      ".*(BUSD|USDC|FDUSD|TUSD|DAI)/.*",
+      ".*(UP|DOWN|BULL|BEAR)/.*"
+    ]
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
+  "fee": 0.001,
+  "dataformat_ohlcv": "feather",
+  "telegram": {
+    "enabled": false,
+    "token": "",
+    "chat_id": ""
+  },
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "0.0.0.0",
+    "listen_port": 8080,
+    "verbosity": "error",
+    "enable_openapi": false,
+    "jwt_secret_key": "change-me-to-a-random-32+char-jwt-secret",
+    "ws_token": "change-me-ws-token",
+    "CORS_origins": [],
+    "username": "freqtrader",
+    "password": "change-me"
+  },
+  "bot_name": "FundingCarry",
+  "initial_state": "running",
+  "force_entry_enable": false,
+  "internals": {
+    "process_throttle_secs": 5
+  }
+}

@@ -37,6 +37,14 @@ GRID = {
 GRID_4H = {**{k: v for k, v in GRID.items() if k not in ("mom_hours", "breadth_days", "crash_breadth")},
            "mom_days": [10, 15, 20, 30, 45]}
 
+# FundingCarry (delta-neutral funding carry)
+GRID_CARRY = {
+    "enter_rate": [0.0001, 0.00015, 0.0002, 0.0003, 0.0004],
+    "lookback_h": [24, 48, 72, 120, 168],
+    "stoploss": [-0.03, -0.05, -0.08, -0.15],
+    "max_open_trades": [5, 8, 10, 15, 20],
+}
+
 VARIANTS_FILE = Path("user_data/strategies/_sensitivity_variants.py")
 
 
@@ -61,14 +69,14 @@ def build_variants(base: str, grid: dict) -> list[str]:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--strategy", default="RotationDipH1")
-    ap.add_argument("--grid", choices=["1h", "4h"], default="1h")
+    ap.add_argument("--grid", choices=["1h", "4h", "carry"], default="1h")
     ap.add_argument("--timerange", default="20200601-20240101")
     ap.add_argument("--config", default="configs/config_backtest.json")
     ap.add_argument("--out", default="research/results/sensitivity.json")
     ap.add_argument("--timeframe", default="1h")
     a = ap.parse_args()
 
-    names = build_variants(a.strategy, GRID if a.grid == "1h" else GRID_4H)
+    names = build_variants(a.strategy, {"1h": GRID, "4h": GRID_4H, "carry": GRID_CARRY}[a.grid])
     rows = []
     try:
         for i in range(0, len(names), 12):

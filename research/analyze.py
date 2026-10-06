@@ -82,12 +82,13 @@ def summarize(name: str, res: dict) -> dict:
         "trades": int(st["total_trades"]),
         "win_rate": round(st["winrate"] * 100, 1),
         "profit_%": round(st["profit_total"] * 100, 1),
-        "cagr_%": round(st["cagr"] * 100, 1),
+        # CAGR from total profit (freqtrade's own field relies on final_balance)
+        "cagr_%": round(((1 + st["profit_total"]) ** (365 / max(1, st["backtest_days"])) - 1) * 100, 1),
         "max_dd_%": round(st["max_drawdown_account"] * 100, 1),
         "wallet_dd_%": None if wallet_dd is None else round(wallet_dd * 100, 1),
         "profit_factor": round(st["profit_factor"], 2),
         "sharpe_daily": round(sharpe, 2),
-        "pos_months_%": round((monthly > 0).sum() / max(1, (monthly != 0).sum()) * 100, 1),
+        "pos_months_%": round(float((monthly > 0).sum() / max(1, (monthly != 0).sum())) * 100, 1),
         "worst_month_%": round(monthly.min() * 100, 1),
         "yearly_%": {str(k.year): round(v * 100, 1) for k, v in yearly_ret.items()},
     }

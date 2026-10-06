@@ -77,7 +77,7 @@ def fetch_month(symbol: str, tf: str, month: str, dataset: str = "spot") -> pd.D
             rate = df.iloc[:, 2].astype("float64")
             ts = (df.iloc[:, 0].astype("int64") // 3_600_000) * 3_600_000
             df = pd.DataFrame({"date": ts, "open": rate, "high": rate, "low": rate,
-                               "close": rate, "volume": 0.0})
+                               "close": rate, "volume": 1.0})  # volume=1 marks a real event
         else:
             df = df.iloc[:, :6].astype("float64")
             df.columns = COLS
