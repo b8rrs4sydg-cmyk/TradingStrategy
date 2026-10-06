@@ -1,33 +1,34 @@
 # pragma pylint: disable=missing-docstring, invalid-name, too-many-arguments
 """
-RotationDip  (4h, spot, long-only)
+RotationDip  (1h, spot, long-only)
 ==================================
 
 "Buy the dip, but only in the strongest coins, and only when the market is healthy."
 
 Layers
 ------
-1. Market regime (right-side / trend):
-     * BTC daily close > BTC daily SMA50 (previous, closed daily candle)
-     * market breadth >= 50 %  (share of coins in the whitelist with positive
-       20-day risk-adjusted momentum)
+1. Market regime (right-side / trend filter):
+     * BTC daily close > BTC daily SMA50 (only CLOSED daily candles are used)
+     * market breadth >= 50 % to enter (share of whitelisted coins with positive
+       5-day risk-adjusted momentum); leave the market when breadth < 40 %
+       or BTC falls below its SMA50 (hysteresis avoids whipsaws)
 2. Multi-coin rotation:
-     every 4h candle, all whitelisted coins are ranked by 20-day
-     volatility-adjusted momentum.  Only the TOP_N coins with positive momentum
-     are eligible -> capital rotates automatically into the current leaders.
-3. Entry (left-side / mean reversion):
-     a short-term oversold pullback inside the long-term uptrend of that coin
-       - RSI(14) < 35 and close > EMA200     ("trend_pullback")
+     every candle all whitelisted coins are ranked by 5-day volatility-adjusted
+     momentum.  Only the TOP_N (10) coins with positive momentum are eligible,
+     so capital rotates automatically into the current leaders.
+3. Entry (left-side / mean reversion inside the trend):
+       - RSI(14) < 35 and close > EMA200          ("trend_pullback")
        - RSI(14) < 30 and close < lower BB(20,2)  ("bb_flush")
+     and no market-wide selloff (BTC 1h RSI >= 30): only idiosyncratic dips.
 4. Exits:
-     * ROI: +5 % (any time), +2.5 % after 3 days, break-even after 5 days
+     * ROI: +5 % any time, +2.5 % after 3 days, break-even after 5 days
      * hard stoploss -10 %
-     * time stop after 10 days
-     * regime turns off -> leave the market
+     * time stop after 10 days (safety net)
+     * regime off -> leave the market
 5. Protections: cooldown, stoploss guard, max-drawdown circuit breaker.
 
-All numbers are standard, round "textbook" values fixed before testing.  The
-strategy contains no hyperopt spaces on purpose (see docs/OVERFITTING.md).
+All numbers are standard round values fixed up-front; there are no hyperopt
+spaces on purpose.  Robustness evidence: docs/STRATEGY_REPORT.md.
 """
 from __future__ import annotations
 
@@ -45,7 +46,7 @@ from freqtrade.strategy import IStrategy
 class RotationDip(IStrategy):
     INTERFACE_VERSION = 3
     can_short = False
-    timeframe = "4h"
+    timeframe = "1h"
     startup_candle_count = 300
 
     minimal_roi = {"0": 0.05, "4320": 0.025, "7200": 0.0}
@@ -60,8 +61,8 @@ class RotationDip(IStrategy):
     regime_sma = 50            # BTC daily SMA
     breadth_min = 0.5          # >= half of the universe in positive momentum
     breadth_exit = 0.4         # leave the market below this breadth (hysteresis)
-    btc_rsi_guard = 30         # no new entries while BTC 4h RSI is below this (0 = off)
-    mom_days = 20              # momentum look-back (days)
+    btc_rsi_guard = 30         # no new entries while BTC 1h RSI is below this (0 = off)
+    mom_hours = 120            # momentum look-back (5 days of 1h candles)
     top_n = 10                 # rotation basket
     rsi_pullback = 35
     rsi_flush = 30
@@ -75,16 +76,16 @@ class RotationDip(IStrategy):
             {"method": "CooldownPeriod", "stop_duration_candles": 2},
             {
                 "method": "StoplossGuard",
-                "lookback_period_candles": 12,      # 2 days
+                "lookback_period_candles": 12,      # 12 hours
                 "trade_limit": 3,
-                "stop_duration_candles": 12,
+                "stop_duration_candles": 12,        # 12 hours
                 "only_per_pair": False,
             },
             {
                 "method": "MaxDrawdown",
-                "lookback_period_candles": 42,      # 1 week
+                "lookback_period_candles": 42,      # ~2 days
                 "trade_limit": 5,
-                "stop_duration_candles": 18,        # 3 days
+                "stop_duration_candles": 18,        # 18 hours
                 "max_allowed_drawdown": 0.08,
             },
         ]
@@ -102,7 +103,7 @@ class RotationDip(IStrategy):
         if self._cs_cache.get("key") == key:
             return self._cs_cache
 
-        w = int(self.mom_days * 24 / 4)  # candles in the momentum window (4h)
+        w = int(self.mom_hours)  # candles in the momentum window (1h)
         scores = {}
         for p in pairs:
             d = self.dp.get_pair_dataframe(p, self.timeframe)

@@ -42,10 +42,10 @@ from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
 
-class RotationDipH1(IStrategy):
+class RotationDip4h(IStrategy):
     INTERFACE_VERSION = 3
     can_short = False
-    timeframe = "1h"
+    timeframe = "4h"
     startup_candle_count = 300
 
     minimal_roi = {"0": 0.05, "4320": 0.025, "7200": 0.0}
@@ -60,8 +60,8 @@ class RotationDipH1(IStrategy):
     regime_sma = 50            # BTC daily SMA
     breadth_min = 0.5          # >= half of the universe in positive momentum
     breadth_exit = 0.4         # leave the market below this breadth (hysteresis)
-    btc_rsi_guard = 30         # no new entries while BTC 1h RSI is below this (0 = off)
-    mom_hours = 120            # momentum look-back (5 days of 1h candles)
+    btc_rsi_guard = 30         # no new entries while BTC 4h RSI is below this (0 = off)
+    mom_days = 20              # momentum look-back (days)
     top_n = 10                 # rotation basket
     rsi_pullback = 35
     rsi_flush = 30
@@ -75,16 +75,16 @@ class RotationDipH1(IStrategy):
             {"method": "CooldownPeriod", "stop_duration_candles": 2},
             {
                 "method": "StoplossGuard",
-                "lookback_period_candles": 12,      # 12 hours
+                "lookback_period_candles": 12,      # 2 days
                 "trade_limit": 3,
-                "stop_duration_candles": 12,        # 12 hours
+                "stop_duration_candles": 12,
                 "only_per_pair": False,
             },
             {
                 "method": "MaxDrawdown",
-                "lookback_period_candles": 42,      # ~2 days
+                "lookback_period_candles": 42,      # 1 week
                 "trade_limit": 5,
-                "stop_duration_candles": 18,        # 18 hours
+                "stop_duration_candles": 18,        # 3 days
                 "max_allowed_drawdown": 0.08,
             },
         ]
@@ -102,7 +102,7 @@ class RotationDipH1(IStrategy):
         if self._cs_cache.get("key") == key:
             return self._cs_cache
 
-        w = int(self.mom_hours)  # candles in the momentum window (1h)
+        w = int(self.mom_days * 24 / 4)  # candles in the momentum window (4h)
         scores = {}
         for p in pairs:
             d = self.dp.get_pair_dataframe(p, self.timeframe)
