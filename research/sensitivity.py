@@ -21,7 +21,7 @@ from analyze import latest_zip, load, summarize  # noqa: E402
 
 GRID = {
     "top_n": [5, 8, 10, 15, 20],
-    "mom_days": [10, 15, 20, 30, 45],
+    "mom_hours": [72, 96, 120, 168, 240],
     "regime_sma": [30, 40, 50, 75, 100],
     "breadth_min": [0.4, 0.45, 0.5, 0.55, 0.6],
     "rsi_pullback": [30, 33, 35, 38, 40],
@@ -31,14 +31,16 @@ GRID = {
     "roi0": [0.03, 0.04, 0.05, 0.06, 0.08],
     "max_trade_days": [5, 7, 10, 14, 20],
 }
+# the 4h research version used a momentum window in days
+GRID_4H = {**{k: v for k, v in GRID.items() if k != "mom_hours"}, "mom_days": [10, 15, 20, 30, 45]}
 
 VARIANTS_FILE = Path("user_data/strategies/_sensitivity_variants.py")
 
 
-def build_variants(base: str) -> list[str]:
+def build_variants(base: str, grid: dict) -> list[str]:
     lines = [f"from {base} import {base}\n"]
     names = []
-    for param, values in GRID.items():
+    for param, values in grid.items():
         for v in values:
             tag = str(v).replace("-", "m").replace(".", "p")
             name = f"S_{param}_{tag}"
@@ -55,21 +57,22 @@ def build_variants(base: str) -> list[str]:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--strategy", default="RotationDip")
+    ap.add_argument("--strategy", default="RotationDipH1")
+    ap.add_argument("--grid", choices=["1h", "4h"], default="1h")
     ap.add_argument("--timerange", default="20200601-20240101")
     ap.add_argument("--config", default="configs/config_backtest.json")
     ap.add_argument("--out", default="research/results/sensitivity.json")
-    ap.add_argument("--extra", nargs="*", default=[])
+    ap.add_argument("--timeframe", default="1h")
     a = ap.parse_args()
 
-    names = build_variants(a.strategy)
+    names = build_variants(a.strategy, GRID if a.grid == "1h" else GRID_4H)
     rows = []
     try:
         for i in range(0, len(names), 12):
             chunk = names[i:i + 12]
             cmd = [sys.executable, "scripts/ft_offline.py", "backtesting", "-c", a.config,
                    "--userdir", "user_data", "--timerange", a.timerange, "--cache", "none",
-                   "--export", "trades", "--strategy-list", *chunk, *a.extra]
+                   "--export", "trades", "--timeframe", a.timeframe, "--strategy-list", *chunk]
             subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             res = load(latest_zip())
             for n in chunk:
