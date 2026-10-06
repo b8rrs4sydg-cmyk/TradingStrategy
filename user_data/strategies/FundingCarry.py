@@ -68,6 +68,9 @@ class FundingCarry(IStrategy):
         f = self._funding(pair)
         s = pd.DataFrame({"date": dates})
         s = s.merge(f.astype({"date": dates.dtype}), on="date", how="left")
+        # Conservative timing: only use funding events stamped strictly BEFORE the candle
+        # opens (1h lag), so a signal never depends on data at the candle boundary.
+        s["funding"] = s["funding"].shift(1)
         s["paid"] = s["funding"].notna().astype(float)
         s["funding"] = s["funding"].fillna(0.0)
         trail = s["funding"].rolling(self.lookback_h, min_periods=self.lookback_h).sum()
@@ -108,6 +111,8 @@ class FundingCarry(IStrategy):
 
     def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         slots = self.config.get("max_open_trades", 10)
+        if slots is None or slots < 0:  # -1 / inf = unlimited slots -> no rank limit
+            slots = float("inf")
         dataframe.loc[
             (dataframe["funding_8h"] >= self.enter_rate)
             & (dataframe["funding_rank"] <= slots)

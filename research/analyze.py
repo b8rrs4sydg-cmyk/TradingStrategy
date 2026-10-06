@@ -58,6 +58,38 @@ def max_dd(eq: pd.Series) -> float:
     return float((1 - eq / eq.cummax()).max())
 
 
+def mtm_equity(st: dict, t: pd.DataFrame, datadir: str = "user_data/data/binance") -> pd.Series | None:
+    """Hourly mark-to-market equity rebuilt from trades + candle closes (spot, long-only).
+
+    Independent of freqtrade's wallet series, which loses the stake of trades whose
+    pair data ends before the backtest end (delisted / migrated coins).
+    """
+    if t.empty or st.get("trading_mode", "spot") != "spot" or (t.get("is_short", False) is True):
+        return None
+    start = pd.Timestamp(st["backtest_start"], tz="UTC")
+    end = pd.Timestamp(st["backtest_end"], tz="UTC")
+    idx = pd.date_range(start, end, freq=st.get("timeframe", "1h").replace("m", "min"))
+    eq = pd.Series(float(st["starting_balance"]), index=idx)
+    for _, tr in t.iterrows():
+        # realised P&L from the close time on
+        eq[eq.index >= tr["close_date"]] += tr["profit_abs"]
+        # unrealised P&L while open
+        f = os.path.join(datadir, f"{tr['pair'].replace('/', '_')}-{st.get('timeframe', '1h')}.feather")
+        if not os.path.exists(f):
+            continue
+        px = pd.read_feather(f).set_index("date")["close"]
+        # candle close of date d is known at d + timeframe
+        px.index = px.index + pd.Timedelta(st.get("timeframe", "1h").replace("m", "min"))
+        win = (eq.index >= tr["open_date"]) & (eq.index < tr["close_date"])
+        if not win.any():
+            continue
+        p = px.reindex(eq.index[win], method="ffill").fillna(tr["open_rate"])
+        fee = tr.get("fee_open", 0.0) or 0.0
+        unreal = tr["amount"] * p.values * (1 - fee) - tr["stake_amount"] * (1 + fee)
+        eq.loc[win] += unreal
+    return eq
+
+
 def summarize(name: str, res: dict) -> dict:
     st, t, w = res["stats"], res["trades"], res["wallet"]
     eq = closed_equity(st, t)
@@ -74,6 +106,8 @@ def summarize(name: str, res: dict) -> dict:
         # one row per currency and candle -> total equity marked to market
         wv = w.groupby("date")["total_quote"].sum()
         wallet_dd = max_dd(wv)
+    mtm = mtm_equity(st, t)
+    mtm_dd = None if mtm is None else max_dd(mtm)
     # daily-return Sharpe on closed equity
     dr = daily.pct_change().dropna()
     sharpe = float(dr.mean() / dr.std() * np.sqrt(365)) if dr.std() > 0 else np.nan
@@ -86,6 +120,7 @@ def summarize(name: str, res: dict) -> dict:
         "cagr_%": round(((1 + st["profit_total"]) ** (365 / max(1, st["backtest_days"])) - 1) * 100, 1),
         "max_dd_%": round(st["max_drawdown_account"] * 100, 1),
         "wallet_dd_%": None if wallet_dd is None else round(wallet_dd * 100, 1),
+        "mtm_dd_%": None if mtm_dd is None else round(mtm_dd * 100, 1),
         "profit_factor": round(st["profit_factor"], 2),
         "sharpe_daily": round(sharpe, 2),
         "pos_months_%": round(float((monthly > 0).sum() / max(1, (monthly != 0).sum())) * 100, 1),
