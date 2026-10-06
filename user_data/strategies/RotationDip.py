@@ -10,7 +10,8 @@ Layers
 1. Market regime (right-side / trend filter):
      * BTC daily close > BTC daily SMA50 (only CLOSED daily candles are used)
      * market breadth >= 50 % to enter (share of whitelisted coins with positive
-       5-day risk-adjusted momentum); leave the market when breadth < 40 %
+       20-day risk-adjusted momentum, on CLOSED daily candles); leave the
+       market when breadth < 40 %
        or BTC falls below its SMA50 (hysteresis avoids whipsaws)
 2. Multi-coin rotation:
      every candle all whitelisted coins are ranked by 5-day volatility-adjusted
@@ -59,8 +60,11 @@ class RotationDip(IStrategy):
 
     # ---- fixed design parameters (not optimised) -------------------------
     regime_sma = 50            # BTC daily SMA
+    breadth_days = 20          # momentum window for the daily breadth regime
     breadth_min = 0.5          # >= half of the universe in positive momentum
     breadth_exit = 0.4         # leave the market below this breadth (hysteresis)
+    crash_breadth = 0.25       # fast exit when HOURLY 5-day breadth falls below (0 = off)
+    atr_stop_mult = 0.0        # volatility stop: -mult * ATR% (capped by stoploss, 0 = off)
     btc_rsi_guard = 30         # no new entries while BTC 1h RSI is below this (0 = off)
     mom_hours = 120            # momentum look-back (5 days of 1h candles)
     top_n = 10                 # rotation basket
@@ -91,7 +95,7 @@ class RotationDip(IStrategy):
         ]
 
     def informative_pairs(self):
-        return [("BTC/USDT", "1d")]
+        return [("BTC/USDT", "1d"), ("BTC/USDT", self.timeframe)]
 
     # ------------------------------------------------------------------ #
     # cross-sectional features (rotation + breadth), computed once per candle
@@ -104,7 +108,7 @@ class RotationDip(IStrategy):
             return self._cs_cache
 
         w = int(self.mom_hours)  # candles in the momentum window (1h)
-        scores = {}
+        scores, daily = {}, {}
         for p in pairs:
             d = self.dp.get_pair_dataframe(p, self.timeframe)
             if d is None or d.empty:
@@ -112,12 +116,27 @@ class RotationDip(IStrategy):
             close = d.set_index("date")["close"]
             lr = np.log(close).diff()
             scores[p] = np.log(close / close.shift(w)) / (lr.rolling(w).std() * np.sqrt(w))
+            daily[p] = close.resample("1D").last()
         score = pd.DataFrame(scores).sort_index()
+
+        # Breadth regime on CLOSED daily candles: share of coins with positive
+        # risk-adjusted momentum.  The value of day D is only known at the end of
+        # day D -> index it at D + 1 day and forward-fill onto the hourly grid.
+        dc = pd.DataFrame(daily).sort_index()
+        dlr = np.log(dc).diff()
+        dmom = np.log(dc / dc.shift(self.breadth_days)) / (
+            dlr.rolling(self.breadth_days).std() * np.sqrt(self.breadth_days)
+        )
+        d_breadth = (dmom > 0).sum(axis=1) / dmom.notna().sum(axis=1).replace(0, np.nan)
+        d_breadth.index = d_breadth.index + pd.Timedelta(days=1)
+        breadth = d_breadth.reindex(score.index, method="ffill")
+
         cache = {
             "key": key,
             "score": score,
             "rank": score.rank(axis=1, ascending=False),
-            "breadth": (score > 0).sum(axis=1) / score.notna().sum(axis=1).replace(0, np.nan),
+            "breadth": breadth,
+            "breadth_fast": (score > 0).sum(axis=1) / score.notna().sum(axis=1).replace(0, np.nan),
         }
         type(self)._cs_cache = cache
         return cache
@@ -140,7 +159,11 @@ class RotationDip(IStrategy):
 
         # --- rotation rank / breadth
         cs = self._cross_section()
-        feat = pd.DataFrame({"date": cs["score"].index.astype(dtype), "breadth": cs["breadth"].values})
+        feat = pd.DataFrame({
+            "date": cs["score"].index.astype(dtype),
+            "breadth": cs["breadth"].values,
+            "breadth_fast": cs["breadth_fast"].values,
+        })
         if pair in cs["score"].columns:
             feat["mom_score"] = cs["score"][pair].values
             feat["mom_rank"] = cs["rank"][pair].values
@@ -153,7 +176,9 @@ class RotationDip(IStrategy):
             (dataframe["btc_bull"] == 1) & (dataframe["breadth"] >= self.breadth_min)
         ).astype(int)
         dataframe["regime_exit"] = (
-            (dataframe["btc_bull"] == 0) | (dataframe["breadth"] < self.breadth_exit)
+            (dataframe["btc_bull"] == 0)
+            | (dataframe["breadth"] < self.breadth_exit)
+            | (dataframe["breadth_fast"] < self.crash_breadth)
         ).astype(int)
 
         # BTC short-term state (market-wide selloff guard)
@@ -168,6 +193,7 @@ class RotationDip(IStrategy):
         # --- coin level
         dataframe["rsi"] = ta.RSI(dataframe, timeperiod=14)
         dataframe["ema200"] = ta.EMA(dataframe, timeperiod=200)
+        dataframe["atr_pct"] = ta.ATR(dataframe, timeperiod=14) / dataframe["close"]
         bb = ta.BBANDS(dataframe, timeperiod=20, nbdevup=2.0, nbdevdn=2.0)
         dataframe["bb_lower"] = bb["lowerband"]
         return dataframe
@@ -190,6 +216,20 @@ class RotationDip(IStrategy):
     def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe.loc[dataframe["regime_exit"] == 1, ["exit_long", "exit_tag"]] = (1, "regime_off")
         return dataframe
+
+    @property
+    def use_custom_stoploss(self) -> bool:  # type: ignore[override]
+        return self.atr_stop_mult > 0
+
+    def custom_stoploss(self, pair: str, trade: Trade, current_time: datetime, current_rate: float,
+                        current_profit: float, after_fill: bool, **kwargs) -> float | None:
+        # stop distance fixed at entry: mult * ATR% of the signal candle, never wider than stoploss
+        df, _ = self.dp.get_analyzed_dataframe(pair, self.timeframe)
+        sig = df.loc[df["date"] < trade.open_date_utc]
+        if sig.empty:
+            return None
+        dist = self.atr_stop_mult * float(sig["atr_pct"].iloc[-1])
+        return -min(abs(self.stoploss), max(dist, 0.02))
 
     def custom_exit(self, pair: str, trade: Trade, current_time: datetime, current_rate: float,
                     current_profit: float, **kwargs):

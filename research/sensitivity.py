@@ -27,12 +27,15 @@ GRID = {
     "rsi_pullback": [30, 33, 35, 38, 40],
     "btc_rsi_guard": [0, 25, 30, 35],
     "breadth_exit": [0.3, 0.35, 0.4, 0.45, 0.5],
+    "breadth_days": [10, 15, 20, 30, 40],
+    "crash_breadth": [0.15, 0.2, 0.25, 0.3, 0.35],
     "stoploss": [-0.07, -0.08, -0.10, -0.12, -0.15],
     "roi0": [0.03, 0.04, 0.05, 0.06, 0.08],
     "max_trade_days": [5, 7, 10, 14, 20],
 }
 # the 4h research version used a momentum window in days
-GRID_4H = {**{k: v for k, v in GRID.items() if k != "mom_hours"}, "mom_days": [10, 15, 20, 30, 45]}
+GRID_4H = {**{k: v for k, v in GRID.items() if k not in ("mom_hours", "breadth_days", "crash_breadth")},
+           "mom_days": [10, 15, 20, 30, 45]}
 
 VARIANTS_FILE = Path("user_data/strategies/_sensitivity_variants.py")
 
