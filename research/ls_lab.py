@@ -315,3 +315,94 @@ def three_sleeve_report(pairs_file="configs/pairs_universe_futures.json", start=
         w = sum(sleeves[k] / len(combo) for k in combo)
         r, wl = vol_target(C, F, w, target_vol=tv)
         print("+".join(combo).ljust(22), stats(r.loc[start:], wl.loc[start:]))
+
+
+# ---------------------------------------------------------------- trend family (A+B research)
+def load_volume(pairs_file: str) -> pd.DataFrame:
+    vol_q = {}
+    for p in json.load(open(pairs_file)):
+        base, quote = p.split(":")[0].split("/")
+        f = DATA / f"{base}_{quote}_{quote}-1d-futures.feather"
+        if f.exists():
+            d = pd.read_feather(f).set_index("date")
+            vol_q[base] = d["volume"] * d["close"]
+    return pd.DataFrame(vol_q).sort_index()
+
+
+def sig_ema_ens(C, R, pairs=((10, 40), (20, 80), (40, 160))):
+    out = 0
+    for f, s in pairs:
+        out = out + np.sign(C.ewm(span=f, adjust=False).mean() - C.ewm(span=s, adjust=False).mean())
+    return out / len(pairs)
+
+
+def sig_tsmom_scaled(C, R, lbs=(20, 60, 120)):
+    v = R.rolling(60, min_periods=30).std()
+    out = 0
+    for lb in lbs:
+        z = np.log(C / C.shift(lb)) / (v * np.sqrt(lb))
+        out = out + z.clip(-1, 1)
+    return out / len(lbs)
+
+
+TREND = {
+    "T1_tsmom_20_60_120": lambda C, R: sig_tsmom(C, R, (20, 60, 120)),
+    "T2_tsmom_ladder": lambda C, R: ensemble_trend(C, R, (10, 20, 40, 80, 160)),
+    "T3_donchian_50_20": lambda C, R: sig_donchian(C, R, 50, 20),
+    "T4_ema_ens": sig_ema_ens,
+    "T5_tsmom_scaled": sig_tsmom_scaled,
+}
+
+
+def liquid_mask(C, V, top=20, lb=30):
+    """True for the `top` coins by trailing 30-day quote volume (known at the close)"""
+    rv = V.reindex_like(C).rolling(lb, min_periods=10).mean()
+    return rv.rank(axis=1, ascending=False) <= top
+
+
+def trend_report(start="2020-06-01", end="2024-01-01", tv=0.12):
+    for uni, pf in (("A", "configs/pairs_universe_futures.json"), ("B", "configs/pairs_holdout_b_futures.json")):
+        C, F = load_universe(pf)
+        V = load_volume(pf)
+        C, F, V = C.loc[:end], F.loc[:end], V.loc[:end]
+        R = C.pct_change(fill_method=None)
+        liq = liquid_mask(C, V)
+        for name, fn in TREND.items():
+            s = fn(C, R)
+            for tag, sig in (("all", s), ("top20liq", s.where(liq, 0.0))):
+                r, wl = vol_target(C, F, raw_weights(C, sig), target_vol=tv)
+                st = stats(r.loc[start:], wl.loc[start:])
+                print(uni, name.ljust(20), tag.ljust(9), "cagr", st["cagr"], "mdd", st["mdd"], "sharpe", st["sharpe"], st["years"])
+
+
+def sig_donchian_ens(C, R, windows=((20, 10), (50, 20), (100, 50))):
+    return sum(sig_donchian(C, R, e, x) for e, x in windows) / len(windows)
+
+
+def vol_target_capped(C, F, w_raw, target_vol=0.12, lookback=60, max_lev=2.0, coin_cap=0.25):
+    """vol targeting + per-coin notional cap (fraction of equity)"""
+    R = C.pct_change(fill_method=None).fillna(0.0)
+    raw = (w_raw.shift(1).fillna(0.0) * R).sum(axis=1)
+    rv = raw.rolling(lookback, min_periods=20).std() * np.sqrt(365)
+    scale = (target_vol / rv).clip(upper=max_lev).fillna(0.0)
+    w = w_raw.mul(scale, axis=0).clip(-coin_cap, coin_cap)
+    wl = w.shift(1).fillna(0.0)
+    turn = (w - w.shift(1).fillna(0.0)).abs().sum(axis=1).shift(1).fillna(0.0)
+    return (wl * R).sum(axis=1) - (wl * F).sum(axis=1) - turn * COST, wl
+
+
+def donchian_report(start="2020-06-01", end="2024-01-01", tv=0.12):
+    for uni, pf in (("A", "configs/pairs_universe_futures.json"), ("B", "configs/pairs_holdout_b_futures.json")):
+        C, F = load_universe(pf)
+        C, F = C.loc[:end], F.loc[:end]
+        R = C.pct_change(fill_method=None)
+        variants = {
+            "don_50_20": sig_donchian(C, R, 50, 20),
+            "don_ens(20/10,50/20,100/50)": sig_donchian_ens(C, R),
+            "don_ens(30/15,60/30,120/60)": sig_donchian_ens(C, R, ((30, 15), (60, 30), (120, 60))),
+        }
+        for name, s in variants.items():
+            for cap in (1.0, 0.25, 0.15, 0.10):
+                r, wl = vol_target_capped(C, F, raw_weights(C, s), target_vol=tv, coin_cap=cap)
+                st = stats(r.loc[start:], wl.loc[start:])
+                print(uni, name.ljust(28), f"cap={cap}".ljust(9), "cagr", st["cagr"], "mdd", st["mdd"], "sharpe", st["sharpe"], st["years"])

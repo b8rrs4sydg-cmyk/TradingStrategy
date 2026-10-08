@@ -79,10 +79,29 @@ class TrendMomentumLS(IStrategy):
         w = (signal / vol).replace([np.inf, -np.inf], np.nan).fillna(0.0)
         return w.div(w.abs().sum(axis=1).replace(0, np.nan), axis=0).fillna(0.0)
 
+    def _raw_weights(self, C: DataFrame, F: DataFrame, vol: DataFrame) -> DataFrame:
+        """Signal -> raw (pre vol-target) weights. Subclasses replace this to swap the signal."""
+        trend = sum(np.sign(C / C.shift(lb) - 1) for lb in self.trend_lbs) / len(self.trend_lbs)
+        xs = 0
+        for lb in self.xs_lbs:
+            rk = (C / C.shift(lb) - 1).rank(axis=1, pct=True)
+            xs = xs + (rk >= 1 - self.xs_quantile).astype(float) - (rk <= self.xs_quantile).astype(float)
+        xs = xs / len(self.xs_lbs)
+
+        carry = 0
+        for lb in self.carry_lbs:
+            rk = F.rolling(lb).sum().where(C.notna()).rank(axis=1, pct=True)
+            carry = carry + (rk <= self.xs_quantile).astype(float) - (rk >= 1 - self.xs_quantile).astype(float)
+        carry = carry / len(self.carry_lbs)
+
+        return (self._inv_vol_weights(trend.where(C.notna()), vol)
+                 + self._inv_vol_weights(xs.where(C.notna()), vol)
+                 + self._inv_vol_weights(carry.where(C.notna()), vol)) / 3
+
     def _targets(self) -> DataFrame:
         pairs = self.dp.current_whitelist()
         ref = self.dp.get_pair_dataframe(pairs[0], self.timeframe)
-        key = (tuple(pairs), len(ref), ref["date"].iloc[-1] if len(ref) else None)
+        key = (type(self).__name__, tuple(pairs), len(ref), ref["date"].iloc[-1] if len(ref) else None)
         if self._cache.get("key") == key:
             return self._cache["w"]
 
@@ -101,22 +120,7 @@ class TrendMomentumLS(IStrategy):
         R = C.pct_change(fill_method=None)
         vol = R.rolling(self.vol_lb, min_periods=self.vol_lb // 2).std() * np.sqrt(365)
 
-        trend = sum(np.sign(C / C.shift(lb) - 1) for lb in self.trend_lbs) / len(self.trend_lbs)
-        xs = 0
-        for lb in self.xs_lbs:
-            rk = (C / C.shift(lb) - 1).rank(axis=1, pct=True)
-            xs = xs + (rk >= 1 - self.xs_quantile).astype(float) - (rk <= self.xs_quantile).astype(float)
-        xs = xs / len(self.xs_lbs)
-
-        carry = 0
-        for lb in self.carry_lbs:
-            rk = F.rolling(lb).sum().where(C.notna()).rank(axis=1, pct=True)
-            carry = carry + (rk <= self.xs_quantile).astype(float) - (rk >= 1 - self.xs_quantile).astype(float)
-        carry = carry / len(self.carry_lbs)
-
-        w_raw = (self._inv_vol_weights(trend.where(C.notna()), vol)
-                 + self._inv_vol_weights(xs.where(C.notna()), vol)
-                 + self._inv_vol_weights(carry.where(C.notna()), vol)) / 3
+        w_raw = self._raw_weights(C, F, vol)
         # volatility targeting on the book's own trailing returns (uses data up to t only)
         raw_ret = (w_raw.shift(1).fillna(0.0) * R.fillna(0.0)).sum(axis=1)
         rv = raw_ret.rolling(self.vol_lb, min_periods=20).std() * np.sqrt(365)
