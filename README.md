@@ -33,6 +33,8 @@ Monte Carlo（5,000 次重抽）：MDD 第 99 百分位 1.0 %、P(勝率 > 60 %)
 研究歷程（包含失敗的方向性策略）、風險與實盤注意事項請見
 **[docs/STRATEGY_REPORT.md](docs/STRATEGY_REPORT.md)**。
 
+> 多空策略研究（目標年化 ≥ 15%）：在乾淨的跨幣池驗證中未達標，完整過程與數字見 [docs/LONG_SHORT_REPORT.md](docs/LONG_SHORT_REPORT.md)。
+
 ## 目錄
 
 ```
