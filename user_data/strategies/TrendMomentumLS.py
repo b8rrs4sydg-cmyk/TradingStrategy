@@ -18,7 +18,7 @@ A portfolio strategy that combines three nearly uncorrelated return sources
 
 Each sleeve is turned into inverse-volatility weights (60-day vol, gross = 1),
 the sleeves are blended equally, and the whole book is scaled so that its
-trailing 60-day realised volatility targets 12 % p.a. (gross leverage <= 2).
+trailing 60-day realised volatility targets 10 % p.a. (gross leverage <= 2).
 
 Freqtrade mechanics
 -------------------
@@ -64,7 +64,7 @@ class TrendMomentumLS(IStrategy):
     xs_quantile = 0.2
     carry_lbs = (3, 7, 14)
     vol_lb = 60
-    target_vol = 0.12
+    target_vol = 0.10
     max_gross = 2.0
     pos_leverage = 2.0
     rebalance_band = 0.25            # re-size when |actual/target - 1| > band
