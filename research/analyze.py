@@ -90,6 +90,59 @@ def mtm_equity(st: dict, t: pd.DataFrame, datadir: str = "user_data/data/binance
     return eq
 
 
+def mtm_equity_orders(st: dict, t: pd.DataFrame, datadir: str = "user_data/data/binance") -> pd.Series | None:
+    """Daily mark-to-market equity rebuilt from every order fill (works for futures, long + short).
+
+    cash accounting: each fill moves cash by -signed_qty * fill_price - fee; positions are
+    marked at the daily close; funding fees of a trade are spread evenly over its life.
+    Reconciles with freqtrade's closed profit at the end of the backtest.
+    """
+    if t.empty or "orders" not in t.columns:
+        return None
+    futures = st.get("trading_mode") == "futures"
+    tf = st.get("timeframe", "1d")
+    fee = float(t["fee_open"].iloc[0] or 0.0)
+    start = pd.Timestamp(st["backtest_start"], tz="UTC").normalize()
+    end = pd.Timestamp(st["backtest_end"], tz="UTC").normalize()
+    days = pd.date_range(start, end, freq="D")
+    cash = pd.Series(0.0, index=days)
+    qty: dict[str, pd.Series] = {}
+    for _, tr in t.iterrows():
+        sgn = -1.0 if tr.get("is_short", False) else 1.0
+        q = qty.setdefault(tr["pair"], pd.Series(0.0, index=days))
+        for o in tr["orders"]:
+            ts = pd.Timestamp(o["order_filled_timestamp"], unit="ms", tz="UTC")
+            entry = (o["ft_order_side"] == "buy") != bool(tr.get("is_short", False))
+            signed = o["amount"] * (1.0 if entry else -1.0) * sgn
+            d = days[days >= ts.floor("D")]
+            if len(d) == 0:
+                continue
+            q[d] += signed
+            cash[d] -= signed * o["safe_price"] + abs(o["amount"] * o["safe_price"]) * fee
+        ff = tr.get("funding_fees", 0.0) or 0.0
+        if ff:
+            life = days[(days >= tr["open_date"].floor("D")) & (days <= tr["close_date"].floor("D"))]
+            if len(life):
+                spread = pd.Series(0.0, index=days)
+                spread[life] = ff / len(life)
+                cash += spread.cumsum()
+    eq = pd.Series(float(st["starting_balance"]), index=days) + cash
+    for pair, q in qty.items():
+        base_quote = pair.split(":")[0].replace("/", "_")
+        if futures:
+            settle = pair.split(":")[1]
+            f = os.path.join(datadir, "futures", f"{base_quote}_{settle}-1d-futures.feather")
+        else:
+            f = os.path.join(datadir, f"{base_quote}-1d.feather")
+        if not os.path.exists(f):
+            continue
+        px = pd.read_feather(f).set_index("date")["close"]
+        px.index = px.index.normalize()
+        px = px.reindex(days).ffill()
+        eq += (q * px).fillna(0.0)
+    return eq
+
+
 def summarize(name: str, res: dict) -> dict:
     st, t, w = res["stats"], res["trades"], res["wallet"]
     eq = closed_equity(st, t)
@@ -106,8 +159,24 @@ def summarize(name: str, res: dict) -> dict:
         # one row per currency and candle -> total equity marked to market
         wv = w.groupby("date")["total_quote"].sum()
         wallet_dd = max_dd(wv)
-    mtm = mtm_equity(st, t)
+    mtm = mtm_equity(st, t) if st.get("trading_mode", "spot") == "spot" else mtm_equity_orders(st, t)
     mtm_dd = None if mtm is None else max_dd(mtm)
+    mtm_stats = {}
+    if mtm is not None and st.get("trading_mode") == "futures":
+        d = mtm.resample("D").last()
+        dr = d.pct_change().dropna()
+        yrs = max(1e-9, (d.index[-1] - d.index[0]).days / 365)
+        yearly_m = d.resample("YE").last()
+        yr = yearly_m.pct_change()
+        yr.iloc[0] = yearly_m.iloc[0] / st["starting_balance"] - 1
+        mtm_stats = {
+            "mtm_cagr_%": round(((d.iloc[-1] / st["starting_balance"]) ** (1 / yrs) - 1) * 100, 1),
+            "mtm_vol_%": round(float(dr.std() * np.sqrt(365)) * 100, 1),
+            "mtm_sharpe": round(float(dr.mean() / dr.std() * np.sqrt(365)), 2) if dr.std() > 0 else None,
+            "mtm_final": round(float(d.iloc[-1]), 1),
+            "mtm_yearly_%": {str(k.year): round(v * 100, 1) for k, v in yr.items()},
+            "mtm_pos_months_%": round(float((d.resample("ME").last().pct_change().dropna() > 0).mean()) * 100, 1),
+        }
     # daily-return Sharpe on closed equity
     dr = daily.pct_change().dropna()
     sharpe = float(dr.mean() / dr.std() * np.sqrt(365)) if dr.std() > 0 else np.nan
@@ -126,6 +195,8 @@ def summarize(name: str, res: dict) -> dict:
         "pos_months_%": round(float((monthly > 0).sum() / max(1, (monthly != 0).sum())) * 100, 1),
         "worst_month_%": round(monthly.min() * 100, 1),
         "yearly_%": {str(k.year): round(v * 100, 1) for k, v in yearly_ret.items()},
+        "final_closed": round(float(st["starting_balance"] + st["profit_total_abs"]), 1),
+        **mtm_stats,
     }
 
 
