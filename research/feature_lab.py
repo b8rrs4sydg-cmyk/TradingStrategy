@@ -12,7 +12,9 @@ Protocol (fixed before looking at results)
   (k = 1, 3, 7 days), measured in excess of the equal-weight market return
 * discrete signals  -> event study: mean signed excess return per event date,
                        t-stat with Newey-West (lag k) over the event-date series
-* continuous signals-> daily cross-sectional Spearman rank IC, NW t-stat
+* continuous signals-> mean return of the top-minus-bottom quintile spread, NW t-stat
+                       (rank IC is reported too, but it ignores fat tails and can be
+                       significant while the tradable spread loses money)
 * a feature SURVIVES only if it is significant in D after Benjamini-Hochberg
   (FDR 10 % over all tests) AND has the same sign with p < 0.05 in V1 AND V2
 
@@ -107,6 +109,22 @@ def event_test(sig: pd.DataFrame, fx: pd.DataFrame, k: int, mask_rows):
     n_events = int(s.notna().sum().sum())
     m, t, n = nw_t(per_day, k)
     return dict(mean_bp=m * 1e4 if np.isfinite(m) else np.nan, t=t, p=p_two(t), days=n, events=n_events)
+
+
+def spread_test(feat: pd.DataFrame, fx: pd.DataFrame, k: int, mask_rows, q: float = 0.2):
+    """mean excess return of the top-quantile minus bottom-quantile (equal weight), NW t-stat.
+
+    This is what a long/short portfolio actually earns (before costs); unlike rank IC it
+    is sensitive to fat right tails (e.g. shorting 'lottery' coins that occasionally explode).
+    """
+    f = feat.loc[mask_rows]
+    y = fx.loc[mask_rows].where(f.notna())
+    rk = f.rank(axis=1, pct=True)
+    enough = (f.notna().sum(axis=1) >= 10).to_numpy()[:, None]
+    top = y.where((rk >= 1 - q) & enough).mean(axis=1)
+    bot = y.where((rk <= q) & enough).mean(axis=1)
+    m, t, n = nw_t(top - bot, k)
+    return dict(mean_bp=m * 1e4 if np.isfinite(m) else np.nan, t=t, p=p_two(t), days=n, events=np.nan)
 
 
 def ic_test(feat: pd.DataFrame, fx: pd.DataFrame, k: int, mask_rows):
@@ -370,7 +388,12 @@ def main():
                     kind, F = feats_by_pf[pf][name]
                     fx = fwd_excess(P, k)
                     rows_mask = (P["close"].index >= s) & (P["close"].index <= e)
-                    res = event_test(F, fx, k, rows_mask) if kind == "event" else ic_test(F, fx, k, rows_mask)
+                    if kind == "event":
+                        res = event_test(F, fx, k, rows_mask)
+                    else:
+                        res = spread_test(F, fx, k, rows_mask)
+                        ic = ic_test(F, fx, k, rows_mask)
+                        row[f"{per}_rankIC_t"] = ic["t"]
                     row["kind"] = kind
                     for kk, vv in res.items():
                         row[f"{per}_{kk}"] = vv
@@ -405,13 +428,14 @@ def factor_portfolio(F: pd.DataFrame, P, rebalance: int = 7, q: float = 0.2, sig
     s = sign * F.where(c.notna())
     rk = s.rank(axis=1, pct=True)
     n_ok = s.notna().sum(axis=1)
-    longs = (rk >= 1 - q) & (n_ok >= 10)
-    shorts = (rk <= q) & (n_ok >= 10)
+    enough = (n_ok >= 10).to_numpy()[:, None]      # row-wise condition (avoid column alignment)
+    longs = (rk >= 1 - q) & enough
+    shorts = (rk <= q) & enough
     w = longs.astype(float).div(longs.sum(axis=1).replace(0, np.nan), axis=0).fillna(0) * 0.5 \
         - shorts.astype(float).div(shorts.sum(axis=1).replace(0, np.nan), axis=0).fillna(0) * 0.5
     if rebalance > 1:
         keep = np.arange(len(w)) % rebalance == 0
-        w = w.where(pd.Series(keep, index=w.index), np.nan).ffill().fillna(0)
+        w = w.where(np.repeat(keep[:, None], w.shape[1], axis=1), np.nan).ffill().fillna(0)
     R = c.pct_change(fill_method=None).fillna(0)
     wl = w.shift(1).fillna(0)
     turn = (w - w.shift(1).fillna(0)).abs().sum(axis=1).shift(1).fillna(0)
@@ -434,7 +458,9 @@ def factor_report():
     panels = {pf: load_panel(pf) for pf in {v[0] for v in PERIODS.values()}}
     rows = []
     for pf, P in panels.items():
-        feats = {**fam_price(P), **fam_indicators(P)}
+        feats = {**fam_indicators(P)}
+        lo50 = P["low"].rolling(50).min()
+        feats["pa:dist_to_50d_low"] = ("continuous", P["close"] / lo50 - 1)
         ranks = [feats[n][1].rank(axis=1, pct=True) for n in SLOW_COMPOSITE]
         feats["COMPOSITE_slow"] = ("continuous", sum(ranks) / len(ranks))
         for name in SLOW_COMPOSITE + ["ind:ret_1d", "ind:rsi2", "COMPOSITE_slow"]:
@@ -455,3 +481,50 @@ def factor_report():
     pd.set_option("display.width", 250)
     print(piv.round(2).to_string())
     df.to_csv("research/results/factor_portfolios.csv", index=False)
+
+
+# ============================================================ intraday (4h) re-test
+def load_panel_4h(pairs_file: str) -> dict[str, pd.DataFrame]:
+    spot = Path("user_data/data/binance")
+    cols = {k: {} for k in ("open", "high", "low", "close", "volume")}
+    for p in json.load(open(pairs_file)):
+        base = p.split("/")[0]
+        f = spot / f"{base}_USDT-1h.feather"
+        if not f.exists():
+            continue
+        d = pd.read_feather(f).set_index("date").resample("4h").agg(
+            {"open": "first", "high": "max", "low": "min", "close": "last", "volume": "sum"})
+        for k in cols:
+            cols[k][base] = d[k]
+    P = {k: pd.DataFrame(v).sort_index() for k, v in cols.items()}
+    P["funding"] = P["close"] * 0
+    return P
+
+
+def intraday_report(horizons=(1, 6, 18)):
+    P = load_panel_4h("configs/pairs_ab_futures.json")
+    feats = {}
+    for name in talib.get_function_groups()["Pattern Recognition"]:
+        raw = apply_talib(P, getattr(talib, name), "open", "high", "low", "close")
+        sig = np.sign(raw).where(raw != 0)
+        if sig.notna().sum().sum() >= 500:
+            feats[f"cdl4h:{name[3:].lower()}"] = sig
+    for k_, v in fam_harmonic(P).items():
+        feats[k_.replace("harm:", "harm4h:")] = v[1]
+    rows = []
+    for name, F in feats.items():
+        for k in horizons:
+            fx = fwd_excess(P, k)
+            row = {"feature": name, "k_bars": k}
+            for per, (s, e) in {"D": ("2020-06-01", "2023-12-31"), "V1": ("2024-01-01", "2026-09-30")}.items():
+                m = (P["close"].index >= s) & (P["close"].index <= e)
+                for kk, vv in event_test(F, fx, k, m).items():
+                    row[f"{per}_{kk}"] = vv
+            rows.append(row)
+    df = pd.DataFrame(rows)
+    df["D_bh"] = bh(df["D_p"])
+    df["replicates"] = df["D_bh"] & (np.sign(df["V1_t"]) == np.sign(df["D_t"])) & (df["V1_p"] < 0.05)
+    df.to_csv("research/results/feature_lab_4h.csv", index=False)
+    print(f"{len(df)} tests, {int(df['D_bh'].sum())} BH-significant in D, {int(df['replicates'].sum())} replicate in V1")
+    show = ["feature", "k_bars", "D_events", "D_mean_bp", "D_t", "V1_mean_bp", "V1_t", "replicates"]
+    print(df[df["D_bh"] | df["feature"].str.startswith("harm4h:any")].sort_values("D_t", key=abs, ascending=False)[show].round(2).head(30).to_string(index=False))
