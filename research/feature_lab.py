@@ -61,16 +61,18 @@ def load_panel(pairs_file: str) -> dict[str, pd.DataFrame]:
     return P
 
 
-def load_metrics(columns) -> dict[str, pd.DataFrame]:
+def load_metrics(columns, index=None) -> dict[str, pd.DataFrame]:
     out = {}
     for f in MET.glob("*_USDT-1d-metrics.feather"):
         base = f.name.split("_")[0]
         d = pd.read_feather(f).set_index("date")
-        d.index = pd.to_datetime(d.index, utc=True).normalize()
-        out[base] = d
+        d.index = pd.DatetimeIndex(pd.to_datetime(d.index, utc=True)).normalize()
+        out[base] = d[~d.index.duplicated()]
     M = {}
     for c in ("oi", "oi_value", "top_acc_ls", "top_pos_ls", "glob_ls", "taker_ls", "premium"):
         M[c] = pd.DataFrame({b: d[c] for b, d in out.items() if c in d}).reindex(columns=columns)
+        if index is not None:
+            M[c] = M[c].reindex(index)
     return M
 
 
@@ -321,7 +323,7 @@ def fam_indicators(P):
 
 
 def fam_sentiment(P):
-    M = load_metrics(P["close"].columns)
+    M = load_metrics(P["close"].columns, P["close"].index)
     c = P["close"]
     fund = P["funding"]
     f = {}
@@ -370,7 +372,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--families", nargs="+", default=["price", "harmonic", "indicators"])
     ap.add_argument("--out", default="research/results/feature_lab.csv")
+    ap.add_argument("--d-start", default=None, help="override discovery start (sentiment data begins 2021-12)")
+    ap.add_argument("--v2-pairs", default=None, help="override the V2 universe file")
     a = ap.parse_args()
+    if a.d_start:
+        PERIODS["D"] = (PERIODS["D"][0], a.d_start, PERIODS["D"][2])
+    if a.v2_pairs:
+        PERIODS["V2"] = (a.v2_pairs, max(a.d_start or "2020-06-01", PERIODS["V2"][1]), PERIODS["V2"][2])
     panels = {}
     for pf in {v[0] for v in PERIODS.values()}:
         panels[pf] = load_panel(pf)
@@ -528,3 +536,59 @@ def intraday_report(horizons=(1, 6, 18)):
     print(f"{len(df)} tests, {int(df['D_bh'].sum())} BH-significant in D, {int(df['replicates'].sum())} replicate in V1")
     show = ["feature", "k_bars", "D_events", "D_mean_bp", "D_t", "V1_mean_bp", "V1_t", "replicates"]
     print(df[df["D_bh"] | df["feature"].str.startswith("harm4h:any")].sort_values("D_t", key=abs, ascending=False)[show].round(2).head(30).to_string(index=False))
+
+
+# ============================================================ market-level (time-series) sentiment
+def market_sentiment_report(horizons=(1, 3, 7)):
+    P = load_panel("configs/pairs_ab_futures.json")
+    M = load_metrics(P["close"].columns, P["close"].index)
+    c = P["close"]
+    R = c.pct_change(fill_method=None)
+    mkt = R.mean(axis=1)                         # equal-weight market daily return
+    btc = R["BTC"]
+    mkt_px = (1 + mkt.fillna(0)).cumprod()
+
+    def z(x, n=180):
+        return (x - x.rolling(n, min_periods=60).mean()) / x.rolling(n, min_periods=60).std()
+
+    feats = {
+        "mkt:funding_7d": P["funding"].mean(axis=1).rolling(7).sum(),
+        "mkt:btc_funding_7d": P["funding"]["BTC"].rolling(7).sum(),
+        "mkt:oi_chg_7d": M["oi_value"].sum(axis=1, min_count=10).pct_change(7, fill_method=None),
+        "mkt:glob_ls": M["glob_ls"].mean(axis=1),
+        "mkt:top_pos_ls": M["top_pos_ls"].mean(axis=1),
+        "mkt:taker_ls_7d": M["taker_ls"].mean(axis=1).rolling(7).mean(),
+        "mkt:btc_premium": M["premium"]["BTC"] if "BTC" in M["premium"] else None,
+        "mkt:breadth_above_ema50": (c > c.ewm(span=50, adjust=False).mean()).sum(axis=1) / c.notna().sum(axis=1),
+        "mkt:ret_30d": mkt_px.pct_change(30),
+        "mkt:vol_30d": mkt.rolling(30).std(),
+    }
+    feats = {k: v for k, v in feats.items() if v is not None}
+    # home-made "fear & greed" proxy: greed = strong momentum, low vol, high funding, rising OI, wide breadth
+    fg = (z(feats["mkt:ret_30d"]) - z(feats["mkt:vol_30d"]) + z(feats["mkt:funding_7d"])
+          + z(feats["mkt:oi_chg_7d"]) + z(feats["mkt:breadth_above_ema50"])) / 5
+    feats["mkt:fear_greed_proxy"] = fg
+    feats["mkt:fear_greed_extreme"] = np.sign(fg).where(fg.abs() > 1.5)
+
+    periods = {"D": ("2021-12-01", "2023-12-31"), "V1": ("2024-01-01", "2026-09-30"),
+               "D_long": ("2020-06-01", "2023-12-31")}     # D_long: features available before 2021-12 only
+    rows = []
+    for name, f in feats.items():
+        fz = z(f) if "extreme" not in name else f
+        for target_name, tgt in (("EW", mkt), ("BTC", btc)):
+            for k in horizons:
+                fwd = (1 + tgt).rolling(k).apply(np.prod, raw=True).shift(-k) - 1
+                row = {"feature": name, "target": target_name, "k": k}
+                for per, (s, e) in periods.items():
+                    x = (fz * fwd).loc[s:e]             # mean of z * fwd return = covariance-type predictive stat
+                    m, t, n = nw_t(x, k)
+                    row[f"{per}_t"] = t
+                    row[f"{per}_n"] = n
+                rows.append(row)
+    df = pd.DataFrame(rows)
+    df["D_bh"] = bh(pd.Series([p_two(t) for t in df["D_t"]], index=df.index))
+    df["replicates"] = df["D_bh"] & (np.sign(df["V1_t"]) == np.sign(df["D_t"])) & (df["V1_t"].abs() > 1.96)
+    df.to_csv("research/results/feature_lab_market_sentiment.csv", index=False)
+    pd.set_option("display.width", 250)
+    print(f"{len(df)} tests, {int(df['D_bh'].sum())} BH-significant in D, {int(df['replicates'].sum())} replicate in V1")
+    print(df.sort_values("D_t", key=abs, ascending=False).round(2).head(20).to_string(index=False))
