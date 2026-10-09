@@ -68,7 +68,7 @@ def mtm_equity(st: dict, t: pd.DataFrame, datadir: str = "user_data/data/binance
         return None
     start = pd.Timestamp(st["backtest_start"], tz="UTC")
     end = pd.Timestamp(st["backtest_end"], tz="UTC")
-    idx = pd.date_range(start, end, freq=st.get("timeframe", "1h").replace("m", "min"))
+    idx = pd.date_range(start, end, freq=st.get("timeframe", "1h").replace("m", "min").replace("d", "D"))
     eq = pd.Series(float(st["starting_balance"]), index=idx)
     for _, tr in t.iterrows():
         # realised P&L from the close time on
@@ -79,7 +79,7 @@ def mtm_equity(st: dict, t: pd.DataFrame, datadir: str = "user_data/data/binance
             continue
         px = pd.read_feather(f).set_index("date")["close"]
         # candle close of date d is known at d + timeframe
-        px.index = px.index + pd.Timedelta(st.get("timeframe", "1h").replace("m", "min"))
+        px.index = px.index + pd.Timedelta(st.get("timeframe", "1h").replace("m", "min").replace("d", "D"))
         win = (eq.index >= tr["open_date"]) & (eq.index < tr["close_date"])
         if not win.any():
             continue

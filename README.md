@@ -36,6 +36,8 @@ Monte Carlo（5,000 次重抽）：MDD 第 99 百分位 1.0 %、P(勝率 > 60 %)
 > 多空策略研究（目標年化 ≥ 15%）：在乾淨的跨幣池驗證中未達標，完整過程與數字見 [docs/LONG_SHORT_REPORT.md](docs/LONG_SHORT_REPORT.md)。
 >
 > 指標數據研究（價格行為、諧波形態、技術指標、市場情緒，共 480 個檢定）：沒有特徵通過跨期跨幣池重現與成本檢驗，見 [docs/FEATURE_RESEARCH.md](docs/FEATURE_RESEARCH.md)。
+>
+> **更好的套利：幣本位季度合約期現套利（BTC/ETH）**——全期間年化 9.1%、樣本外 9.6%、勝率 100%（FundingCarry 為 5.3% / 1.8%）；期權套利不可行。見 [docs/ARBITRAGE_RESEARCH.md](docs/ARBITRAGE_RESEARCH.md)，Freqtrade 策略 `BasisCarry`。
 
 ## 目錄
 
