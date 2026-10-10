@@ -67,7 +67,10 @@ def load_contracts():
 
 
 def backtest(contracts, start, end, slots=10, enter_yield=0.10, exit_yield=None,
-             min_tau=14, max_tau=200, cm_only=False, cost=COST_RT, bases=None, um_only=False):
+             min_tau=14, max_tau=200, cm_only=False, cost=COST_RT, bases=None, um_only=False,
+             lev=1.0, borrow=0.10, lev_margin=0.05):
+    """lev: leverage applied to a position (borrowed USDT buys extra spot) ONLY when its net locked
+    yield >= borrow + lev_margin; interest `borrow` p.a. is charged on the borrowed part."""
     days = pd.date_range(start, end, freq="D", tz="UTC")
     book = {}        # sym -> dict(entry_S, entry_F, weight(capital fraction), market, expiry)
     equity = 1.0
@@ -90,13 +93,15 @@ def backtest(contracts, start, end, slots=10, enter_yield=0.10, exit_yield=None,
             S, F = df.at[d, "S"], df.at[d, "F"]
             cap_mult = 1.0 if pos["market"] == "cm" else 2.0
             ret = (S / pos["S0"] - 1) - (F / pos["F0"] - 1)          # on notional
-            val = pos["cap"] * (1 + ret / cap_mult)
+            held = (d - pos["d0"]).days
+            interest = pos["cap"] * (pos["L"] - 1) * borrow * held / 365
+            val = pos["cap"] * (1 + pos["L"] * ret / cap_mult) - interest
             pnl_day += val - pos["val"]
             pos["val"] = val
             tau = df.at[d, "tau"]
             remaining = (F / S - 1) * 365 / max(tau, 1)
             if tau <= 0 or (exit_yield is not None and tau > 3 and remaining < exit_yield):
-                exit_cost = pos["cap"] * pos["cost"] / 2 / cap_mult if tau > 0 else pos["cap"] * pos["cost"] / 4 / cap_mult
+                exit_cost = pos["L"] * (pos["cap"] * pos["cost"] / 2 / cap_mult if tau > 0 else pos["cap"] * pos["cost"] / 4 / cap_mult)
                 pnl_day -= exit_cost
                 trades.append(dict(sym=sym, entry=pos["d0"], exit=d, locked=pos["y0"],
                                    ret=(val - exit_cost) / pos["cap0"] - 1, early=tau > 0))
@@ -125,10 +130,11 @@ def backtest(contracts, start, end, slots=10, enter_yield=0.10, exit_yield=None,
                 df = c["data"]
                 cap = equity / slots
                 cap_mult = 1.0 if c["market"] == "cm" else 2.0
-                entry_cost = cap * ccost(c["base"]) / 2 / cap_mult
+                L = lev if y_net >= borrow + lev_margin else 1.0
+                entry_cost = L * cap * ccost(c["base"]) / 2 / cap_mult
                 equity -= entry_cost
                 book[sym] = dict(S0=df.at[d, "S"], F0=df.at[d, "F"], cap=cap, cap0=cap + entry_cost,
-                                 val=cap, market=c["market"], d0=d, y0=y_net, cost=ccost(c["base"]))
+                                 val=cap, market=c["market"], d0=d, y0=y_net, cost=ccost(c["base"]), L=L)
         eq_curve.append((d, equity))
         util.append((d, len(book) / slots))
     eq = pd.Series(dict(eq_curve))
