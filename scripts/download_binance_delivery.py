@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Download Binance quarterly DELIVERY futures (USDT-margined 'um' and coin-margined
-'cm') daily klines from the public archive.
+'cm') klines (default 1d) from the public archive.
 
-Output: user_data/data/binance/delivery/<um|cm>/<SYMBOL>-1d.feather
+Output: user_data/data/binance/delivery/<um|cm>/<SYMBOL>-<tf>.feather
         e.g. BTCUSDT_240329-1d.feather, ETHUSD_230630-1d.feather
 
     python scripts/download_binance_delivery.py --contracts-file um.txt --market um
@@ -37,13 +37,13 @@ def get(url):
     return None
 
 
-def contract(market: str, sym: str, out: Path) -> str:
+def contract(market: str, sym: str, out: Path, tf: str = "1d") -> str:
     # contract code YYMMDD -> listed at most ~9 months before expiry
     exp = pd.Timestamp("20" + sym.split("_")[1])
     months = pd.period_range(exp - pd.DateOffset(months=10), exp, freq="M")
     frames = []
     for m in months:
-        raw = get(f"{HOST}/data/futures/{market}/monthly/klines/{sym}/1d/{sym}-1d-{m}.zip")
+        raw = get(f"{HOST}/data/futures/{market}/monthly/klines/{sym}/{tf}/{sym}-{tf}-{m}.zip")
         if raw is None:
             continue
         with zipfile.ZipFile(io.BytesIO(raw)) as zf, zf.open(zf.namelist()[0]) as fh:
@@ -58,8 +58,8 @@ def contract(market: str, sym: str, out: Path) -> str:
     if not frames:
         return f"{sym}: no data"
     df = pd.concat(frames).drop_duplicates("date").sort_values("date").reset_index(drop=True)
-    df.to_feather(out / f"{sym}-1d.feather")
-    return f"{sym}: {len(df)} days {df.date.iloc[0]:%Y-%m-%d} -> {df.date.iloc[-1]:%Y-%m-%d}"
+    df.to_feather(out / f"{sym}-{tf}.feather")
+    return f"{sym} {tf}: {len(df)} rows {df.date.iloc[0]:%Y-%m-%d} -> {df.date.iloc[-1]:%Y-%m-%d}"
 
 
 def main():
@@ -67,12 +67,13 @@ def main():
     ap.add_argument("--contracts-file", required=True)
     ap.add_argument("--market", choices=["um", "cm"], required=True)
     ap.add_argument("--workers", type=int, default=24)
+    ap.add_argument("--timeframe", default="1d")
     a = ap.parse_args()
     out = Path("user_data/data/binance/delivery") / a.market
     out.mkdir(parents=True, exist_ok=True)
     syms = [s.strip() for s in open(a.contracts_file) if s.strip()]
     with ThreadPoolExecutor(a.workers) as ex:
-        for msg in ex.map(lambda s: contract(a.market, s, out), syms):
+        for msg in ex.map(lambda s: contract(a.market, s, out, a.timeframe), syms):
             print(msg, flush=True)
 
 
