@@ -71,7 +71,11 @@ def backtest(contracts, start, end, slots=10, enter_yield=0.10, exit_yield=None,
     days = pd.date_range(start, end, freq="D", tz="UTC")
     book = {}        # sym -> dict(entry_S, entry_F, weight(capital fraction), market, expiry)
     equity = 1.0
-    eq_curve, trades = [], []
+    eq_curve, trades, util = [], [], []
+
+    def ccost(base: str) -> float:
+        """round-trip cost: a float for all, or a dict {base: cost} with key 'default'"""
+        return cost.get(base, cost.get("default", COST_RT)) if isinstance(cost, dict) else cost
     cs = {c["sym"]: c for c in contracts
           if not (cm_only and c["market"] != "cm") and not (um_only and c["market"] != "um")
           and (bases is None or c["base"] in bases)}
@@ -92,7 +96,7 @@ def backtest(contracts, start, end, slots=10, enter_yield=0.10, exit_yield=None,
             tau = df.at[d, "tau"]
             remaining = (F / S - 1) * 365 / max(tau, 1)
             if tau <= 0 or (exit_yield is not None and tau > 3 and remaining < exit_yield):
-                exit_cost = pos["cap"] * cost / 2 / cap_mult if tau > 0 else pos["cap"] * cost / 4 / cap_mult
+                exit_cost = pos["cap"] * pos["cost"] / 2 / cap_mult if tau > 0 else pos["cap"] * pos["cost"] / 4 / cap_mult
                 pnl_day -= exit_cost
                 trades.append(dict(sym=sym, entry=pos["d0"], exit=d, locked=pos["y0"],
                                    ret=(val - exit_cost) / pos["cap0"] - 1, early=tau > 0))
@@ -113,7 +117,7 @@ def backtest(contracts, start, end, slots=10, enter_yield=0.10, exit_yield=None,
                     continue
                 y = (df.at[d, "F"] / df.at[d, "S"] - 1) * 365 / tau
                 # net of round-trip cost spread over the holding period
-                y_net = y - cost * 365 / tau
+                y_net = y - ccost(c["base"]) * 365 / tau
                 if y_net >= enter_yield:
                     cands.append((y_net, sym))
             for y_net, sym in sorted(cands, reverse=True)[:free]:
@@ -121,12 +125,14 @@ def backtest(contracts, start, end, slots=10, enter_yield=0.10, exit_yield=None,
                 df = c["data"]
                 cap = equity / slots
                 cap_mult = 1.0 if c["market"] == "cm" else 2.0
-                entry_cost = cap * cost / 2 / cap_mult
+                entry_cost = cap * ccost(c["base"]) / 2 / cap_mult
                 equity -= entry_cost
                 book[sym] = dict(S0=df.at[d, "S"], F0=df.at[d, "F"], cap=cap, cap0=cap + entry_cost,
-                                 val=cap, market=c["market"], d0=d, y0=y_net)
+                                 val=cap, market=c["market"], d0=d, y0=y_net, cost=ccost(c["base"]))
         eq_curve.append((d, equity))
+        util.append((d, len(book) / slots))
     eq = pd.Series(dict(eq_curve))
+    backtest.utilization = pd.Series(dict(util))      # share of capital deployed each day
     return eq, pd.DataFrame(trades)
 
 
