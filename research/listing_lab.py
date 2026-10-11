@@ -155,14 +155,15 @@ def snipe_minutes(dfs, lst, market, fee, slip, entries=(1, 5, 60), horizons=(0, 
 
 
 # ---------------------------------------------------------------- H2 fade (short) portfolio
-def fade(perps, lst, d_entry=1, hold=30, stop=1.0, w=0.05, fee=0.0005, slip=0.002, stop_slip=0.01):
+def fade(perps, lst, d_entry=1, hold=30, stop=1.0, w=0.05, fee=0.0005, slip=0.002, stop_slip=0.01,
+         start="2020-01-01", end="2026-09-30"):
     """Daily mark-to-market portfolio of short positions in newly listed perps."""
     events = {}
     for _, L in lst.iterrows():
         d = perps[L["base"]]
         if len(d) > d_entry + 1:
             events.setdefault(d.index[d_entry], []).append(L["base"])
-    days = pd.date_range("2020-01-01", "2026-09-30", freq="D", tz="UTC")
+    days = pd.date_range(start, end, freq="D", tz="UTC")
     cash, pos, curve, trades = 1.0, [], [], []
     c = fee + slip
     for t in days:
