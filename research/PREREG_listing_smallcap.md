@@ -40,3 +40,17 @@ annualises above 20 %, exit when it falls below 5 %, at most 10 positions, equal
 costs 0.15 % spot + 0.05 % perp per side + 0.3 % slippage per side for coins outside the top 50.
 Capital 2x notional (spot + perp margin). Pass criteria: OOS and holdout CAGR > FundingCarry's
 (~5 %) and MDD < 15 %.
+
+## Amendment 1 (after the first run, before any change to H2/H3)
+The H1 entry "open of the first daily candle" is not executable: on Binance SPOT listings the first
+print is routinely a placeholder trade at a fraction of the real price (ALICE opened at 0.10 and
+closed its first day at 20.74; SAGA 0.04 -> 6.56), swept by bots within milliseconds. This made the
+spot "snipe" look like +300..900 % per trade. H1 is re-run with 1-minute data of the listing day and
+entries at the close of minute 1, minute 5 and minute 60 after the first trade (still optimistic for
+a retail API sniper), exits unchanged. H2 and H3 are unaffected (entries at daily closes).
+
+## Amendment 2 (data fix, no parameter change)
+After a perp is delisted the archive keeps printing a frozen last price with zero volume (A2Z, DENT,
+HFT ... in 2026), while Binance actually settles the contract at the index price.  The first H3/H2 runs
+marked shorts at that frozen price.  Perp candles with zero volume are now dropped; a position in a
+contract whose data ends is closed at its last traded close (H2) / excluded from the next day (H3).

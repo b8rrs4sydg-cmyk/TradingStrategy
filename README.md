@@ -38,6 +38,8 @@ Monte Carlo（5,000 次重抽）：MDD 第 99 百分位 1.0 %、P(勝率 > 60 %)
 > 指標數據研究（價格行為、諧波形態、技術指標、市場情緒，共 480 個檢定）：沒有特徵通過跨期跨幣池重現與成本檢驗，見 [docs/FEATURE_RESEARCH.md](docs/FEATURE_RESEARCH.md)。
 >
 > **更好的套利：幣本位季度合約期現套利（BTC/ETH）**——全期間年化 9.1%、樣本外 9.6%、勝率 100%（FundingCarry 為 5.3% / 1.8%）；期權套利（平價、盒式、價差、蝴蝶、日曆、合成遠期 vs 季度期貨）扣資金成本後皆無法規模化。見 [docs/ARBITRAGE_RESEARCH.md](docs/ARBITRAGE_RESEARCH.md)，Freqtrade 策略 `BasisCarry`。小資金（約 100 萬台幣）可做全部 14 個幣：全期間年化 9.0%、樣本外 11.3%、勝率 100%，每日操作工具 `scripts/basis_scanner.py`。
+>
+> 新幣狙擊（CEX 上市即買）、做空新上市永續、小幣資金費率套利（含 888 個新上市永續與已下市幣，事先登錄假設）：皆未通過樣本外／holdout，見 [docs/LISTING_SMALLCAP_RESEARCH.md](docs/LISTING_SMALLCAP_RESEARCH.md)。
 
 ## 目錄
 
