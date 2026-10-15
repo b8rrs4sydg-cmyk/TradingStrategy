@@ -8,13 +8,25 @@ from app.schemas.itinerary import (
     ItineraryRequestOut,
     ScoringWeights,
 )
+from app.schemas.plan import (
+    FlightLegOut,
+    RiskWarningOut,
+    SearchResult,
+    StrategyPlanOut,
+    TicketOfferOut,
+)
 
 __all__ = [
     "DateWindowIn",
     "DateWindowOut",
+    "FlightLegOut",
     "HolidayOut",
     "ItineraryRequestIn",
     "ItineraryRequestOut",
     "LeaveStrategyOut",
+    "RiskWarningOut",
     "ScoringWeights",
+    "SearchResult",
+    "StrategyPlanOut",
+    "TicketOfferOut",
 ]

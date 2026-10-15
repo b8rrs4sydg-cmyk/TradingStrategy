@@ -65,7 +65,12 @@ class ItineraryRequestIn(BaseModel):
 
     date_windows: list[DateWindowIn] = Field(default_factory=list, min_length=1)
 
-    @field_validator("origins", "destinations")
+    # ---- Strategy-specific knobs ------------------------------------------
+    # 四段票：票甲的外站候選 (XMN, HKG, …) 以及可比 inner-dates 彈性的額外天數
+    back_to_back_outer_stations: list[str] = Field(default_factory=list, max_length=8)
+    back_to_back_outer_buffer_days: int = Field(default=2, ge=0, le=14)
+
+    @field_validator("origins", "destinations", "back_to_back_outer_stations")
     @classmethod
     def _upper_list(cls, v: list[str]) -> list[str]:
         return [s.strip().upper() for s in v if s and s.strip()]
