@@ -9,12 +9,11 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import replace
-from typing import Iterable
 
 from app.schemas.itinerary import ScoringWeights
 from app.services.strategies.base import RiskLevel, StrategyPlan
-
 
 _RISK_WEIGHT = {RiskLevel.LOW: 0.1, RiskLevel.MEDIUM: 0.4, RiskLevel.HIGH: 1.0}
 

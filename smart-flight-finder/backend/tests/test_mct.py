@@ -1,7 +1,7 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from app.models.enums import CabinClass
-from app.services.mct import DEFAULT_MCT, check_connection, check_cross_ticket_handoff
+from app.services.mct import check_connection, check_cross_ticket_handoff
 from app.services.strategies.base import FlightLeg, RiskLevel, TicketOffer
 
 
@@ -18,7 +18,7 @@ def _leg(origin, destination, dep, arr) -> FlightLeg:
 
 
 def test_same_ticket_international_pass():
-    arr = datetime(2027, 2, 5, 10, 0, tzinfo=timezone.utc)
+    arr = datetime(2027, 2, 5, 10, 0, tzinfo=UTC)
     dep = arr + timedelta(hours=2)
     w = check_connection(
         _leg("XMN", "TPE", arr - timedelta(hours=1), arr),
@@ -29,7 +29,7 @@ def test_same_ticket_international_pass():
 
 
 def test_cross_ticket_too_tight_flags_high():
-    arr = datetime(2027, 2, 5, 10, 0, tzinfo=timezone.utc)
+    arr = datetime(2027, 2, 5, 10, 0, tzinfo=UTC)
     dep = arr + timedelta(hours=1)  # only 60min for cross-ticket international
     w = check_connection(
         _leg("XMN", "TPE", arr - timedelta(hours=1), arr),
@@ -42,7 +42,7 @@ def test_cross_ticket_too_tight_flags_high():
 
 
 def test_overlap_detected():
-    arr = datetime(2027, 2, 5, 10, 0, tzinfo=timezone.utc)
+    arr = datetime(2027, 2, 5, 10, 0, tzinfo=UTC)
     dep = arr - timedelta(minutes=15)
     w = check_connection(
         _leg("XMN", "TPE", arr - timedelta(hours=1), arr),
@@ -53,7 +53,7 @@ def test_overlap_detected():
 
 
 def test_airport_mismatch():
-    arr = datetime(2027, 2, 5, 10, 0, tzinfo=timezone.utc)
+    arr = datetime(2027, 2, 5, 10, 0, tzinfo=UTC)
     dep = arr + timedelta(hours=4)
     w = check_connection(
         _leg("XMN", "TPE", arr - timedelta(hours=1), arr),
@@ -64,7 +64,7 @@ def test_airport_mismatch():
 
 
 def test_cross_ticket_handoff_adds_baggage_warning():
-    arr = datetime(2027, 2, 5, 10, 0, tzinfo=timezone.utc)
+    arr = datetime(2027, 2, 5, 10, 0, tzinfo=UTC)
     dep = arr + timedelta(hours=5)
     inbound = TicketOffer(
         offer_id="A",

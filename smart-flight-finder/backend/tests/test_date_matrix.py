@@ -1,7 +1,5 @@
 from datetime import date
 
-import pytest
-
 from app.models.enums import DateWindowRole, TripType
 from app.schemas.itinerary import DateWindowIn
 from app.services.date_matrix import (

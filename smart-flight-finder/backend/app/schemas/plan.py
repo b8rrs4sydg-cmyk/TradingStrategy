@@ -102,3 +102,4 @@ class SearchResult(BaseModel):
     request_echo: dict
     date_matrix_size: int
     plans: list[StrategyPlanOut]
+    provider_cache: dict[str, int] = Field(default_factory=dict)

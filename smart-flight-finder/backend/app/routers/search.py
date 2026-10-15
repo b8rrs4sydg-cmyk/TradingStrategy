@@ -13,9 +13,10 @@ router = APIRouter(tags=["search"])
 @router.post("/search", response_model=SearchResult)
 def search(req: ItineraryRequestIn) -> SearchResult:
     service = SearchService()
-    matrix_size, plans = service.run(req)
+    matrix_size, plans, cache_stats = service.run(req)
     return SearchResult(
         request_echo=req.model_dump(mode="json"),
         date_matrix_size=matrix_size,
         plans=[StrategyPlanOut.of(p) for p in plans],
+        provider_cache=cache_stats,
     )

@@ -74,11 +74,13 @@ npm run dev
 
 | Phase | 內容 | 狀態 |
 |-------|------|------|
-| 1     | 專案初始化、Docker、資料模型、2027 連假資料庫 | ✅ 本次 |
-| 2     | 彈性日期矩陣引擎、Amadeus/Skyscanner 整合、Redis 快取 | ⬜ |
-| 3     | 反向票 + 四段票策略引擎 (時間軸碰撞、MCT 檢查) | ⬜ |
-| 4     | 前端最佳化看板、Timeline 視覺化 | ⬜ |
-| 5     | 壓測、調校、部署 | ⬜ |
+| 1     | 專案初始化、Docker、資料模型、2027 連假資料庫 | ✅ |
+| 2     | 彈性日期矩陣引擎、FlightOfferProvider 介面 + Stub (Amadeus/Skyscanner 可插拔) | ✅ |
+| 3     | 反向票 + 四段票策略引擎 (時間軸碰撞、MCT 檢查) + 多維度 scoring | ✅ |
+| 4     | SearchForm + ResultBoard + Timeline 視覺化 | ✅ |
+| 5     | Request-scoped provider cache、Alembic migration、CI、Render + Vercel 設定 | ✅ |
+| 2.5   | 真實 Amadeus / Skyscanner provider 實作 (替換 Stub) | ⬜ |
+| 2.6   | Redis-backed cross-request offer cache | ⬜ |
 
 ---
 

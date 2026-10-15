@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from app.models.enums import TicketStrategyType
 from app.providers.base import FlightOfferProvider
+from app.providers.cache import CachingProvider
 from app.providers.stub import StubFlightProvider
 from app.schemas.itinerary import ItineraryRequestIn
 from app.services.date_matrix import expand_itinerary, matrix_cardinality
@@ -22,10 +23,16 @@ from app.services.strategies import (
 
 class SearchService:
     def __init__(self, provider: FlightOfferProvider | None = None) -> None:
-        self.provider = provider or StubFlightProvider()
+        self._raw_provider = provider or StubFlightProvider()
+        self.provider: CachingProvider | FlightOfferProvider = self._raw_provider
 
-    def run(self, req: ItineraryRequestIn) -> tuple[int, list[StrategyPlan]]:
-        """Return (date_matrix_size, ranked plans)."""
+    def run(
+        self, req: ItineraryRequestIn
+    ) -> tuple[int, list[StrategyPlan], dict[str, int]]:
+        """Return (date_matrix_size, ranked plans, provider cache stats)."""
+
+        # Fresh cache per request — never leak offers between users.
+        self.provider = CachingProvider(self._raw_provider)
 
         expanded = expand_itinerary(req)
         matrix_size = matrix_cardinality(expanded)
@@ -38,7 +45,8 @@ class SearchService:
             plans = [p for p in plans if p.total_cost <= req.max_total_budget]
 
         ranked = score_plans(plans, weights=req.scoring_weights)
-        return matrix_size, ranked
+        stats = self.provider.stats() if isinstance(self.provider, CachingProvider) else {}
+        return matrix_size, ranked, stats
 
     # ------------------------------------------------------------------
     def _run_strategy(

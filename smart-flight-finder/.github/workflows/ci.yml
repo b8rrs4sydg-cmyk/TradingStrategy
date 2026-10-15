@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - "smart-flight-finder/**"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    paths:
+      - "smart-flight-finder/**"
+      - ".github/workflows/ci.yml"
+
+jobs:
+  backend:
+    name: Backend (pytest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+      - name: Lint (ruff)
+        run: ruff check .
+      - name: Test
+        run: pytest -q
+
+  frontend:
+    name: Frontend (typecheck + build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: smart-flight-finder/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: smart-flight-finder/frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Build
+        run: npm run build

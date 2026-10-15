@@ -1,3 +1,5 @@
+from datetime import UTC, datetime, timedelta
+
 from app.models.enums import TicketStrategyType
 from app.schemas.itinerary import ScoringWeights
 from app.services.scoring import score_plans
@@ -8,11 +10,10 @@ from app.services.strategies.base import (
     StrategyPlan,
     TicketOffer,
 )
-from datetime import datetime, timedelta, timezone
 
 
 def _leg(hour: int):
-    base = datetime(2027, 2, 5, hour, 0, tzinfo=timezone.utc)
+    base = datetime(2027, 2, 5, hour, 0, tzinfo=UTC)
     return FlightLeg("TPE", "NRT", base, base + timedelta(hours=3), "BR", "BR188")
 
 

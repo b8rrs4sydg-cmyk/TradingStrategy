@@ -73,8 +73,9 @@ def test_four_leg_requires_outer_stations_and_passes_mct():
         ],
     )
     service = SearchService(StubFlightProvider())
-    matrix, plans = service.run(req)
+    matrix, plans, stats = service.run(req)
     assert matrix > 0
+    assert stats["hits"] >= stats["misses"]  # cache paid for itself
     for p in plans:
         assert p.strategy is TicketStrategyType.BACK_TO_BACK_4LEG
         assert len(p.tickets) == 2
@@ -96,7 +97,7 @@ def test_four_leg_without_outer_stations_yields_no_plans():
             DateWindowIn(role=DateWindowRole.RETURN, anchor_date=date(2027, 2, 11)),
         ],
     )
-    _, plans = SearchService(StubFlightProvider()).run(req)
+    _, plans, _ = SearchService(StubFlightProvider()).run(req)
     assert plans == []
 
 

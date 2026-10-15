@@ -7,7 +7,7 @@ so tests can assert stable orderings without network.
 from __future__ import annotations
 
 import hashlib
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import UTC, date, datetime, time, timedelta
 from typing import ClassVar
 
 from app.models.enums import CabinClass
@@ -93,7 +93,7 @@ class StubFlightProvider:
         *,
         hour: int,
     ) -> FlightLeg:
-        dep = datetime.combine(day, time(hour, 0), tzinfo=timezone.utc)
+        dep = datetime.combine(day, time(hour, 0), tzinfo=UTC)
         return FlightLeg(
             origin=origin,
             destination=destination,

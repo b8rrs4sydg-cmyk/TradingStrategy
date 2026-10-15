@@ -7,9 +7,10 @@ Phase 2+ 之後，Amadeus / Skyscanner adapters 會實作同一個 Protocol，
 from __future__ import annotations
 
 from datetime import date
-from typing import Protocol, runtime_checkable
+from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-from app.services.strategies.base import TicketOffer
+if TYPE_CHECKING:
+    from app.services.strategies.base import TicketOffer
 
 
 @runtime_checkable
