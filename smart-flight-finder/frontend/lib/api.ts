@@ -1,40 +1,38 @@
-export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+// All API calls go through the Next.js /api rewrite (next.config.js) so the
+// code works identically from both the browser and the SSR runtime (inside
+// Docker the proxy keeps "api:8000" out of the public URL).
 
-export type Holiday = {
-  id: number;
-  country: string;
-  day: string; // ISO date
-  name_zh: string;
-  name_en: string;
-  kind: string;
-  is_workday: boolean;
-  notes: string | null;
-};
+import type {
+  Holiday,
+  ItineraryRequestIn,
+  LeaveStrategy,
+  SearchResult,
+} from "./types";
 
-export type LeaveStrategy = {
-  id: number;
-  year: number;
-  holiday_key: string;
-  label_zh: string;
-  pto_days: number;
-  total_days: number;
-  window_start: string;
-  window_end: string;
-  description: string | null;
-};
+export type { Holiday, LeaveStrategy } from "./types";
 
-export async function fetchHolidays(): Promise<Holiday[]> {
-  const res = await fetch(`${API_BASE}/holidays/2027`, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to fetch holidays: ${res.status}`);
+async function get<T>(path: string): Promise<T> {
+  const res = await fetch(`/api${path}`, { cache: "no-store" });
+  if (!res.ok) throw new Error(`GET ${path} → ${res.status}`);
   return res.json();
 }
 
-export async function fetchLeaveStrategies(): Promise<LeaveStrategy[]> {
-  const res = await fetch(`${API_BASE}/holidays/2027/leave-strategies`, {
+async function post<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`/api${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
     cache: "no-store",
   });
-  if (!res.ok)
-    throw new Error(`Failed to fetch leave strategies: ${res.status}`);
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`POST ${path} → ${res.status} ${text}`);
+  }
   return res.json();
 }
+
+export const api = {
+  holidays: () => get<Holiday[]>("/holidays/2027"),
+  leaveStrategies: () => get<LeaveStrategy[]>("/holidays/2027/leave-strategies"),
+  search: (req: ItineraryRequestIn) => post<SearchResult>("/search", req),
+};

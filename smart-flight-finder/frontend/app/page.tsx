@@ -1,28 +1,59 @@
-import { HolidayList } from "@/components/HolidayList";
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+
+import { ResultBoard } from "@/components/ResultBoard";
+import { SearchForm } from "@/components/SearchForm";
+import type { SearchResult } from "@/lib/types";
 
 export default function HomePage() {
+  const [result, setResult] = useState<SearchResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [elapsedMs, setElapsedMs] = useState<number | null>(null);
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold">Smart Flight Finder</h1>
-        <p className="mt-2 text-slate-600 dark:text-slate-400">
-          以假期為核心，整合彈性日期矩陣、多段旅程、反向票與外站四段票策略。
-          Phase 1 骨架 — 下方展示 2027 連假與請假攻略資料。
-        </p>
+      <header className="mb-8 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Smart Flight Finder</h1>
+          <p className="mt-2 text-slate-600 dark:text-slate-400">
+            以假期為核心：彈性日期矩陣 × 多段旅程 × 反向票 / 外站四段票。
+          </p>
+        </div>
+        <nav className="text-sm">
+          <Link
+            href="/holidays"
+            className="rounded border border-slate-300 px-3 py-1 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+          >
+            2027 連假 →
+          </Link>
+        </nav>
       </header>
 
-      <HolidayList />
+      <SearchForm
+        onResult={(r, ms) => {
+          setResult(r);
+          setElapsedMs(ms);
+          setError(null);
+        }}
+        onError={(err) => setError(err.message)}
+      />
 
-      <section className="mt-12 rounded-lg border border-slate-200 dark:border-slate-800 p-5">
-        <h2 className="text-xl font-semibold">Roadmap</h2>
-        <ol className="mt-3 list-decimal space-y-1 pl-6 text-sm text-slate-700 dark:text-slate-300">
-          <li>Phase 1 ✅ — 專案骨架、資料模型、2027 連假靜態 DB</li>
-          <li>Phase 2 — 彈性日期矩陣 + Amadeus/Skyscanner 整合 + Redis 快取</li>
-          <li>Phase 3 — 反向票 / 四段票策略引擎 (時間軸碰撞 + MCT 檢查)</li>
-          <li>Phase 4 — 最佳化排序看板 + Timeline View</li>
-          <li>Phase 5 — 壓測、調校、雲端部署</li>
-        </ol>
-      </section>
+      {error && (
+        <div className="mt-6 rounded-lg border border-rose-300 bg-rose-50 p-4 text-sm text-rose-900 dark:border-rose-700 dark:bg-rose-950/30 dark:text-rose-200">
+          {error}
+        </div>
+      )}
+
+      {result && (
+        <div className="mt-10 space-y-3">
+          <div className="text-xs text-slate-500">
+            查詢耗時 {elapsedMs} ms · 使用 stub provider (Phase 2 — 尚未串實體 API)
+          </div>
+          <ResultBoard result={result} />
+        </div>
+      )}
     </main>
   );
 }
