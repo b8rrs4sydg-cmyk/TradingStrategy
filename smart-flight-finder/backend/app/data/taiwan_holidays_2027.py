@@ -101,6 +101,15 @@ HOLIDAYS: list[HolidayRecord] = [
 # ---------------------------------------------------------------------------
 LEAVE_STRATEGIES: list[LeaveStrategyRecord] = [
     LeaveStrategyRecord(
+        holiday_key="nyd",
+        label_zh="元旦請 0 休 3",
+        pto_days=0,
+        total_days=3,
+        window_start=date(2027, 1, 1),
+        window_end=date(2027, 1, 3),
+        description="元旦 1/1 (五) + 1/2 (六) + 1/3 (日) 自然連休。",
+    ),
+    LeaveStrategyRecord(
         holiday_key="lunar_ny",
         label_zh="春節請 2 休 11",
         pto_days=2,
@@ -162,6 +171,24 @@ LEAVE_STRATEGIES: list[LeaveStrategyRecord] = [
         window_start=date(2027, 10, 9),
         window_end=date(2027, 10, 17),
         description="國慶 10/10(日)、補假 10/11(一)，請 10/12-10/15 共 4 天可連休至 10/17(日)。",
+    ),
+    LeaveStrategyRecord(
+        holiday_key="xmas",
+        label_zh="聖誕請 2 休 5",
+        pto_days=2,
+        total_days=5,
+        window_start=date(2027, 12, 23),
+        window_end=date(2027, 12, 27),
+        description="12/25 聖誕為週六，請 12/23 (四) + 12/24 (五) 共 2 天可連休 23-27。",
+    ),
+    LeaveStrategyRecord(
+        holiday_key="yearend",
+        label_zh="跨年請 3 休 10",
+        pto_days=3,
+        total_days=10,
+        window_start=date(2027, 12, 24),
+        window_end=date(2028, 1, 2),
+        description="聖誕 + 元旦長廊：請 12/28-30 共 3 天連休至 1/2 (日)。",
     ),
 ]
 

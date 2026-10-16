@@ -70,6 +70,8 @@ export type ItineraryRequestIn = {
   destinations: string[];
   strategies: TicketStrategyType[];
   holiday_key: string | null;
+  holiday_keys?: string[];
+  holiday_flex_days?: number;
   max_total_budget: number | null;
   max_pto_days: number | null;
   scoring_weights: ScoringWeights | null;

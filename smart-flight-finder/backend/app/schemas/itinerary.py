@@ -59,11 +59,18 @@ class ItineraryRequestIn(BaseModel):
     )
 
     holiday_key: str | None = None
+    # Multi-select candidates: when non-empty, each key is expanded into its own
+    # (outbound, return) window at the search layer and plans run across all of
+    # them. ``date_windows`` is ignored while ``holiday_keys`` is set, so the
+    # UI can offer "search Spring Festival + Christmas + 元旦 at once".
+    holiday_keys: list[str] = Field(default_factory=list, max_length=20)
+    holiday_flex_days: int = Field(default=2, ge=0, le=14)
+
     max_total_budget: int | None = Field(default=None, ge=0, description="TWD")
     max_pto_days: int | None = Field(default=None, ge=0, le=30)
     scoring_weights: ScoringWeights | None = None
 
-    date_windows: list[DateWindowIn] = Field(default_factory=list, min_length=1)
+    date_windows: list[DateWindowIn] = Field(default_factory=list)
 
     # ---- Strategy-specific knobs ------------------------------------------
     # 四段票：票甲的外站候選 (XMN, HKG, …) 以及可比 inner-dates 彈性的額外天數
@@ -77,6 +84,12 @@ class ItineraryRequestIn(BaseModel):
 
     @model_validator(mode="after")
     def _validate_windows(self) -> ItineraryRequestIn:
+        # holiday_keys bypass the window check — the search layer synthesizes
+        # a (outbound, return) pair per selected holiday.
+        if self.holiday_keys:
+            return self
+        if not self.date_windows:
+            raise ValueError("需要 date_windows 或 holiday_keys 其一")
         roles = {w.role for w in self.date_windows}
         if self.trip_type is TripType.ROUND_TRIP and not {
             DateWindowRole.OUTBOUND,

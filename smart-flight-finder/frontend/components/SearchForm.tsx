@@ -41,6 +41,8 @@ export function SearchForm({ onResult, onError }: Props) {
   const [strategies, setStrategies] = useState<LeaveStrategy[]>([]);
   const [tripType, setTripType] = useState<TripType>("round_trip");
   const [holidayKey, setHolidayKey] = useState<string>("lunar_ny");
+  const [holidayKeys, setHolidayKeys] = useState<Set<string>>(new Set());
+  const [holidayFlex, setHolidayFlex] = useState(2);
   const [origins, setOrigins] = useState("TPE");
   const [destinations, setDestinations] = useState("NRT, HND");
   const [outbound, setOutbound] = useState("2027-02-05");
@@ -160,6 +162,7 @@ export function SearchForm({ onResult, onError }: Props) {
               return w;
             })();
 
+      const useMultiHoliday = holidayKeys.size > 0 && tripType !== "multi_city";
       const req: ItineraryRequestIn = {
         trip_type: tripType,
         cabin: "economy",
@@ -169,11 +172,13 @@ export function SearchForm({ onResult, onError }: Props) {
         origins: origins.split(",").map((s) => s.trim()).filter(Boolean),
         destinations: destinations.split(",").map((s) => s.trim()).filter(Boolean),
         strategies: selectedStrategies.length ? selectedStrategies : ["standard"],
-        holiday_key: holidayKey || null,
+        holiday_key: useMultiHoliday ? null : holidayKey || null,
+        holiday_keys: useMultiHoliday ? [...holidayKeys] : [],
+        holiday_flex_days: useMultiHoliday ? holidayFlex : undefined,
         max_total_budget: budget ? Number(budget) : null,
         max_pto_days: null,
         scoring_weights: weights,
-        date_windows: windows,
+        date_windows: useMultiHoliday ? [] : windows,
         back_to_back_outer_stations: outerStations
           .split(",")
           .map((s) => s.trim())
@@ -237,6 +242,73 @@ export function SearchForm({ onResult, onError }: Props) {
           />
         </Field>
       </div>
+
+      {!isMultiCity && strategies.length > 0 && (
+        <fieldset className="rounded-lg border border-slate-200 p-4 dark:border-slate-800">
+          <legend className="px-2 text-sm font-semibold">
+            多假期排列組合 (選 2 個以上，覆蓋上面的「假期快選」)
+          </legend>
+          <p className="mb-2 text-xs text-slate-500">
+            勾選多個 2027 假期後，引擎會把每個假期當獨立候選窗口，分別跑所有勾選的策略，
+            讓您一次比較「春節 + 聖誕 + 元旦 …」哪個時段 + 哪種票規最划算。
+          </p>
+          <div className="grid grid-cols-1 gap-y-1 text-sm md:grid-cols-2 lg:grid-cols-3">
+            {strategies.map((s) => {
+              const checked = holidayKeys.has(s.holiday_key);
+              return (
+                <label key={s.holiday_key} className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={(e) => {
+                      setHolidayKeys((prev) => {
+                        const next = new Set(prev);
+                        if (e.target.checked) next.add(s.holiday_key);
+                        else next.delete(s.holiday_key);
+                        return next;
+                      });
+                    }}
+                    className="mt-0.5 shrink-0"
+                  />
+                  <span className="flex-1 min-w-0">
+                    <span className="font-medium">{s.label_zh}</span>
+                    <span className="ml-1 text-xs font-mono text-slate-400">
+                      {s.window_start.slice(5)}→{s.window_end.slice(5)}
+                    </span>
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+          {holidayKeys.size > 0 && (
+            <div className="mt-3 flex items-center gap-4 border-t border-slate-200 pt-3 dark:border-slate-800">
+              <label className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
+                每個假期前後彈性
+                <input
+                  type="range"
+                  min={0}
+                  max={7}
+                  value={holidayFlex}
+                  onChange={(e) => setHolidayFlex(Number(e.target.value))}
+                  className="w-32"
+                />
+                <span className="font-mono">±{holidayFlex} 天</span>
+              </label>
+              <button
+                type="button"
+                onClick={() => setHolidayKeys(new Set())}
+                className="rounded border border-slate-300 px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+              >
+                清除選擇
+              </button>
+              <span className="text-xs text-slate-500">
+                已選 <strong>{holidayKeys.size}</strong> · 將跑{" "}
+                {holidayKeys.size} × 策略數 次搜尋
+              </span>
+            </div>
+          )}
+        </fieldset>
+      )}
 
       {!isMultiCity && (
         <>
