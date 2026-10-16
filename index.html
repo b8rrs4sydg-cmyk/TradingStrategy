@@ -1,0 +1,1625 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="2027 台灣連假機票湊票引擎 — 彈性日期矩陣、反向票、外站四段票與 MCT 檢查，純前端 demo">
+<style>:root{padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Smart Flight Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Layout: hero band at the top, a sticky search form card, then results
+     (filter bar, price heatmap, plan list with per-card timeline SVG). */
+  :root {
+    --bg: #f7f3eb;
+    --fg: #1a1a1f;
+    --fg-muted: #635e55;
+    --fg-faint: #8c8679;
+    --card: #ffffff;
+    --card-sunken: #f1ece2;
+    --border: #e4ddce;
+    --border-strong: #c9c0ac;
+    --brand: #0e6ead;
+    --brand-ink: #084f80;
+    --brand-wash: #e0edf7;
+    --accent: #c56a0a;
+    --accent-wash: #f6e4cd;
+    --good: #0f7d55;
+    --warn: #b57615;
+    --crit: #b53636;
+    --risk-low-bg: #d7eee3;
+    --risk-low-fg: #0f5c3d;
+    --risk-med-bg: #f6e4c6;
+    --risk-med-fg: #875411;
+    --risk-high-bg: #f1cfd0;
+    --risk-high-fg: #861f1f;
+    --heat-h: 199;
+    --heat-s: 76%;
+    --font-display: 'Fraunces', 'Noto Serif TC', 'Songti TC', Georgia, serif;
+    --font-body: 'Inter', 'Noto Sans TC', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141217;
+      --fg: #ebe6dd;
+      --fg-muted: #9d9684;
+      --fg-faint: #6e6859;
+      --card: #1b181f;
+      --card-sunken: #15131a;
+      --border: #2b2630;
+      --border-strong: #3b3540;
+      --brand: #5fb0e6;
+      --brand-ink: #88c5ef;
+      --brand-wash: #163048;
+      --accent: #e9a460;
+      --accent-wash: #3a260f;
+      --good: #4fcc93;
+      --warn: #e5b365;
+      --crit: #e6757a;
+      --risk-low-bg: #113a2b;
+      --risk-low-fg: #a2e0bf;
+      --risk-med-bg: #3b2a0f;
+      --risk-med-fg: #f0cf86;
+      --risk-high-bg: #3b1515;
+      --risk-high-fg: #f0a0a4;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141217;
+    --fg: #ebe6dd;
+    --fg-muted: #9d9684;
+    --fg-faint: #6e6859;
+    --card: #1b181f;
+    --card-sunken: #15131a;
+    --border: #2b2630;
+    --border-strong: #3b3540;
+    --brand: #5fb0e6;
+    --brand-ink: #88c5ef;
+    --brand-wash: #163048;
+    --accent: #e9a460;
+    --accent-wash: #3a260f;
+    --good: #4fcc93;
+    --warn: #e5b365;
+    --crit: #e6757a;
+    --risk-low-bg: #113a2b;
+    --risk-low-fg: #a2e0bf;
+    --risk-med-bg: #3b2a0f;
+    --risk-med-fg: #f0cf86;
+    --risk-high-bg: #3b1515;
+    --risk-high-fg: #f0a0a4;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font: 400 15px/1.55 var(--font-body);
+    margin: 0;
+    font-feature-settings: 'ss01' on;
+  }
+  .page {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding-block: 24px 56px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  /* --- Typography --- */
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 500; text-wrap: balance; margin: 0 }
+  h1 { font-size: clamp(28px, 4.5vw, 42px); letter-spacing: -0.015em; line-height: 1.08 }
+  h2 { font-size: 20px; letter-spacing: -0.005em }
+  h3 { font-size: 16px }
+  .eyebrow {
+    font: 500 11px/1 var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--fg-muted);
+  }
+  .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums }
+
+  /* --- Hero --- */
+  .hero {
+    display: grid;
+    gap: 10px;
+    padding: 36px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+  .hero p { color: var(--fg-muted); font-size: 16px; max-width: 60ch; margin: 0 }
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 28px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--fg-muted);
+  }
+  .hero-stats b {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--fg);
+    margin-right: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  /* --- Card primitive --- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card + .card { margin-top: 16px }
+  .card h2 { margin-bottom: 14px }
+
+  /* --- Form --- */
+  .grid { display: grid; gap: 14px }
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  @media (max-width: 640px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr }
+  }
+  .field { display: grid; gap: 6px }
+  .field > span { font: 500 11px/1 var(--font-body); color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.12em }
+  .field > input,
+  .field > select {
+    width: 100%;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--fg);
+    font: 400 14px/1.3 var(--font-body);
+  }
+  .field > input[type=range] { padding: 0 }
+  .field > input:focus, .field > select:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--brand-wash);
+  }
+  .field > input[type=date] { font-family: var(--font-mono); font-size: 13px }
+
+  fieldset {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px 16px;
+    margin: 0;
+    background: var(--card-sunken);
+  }
+  fieldset legend {
+    font: 500 11px/1 var(--font-body);
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0 6px;
+  }
+  .strategies {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 14px;
+    margin-top: 4px;
+    font-size: 14px;
+  }
+  @media (min-width: 720px) {
+    .strategies { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+  }
+  .strategies label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer }
+  .four-leg-extras {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-strong);
+  }
+  .four-leg-extras.open { display: grid }
+  @media (max-width: 640px) { .four-leg-extras { grid-template-columns: 1fr } }
+
+  .btn-primary {
+    appearance: none;
+    border: none;
+    background: var(--brand);
+    color: #fff;
+    font: 500 14px/1 var(--font-body);
+    padding: 11px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: var(--brand-ink) }
+  .btn-primary:disabled { opacity: 0.55; cursor: wait }
+  .btn-ghost {
+    appearance: none;
+    background: transparent;
+    color: var(--fg);
+    font: 500 12px/1 var(--font-body);
+    padding: 7px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .btn-ghost:hover { background: var(--card-sunken) }
+  .btn-ghost[aria-pressed="true"], .btn-ghost.active { background: var(--brand-wash); border-color: var(--brand); color: var(--brand-ink) }
+
+  .submit-row { display: flex; align-items: center; gap: 14px; margin-top: 18px; flex-wrap: wrap }
+  .submit-row small { color: var(--fg-muted); font-size: 12px }
+  kbd {
+    font: 500 11px/1 var(--font-mono);
+    border: 1px solid var(--border-strong);
+    background: var(--card-sunken);
+    padding: 3px 6px;
+    border-radius: 4px;
+  }
+
+  /* --- Results --- */
+  #results[hidden] { display: none !important }
+
+  .results-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 14px;
+  }
+  .results-head .counts { font-size: 14px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center }
+  .results-head .counts b { color: var(--brand-ink) }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: 500 11px/1 var(--font-body);
+    padding: 4px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .pill-cache { background: var(--risk-low-bg); color: var(--risk-low-fg) }
+  .pill-sel { background: var(--brand-wash); color: var(--brand-ink) }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+
+  /* --- Heatmap --- */
+  .heatmap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .heatmap h3 { margin-bottom: 4px }
+  .heatmap .caption { font-size: 12px; color: var(--fg-muted); margin-bottom: 10px }
+  .heatmap-wrap { overflow-x: auto }
+  table.heat {
+    border-collapse: separate;
+    border-spacing: 2px;
+    min-width: 100%;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  table.heat th {
+    font-weight: 500;
+    color: var(--fg-muted);
+    padding: 4px 8px;
+    text-align: right;
+    position: sticky;
+  }
+  table.heat th.row-head { left: 0; background: var(--card); z-index: 1; text-align: left }
+  table.heat td {
+    padding: 6px 10px;
+    text-align: right;
+    border-radius: 4px;
+    min-width: 54px;
+  }
+  table.heat td.empty { background: transparent; color: var(--fg-faint) }
+
+  /* --- Plan card --- */
+  .plan {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+  .plan .sel-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: 16px 10px 16px 14px;
+    background: var(--card-sunken);
+    border-right: 1px solid var(--border);
+  }
+  .plan .sel-col input[type=checkbox] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--brand);
+  }
+  .plan .fav-btn {
+    appearance: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--border-strong);
+    padding: 0;
+  }
+  .plan .fav-btn.on { color: var(--accent) }
+  .plan-body { padding: 14px 16px 0 }
+  .plan-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    padding-bottom: 12px;
+  }
+  .plan-head .meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0 }
+  .plan-head .explain {
+    color: var(--fg-muted);
+    font-size: 13px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .plan-head .price { font-family: var(--font-display); font-size: 20px; font-weight: 500; letter-spacing: -0.01em }
+  .plan-head .score { font-size: 11px; color: var(--fg-muted); text-align: right; font-family: var(--font-mono) }
+  .plan .strat {
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    background: var(--brand-wash);
+    color: var(--brand-ink);
+  }
+  .plan.four-leg .strat { background: var(--accent-wash); color: var(--accent) }
+  .plan .rank {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-muted);
+    background: var(--card-sunken);
+    padding: 3px 7px;
+    border-radius: 999px;
+  }
+
+  .plan-detail {
+    display: none;
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    gap: 14px;
+    flex-direction: column;
+  }
+  .plan.open .plan-detail { display: flex }
+
+  .ticket-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 640px) { .ticket-grid { grid-template-columns: 1fr } }
+  .ticket {
+    background: var(--card-sunken);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  .ticket h4 { font: 500 12px/1 var(--font-body); color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 6px }
+  .ticket .ticket-price { font-family: var(--font-mono); font-size: 13px; color: var(--fg); margin-bottom: 4px }
+  .ticket ol { list-style: none; margin: 0; padding: 0 }
+  .ticket li { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-muted); padding: 2px 0 }
+
+  .warnings { display: flex; flex-wrap: wrap; gap: 6px }
+  .warn-pill { font-size: 11.5px; padding: 4px 8px; border-radius: 6px; display: inline-flex; gap: 6px; align-items: center }
+  .warn-pill b { font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: 0.08em }
+  .warn-pill.low { background: var(--risk-low-bg); color: var(--risk-low-fg) }
+  .warn-pill.medium { background: var(--risk-med-bg); color: var(--risk-med-fg) }
+  .warn-pill.high { background: var(--risk-high-bg); color: var(--risk-high-fg) }
+
+  .actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap }
+
+  /* --- Timeline --- */
+  .timeline { background: var(--card-sunken); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px }
+  .timeline svg { display: block; width: 100%; height: auto }
+  .timeline .caption { font-size: 11px; color: var(--fg-muted); margin-top: 6px }
+
+  /* --- Compare --- */
+  .compare {
+    background: var(--brand-wash);
+    border: 1px solid var(--brand);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .compare h3 { margin-bottom: 8px; color: var(--brand-ink) }
+  .compare-wrap { overflow-x: auto }
+  table.compare-tbl { border-collapse: collapse; min-width: 100%; font-size: 13px }
+  table.compare-tbl th, table.compare-tbl td { text-align: left; padding: 6px 10px; border-bottom: 1px solid rgba(0,0,0,0.08) }
+  table.compare-tbl th { font-weight: 500; color: var(--fg-muted); text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.1em }
+  table.compare-tbl td.metric { color: var(--fg); font-weight: 500 }
+
+  /* --- Floating controls --- */
+  .fab-row {
+    position: fixed;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    display: flex;
+    gap: 8px;
+    z-index: 40;
+  }
+  .fab {
+    appearance: none;
+    background: var(--card);
+    color: var(--fg-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font: 500 12px/1 var(--font-body);
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .fab:hover { color: var(--fg); background: var(--card-sunken) }
+
+  .empty {
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    padding: 32px;
+    text-align: center;
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+
+  details.spec {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--fg-muted);
+    background: var(--card-sunken);
+    border-radius: 8px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+  }
+  details.spec summary { cursor: pointer; color: var(--fg); font-weight: 500 }
+  details.spec[open] summary { margin-bottom: 8px }
+  details.spec ul { margin: 8px 0 4px; padding-left: 20px }
+  details.spec li { margin: 2px 0 }
+
+  footer.site {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--fg-muted);
+  }
+  footer.site a { color: inherit; text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 2px }
+
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .plan-detail { transition: opacity 0.15s ease }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <span class="eyebrow">2027 連假 · 進階票規策略</span>
+    <h1>以假期為核心的機票湊票引擎</h1>
+    <p>
+      挑一個 2027 的台灣連假、設定去/回程彈性天數、勾選想評估的票規策略，
+      引擎會展開日期矩陣、依「標準直購 / 反向票 / Open-jaw / 外站四段票」
+      平行搜尋，自動做跨票 MCT 檢查並以多維度評分排序。
+    </p>
+    <div class="hero-stats">
+      <div><b>5</b>種進階票規</div>
+      <div><b>±7</b>天彈性視窗</div>
+      <div><b>MCT</b> 跨票轉機安全檢查</div>
+      <div><b>4-leg</b> 外站四段票湊票</div>
+    </div>
+  </header>
+
+  <section class="card" id="search-card" aria-labelledby="search-title">
+    <h2 id="search-title">搜尋條件</h2>
+    <form id="search-form" class="grid" novalidate>
+      <div class="grid grid-3">
+        <label class="field">
+          <span>假期快選</span>
+          <select id="f-holiday">
+            <option value="">— 自訂日期 —</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>行程類型</span>
+          <select id="f-trip">
+            <option value="round_trip">來回</option>
+            <option value="one_way">單程</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>大人數</span>
+          <input id="f-adults" type="number" min="1" max="9" value="1">
+        </label>
+      </div>
+
+      <div class="grid grid-2">
+        <label class="field">
+          <span>出發機場 (逗號分隔)</span>
+          <input id="f-origins" type="text" value="TPE" placeholder="TPE, KHH">
+        </label>
+        <label class="field">
+          <span>目的地 (IATA)</span>
+          <input id="f-destinations" type="text" value="NRT, HND, KIX, ICN" placeholder="NRT, HND, KIX">
+        </label>
+      </div>
+
+      <div class="grid grid-2">
+        <label class="field">
+          <span>去程日</span>
+          <input id="f-outbound" type="date" value="2027-02-05">
+        </label>
+        <label class="field" id="return-field">
+          <span>回程日</span>
+          <input id="f-return" type="date" value="2027-02-11">
+        </label>
+      </div>
+
+      <div class="grid grid-2">
+        <label class="field">
+          <span>去程彈性 ±<span id="f-flex-out-val">2</span> 天</span>
+          <input id="f-flex-out" type="range" min="0" max="7" value="2">
+        </label>
+        <label class="field">
+          <span>回程彈性 ±<span id="f-flex-ret-val">2</span> 天</span>
+          <input id="f-flex-ret" type="range" min="0" max="7" value="2">
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>策略</legend>
+        <div class="strategies">
+          <label><input type="checkbox" value="standard" checked> 一般來回 / 直購</label>
+          <label><input type="checkbox" value="reverse" checked> 反向票 (A↔B vs B↔A)</label>
+          <label><input type="checkbox" value="open_jaw"> Open-jaw (不同進出點)</label>
+          <label><input type="checkbox" value="back_to_back_4leg"> 外站四段票</label>
+        </div>
+        <div id="four-leg-extras" class="four-leg-extras">
+          <label class="field">
+            <span>外站 (XMN, HKG, …)</span>
+            <input id="f-outer" type="text" value="XMN, HKG">
+          </label>
+          <label class="field">
+            <span>外站緩衝 ±<span id="f-outer-buf-val">2</span> 天</span>
+            <input id="f-outer-buf" type="range" min="0" max="7" value="2">
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="grid grid-2">
+        <label class="field">
+          <span>預算上限 (TWD，可留空)</span>
+          <input id="f-budget" type="number" min="0" placeholder="例如 60000">
+        </label>
+        <details class="spec">
+          <summary>評分權重 (預設 50/20/15/15)</summary>
+          <div class="grid grid-2" style="margin-top:8px">
+            <label class="field"><span>價格優先 (<span id="w-price-v">0.50</span>)</span><input id="w-price" type="range" min="0" max="1" step="0.05" value="0.5"></label>
+            <label class="field"><span>請假效益 (<span id="w-pto-v">0.20</span>)</span><input id="w-pto" type="range" min="0" max="1" step="0.05" value="0.2"></label>
+            <label class="field"><span>飛行時長 (<span id="w-flight-v">0.15</span>)</span><input id="w-flight" type="range" min="0" max="1" step="0.05" value="0.15"></label>
+            <label class="field"><span>策略風險 (<span id="w-risk-v">0.15</span>)</span><input id="w-risk" type="range" min="0" max="1" step="0.05" value="0.15"></label>
+          </div>
+        </details>
+      </div>
+
+      <div class="submit-row">
+        <button class="btn-primary" type="submit">搜尋</button>
+        <small><kbd>⌘</kbd> <kbd>Enter</kbd> 從任何欄位送出</small>
+        <small id="elapsed" aria-live="polite"></small>
+      </div>
+    </form>
+  </section>
+
+  <section id="results" hidden aria-live="polite">
+    <div class="results-head">
+      <div class="counts">
+        <span><b id="r-plan-count">0</b> 個方案</span>
+        <span>· 展開 <b id="r-matrix">0</b> 個日期組合</span>
+        <span id="r-cache-pill" class="pill pill-cache" hidden></span>
+        <span id="r-sel-pill" class="pill pill-sel" hidden></span>
+      </div>
+      <div class="controls">
+        <button type="button" id="btn-compare" class="btn-ghost" disabled>比較 (0)</button>
+        <select id="r-filter" class="btn-ghost" aria-label="策略篩選">
+          <option value="all">全部策略</option>
+        </select>
+        <select id="r-sort" class="btn-ghost" aria-label="排序">
+          <option value="score">綜合分數</option>
+          <option value="price">總價 (低→高)</option>
+          <option value="pto">停留天數 (多→少)</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="compare" class="compare" hidden></div>
+    <div id="heatmap" class="heatmap" hidden></div>
+    <div id="plan-list"></div>
+    <div id="empty" class="empty" hidden>找不到符合條件的方案 — 試著放寬預算、調大日期彈性，或多勾幾個策略。</div>
+  </section>
+
+  <footer class="site">
+    <div>Smart Flight Finder — demo (使用 stub provider 內建價格表，無連真實 API)</div>
+    <div><a href="https://github.com/b8rrs4sydg-cmyk/tradingstrategy/tree/claude/zealous-darwin-1kexus/smart-flight-finder" target="_blank" rel="noopener">GitHub 原始碼</a></div>
+  </footer>
+
+</div>
+
+<div class="fab-row">
+  <button class="fab" type="button" id="fab-theme" aria-label="切換主題">☼ 系統</button>
+  <button class="fab" type="button" id="fab-help">? 快捷鍵</button>
+</div>
+
+<script>
+"use strict";
+
+/* =========================================================================
+ * Data: 2027 Taiwan holidays + leave strategies (mirrors backend seed)
+ * ========================================================================= */
+const LEAVE_STRATEGIES_2027 = [
+  { key: 'lunar_ny',  label: '春節請 2 休 11', pto: 2, total: 11, start: '2027-02-05', end: '2027-02-15', desc: '春節連假週六起，請 2/12(五) + 2/15(一) 共 2 天即可休 11 天。' },
+  { key: 'peace228',  label: '228 請 1 休 4',   pto: 1, total: 4,  start: '2027-02-26', end: '2027-03-01', desc: '請 2/26(五) 搭配 2/27(六)、2/28(日)、3/1(一) 補假。' },
+  { key: 'qingming',  label: '清明請 3 休 9',   pto: 3, total: 9,  start: '2027-04-03', end: '2027-04-11', desc: '請 4/7-4/9 共 3 天可連休至 4/11(日)。' },
+  { key: 'labor',     label: '勞動節請 1 休 4', pto: 1, total: 4,  start: '2027-04-29', end: '2027-05-02', desc: '請 4/29(四) 可連休至 5/2(日)。' },
+  { key: 'duanwu',    label: '端午請 2 休 5',   pto: 2, total: 5,  start: '2027-06-09', end: '2027-06-13', desc: '端午 6/9(三)，請 6/10-6/11 共 2 天可連休至 6/13(日)。' },
+  { key: 'midautumn', label: '中秋請 2 休 5',   pto: 2, total: 5,  start: '2027-09-15', end: '2027-09-19', desc: '中秋 9/15(三)，請 9/16-9/17 共 2 天可連休至 9/19(日)。' },
+  { key: 'national',  label: '國慶請 4 休 9',   pto: 4, total: 9,  start: '2027-10-09', end: '2027-10-17', desc: '國慶 10/10(日)、補假 10/11(一)，請 10/12-10/15 共 4 天可連休至 10/17(日)。' },
+];
+
+/* =========================================================================
+ * Stub provider — mirrors backend/app/providers/stub.py (same seed table)
+ * ========================================================================= */
+const ROUTES = {
+  'TPE-NRT': { base: 12800, dur: 190, carrier: 'BR' },
+  'NRT-TPE': { base: 12500, dur: 200, carrier: 'BR' },
+  'TPE-HND': { base: 14200, dur: 185, carrier: 'CI' },
+  'HND-TPE': { base: 13900, dur: 195, carrier: 'CI' },
+  'TPE-KIX': { base: 11800, dur: 180, carrier: 'JX' },
+  'KIX-TPE': { base: 11600, dur: 190, carrier: 'JX' },
+  'TPE-ICN': { base: 9800,  dur: 160, carrier: 'KE' },
+  'ICN-TPE': { base: 9700,  dur: 170, carrier: 'KE' },
+  'TPE-BKK': { base: 10800, dur: 230, carrier: 'TG' },
+  'BKK-TPE': { base: 10900, dur: 230, carrier: 'TG' },
+  'XMN-TPE': { base: 4200,  dur: 85,  carrier: 'MF' },
+  'TPE-XMN': { base: 4100,  dur: 90,  carrier: 'MF' },
+  'HKG-TPE': { base: 5200,  dur: 90,  carrier: 'CX' },
+  'TPE-HKG': { base: 5100,  dur: 90,  carrier: 'CX' },
+};
+
+/** Stable 0..1 pseudo-random from a string key (FNV-1a 32-bit). */
+function stableFloat(key) {
+  let h = 0x811c9dc5 >>> 0;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return (h & 0xffff) / 0xffff;
+}
+
+function jitter(key) {
+  return (stableFloat(key) - 0.5) * 0.24; // ±12%
+}
+
+function routeFor(a, b) {
+  return ROUTES[`${a}-${b}`] || { base: 15000, dur: 240, carrier: 'ZZ' };
+}
+
+function makeLeg(origin, destination, dateISO, hour) {
+  const r = routeFor(origin, destination);
+  const dep = new Date(`${dateISO}T${String(hour).padStart(2,'0')}:00:00Z`);
+  const arr = new Date(dep.getTime() + r.dur * 60000);
+  return {
+    origin,
+    destination,
+    departure: dep.toISOString(),
+    arrival: arr.toISOString(),
+    carrier: r.carrier,
+    flight_number: r.carrier + ((Math.abs(hashCode(`${origin}-${destination}-${dateISO}`)) % 900) + 100),
+    cabin: 'economy',
+    stops: 0,
+  };
+}
+
+function hashCode(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return h;
+}
+
+const CachingProvider = (function () {
+  const cache = new Map();
+  let hits = 0, misses = 0;
+  function key(args) { return [args.origin, args.destination, args.departureDate, args.returnDate || '-', args.adults || 1].join('|'); }
+  function stats() { return { hits, misses, total: hits + misses, unique: cache.size }; }
+  function reset() { cache.clear(); hits = 0; misses = 0; }
+  function search(args) {
+    const k = key(args);
+    if (cache.has(k)) { hits += 1; return cache.get(k); }
+    misses += 1;
+    const r = routeFor(args.origin, args.destination);
+    const outboundLeg = makeLeg(args.origin, args.destination, args.departureDate, 9);
+    let offers;
+    if (!args.returnDate) {
+      const price = Math.round(r.base * (1 + jitter(`ow|${args.origin}|${args.destination}|${args.departureDate}`)) * (args.adults || 1));
+      offers = [{ offer_id: `ow-${r.carrier}-${args.departureDate}`, legs: [outboundLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }];
+    } else {
+      const returnLeg = makeLeg(args.destination, args.origin, args.returnDate, 18);
+      const price = Math.round(r.base * 1.7 * (1 + jitter(`rt|${args.origin}|${args.destination}|${args.departureDate}|${args.returnDate}`)) * (args.adults || 1));
+      offers = [{ offer_id: `rt-${r.carrier}-${args.departureDate}-${args.returnDate}`, legs: [outboundLeg, returnLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }];
+    }
+    cache.set(k, offers);
+    return offers;
+  }
+  return { search, stats, reset };
+})();
+
+/* =========================================================================
+ * Date matrix
+ * ========================================================================= */
+function parseISO(d) { return new Date(d + 'T00:00:00Z'); }
+function fmtISO(d) { return d.toISOString().slice(0, 10); }
+function addDays(dISO, n) { const d = parseISO(dISO); d.setUTCDate(d.getUTCDate() + n); return fmtISO(d); }
+function daysBetween(aISO, bISO) { return Math.round((parseISO(bISO) - parseISO(aISO)) / 86400000); }
+
+function expandWindow(anchor, flexBefore, flexAfter) {
+  const out = [];
+  for (let i = -flexBefore; i <= flexAfter; i++) out.push(addDays(anchor, i));
+  return out;
+}
+
+/* =========================================================================
+ * MCT policy
+ * ========================================================================= */
+const TW_AIRPORTS = new Set(['TPE','TSA','KHH','RMQ','TNN','HUN','KNH','MZG','TTT','HCN']);
+function isInternational(a, b) {
+  return !(TW_AIRPORTS.has(a) && TW_AIRPORTS.has(b));
+}
+
+function requiredMct(crossTicket, intl) {
+  if (crossTicket) return intl ? 210 : 150;
+  return intl ? 90 : 45;
+}
+
+function fmtGap(ms) {
+  const mins = Math.round(ms / 60000);
+  const h = Math.floor(mins / 60), m = mins % 60;
+  return `${h}h${String(m).padStart(2,'0')}m`;
+}
+
+function checkConnection(prev, next, { crossTicket }) {
+  if (prev.destination !== next.origin) {
+    return { level: 'high', code: 'connection_airport_mismatch', message: `轉機機場不一致：${prev.destination} 下機 vs ${next.origin} 登機` };
+  }
+  const gap = new Date(next.departure) - new Date(prev.arrival);
+  const req = requiredMct(crossTicket, isInternational(prev.destination, next.origin));
+  const reqMs = req * 60000;
+  if (gap < 0) return { level: 'high', code: 'mct_negative_overlap', message: `航段重疊 ${fmtGap(-gap)} — 下一班於上一班落地前起飛` };
+  if (gap < reqMs) return { level: 'high', code: 'mct_too_tight', message: `轉機時間 ${fmtGap(gap)} 低於建議 ${req} 分鐘（${crossTicket ? '跨票' : '同票'}）` };
+  if (gap < reqMs + 30 * 60000) return { level: 'medium', code: 'mct_marginal', message: `轉機時間 ${fmtGap(gap)} 接近下限，建議多留 30 分鐘` };
+  return null;
+}
+
+/* =========================================================================
+ * Strategy engines (ported from backend/app/services/strategies/*)
+ * ========================================================================= */
+function pairRoundTrip(outDates, retDates, minDays = 1) {
+  const pairs = [];
+  for (const o of outDates) for (const r of retDates) if (daysBetween(o, r) >= minDays) pairs.push([o, r]);
+  return pairs;
+}
+
+function planStandard(req, expanded) {
+  const out = [];
+  for (const origin of req.origins) {
+    for (const destination of req.destinations) {
+      if (req.tripType === 'one_way') {
+        for (const d of expanded.out) {
+          const offers = CachingProvider.search({ origin, destination, departureDate: d, returnDate: null, adults: req.adults });
+          if (!offers.length) continue;
+          const cheapest = offers.reduce((a,b) => a.total_price <= b.total_price ? a : b);
+          out.push({
+            strategy: 'standard',
+            tickets: [cheapest],
+            total_cost: cheapest.total_price,
+            currency: cheapest.currency,
+            total_travel_days: 1,
+            warnings: [],
+            explain: `直購：${origin}→${destination} ${d}`,
+          });
+        }
+      } else {
+        for (const [od, rd] of pairRoundTrip(expanded.out, expanded.ret)) {
+          const offers = CachingProvider.search({ origin, destination, departureDate: od, returnDate: rd, adults: req.adults });
+          if (!offers.length) continue;
+          const cheapest = offers.reduce((a,b) => a.total_price <= b.total_price ? a : b);
+          out.push({
+            strategy: 'standard',
+            tickets: [cheapest],
+            total_cost: cheapest.total_price,
+            currency: cheapest.currency,
+            total_travel_days: daysBetween(od, rd) + 1,
+            warnings: [],
+            explain: `直購：${origin}→${destination} ${od} / 回程 ${rd}`,
+          });
+        }
+      }
+    }
+  }
+  return out;
+}
+
+function planReverse(req, expanded) {
+  if (req.tripType === 'one_way') return [];
+  const MIN_SAV = 0.12;
+  const out = [];
+  for (const origin of req.origins) {
+    for (const destination of req.destinations) {
+      let best = null;
+      for (const [od, rd] of pairRoundTrip(expanded.out, expanded.ret)) {
+        const fwd = CachingProvider.search({ origin, destination, departureDate: od, returnDate: rd, adults: req.adults })[0];
+        const rev = CachingProvider.search({ origin: destination, destination: origin, departureDate: od, returnDate: rd, adults: req.adults })[0];
+        if (!fwd || !rev) continue;
+        const sav = fwd.total_price - rev.total_price;
+        if (sav <= 0) continue;
+        const pct = sav / fwd.total_price;
+        if (pct < MIN_SAV) continue;
+        const plan = {
+          strategy: 'reverse',
+          tickets: [rev],
+          total_cost: rev.total_price,
+          currency: rev.currency,
+          total_travel_days: daysBetween(od, rd) + 1,
+          warnings: [
+            { level: 'medium', code: 'reverse_fare_rules', message: '反向開票需確認票規允許棄程/缺省段；里程通常不計入' },
+            { level: 'low',    code: 'reverse_savings_estimate', message: `估計節省 ${sav.toLocaleString()} TWD（${(pct*100).toFixed(0)}%）` },
+          ],
+          explain: `反向：${destination}→${origin}→${destination} 來回 ${od}~${rd}，較正向便宜 ${sav.toLocaleString()}`,
+        };
+        if (!best || plan.total_cost < best.total_cost) best = plan;
+      }
+      if (best) out.push(best);
+    }
+  }
+  return out;
+}
+
+function planOpenJaw(req, expanded) {
+  if (req.tripType === 'one_way') return [];
+  if (req.destinations.length < 2) return [];
+  const MIN_SAV = 0.05;
+  const out = [];
+  const pairs = pairRoundTrip(expanded.out, expanded.ret);
+  for (const origin of req.origins) {
+    const distinctDest = [...new Set(req.destinations)];
+    for (let i = 0; i < distinctDest.length; i++) {
+      for (let j = 0; j < distinctDest.length; j++) {
+        if (i === j) continue;
+        const a = distinctDest[i], b = distinctDest[j];
+        // baseline: cheapest round-trip origin↔a
+        let baseline = 0;
+        for (const [od, rd] of pairs) {
+          const rt = CachingProvider.search({ origin, destination: a, departureDate: od, returnDate: rd, adults: req.adults })[0];
+          if (rt && (!baseline || rt.total_price < baseline)) baseline = rt.total_price;
+        }
+        let best = null;
+        for (const [od, rd] of pairs) {
+          const outbound = CachingProvider.search({ origin, destination: a, departureDate: od, returnDate: null, adults: req.adults })[0];
+          const inbound  = CachingProvider.search({ origin: b, destination: origin, departureDate: rd, returnDate: null, adults: req.adults })[0];
+          if (!outbound || !inbound) continue;
+          const total = outbound.total_price + inbound.total_price;
+          if (baseline && total >= baseline * (1 - MIN_SAV)) continue;
+          const warnings = [{ level: 'low', code: 'open_jaw_awareness', message: `開放式行程：${a} 入境、${b} 出境，需自理 ${a}→${b} 的陸路/內陸交通` }];
+          if (baseline && baseline - total > 0) warnings.push({ level: 'low', code: 'open_jaw_savings_estimate', message: `較 ${origin}↔${a} 來回估省 ${(baseline-total).toLocaleString()} TWD` });
+          const plan = {
+            strategy: 'open_jaw',
+            tickets: [outbound, inbound],
+            total_cost: total,
+            currency: outbound.currency,
+            total_travel_days: daysBetween(od, rd) + 1,
+            warnings,
+            explain: `Open-jaw：${origin}→${a} (${od}) + ${b}→${origin} (${rd})`,
+          };
+          if (!best || plan.total_cost < best.total_cost) best = plan;
+        }
+        if (best) out.push(best);
+      }
+    }
+  }
+  return out;
+}
+
+function planFourLeg(req, expanded) {
+  if (req.tripType === 'one_way') return [];
+  if (!req.outerStations.length) return [];
+  const MIN_SAV = 0.10;
+  const HUB = 'TPE';
+  const out = [];
+  const innerPairs = pairRoundTrip(expanded.out, expanded.ret);
+
+  for (const outerStation of req.outerStations) {
+    for (const destination of req.destinations) {
+      // Baseline = cheapest direct TPE↔destination round-trip in the inner matrix
+      let baseline = 0;
+      for (const [od, rd] of innerPairs) {
+        const rt = CachingProvider.search({ origin: HUB, destination, departureDate: od, returnDate: rd, adults: req.adults })[0];
+        if (rt && (!baseline || rt.total_price < baseline)) baseline = rt.total_price;
+      }
+
+      for (const [innerOut, innerRet] of innerPairs) {
+        const innerTkt = CachingProvider.search({ origin: HUB, destination, departureDate: innerOut, returnDate: innerRet, adults: req.adults })[0];
+        if (!innerTkt) continue;
+        for (let leg1Off = 0; leg1Off <= req.outerBuffer; leg1Off++) {
+          const leg1Date = addDays(innerOut, -leg1Off);
+          for (let leg4Off = 0; leg4Off <= req.outerBuffer; leg4Off++) {
+            const leg4Date = addDays(innerRet, leg4Off);
+            const outerTkt = CachingProvider.search({ origin: outerStation, destination: HUB, departureDate: leg1Date, returnDate: leg4Date, adults: req.adults })[0];
+            if (!outerTkt) continue;
+            const total = outerTkt.total_price + innerTkt.total_price;
+            if (baseline && total >= baseline * (1 - MIN_SAV)) continue;
+
+            // MCT at both TPE handoffs (cross-ticket, international)
+            const warnings = [];
+            const w1 = checkConnection(outerTkt.legs[0], innerTkt.legs[0], { crossTicket: true });
+            const w2 = checkConnection(innerTkt.legs[1], outerTkt.legs[1], { crossTicket: true });
+            if (w1) warnings.push(w1);
+            if (w2) warnings.push(w2);
+            if (warnings.some(w => w.level === 'high')) continue;
+
+            warnings.push({ level: 'medium', code: 'back_to_back_awareness', message: '四段票為兩張獨立 PNR，任何改期/取消/延誤皆不互相保護；行李須入境提領後重新託運。' });
+            if (baseline && baseline - total > 0) warnings.push({ level: 'low', code: 'back_to_back_savings_estimate', message: `較直飛來回估省 ${(baseline-total).toLocaleString()} TWD` });
+
+            out.push({
+              strategy: 'back_to_back_4leg',
+              tickets: [outerTkt, innerTkt],
+              total_cost: total,
+              currency: outerTkt.currency,
+              total_travel_days: daysBetween(innerOut, innerRet) + 1,
+              warnings,
+              explain: `四段票：${outerStation}-${HUB}-${destination}-${HUB}-${outerStation}; 票甲 ${leg1Date}/${leg4Date}, 票乙 ${innerOut}/${innerRet}`,
+            });
+          }
+        }
+      }
+    }
+  }
+  // Keep only the cheapest N per (outerStation, destination) to avoid flooding
+  out.sort((a,b) => a.total_cost - b.total_cost);
+  return out.slice(0, 20);
+}
+
+/* =========================================================================
+ * Scoring
+ * ========================================================================= */
+function flightMinutes(plan) {
+  let total = 0, stopPenalty = 0;
+  for (const t of plan.tickets) {
+    for (const l of t.legs) {
+      total += (new Date(l.arrival) - new Date(l.departure)) / 60000;
+      stopPenalty += (l.stops || 0) * 20;
+    }
+  }
+  return total + stopPenalty;
+}
+
+function riskScore(plan) {
+  const w = { low: 0.1, medium: 0.4, high: 1.0 };
+  return (plan.warnings || []).reduce((s, x) => s + (w[x.level] || 0), 0);
+}
+
+function scorePlans(plans, weights) {
+  if (!plans.length) return plans;
+  const wTot = weights.price + weights.pto + weights.flight + weights.risk || 1;
+  const w = {
+    price:  weights.price / wTot,
+    pto:    weights.pto / wTot,
+    flight: weights.flight / wTot,
+    risk:   weights.risk / wTot,
+  };
+  const prices = plans.map(p => p.total_cost);
+  const flights = plans.map(flightMinutes);
+  const ptoEff = plans.map(p => (p.total_travel_days || 1) / Math.max(p.pto_days || 1, 1));
+  const risks = plans.map(riskScore);
+  const mm = (values, inverse) => {
+    const lo = Math.min(...values), hi = Math.max(...values);
+    if (hi === lo) return values.map(() => 1);
+    return values.map(v => inverse ? (hi - v) / (hi - lo) : (v - lo) / (hi - lo));
+  };
+  const sP = mm(prices, true);
+  const sF = mm(flights, true);
+  const sT = mm(ptoEff, false);
+  const sR = mm(risks, true);
+  return plans.map((p, i) => ({ ...p, score: Number((w.price*sP[i] + w.pto*sT[i] + w.flight*sF[i] + w.risk*sR[i]).toFixed(4)) }))
+              .sort((a,b) => (b.score||0) - (a.score||0));
+}
+
+/* =========================================================================
+ * Favorites (localStorage, defensive)
+ * ========================================================================= */
+const FAV_KEY = 'sff.favorites.v1';
+function fingerprint(plan) {
+  const first = plan.tickets[0]?.legs[0];
+  return [plan.strategy, plan.tickets[0]?.offer_id || '', plan.total_cost, first?.departure || '', first ? `${first.origin}-${first.destination}` : ''].join('|');
+}
+function readFavs() {
+  try { const r = localStorage.getItem(FAV_KEY); return new Set(r ? JSON.parse(r) : []); } catch { return new Set(); }
+}
+function writeFavs(set) { try { localStorage.setItem(FAV_KEY, JSON.stringify([...set])); } catch {} }
+
+/* =========================================================================
+ * Rendering
+ * ========================================================================= */
+const STRATEGY_LABEL = {
+  standard: '一般來回',
+  reverse: '反向票',
+  open_jaw: 'Open-jaw',
+  back_to_back_4leg: '外站四段票',
+};
+
+const state = {
+  result: null,
+  sort: 'score',
+  filter: 'all',
+  selected: new Set(),      // keys = plan rank index
+  favorites: readFavs(),
+};
+
+function renderResults() {
+  const el = document.getElementById('results');
+  if (!state.result) { el.hidden = true; return; }
+  el.hidden = false;
+  const { plans, matrix, cache } = state.result;
+
+  document.getElementById('r-plan-count').textContent = plans.length;
+  document.getElementById('r-matrix').textContent = matrix;
+
+  const pill = document.getElementById('r-cache-pill');
+  if (cache.total) {
+    const rate = Math.round((cache.hits / cache.total) * 100);
+    pill.hidden = false;
+    pill.textContent = `Cache ${rate}% · 省 ${cache.hits.toLocaleString()} 次 provider 呼叫`;
+  } else pill.hidden = true;
+
+  const selPill = document.getElementById('r-sel-pill');
+  if (state.selected.size) {
+    selPill.hidden = false;
+    selPill.textContent = `已選 ${state.selected.size} / 4 比較`;
+  } else selPill.hidden = true;
+
+  // Strategy filter options
+  const counts = new Map();
+  for (const p of plans) counts.set(p.strategy, (counts.get(p.strategy) || 0) + 1);
+  const filterSel = document.getElementById('r-filter');
+  const prev = filterSel.value;
+  filterSel.innerHTML = `<option value="all">全部 (${plans.length})</option>` + [...counts].map(([k,c]) => `<option value="${k}">${STRATEGY_LABEL[k]||k} (${c})</option>`).join('');
+  filterSel.value = counts.has(prev) || prev === 'all' ? prev : 'all';
+
+  // Filter + sort
+  let visible = plans.slice();
+  if (state.filter !== 'all') visible = visible.filter(p => p.strategy === state.filter);
+  if (state.sort === 'price') visible.sort((a,b) => a.total_cost - b.total_cost);
+  else if (state.sort === 'pto') visible.sort((a,b) => b.total_travel_days - a.total_travel_days);
+  else visible.sort((a,b) => (b.score||0) - (a.score||0));
+  // Favorites bubble to top within whatever order picked
+  visible.sort((a,b) => (state.favorites.has(fingerprint(b)) ? 1 : 0) - (state.favorites.has(fingerprint(a)) ? 1 : 0));
+
+  renderHeatmap(plans);
+  renderPlanList(visible);
+  renderCompare(visible);
+
+  document.getElementById('empty').hidden = visible.length !== 0;
+  document.getElementById('plan-list').hidden = visible.length === 0;
+}
+
+function renderHeatmap(plans) {
+  const box = document.getElementById('heatmap');
+  const matrix = new Map();
+  const outSet = new Set(), retSet = new Set();
+  let lo = Infinity, hi = -Infinity;
+  for (const p of plans) {
+    const first = p.tickets[0]?.legs[0];
+    const lastT = p.tickets[p.tickets.length-1];
+    const last = lastT?.legs[lastT.legs.length-1];
+    if (!first || !last) continue;
+    const o = first.departure.slice(0,10), r = last.departure.slice(0,10);
+    if (o >= r) continue;
+    const k = `${o}|${r}`;
+    const prev = matrix.get(k);
+    if (prev === undefined || p.total_cost < prev) matrix.set(k, p.total_cost);
+    outSet.add(o); retSet.add(r);
+    if (p.total_cost < lo) lo = p.total_cost;
+    if (p.total_cost > hi) hi = p.total_cost;
+  }
+  if (outSet.size < 1 || retSet.size < 1 || (outSet.size === 1 && retSet.size === 1)) { box.hidden = true; return; }
+  box.hidden = false;
+  const outs = [...outSet].sort(), rets = [...retSet].sort();
+  const cell = (price) => {
+    if (price === undefined) return '<td class="empty">—</td>';
+    const t = hi === lo ? 0.5 : (price - lo) / (hi - lo);
+    const l = Math.round(94 - 60 * t);
+    const color = t > 0.55 ? '#fff' : '#0f172a';
+    return `<td style="background:hsl(var(--heat-h) var(--heat-s) ${l}%); color:${color}">${(price/1000).toFixed(1)}k</td>`;
+  };
+  const fmtDay = iso => { const [,m,d] = iso.split('-'); return `${m}/${d}`; };
+  box.innerHTML = `
+    <h3>價格矩陣（去程 × 回程）</h3>
+    <div class="caption">每格 = 該日期組合下的最低總價 · 淺色較便宜、深色較貴</div>
+    <div class="heatmap-wrap"><table class="heat">
+      <thead><tr><th class="row-head">去 ↓ / 回 →</th>${rets.map(r => `<th>${fmtDay(r)}</th>`).join('')}</tr></thead>
+      <tbody>${outs.map(o => `<tr><th class="row-head">${fmtDay(o)}</th>${rets.map(r => cell(matrix.get(`${o}|${r}`))).join('')}</tr>`).join('')}</tbody>
+    </table></div>`;
+}
+
+function renderPlanList(plans) {
+  const list = document.getElementById('plan-list');
+  if (!plans.length) { list.innerHTML = ''; return; }
+  list.innerHTML = plans.map((p, i) => renderPlan(p, i+1)).join('');
+
+  // Wire interactions
+  list.querySelectorAll('.plan').forEach((node, idx) => {
+    const plan = plans[idx];
+    const key = `${plan.strategy}-${idx}-${plan.tickets[0]?.offer_id || ''}`;
+    node.querySelector('.plan-head').addEventListener('click', e => {
+      if (e.target.closest('button') || e.target.closest('input')) return;
+      node.classList.toggle('open');
+    });
+    node.querySelector('.fav-btn').addEventListener('click', e => {
+      e.stopPropagation();
+      const fp = fingerprint(plan);
+      if (state.favorites.has(fp)) state.favorites.delete(fp);
+      else state.favorites.add(fp);
+      writeFavs(state.favorites);
+      renderResults();
+    });
+    const check = node.querySelector('input[type=checkbox]');
+    check.addEventListener('change', e => {
+      e.stopPropagation();
+      if (check.checked) {
+        if (state.selected.size >= 4) { check.checked = false; return; }
+        state.selected.add(key);
+      } else state.selected.delete(key);
+      updateCompareButton();
+      renderCompare(plans);
+      document.getElementById('r-sel-pill').hidden = state.selected.size === 0;
+      document.getElementById('r-sel-pill').textContent = `已選 ${state.selected.size} / 4 比較`;
+    });
+    const share = node.querySelector('.btn-share');
+    if (share) share.addEventListener('click', () => sharePlan(plan, share));
+  });
+}
+
+function renderPlan(plan, rank) {
+  const fav = state.favorites.has(fingerprint(plan));
+  const key = `${plan.strategy}-${rank-1}-${plan.tickets[0]?.offer_id || ''}`;
+  const checked = state.selected.has(key);
+  const atLimit = !checked && state.selected.size >= 4;
+  const open = rank === 1 ? 'open' : '';
+  const isFourLeg = plan.strategy === 'back_to_back_4leg';
+  const warnings = plan.warnings.map(w => `<span class="warn-pill ${w.level}"><b>${w.level}</b> ${escapeHtml(w.message)}</span>`).join('');
+  const ticketCount = plan.tickets.length;
+
+  return `
+    <article class="plan ${open} ${isFourLeg ? 'four-leg' : ''}">
+      <div class="sel-col">
+        <input type="checkbox" aria-label="選擇方案 ${rank} 比較" ${checked ? 'checked' : ''} ${atLimit ? 'disabled' : ''}>
+        <button class="fav-btn ${fav ? 'on' : ''}" aria-label="${fav ? '取消收藏' : '收藏'}" aria-pressed="${fav}">${fav ? '★' : '☆'}</button>
+      </div>
+      <div class="plan-body">
+        <div class="plan-head">
+          <div class="meta">
+            <span class="rank mono">#${rank}</span>
+            <span class="strat">${STRATEGY_LABEL[plan.strategy] || plan.strategy}</span>
+            <span class="explain">${escapeHtml(plan.explain || '')}</span>
+          </div>
+          <div>
+            <div class="price mono">${plan.currency} ${plan.total_cost.toLocaleString()}</div>
+            ${plan.score != null ? `<div class="score">score ${plan.score.toFixed(3)}</div>` : ''}
+          </div>
+        </div>
+        <div class="plan-detail">
+          <div class="timeline">${renderTimeline(plan)}<div class="caption">紅色虛線 = 跨票交接 (建議 ≥ 3.5h 緩衝)。</div></div>
+          <div class="ticket-grid">
+            ${plan.tickets.map((t, ti) => `
+              <section class="ticket">
+                <h4>${ticketCount === 2 ? (ti === 0 ? '票甲' : '票乙') : `票 ${ti+1}`} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
+                <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()} · ${t.fare_class || '—'} · ${t.baggage_through_checked ? '行李直掛' : '需提領重掛'}</div>
+                <ol>${t.legs.map(l => `<li>${l.origin}→${l.destination} · ${l.carrier}${l.flight_number} · ${l.departure.slice(0,16).replace('T',' ')}</li>`).join('')}</ol>
+              </section>
+            `).join('')}
+          </div>
+          ${warnings ? `<div class="warnings">${warnings}</div>` : ''}
+          <div class="actions">
+            <button type="button" class="btn-ghost btn-share">分享連結</button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+}
+
+function renderTimeline(plan) {
+  const allLegs = plan.tickets.flatMap(t => t.legs);
+  if (!allLegs.length) return '';
+  const minT = Math.min(...allLegs.map(l => Date.parse(l.departure)));
+  const maxT = Math.max(...allLegs.map(l => Date.parse(l.arrival)));
+  const span = Math.max(maxT - minT, 1);
+  const W = 640, PAD = 48, ROW = 26;
+  const palette = ['#0e6ead', '#c56a0a', '#0f7d55', '#8b5cf6', '#b53636', '#64748b'];
+  const x = t => PAD + ((t - minT) / span) * (W - PAD*2);
+  const rows = plan.tickets.map((t, ti) => ({ ti, t, y: 24 + ti * (ROW + 10), color: palette[ti % palette.length] }));
+  const height = 24 + rows.length * (ROW + 10) + 28;
+
+  // Day ticks
+  const dayMs = 86400000;
+  const first = Math.ceil(minT / dayMs) * dayMs;
+  const ticks = [];
+  for (let v = first; v <= maxT; v += dayMs) ticks.push(v);
+  const fmtDay = ts => { const d = new Date(ts); return `${d.getUTCMonth()+1}/${d.getUTCDate()}`; };
+
+  // Junction markers (cross-ticket, same airport)
+  const junctions = [];
+  for (let i = 0; i < plan.tickets.length - 1; i++) {
+    const inbound = plan.tickets[i].legs[plan.tickets[i].legs.length-1];
+    const outbound = plan.tickets[i+1].legs[0];
+    if (!inbound || !outbound || inbound.destination !== outbound.origin) continue;
+    const mid = (Date.parse(inbound.arrival) + Date.parse(outbound.departure)) / 2;
+    junctions.push({ x: x(mid), airport: inbound.destination });
+  }
+
+  return `<svg viewBox="0 0 ${W} ${height}" aria-label="Flight timeline">
+    <line x1="${PAD}" x2="${W-PAD}" y1="${height-20}" y2="${height-20}" stroke="currentColor" stroke-opacity="0.3"/>
+    ${ticks.map(t => `<g transform="translate(${x(t)}, ${height-20})"><line y1="0" y2="-6" stroke="currentColor" stroke-opacity="0.5"/><text y="14" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.6" font-family="var(--font-mono)">${fmtDay(t)}</text></g>`).join('')}
+    ${rows.map(({ ti, t, y, color }) => `
+      <g>
+        <text x="0" y="${y+16}" font-size="11" fill="currentColor" opacity="0.65">${plan.tickets.length === 2 ? (ti === 0 ? '票甲' : '票乙') : `#${ti+1}`}</text>
+        ${t.legs.map(leg => {
+          const x1 = x(Date.parse(leg.departure)), x2 = x(Date.parse(leg.arrival));
+          return `<g>
+            <rect x="${x1}" y="${y}" width="${Math.max(x2-x1, 2)}" height="${ROW}" rx="4" fill="${color}" opacity="0.9"/>
+            <text x="${x1+5}" y="${y+12}" font-size="10" fill="white" font-weight="600">${leg.origin}→${leg.destination}</text>
+            <text x="${x1+5}" y="${y+22}" font-size="9" fill="white" opacity="0.9">${leg.carrier}${leg.flight_number.replace(/^[A-Z]+/, '')}</text>
+          </g>`;
+        }).join('')}
+      </g>`).join('')}
+    ${junctions.map(j => `<g><line x1="${j.x}" x2="${j.x}" y1="16" y2="${height-28}" stroke="#ef4444" stroke-dasharray="4,3" stroke-opacity="0.75"/><text x="${j.x+4}" y="14" font-size="10" fill="#ef4444" font-weight="600">交接 ${j.airport}</text></g>`).join('')}
+  </svg>`;
+}
+
+function renderCompare(plans) {
+  const box = document.getElementById('compare');
+  const picked = [];
+  plans.forEach((p, i) => {
+    const key = `${p.strategy}-${i}-${p.tickets[0]?.offer_id || ''}`;
+    if (state.selected.has(key)) picked.push(p);
+  });
+  if (picked.length < 2) { box.hidden = true; return; }
+  box.hidden = false;
+  const rows = [
+    ['策略', p => STRATEGY_LABEL[p.strategy] || p.strategy],
+    ['總價 (TWD)', p => p.total_cost.toLocaleString()],
+    ['分數', p => (p.score != null ? p.score.toFixed(3) : '—')],
+    ['停留天數', p => `${p.total_travel_days} 天`],
+    ['飛行時長 (總)', p => { const m = flightMinutes(p); return `${Math.floor(m/60)}h ${Math.round(m%60)}m`; }],
+    ['機票數', p => p.tickets.length],
+    ['警告數', p => p.warnings.length],
+    ['說明', p => p.explain || ''],
+  ];
+  box.innerHTML = `
+    <h3>比較 ${picked.length} 個方案</h3>
+    <div class="compare-wrap"><table class="compare-tbl">
+      <thead><tr><th>指標</th>${picked.map((_,i) => `<th>方案 ${i+1}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map(([label, fn]) => `<tr><td class="metric">${label}</td>${picked.map(p => `<td>${escapeHtml(String(fn(p)))}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div>`;
+}
+
+function updateCompareButton() {
+  const b = document.getElementById('btn-compare');
+  b.textContent = `比較 (${state.selected.size})`;
+  b.disabled = state.selected.size < 2;
+}
+
+/* =========================================================================
+ * Share link via URL hash
+ * ========================================================================= */
+function sharePlan(plan, buttonEl) {
+  try {
+    const json = JSON.stringify(plan);
+    const bytes = new TextEncoder().encode(json);
+    let bin = '';
+    for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    const b64 = btoa(bin).replace(/=+$/,'').replace(/\+/g,'-').replace(/\//g,'_');
+    const url = `${location.origin}${location.pathname}#p=${b64}`;
+    navigator.clipboard.writeText(url).then(() => {
+      const old = buttonEl.textContent;
+      buttonEl.textContent = '✓ 已複製連結';
+      setTimeout(() => { buttonEl.textContent = old; }, 1600);
+    }).catch(() => prompt('複製此連結：', url));
+  } catch (e) {
+    alert('分享失敗：' + e.message);
+  }
+}
+
+function tryLoadSharedPlan() {
+  const h = location.hash || '';
+  if (!h.startsWith('#p=')) return;
+  try {
+    const b64 = h.slice(3).replace(/-/g,'+').replace(/_/g,'/') + '==='.slice((h.length-3+3)%4);
+    const bin = atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    const plan = JSON.parse(new TextDecoder().decode(arr));
+    if (!plan || !plan.strategy || !Array.isArray(plan.tickets)) return;
+    state.result = { plans: [plan], matrix: 1, cache: { hits: 0, misses: 0, total: 0, unique: 0 } };
+    renderResults();
+  } catch {}
+}
+
+/* =========================================================================
+ * iCal export (hand-rolled RFC 5545, data: URI download)
+ * ========================================================================= */
+function downloadIcs(plan) {
+  const esc = s => String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
+  const fmtUtc = iso => iso.replace(/[-:]/g,'').replace(/\.\d+/,'').slice(0,15) + 'Z';
+  const now = fmtUtc(new Date().toISOString());
+  const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Smart Flight Finder//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  plan.tickets.forEach((t, ti) => t.legs.forEach((leg, li) => {
+    const uid = `${plan.strategy}-${ti}-${li}-${leg.departure}@smart-flight-finder`;
+    lines.push('BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${now}`,
+      `DTSTART:${fmtUtc(leg.departure)}`,
+      `DTEND:${fmtUtc(leg.arrival)}`,
+      `SUMMARY:${esc(`✈ ${leg.carrier}${leg.flight_number.replace(/^[A-Z]+/, '')} ${leg.origin}→${leg.destination}`)}`,
+      `LOCATION:${esc(`${leg.origin} → ${leg.destination}`)}`,
+      `DESCRIPTION:${esc(`Strategy: ${plan.strategy}\\nTicket: ${t.offer_id} (${t.currency} ${t.total_price})`)}`,
+      'END:VEVENT');
+  }));
+  lines.push('END:VCALENDAR');
+  const blob = new Blob([lines.join('\r\n') + '\r\n'], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `flight-plan-${plan.strategy}.ics`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/* =========================================================================
+ * Search orchestration
+ * ========================================================================= */
+function runSearch(form) {
+  CachingProvider.reset();
+  const parseList = s => (s || '').split(',').map(x => x.trim().toUpperCase()).filter(Boolean);
+  const strategyBoxes = [...form.querySelectorAll('.strategies input[type=checkbox]')].filter(c => c.checked).map(c => c.value);
+  const req = {
+    tripType: document.getElementById('f-trip').value,
+    adults: Math.max(1, Number(document.getElementById('f-adults').value) || 1),
+    origins: parseList(document.getElementById('f-origins').value),
+    destinations: parseList(document.getElementById('f-destinations').value),
+    strategies: strategyBoxes.length ? strategyBoxes : ['standard'],
+    outerStations: parseList(document.getElementById('f-outer').value),
+    outerBuffer: Math.max(0, Number(document.getElementById('f-outer-buf').value) || 2),
+    budget: Number(document.getElementById('f-budget').value) || null,
+  };
+
+  const outAnchor = document.getElementById('f-outbound').value;
+  const retAnchor = document.getElementById('f-return').value;
+  const flexOut = Number(document.getElementById('f-flex-out').value) || 0;
+  const flexRet = Number(document.getElementById('f-flex-ret').value) || 0;
+
+  const expanded = {
+    out: expandWindow(outAnchor, flexOut, flexOut),
+    ret: req.tripType === 'round_trip' ? expandWindow(retAnchor, flexRet, flexRet) : [],
+  };
+
+  const matrix = expanded.out.length * Math.max(expanded.ret.length, 1);
+
+  let plans = [];
+  for (const strategy of req.strategies) {
+    if (strategy === 'standard') plans = plans.concat(planStandard(req, expanded));
+    else if (strategy === 'reverse') plans = plans.concat(planReverse(req, expanded));
+    else if (strategy === 'open_jaw') plans = plans.concat(planOpenJaw(req, expanded));
+    else if (strategy === 'back_to_back_4leg') plans = plans.concat(planFourLeg(req, expanded));
+  }
+  if (req.budget) plans = plans.filter(p => p.total_cost <= req.budget);
+
+  const weights = {
+    price: Number(document.getElementById('w-price').value) || 0,
+    pto: Number(document.getElementById('w-pto').value) || 0,
+    flight: Number(document.getElementById('w-flight').value) || 0,
+    risk: Number(document.getElementById('w-risk').value) || 0,
+  };
+  plans = scorePlans(plans, weights);
+
+  const cache = CachingProvider.stats();
+  return { plans, matrix, cache };
+}
+
+/* =========================================================================
+ * Wiring
+ * ========================================================================= */
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function syncRangeLabels() {
+  const bind = (slider, label, fmt) => {
+    const el = document.getElementById(slider);
+    const out = document.getElementById(label);
+    const render = () => { out.textContent = fmt ? fmt(el.value) : el.value; };
+    el.addEventListener('input', render);
+    render();
+  };
+  bind('f-flex-out', 'f-flex-out-val');
+  bind('f-flex-ret', 'f-flex-ret-val');
+  bind('f-outer-buf', 'f-outer-buf-val');
+  bind('w-price', 'w-price-v', v => Number(v).toFixed(2));
+  bind('w-pto', 'w-pto-v', v => Number(v).toFixed(2));
+  bind('w-flight', 'w-flight-v', v => Number(v).toFixed(2));
+  bind('w-risk', 'w-risk-v', v => Number(v).toFixed(2));
+}
+
+function populateHolidays() {
+  const sel = document.getElementById('f-holiday');
+  for (const s of LEAVE_STRATEGIES_2027) {
+    const o = document.createElement('option');
+    o.value = s.key;
+    o.textContent = s.label;
+    sel.appendChild(o);
+  }
+  sel.value = 'lunar_ny';
+  const sync = () => {
+    const match = LEAVE_STRATEGIES_2027.find(s => s.key === sel.value);
+    if (match) {
+      document.getElementById('f-outbound').value = match.start;
+      document.getElementById('f-return').value = match.end;
+    }
+  };
+  sel.addEventListener('change', sync);
+}
+
+function toggleReturnByTripType() {
+  const trip = document.getElementById('f-trip');
+  const field = document.getElementById('return-field');
+  const apply = () => { field.style.display = trip.value === 'one_way' ? 'none' : ''; };
+  trip.addEventListener('change', apply);
+  apply();
+}
+
+function toggleFourLegExtras() {
+  const box = document.getElementById('four-leg-extras');
+  const check = () => {
+    const on = [...document.querySelectorAll('.strategies input')].find(c => c.value === 'back_to_back_4leg')?.checked;
+    box.classList.toggle('open', !!on);
+  };
+  document.querySelectorAll('.strategies input').forEach(c => c.addEventListener('change', check));
+  check();
+}
+
+function wireSubmit() {
+  const form = document.getElementById('search-form');
+  const elapsed = document.getElementById('elapsed');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = form.querySelector('.btn-primary');
+    btn.disabled = true;
+    btn.textContent = '搜尋中…';
+    const t0 = performance.now();
+    // Yield once so UI can paint "搜尋中…"
+    setTimeout(() => {
+      try {
+        const result = runSearch(form);
+        state.result = result;
+        state.selected.clear();
+        updateCompareButton();
+        document.getElementById('r-sel-pill').hidden = true;
+        renderResults();
+        elapsed.textContent = `· 搜尋耗時 ${Math.round(performance.now() - t0)} ms`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '搜尋';
+      }
+    }, 0);
+  });
+
+  // ⌘/Ctrl + Enter from any field
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      form.requestSubmit();
+    }
+  });
+}
+
+function wireResultsControls() {
+  document.getElementById('r-filter').addEventListener('change', e => { state.filter = e.target.value; renderResults(); });
+  document.getElementById('r-sort').addEventListener('change', e => { state.sort = e.target.value; renderResults(); });
+  document.getElementById('btn-compare').addEventListener('click', () => {
+    // The compare table is driven by state.selected; just scroll to it if hidden.
+    renderResults();
+    document.getElementById('compare')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+function wireHelp() {
+  const btn = document.getElementById('fab-help');
+  btn.addEventListener('click', () => {
+    alert([
+      '鍵盤快捷鍵',
+      '⌘/Ctrl + Enter — 從任何欄位送出搜尋',
+      'Esc — 關閉對話框',
+      '★ (卡片星號) — 收藏方案，自動置頂',
+      '☐ (卡片 checkbox) — 選最多 4 個方案進比較表',
+    ].join('\n'));
+  });
+}
+
+function wireTheme() {
+  const btn = document.getElementById('fab-theme');
+  const KEY = 'sff.theme.v1';
+  const apply = v => {
+    if (v === 'system') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', v);
+    btn.textContent = v === 'system' ? '☼ 系統' : v === 'light' ? '☀ 淺色' : '☾ 深色';
+  };
+  let current = 'system';
+  try { current = localStorage.getItem(KEY) || 'system'; } catch {}
+  apply(current);
+  btn.addEventListener('click', () => {
+    current = current === 'system' ? 'light' : current === 'light' ? 'dark' : 'system';
+    try { localStorage.setItem(KEY, current); } catch {}
+    apply(current);
+  });
+}
+
+function init() {
+  populateHolidays();
+  syncRangeLabels();
+  toggleReturnByTripType();
+  toggleFourLegExtras();
+  wireSubmit();
+  wireResultsControls();
+  wireHelp();
+  wireTheme();
+  tryLoadSharedPlan();
+
+  // Auto-run so the page is complete at rest (shows a realistic result immediately).
+  document.getElementById('search-form').requestSubmit();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+</script>
+
+</body>
+</html>
