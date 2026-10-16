@@ -17,10 +17,6 @@ from app.services.strategies.base import RiskLevel, StrategyPlan
 
 _RISK_WEIGHT = {RiskLevel.LOW: 0.1, RiskLevel.MEDIUM: 0.4, RiskLevel.HIGH: 1.0}
 
-# A plan's "飛行時長" proxy — number of legs across all tickets (lower = better).
-# We avoid pulling actual durations here so stub / live providers can skip
-# computing them when they are unknown.
-
 
 def score_plans(
     plans: Iterable[StrategyPlan],
@@ -42,7 +38,7 @@ def score_plans(
     )
 
     prices = [p.total_cost for p in plans]
-    flight_steps = [sum(len(t.legs) for t in p.tickets) for p in plans]
+    flight_times = [_flight_minutes(p) for p in plans]
     pto_eff = [
         p.total_travel_days / max(pto_days_used or p.pto_days or 1, 1)
         for p in plans
@@ -58,7 +54,7 @@ def score_plans(
         return [(v - lo) / (hi - lo) for v in values]
 
     s_price = _mm(prices, inverse=True)
-    s_flight = _mm(flight_steps, inverse=True)
+    s_flight = _mm(flight_times, inverse=True)
     s_pto = _mm(pto_eff, inverse=False)
     s_risk = _mm(risks, inverse=True)
 
@@ -69,6 +65,21 @@ def score_plans(
         scored.append(replace(p, score=round(s, 4)))
     scored.sort(key=lambda p: p.score or 0.0, reverse=True)
     return scored
+
+
+def _flight_minutes(plan: StrategyPlan) -> float:
+    """Total airborne minutes across every leg + a 20-minute penalty per stop.
+
+    Durations come from provider timestamps; if a provider leaves them equal
+    (duration = 0) the per-stop penalty still differentiates plans.
+    """
+    total_sec = 0.0
+    stop_penalty_sec = 0.0
+    for ticket in plan.tickets:
+        for leg in ticket.legs:
+            total_sec += leg.duration.total_seconds()
+            stop_penalty_sec += leg.stops * 20 * 60
+    return (total_sec + stop_penalty_sec) / 60.0
 
 
 def _risk_score(plan: StrategyPlan) -> float:
