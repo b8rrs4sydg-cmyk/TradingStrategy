@@ -4,23 +4,29 @@ import type { FlightLegOut, StrategyPlanOut } from "@/lib/types";
 
 /**
  * SVG timeline: X 軸是日期，每張票一列，legs 畫為橫向色帶。
- * 四段票的兩次 TPE 交接會畫出垂直連接線。
+ * 跨票的交接點 (前一張票的最後 arrival 到下一張票的第一次 departure) 標為紅色虛線。
+ * 支援 N 張票 (4-leg = 2 票, multi-city = N 段 = N 票)。
  */
 export function TimelineView({ plan }: { plan: StrategyPlanOut }) {
-  const legs = plan.tickets.flatMap((t) =>
-    t.legs.map((leg) => ({ leg, ticketId: t.offer_id }))
-  );
-  if (legs.length === 0) return null;
+  if (!plan.tickets.length) return null;
+  const allLegs = plan.tickets.flatMap((t) => t.legs);
+  if (allLegs.length === 0) return null;
 
-  const minTime = Math.min(...legs.map((l) => Date.parse(l.leg.departure)));
-  const maxTime = Math.max(...legs.map((l) => Date.parse(l.leg.arrival)));
+  const minTime = Math.min(...allLegs.map((l) => Date.parse(l.departure)));
+  const maxTime = Math.max(...allLegs.map((l) => Date.parse(l.arrival)));
   const totalSpan = Math.max(maxTime - minTime, 1);
   const WIDTH = 640;
-  const ROW_H = 32;
-  const PAD_X = 24;
+  const ROW_H = 28;
+  const PAD_X = 48;
 
-  const ticketColors = ["#0ea5e9", "#f59e0b"];
-  const ticketIds = plan.tickets.map((t) => t.offer_id);
+  const ticketPalette = [
+    "#0ea5e9", // sky
+    "#f59e0b", // amber
+    "#10b981", // emerald
+    "#8b5cf6", // violet
+    "#ef4444", // red
+    "#64748b", // slate
+  ];
 
   const x = (t: number) =>
     PAD_X + ((t - minTime) / totalSpan) * (WIDTH - PAD_X * 2);
@@ -28,11 +34,11 @@ export function TimelineView({ plan }: { plan: StrategyPlanOut }) {
   const rows = plan.tickets.map((ticket, ti) => ({
     ti,
     ticket,
-    y: 24 + ti * (ROW_H + 16),
-    color: ticketColors[ti % ticketColors.length],
+    y: 24 + ti * (ROW_H + 10),
+    color: ticketPalette[ti % ticketPalette.length],
   }));
 
-  const height = 24 + rows.length * (ROW_H + 16) + 24;
+  const height = 24 + rows.length * (ROW_H + 10) + 28;
 
   return (
     <div className="overflow-x-auto">
@@ -41,7 +47,6 @@ export function TimelineView({ plan }: { plan: StrategyPlanOut }) {
         className="w-full text-slate-700 dark:text-slate-200"
         aria-label="Flight timeline"
       >
-        {/* axis */}
         <line
           x1={PAD_X}
           x2={WIDTH - PAD_X}
@@ -66,9 +71,9 @@ export function TimelineView({ plan }: { plan: StrategyPlanOut }) {
         ))}
 
         {rows.map(({ ti, ticket, y, color }) => (
-          <g key={ticket.offer_id}>
-            <text x={0} y={y + 20} fontSize={11} fill="currentColor" opacity={0.6}>
-              {ti === 0 ? "票甲" : "票乙"}
+          <g key={`${ticket.offer_id}-${ti}`}>
+            <text x={0} y={y + 18} fontSize={11} fill="currentColor" opacity={0.6}>
+              {rowLabel(plan.tickets.length, ti)}
             </text>
             {ticket.legs.map((leg, li) => {
               const x1 = x(Date.parse(leg.departure));
@@ -86,16 +91,15 @@ export function TimelineView({ plan }: { plan: StrategyPlanOut }) {
                   />
                   <text
                     x={x1 + 4}
-                    y={y + 13}
+                    y={y + 12}
                     fontSize={10}
                     fill="white"
                     fontWeight={600}
                   >
                     {leg.origin}→{leg.destination}
                   </text>
-                  <text x={x1 + 4} y={y + 26} fontSize={9} fill="white" opacity={0.9}>
-                    {leg.carrier}
-                    {leg.flight_number.replace(/^[A-Z]+/, "")}
+                  <text x={x1 + 4} y={y + 23} fontSize={9} fill="white" opacity={0.9}>
+                    {leg.flight_number}
                   </text>
                 </g>
               );
@@ -103,7 +107,6 @@ export function TimelineView({ plan }: { plan: StrategyPlanOut }) {
           </g>
         ))}
 
-        {/* cross-ticket junction markers (hub = destination of leg N == origin of leg N+1 across tickets) */}
         {junctionMarkers(plan, x).map((j, i) => (
           <g key={i}>
             <line
@@ -128,10 +131,15 @@ export function TimelineView({ plan }: { plan: StrategyPlanOut }) {
         ))}
       </svg>
       <small className="text-xs text-slate-500">
-        紅色虛線 = 跨票交接點，需符合 MCT (建議緩衝 ≥ 3.5h)。
+        紅色虛線 = 跨票交接點。四段票建議 ≥ 3.5h 緩衝；multi-city 的跨段若在不同機場屬 open-jaw (無 MCT 風險)。
       </small>
     </div>
   );
+}
+
+function rowLabel(total: number, i: number): string {
+  if (total === 2) return i === 0 ? "票甲" : "票乙";
+  return `#${i + 1}`;
 }
 
 function axisTicks(min: number, max: number): number[] {
@@ -153,18 +161,24 @@ function junctionMarkers(
   plan: StrategyPlanOut,
   x: (ts: number) => number
 ): Junction[] {
-  if (plan.tickets.length < 2) return [];
-  const outer = plan.tickets[0];
-  const inner = plan.tickets[1];
-  if (!outer || !inner) return [];
   const marks: Junction[] = [];
-  const addMid = (a: FlightLegOut, b: FlightLegOut, airport: string) => {
-    const mid = (Date.parse(a.arrival) + Date.parse(b.departure)) / 2;
-    marks.push({ x: x(mid), airport });
-  };
-  addMid(outer.legs[0], inner.legs[0], outer.legs[0].destination);
-  if (outer.legs[1] && inner.legs[1]) {
-    addMid(inner.legs[1], outer.legs[1], outer.legs[1].origin);
+  for (let i = 0; i < plan.tickets.length - 1; i++) {
+    const inbound = lastLeg(plan.tickets[i].legs);
+    const outbound = firstLeg(plan.tickets[i + 1].legs);
+    if (!inbound || !outbound) continue;
+    // Only mark it as a 交接 when both ends sit on the same airport
+    // (otherwise it's open-jaw with ground transit, not an MCT handoff).
+    if (inbound.destination !== outbound.origin) continue;
+    const mid = (Date.parse(inbound.arrival) + Date.parse(outbound.departure)) / 2;
+    marks.push({ x: x(mid), airport: inbound.destination });
   }
   return marks;
+}
+
+function firstLeg(legs: FlightLegOut[]): FlightLegOut | undefined {
+  return legs[0];
+}
+
+function lastLeg(legs: FlightLegOut[]): FlightLegOut | undefined {
+  return legs[legs.length - 1];
 }

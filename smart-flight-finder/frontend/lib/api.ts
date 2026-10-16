@@ -31,8 +31,22 @@ async function post<T>(path: string, body: unknown): Promise<T> {
   return res.json();
 }
 
+async function postRaw(path: string, body: unknown): Promise<Response> {
+  return fetch(`/api${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    cache: "no-store",
+  });
+}
+
 export const api = {
   holidays: () => get<Holiday[]>("/holidays/2027"),
   leaveStrategies: () => get<LeaveStrategy[]>("/holidays/2027/leave-strategies"),
   search: (req: ItineraryRequestIn) => post<SearchResult>("/search", req),
+  planAsIcs: async (plan: unknown): Promise<Blob> => {
+    const res = await postRaw("/plans/ics", plan);
+    if (!res.ok) throw new Error(`POST /plans/ics → ${res.status}`);
+    return res.blob();
+  },
 };

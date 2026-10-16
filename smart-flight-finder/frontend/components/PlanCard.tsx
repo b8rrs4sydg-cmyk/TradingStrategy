@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { api } from "@/lib/api";
 import { TimelineView } from "./TimelineView";
 import type { RiskLevel, StrategyPlanOut, TicketStrategyType } from "@/lib/types";
 
@@ -21,7 +22,27 @@ const RISK_BADGE: Record<RiskLevel, string> = {
 
 export function PlanCard({ plan, rank }: { plan: StrategyPlanOut; rank: number }) {
   const [open, setOpen] = useState(rank === 1);
+  const [downloading, setDownloading] = useState(false);
   const twd = plan.total_cost.toLocaleString("en-US");
+
+  async function downloadIcs() {
+    setDownloading(true);
+    try {
+      const blob = await api.planAsIcs(plan);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `flight-plan-${plan.strategy}.ics`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      alert(`匯出失敗：${(err as Error).message}`);
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   return (
     <article className="rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
@@ -63,6 +84,16 @@ export function PlanCard({ plan, rank }: { plan: StrategyPlanOut; rank: number }
 
       {open && (
         <div className="space-y-4 border-t border-slate-200 px-4 py-4 dark:border-slate-800">
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={downloadIcs}
+              disabled={downloading}
+              className="rounded border border-slate-300 px-3 py-1 text-xs hover:bg-slate-100 disabled:opacity-50 dark:border-slate-700 dark:hover:bg-slate-800"
+            >
+              {downloading ? "匯出中…" : "加入日曆 (.ics)"}
+            </button>
+          </div>
           <TimelineView plan={plan} />
 
           <div className="grid gap-4 md:grid-cols-2">
