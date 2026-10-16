@@ -1,0 +1,51 @@
+name: Verify Pages site is live
+
+# Runs from GitHub's runners — they can reach *.github.io directly.
+# Prints the HTTP status, Content-Type and a hash of the title so the
+# session that triggered this can read the logs and prove the deploy
+# serves our content. Triggered manually (workflow_dispatch) or after
+# the Pages deploy workflow finishes.
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Deploy demo to GitHub Pages"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl the Pages URL
+        env:
+          URL: https://b8rrs4sydg-cmyk.github.io/TradingStrategy/
+        run: |
+          set -eo pipefail
+          echo "=== HEAD $URL ==="
+          curl -sS -I --max-time 20 "$URL" | tee /tmp/head.txt
+          echo ""
+          echo "=== BODY HEAD (first 400 bytes) ==="
+          curl -sS --max-time 20 "$URL" | head -c 400
+          echo ""
+          echo ""
+          echo "=== Multi-holiday marker search ==="
+          body="$(curl -sS --max-time 20 "$URL")"
+          if printf '%s' "$body" | grep -q "多假期排列組合"; then
+            echo "MARKER_MULTI_HOLIDAY: PRESENT"
+          else
+            echo "MARKER_MULTI_HOLIDAY: MISSING"
+          fi
+          if printf '%s' "$body" | grep -q "元旦請 0 休 3"; then
+            echo "MARKER_NYD: PRESENT"
+          else
+            echo "MARKER_NYD: MISSING"
+          fi
+          echo ""
+          echo "=== Final verdict ==="
+          code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$URL")"
+          echo "HTTP_STATUS=$code"
+          test "$code" = "200" || { echo "FAILURE: expected 200, got $code"; exit 1; }
+          echo "SUCCESS: Pages site serving at $URL"
