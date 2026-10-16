@@ -224,6 +224,35 @@
   .four-leg-extras.open { display: grid }
   @media (max-width: 640px) { .four-leg-extras { grid-template-columns: 1fr } }
 
+  .multi-holidays {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 14px;
+    margin-top: 4px;
+    font-size: 14px;
+  }
+  @media (min-width: 720px) {
+    .multi-holidays { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+  }
+  .multi-holidays label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer }
+  .multi-holidays label.disabled { opacity: 0.55; cursor: default }
+  .multi-hint {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--fg-muted);
+    line-height: 1.5;
+  }
+  .multi-hint b { color: var(--fg) }
+  .multi-flex {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-strong);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+  }
+
   .btn-primary {
     appearance: none;
     border: none;
@@ -597,6 +626,23 @@
       </div>
 
       <fieldset>
+        <legend>多假期排列組合 (可選)</legend>
+        <div id="multi-holidays" class="multi-holidays"></div>
+        <p class="multi-hint">
+          勾選任意 <b>≥ 1 個</b>假期後，上方「假期快選 / 去回程日 / 彈性」會被忽略，
+          引擎會對每個假期自動展開 (去, 回) 視窗並跑完所有勾選策略；
+          <b>外站四段票</b>可因此跨不同假期湊票，排列組合找最佳解。
+        </p>
+        <div class="multi-flex">
+          <label class="field" style="margin:0">
+            <span>每個假期彈性 ±<span id="f-mh-flex-val">1</span> 天</span>
+            <input id="f-mh-flex" type="range" min="0" max="7" value="1">
+          </label>
+          <button type="button" class="btn-ghost" id="btn-mh-clear">全部取消</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
         <legend>策略</legend>
         <div class="strategies">
           <label><input type="checkbox" value="standard" checked> 一般來回 / 直購</label>
@@ -686,6 +732,7 @@
  * Data: 2027 Taiwan holidays + leave strategies (mirrors backend seed)
  * ========================================================================= */
 const LEAVE_STRATEGIES_2027 = [
+  { key: 'nyd',       label: '元旦請 0 休 3',   pto: 0, total: 3,  start: '2027-01-01', end: '2027-01-03', desc: '元旦 1/1(五) 搭配 1/2(六)、1/3(日) 直接連休 3 天。' },
   { key: 'lunar_ny',  label: '春節請 2 休 11', pto: 2, total: 11, start: '2027-02-05', end: '2027-02-15', desc: '春節連假週六起，請 2/12(五) + 2/15(一) 共 2 天即可休 11 天。' },
   { key: 'peace228',  label: '228 請 1 休 4',   pto: 1, total: 4,  start: '2027-02-26', end: '2027-03-01', desc: '請 2/26(五) 搭配 2/27(六)、2/28(日)、3/1(一) 補假。' },
   { key: 'qingming',  label: '清明請 3 休 9',   pto: 3, total: 9,  start: '2027-04-03', end: '2027-04-11', desc: '請 4/7-4/9 共 3 天可連休至 4/11(日)。' },
@@ -693,6 +740,8 @@ const LEAVE_STRATEGIES_2027 = [
   { key: 'duanwu',    label: '端午請 2 休 5',   pto: 2, total: 5,  start: '2027-06-09', end: '2027-06-13', desc: '端午 6/9(三)，請 6/10-6/11 共 2 天可連休至 6/13(日)。' },
   { key: 'midautumn', label: '中秋請 2 休 5',   pto: 2, total: 5,  start: '2027-09-15', end: '2027-09-19', desc: '中秋 9/15(三)，請 9/16-9/17 共 2 天可連休至 9/19(日)。' },
   { key: 'national',  label: '國慶請 4 休 9',   pto: 4, total: 9,  start: '2027-10-09', end: '2027-10-17', desc: '國慶 10/10(日)、補假 10/11(一)，請 10/12-10/15 共 4 天可連休至 10/17(日)。' },
+  { key: 'xmas',      label: '聖誕請 2 休 5',   pto: 2, total: 5,  start: '2027-12-23', end: '2027-12-27', desc: '聖誕 12/25(六)，請 12/23-12/24 共 2 天可連休至 12/27(日)。' },
+  { key: 'yearend',   label: '跨年請 3 休 10',  pto: 3, total: 10, start: '2027-12-24', end: '2028-01-02', desc: '跨年黃金 10 天，請 12/28-12/30 共 3 天連休至 2028/1/2(日)。' },
 ];
 
 /* =========================================================================
@@ -1431,24 +1480,42 @@ function runSearch(form) {
     budget: Number(document.getElementById('f-budget').value) || null,
   };
 
-  const outAnchor = document.getElementById('f-outbound').value;
-  const retAnchor = document.getElementById('f-return').value;
-  const flexOut = Number(document.getElementById('f-flex-out').value) || 0;
-  const flexRet = Number(document.getElementById('f-flex-ret').value) || 0;
+  // Multi-holiday permutation (mirrors backend SearchService.run):
+  // when ≥ 1 holiday checkbox is on, build one (out, ret) window per key
+  // and run every strategy against each; otherwise use the single-pick fields.
+  const holidayKeys = getSelectedHolidayKeys();
+  const mhFlex = Number(document.getElementById('f-mh-flex').value) || 0;
+  const candidateWindowSets = [];
+  if (holidayKeys.length) {
+    for (const key of holidayKeys) {
+      const match = LEAVE_STRATEGIES_2027.find(s => s.key === key);
+      if (!match) continue;
+      candidateWindowSets.push({
+        out: expandWindow(match.start, mhFlex, mhFlex),
+        ret: req.tripType === 'round_trip' ? expandWindow(match.end, mhFlex, mhFlex) : [],
+      });
+    }
+  } else {
+    const outAnchor = document.getElementById('f-outbound').value;
+    const retAnchor = document.getElementById('f-return').value;
+    const flexOut = Number(document.getElementById('f-flex-out').value) || 0;
+    const flexRet = Number(document.getElementById('f-flex-ret').value) || 0;
+    candidateWindowSets.push({
+      out: expandWindow(outAnchor, flexOut, flexOut),
+      ret: req.tripType === 'round_trip' ? expandWindow(retAnchor, flexRet, flexRet) : [],
+    });
+  }
 
-  const expanded = {
-    out: expandWindow(outAnchor, flexOut, flexOut),
-    ret: req.tripType === 'round_trip' ? expandWindow(retAnchor, flexRet, flexRet) : [],
-  };
-
-  const matrix = expanded.out.length * Math.max(expanded.ret.length, 1);
-
+  let matrix = 0;
   let plans = [];
-  for (const strategy of req.strategies) {
-    if (strategy === 'standard') plans = plans.concat(planStandard(req, expanded));
-    else if (strategy === 'reverse') plans = plans.concat(planReverse(req, expanded));
-    else if (strategy === 'open_jaw') plans = plans.concat(planOpenJaw(req, expanded));
-    else if (strategy === 'back_to_back_4leg') plans = plans.concat(planFourLeg(req, expanded));
+  for (const expanded of candidateWindowSets) {
+    matrix += expanded.out.length * Math.max(expanded.ret.length, 1);
+    for (const strategy of req.strategies) {
+      if (strategy === 'standard') plans = plans.concat(planStandard(req, expanded));
+      else if (strategy === 'reverse') plans = plans.concat(planReverse(req, expanded));
+      else if (strategy === 'open_jaw') plans = plans.concat(planOpenJaw(req, expanded));
+      else if (strategy === 'back_to_back_4leg') plans = plans.concat(planFourLeg(req, expanded));
+    }
   }
   if (req.budget) plans = plans.filter(p => p.total_cost <= req.budget);
 
@@ -1506,6 +1573,49 @@ function populateHolidays() {
     }
   };
   sel.addEventListener('change', sync);
+}
+
+function populateMultiHolidays() {
+  const box = document.getElementById('multi-holidays');
+  for (const s of LEAVE_STRATEGIES_2027) {
+    const label = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.value = s.key;
+    cb.dataset.mh = '1';
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(' ' + s.label));
+    box.appendChild(label);
+  }
+  const singleFields = [
+    'f-holiday', 'f-outbound', 'f-return',
+    'f-flex-out', 'f-flex-ret',
+  ];
+  const sync = () => {
+    const any = [...box.querySelectorAll('input[type=checkbox]')].some(c => c.checked);
+    singleFields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.disabled = any;
+    });
+    document.getElementById('f-mh-flex').disabled = !any;
+    document.getElementById('btn-mh-clear').disabled = !any;
+  };
+  box.addEventListener('change', sync);
+  document.getElementById('btn-mh-clear').addEventListener('click', () => {
+    box.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = false; });
+    sync();
+  });
+  const flex = document.getElementById('f-mh-flex');
+  const flexVal = document.getElementById('f-mh-flex-val');
+  const renderFlex = () => { flexVal.textContent = flex.value; };
+  flex.addEventListener('input', renderFlex);
+  renderFlex();
+  sync();
+}
+
+function getSelectedHolidayKeys() {
+  return [...document.querySelectorAll('#multi-holidays input[type=checkbox]')]
+    .filter(c => c.checked).map(c => c.value);
 }
 
 function toggleReturnByTripType() {
@@ -1604,6 +1714,7 @@ function wireTheme() {
 
 function init() {
   populateHolidays();
+  populateMultiHolidays();
   syncRangeLabels();
   toggleReturnByTripType();
   toggleFourLegExtras();
