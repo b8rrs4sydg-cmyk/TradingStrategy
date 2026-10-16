@@ -7,17 +7,30 @@ import type {
   DateWindowIn,
   ItineraryRequestIn,
   LeaveStrategy,
+  ScoringWeights,
   SearchResult,
   TicketStrategyType,
   TripType,
 } from "@/lib/types";
 
-const DEFAULT_WEIGHTS = {
+const DEFAULT_WEIGHTS: ScoringWeights = {
   price: 0.5,
   pto_efficiency: 0.2,
   flight_time: 0.15,
   strategy_risk: 0.15,
 };
+
+type Segment = {
+  origin: string;
+  destination: string;
+  anchor_date: string;
+  flex: number;
+};
+
+const INITIAL_SEGMENTS: Segment[] = [
+  { origin: "TPE", destination: "NRT", anchor_date: "2027-02-05", flex: 1 },
+  { origin: "KIX", destination: "TPE", anchor_date: "2027-02-11", flex: 1 },
+];
 
 type Props = {
   onResult: (r: SearchResult, loadingMs: number) => void;
@@ -36,6 +49,7 @@ export function SearchForm({ onResult, onError }: Props) {
   const [flexAfter, setFlexAfter] = useState(2);
   const [adults, setAdults] = useState(1);
   const [budget, setBudget] = useState<string>("");
+  const [segments, setSegments] = useState<Segment[]>(INITIAL_SEGMENTS);
 
   const [enabledStrategies, setEnabledStrategies] = useState<Record<TicketStrategyType, boolean>>({
     standard: true,
@@ -46,6 +60,8 @@ export function SearchForm({ onResult, onError }: Props) {
   });
   const [outerStations, setOuterStations] = useState("XMN");
   const [outerBufferDays, setOuterBufferDays] = useState(2);
+  const [weights, setWeights] = useState<ScoringWeights>(DEFAULT_WEIGHTS);
+  const [weightsOpen, setWeightsOpen] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -75,27 +91,63 @@ export function SearchForm({ onResult, onError }: Props) {
     [enabledStrategies]
   );
 
+  function updateSegment(i: number, patch: Partial<Segment>) {
+    setSegments((prev) => prev.map((s, idx) => (idx === i ? { ...s, ...patch } : s)));
+  }
+
+  function addSegment() {
+    const last = segments[segments.length - 1];
+    setSegments((prev) => [
+      ...prev,
+      {
+        origin: last?.destination ?? "TPE",
+        destination: "TPE",
+        anchor_date: last?.anchor_date ?? "2027-02-05",
+        flex: 1,
+      },
+    ]);
+  }
+
+  function removeSegment(i: number) {
+    setSegments((prev) => (prev.length <= 2 ? prev : prev.filter((_, idx) => idx !== i)));
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
     const startedAt = Date.now();
     try {
-      const windows: DateWindowIn[] = [
-        {
-          role: "outbound",
-          anchor_date: outbound,
-          flex_before: flexBefore,
-          flex_after: flexAfter,
-        },
-      ];
-      if (tripType === "round_trip") {
-        windows.push({
-          role: "return",
-          anchor_date: returnDate,
-          flex_before: flexBefore,
-          flex_after: flexAfter,
-        });
-      }
+      const windows: DateWindowIn[] =
+        tripType === "multi_city"
+          ? segments.map((seg, i) => ({
+              role: "segment",
+              anchor_date: seg.anchor_date,
+              flex_before: seg.flex,
+              flex_after: seg.flex,
+              sequence: i,
+              segment_origin: seg.origin.trim().toUpperCase() || null,
+              segment_destination: seg.destination.trim().toUpperCase() || null,
+            }))
+          : (() => {
+              const w: DateWindowIn[] = [
+                {
+                  role: "outbound",
+                  anchor_date: outbound,
+                  flex_before: flexBefore,
+                  flex_after: flexAfter,
+                },
+              ];
+              if (tripType === "round_trip") {
+                w.push({
+                  role: "return",
+                  anchor_date: returnDate,
+                  flex_before: flexBefore,
+                  flex_after: flexAfter,
+                });
+              }
+              return w;
+            })();
+
       const req: ItineraryRequestIn = {
         trip_type: tripType,
         cabin: "economy",
@@ -108,7 +160,7 @@ export function SearchForm({ onResult, onError }: Props) {
         holiday_key: holidayKey || null,
         max_total_budget: budget ? Number(budget) : null,
         max_pto_days: null,
-        scoring_weights: DEFAULT_WEIGHTS,
+        scoring_weights: weights,
         date_windows: windows,
         back_to_back_outer_stations: outerStations
           .split(",")
@@ -126,6 +178,7 @@ export function SearchForm({ onResult, onError }: Props) {
   }
 
   const fourLegOn = enabledStrategies.back_to_back_4leg;
+  const isMultiCity = tripType === "multi_city";
 
   return (
     <form onSubmit={onSubmit} className="space-y-5 rounded-xl border border-slate-200 p-5 dark:border-slate-800">
@@ -169,68 +222,142 @@ export function SearchForm({ onResult, onError }: Props) {
         </Field>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Field label="出發機場 (以逗號分隔)">
-          <input
-            type="text"
-            value={origins}
-            onChange={(e) => setOrigins(e.target.value)}
-            placeholder="TPE, TSA, KHH"
-            className={fieldClass}
-          />
-        </Field>
-        <Field label="目的地 (IATA 或國碼)">
-          <input
-            type="text"
-            value={destinations}
-            onChange={(e) => setDestinations(e.target.value)}
-            placeholder="NRT, HND, KIX"
-            className={fieldClass}
-          />
-        </Field>
-      </div>
+      {!isMultiCity && (
+        <>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Field label="出發機場 (以逗號分隔)">
+              <input
+                type="text"
+                value={origins}
+                onChange={(e) => setOrigins(e.target.value)}
+                placeholder="TPE, TSA, KHH"
+                className={fieldClass}
+              />
+            </Field>
+            <Field label="目的地 (IATA 或國碼)">
+              <input
+                type="text"
+                value={destinations}
+                onChange={(e) => setDestinations(e.target.value)}
+                placeholder="NRT, HND, KIX"
+                className={fieldClass}
+              />
+            </Field>
+          </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Field label="去程日">
-          <input
-            type="date"
-            value={outbound}
-            onChange={(e) => setOutbound(e.target.value)}
-            className={fieldClass}
-          />
-        </Field>
-        {tripType === "round_trip" && (
-          <Field label="回程日">
-            <input
-              type="date"
-              value={returnDate}
-              onChange={(e) => setReturnDate(e.target.value)}
-              className={fieldClass}
-            />
-          </Field>
-        )}
-      </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Field label="去程日">
+              <input
+                type="date"
+                value={outbound}
+                onChange={(e) => setOutbound(e.target.value)}
+                className={fieldClass}
+              />
+            </Field>
+            {tripType === "round_trip" && (
+              <Field label="回程日">
+                <input
+                  type="date"
+                  value={returnDate}
+                  onChange={(e) => setReturnDate(e.target.value)}
+                  className={fieldClass}
+                />
+              </Field>
+            )}
+          </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Field label={`去/回程前彈性 ±${flexBefore} 天`}>
-          <input
-            type="range"
-            min={0}
-            max={7}
-            value={flexBefore}
-            onChange={(e) => setFlexBefore(Number(e.target.value))}
-          />
-        </Field>
-        <Field label={`去/回程後彈性 ±${flexAfter} 天`}>
-          <input
-            type="range"
-            min={0}
-            max={7}
-            value={flexAfter}
-            onChange={(e) => setFlexAfter(Number(e.target.value))}
-          />
-        </Field>
-      </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Field label={`去/回程前彈性 ±${flexBefore} 天`}>
+              <input
+                type="range"
+                min={0}
+                max={7}
+                value={flexBefore}
+                onChange={(e) => setFlexBefore(Number(e.target.value))}
+              />
+            </Field>
+            <Field label={`去/回程後彈性 ±${flexAfter} 天`}>
+              <input
+                type="range"
+                min={0}
+                max={7}
+                value={flexAfter}
+                onChange={(e) => setFlexAfter(Number(e.target.value))}
+              />
+            </Field>
+          </div>
+        </>
+      )}
+
+      {isMultiCity && (
+        <fieldset className="rounded-lg border border-slate-200 p-4 dark:border-slate-800">
+          <legend className="px-2 text-sm font-semibold">多段旅程</legend>
+          <ol className="space-y-3">
+            {segments.map((seg, i) => (
+              <li
+                key={i}
+                className="grid gap-2 md:grid-cols-[auto_1fr_1fr_1fr_1fr_auto] md:items-end"
+              >
+                <span className="text-xs text-slate-500 md:self-center">#{i + 1}</span>
+                <Field label="起點">
+                  <input
+                    type="text"
+                    value={seg.origin}
+                    onChange={(e) => updateSegment(i, { origin: e.target.value })}
+                    placeholder="TPE"
+                    className={fieldClass}
+                  />
+                </Field>
+                <Field label="終點">
+                  <input
+                    type="text"
+                    value={seg.destination}
+                    onChange={(e) => updateSegment(i, { destination: e.target.value })}
+                    placeholder="NRT"
+                    className={fieldClass}
+                  />
+                </Field>
+                <Field label="日期">
+                  <input
+                    type="date"
+                    value={seg.anchor_date}
+                    onChange={(e) => updateSegment(i, { anchor_date: e.target.value })}
+                    className={fieldClass}
+                  />
+                </Field>
+                <Field label={`彈性 ±${seg.flex} 天`}>
+                  <input
+                    type="range"
+                    min={0}
+                    max={7}
+                    value={seg.flex}
+                    onChange={(e) => updateSegment(i, { flex: Number(e.target.value) })}
+                  />
+                </Field>
+                <button
+                  type="button"
+                  onClick={() => removeSegment(i)}
+                  disabled={segments.length <= 2}
+                  aria-label="移除本段"
+                  className="justify-self-end rounded border border-slate-300 px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  移除
+                </button>
+              </li>
+            ))}
+          </ol>
+          <button
+            type="button"
+            onClick={addSegment}
+            className="mt-3 rounded border border-slate-300 px-3 py-1 text-xs hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+          >
+            + 新增一段
+          </button>
+          <p className="mt-2 text-xs text-slate-500">
+            Multi-city 需 ≥ 2 段，日期必須嚴格遞增。相鄰段的終點與下一段起點不同時代表 open-jaw。
+          </p>
+        </fieldset>
+      )}
 
       <fieldset className="rounded-lg border border-slate-200 p-4 dark:border-slate-800">
         <legend className="px-2 text-sm font-semibold">策略</legend>
@@ -293,6 +420,49 @@ export function SearchForm({ onResult, onError }: Props) {
         </Field>
       </div>
 
+      <fieldset className="rounded-lg border border-slate-200 p-4 dark:border-slate-800">
+        <legend className="px-2 text-sm font-semibold">
+          <button
+            type="button"
+            onClick={() => setWeightsOpen((o) => !o)}
+            className="text-sm font-semibold hover:underline"
+          >
+            {weightsOpen ? "▾" : "▸"} 評分權重 (進階)
+          </button>
+        </legend>
+        {weightsOpen && (
+          <div className="grid gap-3 md:grid-cols-2">
+            <WeightSlider
+              label="價格優先"
+              value={weights.price}
+              onChange={(v) => setWeights((w) => ({ ...w, price: v }))}
+            />
+            <WeightSlider
+              label="請假效益比"
+              value={weights.pto_efficiency}
+              onChange={(v) => setWeights((w) => ({ ...w, pto_efficiency: v }))}
+            />
+            <WeightSlider
+              label="飛行時長"
+              value={weights.flight_time}
+              onChange={(v) => setWeights((w) => ({ ...w, flight_time: v }))}
+            />
+            <WeightSlider
+              label="策略風險 (低風險加分)"
+              value={weights.strategy_risk}
+              onChange={(v) => setWeights((w) => ({ ...w, strategy_risk: v }))}
+            />
+            <button
+              type="button"
+              onClick={() => setWeights(DEFAULT_WEIGHTS)}
+              className="col-span-full mt-1 self-start text-xs text-slate-500 hover:underline"
+            >
+              重設為預設
+            </button>
+          </div>
+        )}
+      </fieldset>
+
       <button
         type="submit"
         disabled={submitting}
@@ -314,6 +484,36 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
         {label}
       </span>
       {children}
+    </label>
+  );
+}
+
+function WeightSlider({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1 flex items-center justify-between text-xs font-medium uppercase tracking-wide text-slate-500">
+        <span>{label}</span>
+        <span className="font-mono text-slate-600 dark:text-slate-300">
+          {value.toFixed(2)}
+        </span>
+      </span>
+      <input
+        type="range"
+        min={0}
+        max={1}
+        step={0.05}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="w-full"
+      />
     </label>
   );
 }
