@@ -49,4 +49,9 @@ export const api = {
     if (!res.ok) throw new Error(`POST /plans/ics → ${res.status}`);
     return res.blob();
   },
+  plansAsCsv: async (plans: unknown[]): Promise<Blob> => {
+    const res = await postRaw("/plans/csv", { plans });
+    if (!res.ok) throw new Error(`POST /plans/csv → ${res.status}`);
+    return res.blob();
+  },
 };

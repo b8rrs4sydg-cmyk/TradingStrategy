@@ -1,8 +1,10 @@
-"""Plan-level endpoints: iCalendar export, (future) share links."""
+"""Plan-level endpoints: iCalendar export, CSV export, (future) share links."""
 
 from __future__ import annotations
 
+import csv
 from datetime import datetime
+from io import StringIO
 from typing import Any
 
 from fastapi import APIRouter, HTTPException
@@ -93,4 +95,44 @@ def export_plan_as_ics(plan_in: _PlanIn) -> Any:
         content=ics,
         media_type="text/calendar; charset=utf-8",
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
+
+
+class _CsvRequest(BaseModel):
+    plans: list[_PlanIn]
+
+
+@router.post("/csv")
+def export_plans_as_csv(req: _CsvRequest) -> Any:
+    """Flatten N plans into one spreadsheet-friendly table (one row per leg)."""
+
+    if not req.plans:
+        raise HTTPException(status_code=400, detail="Need at least one plan")
+
+    buf = StringIO()
+    writer = csv.writer(buf)
+    writer.writerow([
+        "plan_idx", "strategy", "total_cost", "currency",
+        "pto_days", "total_travel_days", "explain",
+        "ticket_idx", "ticket_offer_id", "ticket_price",
+        "leg_idx", "origin", "destination",
+        "departure_utc", "arrival_utc",
+        "carrier", "flight_number", "cabin", "stops",
+    ])
+    for pi, p in enumerate(req.plans):
+        for ti, t in enumerate(p.tickets):
+            for li, leg in enumerate(t.legs):
+                writer.writerow([
+                    pi, p.strategy.value, p.total_cost, p.currency,
+                    p.pto_days, p.total_travel_days, p.explain or "",
+                    ti, t.offer_id, t.total_price,
+                    li, leg.origin, leg.destination,
+                    leg.departure.isoformat(), leg.arrival.isoformat(),
+                    leg.carrier, leg.flight_number, leg.cabin.value, leg.stops,
+                ])
+
+    return Response(
+        content=buf.getvalue(),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": 'attachment; filename="flight-plans.csv"'},
     )
