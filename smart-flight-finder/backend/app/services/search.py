@@ -30,18 +30,32 @@ logger = logging.getLogger(__name__)
 def resolve_default_provider() -> FlightOfferProvider:
     """Pick a provider from env: Amadeus if both credentials are set, else Stub.
 
-    Keeps the import of :mod:`app.providers.amadeus` lazy so unit tests that
-    never configure Amadeus don't need httpx at import time.
+    When ``REDIS_URL`` is set, wrap the chosen provider in a
+    :class:`RedisCachingProvider` so repeated searches across users share a
+    TTL cache (default 2h). ``CachingProvider`` is still added per-request
+    on top by :class:`SearchService` to collapse intra-request fan-out.
+
+    Imports are lazy so unit tests that don't need Amadeus or Redis skip
+    the extra imports entirely.
     """
 
+    base: FlightOfferProvider = StubFlightProvider()
     if os.getenv("AMADEUS_CLIENT_ID") and os.getenv("AMADEUS_CLIENT_SECRET"):
         try:
             from app.providers.amadeus import AmadeusError, AmadeusProvider
 
-            return AmadeusProvider(env=os.getenv("AMADEUS_ENV", "test"))
+            base = AmadeusProvider(env=os.getenv("AMADEUS_ENV", "test"))
         except AmadeusError as e:
             logger.warning("amadeus_init_failed_falling_back_to_stub", extra={"err": str(e)})
-    return StubFlightProvider()
+
+    if os.getenv("REDIS_URL"):
+        try:
+            from app.providers.redis_cache import RedisCachingProvider
+
+            return RedisCachingProvider(base)
+        except Exception as e:  # pragma: no cover  # noqa: BLE001 — any Redis failure degrades gracefully
+            logger.warning("redis_cache_init_failed", extra={"err": str(e)})
+    return base
 
 
 class SearchService:
