@@ -1,11 +1,15 @@
-name: Deploy demo to GitHub Pages
+name: Deploy demo to GitHub Pages (dormant)
 
-# Pure gh-pages branch deploy — no "github-pages" environment (that one
-# blocks on org/repo-level protection rules that the Claude GitHub App
-# can't flip). After pushing the gh-pages branch, call the Pages REST
-# API from the runner itself to point Source at it — the runner's
-# default GITHUB_TOKEN has pages:write, which Settings UI toggles do.
-# Then curl the URL and dump the status so the log carries the proof.
+# Deployment target for this project is the Claude Artifact at
+# https://claude.ai/artifact/RzaFsGWZg3phJHoUZYem2F — the user picked that
+# over GitHub Pages after we found Pages Source is pointed at the default
+# branch of an unrelated project in this repo (admin:write needed to
+# re-point it, which the Claude GitHub App integration lacks).
+#
+# Workflow kept so if someone later moves Pages Source → "Deploy from
+# branch gh-pages / root" in Settings, every push already stages the
+# built site there. No verify step: Pages is not the live target, so
+# there is nothing to prove green here.
 
 on:
   push:
@@ -19,14 +23,13 @@ on:
 
 permissions:
   contents: write
-  pages: write
 
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  stage-gh-pages:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +41,7 @@ jobs:
           touch _site/.nojekyll
           test -f _site/index.html
 
-      - name: Push gh-pages branch
+      - name: Push to gh-pages branch
         uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e  # v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -47,63 +50,3 @@ jobs:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: ${{ github.event.head_commit.message }}
-
-      - name: Point Pages Source at gh-pages branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set +e
-          echo "=== Current Pages config ==="
-          curl -sS -w "\nHTTP %{http_code}\n" \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            "https://api.github.com/repos/${{ github.repository }}/pages"
-          echo ""
-          echo "=== PUT Pages source → branch gh-pages / root ==="
-          curl -sS -w "\nHTTP %{http_code}\n" -X PUT \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -d '{"source":{"branch":"gh-pages","path":"/"}}' \
-            "https://api.github.com/repos/${{ github.repository }}/pages"
-          echo ""
-          echo "=== Request a Pages build ==="
-          curl -sS -w "\nHTTP %{http_code}\n" -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            "https://api.github.com/repos/${{ github.repository }}/pages/builds"
-          exit 0
-
-      - name: Verify live Pages URL
-        env:
-          URL: https://b8rrs4sydg-cmyk.github.io/TradingStrategy/
-        run: |
-          set +e
-          attempt=0
-          code=0
-          while [ "$attempt" -lt 24 ]; do
-            attempt=$((attempt + 1))
-            code="$(curl -sS -o /tmp/body -w '%{http_code}' --max-time 15 "$URL")"
-            echo "attempt $attempt → HTTP $code"
-            [ "$code" = "200" ] && break
-            sleep 10
-          done
-          echo ""
-          echo "=== HEAD ==="
-          curl -sS -I --max-time 15 "$URL"
-          echo ""
-          echo "=== BODY (first 400 bytes) ==="
-          head -c 400 /tmp/body
-          echo ""
-          echo ""
-          echo "=== Markers ==="
-          grep -q "多假期排列組合" /tmp/body && echo "MARKER_MULTI_HOLIDAY: PRESENT" || echo "MARKER_MULTI_HOLIDAY: MISSING"
-          grep -q "元旦請 0 休 3"      /tmp/body && echo "MARKER_NYD: PRESENT"         || echo "MARKER_NYD: MISSING"
-          grep -q "聖誕請 2 休 5"      /tmp/body && echo "MARKER_XMAS: PRESENT"        || echo "MARKER_XMAS: MISSING"
-          echo ""
-          if [ "$code" = "200" ]; then
-            echo "SUCCESS: Pages site live at $URL"
-            exit 0
-          else
-            echo "WARNING: Pages URL returned HTTP $code after 4 minutes"
-            exit 1
-          fi
