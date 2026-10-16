@@ -2,15 +2,20 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from app.core.rate_limit import enforce_rate_limit
 from app.schemas import ItineraryRequestIn, SearchResult, StrategyPlanOut
 from app.services.search import SearchService
 
 router = APIRouter(tags=["search"])
 
 
-@router.post("/search", response_model=SearchResult)
+@router.post(
+    "/search",
+    response_model=SearchResult,
+    dependencies=[Depends(enforce_rate_limit)],
+)
 def search(req: ItineraryRequestIn) -> SearchResult:
     service = SearchService()
     matrix_size, plans, cache_stats = service.run(req)
