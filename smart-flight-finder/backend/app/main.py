@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app import __version__
 from app.config import get_settings
 from app.core.logging_config import install as install_json_logging
-from app.routers import health, holidays, metrics, plans, search
+from app.routers import admin, health, holidays, metrics, plans, search
 
 install_json_logging()
 
@@ -32,6 +32,7 @@ def create_app() -> FastAPI:
     app.include_router(search.router)
     app.include_router(plans.router)
     app.include_router(metrics.router)
+    app.include_router(admin.router)
     return app
 
 
