@@ -6,6 +6,9 @@ plug-in provider, merges plans, and ranks via :mod:`app.services.scoring`.
 
 from __future__ import annotations
 
+import logging
+import os
+
 from app.models.enums import TicketStrategyType
 from app.providers.base import FlightOfferProvider
 from app.providers.cache import CachingProvider
@@ -21,10 +24,29 @@ from app.services.strategies import (
     StrategyPlan,
 )
 
+logger = logging.getLogger(__name__)
+
+
+def resolve_default_provider() -> FlightOfferProvider:
+    """Pick a provider from env: Amadeus if both credentials are set, else Stub.
+
+    Keeps the import of :mod:`app.providers.amadeus` lazy so unit tests that
+    never configure Amadeus don't need httpx at import time.
+    """
+
+    if os.getenv("AMADEUS_CLIENT_ID") and os.getenv("AMADEUS_CLIENT_SECRET"):
+        try:
+            from app.providers.amadeus import AmadeusError, AmadeusProvider
+
+            return AmadeusProvider(env=os.getenv("AMADEUS_ENV", "test"))
+        except AmadeusError as e:
+            logger.warning("amadeus_init_failed_falling_back_to_stub", extra={"err": str(e)})
+    return StubFlightProvider()
+
 
 class SearchService:
     def __init__(self, provider: FlightOfferProvider | None = None) -> None:
-        self._raw_provider = provider or StubFlightProvider()
+        self._raw_provider = provider or resolve_default_provider()
         self.provider: CachingProvider | FlightOfferProvider = self._raw_provider
 
     def run(
