@@ -1,11 +1,11 @@
 name: Deploy demo to GitHub Pages
 
-# Deploys smart-flight-finder/public/ to the gh-pages branch, which the
-# repository already serves (has_pages: true). This path avoids the
-# official actions/deploy-pages flow — that one blocks until Pages Source
-# is set to "GitHub Actions" in Repository Settings, which this Claude
-# GitHub App integration can't flip. Pushing to gh-pages works with just
-# the default GITHUB_TOKEN contents:write permission.
+# Pages has already been enabled on this repo (has_pages: true in the REST
+# response), so configure-pages should not need to call the "Create Pages
+# Site" API (which the Claude GitHub App integration can't call). Setting
+# enablement: false avoids that failing call. If the user's Pages Source
+# is "GitHub Actions", this deploys. If it's "Deploy from branch", the
+# step-5 peaceiris fallback updates the gh-pages branch instead.
 
 on:
   push:
@@ -19,6 +19,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: "pages"
@@ -26,16 +28,23 @@ concurrency:
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Prepare site
         run: |
           mkdir -p _site
           cp -R smart-flight-finder/public/* _site/
           touch _site/.nojekyll
           test -f _site/index.html
-      - name: Deploy to gh-pages
+
+      # Keep the gh-pages branch fresh so if Pages Source is "Deploy from
+      # branch gh-pages", the push alone makes the site live.
+      - name: Fallback — push to gh-pages branch
         uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e  # v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -44,18 +53,32 @@ jobs:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: ${{ github.event.head_commit.message }}
+
+      # Primary path — Pages Source = "GitHub Actions".
+      - uses: actions/configure-pages@v5
+        id: pages
+        continue-on-error: true
+        with:
+          enablement: false
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.pages.outcome == 'success'
+        with:
+          path: _site
+
+      - name: Deploy
+        id: deployment
+        if: steps.pages.outcome == 'success'
+        uses: actions/deploy-pages@v4
+
       - name: Verify live Pages URL
-        # GitHub's runner has unrestricted egress, so we probe the live site
-        # here and let the log carry the evidence back to whoever reads it.
-        # Pages serves gh-pages uploads with up to ~60s propagation lag, so
-        # retry a handful of times before giving up.
         env:
           URL: https://b8rrs4sydg-cmyk.github.io/TradingStrategy/
         run: |
           set +e
           attempt=0
           code=0
-          while [ "$attempt" -lt 12 ]; do
+          while [ "$attempt" -lt 15 ]; do
             attempt=$((attempt + 1))
             code="$(curl -sS -o /tmp/body -w '%{http_code}' --max-time 15 "$URL")"
             echo "attempt $attempt → HTTP $code"
@@ -76,9 +99,10 @@ jobs:
           grep -q "聖誕請 2 休 5"      /tmp/body && echo "MARKER_XMAS: PRESENT"        || echo "MARKER_XMAS: MISSING"
           echo ""
           if [ "$code" = "200" ]; then
-            echo "SUCCESS: Pages site serving at $URL"
+            echo "SUCCESS: Pages site live at $URL"
             exit 0
           else
-            echo "WARNING: Pages URL returned HTTP $code — may need Repository Settings → Pages → Source → Deploy from branch gh-pages / root"
+            echo "WARNING: Pages URL returned HTTP $code"
+            echo "Fix: Repository Settings → Pages → Source → Deploy from branch gh-pages / (root) → Save"
             exit 1
           fi
