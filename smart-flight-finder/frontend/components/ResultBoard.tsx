@@ -37,12 +37,27 @@ export function ResultBoard({ result }: { result: SearchResult }) {
     return map;
   }, [result.plans]);
 
+  const cache = result.provider_cache;
+  const hitRate =
+    cache && cache.total ? (cache.hits ?? 0) / cache.total : null;
+
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 px-4 py-3 text-sm dark:border-slate-800">
-        <div>
-          <strong>{result.plans.length}</strong> 個方案 · 展開{" "}
-          <strong>{result.date_matrix_size}</strong> 個日期組合
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <span>
+            <strong>{result.plans.length}</strong> 個方案 · 展開{" "}
+            <strong>{result.date_matrix_size}</strong> 個日期組合
+          </span>
+          {cache && cache.total ? (
+            <span
+              className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-200"
+              title={`${cache.unique_queries ?? 0} unique queries → ${cache.total} total provider calls`}
+            >
+              Cache {hitRate !== null ? `${Math.round(hitRate * 100)}%` : "—"} ·
+              {" "}省 {Math.max(0, (cache.hits ?? 0))} 次 provider 呼叫
+            </span>
+          ) : null}
         </div>
         <div className="flex items-center gap-3">
           <label className="flex items-center gap-2">

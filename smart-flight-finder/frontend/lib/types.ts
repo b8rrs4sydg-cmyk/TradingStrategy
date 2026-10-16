@@ -117,8 +117,16 @@ export type StrategyPlanOut = {
   explain: string | null;
 };
 
+export type ProviderCacheStats = {
+  hits?: number;
+  misses?: number;
+  total?: number;
+  unique_queries?: number;
+};
+
 export type SearchResult = {
   request_echo: Record<string, unknown>;
   date_matrix_size: number;
   plans: StrategyPlanOut[];
+  provider_cache?: ProviderCacheStats;
 };

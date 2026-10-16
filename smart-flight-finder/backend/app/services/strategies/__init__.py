@@ -8,12 +8,14 @@ from app.services.strategies.base import (
     StrategyPlan,
     TicketOffer,
 )
+from app.services.strategies.open_jaw import OpenJawPlanner
 from app.services.strategies.reverse import ReverseTicketPlanner
 from app.services.strategies.standard import StandardPlanner
 
 __all__ = [
     "FlightLeg",
     "FourLegPlanner",
+    "OpenJawPlanner",
     "ReverseTicketPlanner",
     "RiskLevel",
     "RiskWarning",

@@ -15,6 +15,7 @@ from app.services.date_matrix import expand_itinerary, matrix_cardinality
 from app.services.scoring import score_plans
 from app.services.strategies import (
     FourLegPlanner,
+    OpenJawPlanner,
     ReverseTicketPlanner,
     StandardPlanner,
     StrategyPlan,
@@ -81,5 +82,13 @@ class SearchService:
                 outer_buffer_days=req.back_to_back_outer_buffer_days,
                 adults=req.adults,
             )
-        # Open-jaw & hidden-city planners not yet implemented in Phase 1 scaffold
+        if strategy is TicketStrategyType.OPEN_JAW:
+            return OpenJawPlanner(self.provider).plan(
+                expanded=expanded,
+                origins=req.origins,
+                destinations=req.destinations,
+                adults=req.adults,
+            )
+        # Hidden-city planner intentionally left out — needs careful fare-rule
+        # review before shipping, and the UX implications are non-trivial.
         return []
