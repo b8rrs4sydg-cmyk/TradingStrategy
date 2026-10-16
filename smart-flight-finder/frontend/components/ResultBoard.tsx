@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { api } from "@/lib/api";
 import { fingerprintPlan, readFavorites } from "@/lib/favorites";
 import { ComparePanel } from "./ComparePanel";
+import { MatrixHeatmap } from "./MatrixHeatmap";
 import { PlanCard } from "./PlanCard";
 import type { SearchResult, StrategyPlanOut, TicketStrategyType } from "@/lib/types";
 
@@ -185,6 +186,8 @@ export function ResultBoard({ result }: { result: SearchResult }) {
       {comparing && selectedPlans.length >= 2 && (
         <ComparePanel plans={selectedPlans} onClose={() => setComparing(false)} />
       )}
+
+      <MatrixHeatmap plans={result.plans} />
 
       <div className="space-y-3">
         {plans.map((plan, i) => {
