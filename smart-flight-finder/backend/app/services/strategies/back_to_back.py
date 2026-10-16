@@ -81,27 +81,33 @@ class FourLegPlanner:
             return []
 
         plans: list[StrategyPlan] = []
-        # Baseline is per-destination only; hoist it so N outer stations
-        # don't each pay for recomputing the same inner round-trip scan.
-        baseline_by_dest: dict[str, int] = {
-            destination: self._baseline_direct_round_trip(
+
+        # Baseline and inner_ticket both depend only on destination, not on
+        # outer_station — precompute once per destination so adding a second
+        # or third outer station is nearly free (fetches are deduped by the
+        # provider cache anyway, but this also skips the Python call overhead).
+        baseline_by_dest: dict[str, int] = {}
+        inner_tickets_by_dest: dict[str, dict[_InnerDates, TicketOffer]] = {}
+        for destination in destinations:
+            baseline_by_dest[destination] = self._baseline_direct_round_trip(
                 destination=destination,
                 inner_pairs=inner_pairs,
                 adults=adults,
             )
-            for destination in destinations
-        }
+            per_dest: dict[_InnerDates, TicketOffer] = {}
+            for inner in inner_pairs:
+                tkt = self._cheapest_inner(
+                    destination=destination, inner=inner, adults=adults
+                )
+                if tkt is not None:
+                    per_dest[inner] = tkt
+            inner_tickets_by_dest[destination] = per_dest
+
         for outer_station in outer_stations:
             for destination in destinations:
                 baseline = baseline_by_dest[destination]
-                for inner in inner_pairs:
-                    inner_ticket = self._cheapest_inner(
-                        destination=destination,
-                        inner=inner,
-                        adults=adults,
-                    )
-                    if inner_ticket is None:
-                        continue
+                inner_tickets = inner_tickets_by_dest[destination]
+                for inner, inner_ticket in inner_tickets.items():
                     for outer in self._iter_outer_dates(inner, outer_buffer_days):
                         outer_ticket = self._cheapest_outer(
                             outer_station=outer_station,
