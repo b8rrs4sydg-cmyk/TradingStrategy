@@ -46,7 +46,14 @@ def resolve_default_provider() -> FlightOfferProvider:
 
             base = AmadeusProvider(env=os.getenv("AMADEUS_ENV", "test"))
         except AmadeusError as e:
-            logger.warning("amadeus_init_failed_falling_back_to_stub", extra={"err": str(e)})
+            logger.warning("amadeus_init_failed", extra={"err": str(e)})
+    elif os.getenv("SKYSCANNER_RAPIDAPI_KEY"):
+        try:
+            from app.providers.skyscanner import SkyscannerError, SkyscannerProvider
+
+            base = SkyscannerProvider()
+        except SkyscannerError as e:
+            logger.warning("skyscanner_init_failed", extra={"err": str(e)})
 
     if os.getenv("REDIS_URL"):
         try:
