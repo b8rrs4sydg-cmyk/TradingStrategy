@@ -44,3 +44,41 @@ jobs:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: ${{ github.event.head_commit.message }}
+      - name: Verify live Pages URL
+        # GitHub's runner has unrestricted egress, so we probe the live site
+        # here and let the log carry the evidence back to whoever reads it.
+        # Pages serves gh-pages uploads with up to ~60s propagation lag, so
+        # retry a handful of times before giving up.
+        env:
+          URL: https://b8rrs4sydg-cmyk.github.io/TradingStrategy/
+        run: |
+          set +e
+          attempt=0
+          code=0
+          while [ "$attempt" -lt 12 ]; do
+            attempt=$((attempt + 1))
+            code="$(curl -sS -o /tmp/body -w '%{http_code}' --max-time 15 "$URL")"
+            echo "attempt $attempt → HTTP $code"
+            [ "$code" = "200" ] && break
+            sleep 10
+          done
+          echo ""
+          echo "=== HEAD ==="
+          curl -sS -I --max-time 15 "$URL" | tee /tmp/head.txt
+          echo ""
+          echo "=== BODY (first 400 bytes) ==="
+          head -c 400 /tmp/body
+          echo ""
+          echo ""
+          echo "=== Markers ==="
+          grep -q "多假期排列組合" /tmp/body && echo "MARKER_MULTI_HOLIDAY: PRESENT" || echo "MARKER_MULTI_HOLIDAY: MISSING"
+          grep -q "元旦請 0 休 3"      /tmp/body && echo "MARKER_NYD: PRESENT"         || echo "MARKER_NYD: MISSING"
+          grep -q "聖誕請 2 休 5"      /tmp/body && echo "MARKER_XMAS: PRESENT"        || echo "MARKER_XMAS: MISSING"
+          echo ""
+          if [ "$code" = "200" ]; then
+            echo "SUCCESS: Pages site serving at $URL"
+            exit 0
+          else
+            echo "WARNING: Pages URL returned HTTP $code — may need Repository Settings → Pages → Source → Deploy from branch gh-pages / root"
+            exit 1
+          fi
