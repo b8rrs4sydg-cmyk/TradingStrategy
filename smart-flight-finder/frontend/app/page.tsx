@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { ResultBoard } from "@/components/ResultBoard";
 import { SearchForm } from "@/components/SearchForm";
+import { ShortcutHelp } from "@/components/ShortcutHelp";
 import type { SearchResult } from "@/lib/types";
 
 export default function HomePage() {
@@ -54,6 +55,8 @@ export default function HomePage() {
           <ResultBoard result={result} />
         </div>
       )}
+
+      <ShortcutHelp />
     </main>
   );
 }
