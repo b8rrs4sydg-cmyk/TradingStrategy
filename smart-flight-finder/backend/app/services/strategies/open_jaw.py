@@ -52,9 +52,21 @@ class OpenJawPlanner:
             return []
 
         plans: list[StrategyPlan] = []
+        # Baseline depends only on (origin, dest_a); dedupe across the (a, b)
+        # pair enumeration where the same origin→a baseline would recompute.
+        baseline_cache: dict[tuple[str, str], int] = {}
+
+        def baseline_for(origin: str, dest_a: str) -> int:
+            key = (origin, dest_a)
+            if key not in baseline_cache:
+                baseline_cache[key] = self._baseline_round_trip(
+                    origin, dest_a, out_dates, ret_dates, adults
+                )
+            return baseline_cache[key]
+
         for origin in origins:
             for a, b in _distinct_pairs(destinations):
-                baseline = self._baseline_round_trip(origin, a, out_dates, ret_dates, adults)
+                baseline = baseline_for(origin, a)
                 for out_date in out_dates:
                     for ret_date in ret_dates:
                         if (ret_date - out_date).days < 1:

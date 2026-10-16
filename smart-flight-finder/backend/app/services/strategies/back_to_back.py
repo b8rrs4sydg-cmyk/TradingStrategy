@@ -81,13 +81,19 @@ class FourLegPlanner:
             return []
 
         plans: list[StrategyPlan] = []
+        # Baseline is per-destination only; hoist it so N outer stations
+        # don't each pay for recomputing the same inner round-trip scan.
+        baseline_by_dest: dict[str, int] = {
+            destination: self._baseline_direct_round_trip(
+                destination=destination,
+                inner_pairs=inner_pairs,
+                adults=adults,
+            )
+            for destination in destinations
+        }
         for outer_station in outer_stations:
             for destination in destinations:
-                baseline = self._baseline_direct_round_trip(
-                    destination=destination,
-                    inner_pairs=inner_pairs,
-                    adults=adults,
-                )
+                baseline = baseline_by_dest[destination]
                 for inner in inner_pairs:
                     inner_ticket = self._cheapest_inner(
                         destination=destination,
