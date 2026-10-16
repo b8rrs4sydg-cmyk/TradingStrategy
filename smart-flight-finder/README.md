@@ -93,17 +93,26 @@ Two live targets are set up and ready to go:
 
 The standalone demo (`smart-flight-finder/public/index.html` — same algorithms,
 same seed table, zero backend) deploys via `.github/workflows/pages.yml`.
-The workflow is wired up and runs on every push to this branch; it will go
-live once Pages is enabled on this repo. For a free GitHub account that
-means toggling the repo to **public** first (private-repo Pages requires
-GitHub Pro):
+The workflow is pushed and tried to run; it currently fails with
+`Resource not accessible by integration` because the Claude GitHub App
+installation on this repo does not have the Pages administration scope.
 
-1. Repo **Settings → General → Change visibility → Make public** (the
-   backend scaffold has no secrets; the `.env.example` is a template).
-2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**
-   (one radio button).
+**One of these three enables the URL below:**
 
-Future URL: **https://b8rrs4sydg-cmyk.github.io/TradingStrategy/**
+- **Make the repo public** — Settings → General → Change visibility → Make
+  public, then Settings → Pages → Build and deployment → Source: GitHub
+  Actions. Free, works with the current App permissions. The scaffold
+  has no secrets; `.env.example` is a template.
+- **Reconnect the Claude GitHub App with Pages scope** at
+  https://claude.ai/connect-github, so the workflow's auto-enablement
+  works even on a private repo.
+- **Upgrade to GitHub Pro** so private-repo Pages is allowed, then enable
+  Pages in Settings as above.
+
+Once any of those is done, the next push (or a manual re-run from the
+Actions tab) deploys the demo to:
+
+**https://b8rrs4sydg-cmyk.github.io/TradingStrategy/**
 
 ### 2. Claude Artifact — a private, logged-in demo that works right now
 
