@@ -1,17 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { PlanCard } from "@/components/PlanCard";
 import { ResultBoard } from "@/components/ResultBoard";
 import { SearchForm } from "@/components/SearchForm";
 import { ShortcutHelp } from "@/components/ShortcutHelp";
-import type { SearchResult } from "@/lib/types";
+import { decodePlanFromHash } from "@/lib/share";
+import type { SearchResult, StrategyPlanOut } from "@/lib/types";
 
 export default function HomePage() {
   const [result, setResult] = useState<SearchResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [elapsedMs, setElapsedMs] = useState<number | null>(null);
+  const [sharedPlan, setSharedPlan] = useState<StrategyPlanOut | null>(null);
+
+  useEffect(() => {
+    const plan = decodePlanFromHash(window.location.hash);
+    if (plan) setSharedPlan(plan);
+  }, []);
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
@@ -31,6 +39,25 @@ export default function HomePage() {
           </Link>
         </nav>
       </header>
+
+      {sharedPlan && (
+        <section className="mb-8 space-y-3 rounded-xl border border-brand/40 bg-brand/5 p-4 dark:bg-brand/10">
+          <header className="flex items-center justify-between">
+            <h2 className="text-sm font-semibold">分享的方案</h2>
+            <button
+              type="button"
+              onClick={() => {
+                setSharedPlan(null);
+                history.replaceState(null, "", window.location.pathname);
+              }}
+              className="rounded px-2 py-1 text-xs text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+            >
+              關閉
+            </button>
+          </header>
+          <PlanCard plan={sharedPlan} rank={1} />
+        </section>
+      )}
 
       <SearchForm
         onResult={(r, ms) => {
