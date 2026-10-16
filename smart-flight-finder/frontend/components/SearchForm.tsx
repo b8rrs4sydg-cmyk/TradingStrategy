@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { api } from "@/lib/api";
 import type {
@@ -64,6 +64,18 @@ export function SearchForm({ onResult, onError }: Props) {
   const [weightsOpen, setWeightsOpen] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      // ⌘/Ctrl + Enter submits from any field in the form
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+        formRef.current?.requestSubmit();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   useEffect(() => {
     api.leaveStrategies()
@@ -181,7 +193,11 @@ export function SearchForm({ onResult, onError }: Props) {
   const isMultiCity = tripType === "multi_city";
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5 rounded-xl border border-slate-200 p-5 dark:border-slate-800">
+    <form
+      ref={formRef}
+      onSubmit={onSubmit}
+      className="space-y-5 rounded-xl border border-slate-200 p-5 dark:border-slate-800"
+    >
       <div className="grid gap-4 md:grid-cols-3">
         <Field label="假期快選">
           <select
@@ -463,13 +479,21 @@ export function SearchForm({ onResult, onError }: Props) {
         )}
       </fieldset>
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {submitting ? "搜尋中…" : "搜尋"}
-      </button>
+      <div className="flex items-center gap-3">
+        <button
+          type="submit"
+          disabled={submitting}
+          className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {submitting ? "搜尋中…" : "搜尋"}
+        </button>
+        <span className="text-xs text-slate-500">
+          <kbd className="rounded border border-slate-300 bg-slate-100 px-1 font-mono dark:border-slate-700 dark:bg-slate-800">
+            ⌘ Enter
+          </kbd>{" "}
+          從任何欄位送出
+        </span>
+      </div>
     </form>
   );
 }

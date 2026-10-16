@@ -5,6 +5,7 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import { TimelineView } from "./TimelineView";
 import type { RiskLevel, StrategyPlanOut, TicketStrategyType } from "@/lib/types";
+import { fingerprintPlan, toggleFavorite } from "@/lib/favorites";
 
 const STRATEGY_LABEL: Record<TicketStrategyType, string> = {
   standard: "一般來回",
@@ -20,10 +21,27 @@ const RISK_BADGE: Record<RiskLevel, string> = {
   high: "bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300",
 };
 
-export function PlanCard({ plan, rank }: { plan: StrategyPlanOut; rank: number }) {
+export function PlanCard({
+  plan,
+  rank,
+  isFavorite = false,
+  onToggleFavorite,
+}: {
+  plan: StrategyPlanOut;
+  rank: number;
+  isFavorite?: boolean;
+  onToggleFavorite?: (key: string, next: boolean) => void;
+}) {
   const [open, setOpen] = useState(rank === 1);
   const [downloading, setDownloading] = useState(false);
   const twd = plan.total_cost.toLocaleString("en-US");
+
+  function star(e: React.MouseEvent) {
+    e.stopPropagation();
+    const key = fingerprintPlan(plan);
+    const favs = toggleFavorite(key);
+    onToggleFavorite?.(key, favs.has(key));
+  }
 
   async function downloadIcs() {
     setDownloading(true);
@@ -51,6 +69,17 @@ export function PlanCard({ plan, rank }: { plan: StrategyPlanOut; rank: number }
         onClick={() => setOpen((o) => !o)}
       >
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={star}
+            aria-label={isFavorite ? "取消收藏" : "收藏"}
+            aria-pressed={isFavorite}
+            className={`text-base ${
+              isFavorite ? "text-amber-500" : "text-slate-300 hover:text-amber-400 dark:text-slate-600"
+            }`}
+          >
+            {isFavorite ? "★" : "☆"}
+          </button>
           <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
             #{rank}
           </span>

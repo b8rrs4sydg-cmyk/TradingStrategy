@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { api } from "@/lib/api";
+import { fingerprintPlan, readFavorites } from "@/lib/favorites";
 import { ComparePanel } from "./ComparePanel";
 import { PlanCard } from "./PlanCard";
 import type { SearchResult, StrategyPlanOut, TicketStrategyType } from "@/lib/types";
@@ -17,6 +18,21 @@ export function ResultBoard({ result }: { result: SearchResult }) {
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
   const [comparing, setComparing] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    setFavorites(readFavorites());
+  }, [result]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && comparing) {
+        setComparing(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [comparing]);
 
   const plans = useMemo(() => {
     let list = [...result.plans];
@@ -33,8 +49,14 @@ export function ResultBoard({ result }: { result: SearchResult }) {
       default:
         list.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
     }
+    // Favorites rise to the top within whatever sort order the user picked.
+    list.sort(
+      (a, b) =>
+        (favorites.has(fingerprintPlan(b)) ? 1 : 0) -
+        (favorites.has(fingerprintPlan(a)) ? 1 : 0),
+    );
     return list;
-  }, [result.plans, sortKey, filterStrategy]);
+  }, [result.plans, sortKey, filterStrategy, favorites]);
 
   const strategyCounts = useMemo(() => {
     const map = new Map<TicketStrategyType, number>();
@@ -167,6 +189,7 @@ export function ResultBoard({ result }: { result: SearchResult }) {
       <div className="space-y-3">
         {plans.map((plan, i) => {
           const k = keyOf(plan, i);
+          const favKey = fingerprintPlan(plan);
           const checked = selectedKeys.has(k);
           const atLimit = !checked && selectedKeys.size >= MAX_COMPARE;
           return (
@@ -180,7 +203,19 @@ export function ResultBoard({ result }: { result: SearchResult }) {
                 aria-label={`選擇方案 ${i + 1} 比較`}
               />
               <div className="flex-1">
-                <PlanCard plan={plan} rank={i + 1} />
+                <PlanCard
+                  plan={plan}
+                  rank={i + 1}
+                  isFavorite={favorites.has(favKey)}
+                  onToggleFavorite={(key, next) =>
+                    setFavorites((prev) => {
+                      const copy = new Set(prev);
+                      if (next) copy.add(key);
+                      else copy.delete(key);
+                      return copy;
+                    })
+                  }
+                />
               </div>
             </div>
           );
