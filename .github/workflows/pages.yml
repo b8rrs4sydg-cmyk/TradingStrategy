@@ -1,5 +1,12 @@
 name: Deploy demo to GitHub Pages
 
+# Deploys smart-flight-finder/public/ to the gh-pages branch, which the
+# repository already serves (has_pages: true). This path avoids the
+# official actions/deploy-pages flow — that one blocks until Pages Source
+# is set to "GitHub Actions" in Repository Settings, which this Claude
+# GitHub App integration can't flip. Pushing to gh-pages works with just
+# the default GITHUB_TOKEN contents:write permission.
+
 on:
   push:
     branches:
@@ -11,9 +18,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: "pages"
@@ -21,9 +26,6 @@ concurrency:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,14 +33,14 @@ jobs:
         run: |
           mkdir -p _site
           cp -R smart-flight-finder/public/* _site/
-          # Optional: a very light index page listing what's inside.
+          touch _site/.nojekyll
           test -f _site/index.html
-      - uses: actions/configure-pages@v5
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e  # v4.0.0
         with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: ${{ github.event.head_commit.message }}
