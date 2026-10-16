@@ -85,6 +85,40 @@ npm run dev
 
 ---
 
+## Deployment
+
+Two live targets are set up and ready to go:
+
+### 1. GitHub Pages — a public, shareable URL for the static demo
+
+The standalone demo (`smart-flight-finder/public/index.html` — same algorithms,
+same seed table, zero backend) deploys via `.github/workflows/pages.yml`.
+The workflow is wired up and runs on every push to this branch; it will go
+live once Pages is enabled on this repo. For a free GitHub account that
+means toggling the repo to **public** first (private-repo Pages requires
+GitHub Pro):
+
+1. Repo **Settings → General → Change visibility → Make public** (the
+   backend scaffold has no secrets; the `.env.example` is a template).
+2. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**
+   (one radio button).
+
+Future URL: **https://b8rrs4sydg-cmyk.github.io/TradingStrategy/**
+
+### 2. Claude Artifact — a private, logged-in demo that works right now
+
+The same page is published as an Artifact. Works immediately for the owner;
+make it shareable through the Share menu inside claude.ai.
+
+Live now: **https://claude.ai/artifact/RzaFsGWZg3phJHoUZYem2F**
+
+### 3. Backend (Render) + Full frontend (Vercel)
+
+For a real deployment with Amadeus/Skyscanner credentials and persistent
+Postgres/Redis, follow `deploy/README.md` — the Render blueprint
+(`deploy/render.yaml`) and Vercel config (`frontend/vercel.json`) are
+prepared, you just need to point them at your accounts.
+
 ## Migrating to its own GitHub repo
 
 這份 scaffold 目前放在 `smart-flight-finder/` 子目錄裡，等您在 GitHub 開好 repo 之後，可以用其中一種方式搬過去：
