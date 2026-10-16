@@ -7,6 +7,7 @@ import { PlanCard } from "@/components/PlanCard";
 import { ResultBoard } from "@/components/ResultBoard";
 import { SearchForm } from "@/components/SearchForm";
 import { ShortcutHelp } from "@/components/ShortcutHelp";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { decodePlanFromHash } from "@/lib/share";
 import type { SearchResult, StrategyPlanOut } from "@/lib/types";
 
@@ -83,6 +84,7 @@ export default function HomePage() {
         </div>
       )}
 
+      <ThemeToggle />
       <ShortcutHelp />
     </main>
   );
