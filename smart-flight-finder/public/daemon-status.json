@@ -1,9 +1,9 @@
 {
- "at": "2026-10-17T17:32:07+00:00",
+ "at": "2026-10-17T17:33:39+00:00",
  "publishes": {
   "ok": 247,
-  "r429": 21,
-  "fail": 0
+  "r429": 36,
+  "fail": 1
  },
  "fares_saved": 652,
  "log": [
@@ -105,6 +105,11 @@
   "17:31:13 handle mvcoauc85zbgr: first_chunk=True total=30",
   "17:31:19 request mvco4b8aefslb: chunk of 87 keys done in 310s; ntfy publishes {'ok': 247, 'r429': 16, 'fail': 0}",
   "17:31:44 publish 429 #20: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
-  "17:31:56 request mvcnxlurewq6w: chunk of 42 keys done in 660s; ntfy publishes {'ok': 247, 'r429': 20, 'fail': 0}"
+  "17:31:56 request mvcnxlurewq6w: chunk of 42 keys done in 660s; ntfy publishes {'ok': 247, 'r429': 20, 'fail': 0}",
+  "17:32:10 request mvcnxlurewq6w: chunk of 42 keys done in 674s; ntfy publishes {'ok': 247, 'r429': 21, 'fail': 0}",
+  "17:32:13 request received: rid mvcoc4tvngf1u 30 keys",
+  "17:32:13 handle mvcoc4tvngf1u: first_chunk=True total=30",
+  "17:32:14 publish gave up",
+  "17:33:16 request mvcnxlurewq6w: chunk of 36 keys done in 741s; ntfy publishes {'ok': 247, 'r429': 33, 'fail': 1}"
  ]
 }
