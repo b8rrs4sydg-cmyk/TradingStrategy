@@ -1,15 +1,12 @@
 {
- "at": "2026-10-17T17:43:33+00:00",
+ "at": "2026-10-17T17:45:05+00:00",
  "publishes": {
   "ok": 247,
-  "r429": 130,
+  "r429": 137,
   "fail": 15
  },
  "fares_saved": 682,
  "log": [
-  "17:14:31 request mvcnogl78el5g: chunk of 22 keys done in 42s; ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
-  "17:14:32 request mvcnogl78el5g: final sent (44/22); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
-  "17:14:32 request received: rid mvcnpefz56bzu 84 keys",
   "17:14:32 handle mvcnpefz56bzu: first_chunk=True total=160",
   "17:14:32 request received: rid mvcnpefz56bzu 84 keys",
   "17:14:32 handle mvcnpefz56bzu: first_chunk=False total=160",
@@ -156,6 +153,9 @@
   "17:41:27 publish gave up",
   "17:43:23 publish gave up",
   "17:43:24 request mvcnrx3wqlty1: final sent (162/81); ntfy publishes {'ok': 247, 'r429': 128, 'fail': 15}",
-  "17:43:25 request mvcoj3auc30ts: chunk of 89 keys done in 180s; ntfy publishes {'ok': 247, 'r429': 129, 'fail': 15}"
+  "17:43:25 request mvcoj3auc30ts: chunk of 89 keys done in 180s; ntfy publishes {'ok': 247, 'r429': 129, 'fail': 15}",
+  "17:43:45 request mvcojpvo3vy9a: chunk of 93 keys done in 138s; ntfy publishes {'ok': 247, 'r429': 131, 'fail': 15}",
+  "17:44:42 request received: rid mvcos5qu47uep 30 keys",
+  "17:44:42 handle mvcos5qu47uep: first_chunk=True total=30"
  ]
 }
