@@ -2303,7 +2303,8 @@ function planMulti(open) {
     g.items.sort((a, b) => b.score - a.score);
     const foundPrices = g.asked.map(i => FARES.fares[i.key]?.price).filter(v => v != null);
     let quota = 1;                                   // round 1: one date variant per route group
-    if (g.asked.length && g.base && foundPrices.length) {
+    if (g.asked.length && !foundPrices.length) quota = 3;   // nothing sellable on that date: try two more dates before giving up
+    else if (g.asked.length && g.base && foundPrices.length) {
       const ratio = (Math.min(...foundPrices) + g.base.fixed) / g.base.rts;   // vs three ordinary round trips
       quota = ratio <= 1.15 ? 8 : ratio <= 1.4 ? 3 : 1;
     } else if (g.asked.length && !g.base) quota = 3; // open jaws: a little more
