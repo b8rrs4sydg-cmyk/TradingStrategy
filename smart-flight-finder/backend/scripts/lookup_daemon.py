@@ -494,6 +494,18 @@ def make_app(daemon: Daemon):
         daemon.queue.put_nowait(("http", text))
         return {"ok": True}
 
+    @app.get("/poll/{rid}")
+    async def poll(rid: str, i: int = 0):
+        """Long poll (Cloudflare quick tunnels do not carry Server-Sent Events): messages from index ``i`` on."""
+
+        end = time.time() + 20
+        while True:
+            buf = daemon.buffers.get(rid[:40])
+            msgs = buf["msgs"] if buf else []
+            if i < len(msgs) or time.time() >= end:
+                return {"msgs": msgs[i:i + 50], "next": min(len(msgs), i + 50) if i < len(msgs) else i}
+            await asyncio.sleep(0.25)
+
     @app.get("/events/{rid}")
     async def events(rid: str):
         async def stream():
@@ -617,17 +629,17 @@ def selftest_http(daemon_json: Path, keys: list[str], timeout: float) -> int:
             time.sleep(4)
     body = json.dumps({"rid": rid, "total": len(keys), "keys": keys}).encode()
     urllib.request.urlopen(urllib.request.Request(f"{url}/lookup", data=body, method="POST"), timeout=15).read()
-    got, final = 0, False
-    with urllib.request.urlopen(f"{url}/events/{rid}", timeout=timeout) as stream:
-        for raw in stream:
-            line = raw.decode("utf-8", "replace").strip()
-            if line.startswith("data:"):
-                m = json.loads(line[5:])
-                got += len(m.get("f", {}))
-                log(f"  http {m.get('done')}/{m.get('total')} fares={got}")
-                if m.get("final") or m.get("error"):
-                    final = True
-                    break
+    got, final, nxt = 0, False, 0
+    while not final and time.time() - t0 < timeout:   # the same long poll the page uses
+        with urllib.request.urlopen(f"{url}/poll/{rid}?i={nxt}", timeout=30) as resp:
+            j = json.loads(resp.read())
+        nxt = j["next"]
+        for text in j["msgs"]:
+            m = json.loads(text)
+            got += len(m.get("f", {}))
+            log(f"  http {m.get('done')}/{m.get('total')} fares={got}")
+            if m.get("final") or m.get("error"):
+                final = True
     log(f"selftest-http finished={final} fares={got} in {time.time() - t0:.1f}s via {url}")
     return 0 if final and got else 1
 
