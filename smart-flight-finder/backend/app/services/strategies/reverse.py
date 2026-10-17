@@ -15,8 +15,14 @@ trip B:
 The other common way to use the 反向票 is to 補頭尾 — buy the first
 H→D1 and last D2→H as two one-ways instead of the 包覆票. Both variants
 are priced; each is kept only if it beats buying two ordinary round trips.
-D1 == D2 is the classic case; D1 != D2 is the 名古屋/東京-style variant
-(each ticket then becomes an open-jaw, priced as multi-city).
+
+Entry and exit of one trip may differ inside the same country (大阪進、東京
+出), so each trip has its own in/out city: A = H→A_in … A_out→H, B = H→B_in
+… B_out→H. The 包覆票 is H→A_in + B_out→H and the 反向票 A_out→H + H→B_in;
+when a ticket's two ends differ it is an open jaw priced as multi-city.
+倒買法 is only practical on Asian short-haul where foreign-origin round
+trips are sold cheaply (Japan, Thailand, sometimes Korea) — other countries
+are skipped (see ``DAOMAI_COUNTRIES``).
 """
 
 from __future__ import annotations
@@ -24,6 +30,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from datetime import date
 
+from app.data.airports import BY_CODE
 from app.models.enums import TicketStrategyType
 from app.providers.base import FlightOfferProvider
 from app.services.strategies.base import RiskLevel, RiskWarning, StrategyPlan, TicketOffer
@@ -31,6 +38,14 @@ from app.services.strategies.two_trip import TripSlot, best_pair, cheapest, fmt_
 
 _Front = tuple[date, date, tuple[TicketOffer, ...]]  # (a_dep, b_ret, tickets)
 _Back = tuple[date, date, TicketOffer]               # (a_ret, b_dep, 反向票)
+
+DAOMAI_COUNTRIES = frozenset({"JP", "TH", "KR"})
+_MAX_PLANS_PER_COUNTRY = 6
+
+
+def daomai_country(code: str) -> str | None:
+    a = BY_CODE.get(code)
+    return a.country if a and a.country in DAOMAI_COUNTRIES else None
 
 
 class ReverseTicketPlanner:
@@ -50,27 +65,48 @@ class ReverseTicketPlanner:
     ) -> list[StrategyPlan]:
         plans: list[StrategyPlan] = []
         for home in origins:
-            dests = [d for d in dict.fromkeys(destinations) if d != home]
-            base_a = {d: self._baseline(home, d, trip_a, adults) for d in dests}
-            base_b = {d: self._baseline(home, d, trip_b, adults) for d in dests}
-            for d1 in dests:
-                for d2 in dests:
-                    if base_a[d1] is None or base_b[d2] is None:
-                        continue
-                    baseline = base_a[d1].total_price + base_b[d2].total_price
-                    back = self._reverse_tickets(home, d1, d2, trip_a, trip_b, adults)
-                    for variant, front in (
-                        ("倒買法", self._wrap_tickets(home, d1, d2, trip_a, trip_b, adults)),
-                        ("補頭尾", self._one_way_pairs(home, d1, d2, trip_a, trip_b, adults)),
-                    ):
-                        best = best_pair(front, back, _compatible)
-                        if best is None or best[0] >= baseline:
-                            continue
-                        plans.append(
-                            self._build(variant, home, d1, d2, trip_a, trip_b, best, baseline)
-                        )
+            by_country: dict[str, list[str]] = {}
+            for d in dict.fromkeys(destinations):
+                c = daomai_country(d)
+                if c and d != home:
+                    by_country.setdefault(c, []).append(d)
+            for dests in by_country.values():
+                plans += self._plan_country(home, dests, trip_a, trip_b, adults)
         plans.sort(key=lambda p: p.total_cost)
         return plans
+
+    def _plan_country(self, home, dests, a: TripSlot, b: TripSlot, adults) -> list[StrategyPlan]:
+        rt_a = [t for d in dests if (t := self._baseline(home, d, a, adults))]
+        rt_b = [t for d in dests if (t := self._baseline(home, d, b, adults))]
+        if not rt_a or not rt_b:
+            return []
+        # Ordinary alternative: the cheapest plain round trip into this country, per trip.
+        baseline = cheapest(rt_a).total_price + cheapest(rt_b).total_price
+        backs = {
+            (a_out, b_in): self._reverse_tickets(home, a_out, b_in, a, b, adults)
+            for a_out in dests
+            for b_in in dests
+        }
+        fronts = {
+            (variant, a_in, b_out): front
+            for a_in in dests
+            for b_out in dests
+            for variant, front in (
+                ("倒買法", self._wrap_tickets(home, a_in, b_out, a, b, adults)),
+                ("補頭尾", self._one_way_pairs(home, a_in, b_out, a, b, adults)),
+            )
+        }
+        out = []
+        for (variant, a_in, b_out), front in fronts.items():
+            for (a_out, b_in), back in backs.items():
+                best = best_pair(front, back, _compatible)
+                if best is None or best[0] >= baseline:
+                    continue
+                out.append(
+                    self._build(variant, home, (a_in, a_out), (b_in, b_out), a, b, best, baseline)
+                )
+        out.sort(key=lambda p: p.total_cost)
+        return out[:_MAX_PLANS_PER_COUNTRY]
 
     # ------------------------------------------------------------------
     def _baseline(self, home: str, d: str, slot: TripSlot, adults: int) -> TicketOffer | None:
@@ -85,29 +121,29 @@ class ReverseTicketPlanner:
         ]
         return cheapest(offers)
 
-    def _reverse_tickets(self, home, d1, d2, a: TripSlot, b: TripSlot, adults) -> list[tuple[int, _Back]]:
+    def _reverse_tickets(self, home, a_out, b_in, a: TripSlot, b: TripSlot, adults) -> list[tuple[int, _Back]]:
         out = []
         for a_ret in a.returns:
             for b_dep in b.departs:
                 if b_dep <= a_ret:
                     continue
-                t = quote(self.provider, [(d1, home, a_ret), (home, d2, b_dep)], adults)
+                t = quote(self.provider, [(a_out, home, a_ret), (home, b_in, b_dep)], adults)
                 if t:
                     out.append((t.total_price, (a_ret, b_dep, t)))
         return out
 
-    def _wrap_tickets(self, home, d1, d2, a: TripSlot, b: TripSlot, adults) -> list[tuple[int, _Front]]:
+    def _wrap_tickets(self, home, a_in, b_out, a: TripSlot, b: TripSlot, adults) -> list[tuple[int, _Front]]:
         out = []
         for a_dep in a.departs:
             for b_ret in b.returns:
-                t = quote(self.provider, [(home, d1, a_dep), (d2, home, b_ret)], adults)
+                t = quote(self.provider, [(home, a_in, a_dep), (b_out, home, b_ret)], adults)
                 if t:
                     out.append((t.total_price, (a_dep, b_ret, (t,))))
         return out
 
-    def _one_way_pairs(self, home, d1, d2, a: TripSlot, b: TripSlot, adults) -> list[tuple[int, _Front]]:
-        firsts = [(dep, quote(self.provider, [(home, d1, dep)], adults)) for dep in a.departs]
-        lasts = [(ret, quote(self.provider, [(d2, home, ret)], adults)) for ret in b.returns]
+    def _one_way_pairs(self, home, a_in, b_out, a: TripSlot, b: TripSlot, adults) -> list[tuple[int, _Front]]:
+        firsts = [(dep, quote(self.provider, [(home, a_in, dep)], adults)) for dep in a.departs]
+        lasts = [(ret, quote(self.provider, [(b_out, home, ret)], adults)) for ret in b.returns]
         return [
             (f.total_price + l_.total_price, (a_dep, b_ret, (f, l_)))
             for a_dep, f in firsts
@@ -116,13 +152,14 @@ class ReverseTicketPlanner:
             if l_
         ]
 
-    def _build(self, variant, home, d1, d2, a: TripSlot, b: TripSlot, best, baseline) -> StrategyPlan:
+    def _build(self, variant, home, trip_a_cities, trip_b_cities, a: TripSlot, b: TripSlot, best, baseline) -> StrategyPlan:
         total, (a_dep, b_ret, front), (a_ret, b_dep, rev) = best
-        rev_role = f"反向票：{d1} 出發" + (f"，回程飛 {d2}" if d1 != d2 else "")
+        (a_in, a_out), (b_in, b_out) = trip_a_cities, trip_b_cities
+        rev_role = f"反向票：{a_out} 出發" + (f"，回程飛 {b_in}" if b_in != a_out else "")
         if variant == "倒買法":
             (wrap,) = front
             tickets = (wrap, rev)
-            roles = (f"包覆票：{home} 出發" + (f"，{d2} 回" if d1 != d2 else ""), rev_role)
+            roles = (f"包覆票：{home} 出發" + (f"，{b_out} 回" if b_out != a_in else ""), rev_role)
             first_tag, last_tag = "包覆票 第1段", "包覆票 第2段"
         else:
             first, last = front
@@ -132,12 +169,12 @@ class ReverseTicketPlanner:
 
         trips = (
             (
-                f"旅程 A｜{a.label}：{fmt_day(a_dep)} {home}→{d1}（{first_tag}）"
-                f" ⇢ {fmt_day(a_ret)} {d1}→{home}（反向票 第1段）"
+                f"旅程 A｜{a.label}：{fmt_day(a_dep)} {home}→{a_in}（{first_tag}）"
+                f" ⇢ {fmt_day(a_ret)} {a_out}→{home}（反向票 第1段）"
             ),
             (
-                f"旅程 B｜{b.label}：{fmt_day(b_dep)} {home}→{d2}（反向票 第2段）"
-                f" ⇢ {fmt_day(b_ret)} {d2}→{home}（{last_tag}）"
+                f"旅程 B｜{b.label}：{fmt_day(b_dep)} {home}→{b_in}（反向票 第2段）"
+                f" ⇢ {fmt_day(b_ret)} {b_out}→{home}（{last_tag}）"
             ),
         )
         saving = baseline - total
@@ -145,7 +182,7 @@ class ReverseTicketPlanner:
             RiskWarning(
                 RiskLevel.MEDIUM,
                 "reverse_ticket_order",
-                f"反向票須從第1段 {d1}→{home} 開始依序搭乘，第1段未搭乘後段會被取消；"
+                f"反向票須從第1段 {a_out}→{home} 開始依序搭乘，第1段未搭乘後段會被取消；"
                 "各張票分開開票，任一張延誤或改期都不保護另一張",
             ),
             RiskWarning(
@@ -171,8 +208,8 @@ class ReverseTicketPlanner:
             currency=rev.currency,
             total_travel_days=(a_ret - a_dep).days + 1 + (b_ret - b_dep).days + 1,
             warnings=tuple(warnings),
-            explain=f"反向票＋{variant}：兩趟 {home}⇄{d1}" + (f" / {d2}" if d1 != d2 else "")
-            + f"，共 {len(tickets)} 張票，省 {saving:,}",
+            explain=f"反向票＋{variant}：旅程A {_route(a_in, a_out)}、旅程B {_route(b_in, b_out)}"
+            f"，共 {len(tickets)} 張票，省 {saving:,}",
             ticket_roles=roles,
             trips=trips,
         )
@@ -182,3 +219,7 @@ def _compatible(front: _Front, back: _Back) -> bool:
     a_dep, b_ret, _ = front
     a_ret, b_dep, _ = back
     return a_dep < a_ret and b_dep < b_ret
+
+
+def _route(city_in: str, city_out: str) -> str:
+    return city_in if city_in == city_out else f"{city_in}進{city_out}出"

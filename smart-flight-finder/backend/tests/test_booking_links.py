@@ -23,15 +23,29 @@ def test_round_trip_links_carry_route_dates_pax_cabin():
     trip = urlparse(urls["trip_com"])
     q = {k: v[0] for k, v in parse_qs(trip.query).items()}
     assert trip.netloc == "www.trip.com"
-    assert q["dcity"] == "tpe" and q["acity"] == "nrt"
+    # Trip.com needs city codes; the airport is pinned separately
+    assert q["dcity"] == "tpe" and q["acity"] == "tyo"
+    assert q["dairport"] == "tpe" and q["aairport"] == "nrt"
     assert q["ddate"] == "2027-02-05" and q["rdate"] == "2027-02-15"
     assert q["triptype"] == "rt" and q["class"] == "c" and q["quantity"] == "2"
 
     assert "/tpe/nrt/270205/270215/" in urls["skyscanner"]
     assert "adultsv2=2" in urls["skyscanner"] and "cabinclass=business" in urls["skyscanner"]
 
-    g = unquote(urls["google_flights"])
-    assert "from TPE to NRT on 2027-02-05 through 2027-02-15" in g and "2 adults business" in g
+    assert "tfs=" in urls["google_flights"] and "q=" not in urls["google_flights"]
+
+
+# Opened in a real browser: Google shows 來回 TPE→NRT 2/5–2/15, 1 adult economy.
+RT_TFS = "GhoSCjIwMjctMDItMDVqBRIDVFBFcgUSA05SVBoaEgoyMDI3LTAyLTE1agUSA05SVHIFEgNUUEVCAQFIAZgBAQ=="
+OW_TFS = "GhoSCjIwMjctMDItMDNqBRIDVFBFcgUSA0hLR0IBAUgBmAEC"
+
+
+def test_google_round_trip_and_one_way_tfs_match_browser_checked_links():
+    rt = TicketOffer("x", (_leg("TPE", "NRT", 2027, 2, 5), _leg("NRT", "TPE", 2027, 2, 15)), 1)
+    ow = TicketOffer("x", (_leg("TPE", "HKG", 2027, 2, 3),), 1)
+    for t, tfs in ((rt, RT_TFS), (ow, OW_TFS)):
+        q = parse_qs(urlparse(_by_source(t)["google_flights"]).query)
+        assert q["tfs"] == [tfs]
 
 
 def test_one_way_links():
@@ -79,19 +93,36 @@ def test_multi_city_ticket_gets_multi_city_links_on_every_site():
     g = urlparse(links["google_flights"].url)
     assert unquote(parse_qs(g.query, keep_blank_values=True)["tfs"][0]) == FOUR_LEG_TFS or         parse_qs(g.query)["tfs"][0] == FOUR_LEG_TFS
 
+    assert set(links) == {"google_flights", "trip_com"}  # no unverifiable Skyscanner multi-city
     q = {k: v[0] for k, v in parse_qs(urlparse(links["trip_com"].url).query).items()}
     assert q["triptype"] == "mt"
-    assert q["dcity"] == "hkg,tpe,nrt,tpe" and q["acity"] == "tpe,nrt,tpe,hkg"
-    assert q["ddate"] == "2027-02-07,2027-02-07,2027-02-15,2027-12-22"
+    assert [q[f"dcity{i}"] for i in range(4)] == ["hkg", "tpe", "tyo", "tpe"]
+    assert [q[f"aairport{i}"] for i in range(4)] == ["tpe", "nrt", "tpe", "hkg"]
+    # dates are 1-based and Trip.com only honours the first two
+    assert (q["ddate1"], q["ddate2"]) == ("2027-02-07", "2027-02-07")
+    assert "第3段起日期" in links["trip_com"].label
 
-    assert "/transport/d/hkg/2027-02-07/tpe/tpe/2027-02-07/nrt/nrt/2027-02-15/tpe/tpe/2027-12-22/hkg/" in links["skyscanner"].url
+
+def test_open_jaw_two_segment_ticket_is_multi_city_with_both_dates_honoured():
+    from dataclasses import replace
+    from datetime import date
+
+    segs = (("KIX", "TPE", date(2027, 2, 14)), ("TPE", "NRT", date(2027, 12, 23)))
+    t = replace(TicketOffer("oj", (_leg("KIX", "TPE", 2027, 2, 14), _leg("TPE", "NRT", 2027, 12, 23)), 1),
+                searched_segments=segs)
+    links = {b.source: b for b in booking_links(t)}
+    q = {k: v[0] for k, v in parse_qs(urlparse(links["trip_com"].url).query).items()}
+    assert links["trip_com"].label == "Trip.com 多段"
+    assert (q["dcity0"], q["acity1"], q["ddate1"], q["ddate2"]) == ("osa", "tyo", "2027-02-14", "2027-12-23")
 
 
-def test_mirrored_two_segment_ticket_from_daomai_still_uses_multi_city():
+def test_mirrored_two_segment_ticket_uses_round_trip_search():
     from dataclasses import replace
     from datetime import date
 
     segs = (("NRT", "TPE", date(2027, 2, 14)), ("TPE", "NRT", date(2027, 12, 23)))
     t = replace(TicketOffer("rt", (_leg("NRT", "TPE", 2027, 2, 14), _leg("TPE", "NRT", 2027, 12, 23)), 1),
                 searched_segments=segs)
-    assert {b.label for b in booking_links(t)} == {"Trip.com 多段", "Google Flights 多段", "Skyscanner 多段"}
+    urls = _by_source(t)
+    q = {k: v[0] for k, v in parse_qs(urlparse(urls["trip_com"]).query).items()}
+    assert (q["triptype"], q["dcity"], q["ddate"], q["rdate"]) == ("rt", "tyo", "2027-02-14", "2027-12-23")

@@ -4,6 +4,20 @@ Offers from the stub provider carry illustrative prices only, and the Amadeus
 self-service API has no booking deep link — so every ticket gets search links
 that open the same route / dates / pax / cabin on real sites where the live
 fare can be checked and booked.
+
+Formats were checked by opening the generated links in a real browser
+(2026-10):
+
+- Google Flights ``tfs`` (round trip / one-way / multi-city): route, dates
+  and every segment load correctly.
+- Trip.com: ``dcity``/``acity`` must be Trip.com *city* codes (tyo, osa,
+  sel …) with ``dairport``/``aairport`` pinning the airport. Multi-city
+  (``triptype=mt``) takes ``dcity{i}``/``acity{i}``/``dairport{i}``/
+  ``aairport{i}`` 0-based and ``ddate{i}`` 1-based; only the first two
+  dates are honoured, later segments get auto-filled dates (flagged in the
+  label so the traveller adjusts them).
+- Skyscanner blocks automated browsers, so only its long-standing
+  single-route ``/transport/flights/`` link is offered; no multi-city link.
 """
 
 from __future__ import annotations
@@ -32,12 +46,17 @@ _SKYSCANNER_CLASS = {
     CabinClass.BUSINESS: "business",
     CabinClass.FIRST: "first",
 }
-_GOOGLE_CLASS = {
-    CabinClass.ECONOMY: "economy",
-    CabinClass.PREMIUM_ECONOMY: "premium economy",
-    CabinClass.BUSINESS: "business class",
-    CabinClass.FIRST: "first class",
+# Trip.com searches by metropolitan city code; anything absent maps to itself.
+_TRIP_CITY = {
+    "TSA": "tpe", "NRT": "tyo", "HND": "tyo", "KIX": "osa", "ITM": "osa",
+    "CTS": "spk", "ICN": "sel", "GMP": "sel", "LHR": "lon", "LGW": "lon",
+    "CDG": "par", "ORY": "par", "JFK": "nyc", "EWR": "nyc", "DMK": "bkk",
 }
+_TRIP_MT_DATES = 2  # Trip.com multi-city honours ddate1 and ddate2 only
+
+
+def _trip_city(code: str) -> str:
+    return _TRIP_CITY.get(code, code.lower())
 
 
 @dataclass(frozen=True, slots=True)
@@ -76,8 +95,10 @@ def _route_of(ticket: TicketOffer) -> _Route:
 
 def _trip_com(r: _Route, adults: int, cabin: CabinClass) -> str:
     params = {
-        "dcity": r.origin.lower(),
-        "acity": r.destination.lower(),
+        "dcity": _trip_city(r.origin),
+        "acity": _trip_city(r.destination),
+        "dairport": r.origin.lower(),
+        "aairport": r.destination.lower(),
         "ddate": r.depart.isoformat(),
         "triptype": "rt" if r.return_ else "ow",
         "class": _TRIP_CLASS[cabin],
@@ -91,11 +112,11 @@ def _trip_com(r: _Route, adults: int, cabin: CabinClass) -> str:
 
 
 def _google_flights(r: _Route, adults: int, cabin: CabinClass) -> str:
-    q = f"Flights from {r.origin} to {r.destination} on {r.depart.isoformat()}"
+    segments = [(r.origin, r.destination, r.depart)]
     if r.return_:
-        q += f" through {r.return_.isoformat()}"
-    q += f" {adults} adult{'s' if adults > 1 else ''} {_GOOGLE_CLASS[cabin]}"
-    return f"https://www.google.com/travel/flights?q={quote(q)}&hl=zh-TW&curr=TWD"
+        segments.append((r.destination, r.origin, r.return_))
+    trip = _GOOGLE_TRIP_ROUND if r.return_ else _GOOGLE_TRIP_ONE_WAY
+    return _google_url(google_flights_tfs(segments, adults=adults, cabin=cabin, trip=trip))
 
 
 def _skyscanner(r: _Route, adults: int, cabin: CabinClass) -> str:
@@ -116,7 +137,7 @@ _GOOGLE_SEAT = {
     CabinClass.BUSINESS: 3,
     CabinClass.FIRST: 4,
 }
-_GOOGLE_TRIP_MULTI_CITY = 3
+_GOOGLE_TRIP_ROUND, _GOOGLE_TRIP_ONE_WAY, _GOOGLE_TRIP_MULTI_CITY = 1, 2, 3
 
 
 def _varint(n: int) -> bytes:
@@ -138,7 +159,11 @@ def _pb_varint(field: int, value: int) -> bytes:
 
 
 def google_flights_tfs(
-    segments: Sequence[tuple[str, str, date]], *, adults: int, cabin: CabinClass
+    segments: Sequence[tuple[str, str, date]],
+    *,
+    adults: int,
+    cabin: CabinClass,
+    trip: int = _GOOGLE_TRIP_MULTI_CITY,
 ) -> str:
     """Google Flights ``tfs`` query: base64 of the ``Info`` protobuf.
 
@@ -158,40 +183,36 @@ def google_flights_tfs(
     )
     msg += _pb_bytes(8, b"".join(_varint(1) for _ in range(adults)))  # ADULT, packed
     msg += _pb_varint(9, _GOOGLE_SEAT[cabin])
-    msg += _pb_varint(19, _GOOGLE_TRIP_MULTI_CITY)
+    msg += _pb_varint(19, trip)
     return base64.b64encode(msg).decode()
+
+
+def _google_url(tfs: str) -> str:
+    return f"https://www.google.com/travel/flights?tfs={quote(tfs, safe='')}&hl=zh-TW&curr=TWD"
 
 
 def _multi_city_links(
     segments: Sequence[tuple[str, str, date]], adults: int, cabin: CabinClass
 ) -> list[BookingLink]:
-    trip = urlencode(
-        {
-            "dcity": ",".join(o.lower() for o, _, _ in segments),
-            "acity": ",".join(d.lower() for _, d, _ in segments),
-            "ddate": ",".join(day.isoformat() for _, _, day in segments),
-            "triptype": "mt",
-            "class": _TRIP_CLASS[cabin],
-            "quantity": adults,
-            "locale": "zh-TW",
-            "curr": "TWD",
-        },
-        safe=",",
-    )
+    params: dict[str, str | int] = {"triptype": "mt"}
+    for i, (o, d, _) in enumerate(segments):
+        params |= {
+            f"dcity{i}": _trip_city(o),
+            f"acity{i}": _trip_city(d),
+            f"dairport{i}": o.lower(),
+            f"aairport{i}": d.lower(),
+        }
+    for i, (_, _, day) in enumerate(segments, start=1):
+        params[f"ddate{i}"] = day.isoformat()
+    params |= {"class": _TRIP_CLASS[cabin], "quantity": adults, "locale": "zh-TW", "curr": "TWD"}
+    trip_label = "Trip.com 多段"
+    if len(segments) > _TRIP_MT_DATES:
+        trip_label += f"（第{_TRIP_MT_DATES + 1}段起日期請手動確認）"
     tfs = google_flights_tfs(segments, adults=adults, cabin=cabin)
-    sky_path = "/".join(f"{o.lower()}/{day.isoformat()}/{d.lower()}" for o, d, day in segments)
-    sky_q = urlencode({"adultsv2": adults, "cabinclass": _SKYSCANNER_CLASS[cabin]})
     return [
-        BookingLink("trip_com", "Trip.com 多段", f"https://www.trip.com/flights/showfarefirst?{trip}"),
+        BookingLink("google_flights", "Google Flights 多段", _google_url(tfs)),
         BookingLink(
-            "google_flights",
-            "Google Flights 多段",
-            f"https://www.google.com/travel/flights?tfs={quote(tfs, safe='')}&hl=zh-TW&curr=TWD",
-        ),
-        BookingLink(
-            "skyscanner",
-            "Skyscanner 多段",
-            f"https://www.skyscanner.com.tw/transport/d/{sky_path}/?{sky_q}",
+            "trip_com", trip_label, f"https://www.trip.com/flights/showfarefirst?{urlencode(params)}"
         ),
     ]
 
@@ -199,8 +220,11 @@ def _multi_city_links(
 def booking_links(
     ticket: TicketOffer, *, adults: int = 1, cabin: CabinClass = CabinClass.ECONOMY
 ) -> list[BookingLink]:
-    if len(ticket.searched_segments) >= 2:
-        return _multi_city_links(ticket.searched_segments, adults, cabin)
+    segs = ticket.searched_segments
+    # A mirrored pair (A→B, B→A) is an ordinary round trip — every site's
+    # round-trip search handles it; open jaws and 3+ segments need multi-city.
+    if len(segs) > 2 or (len(segs) == 2 and (segs[0][0], segs[0][1]) != (segs[1][1], segs[1][0])):
+        return _multi_city_links(segs, adults, cabin)
     r = _route_of(ticket)
     return [
         BookingLink("trip_com", "Trip.com", _trip_com(r, adults, cabin)),

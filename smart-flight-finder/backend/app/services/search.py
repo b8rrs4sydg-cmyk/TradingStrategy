@@ -25,6 +25,7 @@ from app.services.strategies import (
     StandardPlanner,
     StrategyPlan,
 )
+from app.services.strategies.reverse import daomai_country
 from app.services.strategies.two_trip import TripSlot
 
 logger = logging.getLogger(__name__)
@@ -74,6 +75,11 @@ PAIR_STRATEGIES = frozenset({TicketStrategyType.REVERSE, TicketStrategyType.BACK
 NEED_TWO_SLOTS = (
     "反向票＋倒買法 與 外站四腿票 都是「一次購票、兩趟旅程」的買法，"
     "需要至少兩個不重疊的備選時段（例如 春節 + 聖誕）且行程類型為來回。"
+)
+
+DAOMAI_ASIA_ONLY = (
+    "倒買法只適用日本、泰國（偶爾韓國）等亞洲短程 — 這些國家出發的來回票才便宜且常見；"
+    "{} 不套用反向票＋倒買法。"
 )
 
 
@@ -131,6 +137,10 @@ class SearchService:
             pairs = _slot_pairs(req)
             if not pairs:
                 self.notices.append(NEED_TWO_SLOTS)
+            if TicketStrategyType.REVERSE in paired:
+                skipped = [d for d in req.destinations if daomai_country(d) is None]
+                if skipped:
+                    self.notices.append(DAOMAI_ASIA_ONLY.format(", ".join(skipped)))
             for a, b in pairs:
                 for strategy in paired:
                     for plan in self._run_pair_strategy(strategy, req, a, b):

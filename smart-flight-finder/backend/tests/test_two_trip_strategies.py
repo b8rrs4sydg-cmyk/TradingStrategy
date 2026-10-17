@@ -62,13 +62,22 @@ def test_every_kept_plan_beats_two_ordinary_round_trips():
         assert p.total_cost > 0
 
 
-def test_different_cities_per_trip_become_open_jaw_multi_city_tickets():
-    mixed = [p for p in _reverse(("NRT", "KIX")) if "/ KIX" in p.explain or "/ NRT" in p.explain]
-    assert mixed
-    rev = next(t for t, role in zip(mixed[0].tickets, mixed[0].ticket_roles, strict=True) if role.startswith("反向票"))
+def test_entry_and_exit_may_differ_within_the_same_country():
+    plans = _reverse(("NRT", "KIX"))
+    open_jaw = [p for p in plans if "進" in p.explain]
+    assert open_jaw, "大阪進東京出-style plans should be priced too"
+    p = open_jaw[0]
+    rev = next(t for t, role in zip(p.tickets, p.ticket_roles, strict=True) if role.startswith("反向票"))
     (o1, d1, _), (o2, d2, _) = rev.searched_segments
-    assert o1 != d2  # not a mirrored round trip -> priced as multi-city
-    assert o1 in ("NRT", "KIX") and d1 == "TPE" and o2 == "TPE"
+    assert o1 in ("NRT", "KIX") and d1 == "TPE" and o2 == "TPE" and d2 in ("NRT", "KIX")
+    for t in p.tickets:
+        if len(t.searched_segments) == 2 and t.searched_segments[0][0] != t.searched_segments[1][1]:
+            assert len(t.legs) == 2  # open jaw → priced through search_multi_city
+
+
+def test_daomai_only_for_japan_thailand_korea():
+    assert _reverse(("LHR", "JFK")) == []
+    assert all(t.legs[0].destination != "LHR" for p in _reverse(("NRT", "LHR")) for t in p.tickets)
 
 
 def _four_leg(stay=2, outer=("HKG",), dests=("NRT",), provider=None):
@@ -113,6 +122,21 @@ def test_four_leg_outer_stay_days_respected(stay):
         assert (four.legs[0].departure.date() - first.legs[0].departure.date()).days == stay
 
 
+def test_four_leg_head_and_tail_may_differ_in_the_same_country():
+    plans = _four_leg(outer=("NRT", "KIX"), dests=("LHR",))
+    jaw = [p for p in plans if "頭尾不同" in p.explain]
+    assert jaw
+    first, four, last = jaw[0].tickets
+    x, y = four.legs[0].origin, four.legs[3].destination
+    assert x != y and {x, y} == {"NRT", "KIX"}
+    assert first.legs[0].destination == x and last.legs[0].origin == y
+    # different countries never pair up
+    assert all(
+        p.tickets[1].legs[0].origin == p.tickets[1].legs[3].destination
+        for p in _four_leg(outer=("HKG", "NRT"), dests=("LHR",))
+    )
+
+
 def test_four_leg_skips_taiwan_and_destination_as_outstation():
     assert _four_leg(outer=("TPE", "KHH", "NRT"), dests=("NRT",)) == []
 
@@ -141,4 +165,4 @@ def test_search_service_labels_pair_plans_with_both_slots():
     _, plans, _ = svc.run(req)
     assert {p.strategy for p in plans} == {S.REVERSE, S.BACK_TO_BACK_4LEG}
     assert {p.window_label for p in plans} == {"春節請 2 休 11 + 聖誕請 2 休 5"}
-    assert svc.notices == []
+    assert len(svc.notices) == 1 and "LHR" in svc.notices[0]  # 倒買法 is Asia-only

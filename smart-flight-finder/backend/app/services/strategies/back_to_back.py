@@ -11,9 +11,11 @@ The ticket is sold from an outstation X (cheaper market than Taiwan, and leg
 
 Leg 1 must be flown (skipping it cancels the rest), which is why the loop
 needs the separately bought 初段. The 最後一段 can instead be leg 1 of the
-next 四腿票 — chaining tickets this way is the 循環. Each plan prices the
-closed loop (both one-ways) and is kept only if it beats an ordinary round
-trip to D on trip A plus one to X on trip B.
+next 四腿票 — chaining tickets this way is the 循環. 頭尾可以不同: leg 4 may
+land at another outstation Y in the same country as X (double open jaw, e.g.
+札幌→台北→舊金山→台北→東京), and 最後一段 then leaves from Y. Each plan
+prices the closed loop (both one-ways) and is kept only if it beats an
+ordinary round trip to D on trip A plus one to Y on trip B.
 """
 
 from __future__ import annotations
@@ -31,6 +33,10 @@ from app.services.strategies.two_trip import TripSlot, cheapest, fmt_day, neares
 
 HUB = "TPE"
 _MAX_DATES_PER_LEG = 5  # multi-city quotes are expensive on real APIs
+
+
+def _country(code: str) -> str:
+    return BY_CODE[code].country if code in BY_CODE else code
 
 
 class FourLegPlanner:
@@ -54,26 +60,33 @@ class FourLegPlanner:
         a_rets = nearest(trip_a.returns, _MAX_DATES_PER_LEG)
         b_deps = nearest(trip_b.departs, _MAX_DATES_PER_LEG)
         plans: list[StrategyPlan] = []
-        for x in dict.fromkeys(outer_stations):
-            if x == HUB or x in TW_AIRPORT_CODES:
-                continue
-            first_legs = {d: quote(self.provider, [(HUB, x, d)], adults) for d in a_deps}
-            last_legs = {d: quote(self.provider, [(x, HUB, d)], adults) for d in trip_b.returns}
-            base_x = self._cheapest_rt(x, trip_b, adults)
+        stations = [
+            x for x in dict.fromkeys(outer_stations) if x != HUB and x not in TW_AIRPORT_CODES
+        ]
+        first_legs = {x: {d: quote(self.provider, [(HUB, x, d)], adults) for d in a_deps} for x in stations}
+        last_legs = {
+            y: {d: quote(self.provider, [(y, HUB, d)], adults) for d in trip_b.returns} for y in stations
+        }
+        base_y = {y: self._cheapest_rt(y, trip_b, adults) for y in stations}
+        base_d = {}
+        for x, y in product(stations, stations):
+            if y != x and _country(y) != _country(x):
+                continue  # leg 1 and leg 4 must be in the same country
             for dest in dict.fromkeys(destinations):
-                if dest in (x, HUB) or dest in TW_AIRPORT_CODES:
+                if dest in (x, y, HUB) or dest in TW_AIRPORT_CODES:
                     continue
-                base_d = self._cheapest_rt(dest, trip_a, adults)
-                if base_x is None or base_d is None:
+                if dest not in base_d:
+                    base_d[dest] = self._cheapest_rt(dest, trip_a, adults)
+                if base_y[y] is None or base_d[dest] is None:
                     continue
-                baseline = base_d.total_price + base_x.total_price
+                baseline = base_d[dest].total_price + base_y[y].total_price
                 best = self._best_loop(
-                    x, dest, a_deps, a_rets, b_deps, trip_b.returns,
-                    outer_stay_days, first_legs, last_legs, adults,
+                    x, y, dest, a_deps, a_rets, b_deps, outer_stay_days,
+                    first_legs[x], last_legs[y], adults,
                 )
                 if best is None or best[0] >= baseline:
                     continue
-                plans.append(self._build(x, dest, trip_a, trip_b, outer_stay_days, best, baseline))
+                plans.append(self._build(x, y, dest, trip_a, trip_b, outer_stay_days, best, baseline))
         plans.sort(key=lambda p: p.total_cost)
         return plans
 
@@ -88,7 +101,7 @@ class FourLegPlanner:
             )
         ])
 
-    def _best_loop(self, x, dest, a_deps, a_rets, b_deps, b_rets, stay, first_legs, last_legs, adults):
+    def _best_loop(self, x, y, dest, a_deps, a_rets, b_deps, stay, first_legs, last_legs, adults):
         best = None
         for a_dep, a_ret, b_dep in product(a_deps, a_rets, b_deps):
             connect = a_dep + timedelta(days=stay)
@@ -105,7 +118,7 @@ class FourLegPlanner:
                 continue
             four = quote(
                 self.provider,
-                [(x, HUB, connect), (HUB, dest, connect), (dest, HUB, a_ret), (HUB, x, b_dep)],
+                [(x, HUB, connect), (HUB, dest, connect), (dest, HUB, a_ret), (HUB, y, b_dep)],
                 adults,
             )
             if four is None or len(four.legs) < 4:
@@ -138,7 +151,7 @@ class FourLegPlanner:
             )
         return out
 
-    def _build(self, x, dest, a: TripSlot, b: TripSlot, stay, best, baseline) -> StrategyPlan:
+    def _build(self, x, y, dest, a: TripSlot, b: TripSlot, stay, best, baseline) -> StrategyPlan:
         total, (a_dep, a_ret, b_dep, b_ret), (first, four, last), conn_warnings = best
         connect = a_dep + timedelta(days=stay)
         x_name = BY_CODE[x].name_zh if x in BY_CODE else x
@@ -150,8 +163,8 @@ class FourLegPlanner:
                 f" ⇢ {fmt_day(a_ret)} {dest}→{HUB}（第3段，回台中停）"
             ),
             (
-                f"旅程 B｜{b.label}：{fmt_day(b_dep)} {HUB}→{x}（四腿票 第4段）"
-                f" ⇢ {fmt_day(b_ret)} {x}→{HUB}（單買最後一段 或 下一張四腿票第1段＝循環）"
+                f"旅程 B｜{b.label}：{fmt_day(b_dep)} {HUB}→{y}（四腿票 第4段）"
+                f" ⇢ {fmt_day(b_ret)} {y}→{HUB}（單買最後一段 或 下一張四腿票第1段＝循環）"
             ),
         )
         saving = baseline - total
@@ -166,12 +179,12 @@ class FourLegPlanner:
             RiskWarning(
                 RiskLevel.LOW,
                 "four_leg_loop",
-                f"最後一段 {x}→{HUB} 也可改搭下一張四腿票的第1段（循環），省下這張單程",
+                f"最後一段 {y}→{HUB} 也可改搭下一張{y}出發四腿票的第1段（循環），省下這張單程",
             ),
             RiskWarning(
                 RiskLevel.LOW,
                 "four_leg_savings_estimate",
-                f"比旅程A買 {HUB}⇄{dest}、旅程B買 {HUB}⇄{x} 一般來回 (共 {baseline:,})"
+                f"比旅程A買 {HUB}⇄{dest}、旅程B買 {HUB}⇄{y} 一般來回 (共 {baseline:,})"
                 f" 省 {saving:,} TWD（{saving / baseline:.0%}）",
             ),
         ]
@@ -182,8 +195,9 @@ class FourLegPlanner:
             currency=four.currency,
             total_travel_days=(a_ret - a_dep).days + 1 + (b_ret - b_dep).days + 1,
             warnings=tuple(warnings),
-            explain=f"四腿票 {x}→{HUB}→{dest}→{HUB}→{x}（{x_name} 外站）＋單買初段/最後一段，"
-            f"兩趟省 {saving:,}",
+            explain=f"四腿票 {x}→{HUB}→{dest}→{HUB}→{y}（{x_name} 外站"
+            + ("，頭尾不同" if y != x else "")
+            + f"）＋單買初段/最後一段，兩趟省 {saving:,}",
             ticket_roles=("單買初段", f"外站四腿票：{x} 出發", "單買最後一段"),
             trips=trips,
         )

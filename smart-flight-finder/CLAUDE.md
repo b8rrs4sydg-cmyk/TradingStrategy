@@ -71,21 +71,25 @@ nothing plus a `notices` entry. Shared helpers live in `strategies/two_trip.py`
 `search_multi_city`, `best_pair` constrained cheapest combination).
 
 ```
-反向票＋倒買法 (reverse.py), home H, trip A to D1, trip B to D2:
-  包覆票  H→D1 (A start) + D2→H (B end)      ← or 補頭尾: two one-ways
-  反向票  D1→H (A end)   + H→D2 (B start)     ← foreign-origin, cheap in TW 連假
-外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→X:
+反向票＋倒買法 (reverse.py), home H; each trip has its own in/out city in ONE
+country (大阪進東京出); only JP/TH/KR (DAOMAI_COUNTRIES, others → notice):
+  包覆票  H→A_in (A start) + B_out→H (B end)   ← or 補頭尾: two one-ways
+  反向票  A_out→H (A end)  + H→B_in (B start)  ← foreign-origin, cheap in TW 連假
+外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→Y (Y = X, or 頭尾不同 in X's country):
   A: 單買初段 TPE→X · stay outer_stay_days · leg1+2 X→TPE→D (<24h at TPE) · leg3 D→TPE
-  B: leg4 TPE→X · 單買最後一段 X→TPE (or next 四腿票 leg1 = 循環)
+  B: leg4 TPE→Y · 單買最後一段 Y→TPE (or next 四腿票 leg1 = 循環)
 ```
 
 Plans are kept only if cheaper than ordinary round trips for both trips,
 carry `ticket_roles` + `trips`, and scoring divides price / flight time /
 PTO efficiency by `trip_count` so they compare fairly with single trips.
-Tickets carry `searched_segments`; `booking_links` turns those into
-multi-city links (Google Flights `tfs` protobuf — byte-identical to the
-fast-flights schema, pinned in `test_booking_links.py`; Trip.com
-`triptype=mt` and Skyscanner `/transport/d/` formats are unverified).
+Tickets carry `searched_segments`; `booking_links` turns open jaws and 3+
+segments into multi-city links (mirrored pairs use round-trip links). Link
+formats were checked in a real browser — see the module docstring:
+Google `tfs` (trip 1/2/3) is exact; Trip.com needs city codes + airport
+params and its `triptype=mt` honours only `ddate1`/`ddate2`; Skyscanner
+gets no multi-city link (bot wall, unverifiable). The demo
+(`public/index.html`) mirrors all of this in JS — keep both in sync.
 
 The stub fare model (`providers/stub.py`) makes these strategies
 meaningful: +30% on Taiwan-origin departures during 連假, outstation

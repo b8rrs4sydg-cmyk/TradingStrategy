@@ -96,7 +96,7 @@ def test_two_trip_search_returns_roles_trips_and_multi_city_links_through_csv():
         ],
     }
     body = client.post("/search", json=payload).json()
-    assert body["notices"] == []
+    assert [n for n in body["notices"] if "LHR" not in n] == []
     four = next(p for p in body["plans"] if p["strategy"] == "back_to_back_4leg")
     assert four["ticket_roles"][1].startswith("外站四腿票") and len(four["trips"]) == 2
     trip_link = next(b for b in four["tickets"][1]["booking_links"] if b["source"] == "trip_com")
