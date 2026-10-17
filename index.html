@@ -2151,7 +2151,8 @@ function wireTheme() {
 const NTFY = 'https://ntfy.sh';
 const T_REQ = 'sff-q-1dbc38bf5255bfa8b886187c';   // page → crawler
 const T_RES = 'sff-r-dbe95166c8687164a93fc60e';   // crawler → page
-const NTFY_SILENCE_MS = 45000;                    // no reply this long → Claude fallback
+const NTFY_FIRST_MS = 45000;                      // no reply at all → crawler is down → Claude fallback
+const NTFY_SILENCE_MS = 120000;                   // gap between messages once it is working
 const NTFY_STEPS = [['queued', '連線中繼'], ['dispatched', '等爬蟲接手'], ['running', '查詢 Google Flights'], ['done', '完成']];
 const LIVE_CACHE_KEY = 'sff.livefares.v1';
 const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
@@ -2383,7 +2384,7 @@ function ntfyLookup(keys, rid) {
     };
     es.onopen = async () => {
       opened = true;
-      arm(NTFY_SILENCE_MS);
+      arm(NTFY_FIRST_MS);
       try {
         for (const chunk of ntfyChunks(rid, keys)) await ntfyPost(JSON.stringify({ rid, total: keys.length, keys: chunk }));
         if (!finished && live.doc?.status === 'queued') { live.doc = { ...live.doc, status: 'dispatched' }; renderLookup(); }
