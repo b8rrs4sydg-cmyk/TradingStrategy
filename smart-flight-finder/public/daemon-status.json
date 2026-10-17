@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T18:00:05+00:00",
+ "at": "2026-10-17T18:01:37+00:00",
  "publishes": {
-  "ok": 117,
+  "ok": 133,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 940,
+ "fares_saved": 991,
  "log": [
   "17:46:22 http front door: https://behaviour-starter-pastor-domestic.trycloudflare.com",
   "17:46:22 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -58,6 +58,18 @@
   "17:58:39 request mvcp5bt3jhjgq: final sent (135/135); ntfy publishes {'ok': 100, 'r429': 0, 'fail': 0}",
   "17:58:58 request mvcp40ehe6owd: chunk of 76 keys done in 304s; ntfy publishes {'ok': 103, 'r429': 0, 'fail': 0}",
   "18:00:00 request received: rid mvcpbpr0soy4o 160 keys",
-  "18:00:00 handle mvcpbpr0soy4o: first_chunk=True total=160"
+  "18:00:00 handle mvcpbpr0soy4o: first_chunk=True total=160",
+  "18:00:48 request received: rid mvcpcvsdfts19 30 keys",
+  "18:00:48 handle mvcpcvsdfts19: first_chunk=True total=30",
+  "18:00:48 request mvcpcvsdfts19: chunk of 30 keys done in 0s; ntfy publishes {'ok': 123, 'r429': 0, 'fail': 0}",
+  "18:00:50 request mvcpcvsdfts19: final sent (30/30); ntfy publishes {'ok': 124, 'r429': 0, 'fail': 0}",
+  "18:00:51 request received: rid mvcpcyiluj119 84 keys",
+  "18:00:51 handle mvcpcyiluj119: first_chunk=True total=160",
+  "18:00:52 request received: rid mvcpcyiluj119 76 keys",
+  "18:00:52 handle mvcpcyiluj119: first_chunk=False total=160",
+  "18:01:10 request received: rid mvcpdcrpfngds 84 keys",
+  "18:01:10 handle mvcpdcrpfngds: first_chunk=True total=160",
+  "18:01:10 request received: rid mvcpdcrpfngds 76 keys",
+  "18:01:10 handle mvcpdcrpfngds: first_chunk=False total=160"
  ]
 }
