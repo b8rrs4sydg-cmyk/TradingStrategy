@@ -2462,8 +2462,11 @@ function ntfyLookup(keys, rid) {
       renderLookup();
       if (m.final) { finished = true; cleanup(); resolve(); }
     };
+    let posted = false;
     es.onopen = async () => {
       opened = true;
+      if (posted) return;                     // EventSource reconnects re-fire onopen: never post twice
+      posted = true;
       arm(NTFY_FIRST_MS);
       try {
         for (const chunk of ntfyChunks(rid, keys)) await ntfyPost(JSON.stringify({ rid, total: keys.length, keys: chunk }));
