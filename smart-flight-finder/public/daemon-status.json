@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T17:21:26+00:00",
+ "at": "2026-10-17T17:22:58+00:00",
  "publishes": {
-  "ok": 105,
+  "ok": 134,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 583,
+ "fares_saved": 601,
  "log": [
   "17:12:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "17:13:00 request received: rid selftest1792257177 30 keys",
@@ -84,6 +84,7 @@
   "17:20:57 request received: rid mvcnxmswllrnu 42 keys",
   "17:20:57 handle mvcnxmswllrnu: first_chunk=False total=83",
   "17:20:57 request received: rid mvcnxmswllrnu 5 keys",
-  "17:20:57 handle mvcnxmswllrnu: first_chunk=False total=83"
+  "17:20:57 handle mvcnxmswllrnu: first_chunk=False total=83",
+  "17:21:42 request mvcnxmswllrnu: chunk of 5 keys done in 44s; ntfy publishes {'ok': 110, 'r429': 0, 'fail': 0}"
  ]
 }
