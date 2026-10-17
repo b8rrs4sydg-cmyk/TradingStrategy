@@ -1,22 +1,12 @@
 {
- "at": "2026-10-17T18:18:21+00:00",
+ "at": "2026-10-17T18:21:22+00:00",
  "publishes": {
   "ok": 250,
-  "r429": 95,
-  "fail": 11
+  "r429": 114,
+  "fail": 13
  },
- "fares_saved": 1101,
+ "fares_saved": 1137,
  "log": [
-  "17:47:49 request httptest1792259246: chunk of 20 keys done in 23s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "17:47:49 request httptest1792259246: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "17:47:53 request received: rid mvcow9rsi4x6u 30 keys",
-  "17:47:53 handle mvcow9rsi4x6u: first_chunk=True total=30",
-  "17:47:58 request received: rid mvcowe2527vd8 9 keys",
-  "17:47:58 handle mvcowe2527vd8: first_chunk=True total=9",
-  "17:48:32 request mvcowe2527vd8: chunk of 9 keys done in 34s; ntfy publishes {'ok': 7, 'r429': 0, 'fail': 0}",
-  "17:48:35 request mvcowe2527vd8: final sent (9/9); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}",
-  "17:48:44 request received: rid mvcoxd2be611t 30 keys",
-  "17:48:44 handle mvcoxd2be611t: first_chunk=True total=30",
   "17:51:06 request mvcoxd2be611t: chunk of 30 keys done in 142s; ntfy publishes {'ok': 35, 'r429': 0, 'fail': 0}",
   "17:51:07 request mvcoxd2be611t: final sent (30/30); ntfy publishes {'ok': 36, 'r429': 0, 'fail': 0}",
   "17:52:02 request mvcow9rsi4x6u: chunk of 30 keys done in 249s; ntfy publishes {'ok': 41, 'r429': 0, 'fail': 0}",
@@ -156,6 +146,16 @@
   "18:18:07 request received: rid mupj23xv6p3yg 13 keys",
   "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160",
   "18:18:07 request received: rid mupj23xv6p3yg 13 keys",
-  "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160"
+  "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:56 publish 429 #100: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
+  "18:19:55 publish gave up",
+  "18:20:00 request received: rid mvcq1k33r557r 160 keys",
+  "18:20:00 handle mvcq1k33r557r: first_chunk=True total=160",
+  "18:20:03 request mupj23xv6p3yg: chunk of 13 keys done in 116s; ntfy publishes {'ok': 250, 'r429': 105, 'fail': 12}",
+  "18:20:45 request received: rid mvcq2je9m9qst 84 keys",
+  "18:20:45 handle mvcq2je9m9qst: first_chunk=True total=160",
+  "18:20:45 request received: rid mvcq2je9m9qst 76 keys",
+  "18:20:45 handle mvcq2je9m9qst: first_chunk=False total=160",
+  "18:20:51 publish gave up"
  ]
 }
