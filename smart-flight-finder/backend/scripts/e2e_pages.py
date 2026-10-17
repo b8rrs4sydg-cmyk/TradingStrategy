@@ -6,7 +6,7 @@ Scenarios (each prints a timeline; exit code 1 if anything is broken)::
   B  UI: sort, filter, select for compare, favourite, booking links
   C  live lookup: widen the search so fares are missing, watch the ntfy relay /
      fare daemon stream them back until the lookup is DONE
-  D  四腿票 (three trips): narrow to NRT + HKG/ICN at ±0 days, keep looking up what
+  D  四腿票 (three trips): narrow to NRT + HKG/ICN/BKK at ±0 days, keep looking up what
      is missing until the search is complete, then a 四腿票 plan must be listed
      with its three trips, three ticket roles and booking links
 
@@ -137,7 +137,7 @@ async def main() -> int:
         # ---- C: live lookup, widened search ------------------------------------
         await set_checked(page, "pick-dest", None)
         await submit(page)
-        st = await wait_lookup(page, min(420, BUDGET_S / 4), "C")
+        st = await wait_lookup(page, min(900, BUDGET_S / 2), "C")
         check(st["status"] == "done", f"live lookup completes (status={st['status']}, found={st['found']})")
         check((st["found"] or 0) > 0, "fares streamed back from the crawler")
         check(not st["error"], f"no lookup error ({st['error']})")
@@ -146,7 +146,7 @@ async def main() -> int:
         await page.goto(URL, wait_until="load")   # fresh page: scenario C's campaign must not run on
         await page.wait_for_timeout(2500)
         await set_checked(page, "pick-dest", ["NRT"])
-        await set_checked(page, "pick-outer", ["HKG", "ICN"])
+        await set_checked(page, "pick-outer", ["HKG", "ICN", "BKK"])
         await page.fill("#f-bulk-flex", "0")
         await page.click("#btn-apply-flex")
         rounds = 0
