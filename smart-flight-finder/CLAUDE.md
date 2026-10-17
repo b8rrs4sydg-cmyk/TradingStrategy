@@ -144,7 +144,7 @@ When a demo search needs fares the database lacks, the page:
 The session that receives it (Claude) handles it:
 1. `ArtifactData get requests/<rid>` → save `keys` to a file.
 2. `python -m scripts.relay_lookup dispatch <rid> keys.json` → validates keys
-   (`lookup_fares.valid_keys`, ≤ 80, cheap first), commits
+   (`lookup_fares.valid_keys`, ≤ 160, cheap first), commits
    `public/live-request.json`, pushes, prints the sha. The "Fare lookup"
    workflow (`.github/workflows/fare-lookup.yml`) runs `scripts.lookup_fares`
    for just those keys and posts `fare-lookup` commit statuses `done/total`.

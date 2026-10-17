@@ -28,7 +28,7 @@ from pathlib import Path
 from app.providers.fare_db import FareDatabase
 from app.providers.google_flights import scrape
 
-MAX_KEYS = 80
+MAX_KEYS = 160
 _DAY = r"\d{4}-\d{2}-\d{2}"
 _KEY = re.compile(
     rf"^(ow\|[A-Z]{{3}}\|[A-Z]{{3}}\|{_DAY}|rt\|[A-Z]{{3}}\|[A-Z]{{3}}\|{_DAY}\|{_DAY}"
