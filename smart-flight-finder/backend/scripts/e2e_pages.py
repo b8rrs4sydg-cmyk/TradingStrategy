@@ -104,6 +104,26 @@ async def main() -> int:
         check(info["slots"] == 3, f"three default time slots ({info['slots']})")
         check(info["plans"] > 0 and info["cards"] > 0, f"default search lists plans ({info['plans']}/{info['cards']} cards)")
 
+        diag = await page.evaluate(
+            """async () => {
+              const out = {};
+              const tryFetch = async (name, url, opt) => {
+                try { const r = await fetch(url, { cache: 'no-store', ...opt }); const t = await r.text(); out[name] = r.status + ' ' + t.slice(0, 120); return r.ok ? t : null; }
+                catch (e) { out[name] = 'ERR ' + e; return null; }
+              };
+              const api = await tryFetch('api', DAEMON_API, { headers: { Accept: 'application/vnd.github.raw' } });
+              const raw = await tryFetch('raw', DAEMON_RAW + '?_=' + Date.now());
+              const sib = await tryFetch('sibling', 'daemon.json?_=' + Date.now());
+              for (const [n, t] of [['api', api], ['raw', raw], ['sibling', sib]]) {
+                try { const u = JSON.parse(t).url; if (u) await tryFetch('health-' + n, u + '/health'); } catch {}
+              }
+              out.discovered = await discoverDaemon();
+              return out;
+            }"""
+        )
+        log("discovery:", diag)
+        check(bool(diag.get("discovered")), "crawler tunnel discovered by the page")
+
         # ---- B: UI -----------------------------------------------------------
         await page.select_option("#r-sort", "price")
         await page.wait_for_timeout(500)
