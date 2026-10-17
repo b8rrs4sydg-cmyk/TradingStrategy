@@ -1,15 +1,12 @@
 {
- "at": "2026-10-17T22:33:42+00:00",
+ "at": "2026-10-17T22:35:13+00:00",
  "publishes": {
   "ok": 177,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2601,
+ "fares_saved": 2631,
  "log": [
-  "19:21:52 http front door: https://below-divx-ton-contrast.trycloudflare.com",
-  "19:21:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
-  "19:22:52 request received: rid mvcsaels9tlyy 9 keys",
   "19:22:52 handle mvcsaels9tlyy: first_chunk=True total=9",
   "19:22:56 request received: rid mvcsaiscg85eb 160 keys",
   "19:22:56 handle mvcsaiscg85eb: first_chunk=True total=160",
@@ -151,6 +148,14 @@
   "20:56:34 request mvcvkai815d7x: chunk of 27 keys done in 123s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
   "20:56:35 request mvcvkai815d7x: final sent (27/27); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
   "22:31:49 request received: rid mvcz1f23qn4as 160 keys",
-  "22:31:49 handle mvcz1f23qn4as: first_chunk=True total=160"
+  "22:31:49 handle mvcz1f23qn4as: first_chunk=True total=160",
+  "22:33:55 request mvcz1f23qn4as: chunk of 160 keys done in 125s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "22:33:55 request mvcz1f23qn4as: final sent (160/160); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "22:34:14 request received: rid mvcz4imwulqka 160 keys",
+  "22:34:14 handle mvcz4imwulqka: first_chunk=True total=160",
+  "22:34:14 request mvcz4imwulqka: chunk of 160 keys done in 0s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "22:34:17 request mvcz4imwulqka: final sent (160/160); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "22:34:18 request received: rid mvcz4lza9cxe6 160 keys",
+  "22:34:18 handle mvcz4lza9cxe6: first_chunk=True total=160"
  ]
 }
