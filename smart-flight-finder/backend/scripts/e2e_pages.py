@@ -143,6 +143,8 @@ async def main() -> int:
         check(not st["error"], f"no lookup error ({st['error']})")
 
         # ---- D: 四腿票, narrowed so the lookup can finish --------------------------
+        await page.goto(URL, wait_until="load")   # fresh page: scenario C's campaign must not run on
+        await page.wait_for_timeout(2500)
         await set_checked(page, "pick-dest", ["NRT"])
         await set_checked(page, "pick-outer", ["HKG", "ICN"])
         await page.fill("#f-bulk-flex", "0")
@@ -186,5 +188,5 @@ async def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(asyncio.run(main()))
-# e2e rerun 16:55
-# e2e rerun 17:04
+# rerun 16:55
+# rerun 17:04

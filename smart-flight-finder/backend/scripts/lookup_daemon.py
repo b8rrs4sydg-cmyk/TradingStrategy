@@ -44,13 +44,13 @@ from scripts.lookup_fares import MAX_KEYS, valid_keys
 
 NTFY = os.getenv("NTFY_URL", "https://ntfy.sh")
 MSG_BYTES = 3400            # ntfy turns messages over 4096 bytes into attachments
-RATE_KEYS = 800             # accepted keys per window
+RATE_KEYS = 2500            # accepted keys per window
 RATE_WINDOW_S = 600
 CACHE_TTL_S = 1800          # a key fetched in the last 30 min is answered from memory
 FLUSH_EVERY_S = 6
 HEARTBEAT_S = 20
 PERSIST_EVERY_S = 90
-CONCURRENCY = 5
+CONCURRENCY = 8
 _UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/130.0 Safari/537.36"
