@@ -39,7 +39,7 @@ def check(ok: bool, msg: str) -> None:
 
 STATE = """() => ({
   status: live.doc && live.doc.status, found: live.doc && live.doc.found, done: live.doc && live.doc.done,
-  total: live.doc && live.doc.total, mode: live.mode, error: live.error, rid: live.rid,
+  total: live.doc && live.doc.total, mode: live.mode, transport: live.transport, error: live.error, rid: live.rid,
   plans: state.result ? state.result.plans.length : -1,
   four: state.result ? state.result.plans.filter(p => p.strategy === 'back_to_back_4leg').length : -1,
   missing: fareStats.missingKeys.size,
@@ -70,7 +70,7 @@ async def wait_lookup(page: Page, cap_s: float, tag: str) -> dict:
     while time.time() - t0 < cap_s:
         await page.wait_for_timeout(3000)
         st = await page.evaluate(STATE)
-        line = f"{st['status']} {st['done']}/{st['total']} found={st['found']} plans={st['plans']} four={st['four']}"
+        line = f"{st['status']} {st['done']}/{st['total']} found={st['found']} plans={st['plans']} four={st['four']} via={st['transport']}"
         if line != last:
             log(f"[{tag}]", line)
             last = line
@@ -140,6 +140,7 @@ async def main() -> int:
         st = await wait_lookup(page, min(900, BUDGET_S / 2), "C")
         check(st["status"] == "done", f"live lookup completes (status={st['status']}, found={st['found']})")
         check((st["found"] or 0) > 0, "fares streamed back from the crawler")
+        check(st["transport"] == "http", f"page reached the crawler through its direct tunnel (transport={st['transport']})")
         check(not st["error"], f"no lookup error ({st['error']})")
 
         # ---- D: 四腿票, narrowed so the lookup can finish --------------------------

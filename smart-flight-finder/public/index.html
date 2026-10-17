@@ -2157,6 +2157,7 @@ const NTFY_SILENCE_MS = 120000;                   // gap between messages once i
 const NTFY_STEPS = [['queued', '連線中繼'], ['dispatched', '等爬蟲接手'], ['running', '查詢 Google Flights'], ['done', '完成']];
 const LIVE_CACHE_KEY = 'sff.livefares.v1';
 // The crawler announces its public tunnel URL in daemon.json (committed to the repo); read via the GitHub API (no cache lag).
+const DAEMON_RAW = 'https://raw.githubusercontent.com/b8rrs4sydg-cmyk/TradingStrategy/claude/zealous-darwin-1kexus/smart-flight-finder/public/daemon.json';
 const DAEMON_API = 'https://api.github.com/repos/b8rrs4sydg-cmyk/TradingStrategy/contents/smart-flight-finder/public/daemon.json?ref=claude/zealous-darwin-1kexus';
 const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
 // Poke-only scheduled task bound to that session: firing it wakes Claude with the request id.
@@ -2496,12 +2497,17 @@ async function discoverDaemon() {
     return fetch(url, { ...opt, signal: ctl.signal, cache: 'no-store' }).finally(() => clearTimeout(t));
   };
   try {
-    let info = null;
-    try { const r = await timed(DAEMON_API, { headers: { Accept: 'application/vnd.github.raw' } }); if (r.ok) info = await r.json(); } catch {}
-    if (!info) { try { const r = await timed('daemon.json'); if (r.ok) info = await r.json(); } catch {} }   // Pages sibling
-    if (info && info.url) {
-      const h = await timed(`${info.url}/health`, {}, 6000);
-      if (h.ok) live.daemonUrl = info.url;
+    // GitHub API (no cache lag, but 60 requests/hour per IP) → raw file (cache-busted) → file next to the page
+    const sources = [
+      () => timed(DAEMON_API, { headers: { Accept: 'application/vnd.github.raw' } }),
+      () => timed(`${DAEMON_RAW}?_=${Date.now()}`),
+      () => timed(`daemon.json?_=${Date.now()}`),
+    ];
+    for (const get of sources) {
+      let info = null;
+      try { const r = await get(); if (r.ok) info = await r.json(); } catch {}
+      if (!info || !info.url) continue;
+      try { const h = await timed(`${info.url}/health`, {}, 6000); if (h.ok) { live.daemonUrl = info.url; break; } } catch {}
     }
   } catch {}
   return live.daemonUrl;
