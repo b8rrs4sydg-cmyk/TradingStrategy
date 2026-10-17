@@ -324,6 +324,7 @@ class Daemon:
             log(f"daemon up: req={self.req} res={self.res} for {duration:.0f}s")
             deadline = time.time() + duration
             persist_task = asyncio.create_task(self._persist_loop())
+            publisher_task = asyncio.create_task(self.publisher())
             tasks: set[asyncio.Task] = set()
             while time.time() < deadline:
                 try:
@@ -341,6 +342,7 @@ class Daemon:
             if tasks:
                 await asyncio.wait(tasks, timeout=300)
             persist_task.cancel()
+            publisher_task.cancel()
             await asyncio.to_thread(self.persist.flush, True)
             await browser.close()
 
@@ -350,24 +352,29 @@ class Daemon:
             await asyncio.to_thread(self.persist.flush, True)
 
     async def handle(self, req: dict, ctx, sem: PriorityGate) -> None:
+        """Fetch one chunk of a request; results are buffered per request and sent by :meth:`publisher`."""
+
         rid, keys = req["rid"], req["keys"]
         self.seq += 1
         seq = self.seq
         first_chunk = rid not in self.requests
-        state = self.requests.setdefault(rid, {"total": req["total"], "done": 0})
+        state = self.requests.setdefault(
+            rid,
+            {"total": req["total"], "done": 0, "f": {}, "nf": [], "active": 0, "last_sent": 0.0,
+             "last_activity": time.time(), "final_sent": False},
+        )
         log(f"handle {rid}: first_chunk={first_chunk} total={state['total']}")
         fresh = [k for k in keys if (h := self.cache.get(k)) and time.time() - h[0] < CACHE_TTL_S]
         if not self.limiter.allow(len(keys) - len(fresh)):   # answers from memory cost nothing
             await asyncio.to_thread(publish, self.res, json.dumps({"rid": rid, "error": "rate_limited", "final": True}))
             return
-        if first_chunk:
+        state["active"] += 1
+        if first_chunk:   # lets the page see the crawler is alive at once
+            state["last_sent"] = time.time()
             await asyncio.to_thread(
                 publish, self.res,
                 json.dumps({"rid": rid, "done": 0, "total": state["total"], "f": {}, "nf": [], "final": False, "hello": True}),
             )
-        out_f: dict[str, dict] = {}
-        out_n: list[str] = []
-        last_flush = time.time()
 
         async def one(key: str) -> None:
             hit = self.cache.get(key)
@@ -386,34 +393,49 @@ class Daemon:
                 if not failed:   # a crash is not "no itinerary": do not cache or report it as unavailable
                     self.cache[key] = (time.time(), entry)
             state["done"] += 1
+            state["last_activity"] = time.time()
             if entry:
-                out_f[key] = {**entry, "at": datetime.now(UTC).date().isoformat()}
+                state["f"][key] = {**entry, "at": datetime.now(UTC).date().isoformat()}
             elif not failed:
-                out_n.append(key)
+                state["nf"].append(key)
 
-        async def flusher(final: bool) -> None:
-            nonlocal out_f, out_n
-            f, n = out_f, out_n
-            out_f, out_n = {}, []
-            self.persist.add(f, n)
-            finished = final and state["done"] >= state["total"]
-            for text in split_results(rid, f, n, state["done"], state["total"], final=finished):
-                await asyncio.to_thread(publish, self.res, text)
-
-        pending = [asyncio.create_task(one(k)) for k in keys]
         t0 = time.time()
-        last_sent = time.time()
-        while not all(t.done() for t in pending):
-            await asyncio.wait(pending, timeout=FLUSH_EVERY_S, return_when=asyncio.FIRST_COMPLETED)
+        try:
+            await asyncio.gather(*(one(k) for k in keys))
+        finally:
+            state["active"] -= 1
+            state["last_activity"] = time.time()
+        log(f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}")
+
+    async def publisher(self) -> None:
+        """One sender for every request: results are coalesced per request and sent at most every
+        FLUSH_EVERY_S (a heartbeat every HEARTBEAT_S) — ntfy.sh rate-limits anonymous publishers."""
+
+        while True:
+            await asyncio.sleep(2)
             now = time.time()
-            if (out_f or out_n) and now - last_flush >= FLUSH_EVERY_S:
-                await flusher(False)
-                last_flush = last_sent = time.time()
-            elif now - last_sent >= HEARTBEAT_S:   # keeps the page from deciding we died
-                await flusher(False)
-                last_sent = time.time()
-        await flusher(True)
-        log(f"request {rid}: {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}")
+            for rid, st in list(self.requests.items()):
+                if st["final_sent"]:
+                    if now - st["last_activity"] > 900:
+                        del self.requests[rid]
+                    continue
+                quiet = st["active"] == 0 and now - st["last_activity"] > 60   # missing chunk: stop waiting
+                finished = st["active"] == 0 and (st["done"] >= st["total"] or quiet)
+                has_data = bool(st["f"] or st["nf"])
+                due = has_data and now - st["last_sent"] >= FLUSH_EVERY_S
+                beat = now - st["last_sent"] >= HEARTBEAT_S
+                if not (finished or due or beat):
+                    continue
+                f, n = st["f"], st["nf"]
+                st["f"], st["nf"] = {}, []
+                self.persist.add(f, n)
+                for text in split_results(rid, f, n, st["done"], st["total"], final=finished):
+                    await asyncio.to_thread(publish, self.res, text)
+                    await asyncio.sleep(0.5)
+                st["last_sent"] = time.time()
+                if finished:
+                    st["final_sent"] = True
+                    log(f"request {rid}: final sent ({st['done']}/{st['total']}); ntfy publishes {PUB}")
 
 
 # --- self test (client side) -------------------------------------------------------------
