@@ -36,3 +36,14 @@ def test_open_jaw_pairs_distinct_destinations():
         a_dest = p.tickets[0].final_destination
         b_origin = p.tickets[1].origin
         assert a_dest != b_origin, f"open-jaw should enter {a_dest} and leave from a different city"
+
+
+def test_open_jaw_never_crosses_countries():
+    """飛香港卻從馬尼拉回 is two trips, not an open jaw: in/out airports share one country."""
+    from app.data.airports import BY_CODE
+    from app.services.strategies.open_jaw import _distinct_pairs
+
+    pairs = list(_distinct_pairs(["HKG", "MNL", "NRT", "KIX", "ICN"]))
+    assert ("NRT", "KIX") in pairs and ("KIX", "NRT") in pairs
+    assert not any(BY_CODE[a].country != BY_CODE[b].country for a, b in pairs)
+    assert ("HKG", "MNL") not in pairs and ("MNL", "HKG") not in pairs

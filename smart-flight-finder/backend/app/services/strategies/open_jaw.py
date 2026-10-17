@@ -18,6 +18,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from datetime import date
 
+from app.data.airports import BY_CODE
 from app.models.enums import DateWindowRole, TicketStrategyType
 from app.providers.base import FlightOfferProvider
 from app.services.date_matrix import ExpandedWindow
@@ -48,7 +49,7 @@ class OpenJawPlanner:
     ) -> list[StrategyPlan]:
         out_dates = sorted({c for w in expanded if w.role is DateWindowRole.OUTBOUND for c in w.candidates})
         ret_dates = sorted({c for w in expanded if w.role is DateWindowRole.RETURN for c in w.candidates})
-        if not out_dates or not ret_dates or len(destinations) < 2:
+        if not out_dates or not ret_dates or len(destinations) < 2:   # needs two airports of one country
             return []
 
         plans: list[StrategyPlan] = []
@@ -171,9 +172,18 @@ class OpenJawPlanner:
         return min(offers, key=lambda o: o.total_price) if offers else None
 
 
+def _same_country(a: str, b: str) -> bool:
+    ca, cb = BY_CODE.get(a), BY_CODE.get(b)
+    return ca is not None and cb is not None and ca.country == cb.country
+
+
 def _distinct_pairs(items: Iterable[str]) -> Iterable[tuple[str, str]]:
+    """In/out airport pairs of ONE country only: 不同進出點 means e.g. 東京進、大阪出 —
+    flying into Hong Kong and home from Manila is two trips, not an open jaw."""
+
     seen = list(dict.fromkeys(items))  # preserve order, dedup
     for i, a in enumerate(seen):
         for b in seen[i + 1 :]:
-            yield a, b
-            yield b, a
+            if _same_country(a, b):
+                yield a, b
+                yield b, a

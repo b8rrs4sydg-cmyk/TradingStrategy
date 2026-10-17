@@ -47,13 +47,10 @@ def test_daomai_is_wrap_ticket_from_home_plus_reverse_ticket_from_abroad():
     assert all(t.searched_segments for t in p.tickets)
 
 
-def test_bu_tou_wei_variant_uses_two_one_ways_around_the_reverse_ticket():
-    plans = [p for p in _reverse() if "補頭尾" in p.explain]
+def test_reverse_plans_are_always_exactly_two_tickets():
+    plans = _reverse(("NRT", "KIX"))
     assert plans
-    first, rev, last = plans[0].tickets
-    assert (first.legs[0].origin, first.legs[0].destination, len(first.legs)) == ("TPE", "NRT", 1)
-    assert (last.legs[0].origin, last.legs[0].destination, len(last.legs)) == ("NRT", "TPE", 1)
-    assert rev.legs[0].origin == "NRT"
+    assert all(len(p.tickets) == 2 and "補頭尾" not in p.explain for p in plans)
 
 
 def test_every_kept_plan_beats_two_ordinary_round_trips():

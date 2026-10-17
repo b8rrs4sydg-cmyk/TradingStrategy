@@ -73,7 +73,7 @@ mirror, else `search_multi_city`, `best_pair` constrained cheapest combination).
 ```
 反向票＋倒買法 (reverse.py), home H; each trip has its own in/out city in ONE
 country (大阪進東京出); only JP/TH/KR (DAOMAI_COUNTRIES, others → notice):
-  包覆票  H→A_in (A start) + B_out→H (B end)   ← or 補頭尾: two one-ways
+  包覆票  H→A_in (A start) + B_out→H (B end)   ← always exactly two tickets
   反向票  A_out→H (A end)  + H→B_in (B start)  ← foreign-origin, cheap in TW 連假
 外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→Y over THREE slots P<Q<R,
 X, D, Y in three different countries:

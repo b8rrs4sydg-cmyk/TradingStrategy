@@ -12,9 +12,9 @@ trip B:
 
     旅程 A = 包覆票去程 + 反向票去程;  旅程 B = 反向票回程 + 包覆票回程
 
-The other common way to use the 反向票 is to 補頭尾 — buy the first
-H→D1 and last D2→H as two one-ways instead of the 包覆票. Both variants
-are priced; each is kept only if it beats buying two ordinary round trips.
+A plan is always exactly TWO tickets (the 包覆票 and the 反向票; the 補頭尾
+variant with three tickets was dropped) and is kept only if it beats buying
+two ordinary round trips (otherwise the closest comparison is shown).
 
 Entry and exit of one trip may differ inside the same country (大阪進、東京
 出), so each trip has its own in/out city: A = H→A_in … A_out→H, B = H→B_in
@@ -98,10 +98,7 @@ class ReverseTicketPlanner:
             (variant, a_in, b_out): front
             for a_in in dests
             for b_out in dests
-            for variant, front in (
-                ("倒買法", self._wrap_tickets(home, a_in, b_out, a, b, adults)),
-                ("補頭尾", self._one_way_pairs(home, a_in, b_out, a, b, adults)),
-            )
+            for variant, front in (("倒買法", self._wrap_tickets(home, a_in, b_out, a, b, adults)),)
         }
         out, losers = [], []
         for (variant, a_in, b_out), front in fronts.items():
@@ -149,31 +146,14 @@ class ReverseTicketPlanner:
                     out.append((t.total_price, (a_dep, b_ret, (t,))))
         return out
 
-    def _one_way_pairs(self, home, a_in, b_out, a: TripSlot, b: TripSlot, adults) -> list[tuple[int, _Front]]:
-        firsts = [(dep, quote(self.provider, [(home, a_in, dep)], adults)) for dep in a.departs]
-        lasts = [(ret, quote(self.provider, [(b_out, home, ret)], adults)) for ret in b.returns]
-        return [
-            (f.total_price + l_.total_price, (a_dep, b_ret, (f, l_)))
-            for a_dep, f in firsts
-            if f
-            for b_ret, l_ in lasts
-            if l_
-        ]
-
     def _build(self, variant, home, trip_a_cities, trip_b_cities, a: TripSlot, b: TripSlot, best, baseline) -> StrategyPlan:
         total, (a_dep, b_ret, front), (a_ret, b_dep, rev) = best
         (a_in, a_out), (b_in, b_out) = trip_a_cities, trip_b_cities
         rev_role = f"反向票：{a_out} 出發" + (f"，回程飛 {b_in}" if b_in != a_out else "")
-        if variant == "倒買法":
-            (wrap,) = front
-            tickets = (wrap, rev)
-            roles = (f"包覆票：{home} 出發" + (f"，{b_out} 回" if b_out != a_in else ""), rev_role)
-            first_tag, last_tag = "包覆票 第1段", "包覆票 第2段"
-        else:
-            first, last = front
-            tickets = (first, rev, last)
-            roles = ("單買去程 (補頭)", rev_role, "單買回程 (補尾)")
-            first_tag, last_tag = "單買去程", "單買回程"
+        (wrap,) = front   # always two tickets: 包覆票 + 反向票
+        tickets = (wrap, rev)
+        roles = (f"包覆票：{home} 出發" + (f"，{b_out} 回" if b_out != a_in else ""), rev_role)
+        first_tag, last_tag = "包覆票 第1段", "包覆票 第2段"
 
         trips = (
             (
@@ -195,15 +175,14 @@ class ReverseTicketPlanner:
             ),
             saving_warning("reverse_savings_estimate", "兩趟各買一般來回", baseline, total),
         ]
-        if variant == "倒買法":
-            warnings.append(
-                RiskWarning(
-                    RiskLevel.LOW,
-                    "wrap_ticket_validity",
-                    f"包覆票從 {fmt_day(a_dep)} 用到 {fmt_day(b_ret)}，"
-                    "請確認票價規則的最長停留 / 效期（常見為 1 年）",
-                )
+        warnings.append(
+            RiskWarning(
+                RiskLevel.LOW,
+                "wrap_ticket_validity",
+                f"包覆票從 {fmt_day(a_dep)} 用到 {fmt_day(b_ret)}，"
+                "請確認票價規則的最長停留 / 效期（常見為 1 年）",
             )
+        )
         return StrategyPlan(
             strategy=self.strategy,
             tickets=tickets,
