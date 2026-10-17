@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T22:55:20+00:00",
+ "at": "2026-10-17T22:56:52+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3051,
+ "fares_saved": 3064,
  "log": [
   "22:47:38 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "22:47:43 http front door: ['https://flag-quantum-beaches-pets.trycloudflare.com', 'https://a6f30130f46a45.lhr.life']",
@@ -39,6 +39,20 @@
   "22:52:35 request mvczs25kde6le: chunk of 160 keys done in 3s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "22:52:38 request mvczs25kde6le: final sent (160/160); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "22:52:39 request received: rid mvczs7jvyst8t 160 keys",
-  "22:52:39 handle mvczs7jvyst8t: first_chunk=True total=160"
+  "22:52:39 handle mvczs7jvyst8t: first_chunk=True total=160",
+  "22:55:27 request mvczs7jvyst8t: chunk of 160 keys done in 168s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "22:55:27 request mvczs7jvyst8t: final sent (160/160); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "22:55:33 rtc 7uoo0vlcc6: answered",
+  "22:55:34 rtc 7uoo0vlcc6: data channel open",
+  "22:55:34 request received: rid mvczvw6ci0305 5 keys",
+  "22:55:34 handle mvczvw6ci0305: first_chunk=True total=5",
+  "22:55:38 request mvczvw6ci0305: chunk of 5 keys done in 4s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "22:55:39 request mvczvw6ci0305: final sent (5/5); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "22:55:41 request received: rid mvczw3t57dpa3 12 keys",
+  "22:55:41 handle mvczw3t57dpa3: first_chunk=True total=12",
+  "22:56:35 request mvczw3t57dpa3: chunk of 12 keys done in 55s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "22:56:37 request mvczw3t57dpa3: final sent (12/12); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "22:56:38 request received: rid mvczxc4jes7y3 8 keys",
+  "22:56:38 handle mvczxc4jes7y3: first_chunk=True total=8"
  ]
 }
