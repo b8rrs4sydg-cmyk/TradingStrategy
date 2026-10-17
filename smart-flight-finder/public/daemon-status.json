@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:15:23+00:00",
+ "at": "2026-10-17T19:16:54+00:00",
  "publishes": {
-  "ok": 85,
+  "ok": 101,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1470,
+ "fares_saved": 1500,
  "log": [
   "19:09:19 http front door: https://work-posted-gnu-procedure.trycloudflare.com",
   "19:09:19 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -35,6 +35,20 @@
   "19:15:08 request received: rid mvcs0gp8kkxqc 9 keys",
   "19:15:08 handle mvcs0gp8kkxqc: first_chunk=True total=9",
   "19:15:10 request received: rid mvcs0irl0ls3b 12 keys",
-  "19:15:10 handle mvcs0irl0ls3b: first_chunk=True total=12"
+  "19:15:10 handle mvcs0irl0ls3b: first_chunk=True total=12",
+  "19:16:11 request received: rid mvcs1t67y4qrt 9 keys",
+  "19:16:11 handle mvcs1t67y4qrt: first_chunk=True total=9",
+  "19:16:15 request received: rid mvcs1x3a17sj8 160 keys",
+  "19:16:15 handle mvcs1x3a17sj8: first_chunk=True total=160",
+  "19:16:15 request mvcs1x3a17sj8: chunk of 160 keys done in 0s; ntfy publishes {'ok': 94, 'r429': 0, 'fail': 0}",
+  "19:16:17 request mvcs1x3a17sj8: final sent (160/160); ntfy publishes {'ok': 95, 'r429': 0, 'fail': 0}",
+  "19:16:18 request received: rid mvcs1zj7g7qct 160 keys",
+  "19:16:18 handle mvcs1zj7g7qct: first_chunk=True total=160",
+  "19:16:19 request mvcs1t67y4qrt: chunk of 9 keys done in 8s; ntfy publishes {'ok': 95, 'r429': 0, 'fail': 0}",
+  "19:16:19 request mvcs1t67y4qrt: final sent (9/9); ntfy publishes {'ok': 95, 'r429': 0, 'fail': 0}",
+  "19:16:36 request mvcs0irl0ls3b: chunk of 12 keys done in 86s; ntfy publishes {'ok': 98, 'r429': 0, 'fail': 0}",
+  "19:16:38 request mvcs0irl0ls3b: final sent (12/12); ntfy publishes {'ok': 98, 'r429': 0, 'fail': 0}",
+  "19:16:44 request mvcs0gp8kkxqc: chunk of 9 keys done in 96s; ntfy publishes {'ok': 98, 'r429': 0, 'fail': 0}",
+  "19:16:45 request mvcs0gp8kkxqc: final sent (9/9); ntfy publishes {'ok': 99, 'r429': 0, 'fail': 0}"
  ]
 }
