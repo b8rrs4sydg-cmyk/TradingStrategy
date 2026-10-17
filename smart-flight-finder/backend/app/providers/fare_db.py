@@ -233,7 +233,7 @@ class FareDatabaseProvider:
             logger.warning("live_fare_fetch_failed", extra={"err": str(e)})
             return 0
         with self._lock:
-            self.db.merge(fetched, today=date.today(), missing=[*self.db.missing, *missing])  # noqa: DTZ011
+            self.db.merge(fetched, today=datetime.now(UTC).date(), missing=[*self.db.missing, *missing])
             if self.path:
                 try:
                     self.db.save(self.path)
