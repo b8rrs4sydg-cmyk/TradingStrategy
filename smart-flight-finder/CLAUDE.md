@@ -83,8 +83,9 @@ country (大阪進東京出); only JP/TH/KR (DAOMAI_COUNTRIES, others → notice
 Plans are kept only if cheaper than ordinary round trips for both trips,
 carry `ticket_roles` + `trips`, and scoring divides price / flight time /
 PTO efficiency by `trip_count` so they compare fairly with single trips.
-Tickets carry `searched_segments`; `booking_links` turns open jaws and 3+
-segments into multi-city links (mirrored pairs use round-trip links). Link
+Tickets carry `searched_segments`; `booking_links` turns every ticket priced
+over ≥ 2 segments (包覆票 / 反向票 / 四腿票, mirrored pairs included) into
+multi-city links; plain round trips keep round-trip links. Link
 formats were checked in a real browser — see the module docstring:
 Google `tfs` (trip 1/2/3) is exact; Trip.com (tw.trip.com) needs city codes
 + airport params, and multi-city uses its native `multdcity{i}`/

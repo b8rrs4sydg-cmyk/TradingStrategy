@@ -114,13 +114,28 @@ def test_open_jaw_two_segment_ticket_is_multi_city():
     assert (q["multdcity0"], q["multacity1"], q["multddate0"], q["multddate1"]) == ("osa", "tyo", "2027-02-14", "2027-12-23")
 
 
-def test_mirrored_two_segment_ticket_uses_round_trip_search():
+def test_mirrored_two_segment_daomai_ticket_uses_multi_city():
     from dataclasses import replace
     from datetime import date
+
+    from app.services.booking_links import google_flights_tfs
 
     segs = (("NRT", "TPE", date(2027, 2, 14)), ("TPE", "NRT", date(2027, 12, 23)))
     t = replace(TicketOffer("rt", (_leg("NRT", "TPE", 2027, 2, 14), _leg("TPE", "NRT", 2027, 12, 23)), 1),
                 searched_segments=segs)
-    urls = _by_source(t)
-    q = {k: v[0] for k, v in parse_qs(urlparse(urls["trip_com"]).query).items()}
-    assert (q["triptype"], q["dcity"], q["ddate"], q["rdate"]) == ("rt", "tyo", "2027-02-14", "2027-12-23")
+    links = {b.source: b for b in booking_links(t)}
+    assert links["trip_com"].label.startswith("Trip.com 多段")
+    # Google errors on mirrored multi-city → its round-trip search instead
+    assert links["google_flights"].label.startswith("Google Flights 來回")
+    g = google_flights_tfs(segs, adults=1, cabin=CabinClass.ECONOMY, trip=1)
+    assert parse_qs(urlparse(links["google_flights"].url).query)["tfs"] == [g]
+    q = {k: v[0] for k, v in parse_qs(urlparse(links["trip_com"].url).query).items()}
+    assert q["triptype"] == "mt"
+    assert (q["multdcity0"], q["multacity0"], q["multddate0"]) == ("tyo", "tpe", "2027-02-14")
+    assert (q["multdcity1"], q["multacity1"], q["multddate1"]) == ("tpe", "tyo", "2027-12-23")
+
+
+def test_plain_round_trip_without_searched_segments_keeps_round_trip_links():
+    t = TicketOffer("x", (_leg("TPE", "NRT", 2027, 2, 5), _leg("NRT", "TPE", 2027, 2, 15)), 1)
+    q = parse_qs(urlparse(_by_source(t)["trip_com"]).query)
+    assert q["triptype"] == ["rt"]

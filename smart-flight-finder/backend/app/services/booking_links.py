@@ -190,6 +190,10 @@ def _google_url(tfs: str) -> str:
     return f"https://www.google.com/travel/flights?tfs={quote(tfs, safe='')}&hl=zh-TW&curr=TWD"
 
 
+def _mirrored(segments: Sequence[tuple[str, str, date]]) -> bool:
+    return len(segments) == 2 and (segments[0][0], segments[0][1]) == (segments[1][1], segments[1][0])
+
+
 def _multi_city_links(
     segments: Sequence[tuple[str, str, date]], adults: int, cabin: CabinClass
 ) -> list[BookingLink]:
@@ -212,10 +216,23 @@ def _multi_city_links(
         "locale": "zh-TW",
         "curr": "TWD",
     }
-    tfs = google_flights_tfs(segments, adults=adults, cabin=cabin)
+    # Google Flights answers a mirrored multi-city (A→B, B→A) with "No results
+    # returned", so that pair is searched as its equivalent round trip there.
+    if _mirrored(segments):
+        tfs = google_flights_tfs(segments, adults=adults, cabin=cabin, trip=_GOOGLE_TRIP_ROUND)
+        google = BookingLink("google_flights", "Google Flights 來回（Google 多段不支援同城往返）", _google_url(tfs))
+    else:
+        tfs = google_flights_tfs(segments, adults=adults, cabin=cabin)
+        google = BookingLink("google_flights", "Google Flights 多段", _google_url(tfs))
     return [
-        BookingLink("google_flights", "Google Flights 多段", _google_url(tfs)),
-        BookingLink("trip_com", "Trip.com 多段", f"{_TRIP_BASE}?{urlencode(params)}"),
+        google,
+        BookingLink(
+            "trip_com",
+            # Trip.com redirects a mirrored multi-city to its round-trip search
+            # (mt2rt=true, both dates kept) whatever parameters are passed.
+            "Trip.com 多段（同城往返會自動轉為來回，日期不變）" if _mirrored(segments) else "Trip.com 多段",
+            f"{_TRIP_BASE}?{urlencode(params)}",
+        ),
     ]
 
 
@@ -223,9 +240,10 @@ def booking_links(
     ticket: TicketOffer, *, adults: int = 1, cabin: CabinClass = CabinClass.ECONOMY
 ) -> list[BookingLink]:
     segs = ticket.searched_segments
-    # A mirrored pair (A→B, B→A) is an ordinary round trip — every site's
-    # round-trip search handles it; open jaws and 3+ segments need multi-city.
-    if len(segs) > 2 or (len(segs) == 2 and (segs[0][0], segs[0][1]) != (segs[1][1], segs[1][0])):
+    # Tickets a planner priced over several segments (倒買法 包覆票 / 反向票,
+    # 四腿票) always open as multi-city — even a mirrored A→B, B→A pair, so the
+    # two segments show on their own dates, months apart, as one ticket.
+    if len(segs) >= 2:
         return _multi_city_links(segs, adults, cabin)
     r = _route_of(ticket)
     return [

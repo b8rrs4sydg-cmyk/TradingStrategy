@@ -1319,16 +1319,22 @@ function multiCityLinks(segments, adults) {
     q.set(`dairport${i}`, o.toLowerCase()); q.set(`aairport${i}`, d.toLowerCase()); q.set(`multddate${i}`, day);
   });
   for (const [k, v] of Object.entries({ triptype: 'mt', class: 'y', quantity: adults, searchboxarg: 't', nonstoponly: 'off', locale: 'zh-TW', curr: 'TWD' })) q.set(k, v);
+  // Google answers a mirrored multi-city (A→B, B→A) with "No results", so it gets the equivalent round trip.
+  const mirrored = segments.length === 2 && segments[0][0] === segments[1][1] && segments[0][1] === segments[1][0];
   return [
-    { label: 'Google Flights 多段', url: googleUrl(googleTfs(segments, adults, 3)) },
-    { label: 'Trip.com 多段', url: `${TRIP_BASE}?${q}` },
+    mirrored
+      ? { label: 'Google Flights 來回（Google 多段不支援同城往返）', url: googleUrl(googleTfs(segments, adults, 1)) }
+      : { label: 'Google Flights 多段', url: googleUrl(googleTfs(segments, adults, 3)) },
+    // Trip.com redirects a mirrored multi-city to round trip (mt2rt, dates kept) whatever is passed.
+    { label: mirrored ? 'Trip.com 多段（同城往返會自動轉為來回，日期不變）' : 'Trip.com 多段', url: `${TRIP_BASE}?${q}` },
   ];
 }
 
 function bookingLinks(ticket, adults) {
   const segs = ticket.searched_segments || [];
-  // Mirrored pair (A→B, B→A) = ordinary round trip; open jaws and 3+ segments need multi-city.
-  if (segs.length > 2 || (segs.length === 2 && !(segs[0][0] === segs[1][1] && segs[0][1] === segs[1][0]))) return multiCityLinks(segs, adults);
+  // Planner-priced tickets (倒買法 包覆票/反向票, 四腿票) always open as multi-city,
+  // mirrored pairs included (mirrors booking_links.py).
+  if (segs.length >= 2) return multiCityLinks(segs, adults);
   const r = routeOf(ticket);
   const o = encodeURIComponent(r.o.toLowerCase()), d = encodeURIComponent(r.d.toLowerCase());
   const trip = new URLSearchParams({ dcity: tripCity(r.o), acity: tripCity(r.d), dairport: r.o.toLowerCase(), aairport: r.d.toLowerCase(), ddate: r.dep, triptype: r.ret ? 'rt' : 'ow', class: 'y', quantity: adults, locale: 'zh-TW', curr: 'TWD' });
