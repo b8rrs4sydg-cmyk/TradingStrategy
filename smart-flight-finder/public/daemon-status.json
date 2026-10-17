@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T22:42:05+00:00",
+ "at": "2026-10-17T22:43:37+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2646,
+ "fares_saved": 2672,
  "log": [
   "22:37:32 http front door: ['https://sure-levels-kick-defensive.trycloudflare.com', 'https://42e1a0c5bca628.lhr.life']",
   "22:37:32 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -22,6 +22,14 @@
   "22:39:24 request probe1mvcza7dy: chunk of 3 keys done in 45s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "22:39:26 request probe1mvcza7dy: final sent (3/3); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "22:39:37 request httptest1792276718: chunk of 20 keys done in 59s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "22:39:39 request httptest1792276718: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "22:39:39 request httptest1792276718: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "22:42:19 request mvcza0se6teq1: chunk of 160 keys done in 228s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "22:42:20 request mvcza0se6teq1: final sent (160/160); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "22:43:07 request received: rid mvczfxeyiqigr 160 keys",
+  "22:43:07 handle mvczfxeyiqigr: first_chunk=True total=160",
+  "22:43:07 request mvczfxeyiqigr: chunk of 160 keys done in 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "22:43:09 request mvczfxeyiqigr: final sent (160/160); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "22:43:10 request received: rid mvczg0htyxou8 150 keys",
+  "22:43:10 handle mvczg0htyxou8: first_chunk=True total=150"
  ]
 }
