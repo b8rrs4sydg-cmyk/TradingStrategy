@@ -25,9 +25,12 @@ on:
       max_multi_city:
         description: "cap on slow multi-city searches"
         default: "260"
+  # Schedules only run on the default branch; until this branch is merged a
+  # crawl is requested by committing a new timestamp to public/.crawl-request.
   push:
     branches: [claude/zealous-darwin-1kexus]
     paths:
+      - "smart-flight-finder/public/.crawl-request"
       - ".github/workflows/fares-snapshot.yml"
       - "smart-flight-finder/backend/scripts/build_fare_snapshot.py"
       - "smart-flight-finder/backend/app/services/crawl_plan.py"
