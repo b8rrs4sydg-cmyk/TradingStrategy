@@ -19,7 +19,7 @@ import json
 import random
 import sys
 import time
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 from urllib.parse import quote
 from zoneinfo import ZoneInfo
@@ -28,7 +28,12 @@ from app.data.airports import TIMEZONES
 from app.models.enums import CabinClass
 from app.providers.snapshot import parse_key
 from app.services.booking_links import google_flights_tfs
-from app.services.fare_snapshot import SnapshotConfig, cheapest_entry, collect_queries
+from app.services.fare_snapshot import (
+    SnapshotConfig,
+    carry_over,
+    cheapest_entry,
+    collect_queries,
+)
 
 _TRIP = {"ow": 2, "rt": 1, "mc": 3}
 _ROW_LABELS = "li div[aria-label*='New Taiwan dollars']"
@@ -135,6 +140,15 @@ def main() -> None:
     fares, missing = asyncio.run(
         scrape(keys, concurrency=args.concurrency, timeout_ms=args.timeout_ms)
     )
+    if missing:  # multi-city pages are slow under load — one gentler pass
+        print(f"retrying {len(missing)} slowly", flush=True)
+        more, missing = asyncio.run(scrape(missing, concurrency=2, timeout_ms=60000))
+        fares |= more
+    fetched = len(fares)
+    today = datetime.now(UTC).date().isoformat()
+    fares = {k: {**v, "at": today} for k, v in fares.items()}
+    previous = json.loads(args.out.read_text(encoding="utf-8")) if args.out.exists() else {}
+    fares, missing = carry_over(fares, missing, previous, today=date.fromisoformat(today))
     snapshot = {
         "source": "google_flights",
         "generated_at": datetime.now(UTC).isoformat(timespec="seconds"),
@@ -151,11 +165,14 @@ def main() -> None:
         "fares": dict(sorted(fares.items())),
         "missing": sorted(missing),
     }
-    if keys and len(fares) < len(keys) * 0.3:
-        sys.exit(f"only {len(fares)}/{len(keys)} fares — Google may be blocking; keeping the old snapshot")
+    if keys and fetched < len(keys) * 0.3:
+        sys.exit(f"only {fetched}/{len(keys)} fares — Google may be blocking; keeping the old snapshot")
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(snapshot, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print(f"done in {time.time() - t0:.0f}s: {len(fares)} fares, {len(missing)} missing → {args.out}")
+    print(
+        f"done in {time.time() - t0:.0f}s: {fetched} fetched, {len(fares) - fetched} carried over,"
+        f" {len(missing)} missing → {args.out}"
+    )
 
 
 if __name__ == "__main__":

@@ -119,7 +119,10 @@ fallback; offers get `issuer="google_flights"`, later segments carrier
 `待選` (Google lists only segment 1 before you pick it). The demo embeds the
 snapshot in `<script id="fare-snapshot">` at publish time and shows the
 real-fare coverage pill. Some open-jaw searches have no single-ticket result
-on Google and stay 示意價.
+on Google and stay 示意價. Slow multi-city pages get a second, gentler pass;
+a query that still fails keeps the previous snapshot's fare for ≤ 7 days
+(`carry_over`, each entry has its own `at`). Plans mixing real fares and
+示意價 get a HIGH `mixed_fare_sources` warning (demo + `SearchService`).
 
 ## Scoring
 

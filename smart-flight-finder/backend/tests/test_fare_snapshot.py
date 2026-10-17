@@ -102,3 +102,37 @@ def test_embed_snapshot_into_demo_page():
     out = embed({"fares": {"ow|TPE|HKG|2027-02-03": {"price": 2850}}, "note": "</script>"}, html)
     assert '"price":2850' in out and "<\\/script>" in out
     assert embed({"fares": {}}, out).count('id="fare-snapshot"') == 1  # re-embedding replaces
+
+
+def test_carry_over_keeps_recent_previous_fares_only():
+    from app.services.fare_snapshot import carry_over
+
+    prev = {"generated_at": "2026-10-10T00:00:00+00:00", "fares": {
+        "a": {"price": 1}, "b": {"price": 2, "at": "2026-10-01"}, "c": {"price": 3, "at": "2026-10-16"}}}
+    fares, missing = carry_over({"d": {"price": 4, "at": "2026-10-17"}}, ["a", "b", "c", "e"], prev,
+                                today=date(2026, 10, 17))
+    assert fares == {"a": {"price": 1, "at": "2026-10-10"}, "c": {"price": 3, "at": "2026-10-16"},
+                     "d": {"price": 4, "at": "2026-10-17"}}
+    assert missing == ["b", "e"]
+
+
+def test_plans_mixing_real_and_stub_fares_are_flagged():
+    from app.models.enums import TicketStrategyType as S
+    from app.models.enums import TripType
+    from app.schemas.itinerary import CandidateWindowIn, ItineraryRequestIn
+    from app.services.search import SearchService
+
+    cfg = SnapshotConfig(holidays=["lunar_ny", "qingming"], destinations=["NRT"])
+    keys = collect_queries(cfg, today=date(2026, 10, 17))
+    # real fares only for the one-ways: every 四腿票 plan then mixes sources
+    snap = {"fares": {k: {"price": 3000} for k in keys if k.startswith("ow|")}}
+    req = ItineraryRequestIn(
+        trip_type=TripType.ROUND_TRIP, origins=["TPE"], destinations=["NRT"],
+        strategies=[S.BACK_TO_BACK_4LEG], back_to_back_outer_stations=["HKG"],
+        candidate_windows=[
+            CandidateWindowIn(holiday_key="lunar_ny", depart=date(2027, 2, 5), return_date=date(2027, 2, 15)),
+            CandidateWindowIn(holiday_key="qingming", depart=date(2027, 4, 3), return_date=date(2027, 4, 11)),
+        ],
+    )
+    _, plans, _ = SearchService(SnapshotFareProvider(snap)).run(req)
+    assert plans and all(p.warnings[0].code == "mixed_fare_sources" for p in plans)

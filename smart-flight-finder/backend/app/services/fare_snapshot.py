@@ -177,3 +177,29 @@ def cheapest_entry(
             "airline": best.airline,
         }
     return entry
+
+
+MAX_CARRY_DAYS = 7
+
+
+def carry_over(
+    fares: dict[str, dict], missing: list[str], previous: dict, *, today: date
+) -> tuple[dict[str, dict], list[str]]:
+    """Keep last snapshot's fare for a query that failed today (≤ 7 days old).
+
+    Google Flights multi-city pages are slow and sometimes time out; an
+    entry keeps its own ``at`` date so the UI can show how fresh it is.
+    """
+
+    old = previous.get("fares", {})
+    fallback_day = (previous.get("generated_at") or "")[:10]
+    out = dict(fares)
+    still: list[str] = []
+    for key in missing:
+        entry = old.get(key)
+        at = (entry or {}).get("at") or fallback_day
+        if entry and at and (today - date.fromisoformat(at)).days <= MAX_CARRY_DAYS:
+            out[key] = {**entry, "at": at}
+        else:
+            still.append(key)
+    return dict(sorted(out.items())), sorted(still)

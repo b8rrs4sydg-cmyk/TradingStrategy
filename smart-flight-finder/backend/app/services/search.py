@@ -25,6 +25,7 @@ from app.services.strategies import (
     StandardPlanner,
     StrategyPlan,
 )
+from app.services.strategies.base import RiskLevel, RiskWarning
 from app.services.strategies.reverse import daomai_country
 from app.services.strategies.two_trip import TripSlot
 
@@ -161,7 +162,7 @@ class SearchService:
         if req.max_total_budget is not None:
             plans = [p for p in plans if p.total_cost <= req.max_total_budget]
 
-        ranked = score_plans(plans, weights=req.scoring_weights)
+        ranked = score_plans(map(_flag_mixed_sources, plans), weights=req.scoring_weights)
         stats = self.provider.stats() if isinstance(self.provider, CachingProvider) else {}
         return total_matrix, ranked, stats
 
@@ -213,6 +214,20 @@ class SearchService:
             outer_stay_days=req.outer_stay_days,
             adults=req.adults,
         )
+
+
+MIXED_SOURCES = RiskWarning(
+    RiskLevel.HIGH,
+    "mixed_fare_sources",
+    "此方案混用 Google Flights 實際票價與示意價（快照沒涵蓋的票），總價與省下金額僅供參考",
+)
+
+
+def _flag_mixed_sources(plan: StrategyPlan) -> StrategyPlan:
+    issuers = {t.issuer for t in plan.tickets}
+    if "google_flights" in issuers and len(issuers) > 1:
+        return replace(plan, warnings=(MIXED_SOURCES, *plan.warnings))
+    return plan
 
 
 def _slot_pairs(req: ItineraryRequestIn) -> list[tuple[TripSlot, TripSlot]]:
