@@ -1,8 +1,8 @@
 {
- "at": "2026-10-17T17:27:32+00:00",
+ "at": "2026-10-17T17:29:04+00:00",
  "publishes": {
-  "ok": 222,
-  "r429": 0,
+  "ok": 242,
+  "r429": 6,
   "fail": 0
  },
  "fares_saved": 652,
@@ -94,6 +94,11 @@
   "17:26:09 request received: rid mvco4b8aefslb 87 keys",
   "17:26:09 handle mvco4b8aefslb: first_chunk=True total=160",
   "17:26:09 request received: rid mvco4b8aefslb 73 keys",
-  "17:26:09 handle mvco4b8aefslb: first_chunk=False total=160"
+  "17:26:09 handle mvco4b8aefslb: first_chunk=False total=160",
+  "17:28:10 publish 429 #1: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:28:18 publish 429 #2: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:28:34 publish 429 #3: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:28:47 publish 429 #4: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:28:55 publish 429 #5: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'"
  ]
 }
