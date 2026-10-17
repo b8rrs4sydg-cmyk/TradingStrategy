@@ -1535,6 +1535,8 @@ function renderPlanList(plans) {
     });
     const share = node.querySelector('.btn-share');
     if (share) share.addEventListener('click', () => sharePlan(plan, share));
+    const exp = node.querySelector('.btn-export');
+    if (exp) exp.addEventListener('click', () => exportPlan(plan, exp));
   });
 }
 
@@ -1596,6 +1598,7 @@ function renderPlan(plan, rank) {
           ${warnings ? `<div class="warnings">${warnings}</div>` : ''}
           <div class="actions">
             <button type="button" class="btn-ghost btn-share">分享連結</button>
+            <button type="button" class="btn-ghost btn-export">匯出 CSV</button>
           </div>
         </div>
       </div>
@@ -1720,35 +1723,35 @@ function tryLoadSharedPlan() {
 }
 
 /* =========================================================================
- * iCal export (hand-rolled RFC 5545, data: URI download)
+ * Plan export (CSV through the viewer's downloads capability)
  * ========================================================================= */
-function downloadIcs(plan) {
-  const esc = s => String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
-  const fmtUtc = iso => iso.replace(/[-:]/g,'').replace(/\.\d+/,'').slice(0,15) + 'Z';
-  const now = fmtUtc(new Date().toISOString());
-  const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Smart Flight Finder//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
-  plan.tickets.forEach((t, ti) => t.legs.forEach((leg, li) => {
-    const uid = `${plan.strategy}-${ti}-${li}-${leg.departure}@smart-flight-finder`;
-    lines.push('BEGIN:VEVENT',
-      `UID:${uid}`,
-      `DTSTAMP:${now}`,
-      `DTSTART:${fmtUtc(leg.departure)}`,
-      `DTEND:${fmtUtc(leg.arrival)}`,
-      `SUMMARY:${esc(`✈ ${leg.carrier}${leg.flight_number.replace(/^[A-Z]+/, '')} ${leg.origin}→${leg.destination}`)}`,
-      `LOCATION:${esc(`${leg.origin} → ${leg.destination}`)}`,
-      `DESCRIPTION:${esc(`Strategy: ${plan.strategy}\\nTicket: ${t.offer_id} (${t.currency} ${t.total_price})`)}`,
-      'END:VEVENT');
-  }));
-  lines.push('END:VCALENDAR');
-  const blob = new Blob([lines.join('\r\n') + '\r\n'], { type: 'text/calendar;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `flight-plan-${plan.strategy}.ics`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+// Plan → CSV (one row per flight segment, with the price source and links).
+function planCsv(plan) {
+  const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const rows = [['方案', '票', '角色', '航段', '日期', '時刻', '航空公司', '票價(TWD)', '價格來源', '擷取日', 'Google Flights', 'Trip.com']];
+  plan.tickets.forEach((t, ti) => {
+    const links = bookingLinks(t, plan.adults || 1);
+    t.legs.forEach((l, li) => rows.push([
+      plan.explain, ti + 1, plan.ticket_roles?.[ti] || '', `${l.origin}→${l.destination}`, l.departure.slice(0, 10),
+      l.estimated ? '待選' : l.departure.slice(11, 16), l.estimated ? '待選' : l.carrier,
+      li === 0 ? t.total_price : '', li === 0 ? 'Google Flights 實價' : '', li === 0 ? t.fare_at : '',
+      li === 0 ? links.find(x => x.label.startsWith('Google'))?.url : '', li === 0 ? links.find(x => x.label.startsWith('Trip'))?.url : '',
+    ]));
+  });
+  return '\ufeff' + rows.map(r => r.map(q).join(',')).join('\r\n') + '\r\n';
+}
+
+async function exportPlan(plan, buttonEl) {
+  const filename = `flight-plan-${plan.strategy}.csv`;
+  const data = planCsv(plan);
+  const downloads = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('downloads').catch(() => null) : null;
+  if (downloads) {
+    try { await downloads.save({ filename, data }); } catch (e) { if (e && e.code !== 'declined') buttonEl.textContent = '無法匯出'; }
+    return;
+  }
+  // Standalone page (opened as a file): a plain download.
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([data], { type: 'text/csv;charset=utf-8' })), download: filename });
+  document.body.appendChild(a); a.click(); a.remove();
 }
 
 /* =========================================================================
