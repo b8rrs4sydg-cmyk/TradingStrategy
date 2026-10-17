@@ -1,7 +1,7 @@
 {
- "at": "2026-10-17T19:46:14+00:00",
+ "at": "2026-10-17T19:47:46+00:00",
  "publishes": {
-  "ok": 138,
+  "ok": 150,
   "r429": 0,
   "fail": 0
  },
@@ -65,6 +65,10 @@
   "19:44:51 request mvct2ojtnrpxl: chunk of 9 keys done in 0s; ntfy publishes {'ok': 129, 'r429': 0, 'fail': 0}",
   "19:44:51 request mvct2ojtnrpxl: final sent (9/9); ntfy publishes {'ok': 129, 'r429': 0, 'fail': 0}",
   "19:45:34 request probemvct2p1d: chunk of 3 keys done in 44s; ntfy publishes {'ok': 134, 'r429': 0, 'fail': 0}",
-  "19:45:37 request probemvct2p1d: final sent (3/3); ntfy publishes {'ok': 134, 'r429': 0, 'fail': 0}"
+  "19:45:37 request probemvct2p1d: final sent (3/3); ntfy publishes {'ok': 134, 'r429': 0, 'fail': 0}",
+  "19:47:43 request received: rid mvct6d92gixyx 9 keys",
+  "19:47:43 handle mvct6d92gixyx: first_chunk=True total=9",
+  "19:47:43 request mvct6d92gixyx: chunk of 9 keys done in 0s; ntfy publishes {'ok': 149, 'r429': 0, 'fail': 0}",
+  "19:47:44 request mvct6d92gixyx: final sent (9/9); ntfy publishes {'ok': 150, 'r429': 0, 'fail': 0}"
  ]
 }
