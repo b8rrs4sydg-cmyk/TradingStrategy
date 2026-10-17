@@ -1,16 +1,12 @@
 {
- "at": "2026-10-17T18:15:20+00:00",
+ "at": "2026-10-17T18:18:21+00:00",
  "publishes": {
   "ok": 250,
-  "r429": 82,
-  "fail": 8
+  "r429": 95,
+  "fail": 11
  },
- "fares_saved": 1091,
+ "fares_saved": 1101,
  "log": [
-  "17:46:22 http front door: https://behaviour-starter-pastor-domestic.trycloudflare.com",
-  "17:46:22 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
-  "17:47:26 request received: rid httptest1792259246 20 keys",
-  "17:47:26 handle httptest1792259246: first_chunk=True total=20",
   "17:47:49 request httptest1792259246: chunk of 20 keys done in 23s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "17:47:49 request httptest1792259246: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "17:47:53 request received: rid mvcow9rsi4x6u 30 keys",
@@ -134,6 +130,32 @@
   "18:15:00 request received: rid mvcpv3vjmz5jj 9 keys",
   "18:15:00 handle mvcpv3vjmz5jj: first_chunk=True total=9",
   "18:15:00 request mvcpv3vjmz5jj: chunk of 9 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 79, 'fail': 8}",
-  "18:15:01 publish 429 #80: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'"
+  "18:15:01 publish 429 #80: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
+  "18:15:31 publish gave up",
+  "18:16:04 request mvcps99pozewn: chunk of 76 keys done in 198s; ntfy publishes {'ok': 250, 'r429': 85, 'fail': 9}",
+  "18:16:53 request mvcps99pozewn: chunk of 84 keys done in 82s; ntfy publishes {'ok': 250, 'r429': 88, 'fail': 9}",
+  "18:16:58 publish gave up",
+  "18:16:58 request mvcpu4iaem619: chunk of 9 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 88, 'fail': 10}",
+  "18:17:10 publish gave up",
+  "18:18:06 request received: rid mupj23xv6p3yg 39 keys",
+  "18:18:06 handle mupj23xv6p3yg: first_chunk=True total=160",
+  "18:18:06 request received: rid mupj23xv6p3yg 39 keys",
+  "18:18:06 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:06 request received: rid mupj23xv6p3yg 36 keys",
+  "18:18:06 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:06 request received: rid mupj23xv6p3yg 36 keys",
+  "18:18:06 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:06 request received: rid mupj23xv6p3yg 36 keys",
+  "18:18:06 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:06 request received: rid mupj23xv6p3yg 36 keys",
+  "18:18:06 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:07 request received: rid mupj23xv6p3yg 36 keys",
+  "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:07 request received: rid mupj23xv6p3yg 36 keys",
+  "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:07 request received: rid mupj23xv6p3yg 13 keys",
+  "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160",
+  "18:18:07 request received: rid mupj23xv6p3yg 13 keys",
+  "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160"
  ]
 }
