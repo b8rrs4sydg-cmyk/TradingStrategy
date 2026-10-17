@@ -59,7 +59,7 @@ async def set_checked(page: Page, picker: str, codes: list[str] | None) -> None:
 
 
 async def submit(page: Page) -> None:
-    await page.evaluate("document.getElementById('search-form').requestSubmit()")
+    await page.click("#search-form .btn-primary")   # a real click, like a person pressing 搜尋
     await page.wait_for_timeout(1500)
 
 
@@ -122,6 +122,7 @@ async def main() -> int:
             }"""
         )
         log("discovery:", diag)
+        log("initial lookup transport:", await page.evaluate("({t: live.transport, notes: live.daemonNotes, url: live.daemonUrl})"))
         check(bool(diag.get("discovered")), "crawler tunnel discovered by the page")
 
         # ---- B: UI -----------------------------------------------------------
