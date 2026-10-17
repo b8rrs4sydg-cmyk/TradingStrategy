@@ -5,6 +5,10 @@ on:
     paths:
       - "smart-flight-finder/**"
       - ".github/workflows/ci.yml"
+      # data-only commits from the crawler / lookup daemon don't need CI
+      - "!smart-flight-finder/public/fares.json"
+      - "!smart-flight-finder/public/fares-live.json"
+      - "!smart-flight-finder/public/live-request.json"
   pull_request:
     paths:
       - "smart-flight-finder/**"

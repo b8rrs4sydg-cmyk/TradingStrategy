@@ -1,0 +1,62 @@
+name: Fare lookup daemon (always on)
+
+# Keeps one warm headless Chromium listening on a public ntfy.sh topic. The
+# demo page posts lookup requests there; the daemon fetches the fares from
+# Google Flights and streams them back, so lookups skip Claude entirely.
+# See smart-flight-finder/backend/scripts/lookup_daemon.py. Runs ~5h, restarted
+# every 5h by cron (a queued run waits for the previous one — no gap, no overlap).
+on:
+  schedule:
+    - cron: "7 */5 * * *"
+  workflow_dispatch:
+    inputs:
+      duration_minutes:
+        description: "how long to stay up"
+        default: "310"
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths:
+      - ".github/workflows/fare-daemon.yml"
+      - "smart-flight-finder/backend/scripts/lookup_daemon.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fare-daemon
+  cancel-in-progress: false
+
+env:
+  REQ_TOPIC: sff-q-1dbc38bf5255bfa8b886187c
+  RES_TOPIC: sff-r-dbe95166c8687164a93fc60e
+
+jobs:
+  daemon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: |
+          pip install -e . "playwright>=1.50,<2"
+          python -m playwright install --with-deps chromium
+      - name: Git identity
+        working-directory: .
+        run: |
+          git config user.name "fare-daemon-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Run daemon (+ self test 40 s after start)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          (sleep 40; python -m scripts.lookup_daemon selftest --req "$REQ_TOPIC" --res "$RES_TOPIC" || echo "::warning::selftest failed") &
+          python -m scripts.lookup_daemon run --req "$REQ_TOPIC" --res "$RES_TOPIC" \
+            --db ../public/fares-live.json \
+            --duration $(( ${{ inputs.duration_minutes || '310' }} * 60 ))

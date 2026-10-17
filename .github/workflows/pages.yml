@@ -19,6 +19,9 @@ on:
     paths:
       - "smart-flight-finder/public/**"
       - ".github/workflows/pages.yml"
+      - "!smart-flight-finder/public/fares.json"
+      - "!smart-flight-finder/public/fares-live.json"
+      - "!smart-flight-finder/public/live-request.json"
   workflow_dispatch:
 
 permissions:

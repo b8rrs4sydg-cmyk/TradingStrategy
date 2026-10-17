@@ -192,3 +192,38 @@ def test_lookup_accepts_only_well_formed_keys():
     keys = ["mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07", RT, "ow|TPE|HKG|2027-02-03",
             "ow|TPE|HKG|2027-02-03", "rm -rf /", "ow|tpe|hkg|2027-02-03", 42]
     assert valid_keys(keys) == [RT, "ow|TPE|HKG|2027-02-03", "mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07"]
+
+
+# --- lookup daemon helpers ---------------------------------------------------------
+def test_daemon_request_parsing_validates_and_caps():
+    from scripts.lookup_daemon import parse_request
+
+    good = json.dumps({"rid": "abc", "total": 3, "keys": ["ow|TPE|HKG|2027-02-03", RT, "junk", "ow|TPE|HKG|2027-02-03"]})
+    r = parse_request(good)
+    assert r == {"rid": "abc", "total": 3, "keys": [RT, "ow|TPE|HKG|2027-02-03"]} or r["keys"] == ["ow|TPE|HKG|2027-02-03", RT][::-1] or set(r["keys"]) == {RT, "ow|TPE|HKG|2027-02-03"}
+    assert parse_request("not json") is None
+    assert parse_request(json.dumps({"rid": 5, "keys": [RT]})) is None
+    assert parse_request(json.dumps({"rid": "x", "keys": ["junk", "rm -rf"]})) is None
+    assert parse_request(json.dumps({"rid": "x", "total": 9999, "keys": [RT]}))["total"] == 1   # total is clamped
+
+
+def test_daemon_results_split_under_the_message_cap_and_finish_once():
+    from scripts.lookup_daemon import MSG_BYTES, split_results
+
+    first = {"dep": "2027-02-05T08:10:00+08:00", "arr": "2027-02-05T12:15:00+09:00", "stops": 0, "airline": "Jetstar Japan"}
+    fares = {f"ow|TPE|HKG|2027-02-{d:02d}": {"price": 3000 + d, "at": "2026-10-17", "first": first} for d in range(1, 28)}
+    nf = [f"mc|HKG-TPE-2027-02-{d:02d}|TPE-NRT-2027-02-{d:02d}" for d in range(1, 20)]
+    msgs = split_results("r1", fares, nf, 46, 46, final=True)
+    assert len(msgs) > 1 and all(len(m.encode()) <= MSG_BYTES + 200 for m in msgs)
+    parsed = [json.loads(m) for m in msgs]
+    assert [p["final"] for p in parsed] == [False] * (len(parsed) - 1) + [True]
+    assert {k for p in parsed for k in p["fares"]} == set(fares) and {k for p in parsed for k in p["nf"]} == set(nf)
+    assert json.loads(split_results("r1", {}, [], 1, 5, final=False)[0])["final"] is False
+
+
+def test_daemon_rate_limiter_window():
+    from scripts.lookup_daemon import RateLimiter
+
+    rl = RateLimiter(limit=100, window=60)
+    assert rl.allow(60, now=0) and rl.allow(40, now=1) and not rl.allow(1, now=2)
+    assert rl.allow(50, now=61)   # first batch left the window
