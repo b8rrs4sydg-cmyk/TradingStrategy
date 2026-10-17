@@ -14,7 +14,7 @@ on:
       url:
         default: "https://b8rrs4sydg-cmyk.github.io/TradingStrategy/"
       wait_seconds:
-        default: "240"
+        default: "1800"
 
 permissions:
   contents: read
@@ -22,7 +22,7 @@ permissions:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
     defaults:
       run:
         working-directory: smart-flight-finder/backend
@@ -36,4 +36,4 @@ jobs:
       - run: |
           pip install "playwright>=1.50,<2"
           python -m playwright install --with-deps chromium
-      - run: python -m scripts.e2e_pages "${{ inputs.url || 'https://b8rrs4sydg-cmyk.github.io/TradingStrategy/' }}" "${{ inputs.wait_seconds || '240' }}"
+      - run: python -m scripts.e2e_pages "${{ inputs.url || 'https://b8rrs4sydg-cmyk.github.io/TradingStrategy/' }}" "${{ inputs.wait_seconds || '1800' }}"
