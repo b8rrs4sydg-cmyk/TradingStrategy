@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T20:09:06+00:00",
+ "at": "2026-10-17T20:10:38+00:00",
  "publishes": {
   "ok": 177,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2224,
+ "fares_saved": 2245,
  "log": [
   "19:21:52 http front door: https://below-divx-ton-contrast.trycloudflare.com",
   "19:21:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -101,6 +101,20 @@
   "20:07:17 request mvcsqmnhoo9fv: chunk of 160 keys done in 1909s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
   "20:07:18 request mvcsqmnhoo9fv: final sent (160/160); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
   "20:08:35 request mvcsqmeu1lrda: chunk of 160 keys done in 1987s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
-  "20:08:35 request mvcsqmeu1lrda: final sent (160/160); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}"
+  "20:08:35 request mvcsqmeu1lrda: final sent (160/160); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:09:53 request received: rid mvctyuqxcg91e 9 keys",
+  "20:09:53 handle mvctyuqxcg91e: first_chunk=True total=9",
+  "20:09:54 request received: rid mvctywo6m3yy5 9 keys",
+  "20:09:54 handle mvctywo6m3yy5: first_chunk=True total=9",
+  "20:10:07 request mvctywo6m3yy5: chunk of 9 keys done in 13s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:10:07 request mvctywo6m3yy5: final sent (9/9); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:10:09 request received: rid mvctz89kbz4lh 72 keys",
+  "20:10:09 handle mvctz89kbz4lh: first_chunk=True total=72",
+  "20:10:23 request mvctz89kbz4lh: chunk of 72 keys done in 14s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:10:23 request mvctz89kbz4lh: final sent (72/72); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:10:24 request mvctyuqxcg91e: chunk of 9 keys done in 31s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:10:25 request received: rid mvctzkbn6veop 160 keys",
+  "20:10:25 handle mvctzkbn6veop: first_chunk=True total=160",
+  "20:10:25 request mvctyuqxcg91e: final sent (9/9); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}"
  ]
 }
