@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T17:50:55+00:00",
+ "at": "2026-10-17T17:52:26+00:00",
  "publishes": {
-  "ok": 34,
+  "ok": 42,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 705,
+ "fares_saved": 706,
  "log": [
   "17:46:22 http front door: https://behaviour-starter-pastor-domestic.trycloudflare.com",
   "17:46:22 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -20,6 +20,10 @@
   "17:48:32 request mvcowe2527vd8: chunk of 9 keys done in 34s; ntfy publishes {'ok': 7, 'r429': 0, 'fail': 0}",
   "17:48:35 request mvcowe2527vd8: final sent (9/9); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}",
   "17:48:44 request received: rid mvcoxd2be611t 30 keys",
-  "17:48:44 handle mvcoxd2be611t: first_chunk=True total=30"
+  "17:48:44 handle mvcoxd2be611t: first_chunk=True total=30",
+  "17:51:06 request mvcoxd2be611t: chunk of 30 keys done in 142s; ntfy publishes {'ok': 35, 'r429': 0, 'fail': 0}",
+  "17:51:07 request mvcoxd2be611t: final sent (30/30); ntfy publishes {'ok': 36, 'r429': 0, 'fail': 0}",
+  "17:52:02 request mvcow9rsi4x6u: chunk of 30 keys done in 249s; ntfy publishes {'ok': 41, 'r429': 0, 'fail': 0}",
+  "17:52:04 request mvcow9rsi4x6u: final sent (30/30); ntfy publishes {'ok': 42, 'r429': 0, 'fail': 0}"
  ]
 }
