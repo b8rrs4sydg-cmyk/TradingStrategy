@@ -2296,9 +2296,17 @@ function scheduleRefresh() {
   }, 700);
 }
 
+/* Wire form from the crawler: [price, dep, arr, stops, airline] (see lookup_daemon.compact). */
+function expandFare(v) {
+  if (!Array.isArray(v)) return v;
+  const [price, dep, arr, stops, airline] = v;
+  return { price, at: new Date().toISOString().slice(0, 10), ...(dep ? { first: { dep, arr, stops: stops || 0, airline } } : {}) };
+}
+
 function mergeLiveFares(fares, nf) {
   let n = 0;
-  for (const [k, v] of Object.entries(fares || {})) {
+  for (const [k, raw] of Object.entries(fares || {})) {
+    const v = expandFare(raw);
     if (!v || typeof v.price !== 'number') continue;
     FARES.fares[k] = v; liveOverlay[k] = v; live.answered.add(k); live.notFound.delete(k); n++;
   }
@@ -2371,7 +2379,7 @@ function ntfyLookup(keys, rid) {
       gotAny = true;
       arm(NTFY_SILENCE_MS);
       if (m.error) { fail(new Error(m.error === 'rate_limited' ? '查詢太頻繁，爬蟲暫時拒絕，請稍後再試' : String(m.error))); return; }
-      const got = mergeLiveFares(m.fares, m.nf);
+      const got = mergeLiveFares(m.f || m.fares, m.nf);
       const found = (live.doc?.found || 0) + got;
       live.doc = { ...live.doc, status: 'running', done: m.done || 0, total: m.total || keys.length, found };
       if (got) scheduleRefresh();
