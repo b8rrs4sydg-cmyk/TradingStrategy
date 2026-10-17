@@ -792,6 +792,13 @@ const AIRPORTS = [
   ['SYD','雪梨','紐澳',22800,555,'CI',0], ['BNE','布里斯本','紐澳',21900,520,'BR',0],
 ].map(([code, name, group, ow, minutes, carrier, outstation]) => ({ code, name, group, ow, minutes, carrier, outstation: !!outstation }));
 const AIRPORT_BY_CODE = new Map(AIRPORTS.map(a => [a.code, a]));
+const COUNTRY = { NRT:'JP', HND:'JP', KIX:'JP', NGO:'JP', FUK:'JP', CTS:'JP', OKA:'JP', ICN:'KR', PUS:'KR',
+  HKG:'HK', MFM:'MO', XMN:'CN', BKK:'TH', CNX:'TH', SGN:'VN', HAN:'VN', MNL:'PH', CEB:'PH', KUL:'MY', SIN:'SG',
+  LHR:'GB', CDG:'FR', AMS:'NL', VIE:'AT', LAX:'US', SFO:'US', JFK:'US', YVR:'CA', SYD:'AU', BNE:'AU' };
+const countryOf = code => COUNTRY[code] || code;
+// 倒買法 only works where foreign-origin round trips are sold cheaply (mirrors reverse.py).
+const DAOMAI_COUNTRIES = new Set(['JP', 'TH', 'KR']);
+const daomaiCountry = code => (DAOMAI_COUNTRIES.has(COUNTRY[code]) ? COUNTRY[code] : null);
 const TW_AIRPORTS = new Set(['TPE','TSA','KHH','RMQ','TNN','HUN','KNH','MZG','TTT','HCN']);
 const HUB = 'TPE';
 
@@ -1084,59 +1091,73 @@ function cheapestRoundTrip(home, dest, slot, adults) {
 }
 
 function planReversePair(req, A, B) {
+  // Each trip has its own entry / exit city inside one country (大阪進東京出):
+  // 包覆票 home→aIn + bOut→home, 反向票 aOut→home + home→bIn (mirrors reverse.py).
   const plans = [];
+  const route = (i, o) => (i === o ? i : `${i}進${o}出`);
   for (const home of req.origins) {
-    const dests = [...new Set(req.destinations)].filter(d => d !== home);
-    const baseA = new Map(dests.map(d => [d, cheapestRoundTrip(home, d, A, req.adults)]));
-    const baseB = new Map(dests.map(d => [d, cheapestRoundTrip(home, d, B, req.adults)]));
-    for (const d1 of dests) for (const d2 of dests) {
-      if (!baseA.get(d1) || !baseB.get(d2)) continue;
-      const baseline = baseA.get(d1).total_price + baseB.get(d2).total_price;
-      // 反向票: d1→home at the end of A, home→d2 at the start of B
-      const back = [];
-      for (const aRet of A.returns) for (const bDep of B.departs) {
-        if (bDep <= aRet) continue;
-        const t = quote([[d1, home, aRet], [home, d2, bDep]], req.adults);
-        if (t) back.push([t.total_price, { aRet, bDep, t }]);
+    const byCountry = new Map();
+    for (const d of new Set(req.destinations)) {
+      const c = daomaiCountry(d);
+      if (c && d !== home) byCountry.set(c, [...(byCountry.get(c) || []), d]);
+    }
+    for (const dests of byCountry.values()) {
+      const rtA = dests.map(d => cheapestRoundTrip(home, d, A, req.adults)).filter(Boolean);
+      const rtB = dests.map(d => cheapestRoundTrip(home, d, B, req.adults)).filter(Boolean);
+      if (!rtA.length || !rtB.length) continue;
+      const baseline = cheapestOf(rtA).total_price + cheapestOf(rtB).total_price;
+      const backs = [];
+      for (const aOut of dests) for (const bIn of dests) {
+        const back = [];
+        for (const aRet of A.returns) for (const bDep of B.departs) {
+          if (bDep <= aRet) continue;
+          const t = quote([[aOut, home, aRet], [home, bIn, bDep]], req.adults);
+          if (t) back.push([t.total_price, { aRet, bDep, t }]);
+        }
+        backs.push([aOut, bIn, back]);
       }
-      // 倒買法 包覆票: home→d1 at the start of A, d2→home at the end of B
-      const wrap = [];
-      for (const aDep of A.departs) for (const bRet of B.returns) {
-        const t = quote([[home, d1, aDep], [d2, home, bRet]], req.adults);
-        if (t) wrap.push([t.total_price, { aDep, bRet, tickets: [t] }]);
+      const fronts = [];
+      for (const aIn of dests) for (const bOut of dests) {
+        const wrap = [];
+        for (const aDep of A.departs) for (const bRet of B.returns) {
+          const t = quote([[home, aIn, aDep], [bOut, home, bRet]], req.adults);
+          if (t) wrap.push([t.total_price, { aDep, bRet, tickets: [t] }]);
+        }
+        const firsts = A.departs.map(dep => [dep, quote([[home, aIn, dep]], req.adults)]).filter(x => x[1]);
+        const lasts = B.returns.map(ret => [ret, quote([[bOut, home, ret]], req.adults)]).filter(x => x[1]);
+        const ends = [];
+        for (const [aDep, f] of firsts) for (const [bRet, l] of lasts) ends.push([f.total_price + l.total_price, { aDep, bRet, tickets: [f, l] }]);
+        fronts.push(['倒買法', aIn, bOut, wrap], ['補頭尾', aIn, bOut, ends]);
       }
-      // 補頭尾: two one-ways instead of the 包覆票
-      const firsts = A.departs.map(dep => [dep, quote([[home, d1, dep]], req.adults)]).filter(x => x[1]);
-      const lasts = B.returns.map(ret => [ret, quote([[d2, home, ret]], req.adults)]).filter(x => x[1]);
-      const ends = [];
-      for (const [aDep, f] of firsts) for (const [bRet, l] of lasts) ends.push([f.total_price + l.total_price, { aDep, bRet, tickets: [f, l] }]);
       const compatible = (fr, bk) => fr.aDep < bk.aRet && bk.bDep < fr.bRet;
-      for (const [variant, front] of [['倒買法', wrap], ['補頭尾', ends]]) {
+      const found = [];
+      for (const [variant, aIn, bOut, front] of fronts) for (const [aOut, bIn, back] of backs) {
         const best = bestPair(front, back, compatible);
         if (!best || best[0] >= baseline) continue;
         const [total, fr, bk] = best;
-        const revRole = `反向票：${d1} 出發` + (d1 !== d2 ? `，回程飛 ${d2}` : '');
+        const revRole = `反向票：${aOut} 出發` + (bIn !== aOut ? `，回程飛 ${bIn}` : '');
         const daomai = variant === '倒買法';
         const tickets = daomai ? [fr.tickets[0], bk.t] : [fr.tickets[0], bk.t, fr.tickets[1]];
-        const roles = daomai ? [`包覆票：${home} 出發` + (d1 !== d2 ? `，${d2} 回` : ''), revRole] : ['單買去程 (補頭)', revRole, '單買回程 (補尾)'];
+        const roles = daomai ? [`包覆票：${home} 出發` + (bOut !== aIn ? `，${bOut} 回` : ''), revRole] : ['單買去程 (補頭)', revRole, '單買回程 (補尾)'];
         const [firstTag, lastTag] = daomai ? ['包覆票 第1段', '包覆票 第2段'] : ['單買去程', '單買回程'];
         const saving = baseline - total;
         const warnings = [
-          { level: 'medium', code: 'reverse_ticket_order', message: `反向票須從第1段 ${d1}→${home} 開始依序搭乘，第1段未搭乘後段會被取消；各張票分開開票，任一張延誤或改期都不保護另一張` },
+          { level: 'medium', code: 'reverse_ticket_order', message: `反向票須從第1段 ${aOut}→${home} 開始依序搭乘，第1段未搭乘後段會被取消；各張票分開開票，任一張延誤或改期都不保護另一張` },
           { level: 'low', code: 'reverse_savings_estimate', message: `比兩趟各買一般來回 (共 ${baseline.toLocaleString()}) 省 ${saving.toLocaleString()} TWD（${Math.round(saving / baseline * 100)}%）` },
         ];
         if (daomai) warnings.push({ level: 'low', code: 'wrap_ticket_validity', message: `包覆票從 ${md(fr.aDep)} 用到 ${md(fr.bRet)}，請確認票價規則的最長停留 / 效期（常見為 1 年）` });
-        plans.push({
+        found.push({
           strategy: 'reverse', tickets, total_cost: total, currency: 'TWD',
           total_travel_days: tripDays(fr.aDep, bk.aRet) + tripDays(bk.bDep, fr.bRet),
           warnings, ticket_roles: roles,
           trips: [
-            `旅程 A｜${A.label}：${md(fr.aDep)} ${home}→${d1}（${firstTag}） ⇢ ${md(bk.aRet)} ${d1}→${home}（反向票 第1段）`,
-            `旅程 B｜${B.label}：${md(bk.bDep)} ${home}→${d2}（反向票 第2段） ⇢ ${md(fr.bRet)} ${d2}→${home}（${lastTag}）`,
+            `旅程 A｜${A.label}：${md(fr.aDep)} ${home}→${aIn}（${firstTag}） ⇢ ${md(bk.aRet)} ${aOut}→${home}（反向票 第1段）`,
+            `旅程 B｜${B.label}：${md(bk.bDep)} ${home}→${bIn}（反向票 第2段） ⇢ ${md(fr.bRet)} ${bOut}→${home}（${lastTag}）`,
           ],
-          explain: `反向票＋${variant}：兩趟 ${home}⇄${d1}` + (d1 !== d2 ? ` / ${d2}` : '') + `，共 ${tickets.length} 張票，省 ${saving.toLocaleString()}`,
+          explain: `反向票＋${variant}：旅程A ${route(aIn, aOut)}、旅程B ${route(bIn, bOut)}，共 ${tickets.length} 張票，省 ${saving.toLocaleString()}`,
         });
       }
+      plans.push(...found.sort((a, b) => a.total_cost - b.total_cost).slice(0, 6));
     }
   }
   return plans.sort((a, b) => a.total_cost - b.total_cost);
@@ -1152,13 +1173,16 @@ function planFourLegPair(req, A, B) {
   const plans = [];
   const stay = req.outerStay;
   const aDeps = nearestDates(A.departs, 5), aRets = nearestDates(A.returns, 5), bDeps = nearestDates(B.departs, 5);
-  for (const x of new Set(req.outerStations)) {
-    if (x === HUB || TW_AIRPORTS.has(x)) continue;
-    const firstLegs = new Map(aDeps.map(d => [d, quote([[HUB, x, d]], req.adults)]));
-    const lastLegs = B.returns.map(d => [d, quote([[x, HUB, d]], req.adults)]).filter(e => e[1]);
-    const baseX = cheapestRoundTrip(HUB, x, B, req.adults);
+  // 頭尾可不同: leg 4 may land at another outstation y in x's country (mirrors back_to_back.py).
+  const stations = [...new Set(req.outerStations)].filter(x => x !== HUB && !TW_AIRPORTS.has(x));
+  const firstBy = new Map(stations.map(x => [x, new Map(aDeps.map(d => [d, quote([[HUB, x, d]], req.adults)]))]));
+  const lastBy = new Map(stations.map(y => [y, B.returns.map(d => [d, quote([[y, HUB, d]], req.adults)]).filter(e => e[1])]));
+  const baseBy = new Map(stations.map(y => [y, cheapestRoundTrip(HUB, y, B, req.adults)]));
+  for (const x of stations) for (const y of stations) {
+    if (y !== x && countryOf(y) !== countryOf(x)) continue;
+    const firstLegs = firstBy.get(x), lastLegs = lastBy.get(y), baseX = baseBy.get(y);
     for (const dest of new Set(req.destinations)) {
-      if (dest === x || dest === HUB || TW_AIRPORTS.has(dest)) continue;
+      if (dest === x || dest === y || dest === HUB || TW_AIRPORTS.has(dest)) continue;
       const baseD = cheapestRoundTrip(HUB, dest, A, req.adults);
       if (!baseX || !baseD) continue;
       const baseline = baseD.total_price + baseX.total_price;
@@ -1171,7 +1195,7 @@ function planFourLegPair(req, A, B) {
         if (!first || !lasts.length) continue;
         const [bRet, last] = lasts.reduce((a, b) => (b[1].total_price < a[1].total_price ? b : a));
         if (best && first.total_price + last.total_price >= best.total) continue;
-        const four = quote([[x, HUB, connect], [HUB, dest, connect], [dest, HUB, aRet], [HUB, x, bDep]], req.adults);
+        const four = quote([[x, HUB, connect], [HUB, dest, connect], [dest, HUB, aRet], [HUB, y, bDep]], req.adults);
         if (!four || four.legs.length < 4) continue;
         const warns = [];
         if (stay === 0) { const w = checkConnection(first.legs[first.legs.length - 1], four.legs[0], { crossTicket: true }); if (w) warns.push(w); }
@@ -1191,15 +1215,15 @@ function planFourLegPair(req, A, B) {
         ticket_roles: ['單買初段', `外站四腿票：${x} 出發`, '單買最後一段'],
         trips: [
           `旅程 A｜${A.label}：${md(best.aDep)} ${HUB}→${x}（單買初段）· ${stay ? `外站停留 ${stay} 天` : '同日接續'} ⇢ ${md(best.connect)} ${x}→${HUB}→${dest}（四腿票 第1+2段，台北轉機 <24h） ⇢ ${md(best.aRet)} ${dest}→${HUB}（第3段，回台中停）`,
-          `旅程 B｜${B.label}：${md(best.bDep)} ${HUB}→${x}（四腿票 第4段） ⇢ ${md(best.bRet)} ${x}→${HUB}（單買最後一段 或 下一張四腿票第1段＝循環）`,
+          `旅程 B｜${B.label}：${md(best.bDep)} ${HUB}→${y}（四腿票 第4段） ⇢ ${md(best.bRet)} ${y}→${HUB}（單買最後一段 或 下一張四腿票第1段＝循環）`,
         ],
         warnings: [
           ...best.warns,
           { level: 'medium', code: 'four_leg_first_segment', message: `四腿票第1段 ${x}→${HUB} 必須搭乘，未搭乘後續航段全部作廢 —所以要先單買初段飛到外站` },
-          { level: 'low', code: 'four_leg_loop', message: `最後一段 ${x}→${HUB} 也可改搭下一張四腿票的第1段（循環），省下這張單程` },
-          { level: 'low', code: 'four_leg_savings_estimate', message: `比旅程A買 ${HUB}⇄${dest}、旅程B買 ${HUB}⇄${x} 一般來回 (共 ${baseline.toLocaleString()}) 省 ${saving.toLocaleString()} TWD（${Math.round(saving / baseline * 100)}%）` },
+          { level: 'low', code: 'four_leg_loop', message: `最後一段 ${y}→${HUB} 也可改搭下一張${y}出發四腿票的第1段（循環），省下這張單程` },
+          { level: 'low', code: 'four_leg_savings_estimate', message: `比旅程A買 ${HUB}⇄${dest}、旅程B買 ${HUB}⇄${y} 一般來回 (共 ${baseline.toLocaleString()}) 省 ${saving.toLocaleString()} TWD（${Math.round(saving / baseline * 100)}%）` },
         ],
-        explain: `四腿票 ${x}→${HUB}→${dest}→${HUB}→${x}（${xName} 外站）＋單買初段/最後一段，兩趟省 ${saving.toLocaleString()}`,
+        explain: `四腿票 ${x}→${HUB}→${dest}→${HUB}→${y}（${xName} 外站${y !== x ? '，頭尾不同' : ''}）＋單買初段/最後一段，兩趟省 ${saving.toLocaleString()}`,
       });
     }
   }
@@ -1224,8 +1248,9 @@ function routeOf(ticket) {
 
 /* Google Flights tfs = base64(Info protobuf); field numbers from fast-flights'
  * flights.proto (data=3{date=2, from=13{airport=2}, to=14{airport=2}},
- * passengers=8 packed, seat=9, trip=19 with MULTI_CITY=3). */
-function googleTfs(segments, adults) {
+ * passengers=8 packed, seat=9, trip=19: 1 round trip, 2 one-way, 3 multi-city).
+ * All three were opened in a real browser and load the right route + dates. */
+function googleTfs(segments, adults, trip = 3) {
   const enc = new TextEncoder();
   const varint = n => { const out = []; do { let b = n & 0x7f; n >>>= 7; if (n) b |= 0x80; out.push(b); } while (n); return out; };
   const field = (num, bytes) => [...varint(num << 3 | 2), ...varint(bytes.length), ...bytes];
@@ -1234,34 +1259,42 @@ function googleTfs(segments, adults) {
   for (const [o, d, day] of segments) msg.push(...field(3, [...str(2, day), ...field(13, str(2, o)), ...field(14, str(2, d))]));
   msg.push(...field(8, Array(adults).fill(1)));
   msg.push(...varint(9 << 3), 1);        // seat = ECONOMY
-  msg.push(...varint(19 << 3), 3);       // trip = MULTI_CITY
+  msg.push(...varint(19 << 3), trip);
   return btoa(String.fromCharCode(...msg));
 }
+const googleUrl = tfs => `https://www.google.com/travel/flights?tfs=${encodeURIComponent(tfs)}&hl=zh-TW&curr=TWD`;
+
+/* Trip.com searches by city code with dairport/aairport pinning the airport.
+ * Multi-city: dcity{i}/acity{i}/dairport{i}/aairport{i} are 0-based, ddate{i}
+ * 1-based, and only ddate1/ddate2 are honoured (later dates get auto-filled). */
+const TRIP_CITY = { TSA: 'tpe', NRT: 'tyo', HND: 'tyo', KIX: 'osa', ITM: 'osa', CTS: 'spk', ICN: 'sel', GMP: 'sel', LHR: 'lon', LGW: 'lon', CDG: 'par', ORY: 'par', JFK: 'nyc', EWR: 'nyc', DMK: 'bkk' };
+const tripCity = code => TRIP_CITY[code] || code.toLowerCase();
 
 function multiCityLinks(segments, adults) {
-  const trip = `dcity=${segments.map(s => s[0].toLowerCase()).join(',')}&acity=${segments.map(s => s[1].toLowerCase()).join(',')}&ddate=${segments.map(s => s[2]).join(',')}&triptype=mt&class=y&quantity=${adults}&locale=zh-TW&curr=TWD`;
-  const sky = segments.map(([o, d, day]) => `${o.toLowerCase()}/${day}/${d.toLowerCase()}`).join('/');
+  const q = new URLSearchParams({ triptype: 'mt' });
+  segments.forEach(([o, d], i) => { q.set(`dcity${i}`, tripCity(o)); q.set(`acity${i}`, tripCity(d)); q.set(`dairport${i}`, o.toLowerCase()); q.set(`aairport${i}`, d.toLowerCase()); });
+  segments.forEach(([, , day], i) => q.set(`ddate${i + 1}`, day));
+  for (const [k, v] of Object.entries({ class: 'y', quantity: adults, locale: 'zh-TW', curr: 'TWD' })) q.set(k, v);
   return [
-    { label: 'Trip.com 多段', url: `https://www.trip.com/flights/showfarefirst?${trip}` },
-    { label: 'Google Flights 多段', url: `https://www.google.com/travel/flights?tfs=${encodeURIComponent(googleTfs(segments, adults))}&hl=zh-TW&curr=TWD` },
-    { label: 'Skyscanner 多段', url: `https://www.skyscanner.com.tw/transport/d/${sky}/?adultsv2=${adults}&cabinclass=economy` },
+    { label: 'Google Flights 多段', url: googleUrl(googleTfs(segments, adults, 3)) },
+    { label: 'Trip.com 多段' + (segments.length > 2 ? '（第3段起日期請手動確認）' : ''), url: `https://www.trip.com/flights/showfarefirst?${q}` },
   ];
 }
 
 function bookingLinks(ticket, adults) {
-  if (ticket.searched_segments && ticket.searched_segments.length >= 2) return multiCityLinks(ticket.searched_segments, adults);
+  const segs = ticket.searched_segments || [];
+  // Mirrored pair (A→B, B→A) = ordinary round trip; open jaws and 3+ segments need multi-city.
+  if (segs.length > 2 || (segs.length === 2 && !(segs[0][0] === segs[1][1] && segs[0][1] === segs[1][0]))) return multiCityLinks(segs, adults);
   const r = routeOf(ticket);
   const o = encodeURIComponent(r.o.toLowerCase()), d = encodeURIComponent(r.d.toLowerCase());
-  const trip = new URLSearchParams({ dcity: r.o.toLowerCase(), acity: r.d.toLowerCase(), ddate: r.dep, triptype: r.ret ? 'rt' : 'ow', class: 'y', quantity: adults, locale: 'zh-TW', curr: 'TWD' });
+  const trip = new URLSearchParams({ dcity: tripCity(r.o), acity: tripCity(r.d), dairport: r.o.toLowerCase(), aairport: r.d.toLowerCase(), ddate: r.dep, triptype: r.ret ? 'rt' : 'ow', class: 'y', quantity: adults, locale: 'zh-TW', curr: 'TWD' });
   if (r.ret) trip.set('rdate', r.ret);
-  let q = `Flights from ${r.o} to ${r.d} on ${r.dep}`;
-  if (r.ret) q += ` through ${r.ret}`;
-  q += ` ${adults} adult${adults > 1 ? 's' : ''} economy`;
+  const gSegs = [[r.o, r.d, r.dep], ...(r.ret ? [[r.d, r.o, r.ret]] : [])];
   const yymmdd = iso => iso.slice(2).replace(/-/g, '');
   const sky = `${o}/${d}/${yymmdd(r.dep)}/${r.ret ? yymmdd(r.ret) + '/' : ''}`;
   return [
     { label: 'Trip.com', url: `https://www.trip.com/flights/showfarefirst?${trip}` },
-    { label: 'Google Flights', url: `https://www.google.com/travel/flights?q=${encodeURIComponent(q)}&hl=zh-TW&curr=TWD` },
+    { label: 'Google Flights', url: googleUrl(googleTfs(gSegs, adults, r.ret ? 1 : 2)) },
     { label: 'Skyscanner', url: `https://www.skyscanner.com.tw/transport/flights/${sky}?adultsv2=${adults}&cabinclass=economy` },
   ];
 }
@@ -1732,6 +1765,8 @@ function runSearch(form) {
       if (a !== b && a.returns[a.returns.length - 1] < b.departs[0]) pairs.push([a, b]);
     }
     if (!pairs.length) notices.push('反向票＋倒買法 與 外站四腿票 都是「一次購票、兩趟旅程」的買法，需要至少兩個不重疊的備選時段（例如 春節 + 聖誕）且行程類型為來回。');
+    const skipped = req.destinations.filter(d => !daomaiCountry(d));
+    if (paired.includes('reverse') && skipped.length) notices.push(`倒買法只適用日本、泰國（偶爾韓國）等亞洲短程 — 這些國家出發的來回票才便宜且常見；${skipped.join(', ')} 不套用反向票＋倒買法。`);
     for (const [a, b] of pairs) {
       if (paired.includes('reverse')) planReversePair(req, a, b).forEach(p => add(p, `${a.label} + ${b.label}`));
       if (paired.includes('back_to_back_4leg') && req.outerStations.length) planFourLegPair(req, a, b).forEach(p => add(p, `${a.label} + ${b.label}`));
