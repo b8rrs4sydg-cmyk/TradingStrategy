@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T17:18:23+00:00",
+ "at": "2026-10-17T17:26:01+00:00",
  "publishes": {
-  "ok": 60,
+  "ok": 192,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 552,
+ "fares_saved": 622,
  "log": [
   "17:12:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "17:13:00 request received: rid selftest1792257177 30 keys",
@@ -64,6 +64,30 @@
   "17:16:31 handle mvcnrx3wqlty1: first_chunk=False total=81",
   "17:16:31 handle mvcnrx3wqlty1: first_chunk=False total=81",
   "17:17:14 request mvcnrx3wqlty1: chunk of 3 keys done in 44s; ntfy publishes {'ok': 46, 'r429': 0, 'fail': 0}",
-  "17:17:45 request mvcnrx3wqlty1: chunk of 3 keys done in 74s; ntfy publishes {'ok': 52, 'r429': 0, 'fail': 0}"
+  "17:17:45 request mvcnrx3wqlty1: chunk of 3 keys done in 74s; ntfy publishes {'ok': 52, 'r429': 0, 'fail': 0}",
+  "17:19:46 request mvcnrx3wqlty1: chunk of 42 keys done in 196s; ntfy publishes {'ok': 79, 'r429': 0, 'fail': 0}",
+  "17:20:55 request mvcnrx3wqlty1: chunk of 42 keys done in 265s; ntfy publishes {'ok': 94, 'r429': 0, 'fail': 0}",
+  "17:20:55 request received: rid mvcnxlurewq6w 36 keys",
+  "17:20:55 request received: rid mvcnxlurewq6w 36 keys",
+  "17:20:55 handle mvcnxlurewq6w: first_chunk=True total=83",
+  "17:20:55 handle mvcnxlurewq6w: first_chunk=False total=83",
+  "17:20:55 request received: rid mvcnxlurewq6w 42 keys",
+  "17:20:55 request received: rid mvcnxlurewq6w 42 keys",
+  "17:20:55 handle mvcnxlurewq6w: first_chunk=False total=83",
+  "17:20:55 handle mvcnxlurewq6w: first_chunk=False total=83",
+  "17:20:55 request received: rid mvcnxlurewq6w 5 keys",
+  "17:20:55 handle mvcnxlurewq6w: first_chunk=False total=83",
+  "17:20:55 request received: rid mvcnxlurewq6w 5 keys",
+  "17:20:55 handle mvcnxlurewq6w: first_chunk=False total=83",
+  "17:20:57 request received: rid mvcnxmswllrnu 36 keys",
+  "17:20:57 handle mvcnxmswllrnu: first_chunk=True total=83",
+  "17:20:57 request received: rid mvcnxmswllrnu 42 keys",
+  "17:20:57 handle mvcnxmswllrnu: first_chunk=False total=83",
+  "17:20:57 request received: rid mvcnxmswllrnu 5 keys",
+  "17:20:57 handle mvcnxmswllrnu: first_chunk=False total=83",
+  "17:21:42 request mvcnxmswllrnu: chunk of 5 keys done in 44s; ntfy publishes {'ok': 110, 'r429': 0, 'fail': 0}",
+  "17:24:03 request mvcnxmswllrnu: chunk of 42 keys done in 185s; ntfy publishes {'ok': 153, 'r429': 0, 'fail': 0}",
+  "17:25:42 request mvcnxlurewq6w: chunk of 5 keys done in 287s; ntfy publishes {'ok': 185, 'r429': 0, 'fail': 0}",
+  "17:25:45 request mvcnxlurewq6w: chunk of 5 keys done in 290s; ntfy publishes {'ok': 185, 'r429': 0, 'fail': 0}"
  ]
 }
