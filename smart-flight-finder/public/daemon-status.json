@@ -1,8 +1,8 @@
 {
- "at": "2026-10-17T18:09:13+00:00",
+ "at": "2026-10-17T18:10:45+00:00",
  "publishes": {
   "ok": 250,
-  "r429": 5,
+  "r429": 17,
   "fail": 0
  },
  "fares_saved": 1091,
@@ -90,6 +90,11 @@
   "18:08:59 request received: rid mvcpnefgtmgd2 69 keys",
   "18:08:59 handle mvcpnefgtmgd2: first_chunk=False total=160",
   "18:09:04 publish 429 #4: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
-  "18:09:07 publish 429 #5: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'"
+  "18:09:07 publish 429 #5: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
+  "18:10:24 request received: rid mvcpp8ka2ok5i 30 keys",
+  "18:10:24 handle mvcpp8ka2ok5i: first_chunk=True total=30",
+  "18:10:33 request mvcpnefgtmgd2: chunk of 69 keys done in 94s; ntfy publishes {'ok': 250, 'r429': 14, 'fail': 0}",
+  "18:10:37 request mvcpmcspzpfpa: chunk of 76 keys done in 147s; ntfy publishes {'ok': 250, 'r429': 15, 'fail': 0}",
+  "18:10:44 request mvcpmcspzpfpa: chunk of 84 keys done in 154s; ntfy publishes {'ok': 250, 'r429': 16, 'fail': 0}"
  ]
 }
