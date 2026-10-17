@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T17:52:26+00:00",
+ "at": "2026-10-17T17:53:57+00:00",
  "publishes": {
-  "ok": 42,
+  "ok": 48,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 706,
+ "fares_saved": 731,
  "log": [
   "17:46:22 http front door: https://behaviour-starter-pastor-domestic.trycloudflare.com",
   "17:46:22 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -24,6 +24,22 @@
   "17:51:06 request mvcoxd2be611t: chunk of 30 keys done in 142s; ntfy publishes {'ok': 35, 'r429': 0, 'fail': 0}",
   "17:51:07 request mvcoxd2be611t: final sent (30/30); ntfy publishes {'ok': 36, 'r429': 0, 'fail': 0}",
   "17:52:02 request mvcow9rsi4x6u: chunk of 30 keys done in 249s; ntfy publishes {'ok': 41, 'r429': 0, 'fail': 0}",
-  "17:52:04 request mvcow9rsi4x6u: final sent (30/30); ntfy publishes {'ok': 42, 'r429': 0, 'fail': 0}"
+  "17:52:04 request mvcow9rsi4x6u: final sent (30/30); ntfy publishes {'ok': 42, 'r429': 0, 'fail': 0}",
+  "17:53:15 request received: rid mvcp33m2af2ds 9 keys",
+  "17:53:15 handle mvcp33m2af2ds: first_chunk=True total=9",
+  "17:53:15 request mvcp33m2af2ds: chunk of 9 keys done in 0s; ntfy publishes {'ok': 42, 'r429': 0, 'fail': 0}",
+  "17:53:16 request mvcp33m2af2ds: final sent (9/9); ntfy publishes {'ok': 42, 'r429': 0, 'fail': 0}",
+  "17:53:26 request received: rid mvcp3es6mpfky 84 keys",
+  "17:53:26 handle mvcp3es6mpfky: first_chunk=True total=160",
+  "17:53:26 request received: rid mvcp3es6mpfky 76 keys",
+  "17:53:26 handle mvcp3es6mpfky: first_chunk=False total=160",
+  "17:53:45 request received: rid mvcp3qxgz28d4 9 keys",
+  "17:53:45 handle mvcp3qxgz28d4: first_chunk=True total=9",
+  "17:53:45 request mvcp3qxgz28d4: chunk of 9 keys done in 0s; ntfy publishes {'ok': 45, 'r429': 0, 'fail': 0}",
+  "17:53:45 request mvcp3qxgz28d4: final sent (9/9); ntfy publishes {'ok': 45, 'r429': 0, 'fail': 0}",
+  "17:53:54 request received: rid mvcp40ehe6owd 84 keys",
+  "17:53:54 handle mvcp40ehe6owd: first_chunk=True total=160",
+  "17:53:54 request received: rid mvcp40ehe6owd 76 keys",
+  "17:53:54 handle mvcp40ehe6owd: first_chunk=False total=160"
  ]
 }
