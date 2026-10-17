@@ -8,8 +8,8 @@ every offer says where its price came from via ``issuer``.
 
 Google Flights lists only the first segment's flights before you pick one,
 so a snapshot entry has the real total price + real first-segment times;
-later segments keep the fallback's schedule and are flagged ``estimated``
-in ``fare_class`` so the UI can say "時刻待選".
+later segments keep the fallback's dates with carrier ``待選`` so the UI
+shows "航班待選".
 
 Key format (shared with the demo page's JS):
 
@@ -145,6 +145,6 @@ class SnapshotFareProvider:
                 legs=tuple(legs),
                 total_price=int(entry["price"]) * adults,
                 issuer=ISSUER,
-                fare_class="estimated_later_legs" if len(legs) > 1 else None,
+                fare_class="後段航班待選" if len(legs) > 1 else None,
             )
         ]

@@ -17,6 +17,7 @@ const STRATEGY_LABEL: Record<TicketStrategyType, string> = {
 };
 
 const ISSUER_LABEL: Record<string, string> = {
+  google_flights: "Google Flights 實際票價（每日快照，1 位成人最低總價）",
   stub: "示意價 (demo 內建價格表，非即時)",
   amadeus: "Amadeus 即時報價",
   skyscanner: "Skyscanner API 報價",
@@ -196,8 +197,10 @@ export function PlanCard({
                 <ul className="mt-2 space-y-1">
                   {t.legs.map((leg, li) => (
                     <li key={li} className="font-mono text-xs">
-                      {leg.origin}→{leg.destination} · {leg.flight_number} ·{" "}
-                      {new Date(leg.departure).toISOString().slice(0, 16).replace("T", " ")}
+                      {leg.origin}→{leg.destination} ·{" "}
+                      {leg.carrier === "待選"
+                        ? `航班待選 · ${leg.departure.slice(0, 10)}`
+                        : `${leg.flight_number || leg.carrier} · ${leg.departure.slice(0, 16).replace("T", " ")}`}
                     </li>
                   ))}
                 </ul>

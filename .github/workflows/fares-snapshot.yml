@@ -2,7 +2,8 @@ name: Fare snapshot (Google Flights)
 
 # Real fares for the demo page and SnapshotFareProvider. The dev sandbox has
 # no open egress, so the Google Flights searches run here once a day and the
-# result is committed as smart-flight-finder/public/fares.json.
+# result is committed as smart-flight-finder/public/fares.json and embedded
+# into the demo page (public/index.html).
 on:
   schedule:
     - cron: "17 19 * * *" # 03:17 Asia/Taipei
@@ -59,12 +60,14 @@ jobs:
           --destinations "${{ inputs.destinations || 'NRT,KIX,LHR' }}"
           --outer "${{ inputs.outer || 'HKG' }}"
           --flex "${{ inputs.flex || '1' }}"
+      - name: Embed into demo page
+        run: python -m scripts.embed_fare_snapshot ../public/fares.json ../public/index.html
       - name: Commit snapshot
         working-directory: .
         run: |
           git config user.name "fare-snapshot-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add smart-flight-finder/public/fares.json
+          git add smart-flight-finder/public/fares.json smart-flight-finder/public/index.html
           if git diff --cached --quiet; then echo "no change"; exit 0; fi
           git commit -m "data: Google Flights fare snapshot $(date -u +%F)"
           for i in 1 2 3; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done

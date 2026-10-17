@@ -91,3 +91,14 @@ def test_resolver_uses_snapshot_from_env(tmp_path, monkeypatch):
     assert isinstance(resolve_default_provider(), SnapshotFareProvider)
     monkeypatch.setenv("FARE_SNAPSHOT_PATH", str(tmp_path / "missing.json"))
     assert not isinstance(resolve_default_provider(), SnapshotFareProvider)
+
+
+def test_embed_snapshot_into_demo_page():
+    from pathlib import Path
+
+    from scripts.embed_fare_snapshot import embed
+
+    html = Path(__file__).resolve().parents[2].joinpath("public/index.html").read_text(encoding="utf-8")
+    out = embed({"fares": {"ow|TPE|HKG|2027-02-03": {"price": 2850}}, "note": "</script>"}, html)
+    assert '"price":2850' in out and "<\\/script>" in out
+    assert embed({"fares": {}}, out).count('id="fare-snapshot"') == 1  # re-embedding replaces

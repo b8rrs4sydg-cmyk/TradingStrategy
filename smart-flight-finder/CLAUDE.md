@@ -86,14 +86,40 @@ PTO efficiency by `trip_count` so they compare fairly with single trips.
 Tickets carry `searched_segments`; `booking_links` turns open jaws and 3+
 segments into multi-city links (mirrored pairs use round-trip links). Link
 formats were checked in a real browser — see the module docstring:
-Google `tfs` (trip 1/2/3) is exact; Trip.com needs city codes + airport
-params and its `triptype=mt` honours only `ddate1`/`ddate2`; Skyscanner
-gets no multi-city link (bot wall, unverifiable). The demo
+Google `tfs` (trip 1/2/3) is exact; Trip.com (tw.trip.com) needs city codes
++ airport params, and multi-city uses its native `multdcity{i}`/
+`multacity{i}`/`multddate{i}` URL (what its own search button emits);
+Skyscanner gets no multi-city link (bot wall, unverifiable). The demo
 (`public/index.html`) mirrors all of this in JS — keep both in sync.
 
 The stub fare model (`providers/stub.py`) makes these strategies
 meaningful: +30% on Taiwan-origin departures during 連假, outstation
 multi-city through TPE at 0.62× summed one-ways.
+
+## Real fares — Google Flights snapshot
+
+Amadeus Self-Service shut down 2026-07-17, so real prices come from a daily
+GitHub Action (`.github/workflows/fares-snapshot.yml`):
+
+1. `services/fare_snapshot.collect_queries` runs `SearchService` against a
+   `RecordingProvider` (stub prices) → the exact ow / rt / mc searches the
+   planners need for the configured scenario (default TPE → NRT,KIX,LHR,
+   outstation HKG, 春節 + 清明 ±1 day; ≈234 searches, dates beyond Google's
+   ~330-day horizon dropped).
+2. `scripts/build_fare_snapshot.py` opens each as a Google Flights `tfs`
+   search (`hl=en&gl=TW&curr=TWD` — without `gl=TW` round trips show no
+   results) and parses the result rows' aria-labels ("From N New Taiwan
+   dollars … total") → cheapest total + first-segment times.
+3. Result is committed to `public/fares.json`. Keys: `ow|O|D|day`,
+   `rt|O|D|dep|ret`, `mc|O-D-day|…` (`providers/snapshot.fare_key`; the
+   demo JS uses the same strings).
+
+`SnapshotFareProvider` (env `FARE_SNAPSHOT_PATH`) serves it with stub
+fallback; offers get `issuer="google_flights"`, later segments carrier
+`待選` (Google lists only segment 1 before you pick it). The demo embeds the
+snapshot in `<script id="fare-snapshot">` at publish time and shows the
+real-fare coverage pill. Some open-jaw searches have no single-ticket result
+on Google and stay 示意價.
 
 ## Scoring
 
@@ -106,8 +132,10 @@ Risk is the sum of per-warning weights (`low=0.1`, `med=0.4`, `high=1.0`).
 
 `SearchService` calls `resolve_default_provider()`:
 
-- If both `AMADEUS_CLIENT_ID` and `AMADEUS_CLIENT_SECRET` are set → use
-  `AmadeusProvider`. Fail-open to `StubFlightProvider` on `AmadeusError`.
+- If `FARE_SNAPSHOT_PATH` points at a `fares.json` → `SnapshotFareProvider`.
+- Else if both `AMADEUS_CLIENT_ID` and `AMADEUS_CLIENT_SECRET` are set → use
+  `AmadeusProvider` (Enterprise keys only now). Fail-open to
+  `StubFlightProvider` on `AmadeusError`.
 - Otherwise → `StubFlightProvider` (deterministic prices for dev + tests).
 
 Every per-request run wraps the resolved provider in `CachingProvider` for
