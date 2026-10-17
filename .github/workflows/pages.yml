@@ -23,6 +23,7 @@ on:
       - "!smart-flight-finder/public/fares-live.json"
       - "!smart-flight-finder/public/live-request.json"
       - "!smart-flight-finder/public/daemon-status.json"
+      - "!smart-flight-finder/public/daemon.json"
   workflow_dispatch:
 
 permissions:

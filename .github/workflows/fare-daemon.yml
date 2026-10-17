@@ -47,6 +47,13 @@ jobs:
         run: |
           pip install -e . "playwright>=1.50,<2"
           python -m playwright install --with-deps chromium
+      - name: Install cloudflared (free quick tunnel, no account)
+        working-directory: .
+        run: |
+          mkdir -p "$HOME/bin"
+          curl -fsSL -o "$HOME/bin/cloudflared" https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x "$HOME/bin/cloudflared"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
       - name: Git identity
         working-directory: .
         run: |
@@ -56,7 +63,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          (sleep 40; python -m scripts.lookup_daemon selftest --req "$REQ_TOPIC" --res "$RES_TOPIC" --count 30 --timeout 240 || echo "::warning::selftest failed") &
+          (sleep 70; python -m scripts.lookup_daemon selftest-http --daemon-json ../public/daemon.json --count 20 || echo "::warning::http selftest failed") &
           python -m scripts.lookup_daemon run --req "$REQ_TOPIC" --res "$RES_TOPIC" \
             --db ../public/fares-live.json \
             --duration $(( ${{ inputs.duration_minutes || '310' }} * 60 ))
