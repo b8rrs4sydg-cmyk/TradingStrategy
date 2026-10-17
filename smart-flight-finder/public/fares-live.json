@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-17T19:05:41+00:00",
+ "generated_at": "2026-10-17T19:10:49+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -7507,6 +7507,38 @@
     [
      "2026-10-17",
      4526
+    ]
+   ]
+  },
+  "ow|TSA|HAN|2027-02-05": {
+   "price": 81106,
+   "first": {
+    "dep": "2027-02-05T07:15:00+08:00",
+    "arr": "2027-02-05T20:50:00+07:00",
+    "stops": 1,
+    "airline": "EVA Air and Vietnam Airlines"
+   },
+   "at": "2026-10-17",
+   "hist": [
+    [
+     "2026-10-17",
+     81106
+    ]
+   ]
+  },
+  "ow|TSA|MNL|2027-02-05": {
+   "price": 66154,
+   "first": {
+    "dep": "2027-02-05T09:00:00+08:00",
+    "arr": "2027-02-05T19:45:00+08:00",
+    "stops": 1,
+    "airline": "China Airlines and Philippine Airlines"
+   },
+   "at": "2026-10-17",
+   "hist": [
+    [
+     "2026-10-17",
+     66154
     ]
    ]
   },
