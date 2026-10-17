@@ -2496,7 +2496,13 @@ function noteDiag(e) {
 
 /* Where is the crawler? Its Cloudflare tunnel URL (direct HTTPS + SSE, no message quota) if it answers,
  * else null → fall back to the ntfy relay. */
-async function discoverDaemon(force = false) {
+function discoverDaemon(force = false) {
+  if (live.discovering) return live.discovering;          // share one probe between concurrent lookups
+  const p = discoverDaemonNow(force).finally(() => { live.discovering = null; });
+  live.discovering = p;
+  return p;
+}
+async function discoverDaemonNow(force) {
   const now = Date.now();
   if (!force && live.daemonCheckedAt && now - live.daemonCheckedAt < (live.daemonUrl ? 60000 : 15000)) return live.daemonUrl;
   live.daemonNotes = [];
