@@ -1,9 +1,9 @@
 {
- "at": "2026-10-17T18:10:45+00:00",
+ "at": "2026-10-17T18:12:16+00:00",
  "publishes": {
   "ok": 250,
-  "r429": 17,
-  "fail": 0
+  "r429": 47,
+  "fail": 2
  },
  "fares_saved": 1091,
  "log": [
@@ -95,6 +95,27 @@
   "18:10:24 handle mvcpp8ka2ok5i: first_chunk=True total=30",
   "18:10:33 request mvcpnefgtmgd2: chunk of 69 keys done in 94s; ntfy publishes {'ok': 250, 'r429': 14, 'fail': 0}",
   "18:10:37 request mvcpmcspzpfpa: chunk of 76 keys done in 147s; ntfy publishes {'ok': 250, 'r429': 15, 'fail': 0}",
-  "18:10:44 request mvcpmcspzpfpa: chunk of 84 keys done in 154s; ntfy publishes {'ok': 250, 'r429': 16, 'fail': 0}"
+  "18:10:44 request mvcpmcspzpfpa: chunk of 84 keys done in 154s; ntfy publishes {'ok': 250, 'r429': 16, 'fail': 0}",
+  "18:10:52 request received: rid mvcppti4ad4py 108 keys",
+  "18:10:52 handle mvcppti4ad4py: first_chunk=True total=160",
+  "18:10:52 request received: rid mvcppti4ad4py 52 keys",
+  "18:10:52 handle mvcppti4ad4py: first_chunk=False total=160",
+  "18:10:54 request received: rid mvcppvdmiwkg7 46 keys",
+  "18:10:54 handle mvcppvdmiwkg7: first_chunk=True total=46",
+  "18:10:55 publish 429 #20: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
+  "18:11:24 request received: rid mvcpqiqnb6h4c 103 keys",
+  "18:11:24 handle mvcpqiqnb6h4c: first_chunk=True total=160",
+  "18:11:24 request received: rid mvcpqiqnb6h4c 57 keys",
+  "18:11:24 handle mvcpqiqnb6h4c: first_chunk=False total=160",
+  "18:11:37 publish gave up",
+  "18:11:44 publish gave up",
+  "18:11:45 request received: rid mvcpqw10txfy3 30 keys",
+  "18:11:45 handle mvcpqw10txfy3: first_chunk=True total=30",
+  "18:11:45 request mvcpqw10txfy3: chunk of 30 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 37, 'fail': 2}",
+  "18:11:49 request received: rid mvcpqn5vwoahs 30 keys",
+  "18:11:49 handle mvcpqn5vwoahs: first_chunk=True total=30",
+  "18:11:54 publish 429 #40: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
+  "18:12:00 request received: rid mvcpr4281zb9o 160 keys",
+  "18:12:00 handle mvcpr4281zb9o: first_chunk=True total=160"
  ]
 }
