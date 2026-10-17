@@ -24,6 +24,28 @@ jobs:
           npm init -y >/dev/null
           npm i playwright@1.56.1 >/dev/null
           npx playwright install --with-deps chromium >/dev/null
+      - name: Read reference articles
+        run: |
+          for u in \
+            "https://huitinchou.tw/2025-reverse-ticket-vs-4-segment-ticket/" \
+            "https://huitinchou.tw/reverse-ticketing-guide-%E6%A9%9F%E7%A5%A8%E5%80%92%E8%B2%B7%E6%B3%95/" \
+            "https://huitinchou.tw/2025-fourth-leg-guide-taiwan-airlines-2025/"; do
+            echo "######## ARTICLE $u"
+            curl -sSL --max-time 60 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130.0 Safari/537.36" "$u" -o page.html || echo "curl failed"
+            python3 - <<'PY'
+          import html, re
+          raw = open("page.html", encoding="utf-8", errors="ignore").read()
+          m = re.search(r'<div[^>]+class="[^"]*entry-content[^"]*"[^>]*>(.*?)<footer|<article[^>]*>(.*?)</article>', raw, re.S)
+          body = next((g for g in (m.groups() if m else ()) if g), raw)
+          body = re.sub(r"<(script|style|noscript)[^>]*>.*?</\1>", "", body, flags=re.S)
+          body = re.sub(r"<(br|/p|/h[1-6]|/li|/tr)[^>]*>", "\n", body)
+          text = html.unescape(re.sub(r"<[^>]+>", "", body))
+          text = re.sub(r"\n\s*\n+", "\n", text)
+          print(f"len={len(raw)}")
+          print(text[:15000])
+          PY
+            echo "######## END ARTICLE"
+          done
       - name: Probe
         working-directory: .github/probe
         run: node probe.mjs
