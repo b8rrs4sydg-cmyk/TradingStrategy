@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:29:28+00:00",
+ "at": "2026-10-17T19:31:00+00:00",
  "publishes": {
-  "ok": 39,
+  "ok": 44,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1937,
+ "fares_saved": 1968,
  "log": [
   "19:21:52 http front door: https://below-divx-ton-contrast.trycloudflare.com",
   "19:21:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -31,6 +31,10 @@
   "19:29:15 request mvcsfk6y9a9rd: chunk of 109 keys done in 143s; ntfy publishes {'ok': 38, 'r429': 0, 'fail': 0}",
   "19:29:16 request mvcsfk6y9a9rd: final sent (160/160); ntfy publishes {'ok': 39, 'r429': 0, 'fail': 0}",
   "19:29:25 request received: rid mvcsisv7235hm 160 keys",
-  "19:29:25 handle mvcsisv7235hm: first_chunk=True total=160"
+  "19:29:25 handle mvcsisv7235hm: first_chunk=True total=160",
+  "19:30:10 request received: rid mvcsjt532knm5 113 keys",
+  "19:30:10 handle mvcsjt532knm5: first_chunk=True total=160",
+  "19:30:10 request received: rid mvcsjt532knm5 47 keys",
+  "19:30:10 handle mvcsjt532knm5: first_chunk=False total=160"
  ]
 }
