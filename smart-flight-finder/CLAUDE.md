@@ -145,6 +145,13 @@ page ◀──SSE─────────────────  ntfy.sh/<T
   selftest 40 s after start). Requests are validated (`lookup_fares.valid_keys`,
   ≤ 160 keys, ≤ 500 keys / 10 min), results go to `public/fares-live.json`
   (overlay; committed every ~90 s) and the next crawl folds them in.
+- Preferred front door: the daemon starts a Cloudflare quick tunnel
+  (`cloudflared`) and announces the URL in `public/daemon.json`
+  (`POST /lookup`, `GET /events/{rid}` SSE); the page discovers it
+  (`discoverDaemon`) and falls back to ntfy (anonymous quota ~250 msgs/day,
+  error 42908). `public/daemon-status.json` holds counters + log tail.
+  `.github/workflows/fares-fill.yml` + `scripts/fill_fares.py` fill the DB in
+  shards (plan → stage1 → merge → stage2 → final).
 - Topic names (`T_REQ`/`T_RES`) live in the workflow and `public/index.html`;
   ntfy.sh is a public third-party relay (anyone with the names can post
   requests, keys pass through ntfy). Messages must stay < 4096 bytes.
