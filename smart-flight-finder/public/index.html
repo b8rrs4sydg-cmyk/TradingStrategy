@@ -1843,7 +1843,7 @@ function runSearch(form) {
 
   const cache = CachingProvider.stats();
   if (fareStats.missing) {
-    notices.push(`${fareStats.missing} 個查詢不在票價資料庫 —— ${live.ready ? '正在向 Google Flights 即時查詢（見上方進度），查到後結果會自動更新' : '在 Claude 中開啟此頁並允許 Claude Code Remote 連接器即可即時查詢'}；不會用模擬價格補。`);
+    notices.push(`${fareStats.missing} 個查詢不在票價資料庫 —— 爬蟲會先查單程／來回票價，再從上萬種多城市日期組合中挑「預期最能省」的路線，每條路線先查 1 個日期、實價接近三張來回票時再展開更多日期（上限 ${MC_BUDGET} 筆/次搜尋），查到後結果會自動更新；不會用模擬價格補。`);
   }
   return { plans, matrix, cache, notices, fares: { real: fareStats.real, missing: fareStats.missing } };
 }
@@ -2155,8 +2155,7 @@ const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
 // Poke-only scheduled task bound to that session: firing it wakes Claude with the request id.
 const WORKER_TRIGGER = 'trig_01YJmjteUtHz6uoWp6moa8fM';
 const LOOKUP_MAX = 160;            // keys per request (crawler limit)
-const MC_BUDGET = 400;             // multi-city fares fetched per search (the most promising ones)
-const PROMISING = 0.8, PER_GROUP = 3;   // same ranking constants as crawl_plan.py
+const MC_BUDGET = 600;             // multi-city fares fetched per search (the most promising ones)
 const LOOKUP_STEPS = [['queued', '送出請求'], ['dispatched', '啟動爬蟲'], ['running', '查詢 Google Flights'], ['saving', '寫入資料庫'], ['done', '完成']];
 const live = { db: null, mcp: null, ready: false, rid: null, doc: null, keys: [], started: 0, unsub: null, timer: null,
   asked: new Set(), notFound: new Set(), answered: new Set(), needsApproval: false, error: null,
@@ -2175,7 +2174,7 @@ function campaignText() {
   if (!c || !c.batch) return '';
   const left = Math.max(0, (c.left || 0) - (live.keys?.length || 0));
   const stage = c.stage === 1 ? '階段 1：單程／來回票價' : '階段 2：多城市（依預期可省幅度，只查最有希望的）';
-  return `<div class="hint" style="margin-top:4px">第 ${c.batch} 批 · ${stage} · 本次搜尋已送出 ${c.asked} 筆、找到 ${c.found} 筆實價${left ? `，還有約 ${left} 筆待查（查完會自動繼續）` : ''}</div>`;
+  return `<div class="hint" style="margin-top:4px">第 ${c.batch} 批 · ${stage} · 本次搜尋已送出 ${c.asked} 筆、找到 ${c.found + (live.doc?.status === 'done' ? 0 : (live.doc?.found || 0))} 筆實價${left ? `，還有約 ${left} 筆待查（查完會自動繼續）` : ''}</div>`;
 }
 
 function renderLookup() {
@@ -2234,10 +2233,33 @@ function resetLookup() {
 }
 
 /* After every search: look up whatever was missing (once per key). */
-/* Multi-city ranking, a port of crawl_plan.rank_multi_city: spend crawler time on the
- * combinations that can still beat ordinary round trips, judged by the REAL one-way /
- * round-trip prices fetched in stage 1. */
-function rankMulti(keys) {
+/* Multi-city planning (port of crawl_plan, made adaptive). Combinations of the same route are
+ * grouped (x, d, y, months). Round 1 asks ONE date variant per group, ranked by expected saving
+ * from the real one-way / round-trip prices; groups whose real fare comes out close to the three
+ * ordinary round trips are then expanded with more date variants, the rest are left alone. */
+const mcSegs = key => key.slice(3).split('|').map(x => { const [o, d, ...day] = x.split('-'); return [o, d, day.join('-')]; });
+
+function mcInfo(key, ix) {
+  const segs = mcSegs(key);
+  if (segs.length === 4) {
+    const [[x, , c1], [, d, c2], , [, y, rDep]] = segs;
+    const group = ['4leg', x, d, y, c1.slice(5, 7), c2.slice(5, 7), rDep.slice(5, 7)].join('|');
+    const owFirst = ix.min('ow', 'TPE', x, e => e.d1 < c1);
+    const owLast = ix.min('ow', y, 'TPE', e => e.d1 > rDep);
+    const rtX = ix.min('rt', 'TPE', x, e => ix.near(e.d2, c1));
+    const rtD = ix.min('rt', 'TPE', d, e => ix.near(e.d1, c2));
+    const rtY = ix.min('rt', 'TPE', y, e => ix.near(e.d1, rDep));
+    const ok = [owFirst, owLast, rtX, rtD, rtY].every(v => v != null);
+    return { key, group, score: ok ? (rtX + rtD + rtY - owFirst - owLast) / Math.max(rtD, 1) : -Infinity,
+             base: ok ? { fixed: owFirst + owLast, rts: rtX + rtD + rtY } : null };
+  }
+  const [[o1, d1, day1], [o2, d2, day2]] = segs;
+  const group = ['oj', o1, d1, o2, d2, day1.slice(5, 7), day2.slice(5, 7)].join('|');
+  const p = ix.min('rt', o1, d1, e => e.d1 === day1 && e.d2 === day2);
+  return { key, group, score: p == null ? -Infinity : -p, base: null };
+}
+
+function priceIndex() {
   const idx = { ow: new Map(), rt: new Map() };
   for (const [k, v] of Object.entries(FARES.fares)) {
     const kind = k.slice(0, 2);
@@ -2248,50 +2270,48 @@ function rankMulti(keys) {
     idx[kind].get(g).push({ d1, d2, price: v.price });
   }
   const flex = (fareCoverage().flex ?? 1) + 1;
-  const near = (a, b) => Math.abs(daysBetween(a, b)) <= flex;
-  const minOf = (kind, o, d, ok) => {
-    const list = (idx[kind].get(`${o}|${d}`) || []).filter(ok);
-    return list.length ? Math.min(...list.map(e => e.price)) : null;
+  return {
+    near: (a, b) => Math.abs(daysBetween(a, b)) <= flex,
+    min: (kind, o, d, ok) => {
+      const list = (idx[kind].get(`${o}|${d}`) || []).filter(ok);
+      return list.length ? Math.min(...list.map(e => e.price)) : null;
+    },
   };
-  const groups = new Map();
-  for (const key of keys) {
-    const segs = key.slice(3).split('|').map(x => { const [o, d, ...day] = x.split('-'); return [o, d, day.join('-')]; });
-    let score = null, group;
-    if (segs.length === 4) {
-      const [[x, , c1], [, d, c2], , [, y, rDep]] = segs;
-      group = ['4leg', x, d, y, c1.slice(5, 7), c2.slice(5, 7), rDep.slice(5, 7)].join('|');
-      const owFirst = minOf('ow', 'TPE', x, e => e.d1 < c1);
-      const owLast = minOf('ow', y, 'TPE', e => e.d1 > rDep);
-      const rtX = minOf('rt', 'TPE', x, e => near(e.d2, c1));
-      const rtD = minOf('rt', 'TPE', d, e => near(e.d1, c2));
-      const rtY = minOf('rt', 'TPE', y, e => near(e.d1, rDep));
-      if ([owFirst, owLast, rtX, rtD, rtY].every(v => v != null)) score = (rtX + rtD + rtY - owFirst - owLast) / Math.max(rtD, 1);
-    } else {
-      const [[o1, d1, day1], [o2, d2, day2]] = segs;
-      group = ['oj', o1, d1, o2, d2, day1.slice(5, 7), day2.slice(5, 7)].join('|');
-      const p = minOf('rt', o1, d1, e => e.d1 === day1 && e.d2 === day2);
-      score = p == null ? null : -p;
-    }
-    if (!groups.has(group)) groups.set(group, []);
-    groups.get(group).push([score == null ? -Infinity : score, key]);
-  }
-  const picked = [];
-  for (const [group, items] of groups) {
-    items.sort((a, b) => b[0] - a[0]);
-    const k = group.startsWith('4leg') ? (items[0][0] >= PROMISING ? PER_GROUP : 1) : 2;
-    picked.push(...items.slice(0, k));
-  }
-  picked.sort((a, b) => b[0] - a[0]);
-  return picked.map(e => e[1]);
 }
 
-/* Next batch of keys to look up: stage 1 = every one-way / round trip, stage 2 = the best multi-city. */
+function planMulti(open) {
+  const ix = priceIndex();
+  const groups = new Map();
+  const add = (info, asked) => {
+    if (!groups.has(info.group)) groups.set(info.group, { items: [], asked: [], base: null });
+    const g = groups.get(info.group);
+    (asked ? g.asked : g.items).push(info);
+    if (info.base) g.base = info.base;
+  };
+  open.forEach(k => add(mcInfo(k, ix), false));
+  for (const k of live.asked) if (k.startsWith('mc|')) { const info = mcInfo(k, ix); if (groups.has(info.group)) add(info, true); }
+  const picked = [];
+  for (const g of groups.values()) {
+    g.items.sort((a, b) => b.score - a.score);
+    const foundPrices = g.asked.map(i => FARES.fares[i.key]?.price).filter(v => v != null);
+    let quota = 1;                                   // round 1: one date variant per route group
+    if (g.asked.length && g.base && foundPrices.length) {
+      const ratio = (Math.min(...foundPrices) + g.base.fixed) / g.base.rts;   // vs three ordinary round trips
+      quota = ratio <= 1.15 ? 8 : ratio <= 1.4 ? 3 : 1;
+    } else if (g.asked.length && !g.base) quota = 3; // open jaws: a little more
+    for (const it of g.items.slice(0, Math.max(0, quota - g.asked.length))) picked.push(it);
+  }
+  picked.sort((a, b) => b.score - a.score);
+  return picked.map(i => i.key);
+}
+
+/* Next batch of keys to look up: stage 1 = every one-way / round trip, stage 2 = promising multi-city. */
 function nextBatch() {
   const open = [...fareStats.missingKeys].filter(k => !live.asked.has(k) && !live.notFound.has(k));
   const stage1 = open.filter(k => !k.startsWith('mc|'));
   if (stage1.length) return { keys: stage1.slice(0, LOOKUP_MAX), stage: 1, left: stage1.length };
-  const mc = rankMulti(open).slice(0, Math.max(0, live.campaign.mcLeft));
-  return { keys: mc.slice(0, LOOKUP_MAX), stage: 2, left: mc.length, skipped: open.length - mc.length };
+  const mc = planMulti(open).slice(0, Math.max(0, live.campaign.mcLeft));
+  return { keys: mc.slice(0, LOOKUP_MAX), stage: 2, left: mc.length };
 }
 
 /* After a search: look up whatever is missing, batch after batch, until nothing worth asking remains. */
