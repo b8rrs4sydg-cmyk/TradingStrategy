@@ -134,9 +134,12 @@ Self-Service shut down 2026-07-17; every price comes from Google Flights:
 When a demo search needs fares the database lacks, the page:
 1. writes `requests/<rid>` `{keys, total, status:"queued"}` to its artifact db
    (rule: `requests` read view / write interact), and
-2. calls the built-in **Claude Code Remote** connector `send_message` to the
-   dev session (`WORKER_SESSION` in `public/index.html`) with
-   `FARE_LOOKUP <rid> …`.
+2. wakes the dev session through the built-in **Claude Code Remote**
+   connector: `fire_trigger` on the poke-only scheduled task `WORKER_TRIGGER`
+   (bound to `WORKER_SESSION`, both in `public/index.html`) with text
+   `FARE_LOOKUP <rid> …`; `send_message` is the fallback (pages are not
+   allowed it on this connector today). If both fail the page stores the
+   connector's visible tools in `requests/<rid>.connector_tools`.
 
 The session that receives it (Claude) handles it:
 1. `ArtifactData get requests/<rid>` → save `keys` to a file.
