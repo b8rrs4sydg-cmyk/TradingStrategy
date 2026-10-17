@@ -2516,10 +2516,12 @@ async function discoverDaemonNow(force) {
     return fetch(url, { ...opt, signal: ctl.signal, cache: 'no-store' }).finally(() => clearTimeout(t));
   };
   try {
-    // GitHub API (no cache lag, but 60 requests/hour per IP) → raw file (cache-busted) → file next to the page
+    // raw file (a cache-busting query skips the CDN cache, no rate limit) → GitHub API (60 requests/hour per IP,
+    // may be exhausted or blocked) → file next to the page (only as fresh as the last Pages deploy).
+    // Any one of them is enough, and a stale URL simply fails its health check and moves on.
     const sources = [
-      () => timed(DAEMON_API, { headers: { Accept: 'application/vnd.github.raw' } }),
       () => timed(`${DAEMON_RAW}?_=${Date.now()}`),
+      () => timed(DAEMON_API, { headers: { Accept: 'application/vnd.github.raw' } }),
       () => timed(`daemon.json?_=${Date.now()}`),
     ];
     for (const get of sources) {
@@ -2640,6 +2642,7 @@ async function startLookup(keys, viaClaude = false) {
       }
       if (e.gotAny && rest.length && (live.retries || 0) < 2) {   // crawler went quiet mid-run: ask again for what is left
         live.retries = (live.retries || 0) + 1;
+        if (live.transport === 'http') { live.daemonUrl = null; live.daemonCheckedAt = 0; }   // the tunnel may have moved: look it up again
         rest.forEach(k => live.asked.delete(k));
         return startLookup(rest);
       }
