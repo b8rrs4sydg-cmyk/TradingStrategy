@@ -147,9 +147,12 @@ page ◀──SSE─────────────────  ntfy.sh/<T
   (overlay; committed every ~90 s) and the next crawl folds them in.
 - Preferred front door: the daemon starts a Cloudflare quick tunnel
   (`cloudflared`) and announces the URL in `public/daemon.json`
-  (`POST /lookup`, `GET /events/{rid}` SSE); the page discovers it
-  (`discoverDaemon`) and falls back to ntfy (anonymous quota ~250 msgs/day,
-  error 42908). `public/daemon-status.json` holds counters + log tail.
+  (`POST /lookup`, then long-poll `GET /poll/{rid}?i=N` — quick tunnels do
+  not carry SSE, so `/events` only serves the python selftest); the page
+  discovers it (`discoverDaemon`: raw file with cache-busting query → GitHub
+  API → file beside the page; each candidate must pass `/health`) and falls
+  back to ntfy (anonymous quota ~250 msgs/day, error 42908). One-minute
+  browser check of the direct path: `.github/workflows/tunnel-probe.yml`. `public/daemon-status.json` holds counters + log tail.
   `.github/workflows/fares-fill.yml` + `scripts/fill_fares.py` fill the DB in
   shards (plan → stage1 → merge → stage2 → final).
 - Topic names (`T_REQ`/`T_RES`) live in the workflow and `public/index.html`;
