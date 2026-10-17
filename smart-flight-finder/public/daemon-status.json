@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T18:04:39+00:00",
+ "at": "2026-10-17T18:06:10+00:00",
  "publishes": {
-  "ok": 174,
+  "ok": 200,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1012,
+ "fares_saved": 1053,
  "log": [
   "17:46:22 http front door: https://behaviour-starter-pastor-domestic.trycloudflare.com",
   "17:46:22 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -70,6 +70,7 @@
   "18:01:10 request received: rid mvcpdcrpfngds 84 keys",
   "18:01:10 handle mvcpdcrpfngds: first_chunk=True total=160",
   "18:01:10 request received: rid mvcpdcrpfngds 76 keys",
-  "18:01:10 handle mvcpdcrpfngds: first_chunk=False total=160"
+  "18:01:10 handle mvcpdcrpfngds: first_chunk=False total=160",
+  "18:05:47 request mvcpdcrpfngds: chunk of 76 keys done in 276s; ntfy publishes {'ok': 193, 'r429': 0, 'fail': 0}"
  ]
 }
