@@ -1,16 +1,31 @@
 {
- "at": "2026-10-17T17:13:48+00:00",
+ "at": "2026-10-17T17:15:19+00:00",
  "publishes": {
-  "ok": 6,
+  "ok": 21,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 452,
+ "fares_saved": 500,
  "log": [
   "17:12:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "17:13:00 request received: rid selftest1792257177 30 keys",
   "17:13:00 handle selftest1792257177: first_chunk=True total=30",
   "17:13:32 request selftest1792257177: chunk of 30 keys done in 32s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
-  "17:13:33 request selftest1792257177: final sent (30/30); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
+  "17:13:33 request selftest1792257177: final sent (30/30); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "17:13:49 request received: rid mvcnogl78el5g 22 keys",
+  "17:13:49 request received: rid mvcnogl78el5g 22 keys",
+  "17:13:49 handle mvcnogl78el5g: first_chunk=True total=22",
+  "17:13:49 handle mvcnogl78el5g: first_chunk=False total=22",
+  "17:14:15 request mvcnogl78el5g: chunk of 22 keys done in 26s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "17:14:31 request mvcnogl78el5g: chunk of 22 keys done in 42s; ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "17:14:32 request mvcnogl78el5g: final sent (44/22); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "17:14:32 request received: rid mvcnpefz56bzu 84 keys",
+  "17:14:32 handle mvcnpefz56bzu: first_chunk=True total=160",
+  "17:14:32 request received: rid mvcnpefz56bzu 84 keys",
+  "17:14:32 handle mvcnpefz56bzu: first_chunk=False total=160",
+  "17:14:32 request received: rid mvcnpefz56bzu 76 keys",
+  "17:14:32 handle mvcnpefz56bzu: first_chunk=False total=160",
+  "17:14:33 request received: rid mvcnpefz56bzu 76 keys",
+  "17:14:33 handle mvcnpefz56bzu: first_chunk=False total=160"
  ]
 }
