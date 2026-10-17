@@ -21,6 +21,15 @@ async (allKeys) => {
   const url = await discoverDaemon(true);
   mark(`discovered ${url} alternatives=${JSON.stringify(live.daemonAlt || [])} notes=${JSON.stringify(live.daemonNotes)}`);
   if (!url) return out;
+  try {   // peer to peer first: no tunnel at all
+    const c = await rtcEnsure();
+    live.transport = 'rtc';
+    const rid = 'probertc' + Date.now().toString(36), keys = allKeys.slice(6, 9);
+    live.rid = rid; live.keys = keys; live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
+    await ntfyLookup(keys, rid);
+    mark(`peer to peer (${c.sid}): lookup resolved found=${live.doc.found}`);
+    out.rtc = true;
+  } catch (e) { mark('peer to peer failed: ' + e.message); out.rtc = false; }
   const tunnels = [url, ...(live.daemonAlt || [])];
   out.tunnels = tunnels.length;
   out.resolved = 0;
@@ -48,7 +57,7 @@ async def main(url: str) -> int:
             "typeof ntfyLookup === 'function' && typeof FARES === 'object'", timeout=60000
         )
         keys = await page.evaluate(
-            "Object.keys(FARES.fares).filter(k => k.startsWith('ow|')).slice(0, 6)"
+            "Object.keys(FARES.fares).filter(k => k.startsWith('ow|')).slice(0, 9)"
         )
         print("keys:", keys, flush=True)
         has_poll = await page.evaluate("ntfyLookup.toString().includes('/poll/')")
@@ -59,7 +68,8 @@ async def main(url: str) -> int:
             print(" ", s)
         print("page errors:", errors[:5])
         await browser.close()
-        ok = res.get("resolved", 0) >= 1 and has_poll
+        print("peer to peer (no tunnel):", res.get("rtc"))
+        ok = res.get("resolved", 0) >= 1 and has_poll and res.get("rtc") is True
         print("tunnels announced:", res.get("tunnels"), "carrying a lookup:", res.get("resolved"))
         print("PROBE", "OK" if ok else "FAILED", f"in {time.time() - t0:.0f}s")
         return 0 if ok else 1

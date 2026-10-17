@@ -128,7 +128,7 @@ async def main() -> int:
         log(
             "initial lookup transport:",
             await page.evaluate(
-                "({t: live.transport, notes: live.daemonNotes, url: live.daemonUrl})"
+                "({t: live.transport, notes: live.daemonNotes, url: live.daemonUrl, rtcNote: live.rtcNote})"
             ),
         )
         check(bool(diag.get("discovered")), "crawler tunnel discovered by the page")
@@ -202,8 +202,8 @@ async def main() -> int:
         )
         check((st["found"] or 0) > 0, "fares streamed back from the crawler")
         check(
-            st["transport"] == "http",
-            f"page reached the crawler through its direct tunnel (transport={st['transport']})",
+            st["transport"] in ("rtc", "http"),
+            f"page reached the crawler directly, not through ntfy (transport={st['transport']})",
         )
         check(not st["error"], f"no lookup error ({st['error']})")
 

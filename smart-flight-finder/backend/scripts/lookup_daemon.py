@@ -49,6 +49,7 @@ from app.providers.google_flights import _fetch_one
 from scripts.lookup_fares import MAX_KEYS, valid_keys
 
 NTFY = os.getenv("NTFY_URL", "https://ntfy.sh")
+STUN = "stun:stun.l.google.com:19302"   # public STUN: no account, only tells each side its public address
 MSG_BYTES = 3400  # ntfy turns messages over 4096 bytes into attachments
 RATE_KEYS = 2500  # accepted keys per window
 RATE_WINDOW_S = 600
@@ -354,6 +355,7 @@ class Daemon:
         self.buffers: dict[str, dict] = {}  # rid -> {msgs, t}: what SSE subscribers read
         self.tunnel_url: str | None = None
         self.tunnel_urls: list[str] = []
+        self.rtc: dict[str, dict] = {}   # peer-to-peer sessions by id: {pc, ch, t}
         self.seq = 0
 
     async def run(self, duration: float) -> None:
@@ -379,6 +381,7 @@ class Daemon:
             )
             ctx = await browser.new_context(locale="en-US", user_agent=_UA)
             sem = PriorityGate(CONCURRENCY)
+            self.start_rtc(asyncio.get_running_loop(), stop)
             if os.getenv("DAEMON_HTTP", "1") == "1":
                 await start_http(self)
                 found = await asyncio.gather(
@@ -506,13 +509,81 @@ class Daemon:
             f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}"
         )
 
+    # --- peer-to-peer front door (WebRTC): no tunnel, no GitHub API -------------------------------
+    def start_rtc(self, loop, stop: threading.Event) -> None:
+        """Pages offer a WebRTC connection through two tiny ntfy messages (signalling only); the lookups and the
+        fares then flow over the data channel, so neither a tunnel nor the ntfy quota is involved."""
+
+        try:
+            import aiortc  # noqa: F401
+        except ImportError:
+            log("aiortc not installed — no peer-to-peer front door")
+            return
+
+        def on_offer(ev: dict) -> None:
+            loop.call_soon_threadsafe(lambda: asyncio.ensure_future(self.rtc_answer(ev.get("message", ""))))
+
+        threading.Thread(
+            target=subscribe, args=(self.req + "-sig", str(int(time.time()) - 2), stop, on_offer), daemon=True
+        ).start()
+        log(f"peer-to-peer front door: signalling on {self.req}-sig")
+
+    async def rtc_answer(self, message: str) -> None:
+        from aiortc import RTCConfiguration, RTCIceServer, RTCPeerConnection, RTCSessionDescription
+
+        try:
+            m = json.loads(message)
+        except ValueError:
+            return
+        if not isinstance(m, dict) or m.get("type") != "offer":
+            return
+        sid, sdp = str(m.get("sid", "")), m.get("sdp")
+        if not re.fullmatch(r"[A-Za-z0-9_-]{4,24}", sid) or not isinstance(sdp, str) or len(sdp) > 20000:
+            return
+        now = time.time()
+        for old, sess in list(self.rtc.items()):   # forget sessions that never connected or ended
+            if now - sess["t"] > 6 * 3600 or sess["pc"].connectionState in ("failed", "closed"):
+                await sess["pc"].close()
+                self.rtc.pop(old, None)
+        if sid in self.rtc or len(self.rtc) >= 20:
+            return
+        pc = RTCPeerConnection(RTCConfiguration([RTCIceServer(urls=[STUN])]))
+        sess = {"pc": pc, "ch": None, "t": now}
+        self.rtc[sid] = sess
+
+        @pc.on("datachannel")
+        def on_channel(ch) -> None:
+            sess["ch"] = ch
+            log(f"rtc {sid}: data channel open")
+
+            @ch.on("message")
+            def on_message(text) -> None:
+                if isinstance(text, str) and len(text) < 64_000:
+                    self.queue.put_nowait((f"rtc:{sid}", text))
+
+        try:
+            await pc.setRemoteDescription(RTCSessionDescription(sdp=sdp, type="offer"))
+            await pc.setLocalDescription(await pc.createAnswer())
+            await asyncio.to_thread(
+                publish, self.res + "-sig", json.dumps({"type": "answer", "sid": sid, "sdp": pc.localDescription.sdp})
+            )
+            log(f"rtc {sid}: answered")
+        except Exception as e:  # noqa: BLE001
+            log(f"rtc {sid}: failed {e}")
+            await pc.close()
+            self.rtc.pop(sid, None)
+
     async def send(self, rid: str, text: str, via: str) -> None:
         """Every message goes to the SSE buffer; requests that arrived over ntfy are also answered over ntfy."""
 
         buf = self.buffers.setdefault(rid, {"msgs": [], "t": time.time()})
         buf["msgs"].append(text)
         buf["t"] = time.time()
-        if via == "ntfy":
+        if via.startswith("rtc:"):
+            ch = (self.rtc.get(via[4:]) or {}).get("ch")
+            if ch is not None and ch.readyState == "open":
+                ch.send(text)
+        elif via == "ntfy":
             await asyncio.to_thread(publish, self.res, text)
 
     async def publisher(self) -> None:
