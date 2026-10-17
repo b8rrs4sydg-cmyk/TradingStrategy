@@ -2519,7 +2519,7 @@ function finishLookup() {
   setTimeout(() => {
     if (live.doc?.status !== 'done') return;
     const more = nextBatch();
-    if (more.keys.length) { live.doc = null; live.rid = null; maybeLookup(); }
+    if (more.keys.length) { live.doc = null; live.rid = null; live.retries = 0; maybeLookup(); }
     else setTimeout(() => { if (live.doc?.status === 'done') { resetLookup(); renderLookup(); } }, 12000);
   }, 1200);
 }
@@ -2542,8 +2542,13 @@ async function startLookup(keys, viaClaude = false) {
       return;
     } catch (e) {
       if (live.rid !== rid) return;                       // superseded
-      noteDiag(e);
       const rest = keys.filter(k => !live.answered.has(k));
+      if (e.gotAny && rest.length && (live.retries || 0) < 2) {   // crawler went quiet mid-run: ask again for what is left
+        live.retries = (live.retries || 0) + 1;
+        rest.forEach(k => live.asked.delete(k));
+        return startLookup(rest);
+      }
+      noteDiag(e);
       if (!live.ready || !rest.length) {
         clearInterval(live.timer);
         rest.forEach(k => live.asked.delete(k));
