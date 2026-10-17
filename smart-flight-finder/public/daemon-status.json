@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T22:49:13+00:00",
+ "at": "2026-10-17T22:50:45+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2808,
+ "fares_saved": 2841,
  "log": [
   "22:47:38 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "22:47:43 http front door: ['https://flag-quantum-beaches-pets.trycloudflare.com', 'https://a6f30130f46a45.lhr.life']",
@@ -17,6 +17,18 @@
   "22:48:36 request received: rid probertcmvczmzwk 3 keys",
   "22:48:36 handle probertcmvczmzwk: first_chunk=True total=3",
   "22:48:47 request received: rid httptest1792277327 20 keys",
-  "22:48:47 handle httptest1792277327: first_chunk=True total=20"
+  "22:48:47 handle httptest1792277327: first_chunk=True total=20",
+  "22:50:02 request httptest1792277327: chunk of 20 keys done in 75s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "22:50:03 request httptest1792277327: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "22:50:08 request probertcmvczmzwk: chunk of 3 keys done in 92s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "22:50:09 request probertcmvczmzwk: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "22:50:09 request received: rid probe0mvczozw6 3 keys",
+  "22:50:09 handle probe0mvczozw6: first_chunk=True total=3",
+  "22:50:17 request probe0mvczozw6: chunk of 3 keys done in 8s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "22:50:18 request probe0mvczozw6: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "22:50:18 request received: rid probe1mvczp6rc 3 keys",
+  "22:50:18 handle probe1mvczp6rc: first_chunk=True total=3",
+  "22:50:26 request probe1mvczp6rc: chunk of 3 keys done in 8s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "22:50:26 request probe1mvczp6rc: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
