@@ -38,3 +38,4 @@ jobs:
           python -m playwright install --with-deps chromium
       - run: python -m scripts.e2e_pages "${{ inputs.url || 'https://b8rrs4sydg-cmyk.github.io/TradingStrategy/' }}" "${{ inputs.wait_seconds || '1800' }}"
 # rerun 1792262934
+# rerun 1792263164
