@@ -9,6 +9,7 @@ on:
       - "!smart-flight-finder/public/fares.json"
       - "!smart-flight-finder/public/fares-live.json"
       - "!smart-flight-finder/public/live-request.json"
+      - "!smart-flight-finder/public/daemon-status.json"
   pull_request:
     paths:
       - "smart-flight-finder/**"

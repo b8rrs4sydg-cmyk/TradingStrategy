@@ -55,10 +55,15 @@ _UA = (
 )
 
 
+RING: deque[str] = deque(maxlen=150)   # last log lines, committed with the fares (daemon-status.json)
+
+
 def log(*args) -> None:
     """print() that cannot kill a task: Playwright's node driver leaves the shared
     stdout/stderr pipe non-blocking, so a print can raise BlockingIOError."""
 
+    line = " ".join(str(a) for a in args)
+    RING.append(f"{datetime.now(UTC):%H:%M:%S} {line}"[:300])
     try:
         print(*args, flush=True)
     except OSError:
@@ -160,6 +165,8 @@ def publish(topic: str, text: str, retries: int = 8) -> bool:
                 log(f"publish http {e.code}")
                 return False
             PUB["r429"] += 1
+            if PUB["r429"] <= 5 or PUB["r429"] % 20 == 0:
+                log(f"publish 429 #{PUB['r429']}: {e.read()[:120]!r}")
             wait = e.headers.get("Retry-After") if e.headers else None
             time.sleep(min(float(wait) if wait and wait.isdigit() else 5 * (i + 1), 30))   # back off, never drop
         except Exception as e:  # noqa: BLE001
@@ -203,6 +210,7 @@ class Persister:
         self.pending: dict[str, dict] = {}
         self.missing: list[str] = []
         self.lock = threading.Lock()
+        self.dirty = False   # request activity since the last push → publish daemon-status.json
 
     def add(self, fares: dict, nf: list) -> None:
         with self.lock:
@@ -213,13 +221,30 @@ class Persister:
         with self.lock:
             fares, missing = self.pending, self.missing
             self.pending, self.missing = {}, []
-        if not fares and not missing:
+        if not fares and not missing and not self.dirty:
             return 0
-        self.db.merge(fares, today=datetime.now(UTC).date(), missing=[*self.db.missing, *missing])
-        self.db.save(self.path)
+        self.dirty = False
+        if fares or missing:
+            self.db.merge(fares, today=datetime.now(UTC).date(), missing=[*self.db.missing, *missing])
+            self.db.save(self.path)
+        self.write_status({"fares_saved": len(self.db.fares)})
         if push and os.getenv("GITHUB_TOKEN"):
             self._git_push(len(fares))
         return len(fares)
+
+    def write_status(self, extra: dict) -> None:
+        status = {
+            "at": datetime.now(UTC).isoformat(timespec="seconds"),
+            "publishes": dict(PUB),
+            **extra,
+            "log": list(RING),
+        }
+        try:
+            (self.path.parent / "daemon-status.json").write_text(
+                json.dumps(status, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
+            )
+        except OSError:
+            pass
 
     def _git_push(self, n: int) -> None:
         root = Path(__file__).resolve().parents[3]
@@ -227,7 +252,7 @@ class Persister:
         for attempt in range(4):
             try:
                 git = lambda *a: subprocess.run(["git", "-C", str(root), *a], check=True, capture_output=True)
-                git("add", str(self.path))
+                git("add", str(self.path), str(self.path.parent / "daemon-status.json"))
                 if subprocess.run(["git", "-C", str(root), "diff", "--cached", "--quiet"], check=False).returncode == 0:
                     return
                 git("commit", "-q", "-m", f"data: live fare lookups (+{n})")
@@ -276,6 +301,8 @@ class Daemon:
                 except TimeoutError:
                     continue
                 req = parse_request(message)
+                log(f"request received: {'rid ' + req['rid'] + ' ' + str(len(req['keys'])) + ' keys' if req else 'REJECTED ' + message[:80]}")
+                self.persist.dirty = True
                 if req:
                     t = asyncio.create_task(self.handle(req, ctx, sem))
                     tasks.add(t)
@@ -296,6 +323,7 @@ class Daemon:
         rid, keys = req["rid"], req["keys"]
         first_chunk = rid not in self.requests
         state = self.requests.setdefault(rid, {"total": req["total"], "done": 0})
+        log(f"handle {rid}: first_chunk={first_chunk} total={state['total']}")
         fresh = [k for k in keys if (h := self.cache.get(k)) and time.time() - h[0] < CACHE_TTL_S]
         if not self.limiter.allow(len(keys) - len(fresh)):   # answers from memory cost nothing
             await asyncio.to_thread(publish, self.res, json.dumps({"rid": rid, "error": "rate_limited", "final": True}))
