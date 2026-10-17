@@ -2330,6 +2330,28 @@ function loadLiveCache() {
   } catch {}
 }
 
+/* Hosted on GitHub Pages the page sits next to fares.json / fares-live.json
+ * (staged by pages.yml): take whichever entries are newer than the embedded copy. */
+async function loadSiblingFares() {
+  let changed = false;
+  for (const name of ['fares.json', 'fares-live.json']) {
+    try {
+      const r = await fetch(name, { cache: 'no-cache' });
+      if (!r.ok) continue;
+      const d = await r.json();
+      for (const [k, v] of Object.entries(d.fares || {})) {
+        const mine = FARES.fares[k];
+        if (!mine || (v.at || '') > (mine.at || '')) { FARES.fares[k] = v; changed = true; }
+      }
+      (d.unavailable || []).forEach(k => live.notFound.add(k));
+      if (name === 'fares.json' && d.generated_at && (!FARES.generated_at || d.generated_at > FARES.generated_at)) {
+        FARES.generated_at = d.generated_at; FARES.coverage = d.coverage || FARES.coverage; changed = true;
+      }
+    } catch {}
+  }
+  if (changed) { applyCoverage(); scheduleRefresh(); }
+}
+
 function noteDiag(e) {
   live.ntfyOk = false;
   try { live.db?.collection('diag').doc('net').set({ at: new Date().toISOString(), error: String(e?.message || e).slice(0, 200), ua: navigator.userAgent.slice(0, 120) }).catch(() => {}); } catch {}
@@ -2472,6 +2494,7 @@ async function subscribeLiveFares() {
 function init() {
   loadFareSnapshot();
   loadLiveCache();
+  loadSiblingFares();
   renderDbStatus();
   subscribeLiveFares();
   wirePickers();
