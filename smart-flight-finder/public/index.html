@@ -2329,6 +2329,7 @@ function maybeLookup(fromUser = false) {
     // and a fresh campaign starts for THIS combination; keys not answered yet are asked again if still needed.
     if (busy) { live.keys.filter(k => !live.answered.has(k)).forEach(k => live.asked.delete(k)); resetLookup(); }
     live.campaign = { asked: 0, batch: 0, mcLeft: MC_BUDGET, found: 0, started: Date.now() };
+    live.retries = 0;
   }
   const batch = nextBatch();
   if (!batch.keys.length) { live.campaign.left = 0; return; }
