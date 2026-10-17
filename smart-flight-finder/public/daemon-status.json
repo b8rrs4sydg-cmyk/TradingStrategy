@@ -1,15 +1,30 @@
 {
- "at": "2026-10-17T16:51:33+00:00",
+ "at": "2026-10-17T16:55:38+00:00",
  "publishes": {
-  "ok": 9,
+  "ok": 15,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 433,
+ "fares_saved": 434,
  "log": [
-  "16:50:03 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
-  "16:50:45 request received: rid selftest1792255842 30 keys",
-  "16:50:45 handle selftest1792255842: first_chunk=True total=30",
-  "16:51:32 request selftest1792255842: 30 keys done in 47s; ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}"
+  "16:54:08 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
+  "16:54:50 request received: rid selftest1792256087 30 keys",
+  "16:54:50 handle selftest1792256087: first_chunk=True total=30",
+  "16:55:11 request received: rid mvcn0hbu05t87 71 keys",
+  "16:55:11 request received: rid mvcn0hbu05t87 71 keys",
+  "16:55:11 handle mvcn0hbu05t87: first_chunk=True total=160",
+  "16:55:11 handle mvcn0hbu05t87: first_chunk=False total=160",
+  "16:55:11 request received: rid mvcn0hbu05t87 39 keys",
+  "16:55:11 request received: rid mvcn0hbu05t87 39 keys",
+  "16:55:11 handle mvcn0hbu05t87: first_chunk=False total=160",
+  "16:55:11 handle mvcn0hbu05t87: first_chunk=False total=160",
+  "16:55:11 request received: rid mvcn0hbu05t87 36 keys",
+  "16:55:11 request received: rid mvcn0hbu05t87 36 keys",
+  "16:55:11 handle mvcn0hbu05t87: first_chunk=False total=160",
+  "16:55:11 handle mvcn0hbu05t87: first_chunk=False total=160",
+  "16:55:12 request received: rid mvcn0hbu05t87 14 keys",
+  "16:55:12 handle mvcn0hbu05t87: first_chunk=False total=160",
+  "16:55:12 request received: rid mvcn0hbu05t87 14 keys",
+  "16:55:12 handle mvcn0hbu05t87: first_chunk=False total=160"
  ]
 }
