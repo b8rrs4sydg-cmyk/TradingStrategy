@@ -2156,6 +2156,8 @@ const NTFY_FIRST_MS = 45000;                      // no reply at all → crawler
 const NTFY_SILENCE_MS = 120000;                   // gap between messages once it is working
 const NTFY_STEPS = [['queued', '連線中繼'], ['dispatched', '等爬蟲接手'], ['running', '查詢 Google Flights'], ['done', '完成']];
 const LIVE_CACHE_KEY = 'sff.livefares.v1';
+// The crawler announces its public tunnel URL in daemon.json (committed to the repo); read via the GitHub API (no cache lag).
+const DAEMON_API = 'https://api.github.com/repos/b8rrs4sydg-cmyk/TradingStrategy/contents/smart-flight-finder/public/daemon.json?ref=claude/zealous-darwin-1kexus';
 const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
 // Poke-only scheduled task bound to that session: firing it wakes Claude with the request id.
 const WORKER_TRIGGER = 'trig_01YJmjteUtHz6uoWp6moa8fM';
@@ -2471,19 +2473,44 @@ function noteDiag(e) {
   try { live.db?.collection('diag').doc('net').set({ at: new Date().toISOString(), error: String(e?.message || e).slice(0, 200), ua: navigator.userAgent.slice(0, 120) }).catch(() => {}); } catch {}
 }
 
+/* Where is the crawler? Its Cloudflare tunnel URL (direct HTTPS + SSE, no message quota) if it answers,
+ * else null → fall back to the ntfy relay. */
+async function discoverDaemon() {
+  const now = Date.now();
+  if (live.daemonCheckedAt && now - live.daemonCheckedAt < (live.daemonUrl ? 60000 : 15000)) return live.daemonUrl;
+  live.daemonCheckedAt = now;
+  live.daemonUrl = null;
+  const timed = (url, opt = {}, ms = 5000) => {
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), ms);
+    return fetch(url, { ...opt, signal: ctl.signal, cache: 'no-store' }).finally(() => clearTimeout(t));
+  };
+  try {
+    let info = null;
+    try { const r = await timed(DAEMON_API, { headers: { Accept: 'application/vnd.github.raw' } }); if (r.ok) info = await r.json(); } catch {}
+    if (!info) { try { const r = await timed('daemon.json'); if (r.ok) info = await r.json(); } catch {} }   // Pages sibling
+    if (info && info.url) {
+      const h = await timed(`${info.url}/health`, {}, 6000);
+      if (h.ok) live.daemonUrl = info.url;
+    }
+  } catch {}
+  return live.daemonUrl;
+}
+
 function ntfyLookup(keys, rid) {
   return new Promise((resolve, reject) => {
     let es = null, silence = null, opened = false, gotAny = false, finished = false;
     const cleanup = () => { clearTimeout(silence); if (es) es.close(); live.unsub = null; };
     const fail = err => { if (finished) return; finished = true; cleanup(); err.gotAny = gotAny; reject(err); };
     const arm = ms => { clearTimeout(silence); silence = setTimeout(() => fail(new Error(gotAny ? '爬蟲中途沒有回應' : '爬蟲沒有回應')), ms); };
-    try { es = new EventSource(`${NTFY}/${T_RES}/sse?since=30s`); } catch (e) { reject(e); return; }
+    const direct = live.transport === 'http' ? live.daemonUrl : null;
+    try { es = new EventSource(direct ? `${direct}/events/${rid}` : `${NTFY}/${T_RES}/sse?since=30s`); } catch (e) { reject(e); return; }
     live.unsub = () => { finished = true; cleanup(); };       // a newer lookup cancels this one
     arm(8000);                                                // the stream must open quickly
     es.onerror = () => { if (!opened) fail(new Error('無法連線到 ntfy 中繼')); };
     es.onmessage = ev => {
       let m;
-      try { m = JSON.parse(JSON.parse(ev.data).message); } catch { return; }
+      try { m = JSON.parse(ev.data); if (typeof m.message === 'string') m = JSON.parse(m.message); } catch { return; }
       if (!m || m.rid !== rid) return;
       gotAny = true;
       arm(NTFY_SILENCE_MS);
@@ -2502,7 +2529,10 @@ function ntfyLookup(keys, rid) {
       posted = true;
       arm(NTFY_FIRST_MS);
       try {
-        for (const chunk of ntfyChunks(rid, keys)) await ntfyPost(JSON.stringify({ rid, total: keys.length, keys: chunk }));
+        if (direct) {
+          const r = await fetch(`${direct}/lookup`, { method: 'POST', body: JSON.stringify({ rid, total: keys.length, keys }) });
+          if (!r.ok) throw new Error(`爬蟲拒絕請求 (${r.status})`);
+        } else for (const chunk of ntfyChunks(rid, keys)) await ntfyPost(JSON.stringify({ rid, total: keys.length, keys: chunk }));
         if (!finished && live.doc?.status === 'queued') { live.doc = { ...live.doc, status: 'dispatched' }; renderLookup(); }
       } catch (e) { fail(e instanceof Error ? e : new Error(String(e))); }
     };
@@ -2537,6 +2567,8 @@ async function startLookup(keys, viaClaude = false) {
     live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
     renderLookup();
     const rid = live.rid;
+    live.transport = (await discoverDaemon()) ? 'http' : 'ntfy';
+    if (live.rid !== rid) return;
     try {
       await ntfyLookup(keys, rid);
       if (live.rid === rid) finishLookup();
@@ -2544,6 +2576,11 @@ async function startLookup(keys, viaClaude = false) {
     } catch (e) {
       if (live.rid !== rid) return;                       // superseded
       const rest = keys.filter(k => !live.answered.has(k));
+      if (live.transport === 'http' && !e.gotAny) {   // the tunnel did not answer: forget it, go through the ntfy relay
+        live.daemonUrl = null; live.daemonCheckedAt = Date.now() + 45000;
+        rest.forEach(k => live.asked.delete(k));
+        return startLookup(rest);
+      }
       if (e.gotAny && rest.length && (live.retries || 0) < 2) {   // crawler went quiet mid-run: ask again for what is left
         live.retries = (live.retries || 0) + 1;
         rest.forEach(k => live.asked.delete(k));
