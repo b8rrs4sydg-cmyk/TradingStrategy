@@ -497,7 +497,8 @@ def make_app(daemon: Daemon):
     @app.get("/events/{rid}")
     async def events(rid: str):
         async def stream():
-            i, last = 0, time.time()
+            i, last, ping = 0, time.time(), time.time()
+            yield ": open" + " " * 2048 + "\n\n"   # headers + first bytes at once: the page posts its request only after the stream opens
             while time.time() - last < 900:
                 buf = daemon.buffers.get(rid[:40])
                 if buf and i < len(buf["msgs"]):
@@ -509,7 +510,8 @@ def make_app(daemon: Daemon):
                         return
                 else:
                     await asyncio.sleep(0.25)
-                    if int(time.time() * 4) % 60 == 0:
+                    if time.time() - ping > 10:
+                        ping = time.time()
                         yield ": ping\n\n"
 
         return StreamingResponse(stream(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
