@@ -55,6 +55,16 @@ _UA = (
 )
 
 
+def log(*args) -> None:
+    """print() that cannot kill a task: Playwright's node driver leaves the shared
+    stdout/stderr pipe non-blocking, so a print can raise BlockingIOError."""
+
+    try:
+        print(*args, flush=True)
+    except OSError:
+        pass
+
+
 # --- pure helpers (unit-tested) -----------------------------------------------
 def parse_request(message: str) -> dict | None:
     """``{"rid","total","keys"}`` from one request message, else None."""
@@ -132,16 +142,16 @@ def publish(topic: str, text: str, retries: int = 8) -> bool:
         except urllib.error.HTTPError as e:
             if e.code != 429:
                 PUB["fail"] += 1
-                print(f"publish http {e.code}", file=sys.stderr, flush=True)
+                log(f"publish http {e.code}")
                 return False
             PUB["r429"] += 1
             wait = e.headers.get("Retry-After") if e.headers else None
             time.sleep(min(float(wait) if wait and wait.isdigit() else 5 * (i + 1), 30))   # back off, never drop
         except Exception as e:  # noqa: BLE001
-            print(f"publish error {e}", file=sys.stderr, flush=True)
+            log(f"publish error {e}")
             time.sleep(2)
     PUB["fail"] += 1
-    print("publish gave up", file=sys.stderr, flush=True)
+    log("publish gave up")
     return False
 
 
@@ -164,7 +174,7 @@ def subscribe(topic: str, since: str, stop: threading.Event, handler) -> None:
                         last = str(ev.get("time", last))
                         handler(ev)
         except Exception as e:  # noqa: BLE001 — network blips: reconnect
-            print(f"subscribe error {e}; reconnecting", file=sys.stderr, flush=True)
+            log(f"subscribe error {e}; reconnecting")
             time.sleep(3)
 
 
@@ -210,7 +220,7 @@ class Persister:
                 git("push", "-q", "origin", f"HEAD:{branch}")
                 return
             except subprocess.CalledProcessError as e:
-                print(f"git retry {attempt}: {e.stderr[-200:] if e.stderr else e}", file=sys.stderr, flush=True)
+                log(f"git retry {attempt}: {e.stderr[-200:] if e.stderr else e}")
                 time.sleep(3)
 
 
@@ -241,7 +251,7 @@ class Daemon:
             browser = await pw.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
             ctx = await browser.new_context(locale="en-US", user_agent=_UA)
             sem = asyncio.Semaphore(CONCURRENCY)
-            print(f"daemon up: req={self.req} res={self.res} for {duration:.0f}s", flush=True)
+            log(f"daemon up: req={self.req} res={self.res} for {duration:.0f}s")
             deadline = time.time() + duration
             persist_task = asyncio.create_task(self._persist_loop())
             tasks: set[asyncio.Task] = set()
@@ -283,6 +293,7 @@ class Daemon:
 
         async def one(key: str) -> None:
             hit = self.cache.get(key)
+            failed = False
             if hit and time.time() - hit[0] < CACHE_TTL_S:
                 entry = hit[1]
             else:
@@ -290,13 +301,14 @@ class Daemon:
                     try:
                         entry = await _fetch_one(ctx, key, 40000)
                     except Exception as e:  # noqa: BLE001
-                        print(f"fetch failed {key}: {e}", file=sys.stderr, flush=True)
-                        entry = None
-                self.cache[key] = (time.time(), entry)
+                        log(f"fetch failed {key}: {e}")
+                        entry, failed = None, True
+                if not failed:   # a crash is not "no itinerary": do not cache or report it as unavailable
+                    self.cache[key] = (time.time(), entry)
             state["done"] += 1
             if entry:
                 out_f[key] = {**entry, "at": datetime.now(UTC).date().isoformat()}
-            else:
+            elif not failed:
                 out_n.append(key)
 
         async def flusher(final: bool) -> None:
@@ -321,7 +333,7 @@ class Daemon:
                 await flusher(False)
                 last_sent = time.time()
         await flusher(True)
-        print(f"request {rid}: {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}", flush=True)
+        log(f"request {rid}: {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}")
 
 
 # --- self test (client side) -------------------------------------------------------------
@@ -340,7 +352,7 @@ def selftest(req: str, res: str, keys: list[str], timeout: float) -> int:
         if m.get("rid") != rid:
             return
         got.update(m.get("fares", {}))
-        print(f"  {m.get('done')}/{m.get('total')} fares={len(got)} nf={len(m.get('nf', []))} hello={m.get('hello', False)}", flush=True)
+        log(f"  {m.get('done')}/{m.get('total')} fares={len(got)} nf={len(m.get('nf', []))} hello={m.get('hello', False)}")
         if m.get("final") or m.get("error"):
             final.set()
 
@@ -349,10 +361,10 @@ def selftest(req: str, res: str, keys: list[str], timeout: float) -> int:
     time.sleep(3)
     t0 = time.time()
     ok = publish(req, json.dumps({"rid": rid, "total": len(keys), "keys": keys}))
-    print(f"selftest published={ok}", flush=True)
+    log(f"selftest published={ok}")
     final.wait(timeout)
     stop.set()
-    print(f"selftest finished={final.is_set()} fares={len(got)} in {time.time() - t0:.1f}s", flush=True)
+    log(f"selftest finished={final.is_set()} fares={len(got)} in {time.time() - t0:.1f}s")
     return 0 if final.is_set() and got else 1
 
 
