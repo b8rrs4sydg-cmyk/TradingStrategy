@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T17:53:57+00:00",
+ "at": "2026-10-17T17:55:29+00:00",
  "publishes": {
-  "ok": 48,
+  "ok": 65,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 731,
+ "fares_saved": 780,
  "log": [
   "17:46:22 http front door: https://behaviour-starter-pastor-domestic.trycloudflare.com",
   "17:46:22 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -40,6 +40,10 @@
   "17:53:54 request received: rid mvcp40ehe6owd 84 keys",
   "17:53:54 handle mvcp40ehe6owd: first_chunk=True total=160",
   "17:53:54 request received: rid mvcp40ehe6owd 76 keys",
-  "17:53:54 handle mvcp40ehe6owd: first_chunk=False total=160"
+  "17:53:54 handle mvcp40ehe6owd: first_chunk=False total=160",
+  "17:54:45 request received: rid mvcp4z1uuf9rr 30 keys",
+  "17:54:45 handle mvcp4z1uuf9rr: first_chunk=True total=30",
+  "17:55:00 request received: rid mvcp5bt3jhjgq 135 keys",
+  "17:55:00 handle mvcp5bt3jhjgq: first_chunk=True total=135"
  ]
 }
