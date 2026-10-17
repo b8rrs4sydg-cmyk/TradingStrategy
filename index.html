@@ -2147,6 +2147,8 @@ function wireTheme() {
  * search). Statuses: queued → dispatched → running (done/total) → saving → done.
  * ========================================================================= */
 const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
+// Poke-only scheduled task bound to that session: firing it wakes Claude with the request id.
+const WORKER_TRIGGER = 'trig_01YJmjteUtHz6uoWp6moa8fM';
 const LOOKUP_MAX = 80;
 const LOOKUP_STEPS = [['queued', '送出請求'], ['dispatched', '啟動爬蟲'], ['running', '查詢 Google Flights'], ['saving', '寫入資料庫'], ['done', '完成']];
 const live = { db: null, mcp: null, ready: false, rid: null, doc: null, keys: [], started: 0, unsub: null, timer: null,
@@ -2220,6 +2222,30 @@ function maybeLookup() {
   startLookup(keys.slice(0, LOOKUP_MAX));
 }
 
+/* Wake Claude: fire the poke-only task (preferred), else message the session.
+ * If neither tool is open to pages, record what the connector does offer. */
+async function wakeWorker(rid, n, ref) {
+  const text = `FARE_LOOKUP ${rid} — fare lookup request from the Smart Flight Finder page (${n} keys in requests/${rid}).`;
+  const attempts = [
+    ['fire_trigger', { trigger_id: WORKER_TRIGGER, text }],
+    ['send_message', { session_id: WORKER_SESSION, message: text }],
+  ];
+  let lastErr = null;
+  for (const [tool, input] of attempts) {
+    try { await live.mcp.callTool('Claude Code Remote', tool, input, { cache: false }); return; }
+    catch (e) {
+      lastErr = e;
+      if (e && (e.code === 'approval_required' || e.code === 'server_not_connected')) throw e;
+    }
+  }
+  try {
+    const listed = await live.mcp.listTools('Claude Code Remote');
+    const names = (listed?.servers || []).flatMap(sv => (sv.tools || []).map(t => `${sv.server}:${t.name}`));
+    await ref.update({ status: 'error', message: `wake failed: ${lastErr?.code || ''} ${lastErr?.message || ''}`.slice(0, 300), connector_tools: names });
+  } catch {}
+  throw lastErr;
+}
+
 async function startLookup(keys) {
   resetLookup();
   live.keys = keys;
@@ -2241,10 +2267,7 @@ async function startLookup(keys) {
       if (live.doc?.status === 'error') clearInterval(live.timer);
       renderLookup();
     }, () => {});
-    await live.mcp.callTool('Claude Code Remote', 'send_message', {
-      session_id: WORKER_SESSION,
-      message: `FARE_LOOKUP ${live.rid} — fare lookup request from the Smart Flight Finder page (${keys.length} keys in requests/${live.rid}).`,
-    }, { cache: false });
+    await wakeWorker(live.rid, keys.length, ref);
   } catch (e) {
     clearInterval(live.timer);
     keys.forEach(k => live.asked.delete(k));

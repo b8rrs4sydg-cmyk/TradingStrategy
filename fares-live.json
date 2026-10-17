@@ -1,0 +1,75 @@
+{
+ "schema": 2,
+ "source": "google_flights",
+ "generated_at": "2026-10-17T08:52:37+00:00",
+ "currency": "TWD",
+ "adults": 1,
+ "coverage": {},
+ "fares": {
+  "mc|TPE-KIX-2027-02-05|NRT-TPE-2027-04-12": {
+   "price": 26073,
+   "first": {
+    "dep": "2027-02-05T22:25:00+08:00",
+    "arr": "2027-02-06T06:20:00+09:00",
+    "stops": 1,
+    "airline": "Cathay Pacific"
+   },
+   "at": "2026-10-17",
+   "hist": [
+    [
+     "2026-10-17",
+     26073
+    ]
+   ]
+  },
+  "ow|TPE|CDG|2027-02-05": {
+   "price": 22544,
+   "first": {
+    "dep": "2027-02-05T23:30:00+08:00",
+    "arr": "2027-02-06T21:30:00+01:00",
+    "stops": 1,
+    "airline": "China Airlines and Condor"
+   },
+   "at": "2026-10-17",
+   "hist": [
+    [
+     "2026-10-17",
+     22544
+    ]
+   ]
+  },
+  "rt|TPE|CDG|2027-02-04|2027-02-15": {
+   "price": 42437,
+   "first": {
+    "dep": "2027-02-04T23:30:00+08:00",
+    "arr": "2027-02-05T21:30:00+01:00",
+    "stops": 1,
+    "airline": "China Airlines and Condor"
+   },
+   "at": "2026-10-17",
+   "hist": [
+    [
+     "2026-10-17",
+     42437
+    ]
+   ]
+  },
+  "rt|TPE|CDG|2027-02-05|2027-02-15": {
+   "price": 42203,
+   "first": {
+    "dep": "2027-02-05T23:30:00+08:00",
+    "arr": "2027-02-06T21:30:00+01:00",
+    "stops": 1,
+    "airline": "China Airlines and Condor"
+   },
+   "at": "2026-10-17",
+   "hist": [
+    [
+     "2026-10-17",
+     42203
+    ]
+   ]
+  }
+ },
+ "missing": []
+}
