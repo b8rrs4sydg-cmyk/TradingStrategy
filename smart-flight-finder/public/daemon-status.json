@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:34:03+00:00",
+ "at": "2026-10-17T19:35:34+00:00",
  "publishes": {
-  "ok": 60,
+  "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1977,
+ "fares_saved": 2037,
  "log": [
   "19:21:52 http front door: https://below-divx-ton-contrast.trycloudflare.com",
   "19:21:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -35,6 +35,23 @@
   "19:30:10 request received: rid mvcsjt532knm5 113 keys",
   "19:30:10 handle mvcsjt532knm5: first_chunk=True total=160",
   "19:30:10 request received: rid mvcsjt532knm5 47 keys",
-  "19:30:10 handle mvcsjt532knm5: first_chunk=False total=160"
+  "19:30:10 handle mvcsjt532knm5: first_chunk=False total=160",
+  "19:34:17 request mvcsjt532knm5: chunk of 47 keys done in 247s; ntfy publishes {'ok': 61, 'r429': 0, 'fail': 0}",
+  "19:35:21 request mvcsjt532knm5: chunk of 113 keys done in 311s; ntfy publishes {'ok': 71, 'r429': 0, 'fail': 0}",
+  "19:35:23 request received: rid mvcsqiisp4r3d 9 keys",
+  "19:35:23 handle mvcsqiisp4r3d: first_chunk=True total=9",
+  "19:35:23 request received: rid mvcsqimdbl0g2 9 keys",
+  "19:35:23 handle mvcsqimdbl0g2: first_chunk=True total=9",
+  "19:35:23 request mvcsjt532knm5: final sent (160/160); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "19:35:27 request mvcsqiisp4r3d: chunk of 9 keys done in 4s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "19:35:28 request received: rid mvcsqmeu1lrda 160 keys",
+  "19:35:28 handle mvcsqmeu1lrda: first_chunk=True total=160",
+  "19:35:28 request mvcsqimdbl0g2: chunk of 9 keys done in 5s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "19:35:28 request mvcsqiisp4r3d: final sent (9/9); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "19:35:28 request received: rid mvcsqmnhoo9fv 160 keys",
+  "19:35:28 handle mvcsqmnhoo9fv: first_chunk=True total=160",
+  "19:35:28 request mvcsqimdbl0g2: final sent (9/9); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "19:35:29 request received: rid mvcsqll86nc2s 160 keys",
+  "19:35:29 handle mvcsqll86nc2s: first_chunk=True total=160"
  ]
 }
