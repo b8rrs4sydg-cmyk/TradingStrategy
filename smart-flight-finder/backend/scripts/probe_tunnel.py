@@ -14,22 +14,24 @@ import time
 from playwright.async_api import async_playwright
 
 JS = """
-async (keys) => {
+async (allKeys) => {
   const t0 = performance.now();
   const out = { steps: [] };
   const mark = s => out.steps.push(`${((performance.now() - t0) / 1000).toFixed(1)}s ${s}`);
   const url = await discoverDaemon(true);
-  mark(`discovered ${url} notes=${JSON.stringify(live.daemonNotes)}`);
+  mark(`discovered ${url} alternatives=${JSON.stringify(live.daemonAlt || [])} notes=${JSON.stringify(live.daemonNotes)}`);
   if (!url) return out;
-  live.transport = 'http';
-  const rid = 'probe' + Date.now().toString(36);
-  live.rid = rid; live.keys = keys; live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
-  const seen = [];
-  const timer = setInterval(() => seen.push(`${((performance.now() - t0) / 1000).toFixed(0)}s ${live.doc.status} ${live.doc.done}/${live.doc.total} found=${live.doc.found}`), 3000);
-  try { await ntfyLookup(keys, rid); mark('lookup resolved'); } catch (e) { mark('lookup failed: ' + e.message); }
-  clearInterval(timer);
-  out.progress = seen.slice(-12);
-  out.transport = live.transport;
+  const tunnels = [url, ...(live.daemonAlt || [])];
+  out.tunnels = tunnels.length;
+  out.resolved = 0;
+  for (const [i, u] of tunnels.entries()) {   // every announced tunnel must carry a lookup on its own
+    const keys = allKeys.slice(i * 3, i * 3 + 3);
+    live.transport = 'http'; live.daemonUrl = u;
+    const rid = 'probe' + i + Date.now().toString(36);
+    live.rid = rid; live.keys = keys; live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
+    try { await ntfyLookup(keys, rid); mark(`${u}: lookup resolved found=${live.doc.found}`); out.resolved++; }
+    catch (e) { mark(`${u}: lookup failed: ${e.message}`); }
+  }
   return out;
 }
 """
@@ -46,7 +48,7 @@ async def main(url: str) -> int:
             "typeof ntfyLookup === 'function' && typeof FARES === 'object'", timeout=60000
         )
         keys = await page.evaluate(
-            "Object.keys(FARES.fares).filter(k => k.startsWith('ow|')).slice(0, 3)"
+            "Object.keys(FARES.fares).filter(k => k.startsWith('ow|')).slice(0, 6)"
         )
         print("keys:", keys, flush=True)
         has_poll = await page.evaluate("ntfyLookup.toString().includes('/poll/')")
@@ -55,11 +57,10 @@ async def main(url: str) -> int:
         res = await asyncio.wait_for(page.evaluate(JS, keys), timeout=150)
         for s in res["steps"]:
             print(" ", s)
-        for s in res.get("progress", []):
-            print("   ", s)
         print("page errors:", errors[:5])
         await browser.close()
-        ok = any("resolved" in s for s in res["steps"]) and has_poll
+        ok = res.get("resolved", 0) >= 1 and has_poll
+        print("tunnels announced:", res.get("tunnels"), "carrying a lookup:", res.get("resolved"))
         print("PROBE", "OK" if ok else "FAILED", f"in {time.time() - t0:.0f}s")
         return 0 if ok else 1
 

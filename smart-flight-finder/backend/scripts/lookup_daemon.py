@@ -49,10 +49,10 @@ from app.providers.google_flights import _fetch_one
 from scripts.lookup_fares import MAX_KEYS, valid_keys
 
 NTFY = os.getenv("NTFY_URL", "https://ntfy.sh")
-MSG_BYTES = 3400            # ntfy turns messages over 4096 bytes into attachments
-RATE_KEYS = 2500            # accepted keys per window
+MSG_BYTES = 3400  # ntfy turns messages over 4096 bytes into attachments
+RATE_KEYS = 2500  # accepted keys per window
 RATE_WINDOW_S = 600
-CACHE_TTL_S = 1800          # a key fetched in the last 30 min is answered from memory
+CACHE_TTL_S = 1800  # a key fetched in the last 30 min is answered from memory
 FLUSH_EVERY_S = 6
 HEARTBEAT_S = 20
 PERSIST_EVERY_S = 90
@@ -63,7 +63,9 @@ _UA = (
 )
 
 
-RING: deque[str] = deque(maxlen=150)   # last log lines, committed with the fares (daemon-status.json)
+RING: deque[str] = deque(
+    maxlen=150
+)  # last log lines, committed with the fares (daemon-status.json)
 
 
 def log(*args) -> None:
@@ -102,10 +104,18 @@ def compact(entry: dict) -> list:
     first = entry.get("first")
     if not first:
         return [entry["price"]]
-    return [entry["price"], first.get("dep"), first.get("arr"), first.get("stops", 0), first.get("airline")]
+    return [
+        entry["price"],
+        first.get("dep"),
+        first.get("arr"),
+        first.get("stops", 0),
+        first.get("airline"),
+    ]
 
 
-def split_results(rid: str, fares: dict, nf: list, done: int, total: int, *, final: bool) -> list[str]:
+def split_results(
+    rid: str, fares: dict, nf: list, done: int, total: int, *, final: bool
+) -> list[str]:
     """Result messages, each under :data:`MSG_BYTES`; the last one carries ``final``.
 
     ntfy.sh rate-limits anonymous publishers hard (and GitHub runners share IPs),
@@ -203,7 +213,9 @@ def publish(topic: str, text: str, retries: int = 8) -> bool:
             if PUB["r429"] <= 5 or PUB["r429"] % 20 == 0:
                 log(f"publish 429 #{PUB['r429']}: {e.read()[:120]!r}")
             wait = e.headers.get("Retry-After") if e.headers else None
-            time.sleep(min(float(wait) if wait and wait.isdigit() else 5 * (i + 1), 30))   # back off, never drop
+            time.sleep(
+                min(float(wait) if wait and wait.isdigit() else 5 * (i + 1), 30)
+            )  # back off, never drop
         except Exception as e:  # noqa: BLE001
             log(f"publish error {e}")
             time.sleep(2)
@@ -245,7 +257,7 @@ class Persister:
         self.pending: dict[str, dict] = {}
         self.missing: list[str] = []
         self.lock = threading.Lock()
-        self.dirty = False   # request activity since the last push → publish daemon-status.json
+        self.dirty = False  # request activity since the last push → publish daemon-status.json
 
     def add(self, fares: dict, nf: list) -> None:
         with self.lock:
@@ -260,18 +272,28 @@ class Persister:
             return 0
         self.dirty = False
         if fares or missing:
-            self.db.merge(fares, today=datetime.now(UTC).date(), missing=[*self.db.missing, *missing])
+            self.db.merge(
+                fares, today=datetime.now(UTC).date(), missing=[*self.db.missing, *missing]
+            )
             self.db.save(self.path)
         self.write_status({"fares_saved": len(self.db.fares)})
         if push and os.getenv("GITHUB_TOKEN"):
             self._git_push(len(fares))
         return len(fares)
 
-    def announce(self, url: str | None) -> None:
-        """Tell pages where to reach this daemon (daemon.json, read through the GitHub API)."""
+    def announce(self, urls: list[str]) -> None:
+        """Tell pages where to reach this daemon (daemon.json: independent tunnels, the page tries each)."""
 
         (self.path.parent / "daemon.json").write_text(
-            json.dumps({"url": url, "at": datetime.now(UTC).isoformat(timespec="seconds")}) + "\n", encoding="utf-8"
+            json.dumps(
+                {
+                    "url": urls[0] if urls else None,
+                    "urls": urls,
+                    "at": datetime.now(UTC).isoformat(timespec="seconds"),
+                }
+            )
+            + "\n",
+            encoding="utf-8",
         )
         if os.getenv("GITHUB_TOKEN"):
             self._git_push(0)
@@ -295,9 +317,21 @@ class Persister:
         branch = os.getenv("GITHUB_REF_NAME", "")
         for attempt in range(4):
             try:
-                git = lambda *a: subprocess.run(["git", "-C", str(root), *a], check=True, capture_output=True)
-                git("add", str(self.path), str(self.path.parent / "daemon-status.json"), str(self.path.parent / "daemon.json"))
-                if subprocess.run(["git", "-C", str(root), "diff", "--cached", "--quiet"], check=False).returncode == 0:
+                git = lambda *a: subprocess.run(
+                    ["git", "-C", str(root), *a], check=True, capture_output=True
+                )
+                git(
+                    "add",
+                    str(self.path),
+                    str(self.path.parent / "daemon-status.json"),
+                    str(self.path.parent / "daemon.json"),
+                )
+                if (
+                    subprocess.run(
+                        ["git", "-C", str(root), "diff", "--cached", "--quiet"], check=False
+                    ).returncode
+                    == 0
+                ):
                     return
                 git("commit", "-q", "-m", f"data: live fare lookups (+{n})")
                 git("pull", "-q", "--rebase", "origin", branch)
@@ -314,11 +348,12 @@ class Daemon:
         self.persist = Persister(db_path)
         self.limiter = RateLimiter()
         self.cache: dict[str, tuple[float, dict | None]] = {}
-        self.requests: dict[str, dict] = {}     # rid → {total, done}
+        self.requests: dict[str, dict] = {}  # rid → {total, done}
         self.seen: set[str] = set()
         self.queue: asyncio.Queue = asyncio.Queue()
-        self.buffers: dict[str, dict] = {}   # rid -> {msgs, t}: what SSE subscribers read
+        self.buffers: dict[str, dict] = {}  # rid -> {msgs, t}: what SSE subscribers read
         self.tunnel_url: str | None = None
+        self.tunnel_urls: list[str] = []
         self.seq = 0
 
     async def run(self, duration: float) -> None:
@@ -333,16 +368,26 @@ class Daemon:
             self.seen.add(ev.get("id"))
             loop.call_soon_threadsafe(self.queue.put_nowait, ("ntfy", ev.get("message", "")))
 
-        threading.Thread(target=subscribe, args=(self.req, str(int(time.time()) - 5), stop, on_message), daemon=True).start()
+        threading.Thread(
+            target=subscribe,
+            args=(self.req, str(int(time.time()) - 5), stop, on_message),
+            daemon=True,
+        ).start()
         async with async_playwright() as pw:
-            browser = await pw.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
+            browser = await pw.chromium.launch(
+                args=["--disable-blink-features=AutomationControlled"]
+            )
             ctx = await browser.new_context(locale="en-US", user_agent=_UA)
             sem = PriorityGate(CONCURRENCY)
             if os.getenv("DAEMON_HTTP", "1") == "1":
                 await start_http(self)
-                self.tunnel_url = await start_tunnel()
-                self.persist.announce(self.tunnel_url)
-                log(f"http front door: {self.tunnel_url}")
+                found = await asyncio.gather(
+                    start_tunnel(), start_tunnel_ssh()
+                )  # two independent providers
+                self.tunnel_urls = [u for u in found if u]
+                self.tunnel_url = self.tunnel_urls[0] if self.tunnel_urls else None
+                self.persist.announce(self.tunnel_urls)
+                log(f"http front door: {self.tunnel_urls}")
             log(f"daemon up: req={self.req} res={self.res} for {duration:.0f}s")
             deadline = time.time() + duration
             persist_task = asyncio.create_task(self._persist_loop())
@@ -356,7 +401,9 @@ class Daemon:
                 req = parse_request(message)
                 if req:
                     req["via"] = via
-                log(f"request received: {'rid ' + req['rid'] + ' ' + str(len(req['keys'])) + ' keys' if req else 'REJECTED ' + message[:80]}")
+                log(
+                    f"request received: {'rid ' + req['rid'] + ' ' + str(len(req['keys'])) + ' keys' if req else 'REJECTED ' + message[:80]}"
+                )
                 self.persist.dirty = True
                 if req:
                     t = asyncio.create_task(self.handle(req, ctx, sem))
@@ -384,20 +431,43 @@ class Daemon:
         first_chunk = rid not in self.requests
         state = self.requests.setdefault(
             rid,
-            {"total": req["total"], "done": 0, "f": {}, "nf": [], "active": 0, "last_sent": 0.0,
-             "last_activity": time.time(), "final_sent": False, "via": req.get("via", "ntfy")},
+            {
+                "total": req["total"],
+                "done": 0,
+                "f": {},
+                "nf": [],
+                "active": 0,
+                "last_sent": 0.0,
+                "last_activity": time.time(),
+                "final_sent": False,
+                "via": req.get("via", "ntfy"),
+            },
         )
         log(f"handle {rid}: first_chunk={first_chunk} total={state['total']}")
         fresh = [k for k in keys if (h := self.cache.get(k)) and time.time() - h[0] < CACHE_TTL_S]
-        if not self.limiter.allow(len(keys) - len(fresh)):   # answers from memory cost nothing
-            await self.send(rid, json.dumps({"rid": rid, "error": "rate_limited", "final": True}), req.get("via", "ntfy"))
+        if not self.limiter.allow(len(keys) - len(fresh)):  # answers from memory cost nothing
+            await self.send(
+                rid,
+                json.dumps({"rid": rid, "error": "rate_limited", "final": True}),
+                req.get("via", "ntfy"),
+            )
             return
         state["active"] += 1
-        if first_chunk:   # lets the page see the crawler is alive at once
+        if first_chunk:  # lets the page see the crawler is alive at once
             state["last_sent"] = time.time()
             await self.send(
                 rid,
-                json.dumps({"rid": rid, "done": 0, "total": state["total"], "f": {}, "nf": [], "final": False, "hello": True}),
+                json.dumps(
+                    {
+                        "rid": rid,
+                        "done": 0,
+                        "total": state["total"],
+                        "f": {},
+                        "nf": [],
+                        "final": False,
+                        "hello": True,
+                    }
+                ),
                 req.get("via", "ntfy"),
             )
 
@@ -415,7 +485,9 @@ class Daemon:
                     entry, failed = None, True
                 finally:
                     sem.release()
-                if not failed:   # a crash is not "no itinerary": do not cache or report it as unavailable
+                if (
+                    not failed
+                ):  # a crash is not "no itinerary": do not cache or report it as unavailable
                     self.cache[key] = (time.time(), entry)
             state["done"] += 1
             state["last_activity"] = time.time()
@@ -430,7 +502,9 @@ class Daemon:
         finally:
             state["active"] -= 1
             state["last_activity"] = time.time()
-        log(f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}")
+        log(
+            f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}"
+        )
 
     async def send(self, rid: str, text: str, via: str) -> None:
         """Every message goes to the SSE buffer; requests that arrived over ntfy are also answered over ntfy."""
@@ -455,7 +529,9 @@ class Daemon:
                     if now - st["last_activity"] > 900:
                         del self.requests[rid]
                     continue
-                quiet = st["active"] == 0 and now - st["last_activity"] > 60   # missing chunk: stop waiting
+                quiet = (
+                    st["active"] == 0 and now - st["last_activity"] > 60
+                )  # missing chunk: stop waiting
                 finished = st["active"] == 0 and (st["done"] >= st["total"] or quiet)
                 has_data = bool(st["f"] or st["nf"])
                 due = has_data and now - st["last_sent"] >= FLUSH_EVERY_S
@@ -471,17 +547,25 @@ class Daemon:
                 st["last_sent"] = time.time()
                 if finished:
                     st["final_sent"] = True
-                    log(f"request {rid}: final sent ({st['done']}/{st['total']}); ntfy publishes {PUB}")
+                    log(
+                        f"request {rid}: final sent ({st['done']}/{st['total']}); ntfy publishes {PUB}"
+                    )
 
 
 # --- HTTP front door: the page talks to the daemon directly (through a Cloudflare quick tunnel) --------
 def make_app(daemon: Daemon):
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
-    app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET", "POST"], allow_headers=["*"])
+    app.add_middleware(
+        CORSMiddleware, allow_origins=["*"], allow_methods=["GET", "POST"], allow_headers=["*"]
+    )
 
     @app.get("/health")
     async def health() -> dict:
-        return {"ok": True, "at": datetime.now(UTC).isoformat(timespec="seconds"), "requests": len(daemon.requests)}
+        return {
+            "ok": True,
+            "at": datetime.now(UTC).isoformat(timespec="seconds"),
+            "requests": len(daemon.requests),
+        }
 
     @app.post("/lookup")
     async def lookup(request: Request):
@@ -503,14 +587,19 @@ def make_app(daemon: Daemon):
             buf = daemon.buffers.get(rid[:40])
             msgs = buf["msgs"] if buf else []
             if i < len(msgs) or time.time() >= end:
-                return {"msgs": msgs[i:i + 50], "next": min(len(msgs), i + 50) if i < len(msgs) else i}
+                return {
+                    "msgs": msgs[i : i + 50],
+                    "next": min(len(msgs), i + 50) if i < len(msgs) else i,
+                }
             await asyncio.sleep(0.25)
 
     @app.get("/events/{rid}")
     async def events(rid: str):
         async def stream():
             i, last, ping = 0, time.time(), time.time()
-            yield ": open" + " " * 2048 + "\n\n"   # headers + first bytes at once: the page posts its request only after the stream opens
+            yield (
+                ": open" + " " * 2048 + "\n\n"
+            )  # headers + first bytes at once: the page posts its request only after the stream opens
             while time.time() - last < 900:
                 buf = daemon.buffers.get(rid[:40])
                 if buf and i < len(buf["msgs"]):
@@ -526,7 +615,11 @@ def make_app(daemon: Daemon):
                         ping = time.time()
                         yield ": ping\n\n"
 
-        return StreamingResponse(stream(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+        return StreamingResponse(
+            stream(),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        )
 
     return app
 
@@ -534,8 +627,10 @@ def make_app(daemon: Daemon):
 async def start_http(daemon: Daemon, port: int = 8787) -> None:
     import uvicorn
 
-    server = uvicorn.Server(uvicorn.Config(make_app(daemon), host="127.0.0.1", port=port, log_level="warning"))
-    server.install_signal_handlers = lambda: None   # type: ignore[method-assign]
+    server = uvicorn.Server(
+        uvicorn.Config(make_app(daemon), host="127.0.0.1", port=port, log_level="warning")
+    )
+    server.install_signal_handlers = lambda: None  # type: ignore[method-assign]
     asyncio.create_task(server.serve())
     for _ in range(40):
         await asyncio.sleep(0.25)
@@ -551,8 +646,13 @@ async def start_tunnel(port: int = 8787) -> str | None:
         log("cloudflared not installed — ntfy only")
         return None
     proc = await asyncio.create_subprocess_exec(
-        exe, "tunnel", "--url", f"http://127.0.0.1:{port}", "--no-autoupdate",
-        stdout=asyncio.subprocess.DEVNULL, stderr=asyncio.subprocess.PIPE,
+        exe,
+        "tunnel",
+        "--url",
+        f"http://127.0.0.1:{port}",
+        "--no-autoupdate",
+        stdout=asyncio.subprocess.DEVNULL,
+        stderr=asyncio.subprocess.PIPE,
     )
     found: asyncio.Future = asyncio.get_running_loop().create_future()
 
@@ -568,6 +668,46 @@ async def start_tunnel(port: int = 8787) -> str | None:
         return await asyncio.wait_for(found, timeout=60)
     except TimeoutError:
         log("tunnel did not come up in 60 s")
+        return None
+
+
+async def start_tunnel_ssh(port: int = 8787) -> str | None:
+    """Second, independent tunnel (localhost.run over ssh, no account): returns its https URL, or None."""
+
+    exe = shutil.which("ssh")
+    if not exe:
+        return None
+    proc = await asyncio.create_subprocess_exec(
+        exe,
+        "-o",
+        "StrictHostKeyChecking=no",
+        "-o",
+        "UserKnownHostsFile=/dev/null",
+        "-o",
+        "ServerAliveInterval=30",
+        "-o",
+        "ExitOnForwardFailure=yes",
+        "-R",
+        f"80:127.0.0.1:{port}",
+        "nokey@localhost.run",
+        stdin=asyncio.subprocess.DEVNULL,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.STDOUT,
+    )
+    found: asyncio.Future = asyncio.get_running_loop().create_future()
+
+    async def drain() -> None:
+        assert proc.stdout
+        async for raw in proc.stdout:
+            m = re.search(r"https://[a-z0-9-]+\.lhr\.life", raw.decode("utf-8", "replace"))
+            if m and not found.done():
+                found.set_result(m.group(0))
+
+    asyncio.create_task(drain())
+    try:
+        return await asyncio.wait_for(found, timeout=60)
+    except TimeoutError:
+        log("ssh tunnel did not come up in 60 s")
         return None
 
 
@@ -587,7 +727,9 @@ def selftest(req: str, res: str, keys: list[str], timeout: float) -> int:
         if m.get("rid") != rid:
             return
         got.update(m.get("f", {}))
-        log(f"  {m.get('done')}/{m.get('total')} fares={len(got)} nf={len(m.get('nf', []))} hello={m.get('hello', False)}")
+        log(
+            f"  {m.get('done')}/{m.get('total')} fares={len(got)} nf={len(m.get('nf', []))} hello={m.get('hello', False)}"
+        )
         if m.get("final") or m.get("error"):
             final.set()
 
@@ -620,7 +762,7 @@ def selftest_http(daemon_json: Path, keys: list[str], timeout: float) -> int:
         return 1
     rid = "httptest" + str(int(time.time()))
     t0 = time.time()
-    for attempt in range(10):   # a fresh quick tunnel needs a moment before it resolves
+    for attempt in range(10):  # a fresh quick tunnel needs a moment before it resolves
         try:
             urllib.request.urlopen(f"{url}/health", timeout=8).read()
             break
@@ -628,9 +770,11 @@ def selftest_http(daemon_json: Path, keys: list[str], timeout: float) -> int:
             log(f"selftest-http: tunnel not ready ({e})")
             time.sleep(4)
     body = json.dumps({"rid": rid, "total": len(keys), "keys": keys}).encode()
-    urllib.request.urlopen(urllib.request.Request(f"{url}/lookup", data=body, method="POST"), timeout=15).read()
+    urllib.request.urlopen(
+        urllib.request.Request(f"{url}/lookup", data=body, method="POST"), timeout=15
+    ).read()
     got, final, nxt = 0, False, 0
-    while not final and time.time() - t0 < timeout:   # the same long poll the page uses
+    while not final and time.time() - t0 < timeout:  # the same long poll the page uses
         with urllib.request.urlopen(f"{url}/poll/{rid}?i={nxt}", timeout=30) as resp:
             j = json.loads(resp.read())
         nxt = j["next"]
@@ -657,7 +801,9 @@ def main() -> None:
     s.add_argument("--res", required=True)
     s.add_argument("--keys", default="ow|TPE|HKG|2027-02-03,rt|TPE|NRT|2027-02-05|2027-02-15")
     s.add_argument("--timeout", type=float, default=180)
-    s.add_argument("--count", type=int, default=0, help="instead of --keys: this many one-way queries")
+    s.add_argument(
+        "--count", type=int, default=0, help="instead of --keys: this many one-way queries"
+    )
     h = sub.add_parser("selftest-http")
     h.add_argument("--daemon-json", type=Path, required=True)
     h.add_argument("--count", type=int, default=20)
@@ -667,7 +813,10 @@ def main() -> None:
         from datetime import timedelta
 
         base = datetime.now(UTC).date() + timedelta(days=130)
-        keys = [f"ow|TPE|{('HKG', 'ICN', 'BKK')[i % 3]}|{base + timedelta(days=i // 3)}" for i in range(args.count)]
+        keys = [
+            f"ow|TPE|{('HKG', 'ICN', 'BKK')[i % 3]}|{base + timedelta(days=i // 3)}"
+            for i in range(args.count)
+        ]
         sys.exit(selftest_http(args.daemon_json, keys, args.timeout))
     if args.cmd == "run":
         asyncio.run(Daemon(args.req, args.res, args.db).run(args.duration))
@@ -679,7 +828,8 @@ def main() -> None:
             origins = ["TPE", "HKG", "NRT", "ICN"]
             base = datetime.now(UTC).date() + timedelta(days=120)
             keys = [
-                f"ow|TPE|{origins[1 + i % 3]}|{base + timedelta(days=i // 3)}" for i in range(args.count)
+                f"ow|TPE|{origins[1 + i % 3]}|{base + timedelta(days=i // 3)}"
+                for i in range(args.count)
             ]
         sys.exit(selftest(args.req, args.res, keys, args.timeout))
 

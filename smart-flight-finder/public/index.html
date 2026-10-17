@@ -2527,8 +2527,15 @@ async function discoverDaemonNow(force) {
     for (const get of sources) {
       let info = null;
       try { const r = await get(); if (r.ok) info = await r.json(); } catch {}
-      if (!info || !info.url) { live.daemonNotes.push('no info'); continue; }
-      try { const h = await timed(`${info.url}/health`, {}, 10000); if (h.ok) { live.daemonUrl = info.url; break; } live.daemonNotes.push(`health ${h.status}`); } catch (e) { live.daemonNotes.push(`health ${e}`); }
+      const urls = info ? (info.urls && info.urls.length ? info.urls : [info.url]).filter(Boolean) : [];
+      if (!urls.length) { live.daemonNotes.push('no info'); continue; }
+      // the daemon runs independent tunnels (Cloudflare + localhost.run): the first healthy one wins
+      const alive = await Promise.all(urls.map(async u => {
+        try { const h = await timed(`${u}/health`, {}, 10000); if (h.ok) return u; live.daemonNotes.push(`health ${h.status}`); } catch (e) { live.daemonNotes.push(`health ${e}`); }
+        return null;
+      }));
+      const ok = alive.find(Boolean);
+      if (ok) { live.daemonUrl = ok; live.daemonAlt = alive.filter(u => u && u !== ok); break; }
     }
   } catch {}
   return live.daemonUrl;
@@ -2635,8 +2642,9 @@ async function startLookup(keys, viaClaude = false) {
     } catch (e) {
       if (live.rid !== rid) return;                       // superseded
       const rest = keys.filter(k => !live.answered.has(k));
-      if (live.transport === 'http' && !e.gotAny) {   // the tunnel did not answer: forget it, go through the ntfy relay
-        live.daemonUrl = null; live.daemonCheckedAt = Date.now() + 45000;
+      if (live.transport === 'http' && !e.gotAny) {   // the tunnel did not answer: try the other one, then the ntfy relay
+        const alt = (live.daemonAlt || []).shift();
+        live.daemonUrl = alt || null; live.daemonCheckedAt = alt ? Date.now() : Date.now() + 45000;
         rest.forEach(k => live.asked.delete(k));
         return startLookup(rest);
       }
