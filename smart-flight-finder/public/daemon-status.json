@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:12:20+00:00",
+ "at": "2026-10-17T19:13:51+00:00",
  "publishes": {
-  "ok": 36,
+  "ok": 59,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1356,
+ "fares_saved": 1389,
  "log": [
   "19:09:19 http front door: https://work-posted-gnu-procedure.trycloudflare.com",
   "19:09:19 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -28,6 +28,7 @@
   "19:11:08 request received: rid mvcrvc07mf5f6 84 keys",
   "19:11:08 handle mvcrvc07mf5f6: first_chunk=True total=160",
   "19:11:08 request received: rid mvcrvc07mf5f6 76 keys",
-  "19:11:08 handle mvcrvc07mf5f6: first_chunk=False total=160"
+  "19:11:08 handle mvcrvc07mf5f6: first_chunk=False total=160",
+  "19:13:20 request mvcrvc07mf5f6: chunk of 76 keys done in 132s; ntfy publishes {'ok': 52, 'r429': 0, 'fail': 0}"
  ]
 }
