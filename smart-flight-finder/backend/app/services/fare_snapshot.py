@@ -128,7 +128,8 @@ class ParsedOption:
 
 def _when(clock: str, month_day: str, year: int, tz: ZoneInfo) -> datetime:
     clock = clock.replace(" ", " ").replace(" ", "")
-    dt = datetime.strptime(f"{month_day} {year} {clock}", "%B %d %Y %I:%M%p")  # noqa: DTZ007
+    # Parsed with a dummy +0000 offset, then pinned to the airport's zone.
+    dt = datetime.strptime(f"{month_day} {year} {clock} +0000", "%B %d %Y %I:%M%p %z")
     return dt.replace(tzinfo=tz)
 
 
