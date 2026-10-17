@@ -2058,9 +2058,13 @@ function toggleFourLegExtras() {
 
 function wireSubmit() {
   const form = document.getElementById('search-form');
+  let byUser = false;   // real clicks / shortcut only — not the automatic re-search after a database update
+  form.querySelector('.btn-primary').addEventListener('click', () => { byUser = true; });
   const elapsed = document.getElementById('elapsed');
   form.addEventListener('submit', e => {
     e.preventDefault();
+    const user = byUser;
+    byUser = false;
     if (!updateSlotSummary()) return;
     const btn = form.querySelector('.btn-primary');
     btn.disabled = true;
@@ -2076,7 +2080,7 @@ function wireSubmit() {
         document.getElementById('r-sel-pill').hidden = true;
         renderResults();
         elapsed.textContent = `· 搜尋耗時 ${Math.round(performance.now() - t0)} ms`;
-        maybeLookup(true);
+        maybeLookup(user);
       } finally {
         btn.textContent = '搜尋';
         updateSlotSummary();
@@ -2088,6 +2092,7 @@ function wireSubmit() {
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
+      byUser = true;
       form.requestSubmit();
     }
   });
@@ -2316,8 +2321,15 @@ function nextBatch() {
 
 /* After a search: look up whatever is missing, batch after batch, until nothing worth asking remains. */
 function maybeLookup(fromUser = false) {
-  if (!(live.ready || live.ntfyOk) || (live.rid && live.doc?.status !== 'done' && live.doc?.status !== 'error')) return;
-  if (fromUser) live.campaign = { asked: 0, batch: 0, mcLeft: MC_BUDGET, found: 0, started: Date.now() };
+  if (!(live.ready || live.ntfyOk)) return;
+  const busy = live.rid && live.doc?.status !== 'done' && live.doc?.status !== 'error';
+  if (busy && !fromUser) return;
+  if (fromUser) {
+    // The user pressed 搜尋: whatever was being looked up (e.g. the default search at load) is abandoned
+    // and a fresh campaign starts for THIS combination; keys not answered yet are asked again if still needed.
+    if (busy) { live.keys.filter(k => !live.answered.has(k)).forEach(k => live.asked.delete(k)); resetLookup(); }
+    live.campaign = { asked: 0, batch: 0, mcLeft: MC_BUDGET, found: 0, started: Date.now() };
+  }
   const batch = nextBatch();
   if (!batch.keys.length) { live.campaign.left = 0; return; }
   live.campaign.batch += 1;

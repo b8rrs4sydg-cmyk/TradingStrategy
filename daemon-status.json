@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T17:26:01+00:00",
+ "at": "2026-10-17T17:33:39+00:00",
  "publishes": {
-  "ok": 192,
-  "r429": 0,
-  "fail": 0
+  "ok": 247,
+  "r429": 36,
+  "fail": 1
  },
- "fares_saved": 622,
+ "fares_saved": 652,
  "log": [
   "17:12:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "17:13:00 request received: rid selftest1792257177 30 keys",
@@ -88,6 +88,28 @@
   "17:21:42 request mvcnxmswllrnu: chunk of 5 keys done in 44s; ntfy publishes {'ok': 110, 'r429': 0, 'fail': 0}",
   "17:24:03 request mvcnxmswllrnu: chunk of 42 keys done in 185s; ntfy publishes {'ok': 153, 'r429': 0, 'fail': 0}",
   "17:25:42 request mvcnxlurewq6w: chunk of 5 keys done in 287s; ntfy publishes {'ok': 185, 'r429': 0, 'fail': 0}",
-  "17:25:45 request mvcnxlurewq6w: chunk of 5 keys done in 290s; ntfy publishes {'ok': 185, 'r429': 0, 'fail': 0}"
+  "17:25:45 request mvcnxlurewq6w: chunk of 5 keys done in 290s; ntfy publishes {'ok': 185, 'r429': 0, 'fail': 0}",
+  "17:26:06 request mvcnxmswllrnu: chunk of 36 keys done in 308s; ntfy publishes {'ok': 194, 'r429': 0, 'fail': 0}",
+  "17:26:06 request mvcnxmswllrnu: final sent (83/83); ntfy publishes {'ok': 195, 'r429': 0, 'fail': 0}",
+  "17:26:09 request received: rid mvco4b8aefslb 87 keys",
+  "17:26:09 handle mvco4b8aefslb: first_chunk=True total=160",
+  "17:26:09 request received: rid mvco4b8aefslb 73 keys",
+  "17:26:09 handle mvco4b8aefslb: first_chunk=False total=160",
+  "17:28:10 publish 429 #1: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:28:18 publish 429 #2: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:28:34 publish 429 #3: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:28:47 publish 429 #4: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:28:55 publish 429 #5: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "17:30:37 request mvco4b8aefslb: chunk of 73 keys done in 268s; ntfy publishes {'ok': 247, 'r429': 13, 'fail': 0}",
+  "17:31:13 request received: rid mvcoauc85zbgr 30 keys",
+  "17:31:13 handle mvcoauc85zbgr: first_chunk=True total=30",
+  "17:31:19 request mvco4b8aefslb: chunk of 87 keys done in 310s; ntfy publishes {'ok': 247, 'r429': 16, 'fail': 0}",
+  "17:31:44 publish 429 #20: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
+  "17:31:56 request mvcnxlurewq6w: chunk of 42 keys done in 660s; ntfy publishes {'ok': 247, 'r429': 20, 'fail': 0}",
+  "17:32:10 request mvcnxlurewq6w: chunk of 42 keys done in 674s; ntfy publishes {'ok': 247, 'r429': 21, 'fail': 0}",
+  "17:32:13 request received: rid mvcoc4tvngf1u 30 keys",
+  "17:32:13 handle mvcoc4tvngf1u: first_chunk=True total=30",
+  "17:32:14 publish gave up",
+  "17:33:16 request mvcnxlurewq6w: chunk of 36 keys done in 741s; ntfy publishes {'ok': 247, 'r429': 33, 'fail': 1}"
  ]
 }
