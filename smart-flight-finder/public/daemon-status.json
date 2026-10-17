@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T22:52:17+00:00",
+ "at": "2026-10-17T22:53:49+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2909,
+ "fares_saved": 2964,
  "log": [
   "22:47:38 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "22:47:43 http front door: ['https://flag-quantum-beaches-pets.trycloudflare.com', 'https://a6f30130f46a45.lhr.life']",
@@ -29,6 +29,16 @@
   "22:50:18 request received: rid probe1mvczp6rc 3 keys",
   "22:50:18 handle probe1mvczp6rc: first_chunk=True total=3",
   "22:50:26 request probe1mvczp6rc: chunk of 3 keys done in 8s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "22:50:26 request probe1mvczp6rc: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "22:50:26 request probe1mvczp6rc: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "22:52:32 rtc 9hc9q4dsld: answered",
+  "22:52:32 rtc 9hc9q4dsld: data channel open",
+  "22:52:32 request received: rid mvczs25kde6le 160 keys",
+  "22:52:32 handle mvczs25kde6le: first_chunk=True total=160",
+  "22:52:34 request mvczmcr6pjoa4: chunk of 160 keys done in 268s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "22:52:35 request mvczmcr6pjoa4: final sent (160/160); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "22:52:35 request mvczs25kde6le: chunk of 160 keys done in 3s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "22:52:38 request mvczs25kde6le: final sent (160/160); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "22:52:39 request received: rid mvczs7jvyst8t 160 keys",
+  "22:52:39 handle mvczs7jvyst8t: first_chunk=True total=160"
  ]
 }
