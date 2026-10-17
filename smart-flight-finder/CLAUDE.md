@@ -131,34 +131,34 @@ Self-Service shut down 2026-07-17; every price comes from Google Flights:
 
 ## Live lookups (missing fares, on demand)
 
-When a demo search needs fares the database lacks, the page:
-1. writes `requests/<rid>` `{keys, total, status:"queued"}` to its artifact db
-   (rule: `requests` read view / write interact), and
-2. wakes the dev session through the built-in **Claude Code Remote**
-   connector: `fire_trigger` on the poke-only scheduled task `WORKER_TRIGGER`
-   (bound to `WORKER_SESSION`, both in `public/index.html`) with text
-   `FARE_LOOKUP <rid> …`; `send_message` is the fallback (pages are not
-   allowed it on this connector today). If both fail the page stores the
-   connector's visible tools in `requests/<rid>.connector_tools`.
+No Claude session in the fast path. A search that needs fares the database
+lacks shows every database hit immediately, then streams the rest in:
 
-The session that receives it (Claude) handles it:
-1. `ArtifactData get requests/<rid>` → save `keys` to a file.
-2. `python -m scripts.relay_lookup dispatch <rid> keys.json` → validates keys
-   (`lookup_fares.valid_keys`, ≤ 160, cheap first), commits
-   `public/live-request.json`, pushes, prints the sha. The "Fare lookup"
-   workflow (`.github/workflows/fare-lookup.yml`) runs `scripts.lookup_fares`
-   for just those keys and posts `fare-lookup` commit statuses `done/total`.
-3. Update `requests/<rid>` → `status:"dispatched"`, then Monitor
-   `python -m scripts.relay_lookup watch <sha>` and write each line back
-   (`running n/N` → `status:"running", done:n`).
-4. On `done`: `status:"saving"`, `python -m scripts.relay_lookup export <dir>`
-   (pull + chunks of crawl ∪ `fares-live.json`), write `fares/c*` + `fares/meta`
-   with a fresh `gen`/`generated_at` (the page swaps data and re-searches),
-   then `status:"done", found, not_found`. On `failed`: `status:"error", message`.
+```
+page ──POST (<4 KB chunks)──▶ ntfy.sh/<T_REQ> ──▶ scripts/lookup_daemon.py ──▶ Google Flights
+page ◀──SSE─────────────────  ntfy.sh/<T_RES> ◀── batches {rid,done,total,fares,nf,final}
+```
 
-Results live in `public/fares-live.json` (overlay, never conflicts with the
-crawl; the next crawl folds it in). Keys a lookup found nothing for are listed
-as `unavailable` so pages do not re-ask.
+- `scripts/lookup_daemon.py` runs on GitHub Actions (`.github/workflows/fare-daemon.yml`,
+  ~5 h runs restarted by cron every 5 h, one warm Chromium, 5 parallel pages,
+  selftest 40 s after start). Requests are validated (`lookup_fares.valid_keys`,
+  ≤ 160 keys, ≤ 500 keys / 10 min), results go to `public/fares-live.json`
+  (overlay; committed every ~90 s) and the next crawl folds them in.
+- Topic names (`T_REQ`/`T_RES`) live in the workflow and `public/index.html`;
+  ntfy.sh is a public third-party relay (anyone with the names can post
+  requests, keys pass through ntfy). Messages must stay < 4096 bytes.
+- Page (`ntfyLookup`, `mergeLiveFares`, `scheduleRefresh`): merges each fare into
+  `FARES`, re-runs the search (debounced), caches fares in localStorage
+  (`sff.livefares.v1`, 7 days) and keeps them over snapshot swaps.
+- Fallback when ntfy is unreachable or the daemon is silent for 45 s: the old
+  Claude relay — the page writes `requests/<rid>` to its artifact db and
+  fires the poke-only task `WORKER_TRIGGER` (connector *Claude Code Remote*;
+  `send_message` is not open to pages). The dev session then runs
+  `python -m scripts.relay_lookup dispatch <rid> keys.json` (commits
+  `public/live-request.json` → "Fare lookup" workflow posts `fare-lookup`
+  commit statuses), mirrors progress into `requests/<rid>`, exports chunks
+  (`relay_lookup export`) into `fares/c*` + `fares/meta`, and sets `done`.
+- Keys a lookup found nothing for are `unavailable` so pages do not re-ask.
 
 ## Scoring
 

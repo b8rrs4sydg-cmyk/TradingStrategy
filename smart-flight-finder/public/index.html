@@ -2140,23 +2140,34 @@ function wireTheme() {
 
 /* =========================================================================
  * Live lookup — fares the database lacks are fetched from Google Flights now.
- * The page writes requests/<rid> (keys) and messages the Claude Code session
- * below through the Claude Code Remote connector; Claude starts the "Fare
- * lookup" GitHub Action for exactly those keys and writes its progress back
- * into requests/<rid>, then the new fares into fares/* (which re-runs the
- * search). Statuses: queued → dispatched → running (done/total) → saving → done.
+ * Fast path (no Claude in the loop): the page posts the missing keys to a public
+ * ntfy.sh topic; an always-on crawler (GitHub Actions, scripts/lookup_daemon.py)
+ * fetches them and streams the fares back on a second topic. The page already
+ * shows every database hit and merges each fare as it arrives, re-running the
+ * search so the results keep updating. Fallback (ntfy unreachable or the
+ * crawler silent): requests/<rid> in the artifact db + a message to the Claude
+ * Code session through the Claude Code Remote connector, as before.
  * ========================================================================= */
+const NTFY = 'https://ntfy.sh';
+const T_REQ = 'sff-q-1dbc38bf5255bfa8b886187c';   // page → crawler
+const T_RES = 'sff-r-dbe95166c8687164a93fc60e';   // crawler → page
+const NTFY_SILENCE_MS = 45000;                    // no reply this long → Claude fallback
+const NTFY_STEPS = [['queued', '連線中繼'], ['dispatched', '等爬蟲接手'], ['running', '查詢 Google Flights'], ['done', '完成']];
+const LIVE_CACHE_KEY = 'sff.livefares.v1';
 const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
 // Poke-only scheduled task bound to that session: firing it wakes Claude with the request id.
 const WORKER_TRIGGER = 'trig_01YJmjteUtHz6uoWp6moa8fM';
 const LOOKUP_MAX = 160;
 const LOOKUP_STEPS = [['queued', '送出請求'], ['dispatched', '啟動爬蟲'], ['running', '查詢 Google Flights'], ['saving', '寫入資料庫'], ['done', '完成']];
 const live = { db: null, mcp: null, ready: false, rid: null, doc: null, keys: [], started: 0, unsub: null, timer: null,
-  asked: new Set(), notFound: new Set(), needsApproval: false, error: null };
+  asked: new Set(), notFound: new Set(), answered: new Set(), needsApproval: false, error: null,
+  mode: 'ntfy', steps: NTFY_STEPS, ntfyOk: true };
+const liveOverlay = {};   // fares fetched on this page / cached locally; survives snapshot swaps
 
 function lookupEta(keys) {
   const mc = keys.filter(k => k.startsWith('mc|')).length;
-  return 60 + Math.ceil((keys.length - mc) / 5) * 4 + Math.ceil(mc / 5) * 18; // seconds
+  const base = live.mode === 'ntfy' ? 5 : 60;
+  return base + Math.ceil((keys.length - mc) / 5) * 4 + Math.ceil(mc / 5) * 18; // seconds
 }
 const fmtSec = s => (s >= 60 ? `${Math.floor(s / 60)} 分 ${Math.round(s % 60)} 秒` : `${Math.max(0, Math.round(s))} 秒`);
 
@@ -2169,7 +2180,7 @@ function renderLookup() {
   if (live.needsApproval) {
     el.innerHTML = `<div>有 ${live.keys.length} 個查詢不在票價資料庫。即時查詢要透過 <b>Claude Code Remote</b> 連接器請 Claude 去 Google Flights 查。</div>
       <button type="button" class="btn-ghost" id="btn-lookup-allow">允許並即時查詢</button>`;
-    document.getElementById('btn-lookup-allow').onclick = () => { live.needsApproval = false; startLookup(live.keys); };
+    document.getElementById('btn-lookup-allow').onclick = () => { live.needsApproval = false; startLookup(live.keys, true); };
     return;
   }
   if (live.error || d?.status === 'error') {
@@ -2179,28 +2190,30 @@ function renderLookup() {
     return;
   }
   const status = d?.status || 'queued';
-  const idx = LOOKUP_STEPS.findIndex(([k]) => k === status);
+  const idx = live.steps.findIndex(([k]) => k === status);
   const total = d?.total || live.keys.length;
   const done = Math.min(d?.done || 0, total);
   const elapsed = (Date.now() - live.started) / 1000;
   const eta = lookupEta(live.keys);
-  const stalled = status === 'queued' && elapsed > 120;
+  const stalled = live.mode !== 'ntfy' && status === 'queued' && elapsed > 120;
   let head, pct = null;
   if (status === 'done') {
     head = `<b>即時查詢完成</b>：${d.found ?? done} 筆找到實價${(d.not_found || []).length ? `，${d.not_found.length} 筆 Google Flights 沒有可售行程` : ''} —— 結果已更新`;
     pct = 100;
   } else if (status === 'running') {
-    head = `<b>正在即時查詢 Google Flights</b>：${done} / ${total} 筆`;
+    head = `<b>正在即時查詢 Google Flights</b>：${done} / ${total} 筆${live.mode === 'ntfy' ? `（已找到 ${d.found || 0} 筆實價，結果邊查邊更新）` : ''}`;
     pct = total ? Math.round(done / total * 100) : 0;
   } else if (status === 'saving') {
     head = '<b>寫入票價資料庫</b>…'; pct = 100;
   } else if (stalled) {
     head = '<b>Claude 工作階段還沒接手</b> —— 它可能正在處理其他事或已休眠，請稍候或重試';
+  } else if (live.mode === 'ntfy') {
+    head = `<b>已送出 ${total} 筆缺少的票價</b>，等待爬蟲接手…（資料庫已有的結果先列在下方）`;
   } else {
     head = `<b>即時查詢 ${total} 筆缺少的票價</b>…`;
   }
   el.innerHTML = `<div class="row">${head}<span class="mono">${status === 'done' ? `共 ${fmtSec(elapsed)}` : `已等 ${fmtSec(elapsed)} · 預估約 ${fmtSec(Math.max(eta - elapsed, 5))}`}</span></div>
-    <div class="steps">${LOOKUP_STEPS.map(([k, label], i) => `<span class="${i < idx ? 'done' : i === idx ? 'on' : ''}">${i < idx ? '✓ ' : ''}${label}</span>`).join('')}</div>
+    <div class="steps">${live.steps.map(([k, label], i) => `<span class="${i < idx ? 'done' : i === idx ? 'on' : ''}">${i < idx ? '✓ ' : ''}${label}</span>`).join('')}</div>
     <div class="bar"><i class="${pct == null ? 'indet' : ''}" style="width:${pct ?? 30}%"></i></div>
     ${stalled ? '<button type="button" class="btn-ghost" id="btn-lookup-retry">重新送出</button>' : ''}`;
   const retry = document.getElementById('btn-lookup-retry');
@@ -2215,7 +2228,7 @@ function resetLookup() {
 
 /* After every search: look up whatever was missing (once per key). */
 function maybeLookup() {
-  if (!live.ready || (live.rid && live.doc?.status !== 'done' && live.doc?.status !== 'error')) return;
+  if (!(live.ready || live.ntfyOk) || (live.rid && live.doc?.status !== 'done' && live.doc?.status !== 'error')) return;
   const keys = [...fareStats.missingKeys].filter(k => !live.asked.has(k) && !live.notFound.has(k));
   if (!keys.length) return;
   keys.sort((a, b) => a.startsWith('mc|') - b.startsWith('mc|'));
@@ -2246,14 +2259,159 @@ async function wakeWorker(rid, n, ref) {
   throw lastErr;
 }
 
-async function startLookup(keys) {
+/* ---- ntfy fast path ------------------------------------------------------ */
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+function ntfyChunks(rid, keys) {
+  const size = a => new TextEncoder().encode(JSON.stringify({ rid, total: keys.length, keys: a })).length;
+  const out = [];
+  let cur = [];
+  for (const k of keys) {
+    if (cur.length && size([...cur, k]) > 3000) { out.push(cur); cur = []; }   // ntfy: < 4 KB per message
+    cur.push(k);
+  }
+  if (cur.length) out.push(cur);
+  return out;
+}
+
+async function ntfyPost(text) {
+  for (let i = 0; i < 4; i++) {
+    const r = await fetch(`${NTFY}/${T_REQ}`, { method: 'POST', body: text });
+    if (r.ok) return;
+    if (r.status !== 429) throw new Error(`ntfy ${r.status}`);
+    await sleep(2000 * (i + 1));
+  }
+  throw new Error('ntfy 暫時限流，請稍後再試');
+}
+
+/* Fares that arrive are merged into the database right away and the search is
+ * re-run (debounced) — the results list grows while the crawler works. */
+let refreshTimer = null;
+function scheduleRefresh() {
+  if (refreshTimer) return;
+  refreshTimer = setTimeout(() => {
+    refreshTimer = null;
+    try {
+      state.result = runSearch(document.getElementById('search-form'));
+      renderResults();
+      applyCoverage();
+    } catch (e) { console.warn('refresh failed', e); }
+  }, 700);
+}
+
+function mergeLiveFares(fares, nf) {
+  let n = 0;
+  for (const [k, v] of Object.entries(fares || {})) {
+    if (!v || typeof v.price !== 'number') continue;
+    FARES.fares[k] = v; liveOverlay[k] = v; live.answered.add(k); live.notFound.delete(k); n++;
+  }
+  for (const k of nf || []) { live.notFound.add(k); live.answered.add(k); }
+  if (n) saveLiveCache();
+  return n;
+}
+
+function saveLiveCache() {
+  try {
+    const entries = Object.entries(liveOverlay).sort((a, b) => (b[1].at || '').localeCompare(a[1].at || '')).slice(0, 800);
+    localStorage.setItem(LIVE_CACHE_KEY, JSON.stringify(Object.fromEntries(entries)));
+  } catch {}
+}
+
+function loadLiveCache() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(LIVE_CACHE_KEY) || '{}');
+    const cutoff = Date.now() - 7 * 864e5;
+    for (const [k, v] of Object.entries(cached)) {
+      if (!v || typeof v.price !== 'number' || Date.parse(v.at) < cutoff) continue;
+      liveOverlay[k] = v;
+      const mine = FARES.fares[k];
+      if (!mine || (v.at || '') > (mine.at || '')) FARES.fares[k] = v;
+    }
+  } catch {}
+}
+
+function noteDiag(e) {
+  live.ntfyOk = false;
+  try { live.db?.collection('diag').doc('net').set({ at: new Date().toISOString(), error: String(e?.message || e).slice(0, 200), ua: navigator.userAgent.slice(0, 120) }); } catch {}
+}
+
+function ntfyLookup(keys, rid) {
+  return new Promise((resolve, reject) => {
+    let es = null, silence = null, opened = false, gotAny = false, finished = false;
+    const cleanup = () => { clearTimeout(silence); if (es) es.close(); live.unsub = null; };
+    const fail = err => { if (finished) return; finished = true; cleanup(); err.gotAny = gotAny; reject(err); };
+    const arm = ms => { clearTimeout(silence); silence = setTimeout(() => fail(new Error(gotAny ? '爬蟲中途沒有回應' : '爬蟲沒有回應')), ms); };
+    try { es = new EventSource(`${NTFY}/${T_RES}/sse?since=30s`); } catch (e) { reject(e); return; }
+    live.unsub = () => { finished = true; cleanup(); };       // a newer lookup cancels this one
+    arm(8000);                                                // the stream must open quickly
+    es.onerror = () => { if (!opened) fail(new Error('無法連線到 ntfy 中繼')); };
+    es.onmessage = ev => {
+      let m;
+      try { m = JSON.parse(JSON.parse(ev.data).message); } catch { return; }
+      if (!m || m.rid !== rid) return;
+      gotAny = true;
+      arm(NTFY_SILENCE_MS);
+      if (m.error) { fail(new Error(m.error === 'rate_limited' ? '查詢太頻繁，爬蟲暫時拒絕，請稍後再試' : String(m.error))); return; }
+      const got = mergeLiveFares(m.fares, m.nf);
+      const found = (live.doc?.found || 0) + got;
+      live.doc = { ...live.doc, status: 'running', done: m.done || 0, total: m.total || keys.length, found };
+      if (got) scheduleRefresh();
+      renderLookup();
+      if (m.final) { finished = true; cleanup(); resolve(); }
+    };
+    es.onopen = async () => {
+      opened = true;
+      arm(NTFY_SILENCE_MS);
+      try {
+        for (const chunk of ntfyChunks(rid, keys)) await ntfyPost(JSON.stringify({ rid, total: keys.length, keys: chunk }));
+        if (!finished && live.doc?.status === 'queued') { live.doc = { ...live.doc, status: 'dispatched' }; renderLookup(); }
+      } catch (e) { fail(e instanceof Error ? e : new Error(String(e))); }
+    };
+  });
+}
+
+function finishLookup() {
+  const nf = live.keys.filter(k => live.notFound.has(k));
+  live.doc = { ...live.doc, status: 'done', found: live.keys.filter(k => FARES.fares[k]).length, done: live.keys.length, not_found: nf };
+  clearInterval(live.timer);
+  renderLookup();
+  scheduleRefresh();
+  setTimeout(() => { if (live.doc?.status === 'done') { resetLookup(); renderLookup(); } }, 12000);
+}
+
+async function startLookup(keys, viaClaude = false) {
   resetLookup();
   live.keys = keys;
   live.rid = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
   live.started = Date.now();
   keys.forEach(k => live.asked.add(k));
-  renderLookup();
   live.timer = setInterval(renderLookup, 1000);
+  if (!viaClaude) {
+    live.mode = 'ntfy'; live.steps = NTFY_STEPS;
+    live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
+    renderLookup();
+    const rid = live.rid;
+    try {
+      await ntfyLookup(keys, rid);
+      if (live.rid === rid) finishLookup();
+      return;
+    } catch (e) {
+      if (live.rid !== rid) return;                       // superseded
+      noteDiag(e);
+      const rest = keys.filter(k => !live.answered.has(k));
+      if (!live.ready || !rest.length) {
+        clearInterval(live.timer);
+        rest.forEach(k => live.asked.delete(k));
+        live.error = `${e.message || e}${live.ready ? '' : '（且無法改用 Claude 中繼）'}`;
+        renderLookup();
+        return;
+      }
+      keys = rest;                                        // fall back to the Claude relay for what is left
+      live.keys = keys;
+    }
+  }
+  live.mode = 'claude'; live.steps = LOOKUP_STEPS; live.doc = null; live.error = null;
+  renderLookup();
   try {
     const ref = live.db.collection('requests').doc(live.rid);
     await ref.set({ keys, total: keys.length, status: 'queued', created_at: new Date().toISOString() });
@@ -2290,7 +2448,7 @@ async function subscribeLiveFares() {
   live.db = db;
   try { live.mcp = await window.claude.use('mcp'); } catch { live.mcp = null; }
   live.ready = !!live.mcp;
-  if (live.ready && state.result) maybeLookup();
+  if (state.result) maybeLookup();
   db.collection('fares').onSnapshot(snap => {
     const docs = new Map(snap.docs.map(d => [d.id, d.data()]));
     const meta = docs.get('meta');
@@ -2303,6 +2461,7 @@ async function subscribeLiveFares() {
     }
     liveDb = true;
     if (FARES.generated_at && Date.parse(meta.generated_at) <= Date.parse(FARES.generated_at)) { renderDbStatus(); return; }
+    for (const [k, v] of Object.entries(liveOverlay)) if (!fares[k] || (v.at || '') >= (fares[k].at || '')) fares[k] = v;
     FARES = { ...FARES, generated_at: meta.generated_at, coverage: meta.coverage || FARES.coverage, fares };
     (meta.unavailable || []).forEach(k => live.notFound.add(k));
     applyCoverage();
@@ -2312,6 +2471,7 @@ async function subscribeLiveFares() {
 
 function init() {
   loadFareSnapshot();
+  loadLiveCache();
   renderDbStatus();
   subscribeLiveFares();
   wirePickers();

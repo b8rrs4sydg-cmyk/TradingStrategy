@@ -163,8 +163,8 @@ class Persister:
     """Merges fetched fares into the live overlay file and pushes it to git."""
 
     def __init__(self, path: Path) -> None:
-        self.path = path
-        self.db = FareDatabase.load(path)
+        self.path = path.resolve()  # git -C <root> needs a path inside the repo
+        self.db = FareDatabase.load(self.path)
         self.pending: dict[str, dict] = {}
         self.missing: list[str] = []
         self.lock = threading.Lock()
