@@ -181,8 +181,7 @@ export function PlanCard({
                 <ul className="mt-2 space-y-1">
                   {t.legs.map((leg, li) => (
                     <li key={li} className="font-mono text-xs">
-                      {leg.origin}→{leg.destination} · {leg.carrier}
-                      {leg.flight_number} ·{" "}
+                      {leg.origin}→{leg.destination} · {leg.flight_number} ·{" "}
                       {new Date(leg.departure).toISOString().slice(0, 16).replace("T", " ")}
                     </li>
                   ))}

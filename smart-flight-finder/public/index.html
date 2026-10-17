@@ -96,6 +96,7 @@
     color-scheme: dark;
   }
 
+  *, *::before, *::after { box-sizing: border-box }
   body {
     background: var(--bg);
     color: var(--fg);
@@ -224,34 +225,58 @@
   .four-leg-extras.open { display: grid }
   @media (max-width: 640px) { .four-leg-extras { grid-template-columns: 1fr } }
 
-  .multi-holidays {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px 14px;
-    margin-top: 4px;
-    font-size: 14px;
-  }
-  @media (min-width: 720px) {
-    .multi-holidays { grid-template-columns: repeat(3, minmax(0, 1fr)) }
-  }
-  .multi-holidays label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer }
-  .multi-holidays label.disabled { opacity: 0.55; cursor: default }
-  .multi-hint {
-    margin-top: 10px;
-    font-size: 12px;
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 14px }
+  .chip {
+    appearance: none;
+    border: 1px solid var(--border-strong);
+    background: var(--card);
     color: var(--fg-muted);
-    line-height: 1.5;
+    border-radius: 999px;
+    padding: 5px 11px;
+    font: 500 12px/1.2 var(--font-body);
+    cursor: pointer;
   }
-  .multi-hint b { color: var(--fg) }
-  .multi-flex {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed var(--border-strong);
+  .chip:hover { background: var(--card-sunken); color: var(--fg) }
+  .chip.on { background: var(--brand-wash); border-color: var(--brand); color: var(--brand-ink) }
+  .chip .mono { font-size: 11px; opacity: 0.75; margin-left: 4px }
+  .hint { font-size: 12px; color: var(--fg-muted); line-height: 1.5 }
+  .slot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px }
+  .slot {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 14px;
-    align-items: center;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: end;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
   }
+  .slot.bad { border-color: var(--crit) }
+  .slot .err { grid-column: 1 / -1; color: var(--crit); font-size: 12px; margin: 0 }
+  .slot .pair { display: grid; grid-template-columns: minmax(0, 1fr) 64px; gap: 6px }
+  .slot .btns { display: flex; gap: 6px }
+  @media (max-width: 640px) { .slot { grid-template-columns: 1fr } }
+  .slot-tools {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-strong);
+    font-size: 12px; color: var(--fg-muted);
+  }
+  .slot-tools input[type=number] { width: 64px }
+  .num {
+    padding: 8px 8px; border: 1px solid var(--border-strong); border-radius: 6px;
+    background: var(--card); color: var(--fg); font: 400 14px/1.3 var(--font-mono); min-width: 0;
+  }
+  .plan .slot-tag {
+    padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 500;
+    background: var(--accent-wash); color: var(--accent);
+  }
+  .ticket .src { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--fg-muted) }
+  .ticket .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px }
+  .ticket .links a {
+    font: 500 11.5px/1 var(--font-body); padding: 5px 8px; border-radius: 6px;
+    border: 1px solid var(--brand); color: var(--brand-ink); text-decoration: none; background: var(--card);
+  }
+  .ticket .links a:hover { background: var(--brand-wash) }
 
   .btn-primary {
     appearance: none;
@@ -557,9 +582,9 @@
     <span class="eyebrow">2027 連假 · 進階票規策略</span>
     <h1>以假期為核心的機票湊票引擎</h1>
     <p>
-      挑一個 2027 的台灣連假、設定去/回程彈性天數、勾選想評估的票規策略，
-      引擎會展開日期矩陣、依「標準直購 / 反向票 / Open-jaw / 外站四段票」
-      平行搜尋，自動做跨票 MCT 檢查並以多維度評分排序。
+      以 2027 台灣連假為參考，多選並微調成「備選時段」(各自設定去/回程彈性)，
+      引擎會對每個時段展開日期矩陣、依「標準直購 / 反向票 / Open-jaw / 外站四段票」
+      搜尋，做跨票 MCT 檢查、合併排序，每張票附 Trip.com 等訂票網站連結。
     </p>
     <div class="hero-stats">
       <div><b>5</b>種進階票規</div>
@@ -572,13 +597,7 @@
   <section class="card" id="search-card" aria-labelledby="search-title">
     <h2 id="search-title">搜尋條件</h2>
     <form id="search-form" class="grid" novalidate>
-      <div class="grid grid-3">
-        <label class="field">
-          <span>假期快選</span>
-          <select id="f-holiday">
-            <option value="">— 自訂日期 —</option>
-          </select>
-        </label>
+      <div class="grid grid-2">
         <label class="field">
           <span>行程類型</span>
           <select id="f-trip">
@@ -603,42 +622,16 @@
         </label>
       </div>
 
-      <div class="grid grid-2">
-        <label class="field">
-          <span>去程日</span>
-          <input id="f-outbound" type="date" value="2027-02-05">
-        </label>
-        <label class="field" id="return-field">
-          <span>回程日</span>
-          <input id="f-return" type="date" value="2027-02-11">
-        </label>
-      </div>
-
-      <div class="grid grid-2">
-        <label class="field">
-          <span>去程彈性 ±<span id="f-flex-out-val">2</span> 天</span>
-          <input id="f-flex-out" type="range" min="0" max="7" value="2">
-        </label>
-        <label class="field">
-          <span>回程彈性 ±<span id="f-flex-ret-val">2</span> 天</span>
-          <input id="f-flex-ret" type="range" min="0" max="7" value="2">
-        </label>
-      </div>
-
       <fieldset>
-        <legend>多假期排列組合 (可選)</legend>
-        <div id="multi-holidays" class="multi-holidays"></div>
-        <p class="multi-hint">
-          勾選任意 <b>≥ 1 個</b>假期後，上方「假期快選 / 去回程日 / 彈性」會被忽略，
-          引擎會對每個假期自動展開 (去, 回) 視窗並跑完所有勾選策略；
-          <b>外站四段票</b>可因此跨不同假期湊票，排列組合找最佳解。
-        </p>
-        <div class="multi-flex">
-          <label class="field" style="margin:0">
-            <span>每個假期彈性 ±<span id="f-mh-flex-val">1</span> 天</span>
-            <input id="f-mh-flex" type="range" min="0" max="7" value="1">
-          </label>
-          <button type="button" class="btn-ghost" id="btn-mh-clear">全部取消</button>
+        <legend>備選時段</legend>
+        <div class="hint">2027 連假參考 — 點選加入 / 移除備選時段 (可多選)，加入後可再調整日期與彈性</div>
+        <div id="holiday-chips" class="chips"></div>
+        <ol id="slot-list" class="slot-list"></ol>
+        <div class="slot-tools">
+          <button type="button" class="btn-ghost" id="btn-add-slot">+ 自訂時段</button>
+          <label>彈性 ± <input id="f-bulk-flex" class="num" type="number" min="0" max="7" value="2"> 天</label>
+          <button type="button" class="btn-ghost" id="btn-apply-flex">套用到全部時段</button>
+          <span id="slot-summary"></span>
         </div>
       </fieldset>
 
@@ -714,7 +707,7 @@
   </section>
 
   <footer class="site">
-    <div>Smart Flight Finder — demo (使用 stub provider 內建價格表，無連真實 API)</div>
+    <div>Smart Flight Finder — demo：價格為內建 stub 示意價，非即時報價；請點各票的 Trip.com / Google Flights / Skyscanner 連結查詢實際票價。</div>
     <div><a href="https://github.com/b8rrs4sydg-cmyk/tradingstrategy/tree/claude/zealous-darwin-1kexus/smart-flight-finder" target="_blank" rel="noopener">GitHub 原始碼</a></div>
   </footer>
 
@@ -1066,6 +1059,41 @@ function planFourLeg(req, expanded) {
 }
 
 /* =========================================================================
+ * Booking links (mirrors backend/app/services/booking_links.py)
+ * ========================================================================= */
+function routeOf(ticket) {
+  const legs = ticket.legs, first = legs[0], last = legs[legs.length - 1];
+  if (legs.length >= 2 && last.destination === first.origin) {
+    let turn = 0, best = -Infinity;
+    for (let i = 0; i < legs.length - 1; i++) {
+      const gap = Date.parse(legs[i + 1].departure) - Date.parse(legs[i].arrival);
+      if (gap > best) { best = gap; turn = i; }
+    }
+    return { o: first.origin, d: legs[turn].destination, dep: first.departure.slice(0, 10), ret: legs[turn + 1].departure.slice(0, 10) };
+  }
+  return { o: first.origin, d: last.destination, dep: first.departure.slice(0, 10), ret: null };
+}
+
+function bookingLinks(ticket, adults) {
+  const r = routeOf(ticket);
+  const o = encodeURIComponent(r.o.toLowerCase()), d = encodeURIComponent(r.d.toLowerCase());
+  const trip = new URLSearchParams({ dcity: r.o.toLowerCase(), acity: r.d.toLowerCase(), ddate: r.dep, triptype: r.ret ? 'rt' : 'ow', class: 'y', quantity: adults, locale: 'zh-TW', curr: 'TWD' });
+  if (r.ret) trip.set('rdate', r.ret);
+  let q = `Flights from ${r.o} to ${r.d} on ${r.dep}`;
+  if (r.ret) q += ` through ${r.ret}`;
+  q += ` ${adults} adult${adults > 1 ? 's' : ''} economy`;
+  const yymmdd = iso => iso.slice(2).replace(/-/g, '');
+  const sky = `${o}/${d}/${yymmdd(r.dep)}/${r.ret ? yymmdd(r.ret) + '/' : ''}`;
+  return [
+    { label: 'Trip.com', url: `https://www.trip.com/flights/showfarefirst?${trip}` },
+    { label: 'Google Flights', url: `https://www.google.com/travel/flights?q=${encodeURIComponent(q)}&hl=zh-TW&curr=TWD` },
+    { label: 'Skyscanner', url: `https://www.skyscanner.com.tw/transport/flights/${sky}?adultsv2=${adults}&cabinclass=economy` },
+  ];
+}
+
+const ISSUER_LABEL = { stub: '示意價 (demo 內建價格表，非即時)', amadeus: 'Amadeus 即時報價', skyscanner: 'Skyscanner API 報價' };
+
+/* =========================================================================
  * Scoring
  * ========================================================================= */
 function flightMinutes(plan) {
@@ -1286,6 +1314,7 @@ function renderPlan(plan, rank) {
           <div class="meta">
             <span class="rank mono">#${rank}</span>
             <span class="strat">${STRATEGY_LABEL[plan.strategy] || plan.strategy}</span>
+            ${plan.window_label ? `<span class="slot-tag">${escapeHtml(plan.window_label)}</span>` : ''}
             <span class="explain">${escapeHtml(plan.explain || '')}</span>
           </div>
           <div>
@@ -1298,9 +1327,12 @@ function renderPlan(plan, rank) {
           <div class="ticket-grid">
             ${plan.tickets.map((t, ti) => `
               <section class="ticket">
-                <h4>${ticketCount === 2 ? (ti === 0 ? '票甲' : '票乙') : `票 ${ti+1}`} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
+                <h4>${isFourLeg ? (ti === 0 ? '票甲 (外站)' : '票乙 (中段)') : ticketCount > 1 ? `票 ${ti+1}` : '票'} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
                 <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()} · ${t.fare_class || '—'} · ${t.baggage_through_checked ? '行李直掛' : '需提領重掛'}</div>
-                <ol>${t.legs.map(l => `<li>${l.origin}→${l.destination} · ${l.carrier}${l.flight_number} · ${l.departure.slice(0,16).replace('T',' ')}</li>`).join('')}</ol>
+                <ol>${t.legs.map(l => `<li>${escapeHtml(l.origin)}→${escapeHtml(l.destination)} · ${escapeHtml(l.flight_number)} · ${l.departure.slice(0,16).replace('T',' ')}</li>`).join('')}</ol>
+                <div class="src">價格來源：${escapeHtml(ISSUER_LABEL[t.issuer] || t.issuer || '—')}
+                  <div class="links">${bookingLinks(t, plan.adults || 1).map(b => `<a href="${escapeHtml(b.url)}" target="_blank" rel="noopener noreferrer">${b.label} ↗</a>`).join('')}</div>
+                </div>
               </section>
             `).join('')}
           </div>
@@ -1480,41 +1512,31 @@ function runSearch(form) {
     budget: Number(document.getElementById('f-budget').value) || null,
   };
 
-  // Multi-holiday permutation (mirrors backend SearchService.run):
-  // when ≥ 1 holiday checkbox is on, build one (out, ret) window per key
-  // and run every strategy against each; otherwise use the single-pick fields.
-  const holidayKeys = getSelectedHolidayKeys();
-  const mhFlex = Number(document.getElementById('f-mh-flex').value) || 0;
-  const candidateWindowSets = [];
-  if (holidayKeys.length) {
-    for (const key of holidayKeys) {
-      const match = LEAVE_STRATEGIES_2027.find(s => s.key === key);
-      if (!match) continue;
-      candidateWindowSets.push({
-        out: expandWindow(match.start, mhFlex, mhFlex),
-        ret: req.tripType === 'round_trip' ? expandWindow(match.end, mhFlex, mhFlex) : [],
-      });
-    }
-  } else {
-    const outAnchor = document.getElementById('f-outbound').value;
-    const retAnchor = document.getElementById('f-return').value;
-    const flexOut = Number(document.getElementById('f-flex-out').value) || 0;
-    const flexRet = Number(document.getElementById('f-flex-ret').value) || 0;
-    candidateWindowSets.push({
-      out: expandWindow(outAnchor, flexOut, flexOut),
-      ret: req.tripType === 'round_trip' ? expandWindow(retAnchor, flexRet, flexRet) : [],
-    });
-  }
-
+  // 備選時段 (mirrors backend SearchService.run): every strategy runs once per
+  // slot; plans are tagged with the slot label and de-duplicated across
+  // overlapping slots (same strategy + same tickets).
   let matrix = 0;
   let plans = [];
-  for (const expanded of candidateWindowSets) {
+  const seen = new Set();
+  for (const slot of slots) {
+    const expanded = {
+      out: expandWindow(slot.depart, slot.departFlex, slot.departFlex),
+      ret: req.tripType === 'round_trip' ? expandWindow(slot.ret, slot.retFlex, slot.retFlex) : [],
+    };
     matrix += expanded.out.length * Math.max(expanded.ret.length, 1);
+    const label = slotLabel(slot);
     for (const strategy of req.strategies) {
-      if (strategy === 'standard') plans = plans.concat(planStandard(req, expanded));
-      else if (strategy === 'reverse') plans = plans.concat(planReverse(req, expanded));
-      else if (strategy === 'open_jaw') plans = plans.concat(planOpenJaw(req, expanded));
-      else if (strategy === 'back_to_back_4leg') plans = plans.concat(planFourLeg(req, expanded));
+      let found = [];
+      if (strategy === 'standard') found = planStandard(req, expanded);
+      else if (strategy === 'reverse') found = planReverse(req, expanded);
+      else if (strategy === 'open_jaw') found = planOpenJaw(req, expanded);
+      else if (strategy === 'back_to_back_4leg') found = planFourLeg(req, expanded);
+      for (const p of found) {
+        const key = p.strategy + '|' + p.tickets.map(t => t.offer_id).join('|');
+        if (seen.has(key)) continue;
+        seen.add(key);
+        plans.push({ ...p, window_label: label, adults: req.adults });
+      }
     }
   }
   if (req.budget) plans = plans.filter(p => p.total_cost <= req.budget);
@@ -1547,8 +1569,6 @@ function syncRangeLabels() {
     el.addEventListener('input', render);
     render();
   };
-  bind('f-flex-out', 'f-flex-out-val');
-  bind('f-flex-ret', 'f-flex-ret-val');
   bind('f-outer-buf', 'f-outer-buf-val');
   bind('w-price', 'w-price-v', v => Number(v).toFixed(2));
   bind('w-pto', 'w-pto-v', v => Number(v).toFixed(2));
@@ -1556,74 +1576,126 @@ function syncRangeLabels() {
   bind('w-risk', 'w-risk-v', v => Number(v).toFixed(2));
 }
 
-function populateHolidays() {
-  const sel = document.getElementById('f-holiday');
-  for (const s of LEAVE_STRATEGIES_2027) {
-    const o = document.createElement('option');
-    o.value = s.key;
-    o.textContent = s.label;
-    sel.appendChild(o);
-  }
-  sel.value = 'lunar_ny';
-  const sync = () => {
-    const match = LEAVE_STRATEGIES_2027.find(s => s.key === sel.value);
-    if (match) {
-      document.getElementById('f-outbound').value = match.start;
-      document.getElementById('f-return').value = match.end;
-    }
-  };
-  sel.addEventListener('change', sync);
+/* ---- 備選時段 state + UI ---- */
+let nextSlotId = 1;
+const slots = [];
+const holidayByKey = new Map(LEAVE_STRATEGIES_2027.map(h => [h.key, h]));
+const isRoundTrip = () => document.getElementById('f-trip').value === 'round_trip';
+const clampFlex = v => Math.max(0, Math.min(7, Number(v) || 0));
+const bulkFlex = () => clampFlex(document.getElementById('f-bulk-flex').value);
+
+function slotFromHoliday(h, flex) {
+  return { id: nextSlotId++, label: '', holidayKey: h.key, depart: h.start, ret: h.end, departFlex: flex, retFlex: flex };
 }
 
-function populateMultiHolidays() {
-  const box = document.getElementById('multi-holidays');
-  for (const s of LEAVE_STRATEGIES_2027) {
-    const label = document.createElement('label');
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.value = s.key;
-    cb.dataset.mh = '1';
-    label.appendChild(cb);
-    label.appendChild(document.createTextNode(' ' + s.label));
-    box.appendChild(label);
-  }
-  const singleFields = [
-    'f-holiday', 'f-outbound', 'f-return',
-    'f-flex-out', 'f-flex-ret',
-  ];
-  const sync = () => {
-    const any = [...box.querySelectorAll('input[type=checkbox]')].some(c => c.checked);
-    singleFields.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.disabled = any;
-    });
-    document.getElementById('f-mh-flex').disabled = !any;
-    document.getElementById('btn-mh-clear').disabled = !any;
-  };
-  box.addEventListener('change', sync);
-  document.getElementById('btn-mh-clear').addEventListener('click', () => {
-    box.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = false; });
-    sync();
+function slotLabel(slot) {
+  if (slot.label.trim()) return slot.label.trim();
+  const h = holidayByKey.get(slot.holidayKey);
+  if (h) return h.label;
+  return slot.ret && isRoundTrip() ? `${slot.depart.slice(5).replace('-','/')}–${slot.ret.slice(5).replace('-','/')}` : slot.depart;
+}
+
+function slotInvalid(slot) {
+  return !slot.depart || (isRoundTrip() && (!slot.ret || slot.ret < slot.depart));
+}
+
+function renderChips() {
+  const box = document.getElementById('holiday-chips');
+  box.innerHTML = LEAVE_STRATEGIES_2027.map(h => {
+    const on = slots.some(s => s.holidayKey === h.key);
+    return `<button type="button" class="chip ${on ? 'on' : ''}" data-key="${h.key}" aria-pressed="${on}" title="${escapeHtml(h.desc)}">${on ? '✓' : '+'} ${h.label}<span class="mono">${h.start.slice(5)}→${h.end.slice(5)}</span></button>`;
+  }).join('');
+}
+
+function renderSlots() {
+  const rt = isRoundTrip();
+  document.getElementById('slot-list').innerHTML = slots.map(slot => {
+    const h = holidayByKey.get(slot.holidayKey);
+    const bad = slotInvalid(slot);
+    return `
+      <li class="slot ${bad ? 'bad' : ''}" data-id="${slot.id}">
+        <label class="field"><span>${h ? '參考：' + h.label : '自訂時段'}</span>
+          <input type="text" data-f="label" maxlength="40" value="${escapeHtml(slot.label)}" placeholder="${escapeHtml(h ? h.label : '名稱 (選填)')}"></label>
+        <div class="pair">
+          <label class="field"><span>去程日</span><input type="date" data-f="depart" value="${slot.depart}"></label>
+          <label class="field"><span>± 天</span><input type="number" class="num" data-f="departFlex" min="0" max="7" value="${slot.departFlex}"></label>
+        </div>
+        ${rt ? `<div class="pair">
+          <label class="field"><span>回程日</span><input type="date" data-f="ret" value="${slot.ret}"></label>
+          <label class="field"><span>± 天</span><input type="number" class="num" data-f="retFlex" min="0" max="7" value="${slot.retFlex}"></label>
+        </div>` : '<div></div>'}
+        <div class="btns">
+          ${h ? `<button type="button" class="btn-ghost" data-act="reset" title="還原為 ${h.start} → ${h.end}">還原</button>` : ''}
+          <button type="button" class="btn-ghost" data-act="remove">移除</button>
+        </div>
+        ${bad ? '<p class="err">回程日需晚於或等於去程日</p>' : ''}
+      </li>`;
+  }).join('');
+  renderChips();
+  updateSlotSummary();
+}
+
+function updateSlotSummary() {
+  const rt = isRoundTrip();
+  const combos = slots.reduce((n, s) => n + (2 * s.departFlex + 1) * (rt ? 2 * s.retFlex + 1 : 1), 0);
+  const invalid = slots.length === 0 || slots.some(slotInvalid);
+  document.getElementById('slot-summary').innerHTML = slots.length === 0
+    ? '<span style="color:var(--crit)">請至少加入一個備選時段</span>'
+    : `<b>${slots.length}</b> 個時段 · 共 <b>${combos}</b> 組日期 × 每個勾選策略`;
+  document.querySelector('#search-form .btn-primary').disabled = invalid;
+  document.getElementById('btn-apply-flex').disabled = slots.length === 0;
+  return !invalid;
+}
+
+function wireSlots() {
+  slots.push(slotFromHoliday(holidayByKey.get('lunar_ny'), 2));
+
+  document.getElementById('holiday-chips').addEventListener('click', e => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    const idx = slots.findIndex(s => s.holidayKey === chip.dataset.key);
+    if (idx >= 0) slots.splice(idx, 1);
+    else slots.push(slotFromHoliday(holidayByKey.get(chip.dataset.key), bulkFlex()));
+    renderSlots();
   });
-  const flex = document.getElementById('f-mh-flex');
-  const flexVal = document.getElementById('f-mh-flex-val');
-  const renderFlex = () => { flexVal.textContent = flex.value; };
-  flex.addEventListener('input', renderFlex);
-  renderFlex();
-  sync();
-}
 
-function getSelectedHolidayKeys() {
-  return [...document.querySelectorAll('#multi-holidays input[type=checkbox]')]
-    .filter(c => c.checked).map(c => c.value);
-}
+  const list = document.getElementById('slot-list');
+  list.addEventListener('input', e => {
+    const li = e.target.closest('.slot');
+    const f = e.target.dataset.f;
+    if (!li || !f) return;
+    const slot = slots.find(s => s.id === Number(li.dataset.id));
+    slot[f] = f.endsWith('Flex') ? clampFlex(e.target.value) : e.target.value;
+    const bad = slotInvalid(slot);
+    if (bad !== li.classList.contains('bad')) renderSlots();
+    else updateSlotSummary();
+  });
+  list.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    const id = Number(btn.closest('.slot').dataset.id);
+    const idx = slots.findIndex(s => s.id === id);
+    if (btn.dataset.act === 'remove') slots.splice(idx, 1);
+    else {
+      const h = holidayByKey.get(slots[idx].holidayKey);
+      slots[idx].depart = h.start;
+      slots[idx].ret = h.end;
+    }
+    renderSlots();
+  });
 
-function toggleReturnByTripType() {
-  const trip = document.getElementById('f-trip');
-  const field = document.getElementById('return-field');
-  const apply = () => { field.style.display = trip.value === 'one_way' ? 'none' : ''; };
-  trip.addEventListener('change', apply);
-  apply();
+  document.getElementById('btn-add-slot').addEventListener('click', () => {
+    const last = slots[slots.length - 1];
+    slots.push({ id: nextSlotId++, label: '', holidayKey: null, depart: last ? last.depart : '2027-02-05', ret: last ? last.ret : '2027-02-11', departFlex: bulkFlex(), retFlex: bulkFlex() });
+    renderSlots();
+  });
+  document.getElementById('btn-apply-flex').addEventListener('click', () => {
+    const f = bulkFlex();
+    slots.forEach(s => { s.departFlex = f; s.retFlex = f; });
+    renderSlots();
+  });
+  document.getElementById('f-trip').addEventListener('change', renderSlots);
+  renderSlots();
 }
 
 function toggleFourLegExtras() {
@@ -1641,6 +1713,7 @@ function wireSubmit() {
   const elapsed = document.getElementById('elapsed');
   form.addEventListener('submit', e => {
     e.preventDefault();
+    if (!updateSlotSummary()) return;
     const btn = form.querySelector('.btn-primary');
     btn.disabled = true;
     btn.textContent = '搜尋中…';
@@ -1656,8 +1729,8 @@ function wireSubmit() {
         renderResults();
         elapsed.textContent = `· 搜尋耗時 ${Math.round(performance.now() - t0)} ms`;
       } finally {
-        btn.disabled = false;
         btn.textContent = '搜尋';
+        updateSlotSummary();
       }
     }, 0);
   });
@@ -1713,10 +1786,8 @@ function wireTheme() {
 }
 
 function init() {
-  populateHolidays();
-  populateMultiHolidays();
+  wireSlots();
   syncRangeLabels();
-  toggleReturnByTripType();
   toggleFourLegExtras();
   wireSubmit();
   wireResultsControls();
