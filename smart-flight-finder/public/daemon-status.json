@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:44:43+00:00",
+ "at": "2026-10-17T19:46:14+00:00",
  "publishes": {
-  "ok": 128,
+  "ok": 138,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2050,
+ "fares_saved": 2052,
  "log": [
   "19:21:52 http front door: https://below-divx-ton-contrast.trycloudflare.com",
   "19:21:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -57,6 +57,14 @@
   "19:36:14 handle mvcsrm878qj82: first_chunk=True total=160",
   "19:36:14 request received: rid mvcsrm878qj82 45 keys",
   "19:36:14 handle mvcsrm878qj82: first_chunk=False total=160",
-  "19:40:05 request mvcsrm878qj82: chunk of 45 keys done in 231s; ntfy publishes {'ok': 93, 'r429': 0, 'fail': 0}"
+  "19:40:05 request mvcsrm878qj82: chunk of 45 keys done in 231s; ntfy publishes {'ok': 93, 'r429': 0, 'fail': 0}",
+  "19:44:51 request received: rid probemvct2p1d 3 keys",
+  "19:44:51 handle probemvct2p1d: first_chunk=True total=3",
+  "19:44:51 request received: rid mvct2ojtnrpxl 9 keys",
+  "19:44:51 handle mvct2ojtnrpxl: first_chunk=True total=9",
+  "19:44:51 request mvct2ojtnrpxl: chunk of 9 keys done in 0s; ntfy publishes {'ok': 129, 'r429': 0, 'fail': 0}",
+  "19:44:51 request mvct2ojtnrpxl: final sent (9/9); ntfy publishes {'ok': 129, 'r429': 0, 'fail': 0}",
+  "19:45:34 request probemvct2p1d: chunk of 3 keys done in 44s; ntfy publishes {'ok': 134, 'r429': 0, 'fail': 0}",
+  "19:45:37 request probemvct2p1d: final sent (3/3); ntfy publishes {'ok': 134, 'r429': 0, 'fail': 0}"
  ]
 }
