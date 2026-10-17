@@ -1651,7 +1651,7 @@ function renderTimeline(plan) {
           return `<g>
             <rect x="${x1}" y="${y}" width="${Math.max(x2-x1, 2)}" height="${ROW}" rx="4" fill="${color}" opacity="0.9"/>
             <text x="${x1+5}" y="${y+12}" font-size="10" fill="white" font-weight="600">${leg.origin}→${leg.destination}</text>
-            <text x="${x1+5}" y="${y+22}" font-size="9" fill="white" opacity="0.9">${leg.carrier}${leg.flight_number.replace(/^[A-Z]+/, '')}</text>
+            <text x="${x1+5}" y="${y+22}" font-size="9" fill="white" opacity="0.9">${escapeHtml(leg.carrier)}${escapeHtml(leg.flight_number.replace(/^[A-Z]+/, ''))}</text>
           </g>`;
         }).join('')}
       </g>`).join('')}
@@ -2408,20 +2408,30 @@ function scheduleRefresh() {
 }
 
 /* Wire form from the crawler: [price, dep, arr, stops, airline] (see lookup_daemon.compact). */
+const ISO_TS = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?([+-]\d{2}:\d{2}|Z)?$/;
+/* Fares come over a public relay: accept only well-formed numbers / timestamps / plain-text airline names. */
 function expandFare(v) {
-  if (!Array.isArray(v)) return v;
-  const [price, dep, arr, stops, airline] = v;
-  return { price, at: new Date().toISOString().slice(0, 10), ...(dep ? { first: { dep, arr, stops: stops || 0, airline } } : {}) };
+  const raw = Array.isArray(v) ? { price: v[0], first: v[1] ? { dep: v[1], arr: v[2], stops: v[3], airline: v[4] } : null } : v;
+  if (!raw || !Number.isInteger(raw.price) || raw.price < 1 || raw.price > 3000000) return null;
+  const out = { price: raw.price, at: new Date().toISOString().slice(0, 10) };
+  const f = raw.first;
+  if (f) {
+    if (!ISO_TS.test(String(f.dep)) || !ISO_TS.test(String(f.arr))) return null;
+    out.first = { dep: f.dep, arr: f.arr, stops: Math.max(0, Math.min(5, Number(f.stops) || 0)),
+                  airline: String(f.airline || '').replace(/[<>&"'`\\]/g, '').slice(0, 40) };
+  }
+  return out;
 }
 
 function mergeLiveFares(fares, nf) {
   let n = 0;
+  const asked = new Set(live.keys);
   for (const [k, raw] of Object.entries(fares || {})) {
-    const v = expandFare(raw);
-    if (!v || typeof v.price !== 'number') continue;
+    const v = asked.has(k) ? expandFare(raw) : null;      // only keys this page asked for, only valid shapes
+    if (!v) continue;
     FARES.fares[k] = v; liveOverlay[k] = v; live.answered.add(k); live.notFound.delete(k); n++;
   }
-  for (const k of nf || []) { live.notFound.add(k); live.answered.add(k); }
+  for (const k of nf || []) if (asked.has(k)) { live.notFound.add(k); live.answered.add(k); }
   if (n) saveLiveCache();
   return n;
 }
@@ -2438,7 +2448,7 @@ function loadLiveCache() {
     const cached = JSON.parse(localStorage.getItem(LIVE_CACHE_KEY) || '{}');
     const cutoff = Date.now() - 7 * 864e5;
     for (const [k, v] of Object.entries(cached)) {
-      if (!v || typeof v.price !== 'number' || Date.parse(v.at) < cutoff) continue;
+      if (!expandFare(v) || Date.parse(v.at) < cutoff || !/^(ow|rt|mc)\|[A-Z0-9|:\-]+$/.test(k)) continue;
       liveOverlay[k] = v;
       const mine = FARES.fares[k];
       if (!mine || (v.at || '') > (mine.at || '')) FARES.fares[k] = v;
