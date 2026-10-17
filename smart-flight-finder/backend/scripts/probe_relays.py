@@ -55,14 +55,36 @@ async () => {
     return { id: o.id, g1: g1.data, put: p.status, g2: g2.data };
   });
 
-  await t('npoint', async () => {
-    const r = await fetch('https://api.npoint.io/bins', { method: 'POST', headers: J, body: JSON.stringify({ n: 1 }) });
-    return { status: r.status, body: (await r.text()).slice(0, 100) };
+  await t('extendsclass', async () => {
+    const r = await fetch('https://json.extendsclass.com/bin', { method: 'POST', headers: J, body: JSON.stringify({ n: 1 }) });
+    const o = await r.json();
+    const id = (o.uri || '').split('/').pop();
+    if (!id) return { status: r.status, body: JSON.stringify(o).slice(0, 100) };
+    const url = 'https://json.extendsclass.com/bin/' + id;
+    const g1 = await (await fetch(url)).json();
+    const p = await fetch(url, { method: 'PUT', headers: { ...J, 'Api-key': o.apiKey || '' }, body: JSON.stringify({ n: 2 }) });
+    const g2 = await (await fetch(url)).json();
+    return { id, g1, put: p.status, g2, hasKey: !!o.apiKey };
   });
 
-  await t('ntfy-poll', async () => {   // for reference: the relay we already use, readable with a plain GET
-    const r = await fetch('https://ntfy.sh/sff-probe-' + Date.now() + '/json?poll=1');
-    return { status: r.status };
+  await t('myjson', async () => {
+    const r = await fetch('https://api.myjson.online/v1/records', { method: 'POST', headers: J, body: JSON.stringify({ data: { n: 1 } }) });
+    const o = await r.json().catch(() => ({}));
+    return { status: r.status, keys: Object.keys(o), uri: o.uri || o.id || '' };
+  });
+
+  // rate limit of the one that works: hammer it from the page and see where it stops
+  await t('restful-rate', async () => {
+    const r = await fetch('https://api.restful-api.dev/objects', { method: 'POST', headers: J, body: JSON.stringify({ name: 'sff', data: { n: 0 } }) });
+    const o = await r.json();
+    const url = 'https://api.restful-api.dev/objects/' + o.id;
+    let n = 0, firstFail = null, hdr = {};
+    for (; n < 400; n++) {
+      const g = await fetch(url, { headers: J });
+      if (n === 0) for (const h of ['x-ratelimit-limit', 'x-ratelimit-remaining', 'x-ratelimit-reset', 'retry-after']) hdr[h] = g.headers.get(h);
+      if (!g.ok) { firstFail = { n, status: g.status, text: (await g.text()).slice(0, 120) }; break; }
+    }
+    return { ok_gets: n, firstFail, hdr };
   });
   return out;
 }
@@ -74,7 +96,7 @@ async def main(url: str) -> int:
         browser = await pw.chromium.launch()
         page = await browser.new_page()
         await page.goto(url, wait_until="load")
-        res = await asyncio.wait_for(page.evaluate(JS), timeout=120)
+        res = await asyncio.wait_for(page.evaluate(JS), timeout=240)
         print(json.dumps(res, indent=1, ensure_ascii=False))
         await browser.close()
     return 0
