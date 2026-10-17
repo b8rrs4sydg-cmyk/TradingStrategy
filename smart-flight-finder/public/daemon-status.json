@@ -1,5 +1,5 @@
 {
- "at": "2026-10-17T20:38:03+00:00",
+ "at": "2026-10-17T20:54:35+00:00",
  "publishes": {
   "ok": 177,
   "r429": 0,
@@ -137,6 +137,16 @@
   "20:36:06 request mvcsaels9tlyy: final sent (9/9); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
   "20:36:07 request mvcseg51kcwt8: final sent (160/160); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
   "20:36:40 request mvcsaiscg85eb: chunk of 160 keys done in 4423s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
-  "20:36:42 request mvcsaiscg85eb: final sent (160/160); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}"
+  "20:36:42 request mvcsaiscg85eb: final sent (160/160); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:54:08 request received: rid mvcvjqb6jynp0 9 keys",
+  "20:54:08 handle mvcvjqb6jynp0: first_chunk=True total=9",
+  "20:54:15 request mvcvjqb6jynp0: chunk of 9 keys done in 7s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:54:16 request mvcvjqb6jynp0: final sent (9/9); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:54:23 request received: rid mvcvk0yelrjav 9 keys",
+  "20:54:23 handle mvcvk0yelrjav: first_chunk=True total=9",
+  "20:54:23 request mvcvk0yelrjav: chunk of 9 keys done in 0s; ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:54:24 request mvcvk0yelrjav: final sent (9/9); ntfy publishes {'ok': 177, 'r429': 0, 'fail': 0}",
+  "20:54:31 request received: rid mvcvkai815d7x 27 keys",
+  "20:54:31 handle mvcvkai815d7x: first_chunk=True total=27"
  ]
 }
