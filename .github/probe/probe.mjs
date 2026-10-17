@@ -7,11 +7,8 @@ const cities = SEGS.map(([dc, ac, da, aa], i) => `dcity${i}=${dc}&acity${i}=${ac
 const dates = (base, ds) => ds.map((d, i) => `ddate${i + base}=${d}`).join('&');
 const FEB = ['2027-02-05', '2027-02-06', '2027-02-17', '2027-02-24'];
 const GAP = ['2027-02-05', '2027-02-06', '2027-02-17', '2027-06-10'];
-const CLOSE = ['2027-02-05', '2027-02-06', '2027-02-08', '2027-02-10'];
 const LINKS = {
-  d1_close: `${T}triptype=mt&${cities}&${dates(1, CLOSE)}${tail}`,
-  d0_close: `${T}triptype=mt&${cities}&${dates(0, CLOSE)}${tail}`,
-  d1_feb: `${T}triptype=mt&${cities}&${dates(1, FEB)}${tail}`,
+  oj_trip: 'https://www.trip.com/flights/showfarefirst?triptype=mt&dcity0=tpe&acity0=osa&dairport0=tpe&aairport0=kix&dcity1=tyo&acity1=tpe&dairport1=nrt&aairport1=tpe&ddate1=2027-02-03&ddate2=2027-12-28&class=y&quantity=1&locale=zh-TW&curr=TWD',
 };
 const browser = await chromium.launch({ args: ['--disable-blink-features=AutomationControlled'] });
 const ctx = await browser.newContext({ locale: 'en-US', userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36', viewport: { width: 1366, height: 1000 } });
@@ -31,4 +28,8 @@ for (const [name, url] of Object.entries(LINKS)) {
   } catch (e) { console.log(`#### FAIL ${name} ${e}`); }
   await page.close();
 }
+const g = await ctx.newPage();
+await g.goto('https://www.google.com/travel/flights?tfs=GhoSCjIwMjctMDItMDNqBRIDVFBFcgUSA0tJWBoaEgoyMDI3LTEyLTI4agUSA05SVHIFEgNUUEVCAQFIAZgBAw%3D%3D&hl=zh-TW&curr=TWD', { waitUntil: 'domcontentloaded' });
+await g.waitForTimeout(9000);
+console.log(`#### oj_google inputs=${JSON.stringify(await g.evaluate(() => [...document.querySelectorAll('input')].map(i => i.value).filter(Boolean).slice(0, 10)))} text=${(await g.evaluate(() => document.body.innerText)).replace(/\s+/g, ' ').slice(0, 200)}`);
 await browser.close();
