@@ -1,0 +1,45 @@
+name: WebRTC probe
+
+# Peer to peer between a browser on one runner and python on another — no tunnel. ntfy only carries the SDP.
+on:
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths:
+      - ".github/workflows/webrtc-probe.yml"
+      - "smart-flight-finder/backend/scripts/probe_webrtc.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  TOPIC: sff-rtc-probe-${{ github.run_id }}
+
+jobs:
+  answerer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install aiortc
+      - run: python -m scripts.probe_webrtc answer "$TOPIC"
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "playwright>=1.50,<2" && python -m playwright install --with-deps chromium
+      - run: python -m scripts.probe_webrtc browser "$TOPIC"
