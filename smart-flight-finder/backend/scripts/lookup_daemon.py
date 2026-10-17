@@ -24,6 +24,8 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import heapq
+import itertools
 import json
 import os
 import subprocess
@@ -131,6 +133,33 @@ def split_results(rid: str, fares: dict, nf: list, done: int, total: int, *, fin
             cur_f, cur_n = ({k: v}, []) if kind == "f" else ({}, [k])
     out.append(msg(cur_f, cur_n, True))
     return out
+
+
+class PriorityGate:
+    """Counting semaphore that wakes the waiter with the smallest priority first
+    (newest request first, one-ways/round trips before multi-city), so a fresh
+    search is not stuck behind the leftovers of an abandoned one."""
+
+    def __init__(self, n: int) -> None:
+        self.free = n
+        self.waiters: list[tuple[tuple, int, asyncio.Future]] = []
+        self.counter = itertools.count()
+
+    async def acquire(self, prio: tuple) -> None:
+        if self.free > 0:
+            self.free -= 1
+            return
+        fut = asyncio.get_running_loop().create_future()
+        heapq.heappush(self.waiters, (prio, next(self.counter), fut))
+        await fut
+
+    def release(self) -> None:
+        while self.waiters:
+            _, _, fut = heapq.heappop(self.waiters)
+            if not fut.done():
+                fut.set_result(None)
+                return
+        self.free += 1
 
 
 class RateLimiter:
@@ -273,6 +302,7 @@ class Daemon:
         self.requests: dict[str, dict] = {}     # rid → {total, done}
         self.seen: set[str] = set()
         self.queue: asyncio.Queue = asyncio.Queue()
+        self.seq = 0
 
     async def run(self, duration: float) -> None:
         from playwright.async_api import async_playwright
@@ -290,7 +320,7 @@ class Daemon:
         async with async_playwright() as pw:
             browser = await pw.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
             ctx = await browser.new_context(locale="en-US", user_agent=_UA)
-            sem = asyncio.Semaphore(CONCURRENCY)
+            sem = PriorityGate(CONCURRENCY)
             log(f"daemon up: req={self.req} res={self.res} for {duration:.0f}s")
             deadline = time.time() + duration
             persist_task = asyncio.create_task(self._persist_loop())
@@ -319,8 +349,10 @@ class Daemon:
             await asyncio.sleep(PERSIST_EVERY_S)
             await asyncio.to_thread(self.persist.flush, True)
 
-    async def handle(self, req: dict, ctx, sem: asyncio.Semaphore) -> None:
+    async def handle(self, req: dict, ctx, sem: PriorityGate) -> None:
         rid, keys = req["rid"], req["keys"]
+        self.seq += 1
+        seq = self.seq
         first_chunk = rid not in self.requests
         state = self.requests.setdefault(rid, {"total": req["total"], "done": 0})
         log(f"handle {rid}: first_chunk={first_chunk} total={state['total']}")
@@ -343,12 +375,14 @@ class Daemon:
             if hit and time.time() - hit[0] < CACHE_TTL_S:
                 entry = hit[1]
             else:
-                async with sem:
-                    try:
-                        entry = await _fetch_one(ctx, key, 40000)
-                    except Exception as e:  # noqa: BLE001
-                        log(f"fetch failed {key}: {e}")
-                        entry, failed = None, True
+                await sem.acquire((-seq, key.startswith("mc|")))
+                try:
+                    entry = await _fetch_one(ctx, key, 40000)
+                except Exception as e:  # noqa: BLE001
+                    log(f"fetch failed {key}: {e}")
+                    entry, failed = None, True
+                finally:
+                    sem.release()
                 if not failed:   # a crash is not "no itinerary": do not cache or report it as unavailable
                     self.cache[key] = (time.time(), entry)
             state["done"] += 1

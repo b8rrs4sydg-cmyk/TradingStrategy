@@ -228,3 +228,31 @@ def test_daemon_rate_limiter_window():
     rl = RateLimiter(limit=100, window=60)
     assert rl.allow(60, now=0) and rl.allow(40, now=1) and not rl.allow(1, now=2)
     assert rl.allow(50, now=61)   # first batch left the window
+
+
+def test_daemon_priority_gate_serves_newest_request_first():
+    import asyncio
+
+    from scripts.lookup_daemon import PriorityGate
+
+    async def run() -> list[str]:
+        gate, order = PriorityGate(1), []
+        await gate.acquire((0, 0))
+
+        async def waiter(name: str, prio: tuple) -> None:
+            await gate.acquire(prio)
+            order.append(name)
+            gate.release()
+
+        tasks = [
+            asyncio.create_task(waiter("old-mc", (-1, 1))),
+            asyncio.create_task(waiter("old-ow", (-1, 0))),
+            asyncio.create_task(waiter("new-mc", (-2, 1))),
+            asyncio.create_task(waiter("new-ow", (-2, 0))),
+        ]
+        await asyncio.sleep(0)
+        gate.release()
+        await asyncio.gather(*tasks)
+        return order
+
+    assert asyncio.run(run()) == ["new-ow", "new-mc", "old-ow", "old-mc"]
