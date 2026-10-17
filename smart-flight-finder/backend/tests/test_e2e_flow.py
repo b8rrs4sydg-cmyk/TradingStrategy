@@ -91,14 +91,15 @@ def test_two_trip_search_returns_roles_trips_and_multi_city_links_through_csv():
         "back_to_back_outer_stations": ["HKG", "ICN"],
         "candidate_windows": [
             {"holiday_key": "lunar_ny", "depart": "2027-02-05", "return_date": "2027-02-15"},
+            {"holiday_key": "qingming", "depart": "2027-04-02", "return_date": "2027-04-11"},
             {"holiday_key": "xmas", "depart": "2027-12-23", "return_date": "2027-12-27"},
         ],
     }
     body = client.post("/search", json=payload).json()
     assert [n for n in body["notices"] if "LHR" not in n] == []
     four = next(p for p in body["plans"] if p["strategy"] == "back_to_back_4leg")
-    assert four["ticket_roles"][0].startswith("外站四腿票") and len(four["trips"]) == 2
-    trip_link = next(b for b in four["tickets"][0]["booking_links"] if b["source"] == "trip_com")
+    assert four["ticket_roles"][1].startswith("外站四腿票") and len(four["trips"]) == 3
+    trip_link = next(b for b in four["tickets"][1]["booking_links"] if b["source"] == "trip_com")
     assert "triptype=mt" in trip_link["url"]
 
     rows = list(csv.DictReader(io.StringIO(client.post("/plans/csv", json={"plans": [four]}).text)))

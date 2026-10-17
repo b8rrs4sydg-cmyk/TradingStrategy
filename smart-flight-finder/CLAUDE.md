@@ -61,25 +61,25 @@ Rules of thumb:
 - Planners either consume `iter_date_combos` or pair dates manually (standard
   does the latter for simpler round-trip code).
 
-## Two-trip strategies — 反向票＋倒買法 and 外站四腿票
+## Multi-trip strategies — 反向票＋倒買法 (2 trips) and 外站四腿票 (3 trips)
 
-Both only pay off when ONE purchase covers TWO trips, so `SearchService`
-runs them over ordered pairs of non-overlapping `candidate_windows`
-(trip A strictly before trip B; `_slot_pairs`). With < 2 slots they return
-nothing plus a `notices` entry. Shared helpers live in `strategies/two_trip.py`
-(`TripSlot`, `quote` → round trip if the two segments mirror, else
-`search_multi_city`, `best_pair` constrained cheapest combination).
+Both only pay off when ONE purchase covers several trips, so `SearchService`
+runs 反向票＋倒買法 over ordered pairs of non-overlapping `candidate_windows`
+(`_slot_pairs`) and 四腿票 over ordered triples (`_slot_triples`). With too few
+slots they return nothing plus a `notices` entry. Shared helpers live in
+`strategies/two_trip.py` (`TripSlot`, `quote` → round trip if the two segments
+mirror, else `search_multi_city`, `best_pair` constrained cheapest combination).
 
 ```
 反向票＋倒買法 (reverse.py), home H; each trip has its own in/out city in ONE
 country (大阪進東京出); only JP/TH/KR (DAOMAI_COUNTRIES, others → notice):
   包覆票  H→A_in (A start) + B_out→H (B end)   ← or 補頭尾: two one-ways
   反向票  A_out→H (A end)  + H→B_in (B start)  ← foreign-origin, cheap in TW 連假
-外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→Y, Y in a THIRD country
-(not X's, not D's — so the two trips never visit the same country):
-  A: leg1 X→TPE (c1) + leg2 TPE→D (c2 ≥ c1), both inside trip A's window, any stay
-     in Taipei between (no 單買初段, no fixed outer-stay days) · leg3 D→TPE
-  B: leg4 TPE→Y · 單買最後一段 Y→TPE (or next 四腿票 leg1 = 循環)
+外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→Y over THREE slots P<Q<R,
+X, D, Y in three different countries:
+  旅程1 (P): 單買初段 TPE→X · stay in X, any length · leg1 X→TPE (inside P's window)
+  旅程2 (Q): leg2 TPE→D · leg3 D→TPE        (leg 1 is NOT glued to leg 2)
+  旅程3 (R): leg4 TPE→Y · 單買最後一段 Y→TPE (or next 四腿票 leg1 = 循環)
 ```
 
 Plans that beat ordinary round trips for both trips are kept; if none does,
@@ -120,7 +120,7 @@ Self-Service shut down 2026-07-17; every price comes from Google Flights:
   (`.github/workflows/fares-snapshot.yml`, every 6 h; dispatch on the
   branch until merged — schedules only run on the default branch).
   Stage 1: every ow/rt query; stage 2: multi-city queries ranked by the real
-  stage-1 prices (四腿票 budget = rt_D + rt_Y − ow(Y→TPE); up to
+  stage-1 prices (四腿票 budget = rt_X + rt_D + rt_Y − ow(TPE→X) − ow(Y→TPE); up to
   3 date variants when ≥ 80% of rt_D, else 1; open jaws by mirrored rt),
   capped at `--max-multi-city`; then a slow retry pass; merged into the DB.
 - Demo: `scripts/embed_fare_snapshot.py` writes the DB into

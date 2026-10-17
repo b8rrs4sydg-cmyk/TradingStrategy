@@ -547,7 +547,7 @@ export function SearchForm({ onResult, onError }: Props) {
             [
               ["standard", "一般來回 / 直購"],
               ["reverse", "反向票＋倒買法 (一次買兩趟)"],
-              ["back_to_back_4leg", "外站四腿票 (一次買兩趟)"],
+              ["back_to_back_4leg", "外站四腿票 (一張票串三趟)"],
               ["open_jaw", "Open-jaw (開放式)"],
               ["hidden_city", "隱藏城市 (Skiplag)"],
             ] as const
@@ -567,11 +567,12 @@ export function SearchForm({ onResult, onError }: Props) {
 
         {pairStrategyOn && (
           <p className="mt-3 text-xs text-slate-500">
-            反向票＋倒買法、外站四腿票都是「一次購票、兩趟旅程」：會用備選時段兩兩配對
-            (較早的當旅程 A、較晚的當旅程 B)。
-            {candidates.length < 2 && (
+            反向票＋倒買法：一次購票、兩趟旅程 (備選時段兩兩配對)；外站四腿票：一張票串三趟旅程
+            (單買初段＋第1段、第2+3段、第4段＋單買最後一段)，需三個不重疊時段。
+            {candidates.length < (enabledStrategies.back_to_back_4leg ? 3 : 2) && (
               <span className="text-amber-700 dark:text-amber-400">
-                {" "}目前只有 {candidates.length} 個時段，請再加入一個 (例如 春節 + 聖誕)。
+                {" "}目前只有 {candidates.length} 個時段，請再加入至少{" "}
+                {(enabledStrategies.back_to_back_4leg ? 3 : 2) - candidates.length} 個 (例如 春節 + 清明 + 端午)。
               </span>
             )}
           </p>

@@ -1,4 +1,4 @@
-"""反向票＋倒買法 and 外站四腿票: one purchase, two trips (slot A then slot B)."""
+"""反向票＋倒買法 (two trips) and 外站四腿票 (three trips) over ordered holiday slots."""
 
 from dataclasses import replace
 from datetime import date
@@ -14,6 +14,8 @@ from tests.fake_fares import FakeFareProvider
 
 LNY = TripSlot("春節", departs=(date(2027, 2, 4), date(2027, 2, 5), date(2027, 2, 6)),
                returns=(date(2027, 2, 14), date(2027, 2, 15), date(2027, 2, 16)))
+QM = TripSlot("清明", departs=(date(2027, 4, 2), date(2027, 4, 3), date(2027, 4, 4)),
+              returns=(date(2027, 4, 10), date(2027, 4, 11), date(2027, 4, 12)))
 XMAS = TripSlot("聖誕", departs=(date(2027, 12, 22), date(2027, 12, 23), date(2027, 12, 24)),
                 returns=(date(2027, 12, 26), date(2027, 12, 27), date(2027, 12, 28)))
 
@@ -81,40 +83,48 @@ def test_daomai_only_for_japan_thailand_korea():
 
 def _four_leg(outer=("HKG", "ICN"), dests=("NRT",), provider=None):
     return FourLegPlanner(provider or FakeFareProvider()).plan(
-        trip_a=LNY, trip_b=XMAS, outer_stations=list(outer), destinations=list(dests),
+        trip_p=LNY, trip_q=QM, trip_r=XMAS, outer_stations=list(outer), destinations=list(dests),
     )
 
 
-def test_four_leg_is_one_ticket_plus_a_last_one_way():
+def test_four_leg_stitches_three_trips_with_first_and_last_one_ways():
     plans = _four_leg(dests=("LHR",))
     assert plans
-    p = next(p for p in plans if p.tickets[0].legs[0].origin == "HKG")
-    four, last = p.tickets
-    assert p.ticket_roles == ("外站四腿票：HKG 出發", "單買最後一段")   # no 單買初段 any more
-    # The 四腿票 itself: X→TPE→D→TPE→Y on ONE ticket, Y in a third country
+    p = next(p for p in plans if p.tickets[1].legs[0].origin == "HKG")
+    first, four, last = p.tickets
+    assert p.ticket_roles == ("單買初段", "外站四腿票：HKG 出發", "單買最後一段")
+    assert len(p.trips) == 3 and p.trip_count == 3
+    # 單買初段 is the outbound of trip 1; leg 1 of the 四腿票 is its return
+    assert [(leg.origin, leg.destination) for leg in first.legs] == [("TPE", "HKG")]
+    assert first.legs[0].departure.date() in LNY.departs
     assert [(leg.origin, leg.destination) for leg in four.legs] == [
         ("HKG", "TPE"), ("TPE", "LHR"), ("LHR", "TPE"), ("TPE", "ICN"),
     ]
     leg1, leg2, leg3, leg4 = four.legs
-    assert leg1.departure.date() in LNY.departs     # first segment inside trip A's window
-    assert leg1.departure.date() <= leg2.departure.date() in LNY.departs   # any stay in Taipei
-    assert leg3.departure.date() in LNY.returns     # back home at the end of trip A
-    assert leg4.departure.date() in XMAS.departs    # leg 4 starts trip B
-    # 單買最後一段 closes the loop at the end of trip B
+    assert leg1.departure.date() in LNY.returns     # inside trip 1's window
+    assert leg2.departure.date() in QM.departs      # NOT glued to leg 1: another holiday
+    assert leg3.departure.date() in QM.returns
+    assert leg4.departure.date() in XMAS.departs
     assert [(leg.origin, leg.destination) for leg in last.legs] == [("ICN", "TPE")]
     assert last.legs[0].departure.date() in XMAS.returns
-    assert p.total_cost == four.total_price + last.total_price
+    assert p.total_cost == first.total_price + four.total_price + last.total_price
     codes = {w.code for w in p.warnings}
     assert {"four_leg_first_segment", "four_leg_loop", "four_leg_savings_estimate",
             "four_leg_origin_open_jaw"} <= codes
 
 
-def test_four_leg_allows_any_stay_between_leg_1_and_2():
-    spans = {
-        (p.tickets[0].legs[1].departure.date() - p.tickets[0].legs[0].departure.date()).days
-        for p in _four_leg(dests=("LHR", "BKK"), outer=("HKG", "ICN", "NRT"))
-    }
-    assert all(d >= 0 for d in spans)
+def test_four_leg_needs_three_slots():
+    req = ItineraryRequestIn(
+        trip_type=TripType.ROUND_TRIP, origins=["TPE"], destinations=["NRT", "LHR"],
+        strategies=[S.BACK_TO_BACK_4LEG], back_to_back_outer_stations=["HKG", "ICN"],
+        candidate_windows=[
+            CandidateWindowIn(holiday_key="lunar_ny", depart=date(2027, 2, 5), return_date=date(2027, 2, 15)),
+            CandidateWindowIn(holiday_key="xmas", depart=date(2027, 12, 23), return_date=date(2027, 12, 27)),
+        ],
+    )
+    svc = SearchService(FakeFareProvider())
+    _, plans, _ = svc.run(req)
+    assert plans == [] and any("三個" in n for n in svc.notices)
 
 
 def test_four_leg_never_starts_and_ends_in_the_same_country():
@@ -125,9 +135,9 @@ def test_four_leg_never_starts_and_ends_in_the_same_country():
     plans = _four_leg(outer=("HKG", "NRT", "KIX", "ICN"), dests=("NRT", "BKK"))
     assert plans
     for p in plans:
-        x, d, y = p.tickets[0].legs[0].origin, p.tickets[0].legs[1].destination, p.tickets[0].legs[3].destination
-        assert country[y] not in (country[x], country[d])
-        assert p.tickets[1].legs[0].origin == y
+        x, d, y = p.tickets[1].legs[0].origin, p.tickets[1].legs[1].destination, p.tickets[1].legs[3].destination
+        assert len({country[x], country[d], country[y]}) == 3
+        assert p.tickets[0].legs[0].destination == x and p.tickets[2].legs[0].origin == y
 
 
 def test_best_non_saving_plan_is_kept_and_flagged():
@@ -152,7 +162,7 @@ def test_four_leg_needs_a_provider_that_can_quote_multi_city():
     assert _four_leg(dests=("LHR",), provider=NoMultiCity()) == []
 
 
-def test_search_service_labels_pair_plans_with_both_slots():
+def test_search_service_labels_plans_with_their_slots():
     req = ItineraryRequestIn(
         trip_type=TripType.ROUND_TRIP,
         origins=["TPE"],
@@ -161,11 +171,13 @@ def test_search_service_labels_pair_plans_with_both_slots():
         back_to_back_outer_stations=["HKG", "ICN"],
         candidate_windows=[
             CandidateWindowIn(holiday_key="lunar_ny", depart=date(2027, 2, 5), return_date=date(2027, 2, 15)),
+            CandidateWindowIn(holiday_key="qingming", depart=date(2027, 4, 2), return_date=date(2027, 4, 11)),
             CandidateWindowIn(holiday_key="xmas", depart=date(2027, 12, 23), return_date=date(2027, 12, 27)),
         ],
     )
     svc = SearchService(FakeFareProvider())
     _, plans, _ = svc.run(req)
     assert {p.strategy for p in plans} == {S.REVERSE, S.BACK_TO_BACK_4LEG}
-    assert {p.window_label for p in plans} == {"春節請 2 休 11 + 聖誕請 2 休 5"}
-    assert len(svc.notices) == 1 and "LHR" in svc.notices[0]  # 倒買法 is Asia-only
+    four_labels = {p.window_label for p in plans if p.strategy is S.BACK_TO_BACK_4LEG}
+    assert four_labels == {"春節請 2 休 11 + 清明請 3 休 9 + 聖誕請 2 休 5"}
+    assert any("LHR" in n for n in svc.notices)  # 倒買法 is Asia-only

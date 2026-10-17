@@ -104,21 +104,24 @@ def _near(day: date, flex: int):
 
 
 def four_leg_budget(key: str, prices: Mapping[str, int], cfg: CrawlConfig) -> tuple[float | None, tuple]:
-    """(room for saving / trip-A round trip, group) for a 四腿票 key.
+    """(room for saving / trip-Q round trip, group) for a 四腿票 key.
 
-    The four-leg ticket replaces both round trips, so what it may cost at most
-    to beat them is rt(D) + rt(Y) − the one-way Y→TPE bought separately.
+    The four-leg ticket replaces three round trips (X on P, D on Q, Y on R);
+    the 單買初段 and 最後一段 are bought separately, so what it may cost at most
+    to beat them is rt(X) + rt(D) + rt(Y) − ow(TPE→X) − ow(Y→TPE).
     """
 
     _, segs = parse_key(key)
-    (x, _, c1), (_, d, c2), _, (_, y, b_dep) = segs
-    group = ("4leg", x, d, y, c1.month, b_dep.month)
-    ow_last = _min_price(prices, f"ow|{y}|TPE|", lambda k: parse_key(k)[1][0][2] > b_dep)
+    (x, _, c1), (_, d, c2), _, (_, y, r_dep) = segs
+    group = ("4leg", x, d, y, c1.month, c2.month, r_dep.month)
+    ow_first = _min_price(prices, f"ow|TPE|{x}|", lambda k: parse_key(k)[1][0][2] < c1)
+    ow_last = _min_price(prices, f"ow|{y}|TPE|", lambda k: parse_key(k)[1][0][2] > r_dep)
+    rt_x = _min_price(prices, f"rt|TPE|{x}|", lambda k: abs((parse_key(k)[1][1][2] - c1).days) <= cfg.flex + 1)
     rt_d = _min_price(prices, f"rt|TPE|{d}|", _near(c2, cfg.flex))
-    rt_y = _min_price(prices, f"rt|TPE|{y}|", _near(b_dep, cfg.flex))
-    if None in (ow_last, rt_d, rt_y):
+    rt_y = _min_price(prices, f"rt|TPE|{y}|", _near(r_dep, cfg.flex))
+    if None in (ow_first, ow_last, rt_x, rt_d, rt_y):
         return None, group
-    return (rt_d + rt_y - ow_last) / max(rt_d, 1), group
+    return (rt_x + rt_d + rt_y - ow_first - ow_last) / max(rt_d, 1), group
 
 
 def open_jaw_score(key: str, prices: Mapping[str, int]) -> tuple[float | None, tuple]:

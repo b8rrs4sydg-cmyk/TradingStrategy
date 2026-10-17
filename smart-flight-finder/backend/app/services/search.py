@@ -117,11 +117,15 @@ UNCOVERED = (
 
 
 # Strategies whose whole point is covering TWO trips with interleaved tickets.
-PAIR_STRATEGIES = frozenset({TicketStrategyType.REVERSE, TicketStrategyType.BACK_TO_BACK_4LEG})
+PAIR_STRATEGIES = frozenset({TicketStrategyType.REVERSE})
 
 NEED_TWO_SLOTS = (
-    "反向票＋倒買法 與 外站四腿票 都是「一次購票、兩趟旅程」的買法，"
+    "反向票＋倒買法是「一次購票、兩趟旅程」的買法，"
     "需要至少兩個不重疊的備選時段（例如 春節 + 聖誕）且行程類型為來回。"
+)
+NEED_THREE_SLOTS = (
+    "外站四腿票串起三趟旅程（單買初段＋第1段 / 第2+3段 / 第4段＋單買最後一段），"
+    "需要至少三個不重疊的備選時段（例如 春節 + 清明 + 端午）且行程類型為來回。"
 )
 
 DAOMAI_ASIA_ONLY = (
@@ -217,6 +221,20 @@ class SearchService:
                 for strategy in paired:
                     for plan in self._run_pair_strategy(strategy, req, a, b):
                         add(plan, f"{a.label} + {b.label}")
+        if TicketStrategyType.BACK_TO_BACK_4LEG in req.strategies and req.back_to_back_outer_stations:
+            triples = _slot_triples(req)
+            if not triples:
+                self.notices.append(NEED_THREE_SLOTS)
+            for p_, q_, r_ in triples:
+                for plan in FourLegPlanner(self.provider).plan(
+                    trip_p=p_,
+                    trip_q=q_,
+                    trip_r=r_,
+                    outer_stations=req.back_to_back_outer_stations,
+                    destinations=req.destinations,
+                    adults=req.adults,
+                ):
+                    add(plan, f"{p_.label} + {q_.label} + {r_.label}")
         return total_matrix, plans
 
     # ------------------------------------------------------------------
@@ -257,19 +275,11 @@ class SearchService:
                 destinations=req.destinations,
                 adults=req.adults,
             )
-        if not req.back_to_back_outer_stations:
-            return []
-        return FourLegPlanner(self.provider).plan(
-            trip_a=a,
-            trip_b=b,
-            outer_stations=req.back_to_back_outer_stations,
-            destinations=req.destinations,
-            adults=req.adults,
-        )
+        return []
 
 
-def _slot_pairs(req: ItineraryRequestIn) -> list[tuple[TripSlot, TripSlot]]:
-    """Ordered (earlier, later) pairs of round-trip slots that don't overlap."""
+def _slots(req: ItineraryRequestIn) -> list[TripSlot]:
+    """Round-trip candidate windows as trip slots (empty unless round trip)."""
 
     if req.trip_type is not TripType.ROUND_TRIP:
         return []
@@ -282,11 +292,28 @@ def _slot_pairs(req: ItineraryRequestIn) -> list[tuple[TripSlot, TripSlot]]:
         for c in req.candidate_windows
         if len(ws := _windows_from_candidate(c, req.trip_type)) == 2
     ]
+    return slots
+
+
+def _slot_pairs(req: ItineraryRequestIn) -> list[tuple[TripSlot, TripSlot]]:
+    """Ordered (earlier, later) pairs of round-trip slots that don't overlap."""
+
+    slots = _slots(req)
+    return [(a, b) for a in slots for b in slots if a is not b and max(a.returns) < min(b.departs)]
+
+
+def _slot_triples(req: ItineraryRequestIn) -> list[tuple[TripSlot, TripSlot, TripSlot]]:
+    """Ordered non-overlapping slot chains (P before Q before R)."""
+
+    slots = _slots(req)
     return [
-        (a, b)
+        (a, b, c)
         for a in slots
         for b in slots
-        if a is not b and max(a.returns) < min(b.departs)
+        for c in slots
+        if len({id(a), id(b), id(c)}) == 3
+        and max(a.returns) < min(b.departs)
+        and max(b.returns) < min(c.departs)
     ]
 
 
