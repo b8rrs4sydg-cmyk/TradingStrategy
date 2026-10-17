@@ -225,6 +225,16 @@
   .four-leg-extras.open { display: grid }
   @media (max-width: 640px) { .four-leg-extras { grid-template-columns: 1fr } }
 
+  .picker { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: var(--card) }
+  .picker + .picker { margin-top: 10px }
+  .picker .head { font: 500 11px/1 var(--font-body); color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px }
+  .picker .row { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; font-size: 13.5px; padding: 3px 0 }
+  .picker .grp { width: 64px; flex-shrink: 0; font-size: 11.5px; color: var(--fg-muted) }
+  .picker label { display: inline-flex; align-items: center; gap: 5px; cursor: pointer }
+  .picker .code { font: 400 10.5px/1 var(--font-mono); color: var(--fg-faint) }
+  .notice { border: 1px solid var(--warn); background: var(--risk-med-bg); color: var(--risk-med-fg); border-radius: 8px; padding: 10px 14px; font-size: 13.5px; margin-bottom: 14px }
+  .trips { list-style: none; margin: 0; padding: 10px 12px; background: var(--accent-wash); color: var(--fg); border-radius: 8px; font-size: 12.5px; display: grid; gap: 4px }
+  .per-trip { font-size: 11px; color: var(--fg-muted); text-align: right }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 14px }
   .chip {
     appearance: none;
@@ -584,7 +594,8 @@
     <p>
       以 2027 台灣連假為參考，多選並微調成「備選時段」(各自設定去/回程彈性)，
       引擎會對每個時段展開日期矩陣、依「標準直購 / 反向票 / Open-jaw / 外站四段票」
-      搜尋，做跨票 MCT 檢查、合併排序，每張票附 Trip.com 等訂票網站連結。
+      搜尋；反向票＋倒買法、外站四腿票會把兩個時段配成「一次購票、兩趟旅程」，
+      每張票附 Trip.com / Google Flights / Skyscanner 連結 (多段票給多段搜尋連結)。
     </p>
     <div class="hero-stats">
       <div><b>5</b>種進階票規</div>
@@ -611,15 +622,10 @@
         </label>
       </div>
 
-      <div class="grid grid-2">
-        <label class="field">
-          <span>出發機場 (逗號分隔)</span>
-          <input id="f-origins" type="text" value="TPE" placeholder="TPE, KHH">
-        </label>
-        <label class="field">
-          <span>目的地 (IATA)</span>
-          <input id="f-destinations" type="text" value="NRT, HND, KIX, ICN" placeholder="NRT, HND, KIX">
-        </label>
+      <div>
+        <div class="picker" id="pick-origins"></div>
+        <div class="picker" id="pick-dest"></div>
+        <p class="hint" id="airport-err" style="color:var(--crit)" hidden>請至少勾選一個出發機場與一個目的地</p>
       </div>
 
       <fieldset>
@@ -639,18 +645,16 @@
         <legend>策略</legend>
         <div class="strategies">
           <label><input type="checkbox" value="standard" checked> 一般來回 / 直購</label>
-          <label><input type="checkbox" value="reverse" checked> 反向票 (A↔B vs B↔A)</label>
+          <label><input type="checkbox" value="reverse" checked> 反向票＋倒買法 (一次買兩趟)</label>
           <label><input type="checkbox" value="open_jaw"> Open-jaw (不同進出點)</label>
-          <label><input type="checkbox" value="back_to_back_4leg"> 外站四段票</label>
+          <label><input type="checkbox" value="back_to_back_4leg" checked> 外站四腿票 (一次買兩趟)</label>
         </div>
-        <div id="four-leg-extras" class="four-leg-extras">
+        <p class="hint" id="pair-hint" style="margin-top:8px"></p>
+        <div id="four-leg-extras" class="four-leg-extras" style="grid-template-columns:1fr">
+          <div class="picker" id="pick-outer" style="margin:0"></div>
           <label class="field">
-            <span>外站 (XMN, HKG, …)</span>
-            <input id="f-outer" type="text" value="XMN, HKG">
-          </label>
-          <label class="field">
-            <span>外站緩衝 ±<span id="f-outer-buf-val">2</span> 天</span>
-            <input id="f-outer-buf" type="range" min="0" max="7" value="2">
+            <span>旅程 A 先單買初段到外站，停留 <span id="f-outer-stay-val">2</span> 天後飛四腿票第1+2段</span>
+            <input id="f-outer-stay" type="range" min="0" max="7" value="2">
           </label>
         </div>
       </fieldset>
@@ -700,6 +704,7 @@
       </div>
     </div>
 
+    <div id="notices"></div>
     <div id="compare" class="compare" hidden></div>
     <div id="heatmap" class="heatmap" hidden></div>
     <div id="plan-list"></div>
@@ -771,8 +776,50 @@ function jitter(key) {
   return (stableFloat(key) - 0.5) * 0.24; // ±12%
 }
 
+/* Airport catalog — mirrors backend/app/data/airports.py */
+const AIRPORTS = [
+  // code, name, group, ow fare from TPE (stub), minutes, carrier, outstation?
+  ['TPE','台北桃園','台灣',0,0,'BR',0], ['TSA','台北松山','台灣',0,0,'CI',0], ['KHH','高雄','台灣',0,0,'CI',0], ['RMQ','台中','台灣',0,0,'AE',0],
+  ['NRT','東京成田','日本',12800,190,'BR',1], ['HND','東京羽田','日本',14200,185,'CI',1], ['KIX','大阪關西','日本',11800,180,'JX',1],
+  ['NGO','名古屋','日本',11500,175,'CI',0], ['FUK','福岡','日本',10200,150,'CI',1], ['CTS','札幌','日本',13800,245,'BR',0], ['OKA','沖繩','日本',8200,90,'CI',0],
+  ['ICN','首爾仁川','韓國',9800,160,'KE',1], ['PUS','釜山','韓國',9200,135,'BR',0],
+  ['HKG','香港','港澳/中國',5100,90,'CX',1], ['MFM','澳門','港澳/中國',5300,95,'NX',1], ['XMN','廈門','港澳/中國',4100,90,'MF',1],
+  ['BKK','曼谷','東南亞',10800,230,'TG',1], ['CNX','清邁','東南亞',11200,245,'BR',0], ['SGN','胡志明市','東南亞',8900,215,'BR',1],
+  ['HAN','河內','東南亞',9300,200,'CI',1], ['MNL','馬尼拉','東南亞',7800,140,'PR',1], ['CEB','宿霧','東南亞',8600,170,'JX',1],
+  ['KUL','吉隆坡','東南亞',10200,285,'MH',1], ['SIN','新加坡','東南亞',11600,280,'SQ',1],
+  ['LHR','倫敦','歐洲',32000,845,'BR',0], ['CDG','巴黎','歐洲',31500,830,'BR',0], ['AMS','阿姆斯特丹','歐洲',30500,820,'CI',0], ['VIE','維也納','歐洲',30000,790,'BR',0],
+  ['LAX','洛杉磯','美洲',26500,720,'BR',0], ['SFO','舊金山','美洲',25800,690,'BR',0], ['JFK','紐約','美洲',30800,935,'BR',0], ['YVR','溫哥華','美洲',24500,650,'BR',0],
+  ['SYD','雪梨','紐澳',22800,555,'CI',0], ['BNE','布里斯本','紐澳',21900,520,'BR',0],
+].map(([code, name, group, ow, minutes, carrier, outstation]) => ({ code, name, group, ow, minutes, carrier, outstation: !!outstation }));
+const AIRPORT_BY_CODE = new Map(AIRPORTS.map(a => [a.code, a]));
+const TW_AIRPORTS = new Set(['TPE','TSA','KHH','RMQ','TNN','HUN','KNH','MZG','TTT','HCN']);
+const HUB = 'TPE';
+
+/* Fare model (mirrors stub.py): TW-origin departures in 連假 cost more; an
+ * outstation multi-city through TPE (四腿票) is priced in the cheaper market. */
+const TW_HOLIDAY_SURGE = 1.30, MULTI_CITY_FACTOR = 0.85, OUTSTATION_MULTI_CITY_FACTOR = 0.62;
+const TW_PEAK_DAYS = new Set(LEAVE_STRATEGIES_2027.flatMap(s => {
+  const out = [];
+  for (let i = -1; i < daysBetween(s.start, s.end); i++) out.push(addDays(s.start, i));
+  return out;
+}));
+function marketFactor(origin, dateISO) {
+  return TW_AIRPORTS.has(origin) && TW_PEAK_DAYS.has(dateISO) ? TW_HOLIDAY_SURGE : 1;
+}
+
 function routeFor(a, b) {
-  return ROUTES[`${a}-${b}`] || { base: 15000, dur: 240, carrier: 'ZZ' };
+  const exact = ROUTES[`${a}-${b}`];
+  if (exact) return exact;
+  const r100 = x => Math.round(x / 100) * 100;
+  if (TW_AIRPORTS.has(a) && AIRPORT_BY_CODE.get(b)?.ow) {
+    const x = AIRPORT_BY_CODE.get(b);
+    return { base: r100(x.ow * (a === HUB ? 1 : 1.06)), dur: x.minutes, carrier: x.carrier };
+  }
+  if (TW_AIRPORTS.has(b) && AIRPORT_BY_CODE.get(a)?.ow) {
+    const x = AIRPORT_BY_CODE.get(a);
+    return { base: r100(x.ow * (b === HUB ? 0.98 : 1.04)), dur: x.minutes + 10, carrier: x.carrier };
+  }
+  return { base: 15000, dur: 240, carrier: 'ZZ' };
 }
 
 function makeLeg(origin, destination, dateISO, hour) {
@@ -811,17 +858,44 @@ const CachingProvider = (function () {
     const outboundLeg = makeLeg(args.origin, args.destination, args.departureDate, 9);
     let offers;
     if (!args.returnDate) {
-      const price = Math.round(r.base * (1 + jitter(`ow|${args.origin}|${args.destination}|${args.departureDate}`)) * (args.adults || 1));
+      const price = Math.round(r.base * marketFactor(args.origin, args.departureDate) * (1 + jitter(`ow|${args.origin}|${args.destination}|${args.departureDate}`)) * (args.adults || 1));
       offers = [{ offer_id: `ow-${r.carrier}-${args.departureDate}`, legs: [outboundLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }];
     } else {
       const returnLeg = makeLeg(args.destination, args.origin, args.returnDate, 18);
-      const price = Math.round(r.base * 1.7 * (1 + jitter(`rt|${args.origin}|${args.destination}|${args.departureDate}|${args.returnDate}`)) * (args.adults || 1));
+      const price = Math.round(r.base * 1.7 * marketFactor(args.origin, args.departureDate) * (1 + jitter(`rt|${args.origin}|${args.destination}|${args.departureDate}|${args.returnDate}`)) * (args.adults || 1));
       offers = [{ offer_id: `rt-${r.carrier}-${args.departureDate}-${args.returnDate}`, legs: [outboundLeg, returnLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }];
     }
     cache.set(k, offers);
     return offers;
   }
-  return { search, stats, reset };
+  // One ticket over several segments (四腿票, open-jaw 倒買法 tickets).
+  function searchMultiCity(segments, adults) {
+    const k = 'mc|' + segments.map(s => s.join('-')).join('|') + '|' + adults;
+    if (cache.has(k)) { hits += 1; return cache.get(k); }
+    misses += 1;
+    const seeds = segments.map(([o, d]) => routeFor(o, d));
+    const carrier = seeds.reduce((a, b) => (b.base > a.base ? b : a)).carrier;
+    const legs = [];
+    segments.forEach(([o, d, day], i) => {
+      const prev = legs[legs.length - 1];
+      let dep = new Date(`${day}T14:00:00Z`);
+      if (prev && prev.destination === o && prev.arrival.slice(0, 10) === day) dep = new Date(Date.parse(prev.arrival) + 150 * 60000);
+      legs.push({
+        origin: o, destination: d, departure: dep.toISOString(),
+        arrival: new Date(dep.getTime() + seeds[i].dur * 60000).toISOString(),
+        carrier, flight_number: carrier + ((Math.abs(hashCode(`${o}-${d}-${day}`)) % 900) + 100), cabin: 'economy', stops: 0,
+      });
+    });
+    const [o0, , d0] = segments[0];
+    const hubTouches = segments.filter(([o, d]) => o === HUB || d === HUB).length;
+    const outstation = !TW_AIRPORTS.has(o0) && segments.length >= 4 && hubTouches >= 4;
+    const factor = outstation ? OUTSTATION_MULTI_CITY_FACTOR : MULTI_CITY_FACTOR;
+    const price = Math.round(seeds.reduce((n, sd) => n + sd.base, 0) * factor * marketFactor(o0, d0) * (1 + jitter(k)) * adults);
+    const offers = [{ offer_id: 'mc-' + segments.map(([o, d, day]) => `${o}${d}${day.slice(5).replace('-', '')}`).join('-'), legs, total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }];
+    cache.set(k, offers);
+    return offers;
+  }
+  return { search, searchMultiCity, stats, reset };
 })();
 
 /* =========================================================================
@@ -841,7 +915,6 @@ function expandWindow(anchor, flexBefore, flexAfter) {
 /* =========================================================================
  * MCT policy
  * ========================================================================= */
-const TW_AIRPORTS = new Set(['TPE','TSA','KHH','RMQ','TNN','HUN','KNH','MZG','TTT','HCN']);
 function isInternational(a, b) {
   return !(TW_AIRPORTS.has(a) && TW_AIRPORTS.has(b));
 }
@@ -919,41 +992,6 @@ function planStandard(req, expanded) {
   return out;
 }
 
-function planReverse(req, expanded) {
-  if (req.tripType === 'one_way') return [];
-  const MIN_SAV = 0.12;
-  const out = [];
-  for (const origin of req.origins) {
-    for (const destination of req.destinations) {
-      let best = null;
-      for (const [od, rd] of pairRoundTrip(expanded.out, expanded.ret)) {
-        const fwd = CachingProvider.search({ origin, destination, departureDate: od, returnDate: rd, adults: req.adults })[0];
-        const rev = CachingProvider.search({ origin: destination, destination: origin, departureDate: od, returnDate: rd, adults: req.adults })[0];
-        if (!fwd || !rev) continue;
-        const sav = fwd.total_price - rev.total_price;
-        if (sav <= 0) continue;
-        const pct = sav / fwd.total_price;
-        if (pct < MIN_SAV) continue;
-        const plan = {
-          strategy: 'reverse',
-          tickets: [rev],
-          total_cost: rev.total_price,
-          currency: rev.currency,
-          total_travel_days: daysBetween(od, rd) + 1,
-          warnings: [
-            { level: 'medium', code: 'reverse_fare_rules', message: '反向開票需確認票規允許棄程/缺省段；里程通常不計入' },
-            { level: 'low',    code: 'reverse_savings_estimate', message: `估計節省 ${sav.toLocaleString()} TWD（${(pct*100).toFixed(0)}%）` },
-          ],
-          explain: `反向：${destination}→${origin}→${destination} 來回 ${od}~${rd}，較正向便宜 ${sav.toLocaleString()}`,
-        };
-        if (!best || plan.total_cost < best.total_cost) best = plan;
-      }
-      if (best) out.push(best);
-    }
-  }
-  return out;
-}
-
 function planOpenJaw(req, expanded) {
   if (req.tripType === 'one_way') return [];
   if (req.destinations.length < 2) return [];
@@ -999,63 +1037,173 @@ function planOpenJaw(req, expanded) {
   return out;
 }
 
-function planFourLeg(req, expanded) {
-  if (req.tripType === 'one_way') return [];
-  if (!req.outerStations.length) return [];
-  const MIN_SAV = 0.10;
-  const HUB = 'TPE';
-  const out = [];
-  const innerPairs = pairRoundTrip(expanded.out, expanded.ret);
+/* =========================================================================
+ * Two-trip strategies (mirror backend reverse.py / back_to_back.py)
+ *   A = earlier 備選時段, B = later one; {label, departs[], returns[]} ISO dates.
+ * ========================================================================= */
+const cheapestOf = offers => (offers && offers.length ? offers.reduce((a, b) => (a.total_price <= b.total_price ? a : b)) : null);
 
-  for (const outerStation of req.outerStations) {
-    for (const destination of req.destinations) {
-      // Baseline = cheapest direct TPE↔destination round-trip in the inner matrix
-      let baseline = 0;
-      for (const [od, rd] of innerPairs) {
-        const rt = CachingProvider.search({ origin: HUB, destination, departureDate: od, returnDate: rd, adults: req.adults })[0];
-        if (rt && (!baseline || rt.total_price < baseline)) baseline = rt.total_price;
+function quote(segments, adults) {
+  let t;
+  if (segments.length === 1) {
+    const [[o, d, day]] = segments;
+    t = cheapestOf(CachingProvider.search({ origin: o, destination: d, departureDate: day, returnDate: null, adults }));
+  } else if (segments.length === 2 && segments[0][0] === segments[1][1] && segments[0][1] === segments[1][0]) {
+    t = cheapestOf(CachingProvider.search({ origin: segments[0][0], destination: segments[0][1], departureDate: segments[0][2], returnDate: segments[1][2], adults }));
+  } else {
+    t = cheapestOf(CachingProvider.searchMultiCity(segments, adults));
+  }
+  return t ? { ...t, searched_segments: segments } : null;
+}
+
+function bestPair(front, back, compatible) {
+  const f = [...front].sort((a, b) => a[0] - b[0]);
+  const bk = [...back].sort((a, b) => a[0] - b[0]);
+  if (!f.length || !bk.length) return null;
+  let best = null;
+  for (const [fc, fv] of f) {
+    if (best && fc + bk[0][0] >= best[0]) break;
+    for (const [bc, bv] of bk) {
+      if (best && fc + bc >= best[0]) break;
+      if (compatible(fv, bv)) { best = [fc + bc, fv, bv]; break; }
+    }
+  }
+  return best;
+}
+
+const md = iso => `${Number(iso.slice(5, 7))}/${Number(iso.slice(8, 10))}`;
+const tripDays = (dep, ret) => daysBetween(dep, ret) + 1;
+
+function cheapestRoundTrip(home, dest, slot, adults) {
+  const offers = [];
+  for (const dep of slot.departs) for (const ret of slot.returns) {
+    if (ret <= dep) continue;
+    offers.push(...CachingProvider.search({ origin: home, destination: dest, departureDate: dep, returnDate: ret, adults }));
+  }
+  return cheapestOf(offers);
+}
+
+function planReversePair(req, A, B) {
+  const plans = [];
+  for (const home of req.origins) {
+    const dests = [...new Set(req.destinations)].filter(d => d !== home);
+    const baseA = new Map(dests.map(d => [d, cheapestRoundTrip(home, d, A, req.adults)]));
+    const baseB = new Map(dests.map(d => [d, cheapestRoundTrip(home, d, B, req.adults)]));
+    for (const d1 of dests) for (const d2 of dests) {
+      if (!baseA.get(d1) || !baseB.get(d2)) continue;
+      const baseline = baseA.get(d1).total_price + baseB.get(d2).total_price;
+      // 反向票: d1→home at the end of A, home→d2 at the start of B
+      const back = [];
+      for (const aRet of A.returns) for (const bDep of B.departs) {
+        if (bDep <= aRet) continue;
+        const t = quote([[d1, home, aRet], [home, d2, bDep]], req.adults);
+        if (t) back.push([t.total_price, { aRet, bDep, t }]);
       }
-
-      for (const [innerOut, innerRet] of innerPairs) {
-        const innerTkt = CachingProvider.search({ origin: HUB, destination, departureDate: innerOut, returnDate: innerRet, adults: req.adults })[0];
-        if (!innerTkt) continue;
-        for (let leg1Off = 0; leg1Off <= req.outerBuffer; leg1Off++) {
-          const leg1Date = addDays(innerOut, -leg1Off);
-          for (let leg4Off = 0; leg4Off <= req.outerBuffer; leg4Off++) {
-            const leg4Date = addDays(innerRet, leg4Off);
-            const outerTkt = CachingProvider.search({ origin: outerStation, destination: HUB, departureDate: leg1Date, returnDate: leg4Date, adults: req.adults })[0];
-            if (!outerTkt) continue;
-            const total = outerTkt.total_price + innerTkt.total_price;
-            if (baseline && total >= baseline * (1 - MIN_SAV)) continue;
-
-            // MCT at both TPE handoffs (cross-ticket, international)
-            const warnings = [];
-            const w1 = checkConnection(outerTkt.legs[0], innerTkt.legs[0], { crossTicket: true });
-            const w2 = checkConnection(innerTkt.legs[1], outerTkt.legs[1], { crossTicket: true });
-            if (w1) warnings.push(w1);
-            if (w2) warnings.push(w2);
-            if (warnings.some(w => w.level === 'high')) continue;
-
-            warnings.push({ level: 'medium', code: 'back_to_back_awareness', message: '四段票為兩張獨立 PNR，任何改期/取消/延誤皆不互相保護；行李須入境提領後重新託運。' });
-            if (baseline && baseline - total > 0) warnings.push({ level: 'low', code: 'back_to_back_savings_estimate', message: `較直飛來回估省 ${(baseline-total).toLocaleString()} TWD` });
-
-            out.push({
-              strategy: 'back_to_back_4leg',
-              tickets: [outerTkt, innerTkt],
-              total_cost: total,
-              currency: outerTkt.currency,
-              total_travel_days: daysBetween(innerOut, innerRet) + 1,
-              warnings,
-              explain: `四段票：${outerStation}-${HUB}-${destination}-${HUB}-${outerStation}; 票甲 ${leg1Date}/${leg4Date}, 票乙 ${innerOut}/${innerRet}`,
-            });
-          }
-        }
+      // 倒買法 包覆票: home→d1 at the start of A, d2→home at the end of B
+      const wrap = [];
+      for (const aDep of A.departs) for (const bRet of B.returns) {
+        const t = quote([[home, d1, aDep], [d2, home, bRet]], req.adults);
+        if (t) wrap.push([t.total_price, { aDep, bRet, tickets: [t] }]);
+      }
+      // 補頭尾: two one-ways instead of the 包覆票
+      const firsts = A.departs.map(dep => [dep, quote([[home, d1, dep]], req.adults)]).filter(x => x[1]);
+      const lasts = B.returns.map(ret => [ret, quote([[d2, home, ret]], req.adults)]).filter(x => x[1]);
+      const ends = [];
+      for (const [aDep, f] of firsts) for (const [bRet, l] of lasts) ends.push([f.total_price + l.total_price, { aDep, bRet, tickets: [f, l] }]);
+      const compatible = (fr, bk) => fr.aDep < bk.aRet && bk.bDep < fr.bRet;
+      for (const [variant, front] of [['倒買法', wrap], ['補頭尾', ends]]) {
+        const best = bestPair(front, back, compatible);
+        if (!best || best[0] >= baseline) continue;
+        const [total, fr, bk] = best;
+        const revRole = `反向票：${d1} 出發` + (d1 !== d2 ? `，回程飛 ${d2}` : '');
+        const daomai = variant === '倒買法';
+        const tickets = daomai ? [fr.tickets[0], bk.t] : [fr.tickets[0], bk.t, fr.tickets[1]];
+        const roles = daomai ? [`包覆票：${home} 出發` + (d1 !== d2 ? `，${d2} 回` : ''), revRole] : ['單買去程 (補頭)', revRole, '單買回程 (補尾)'];
+        const [firstTag, lastTag] = daomai ? ['包覆票 第1段', '包覆票 第2段'] : ['單買去程', '單買回程'];
+        const saving = baseline - total;
+        const warnings = [
+          { level: 'medium', code: 'reverse_ticket_order', message: `反向票須從第1段 ${d1}→${home} 開始依序搭乘，第1段未搭乘後段會被取消；各張票分開開票，任一張延誤或改期都不保護另一張` },
+          { level: 'low', code: 'reverse_savings_estimate', message: `比兩趟各買一般來回 (共 ${baseline.toLocaleString()}) 省 ${saving.toLocaleString()} TWD（${Math.round(saving / baseline * 100)}%）` },
+        ];
+        if (daomai) warnings.push({ level: 'low', code: 'wrap_ticket_validity', message: `包覆票從 ${md(fr.aDep)} 用到 ${md(fr.bRet)}，請確認票價規則的最長停留 / 效期（常見為 1 年）` });
+        plans.push({
+          strategy: 'reverse', tickets, total_cost: total, currency: 'TWD',
+          total_travel_days: tripDays(fr.aDep, bk.aRet) + tripDays(bk.bDep, fr.bRet),
+          warnings, ticket_roles: roles,
+          trips: [
+            `旅程 A｜${A.label}：${md(fr.aDep)} ${home}→${d1}（${firstTag}） ⇢ ${md(bk.aRet)} ${d1}→${home}（反向票 第1段）`,
+            `旅程 B｜${B.label}：${md(bk.bDep)} ${home}→${d2}（反向票 第2段） ⇢ ${md(fr.bRet)} ${d2}→${home}（${lastTag}）`,
+          ],
+          explain: `反向票＋${variant}：兩趟 ${home}⇄${d1}` + (d1 !== d2 ? ` / ${d2}` : '') + `，共 ${tickets.length} 張票，省 ${saving.toLocaleString()}`,
+        });
       }
     }
   }
-  // Keep only the cheapest N per (outerStation, destination) to avoid flooding
-  out.sort((a,b) => a.total_cost - b.total_cost);
-  return out.slice(0, 20);
+  return plans.sort((a, b) => a.total_cost - b.total_cost);
+}
+
+function nearestDates(dates, k) {
+  if (dates.length <= k) return dates;
+  const mid = dates[Math.floor(dates.length / 2)];
+  return [...dates].sort((a, b) => Math.abs(daysBetween(mid, a)) - Math.abs(daysBetween(mid, b))).slice(0, k).sort();
+}
+
+function planFourLegPair(req, A, B) {
+  const plans = [];
+  const stay = req.outerStay;
+  const aDeps = nearestDates(A.departs, 5), aRets = nearestDates(A.returns, 5), bDeps = nearestDates(B.departs, 5);
+  for (const x of new Set(req.outerStations)) {
+    if (x === HUB || TW_AIRPORTS.has(x)) continue;
+    const firstLegs = new Map(aDeps.map(d => [d, quote([[HUB, x, d]], req.adults)]));
+    const lastLegs = B.returns.map(d => [d, quote([[x, HUB, d]], req.adults)]).filter(e => e[1]);
+    const baseX = cheapestRoundTrip(HUB, x, B, req.adults);
+    for (const dest of new Set(req.destinations)) {
+      if (dest === x || dest === HUB || TW_AIRPORTS.has(dest)) continue;
+      const baseD = cheapestRoundTrip(HUB, dest, A, req.adults);
+      if (!baseX || !baseD) continue;
+      const baseline = baseD.total_price + baseX.total_price;
+      let best = null;
+      for (const aDep of aDeps) for (const aRet of aRets) for (const bDep of bDeps) {
+        const connect = addDays(aDep, stay);
+        if (!(connect < aRet && aRet < bDep)) continue;
+        const first = firstLegs.get(aDep);
+        const lasts = lastLegs.filter(([d]) => d > bDep);
+        if (!first || !lasts.length) continue;
+        const [bRet, last] = lasts.reduce((a, b) => (b[1].total_price < a[1].total_price ? b : a));
+        if (best && first.total_price + last.total_price >= best.total) continue;
+        const four = quote([[x, HUB, connect], [HUB, dest, connect], [dest, HUB, aRet], [HUB, x, bDep]], req.adults);
+        if (!four || four.legs.length < 4) continue;
+        const warns = [];
+        if (stay === 0) { const w = checkConnection(first.legs[first.legs.length - 1], four.legs[0], { crossTicket: true }); if (w) warns.push(w); }
+        const w12 = checkConnection(four.legs[0], four.legs[1], { crossTicket: false });
+        if (w12) warns.push(w12);
+        if (Date.parse(four.legs[1].departure) - Date.parse(four.legs[0].arrival) >= 24 * 3600e3) warns.push({ level: 'high', code: 'four_leg_second_stopover', message: '第1→2段在台北超過 24 小時會變成第二次中停' });
+        if (warns.some(w => w.level === 'high')) continue;
+        const total = first.total_price + four.total_price + last.total_price;
+        if (!best || total < best.total) best = { total, aDep, aRet, bDep, bRet, connect, first, four, last, warns };
+      }
+      if (!best || best.total >= baseline) continue;
+      const saving = baseline - best.total;
+      const xName = AIRPORT_BY_CODE.get(x)?.name || x;
+      plans.push({
+        strategy: 'back_to_back_4leg', tickets: [best.first, best.four, best.last], total_cost: best.total, currency: 'TWD',
+        total_travel_days: tripDays(best.aDep, best.aRet) + tripDays(best.bDep, best.bRet),
+        ticket_roles: ['單買初段', `外站四腿票：${x} 出發`, '單買最後一段'],
+        trips: [
+          `旅程 A｜${A.label}：${md(best.aDep)} ${HUB}→${x}（單買初段）· ${stay ? `外站停留 ${stay} 天` : '同日接續'} ⇢ ${md(best.connect)} ${x}→${HUB}→${dest}（四腿票 第1+2段，台北轉機 <24h） ⇢ ${md(best.aRet)} ${dest}→${HUB}（第3段，回台中停）`,
+          `旅程 B｜${B.label}：${md(best.bDep)} ${HUB}→${x}（四腿票 第4段） ⇢ ${md(best.bRet)} ${x}→${HUB}（單買最後一段 或 下一張四腿票第1段＝循環）`,
+        ],
+        warnings: [
+          ...best.warns,
+          { level: 'medium', code: 'four_leg_first_segment', message: `四腿票第1段 ${x}→${HUB} 必須搭乘，未搭乘後續航段全部作廢 —所以要先單買初段飛到外站` },
+          { level: 'low', code: 'four_leg_loop', message: `最後一段 ${x}→${HUB} 也可改搭下一張四腿票的第1段（循環），省下這張單程` },
+          { level: 'low', code: 'four_leg_savings_estimate', message: `比旅程A買 ${HUB}⇄${dest}、旅程B買 ${HUB}⇄${x} 一般來回 (共 ${baseline.toLocaleString()}) 省 ${saving.toLocaleString()} TWD（${Math.round(saving / baseline * 100)}%）` },
+        ],
+        explain: `四腿票 ${x}→${HUB}→${dest}→${HUB}→${x}（${xName} 外站）＋單買初段/最後一段，兩趟省 ${saving.toLocaleString()}`,
+      });
+    }
+  }
+  return plans.sort((a, b) => a.total_cost - b.total_cost);
 }
 
 /* =========================================================================
@@ -1074,7 +1222,34 @@ function routeOf(ticket) {
   return { o: first.origin, d: last.destination, dep: first.departure.slice(0, 10), ret: null };
 }
 
+/* Google Flights tfs = base64(Info protobuf); field numbers from fast-flights'
+ * flights.proto (data=3{date=2, from=13{airport=2}, to=14{airport=2}},
+ * passengers=8 packed, seat=9, trip=19 with MULTI_CITY=3). */
+function googleTfs(segments, adults) {
+  const enc = new TextEncoder();
+  const varint = n => { const out = []; do { let b = n & 0x7f; n >>>= 7; if (n) b |= 0x80; out.push(b); } while (n); return out; };
+  const field = (num, bytes) => [...varint(num << 3 | 2), ...varint(bytes.length), ...bytes];
+  const str = (num, v) => field(num, [...enc.encode(v)]);
+  let msg = [];
+  for (const [o, d, day] of segments) msg.push(...field(3, [...str(2, day), ...field(13, str(2, o)), ...field(14, str(2, d))]));
+  msg.push(...field(8, Array(adults).fill(1)));
+  msg.push(...varint(9 << 3), 1);        // seat = ECONOMY
+  msg.push(...varint(19 << 3), 3);       // trip = MULTI_CITY
+  return btoa(String.fromCharCode(...msg));
+}
+
+function multiCityLinks(segments, adults) {
+  const trip = `dcity=${segments.map(s => s[0].toLowerCase()).join(',')}&acity=${segments.map(s => s[1].toLowerCase()).join(',')}&ddate=${segments.map(s => s[2]).join(',')}&triptype=mt&class=y&quantity=${adults}&locale=zh-TW&curr=TWD`;
+  const sky = segments.map(([o, d, day]) => `${o.toLowerCase()}/${day}/${d.toLowerCase()}`).join('/');
+  return [
+    { label: 'Trip.com 多段', url: `https://www.trip.com/flights/showfarefirst?${trip}` },
+    { label: 'Google Flights 多段', url: `https://www.google.com/travel/flights?tfs=${encodeURIComponent(googleTfs(segments, adults))}&hl=zh-TW&curr=TWD` },
+    { label: 'Skyscanner 多段', url: `https://www.skyscanner.com.tw/transport/d/${sky}/?adultsv2=${adults}&cabinclass=economy` },
+  ];
+}
+
 function bookingLinks(ticket, adults) {
+  if (ticket.searched_segments && ticket.searched_segments.length >= 2) return multiCityLinks(ticket.searched_segments, adults);
   const r = routeOf(ticket);
   const o = encodeURIComponent(r.o.toLowerCase()), d = encodeURIComponent(r.d.toLowerCase());
   const trip = new URLSearchParams({ dcity: r.o.toLowerCase(), acity: r.d.toLowerCase(), ddate: r.dep, triptype: r.ret ? 'rt' : 'ow', class: 'y', quantity: adults, locale: 'zh-TW', curr: 'TWD' });
@@ -1121,9 +1296,11 @@ function scorePlans(plans, weights) {
     flight: weights.flight / wTot,
     risk:   weights.risk / wTot,
   };
-  const prices = plans.map(p => p.total_cost);
-  const flights = plans.map(flightMinutes);
-  const ptoEff = plans.map(p => (p.total_travel_days || 1) / Math.max(p.pto_days || 1, 1));
+  // Two-trip plans compare per trip, otherwise they'd always look 2× pricier.
+  const trips = p => Math.max(1, (p.trips || []).length);
+  const prices = plans.map(p => p.total_cost / trips(p));
+  const flights = plans.map(p => flightMinutes(p) / trips(p));
+  const ptoEff = plans.map(p => (p.total_travel_days || 1) / trips(p) / Math.max(p.pto_days || 1, 1));
   const risks = plans.map(riskScore);
   const mm = (values, inverse) => {
     const lo = Math.min(...values), hi = Math.max(...values);
@@ -1156,9 +1333,9 @@ function writeFavs(set) { try { localStorage.setItem(FAV_KEY, JSON.stringify([..
  * ========================================================================= */
 const STRATEGY_LABEL = {
   standard: '一般來回',
-  reverse: '反向票',
+  reverse: '反向票＋倒買法',
   open_jaw: 'Open-jaw',
-  back_to_back_4leg: '外站四段票',
+  back_to_back_4leg: '外站四腿票',
 };
 
 const state = {
@@ -1208,7 +1385,8 @@ function renderResults() {
   // Favorites bubble to top within whatever order picked
   visible.sort((a,b) => (state.favorites.has(fingerprint(b)) ? 1 : 0) - (state.favorites.has(fingerprint(a)) ? 1 : 0));
 
-  renderHeatmap(plans);
+  document.getElementById('notices').innerHTML = (state.result.notices || []).map(n => `<div class="notice">${escapeHtml(n)}</div>`).join('');
+  renderHeatmap(plans.filter(p => !(p.trips || []).length));
   renderPlanList(visible);
   renderCompare(visible);
 
@@ -1319,15 +1497,18 @@ function renderPlan(plan, rank) {
           </div>
           <div>
             <div class="price mono">${plan.currency} ${plan.total_cost.toLocaleString()}</div>
+            ${(plan.trips || []).length > 1 ? `<div class="per-trip">${plan.trips.length} 趟合計 · 平均每趟 ${Math.round(plan.total_cost / plan.trips.length).toLocaleString()}</div>` : ''}
             ${plan.score != null ? `<div class="score">score ${plan.score.toFixed(3)}</div>` : ''}
           </div>
         </div>
         <div class="plan-detail">
-          <div class="timeline">${renderTimeline(plan)}<div class="caption">紅色虛線 = 跨票交接 (建議 ≥ 3.5h 緩衝)。</div></div>
+          ${(plan.trips || []).length
+            ? `<ol class="trips">${plan.trips.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ol>`
+            : `<div class="timeline">${renderTimeline(plan)}<div class="caption">紅色虛線 = 跨票交接 (建議 ≥ 3.5h 緩衝)。</div></div>`}
           <div class="ticket-grid">
             ${plan.tickets.map((t, ti) => `
               <section class="ticket">
-                <h4>${isFourLeg ? (ti === 0 ? '票甲 (外站)' : '票乙 (中段)') : ticketCount > 1 ? `票 ${ti+1}` : '票'} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
+                <h4>${plan.ticket_roles?.[ti] ? `票 ${ti+1}｜${escapeHtml(plan.ticket_roles[ti])}` : ticketCount > 1 ? `票 ${ti+1}` : '票'} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
                 <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()} · ${t.fare_class || '—'} · ${t.baggage_through_checked ? '行李直掛' : '需提領重掛'}</div>
                 <ol>${t.legs.map(l => `<li>${escapeHtml(l.origin)}→${escapeHtml(l.destination)} · ${escapeHtml(l.flight_number)} · ${l.departure.slice(0,16).replace('T',' ')}</li>`).join('')}</ol>
                 <div class="src">價格來源：${escapeHtml(ISSUER_LABEL[t.issuer] || t.issuer || '—')}
@@ -1499,16 +1680,15 @@ function downloadIcs(plan) {
  * ========================================================================= */
 function runSearch(form) {
   CachingProvider.reset();
-  const parseList = s => (s || '').split(',').map(x => x.trim().toUpperCase()).filter(Boolean);
   const strategyBoxes = [...form.querySelectorAll('.strategies input[type=checkbox]')].filter(c => c.checked).map(c => c.value);
   const req = {
     tripType: document.getElementById('f-trip').value,
     adults: Math.max(1, Number(document.getElementById('f-adults').value) || 1),
-    origins: parseList(document.getElementById('f-origins').value),
-    destinations: parseList(document.getElementById('f-destinations').value),
+    origins: checkedCodes('pick-origins'),
+    destinations: checkedCodes('pick-dest'),
     strategies: strategyBoxes.length ? strategyBoxes : ['standard'],
-    outerStations: parseList(document.getElementById('f-outer').value),
-    outerBuffer: Math.max(0, Number(document.getElementById('f-outer-buf').value) || 2),
+    outerStations: checkedCodes('pick-outer'),
+    outerStay: clampFlex(document.getElementById('f-outer-stay').value),
     budget: Number(document.getElementById('f-budget').value) || null,
   };
 
@@ -1517,7 +1697,15 @@ function runSearch(form) {
   // overlapping slots (same strategy + same tickets).
   let matrix = 0;
   let plans = [];
+  const notices = [];
   const seen = new Set();
+  const add = (p, label) => {
+    const key = p.strategy + '|' + p.tickets.map(t => t.offer_id).join('|');
+    if (seen.has(key)) return;
+    seen.add(key);
+    plans.push({ ...p, window_label: label, adults: req.adults });
+  };
+  const PAIR = new Set(['reverse', 'back_to_back_4leg']);
   for (const slot of slots) {
     const expanded = {
       out: expandWindow(slot.depart, slot.departFlex, slot.departFlex),
@@ -1526,17 +1714,27 @@ function runSearch(form) {
     matrix += expanded.out.length * Math.max(expanded.ret.length, 1);
     const label = slotLabel(slot);
     for (const strategy of req.strategies) {
-      let found = [];
-      if (strategy === 'standard') found = planStandard(req, expanded);
-      else if (strategy === 'reverse') found = planReverse(req, expanded);
-      else if (strategy === 'open_jaw') found = planOpenJaw(req, expanded);
-      else if (strategy === 'back_to_back_4leg') found = planFourLeg(req, expanded);
-      for (const p of found) {
-        const key = p.strategy + '|' + p.tickets.map(t => t.offer_id).join('|');
-        if (seen.has(key)) continue;
-        seen.add(key);
-        plans.push({ ...p, window_label: label, adults: req.adults });
-      }
+      if (strategy === 'standard') planStandard(req, expanded).forEach(p => add(p, label));
+      else if (strategy === 'open_jaw') planOpenJaw(req, expanded).forEach(p => add(p, label));
+    }
+  }
+
+  // 反向票＋倒買法 / 外站四腿票: one purchase, two trips → ordered slot pairs.
+  const paired = req.strategies.filter(s => PAIR.has(s));
+  if (paired.length) {
+    const tripSlots = req.tripType !== 'round_trip' ? [] : slots.map(s => ({
+      label: slotLabel(s),
+      departs: expandWindow(s.depart, s.departFlex, s.departFlex),
+      returns: expandWindow(s.ret, s.retFlex, s.retFlex),
+    }));
+    const pairs = [];
+    for (const a of tripSlots) for (const b of tripSlots) {
+      if (a !== b && a.returns[a.returns.length - 1] < b.departs[0]) pairs.push([a, b]);
+    }
+    if (!pairs.length) notices.push('反向票＋倒買法 與 外站四腿票 都是「一次購票、兩趟旅程」的買法，需要至少兩個不重疊的備選時段（例如 春節 + 聖誕）且行程類型為來回。');
+    for (const [a, b] of pairs) {
+      if (paired.includes('reverse')) planReversePair(req, a, b).forEach(p => add(p, `${a.label} + ${b.label}`));
+      if (paired.includes('back_to_back_4leg') && req.outerStations.length) planFourLegPair(req, a, b).forEach(p => add(p, `${a.label} + ${b.label}`));
     }
   }
   if (req.budget) plans = plans.filter(p => p.total_cost <= req.budget);
@@ -1550,7 +1748,7 @@ function runSearch(form) {
   plans = scorePlans(plans, weights);
 
   const cache = CachingProvider.stats();
-  return { plans, matrix, cache };
+  return { plans, matrix, cache, notices };
 }
 
 /* =========================================================================
@@ -1569,7 +1767,7 @@ function syncRangeLabels() {
     el.addEventListener('input', render);
     render();
   };
-  bind('f-outer-buf', 'f-outer-buf-val');
+  bind('f-outer-stay', 'f-outer-stay-val');
   bind('w-price', 'w-price-v', v => Number(v).toFixed(2));
   bind('w-pto', 'w-pto-v', v => Number(v).toFixed(2));
   bind('w-flight', 'w-flight-v', v => Number(v).toFixed(2));
@@ -1638,7 +1836,10 @@ function renderSlots() {
 function updateSlotSummary() {
   const rt = isRoundTrip();
   const combos = slots.reduce((n, s) => n + (2 * s.departFlex + 1) * (rt ? 2 * s.retFlex + 1 : 1), 0);
-  const invalid = slots.length === 0 || slots.some(slotInvalid);
+  const noAirports = !checkedCodes('pick-origins').length || !checkedCodes('pick-dest').length;
+  document.getElementById('airport-err').hidden = !noAirports;
+  updatePairHint();
+  const invalid = slots.length === 0 || slots.some(slotInvalid) || noAirports;
   document.getElementById('slot-summary').innerHTML = slots.length === 0
     ? '<span style="color:var(--crit)">請至少加入一個備選時段</span>'
     : `<b>${slots.length}</b> 個時段 · 共 <b>${combos}</b> 組日期 × 每個勾選策略`;
@@ -1649,6 +1850,7 @@ function updateSlotSummary() {
 
 function wireSlots() {
   slots.push(slotFromHoliday(holidayByKey.get('lunar_ny'), 2));
+  slots.push(slotFromHoliday(holidayByKey.get('xmas'), 2));
 
   document.getElementById('holiday-chips').addEventListener('click', e => {
     const chip = e.target.closest('.chip');
@@ -1698,13 +1900,43 @@ function wireSlots() {
   renderSlots();
 }
 
+function renderPicker(id, title, airports, selected) {
+  const groups = new Map();
+  for (const a of airports) groups.set(a.group, [...(groups.get(a.group) || []), a]);
+  const el = document.getElementById(id);
+  el.innerHTML = `<div class="head">${title} · 已選 <span class="n">${selected.size}</span></div>` + [...groups].map(([g, list]) =>
+    `<div class="row"><span class="grp">${g}</span>${list.map(a =>
+      `<label><input type="checkbox" value="${a.code}" ${selected.has(a.code) ? 'checked' : ''}>${a.name}<span class="code">${a.code}</span></label>`).join('')}</div>`).join('');
+  el.addEventListener('change', () => {
+    el.querySelector('.n').textContent = checkedCodes(id).length;
+    updateSlotSummary();
+  });
+}
+
+function checkedCodes(id) {
+  return [...document.querySelectorAll(`#${id} input[type=checkbox]:checked`)].map(c => c.value);
+}
+
+function wirePickers() {
+  renderPicker('pick-origins', '出發機場', AIRPORTS.filter(a => a.group === '台灣'), new Set(['TPE']));
+  renderPicker('pick-dest', '目的地 (可多選，反向票/倒買法可讓兩趟去不同城市)', AIRPORTS.filter(a => a.group !== '台灣'), new Set(['NRT', 'KIX', 'LHR']));
+  renderPicker('pick-outer', '四腿票外站 (第1段出發 / 第4段抵達)', AIRPORTS.filter(a => a.outstation), new Set(['HKG']));
+}
+
+function updatePairHint() {
+  const on = [...document.querySelectorAll('.strategies input:checked')].some(c => c.value === 'reverse' || c.value === 'back_to_back_4leg');
+  const el = document.getElementById('pair-hint');
+  el.innerHTML = !on ? '' : '反向票＋倒買法、外站四腿票都是「一次購票、兩趟旅程」：會用備選時段兩兩配對 (較早的當旅程 A、較晚的當旅程 B)。'
+    + (slots.length < 2 ? ` <b style="color:var(--warn)">目前只有 ${slots.length} 個時段，請再加入一個 (例如 春節 + 聖誕)。</b>` : '');
+}
+
 function toggleFourLegExtras() {
   const box = document.getElementById('four-leg-extras');
   const check = () => {
     const on = [...document.querySelectorAll('.strategies input')].find(c => c.value === 'back_to_back_4leg')?.checked;
     box.classList.toggle('open', !!on);
   };
-  document.querySelectorAll('.strategies input').forEach(c => c.addEventListener('change', check));
+  document.querySelectorAll('.strategies input').forEach(c => c.addEventListener('change', () => { check(); updatePairHint(); }));
   check();
 }
 
@@ -1786,6 +2018,7 @@ function wireTheme() {
 }
 
 function init() {
+  wirePickers();
   wireSlots();
   syncRangeLabels();
   toggleFourLegExtras();

@@ -48,8 +48,8 @@ Rules of thumb:
   class with `.strategy` and `.plan(...)`, plus a dispatch arm in
   `SearchService._run_strategy`.
 - A new data source = a new class under `app/providers/` implementing the
-  `FlightOfferProvider` Protocol. `CachingProvider` wraps it per request; no
-  Redis layer yet.
+  `FlightOfferProvider` Protocol (`search` + `search_multi_city`; return `[]`
+  if the API can't quote multi-city). `CachingProvider` wraps it per request.
 
 ## Date matrix pruning (`date_matrix.py`)
 
@@ -61,28 +61,35 @@ Rules of thumb:
 - Planners either consume `iter_date_combos` or pair dates manually (standard
   does the latter for simpler round-trip code).
 
-## 4-leg (back-to-back) engine — the hard one
+## Two-trip strategies — 反向票＋倒買法 and 外站四腿票
 
-Timeline — two independent PNRs with TPE as hub:
+Both only pay off when ONE purchase covers TWO trips, so `SearchService`
+runs them over ordered pairs of non-overlapping `candidate_windows`
+(trip A strictly before trip B; `_slot_pairs`). With < 2 slots they return
+nothing plus a `notices` entry. Shared helpers live in `strategies/two_trip.py`
+(`TripSlot`, `quote` → round trip if the two segments mirror, else
+`search_multi_city`, `best_pair` constrained cheapest combination).
 
 ```
-XMN ─leg1→ TPE ─(MCT handoff)─ TPE ─leg2→ NRT … stay … NRT ─leg3→ TPE ─(MCT)─ TPE ─leg4→ XMN
+反向票＋倒買法 (reverse.py), home H, trip A to D1, trip B to D2:
+  包覆票  H→D1 (A start) + D2→H (B end)      ← or 補頭尾: two one-ways
+  反向票  D1→H (A end)   + H→D2 (B start)     ← foreign-origin, cheap in TW 連假
+外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→X:
+  A: 單買初段 TPE→X · stay outer_stay_days · leg1+2 X→TPE→D (<24h at TPE) · leg3 D→TPE
+  B: leg4 TPE→X · 單買最後一段 X→TPE (or next 四腿票 leg1 = 循環)
 ```
 
-Enumeration order inside `FourLegPlanner.plan`:
+Plans are kept only if cheaper than ordinary round trips for both trips,
+carry `ticket_roles` + `trips`, and scoring divides price / flight time /
+PTO efficiency by `trip_count` so they compare fairly with single trips.
+Tickets carry `searched_segments`; `booking_links` turns those into
+multi-city links (Google Flights `tfs` protobuf — byte-identical to the
+fast-flights schema, pinned in `test_booking_links.py`; Trip.com
+`triptype=mt` and Skyscanner `/transport/d/` formats are unverified).
 
-1. For each `outer_station × destination`:
-2. Pick the baseline (cheapest direct TPE↔destination round-trip across inner
-   dates) — plans must undercut it by `MIN_SAVINGS_PCT`.
-3. For each inner `(leg2, leg3)` pair with strict order, fetch cheapest inner
-   ticket.
-4. For each outer `(leg1, leg4)` pair in a `±outer_buffer` window around the
-   inner, fetch cheapest outer ticket.
-5. Run `check_cross_ticket_handoff` at both junctions — any HIGH risk aborts
-   the plan.
-
-Attach `back_to_back_awareness` warning on every surviving plan + an estimated
-savings warning.
+The stub fare model (`providers/stub.py`) makes these strategies
+meaningful: +30% on Taiwan-origin departures during 連假, outstation
+multi-city through TPE at 0.62× summed one-ways.
 
 ## Scoring
 
