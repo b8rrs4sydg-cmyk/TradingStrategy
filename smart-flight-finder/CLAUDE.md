@@ -145,7 +145,15 @@ page ◀──SSE─────────────────  ntfy.sh/<T
   selftest 40 s after start). Requests are validated (`lookup_fares.valid_keys`,
   ≤ 160 keys, ≤ 500 keys / 10 min), results go to `public/fares-live.json`
   (overlay; committed every ~90 s) and the next crawl folds them in.
-- Preferred front door: the daemon starts TWO independent tunnels (Cloudflare
+- Preferred front door is peer to peer (WebRTC, `rtcEnsure` in the page,
+  `Daemon.start_rtc/rtc_answer` with aiortc): the page offers through the ntfy
+  topic `<T_REQ>-sig`, the daemon answers on `<T_RES>-sig` (two small
+  messages), then lookups and fares flow over a data channel — no tunnel, no
+  `daemon.json`, no GitHub API, no ntfy quota for the data. Verified between
+  two GitHub runners (`webrtc-probe.yml`) and in the full Pages e2e
+  (`via=rtc`). When no peer connection forms in 15 s (symmetric NATs) the page
+  falls back to the tunnels below, then ntfy.
+- Tunnel front door: the daemon starts TWO independent tunnels (Cloudflare
   quick tunnel via `cloudflared`, and localhost.run via `ssh`) and announces
   them in `public/daemon.json` (`urls`; the page uses the first that answers
   `/health`, tries the other on failure, then ntfy). Anonymous public
