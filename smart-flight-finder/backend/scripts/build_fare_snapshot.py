@@ -63,7 +63,6 @@ def main() -> None:
     ap.add_argument("--outer", default=",".join(defaults.outer_stations))
     ap.add_argument("--holidays", default=",".join(defaults.holidays))
     ap.add_argument("--flex", type=int, default=defaults.flex)
-    ap.add_argument("--outer-stay", type=int, default=defaults.outer_stay_days)
     ap.add_argument("--max-multi-city", type=int, default=260)
     ap.add_argument("--concurrency", type=int, default=5)
     ap.add_argument("--dry-run", action="store_true", help="print the crawl plan and exit")
@@ -78,7 +77,6 @@ def main() -> None:
         outer_stations=split(args.outer),
         holidays=[x.strip() for x in args.holidays.split(",") if x.strip()],
         flex=args.flex,
-        outer_stay_days=args.outer_stay,
     )
     today = datetime.now(ZoneInfo("Asia/Taipei")).date()
     db = FareDatabase.load(args.db)

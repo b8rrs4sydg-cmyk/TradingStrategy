@@ -1,9 +1,7 @@
 """反向票＋倒買法 and 外站四腿票: one purchase, two trips (slot A then slot B)."""
 
 from dataclasses import replace
-from datetime import date, timedelta
-
-import pytest
+from datetime import date
 
 from app.models.enums import TicketStrategyType as S
 from app.models.enums import TripType
@@ -81,47 +79,42 @@ def test_daomai_only_for_japan_thailand_korea():
     assert all(t.legs[0].destination != "LHR" for p in _reverse(("NRT", "LHR")) for t in p.tickets)
 
 
-def _four_leg(stay=2, outer=("HKG", "ICN"), dests=("NRT",), provider=None):
+def _four_leg(outer=("HKG", "ICN"), dests=("NRT",), provider=None):
     return FourLegPlanner(provider or FakeFareProvider()).plan(
         trip_a=LNY, trip_b=XMAS, outer_stations=list(outer), destinations=list(dests),
-        outer_stay_days=stay,
     )
 
 
-def test_four_leg_is_one_ticket_plus_first_and_last_one_ways():
+def test_four_leg_is_one_ticket_plus_a_last_one_way():
     plans = _four_leg(dests=("LHR",))
     assert plans
-    p = next(p for p in plans if p.tickets[1].legs[0].origin == "HKG")
-    first, four, last = p.tickets
-    assert p.ticket_roles == ("單買初段", "外站四腿票：HKG 出發", "單買最後一段")
-    # 單買初段 gets us to the outstation at the start of trip A
-    assert [(leg.origin, leg.destination) for leg in first.legs] == [("TPE", "HKG")]
-    assert first.legs[0].departure.date() in LNY.departs
+    p = next(p for p in plans if p.tickets[0].legs[0].origin == "HKG")
+    four, last = p.tickets
+    assert p.ticket_roles == ("外站四腿票：HKG 出發", "單買最後一段")   # no 單買初段 any more
     # The 四腿票 itself: X→TPE→D→TPE→Y on ONE ticket, Y in a third country
     assert [(leg.origin, leg.destination) for leg in four.legs] == [
         ("HKG", "TPE"), ("TPE", "LHR"), ("LHR", "TPE"), ("TPE", "ICN"),
     ]
     leg1, leg2, leg3, leg4 = four.legs
-    assert leg1.departure.date() == first.legs[0].departure.date() + timedelta(days=2)
-    assert timedelta(0) < leg2.departure - leg1.arrival < timedelta(hours=24)
+    assert leg1.departure.date() in LNY.departs     # first segment inside trip A's window
+    assert leg1.departure.date() <= leg2.departure.date() in LNY.departs   # any stay in Taipei
     assert leg3.departure.date() in LNY.returns     # back home at the end of trip A
     assert leg4.departure.date() in XMAS.departs    # leg 4 starts trip B
     # 單買最後一段 closes the loop at the end of trip B
     assert [(leg.origin, leg.destination) for leg in last.legs] == [("ICN", "TPE")]
     assert last.legs[0].departure.date() in XMAS.returns
-    assert p.total_cost == first.total_price + four.total_price + last.total_price
+    assert p.total_cost == four.total_price + last.total_price
     codes = {w.code for w in p.warnings}
     assert {"four_leg_first_segment", "four_leg_loop", "four_leg_savings_estimate",
             "four_leg_origin_open_jaw"} <= codes
 
 
-@pytest.mark.parametrize("stay", [0, 1, 3])
-def test_four_leg_outer_stay_days_respected(stay):
-    plans = _four_leg(stay=stay, dests=("LHR",))
-    assert plans
-    for p in plans:
-        first, four, _ = p.tickets
-        assert (four.legs[0].departure.date() - first.legs[0].departure.date()).days == stay
+def test_four_leg_allows_any_stay_between_leg_1_and_2():
+    spans = {
+        (p.tickets[0].legs[1].departure.date() - p.tickets[0].legs[0].departure.date()).days
+        for p in _four_leg(dests=("LHR", "BKK"), outer=("HKG", "ICN", "NRT"))
+    }
+    assert all(d >= 0 for d in spans)
 
 
 def test_four_leg_never_starts_and_ends_in_the_same_country():
@@ -132,9 +125,9 @@ def test_four_leg_never_starts_and_ends_in_the_same_country():
     plans = _four_leg(outer=("HKG", "NRT", "KIX", "ICN"), dests=("NRT", "BKK"))
     assert plans
     for p in plans:
-        x, d, y = p.tickets[1].legs[0].origin, p.tickets[1].legs[1].destination, p.tickets[1].legs[3].destination
+        x, d, y = p.tickets[0].legs[0].origin, p.tickets[0].legs[1].destination, p.tickets[0].legs[3].destination
         assert country[y] not in (country[x], country[d])
-        assert p.tickets[0].legs[0].destination == x and p.tickets[2].legs[0].origin == y
+        assert p.tickets[1].legs[0].origin == y
 
 
 def test_best_non_saving_plan_is_kept_and_flagged():

@@ -77,7 +77,8 @@ country (大阪進東京出); only JP/TH/KR (DAOMAI_COUNTRIES, others → notice
   反向票  A_out→H (A end)  + H→B_in (B start)  ← foreign-origin, cheap in TW 連假
 外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→Y, Y in a THIRD country
 (not X's, not D's — so the two trips never visit the same country):
-  A: 單買初段 TPE→X · stay outer_stay_days · leg1+2 X→TPE→D (<24h at TPE) · leg3 D→TPE
+  A: leg1 X→TPE (c1) + leg2 TPE→D (c2 ≥ c1), both inside trip A's window, any stay
+     in Taipei between (no 單買初段, no fixed outer-stay days) · leg3 D→TPE
   B: leg4 TPE→Y · 單買最後一段 Y→TPE (or next 四腿票 leg1 = 循環)
 ```
 
@@ -119,7 +120,7 @@ Self-Service shut down 2026-07-17; every price comes from Google Flights:
   (`.github/workflows/fares-snapshot.yml`, every 6 h; dispatch on the
   branch until merged — schedules only run on the default branch).
   Stage 1: every ow/rt query; stage 2: multi-city queries ranked by the real
-  stage-1 prices (四腿票 budget = rt_D + rt_Y − ow(TPE→X) − ow(Y→TPE); up to
+  stage-1 prices (四腿票 budget = rt_D + rt_Y − ow(Y→TPE); up to
   3 date variants when ≥ 80% of rt_D, else 1; open jaws by mirrored rt),
   capped at `--max-multi-city`; then a slow retry pass; merged into the DB.
 - Demo: `scripts/embed_fare_snapshot.py` writes the DB into

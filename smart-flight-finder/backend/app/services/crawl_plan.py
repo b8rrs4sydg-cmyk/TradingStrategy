@@ -43,7 +43,6 @@ class CrawlConfig:
     outer_stations: list[str] = field(default_factory=lambda: ["HKG", "ICN", "BKK"])
     holidays: list[str] = field(default_factory=lambda: ["lunar_ny", "qingming", "duanwu"])
     flex: int = 1
-    outer_stay_days: int = 2
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -74,7 +73,6 @@ def build_request(cfg: CrawlConfig, *, today: date) -> ItineraryRequestIn:
             TicketStrategyType.BACK_TO_BACK_4LEG,
         ],
         back_to_back_outer_stations=cfg.outer_stations,
-        outer_stay_days=cfg.outer_stay_days,
         candidate_windows=windows,
     )
 
@@ -106,19 +104,21 @@ def _near(day: date, flex: int):
 
 
 def four_leg_budget(key: str, prices: Mapping[str, int], cfg: CrawlConfig) -> tuple[float | None, tuple]:
-    """(budget / trip-A round trip, group) for a 四腿票 key."""
+    """(room for saving / trip-A round trip, group) for a 四腿票 key.
+
+    The four-leg ticket replaces both round trips, so what it may cost at most
+    to beat them is rt(D) + rt(Y) − the one-way Y→TPE bought separately.
+    """
 
     _, segs = parse_key(key)
-    (x, _, connect), (_, d, _), _, (_, y, b_dep) = segs
-    first_day = connect - timedelta(days=cfg.outer_stay_days)
-    group = ("4leg", x, d, y, first_day.month, b_dep.month)
-    ow1 = prices.get(fare_key([("TPE", x, first_day)]))
+    (x, _, c1), (_, d, c2), _, (_, y, b_dep) = segs
+    group = ("4leg", x, d, y, c1.month, b_dep.month)
     ow_last = _min_price(prices, f"ow|{y}|TPE|", lambda k: parse_key(k)[1][0][2] > b_dep)
-    rt_d = _min_price(prices, f"rt|TPE|{d}|", _near(first_day, cfg.flex))
+    rt_d = _min_price(prices, f"rt|TPE|{d}|", _near(c2, cfg.flex))
     rt_y = _min_price(prices, f"rt|TPE|{y}|", _near(b_dep, cfg.flex))
-    if None in (ow1, ow_last, rt_d, rt_y):
+    if None in (ow_last, rt_d, rt_y):
         return None, group
-    return (rt_d + rt_y - ow1 - ow_last) / max(rt_d, 1), group
+    return (rt_d + rt_y - ow_last) / max(rt_d, 1), group
 
 
 def open_jaw_score(key: str, prices: Mapping[str, int]) -> tuple[float | None, tuple]:

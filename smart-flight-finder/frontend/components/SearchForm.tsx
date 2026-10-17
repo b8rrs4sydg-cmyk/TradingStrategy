@@ -96,7 +96,6 @@ export function SearchForm({ onResult, onError }: Props) {
     hidden_city: false,
   });
   const [outerStations, setOuterStations] = useState<Set<string>>(new Set(["HKG", "ICN", "BKK"]));
-  const [outerStayDays, setOuterStayDays] = useState(2);
   const [weights, setWeights] = useState<ScoringWeights>(DEFAULT_WEIGHTS);
   const [weightsOpen, setWeightsOpen] = useState(false);
 
@@ -252,7 +251,6 @@ export function SearchForm({ onResult, onError }: Props) {
         scoring_weights: weights,
         date_windows: windows,
         back_to_back_outer_stations: [...outerStations],
-        outer_stay_days: outerStayDays,
       };
       const result = await api.search(req);
       onResult(result, Date.now() - startedAt);
@@ -587,15 +585,6 @@ export function SearchForm({ onResult, onError }: Props) {
               selected={outerStations}
               onChange={setOuterStations}
             />
-            <Field label={`旅程 A 先單買初段到外站，停留 ${outerStayDays} 天後飛四腿票第1+2段`}>
-              <input
-                type="range"
-                min={0}
-                max={7}
-                value={outerStayDays}
-                onChange={(e) => setOuterStayDays(Number(e.target.value))}
-              />
-            </Field>
           </div>
         )}
       </fieldset>

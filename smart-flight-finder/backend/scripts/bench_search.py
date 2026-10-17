@@ -25,7 +25,7 @@ from app.schemas.itinerary import CandidateWindowIn, ItineraryRequestIn
 from app.services.search import SearchService
 
 
-def build_request(flex: int, outer_stay: int) -> ItineraryRequestIn:
+def build_request(flex: int) -> ItineraryRequestIn:
     def slot(key: str, dep: date, ret: date) -> CandidateWindowIn:
         return CandidateWindowIn(
             holiday_key=key, depart=dep, return_date=ret, depart_flex=flex, return_flex=flex
@@ -43,7 +43,6 @@ def build_request(flex: int, outer_stay: int) -> ItineraryRequestIn:
             TicketStrategyType.BACK_TO_BACK_4LEG,
         ],
         back_to_back_outer_stations=["XMN", "HKG"],
-        outer_stay_days=outer_stay,
         candidate_windows=[
             slot("lunar_ny", date(2027, 2, 5), date(2027, 2, 15)),
             slot("xmas", date(2027, 12, 23), date(2027, 12, 27)),
@@ -54,16 +53,15 @@ def build_request(flex: int, outer_stay: int) -> ItineraryRequestIn:
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--flex", type=int, default=3, help="±N days per window")
-    p.add_argument("--outer-stay", type=int, default=2, help="四腿票 外站停留天數")
     args = p.parse_args()
 
-    req = build_request(args.flex, args.outer_stay)
+    req = build_request(args.flex)
     service = SearchService()
     t0 = time.perf_counter()
     matrix_size, plans, stats = service.run(req)
     elapsed = time.perf_counter() - t0
 
-    print(f"Request:   flex=±{args.flex}, outer_stay={args.outer_stay}")
+    print(f"Request:   flex=±{args.flex}")
     print(f"Matrix:    {matrix_size} candidate date combinations (pre-prune)")
     print(f"Plans:     {len(plans)}")
     print(

@@ -20,7 +20,6 @@ SEARCH_PAYLOAD = {
     "destinations": ["NRT", "HND"],
     "strategies": ["standard", "reverse", "back_to_back_4leg"],
     "back_to_back_outer_stations": ["XMN"],
-    "outer_stay_days": 2,
     "date_windows": [
         {"role": "outbound", "anchor_date": "2027-02-05", "flex_before": 1, "flex_after": 1},
         {"role": "return", "anchor_date": "2027-02-11", "flex_before": 1, "flex_after": 1},
@@ -98,8 +97,8 @@ def test_two_trip_search_returns_roles_trips_and_multi_city_links_through_csv():
     body = client.post("/search", json=payload).json()
     assert [n for n in body["notices"] if "LHR" not in n] == []
     four = next(p for p in body["plans"] if p["strategy"] == "back_to_back_4leg")
-    assert four["ticket_roles"][1].startswith("外站四腿票") and len(four["trips"]) == 2
-    trip_link = next(b for b in four["tickets"][1]["booking_links"] if b["source"] == "trip_com")
+    assert four["ticket_roles"][0].startswith("外站四腿票") and len(four["trips"]) == 2
+    trip_link = next(b for b in four["tickets"][0]["booking_links"] if b["source"] == "trip_com")
     assert "triptype=mt" in trip_link["url"]
 
     rows = list(csv.DictReader(io.StringIO(client.post("/plans/csv", json={"plans": [four]}).text)))

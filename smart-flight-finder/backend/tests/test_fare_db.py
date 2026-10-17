@@ -153,7 +153,7 @@ def test_rank_multi_city_spends_requests_on_promising_combinations(budget_ok):
     ow = 1000 if budget_ok else 9000
     prices = {k: (20000 if "|NRT|" in k else 8000) if k.startswith("rt|") else ow for k in stage1}
     budget, group = four_leg_budget(four[0], prices, cfg)
-    assert group[0] == "4leg" and budget == pytest.approx((20000 + 8000 - 2 * ow) / 20000)
+    assert group[0] == "4leg" and budget == pytest.approx((20000 + 8000 - ow) / 20000)
     picked = rank_multi_city(four, prices, cfg, max_multi_city=500)
     groups = {four_leg_budget(k, prices, cfg)[1] for k in four}
     assert len(picked) == (min(3, len(four)) if budget_ok else 1) * len(groups) or len(picked) <= 3 * len(groups)

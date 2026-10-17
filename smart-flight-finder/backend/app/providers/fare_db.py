@@ -10,7 +10,7 @@ Schema (``schema: 2``)::
     {"schema": 2, "source": "google_flights", "generated_at": ISO-8601,
      "currency": "TWD", "adults": 1,
      "coverage": {"origins": [...], "destinations": [...], "outer_stations": [...],
-                  "holidays": [...], "flex": 1, "outer_stay_days": 2},
+                  "holidays": [...], "flex": 1},
      "fares": {KEY: {"price": 22080, "at": "2026-10-17",
                      "first": {"dep": ISO, "arr": ISO, "stops": 0, "airline": "..."},
                      "prev": 23100, "prev_at": "2026-10-16",

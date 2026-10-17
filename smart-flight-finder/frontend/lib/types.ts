@@ -85,7 +85,6 @@ export type ItineraryRequestIn = {
   scoring_weights: ScoringWeights | null;
   date_windows: DateWindowIn[];
   back_to_back_outer_stations: string[];
-  outer_stay_days: number;
 };
 
 export type FlightLegOut = {

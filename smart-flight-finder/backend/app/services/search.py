@@ -264,7 +264,6 @@ class SearchService:
             trip_b=b,
             outer_stations=req.back_to_back_outer_stations,
             destinations=req.destinations,
-            outer_stay_days=req.outer_stay_days,
             adults=req.adults,
         )
 
