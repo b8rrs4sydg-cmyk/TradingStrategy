@@ -42,7 +42,7 @@ from scripts.lookup_fares import MAX_KEYS, valid_keys
 
 NTFY = os.getenv("NTFY_URL", "https://ntfy.sh")
 MSG_BYTES = 3400            # ntfy turns messages over 4096 bytes into attachments
-RATE_KEYS = 500             # accepted keys per window
+RATE_KEYS = 800             # accepted keys per window
 RATE_WINDOW_S = 600
 CACHE_TTL_S = 1800          # a key fetched in the last 30 min is answered from memory
 FLUSH_EVERY_S = 6
@@ -261,7 +261,7 @@ class Daemon:
             self.seen.add(ev.get("id"))
             loop.call_soon_threadsafe(self.queue.put_nowait, ev.get("message", ""))
 
-        threading.Thread(target=subscribe, args=(self.req, "20m", stop, on_message), daemon=True).start()
+        threading.Thread(target=subscribe, args=(self.req, str(int(time.time()) - 5), stop, on_message), daemon=True).start()
         async with async_playwright() as pw:
             browser = await pw.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
             ctx = await browser.new_context(locale="en-US", user_agent=_UA)
@@ -296,7 +296,8 @@ class Daemon:
         rid, keys = req["rid"], req["keys"]
         first_chunk = rid not in self.requests
         state = self.requests.setdefault(rid, {"total": req["total"], "done": 0})
-        if not self.limiter.allow(len(keys)):
+        fresh = [k for k in keys if (h := self.cache.get(k)) and time.time() - h[0] < CACHE_TTL_S]
+        if not self.limiter.allow(len(keys) - len(fresh)):   # answers from memory cost nothing
             await asyncio.to_thread(publish, self.res, json.dumps({"rid": rid, "error": "rate_limited", "final": True}))
             return
         if first_chunk:
