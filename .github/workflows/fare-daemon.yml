@@ -4,7 +4,7 @@ name: Fare lookup daemon (always on)
 # demo page posts lookup requests there; the daemon fetches the fares from
 # Google Flights and streams them back, so lookups skip Claude entirely.
 # See smart-flight-finder/backend/scripts/lookup_daemon.py. Runs ~5h, restarted
-# every 5h by cron (a queued run waits for the previous one — no gap, no overlap).
+# every 5h by cron (a newer run cancels the previous one — a pushed fix takes over at once).
 on:
   schedule:
     - cron: "7 */5 * * *"
@@ -24,7 +24,7 @@ permissions:
 
 concurrency:
   group: fare-daemon
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   REQ_TOPIC: sff-q-1dbc38bf5255bfa8b886187c
@@ -56,7 +56,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          (sleep 40; python -m scripts.lookup_daemon selftest --req "$REQ_TOPIC" --res "$RES_TOPIC" || echo "::warning::selftest failed") &
+          (sleep 40; python -m scripts.lookup_daemon selftest --req "$REQ_TOPIC" --res "$RES_TOPIC" --count 30 --timeout 240 || echo "::warning::selftest failed") &
           python -m scripts.lookup_daemon run --req "$REQ_TOPIC" --res "$RES_TOPIC" \
             --db ../public/fares-live.json \
             --duration $(( ${{ inputs.duration_minutes || '310' }} * 60 ))

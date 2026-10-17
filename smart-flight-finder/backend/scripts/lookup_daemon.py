@@ -45,7 +45,8 @@ MSG_BYTES = 3400            # ntfy turns messages over 4096 bytes into attachmen
 RATE_KEYS = 500             # accepted keys per window
 RATE_WINDOW_S = 600
 CACHE_TTL_S = 1800          # a key fetched in the last 30 min is answered from memory
-FLUSH_EVERY_S = 1.5
+FLUSH_EVERY_S = 3
+HEARTBEAT_S = 10
 PERSIST_EVERY_S = 90
 CONCURRENCY = 5
 _UA = (
@@ -118,20 +119,29 @@ class RateLimiter:
 
 
 # --- ntfy io (blocking, run in threads) ----------------------------------------
-def publish(topic: str, text: str, retries: int = 6) -> bool:
+PUB = {"ok": 0, "r429": 0, "fail": 0}
+
+
+def publish(topic: str, text: str, retries: int = 8) -> bool:
     for i in range(retries):
         try:
             req = urllib.request.Request(f"{NTFY}/{topic}", data=text.encode(), method="POST")
             urllib.request.urlopen(req, timeout=15).close()
+            PUB["ok"] += 1
             return True
         except urllib.error.HTTPError as e:
             if e.code != 429:
+                PUB["fail"] += 1
                 print(f"publish http {e.code}", file=sys.stderr, flush=True)
                 return False
-            time.sleep(min(5 * (i + 1), 30))   # ntfy rate limit: back off, never drop
+            PUB["r429"] += 1
+            wait = e.headers.get("Retry-After") if e.headers else None
+            time.sleep(min(float(wait) if wait and wait.isdigit() else 5 * (i + 1), 30))   # back off, never drop
         except Exception as e:  # noqa: BLE001
             print(f"publish error {e}", file=sys.stderr, flush=True)
             time.sleep(2)
+    PUB["fail"] += 1
+    print("publish gave up", file=sys.stderr, flush=True)
     return False
 
 
@@ -299,13 +309,19 @@ class Daemon:
                 await asyncio.to_thread(publish, self.res, text)
 
         pending = [asyncio.create_task(one(k)) for k in keys]
-        for fut in asyncio.as_completed(pending):
-            await fut
-            if time.time() - last_flush >= FLUSH_EVERY_S and (out_f or out_n):
+        t0 = time.time()
+        last_sent = time.time()
+        while not all(t.done() for t in pending):
+            await asyncio.wait(pending, timeout=FLUSH_EVERY_S, return_when=asyncio.FIRST_COMPLETED)
+            now = time.time()
+            if (out_f or out_n) and now - last_flush >= FLUSH_EVERY_S:
                 await flusher(False)
-                last_flush = time.time()
+                last_flush = last_sent = time.time()
+            elif now - last_sent >= HEARTBEAT_S:   # keeps the page from deciding we died
+                await flusher(False)
+                last_sent = time.time()
         await flusher(True)
-        print(f"request {rid}: {len(keys)} keys done", flush=True)
+        print(f"request {rid}: {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}", flush=True)
 
 
 # --- self test (client side) -------------------------------------------------------------
@@ -353,11 +369,21 @@ def main() -> None:
     s.add_argument("--res", required=True)
     s.add_argument("--keys", default="ow|TPE|HKG|2027-02-03,rt|TPE|NRT|2027-02-05|2027-02-15")
     s.add_argument("--timeout", type=float, default=180)
+    s.add_argument("--count", type=int, default=0, help="instead of --keys: this many one-way queries")
     args = ap.parse_args()
     if args.cmd == "run":
         asyncio.run(Daemon(args.req, args.res, args.db).run(args.duration))
     else:
-        sys.exit(selftest(args.req, args.res, args.keys.split(","), args.timeout))
+        keys = args.keys.split(",")
+        if args.count:
+            from datetime import timedelta
+
+            origins = ["TPE", "HKG", "NRT", "ICN"]
+            base = datetime.now(UTC).date() + timedelta(days=120)
+            keys = [
+                f"ow|TPE|{origins[1 + i % 3]}|{base + timedelta(days=i // 3)}" for i in range(args.count)
+            ]
+        sys.exit(selftest(args.req, args.res, keys, args.timeout))
 
 
 if __name__ == "__main__":
