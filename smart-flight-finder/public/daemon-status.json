@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T17:26:01+00:00",
+ "at": "2026-10-17T17:27:32+00:00",
  "publishes": {
-  "ok": 192,
+  "ok": 222,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 622,
+ "fares_saved": 652,
  "log": [
   "17:12:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "17:13:00 request received: rid selftest1792257177 30 keys",
@@ -88,6 +88,12 @@
   "17:21:42 request mvcnxmswllrnu: chunk of 5 keys done in 44s; ntfy publishes {'ok': 110, 'r429': 0, 'fail': 0}",
   "17:24:03 request mvcnxmswllrnu: chunk of 42 keys done in 185s; ntfy publishes {'ok': 153, 'r429': 0, 'fail': 0}",
   "17:25:42 request mvcnxlurewq6w: chunk of 5 keys done in 287s; ntfy publishes {'ok': 185, 'r429': 0, 'fail': 0}",
-  "17:25:45 request mvcnxlurewq6w: chunk of 5 keys done in 290s; ntfy publishes {'ok': 185, 'r429': 0, 'fail': 0}"
+  "17:25:45 request mvcnxlurewq6w: chunk of 5 keys done in 290s; ntfy publishes {'ok': 185, 'r429': 0, 'fail': 0}",
+  "17:26:06 request mvcnxmswllrnu: chunk of 36 keys done in 308s; ntfy publishes {'ok': 194, 'r429': 0, 'fail': 0}",
+  "17:26:06 request mvcnxmswllrnu: final sent (83/83); ntfy publishes {'ok': 195, 'r429': 0, 'fail': 0}",
+  "17:26:09 request received: rid mvco4b8aefslb 87 keys",
+  "17:26:09 handle mvco4b8aefslb: first_chunk=True total=160",
+  "17:26:09 request received: rid mvco4b8aefslb 73 keys",
+  "17:26:09 handle mvco4b8aefslb: first_chunk=False total=160"
  ]
 }
