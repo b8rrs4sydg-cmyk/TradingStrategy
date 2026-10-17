@@ -2076,7 +2076,7 @@ function wireSubmit() {
         document.getElementById('r-sel-pill').hidden = true;
         renderResults();
         elapsed.textContent = `· 搜尋耗時 ${Math.round(performance.now() - t0)} ms`;
-        maybeLookup();
+        maybeLookup(true);
       } finally {
         btn.textContent = '搜尋';
         updateSlotSummary();
@@ -2154,11 +2154,13 @@ const LIVE_CACHE_KEY = 'sff.livefares.v1';
 const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
 // Poke-only scheduled task bound to that session: firing it wakes Claude with the request id.
 const WORKER_TRIGGER = 'trig_01YJmjteUtHz6uoWp6moa8fM';
-const LOOKUP_MAX = 160;
+const LOOKUP_MAX = 160;            // keys per request (crawler limit)
+const MC_BUDGET = 400;             // multi-city fares fetched per search (the most promising ones)
+const PROMISING = 0.8, PER_GROUP = 3;   // same ranking constants as crawl_plan.py
 const LOOKUP_STEPS = [['queued', '送出請求'], ['dispatched', '啟動爬蟲'], ['running', '查詢 Google Flights'], ['saving', '寫入資料庫'], ['done', '完成']];
 const live = { db: null, mcp: null, ready: false, rid: null, doc: null, keys: [], started: 0, unsub: null, timer: null,
   asked: new Set(), notFound: new Set(), answered: new Set(), needsApproval: false, error: null,
-  mode: 'ntfy', steps: NTFY_STEPS, ntfyOk: true };
+  mode: 'ntfy', steps: NTFY_STEPS, ntfyOk: true, campaign: { asked: 0, batch: 0, mcLeft: MC_BUDGET, found: 0 } };
 const liveOverlay = {};   // fares fetched on this page / cached locally; survives snapshot swaps
 
 function lookupEta(keys) {
@@ -2167,6 +2169,14 @@ function lookupEta(keys) {
   return base + Math.ceil((keys.length - mc) / 5) * 4 + Math.ceil(mc / 5) * 18; // seconds
 }
 const fmtSec = s => (s >= 60 ? `${Math.floor(s / 60)} 分 ${Math.round(s % 60)} 秒` : `${Math.max(0, Math.round(s))} 秒`);
+
+function campaignText() {
+  const c = live.campaign;
+  if (!c || !c.batch) return '';
+  const left = Math.max(0, (c.left || 0) - (live.keys?.length || 0));
+  const stage = c.stage === 1 ? '階段 1：單程／來回票價' : '階段 2：多城市（依預期可省幅度，只查最有希望的）';
+  return `<div class="hint" style="margin-top:4px">第 ${c.batch} 批 · ${stage} · 本次搜尋已送出 ${c.asked} 筆、找到 ${c.found} 筆實價${left ? `，還有約 ${left} 筆待查（查完會自動繼續）` : ''}</div>`;
+}
 
 function renderLookup() {
   const el = document.getElementById('live-lookup');
@@ -2209,7 +2219,7 @@ function renderLookup() {
   } else {
     head = `<b>即時查詢 ${total} 筆缺少的票價</b>…`;
   }
-  el.innerHTML = `<div class="row">${head}<span class="mono">${status === 'done' ? `共 ${fmtSec(elapsed)}` : `已等 ${fmtSec(elapsed)} · 預估約 ${fmtSec(Math.max(eta - elapsed, 5))}`}</span></div>
+  el.innerHTML = `<div class="row">${head}<span class="mono">${status === 'done' ? `共 ${fmtSec(elapsed)}` : `已等 ${fmtSec(elapsed)} · 預估約 ${fmtSec(Math.max(eta - elapsed, 5))}`}</span></div>${campaignText()}
     <div class="steps">${live.steps.map(([k, label], i) => `<span class="${i < idx ? 'done' : i === idx ? 'on' : ''}">${i < idx ? '✓ ' : ''}${label}</span>`).join('')}</div>
     <div class="bar"><i class="${pct == null ? 'indet' : ''}" style="width:${pct ?? 30}%"></i></div>
     ${stalled ? '<button type="button" class="btn-ghost" id="btn-lookup-retry">重新送出</button>' : ''}`;
@@ -2224,12 +2234,78 @@ function resetLookup() {
 }
 
 /* After every search: look up whatever was missing (once per key). */
-function maybeLookup() {
+/* Multi-city ranking, a port of crawl_plan.rank_multi_city: spend crawler time on the
+ * combinations that can still beat ordinary round trips, judged by the REAL one-way /
+ * round-trip prices fetched in stage 1. */
+function rankMulti(keys) {
+  const idx = { ow: new Map(), rt: new Map() };
+  for (const [k, v] of Object.entries(FARES.fares)) {
+    const kind = k.slice(0, 2);
+    if (kind !== 'ow' && kind !== 'rt') continue;
+    const [, o, d, d1, d2] = k.split('|');
+    const g = `${o}|${d}`;
+    if (!idx[kind].has(g)) idx[kind].set(g, []);
+    idx[kind].get(g).push({ d1, d2, price: v.price });
+  }
+  const flex = (fareCoverage().flex ?? 1) + 1;
+  const near = (a, b) => Math.abs(daysBetween(a, b)) <= flex;
+  const minOf = (kind, o, d, ok) => {
+    const list = (idx[kind].get(`${o}|${d}`) || []).filter(ok);
+    return list.length ? Math.min(...list.map(e => e.price)) : null;
+  };
+  const groups = new Map();
+  for (const key of keys) {
+    const segs = key.slice(3).split('|').map(x => { const [o, d, ...day] = x.split('-'); return [o, d, day.join('-')]; });
+    let score = null, group;
+    if (segs.length === 4) {
+      const [[x, , c1], [, d, c2], , [, y, rDep]] = segs;
+      group = ['4leg', x, d, y, c1.slice(5, 7), c2.slice(5, 7), rDep.slice(5, 7)].join('|');
+      const owFirst = minOf('ow', 'TPE', x, e => e.d1 < c1);
+      const owLast = minOf('ow', y, 'TPE', e => e.d1 > rDep);
+      const rtX = minOf('rt', 'TPE', x, e => near(e.d2, c1));
+      const rtD = minOf('rt', 'TPE', d, e => near(e.d1, c2));
+      const rtY = minOf('rt', 'TPE', y, e => near(e.d1, rDep));
+      if ([owFirst, owLast, rtX, rtD, rtY].every(v => v != null)) score = (rtX + rtD + rtY - owFirst - owLast) / Math.max(rtD, 1);
+    } else {
+      const [[o1, d1, day1], [o2, d2, day2]] = segs;
+      group = ['oj', o1, d1, o2, d2, day1.slice(5, 7), day2.slice(5, 7)].join('|');
+      const p = minOf('rt', o1, d1, e => e.d1 === day1 && e.d2 === day2);
+      score = p == null ? null : -p;
+    }
+    if (!groups.has(group)) groups.set(group, []);
+    groups.get(group).push([score == null ? -Infinity : score, key]);
+  }
+  const picked = [];
+  for (const [group, items] of groups) {
+    items.sort((a, b) => b[0] - a[0]);
+    const k = group.startsWith('4leg') ? (items[0][0] >= PROMISING ? PER_GROUP : 1) : 2;
+    picked.push(...items.slice(0, k));
+  }
+  picked.sort((a, b) => b[0] - a[0]);
+  return picked.map(e => e[1]);
+}
+
+/* Next batch of keys to look up: stage 1 = every one-way / round trip, stage 2 = the best multi-city. */
+function nextBatch() {
+  const open = [...fareStats.missingKeys].filter(k => !live.asked.has(k) && !live.notFound.has(k));
+  const stage1 = open.filter(k => !k.startsWith('mc|'));
+  if (stage1.length) return { keys: stage1.slice(0, LOOKUP_MAX), stage: 1, left: stage1.length };
+  const mc = rankMulti(open).slice(0, Math.max(0, live.campaign.mcLeft));
+  return { keys: mc.slice(0, LOOKUP_MAX), stage: 2, left: mc.length, skipped: open.length - mc.length };
+}
+
+/* After a search: look up whatever is missing, batch after batch, until nothing worth asking remains. */
+function maybeLookup(fromUser = false) {
   if (!(live.ready || live.ntfyOk) || (live.rid && live.doc?.status !== 'done' && live.doc?.status !== 'error')) return;
-  const keys = [...fareStats.missingKeys].filter(k => !live.asked.has(k) && !live.notFound.has(k));
-  if (!keys.length) return;
-  keys.sort((a, b) => a.startsWith('mc|') - b.startsWith('mc|'));
-  startLookup(keys.slice(0, LOOKUP_MAX));
+  if (fromUser) live.campaign = { asked: 0, batch: 0, mcLeft: MC_BUDGET, found: 0, started: Date.now() };
+  const batch = nextBatch();
+  if (!batch.keys.length) { live.campaign.left = 0; return; }
+  live.campaign.batch += 1;
+  live.campaign.stage = batch.stage;
+  live.campaign.left = batch.left;
+  if (batch.stage === 2) live.campaign.mcLeft -= batch.keys.length;
+  live.campaign.asked += batch.keys.length;
+  startLookup(batch.keys);
 }
 
 /* Wake Claude: fire the poke-only task (preferred), else message the session.
@@ -2403,7 +2479,14 @@ function finishLookup() {
   clearInterval(live.timer);
   renderLookup();
   scheduleRefresh();
-  setTimeout(() => { if (live.doc?.status === 'done') { resetLookup(); renderLookup(); } }, 12000);
+  live.campaign.found += live.doc.found || 0;
+  // more to look up? let the refreshed search recount what is missing, then ask for the next batch
+  setTimeout(() => {
+    if (live.doc?.status !== 'done') return;
+    const more = nextBatch();
+    if (more.keys.length) { live.doc = null; live.rid = null; maybeLookup(); }
+    else setTimeout(() => { if (live.doc?.status === 'done') { resetLookup(); renderLookup(); } }, 12000);
+  }, 1200);
 }
 
 async function startLookup(keys, viaClaude = false) {
