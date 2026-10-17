@@ -316,6 +316,9 @@
     border: 1px solid var(--brand); color: var(--brand-ink); text-decoration: none; background: var(--card);
   }
   .ticket .links a:hover { background: var(--brand-wash) }
+  .itinerary-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; color: var(--fg-muted) }
+  .itinerary-links a { border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; text-decoration: none; color: var(--brand) }
+  .itinerary-links a:hover { background: var(--brand-wash) }
 
   .btn-primary {
     appearance: none;
@@ -1015,6 +1018,7 @@ function planOpenJaw(req, expanded) {
       for (let j = 0; j < distinctDest.length; j++) {
         if (i === j) continue;
         const a = distinctDest[i], b = distinctDest[j];
+        if (countryOf(a) !== countryOf(b)) continue;   // 不同進出點 = same country (飛香港、從馬尼拉回 is two trips)
         // baseline: cheapest round-trip origin↔a
         let baseline = 0;
         for (const [od, rd] of pairs) {
@@ -1127,11 +1131,7 @@ function planReversePair(req, A, B) {
           const t = quote([[home, aIn, aDep], [bOut, home, bRet]], req.adults);
           if (t) wrap.push([t.total_price, { aDep, bRet, tickets: [t] }]);
         }
-        const firsts = A.departs.map(dep => [dep, quote([[home, aIn, dep]], req.adults)]).filter(x => x[1]);
-        const lasts = B.returns.map(ret => [ret, quote([[bOut, home, ret]], req.adults)]).filter(x => x[1]);
-        const ends = [];
-        for (const [aDep, f] of firsts) for (const [bRet, l] of lasts) ends.push([f.total_price + l.total_price, { aDep, bRet, tickets: [f, l] }]);
-        fronts.push(['倒買法', aIn, bOut, wrap], ['補頭尾', aIn, bOut, ends]);
+        fronts.push(['倒買法', aIn, bOut, wrap]);
       }
       const compatible = (fr, bk) => fr.aDep < bk.aRet && bk.bDep < fr.bRet;
       const found = [];
@@ -1140,20 +1140,21 @@ function planReversePair(req, A, B) {
         if (!best) continue;
         const [total, fr, bk] = best;
         const revRole = `反向票：${aOut} 出發` + (bIn !== aOut ? `，回程飛 ${bIn}` : '');
-        const daomai = variant === '倒買法';
-        const tickets = daomai ? [fr.tickets[0], bk.t] : [fr.tickets[0], bk.t, fr.tickets[1]];
-        const roles = daomai ? [`包覆票：${home} 出發` + (bOut !== aIn ? `，${bOut} 回` : ''), revRole] : ['單買去程 (補頭)', revRole, '單買回程 (補尾)'];
-        const [firstTag, lastTag] = daomai ? ['包覆票 第1段', '包覆票 第2段'] : ['單買去程', '單買回程'];
+        // exactly two tickets: the 包覆票 (home→aIn + bOut→home) and the 反向票 (aOut→home + home→bIn)
+        const tickets = [fr.tickets[0], bk.t];
+        const roles = [`包覆票：${home} 出發` + (bOut !== aIn ? `，${bOut} 回` : ''), revRole];
+        const [firstTag, lastTag] = ['包覆票 第1段', '包覆票 第2段'];
         const saving = baseline - total;
         const warnings = [
           { level: 'medium', code: 'reverse_ticket_order', message: `反向票須從第1段 ${aOut}→${home} 開始依序搭乘，第1段未搭乘後段會被取消；各張票分開開票，任一張延誤或改期都不保護另一張` },
           savingWarning('reverse_savings_estimate', '兩趟各買一般來回', baseline, total),
         ];
-        if (daomai) warnings.push({ level: 'low', code: 'wrap_ticket_validity', message: `包覆票從 ${md(fr.aDep)} 用到 ${md(fr.bRet)}，請確認票價規則的最長停留 / 效期（常見為 1 年）` });
+        warnings.push({ level: 'low', code: 'wrap_ticket_validity', message: `包覆票從 ${md(fr.aDep)} 用到 ${md(fr.bRet)}，請確認票價規則的最長停留 / 效期（常見為 1 年）` });
         found.push({
           strategy: 'reverse', tickets, total_cost: total, currency: 'TWD',
           total_travel_days: tripDays(fr.aDep, bk.aRet) + tripDays(bk.bDep, fr.bRet),
           warnings, ticket_roles: roles,
+          itinerary: [[home, aIn, fr.aDep], [aOut, home, bk.aRet], [home, bIn, bk.bDep], [bOut, home, fr.bRet]],
           trips: [
             `旅程 A｜${A.label}：${md(fr.aDep)} ${home}→${aIn}（${firstTag}） ⇢ ${md(bk.aRet)} ${aOut}→${home}（反向票 第1段）`,
             `旅程 B｜${B.label}：${md(bk.bDep)} ${home}→${bIn}（反向票 第2段） ⇢ ${md(fr.bRet)} ${bOut}→${home}（${lastTag}）`,
@@ -1601,6 +1602,7 @@ function renderPlan(plan, rank) {
               </section>
             `).join('')}
           </div>
+          ${plan.itinerary ? `<div class="itinerary-links"><span>整趟 ${plan.itinerary.length} 段行程（一張多城市搜尋，僅供對照航班與價格；實際購買請用上面兩張票）：</span>${multiCityLinks(plan.itinerary, plan.adults || 1).map(b => `<a href="${escapeHtml(b.url)}" target="_blank" rel="noopener noreferrer">${b.label} ↗</a>`).join('')}</div>` : ''}
           ${warnings ? `<div class="warnings">${warnings}</div>` : ''}
           <div class="actions">
             <button type="button" class="btn-ghost btn-share">分享連結</button>
