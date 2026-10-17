@@ -66,3 +66,19 @@ TW_AIRPORT_CODES: frozenset[str] = frozenset(a.code for a in TW_ORIGINS) | {
     "TNN", "HUN", "KNH", "MZG", "TTT", "HCN",
 }
 OUTSTATIONS: tuple[Airport, ...] = tuple(a for a in DESTINATIONS if a.outstation)
+
+# IANA time zones, for reading local departure/arrival times off fare sites.
+TIMEZONES: dict[str, str] = {
+    "TPE": "Asia/Taipei", "TSA": "Asia/Taipei", "KHH": "Asia/Taipei", "RMQ": "Asia/Taipei",
+    "NRT": "Asia/Tokyo", "HND": "Asia/Tokyo", "KIX": "Asia/Tokyo", "NGO": "Asia/Tokyo",
+    "FUK": "Asia/Tokyo", "CTS": "Asia/Tokyo", "OKA": "Asia/Tokyo",
+    "ICN": "Asia/Seoul", "PUS": "Asia/Seoul",
+    "HKG": "Asia/Hong_Kong", "MFM": "Asia/Macau", "XMN": "Asia/Shanghai",
+    "BKK": "Asia/Bangkok", "CNX": "Asia/Bangkok", "SGN": "Asia/Ho_Chi_Minh",
+    "HAN": "Asia/Ho_Chi_Minh", "MNL": "Asia/Manila", "CEB": "Asia/Manila",
+    "KUL": "Asia/Kuala_Lumpur", "SIN": "Asia/Singapore",
+    "LHR": "Europe/London", "CDG": "Europe/Paris", "AMS": "Europe/Amsterdam",
+    "VIE": "Europe/Vienna", "LAX": "America/Los_Angeles", "SFO": "America/Los_Angeles",
+    "JFK": "America/New_York", "YVR": "America/Vancouver",
+    "SYD": "Australia/Sydney", "BNE": "Australia/Brisbane",
+}

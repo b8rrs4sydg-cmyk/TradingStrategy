@@ -59,5 +59,5 @@ def test_csv_includes_slot_label_and_trip_com_link():
     r = client.post("/plans/csv", json={"plans": [plan]})
     rows = list(csv.DictReader(io.StringIO(r.text)))
     assert rows[0]["window_label"] == "春節請 2 休 11"
-    assert rows[0]["trip_com_url"].startswith("https://www.trip.com/flights/showfarefirst?")
+    assert rows[0]["trip_com_url"].startswith("https://tw.trip.com/flights/showfarefirst?")
     assert "dcity=tpe" in rows[0]["trip_com_url"] and "triptype=ow" in rows[0]["trip_com_url"]

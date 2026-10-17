@@ -22,7 +22,7 @@ def test_round_trip_links_carry_route_dates_pax_cabin():
 
     trip = urlparse(urls["trip_com"])
     q = {k: v[0] for k, v in parse_qs(trip.query).items()}
-    assert trip.netloc == "www.trip.com"
+    assert trip.netloc == "tw.trip.com"
     # Trip.com needs city codes; the airport is pinned separately
     assert q["dcity"] == "tpe" and q["acity"] == "tyo"
     assert q["dairport"] == "tpe" and q["aairport"] == "nrt"
@@ -96,14 +96,12 @@ def test_multi_city_ticket_gets_multi_city_links_on_every_site():
     assert set(links) == {"google_flights", "trip_com"}  # no unverifiable Skyscanner multi-city
     q = {k: v[0] for k, v in parse_qs(urlparse(links["trip_com"].url).query).items()}
     assert q["triptype"] == "mt"
-    assert [q[f"dcity{i}"] for i in range(4)] == ["hkg", "tpe", "tyo", "tpe"]
+    assert [q[f"multdcity{i}"] for i in range(4)] == ["hkg", "tpe", "tyo", "tpe"]
     assert [q[f"aairport{i}"] for i in range(4)] == ["tpe", "nrt", "tpe", "hkg"]
-    # dates are 1-based and Trip.com only honours the first two
-    assert (q["ddate1"], q["ddate2"]) == ("2027-02-07", "2027-02-07")
-    assert "第3段起日期" in links["trip_com"].label
+    assert [q[f"multddate{i}"] for i in range(4)] == ["2027-02-07", "2027-02-07", "2027-02-15", "2027-12-22"]
 
 
-def test_open_jaw_two_segment_ticket_is_multi_city_with_both_dates_honoured():
+def test_open_jaw_two_segment_ticket_is_multi_city():
     from dataclasses import replace
     from datetime import date
 
@@ -113,7 +111,7 @@ def test_open_jaw_two_segment_ticket_is_multi_city_with_both_dates_honoured():
     links = {b.source: b for b in booking_links(t)}
     q = {k: v[0] for k, v in parse_qs(urlparse(links["trip_com"].url).query).items()}
     assert links["trip_com"].label == "Trip.com 多段"
-    assert (q["dcity0"], q["acity1"], q["ddate1"], q["ddate2"]) == ("osa", "tyo", "2027-02-14", "2027-12-23")
+    assert (q["multdcity0"], q["multacity1"], q["multddate0"], q["multddate1"]) == ("osa", "tyo", "2027-02-14", "2027-12-23")
 
 
 def test_mirrored_two_segment_ticket_uses_round_trip_search():

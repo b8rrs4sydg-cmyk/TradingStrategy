@@ -1,0 +1,71 @@
+name: Fare snapshot (Google Flights)
+
+# Real fares for the demo page and SnapshotFareProvider. The dev sandbox has
+# no open egress, so the Google Flights searches run here once a day and the
+# result is committed as smart-flight-finder/public/fares.json.
+on:
+  schedule:
+    - cron: "17 19 * * *" # 03:17 Asia/Taipei
+  workflow_dispatch:
+    inputs:
+      holidays:
+        description: "holiday keys (comma separated)"
+        default: "lunar_ny,qingming"
+      destinations:
+        description: "destination airports"
+        default: "NRT,KIX,LHR"
+      outer:
+        description: "四腿票 outstations"
+        default: "HKG"
+      flex:
+        description: "± days around each holiday"
+        default: "1"
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths:
+      - ".github/workflows/fares-snapshot.yml"
+      - "smart-flight-finder/backend/scripts/build_fare_snapshot.py"
+      - "smart-flight-finder/backend/app/services/fare_snapshot.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fare-snapshot-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: |
+          pip install -e . "playwright>=1.50,<2"
+          python -m playwright install --with-deps chromium
+      - name: Fetch fares
+        run: >-
+          python -m scripts.build_fare_snapshot
+          --out ../public/fares.json
+          --holidays "${{ inputs.holidays || 'lunar_ny,qingming' }}"
+          --destinations "${{ inputs.destinations || 'NRT,KIX,LHR' }}"
+          --outer "${{ inputs.outer || 'HKG' }}"
+          --flex "${{ inputs.flex || '1' }}"
+      - name: Commit snapshot
+        working-directory: .
+        run: |
+          git config user.name "fare-snapshot-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add smart-flight-finder/public/fares.json
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -m "data: Google Flights fare snapshot $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done
+          exit 1

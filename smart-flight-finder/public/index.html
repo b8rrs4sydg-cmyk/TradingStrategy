@@ -281,6 +281,9 @@
     background: var(--accent-wash); color: var(--accent);
   }
   .ticket .src { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--fg-muted) }
+  .ticket .src.real { color: var(--good); font-weight: 500 }
+  .pill-fare { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good) }
+  .pill-fare.none { background: var(--card-sunken); color: var(--fg-muted) }
   .ticket .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px }
   .ticket .links a {
     font: 500 11.5px/1 var(--font-body); padding: 5px 8px; border-radius: 6px;
@@ -689,6 +692,7 @@
         <span><b id="r-plan-count">0</b> 個方案</span>
         <span>· 展開 <b id="r-matrix">0</b> 個日期組合</span>
         <span id="r-cache-pill" class="pill pill-cache" hidden></span>
+        <span id="r-fare-pill" class="pill pill-fare" hidden></span>
         <span id="r-sel-pill" class="pill pill-sel" hidden></span>
       </div>
       <div class="controls">
@@ -712,7 +716,7 @@
   </section>
 
   <footer class="site">
-    <div>Smart Flight Finder — demo：價格為內建 stub 示意價，非即時報價；請點各票的 Trip.com / Google Flights / Skyscanner 連結查詢實際票價。</div>
+    <div>Smart Flight Finder — demo：標示「Google Flights 實際票價」的票為每日擷取的 Google Flights 最低總價（1 位成人、經濟艙）；快照沒涵蓋的組合顯示內建示意價。訂票前請點各票連結確認即時價格。</div>
     <div><a href="https://github.com/b8rrs4sydg-cmyk/tradingstrategy/tree/claude/zealous-darwin-1kexus/smart-flight-finder" target="_blank" rel="noopener">GitHub 原始碼</a></div>
   </footer>
 
@@ -723,6 +727,7 @@
   <button class="fab" type="button" id="fab-help">? 快捷鍵</button>
 </div>
 
+<script id="fare-snapshot" type="application/json"></script>
 <script>
 "use strict";
 
@@ -851,12 +856,48 @@ function hashCode(s) {
   return h;
 }
 
+/* Real fares: a Google Flights snapshot (fares.json, refreshed daily by the
+ * "Fare snapshot" GitHub Action, mirrors backend/app/providers/snapshot.py).
+ * A hit replaces the stub price with the real cheapest total and the first
+ * segment's real times; later segments are placeholders (時刻待選). */
+let FARES = { fares: {}, generated_at: null };
+const fareStats = { real: 0, stub: 0 };
+function loadFareSnapshot() {
+  try {
+    const el = document.getElementById('fare-snapshot');
+    if (el && el.textContent.trim()) FARES = JSON.parse(el.textContent);
+  } catch (e) { console.warn('fare snapshot unreadable', e); }
+}
+const fareKeyOW = (o, d, day) => `ow|${o}|${d}|${day}`;
+const fareKeyRT = (o, d, dep, ret) => `rt|${o}|${d}|${dep}|${ret}`;
+const fareKeyMC = segments => 'mc|' + segments.map(([o, d, day]) => `${o}-${d}-${day}`).join('|');
+function applyRealFare(key, offers, adults) {
+  const e = FARES.fares && FARES.fares[key];
+  if (!e) { fareStats.stub += 1; return offers; }
+  fareStats.real += 1;
+  const t = offers[0];
+  const legs = t.legs.map(l => ({ ...l }));
+  if (e.first) {
+    legs[0] = { ...legs[0], departure: e.first.dep, arrival: e.first.arr, carrier: e.first.airline || legs[0].carrier, flight_number: '', stops: e.first.stops || 0 };
+    for (let i = 1; i < legs.length; i++) {
+      Object.assign(legs[i], { estimated: true, carrier: '待選', flight_number: '' });
+      const prevArr = Date.parse(legs[i - 1].arrival), dep = Date.parse(legs[i].departure);
+      if (legs[i].departure.slice(0, 10) <= legs[i - 1].arrival.slice(0, 10) && dep < prevArr + 150 * 60000) {
+        const dur = Date.parse(legs[i].arrival) - dep;
+        legs[i].departure = new Date(prevArr + 150 * 60000).toISOString();
+        legs[i].arrival = new Date(prevArr + 150 * 60000 + dur).toISOString();
+      }
+    }
+  }
+  return [{ ...t, offer_id: `gf-${key}`, legs, total_price: e.price * adults, issuer: 'google_flights', fare_class: legs.length > 1 ? '後段時刻待選' : null }];
+}
+
 const CachingProvider = (function () {
   const cache = new Map();
   let hits = 0, misses = 0;
   function key(args) { return [args.origin, args.destination, args.departureDate, args.returnDate || '-', args.adults || 1].join('|'); }
   function stats() { return { hits, misses, total: hits + misses, unique: cache.size }; }
-  function reset() { cache.clear(); hits = 0; misses = 0; }
+  function reset() { cache.clear(); hits = 0; misses = 0; fareStats.real = 0; fareStats.stub = 0; }
   function search(args) {
     const k = key(args);
     if (cache.has(k)) { hits += 1; return cache.get(k); }
@@ -866,11 +907,11 @@ const CachingProvider = (function () {
     let offers;
     if (!args.returnDate) {
       const price = Math.round(r.base * marketFactor(args.origin, args.departureDate) * (1 + jitter(`ow|${args.origin}|${args.destination}|${args.departureDate}`)) * (args.adults || 1));
-      offers = [{ offer_id: `ow-${r.carrier}-${args.departureDate}`, legs: [outboundLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }];
+      offers = applyRealFare(fareKeyOW(args.origin, args.destination, args.departureDate), [{ offer_id: `ow-${r.carrier}-${args.departureDate}`, legs: [outboundLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }], args.adults || 1);
     } else {
       const returnLeg = makeLeg(args.destination, args.origin, args.returnDate, 18);
       const price = Math.round(r.base * 1.7 * marketFactor(args.origin, args.departureDate) * (1 + jitter(`rt|${args.origin}|${args.destination}|${args.departureDate}|${args.returnDate}`)) * (args.adults || 1));
-      offers = [{ offer_id: `rt-${r.carrier}-${args.departureDate}-${args.returnDate}`, legs: [outboundLeg, returnLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }];
+      offers = applyRealFare(fareKeyRT(args.origin, args.destination, args.departureDate, args.returnDate), [{ offer_id: `rt-${r.carrier}-${args.departureDate}-${args.returnDate}`, legs: [outboundLeg, returnLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }], args.adults || 1);
     }
     cache.set(k, offers);
     return offers;
@@ -898,7 +939,7 @@ const CachingProvider = (function () {
     const outstation = !TW_AIRPORTS.has(o0) && segments.length >= 4 && hubTouches >= 4;
     const factor = outstation ? OUTSTATION_MULTI_CITY_FACTOR : MULTI_CITY_FACTOR;
     const price = Math.round(seeds.reduce((n, sd) => n + sd.base, 0) * factor * marketFactor(o0, d0) * (1 + jitter(k)) * adults);
-    const offers = [{ offer_id: 'mc-' + segments.map(([o, d, day]) => `${o}${d}${day.slice(5).replace('-', '')}`).join('-'), legs, total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }];
+    const offers = applyRealFare(fareKeyMC(segments), [{ offer_id: 'mc-' + segments.map(([o, d, day]) => `${o}${d}${day.slice(5).replace('-', '')}`).join('-'), legs, total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }], adults);
     cache.set(k, offers);
     return offers;
   }
@@ -1264,20 +1305,23 @@ function googleTfs(segments, adults, trip = 3) {
 }
 const googleUrl = tfs => `https://www.google.com/travel/flights?tfs=${encodeURIComponent(tfs)}&hl=zh-TW&curr=TWD`;
 
-/* Trip.com searches by city code with dairport/aairport pinning the airport.
- * Multi-city: dcity{i}/acity{i}/dairport{i}/aairport{i} are 0-based, ddate{i}
- * 1-based, and only ddate1/ddate2 are honoured (later dates get auto-filled). */
+/* Trip.com (tw.trip.com) searches by city code with dairport/aairport pinning
+ * the airport. Multi-city uses Trip.com's own URL — what its search button
+ * produces: multdcity{i}/multacity{i}/dairport{i}/aairport{i}/multddate{i}. */
+const TRIP_BASE = 'https://tw.trip.com/flights/showfarefirst';
 const TRIP_CITY = { TSA: 'tpe', NRT: 'tyo', HND: 'tyo', KIX: 'osa', ITM: 'osa', CTS: 'spk', ICN: 'sel', GMP: 'sel', LHR: 'lon', LGW: 'lon', CDG: 'par', ORY: 'par', JFK: 'nyc', EWR: 'nyc', DMK: 'bkk' };
 const tripCity = code => TRIP_CITY[code] || code.toLowerCase();
 
 function multiCityLinks(segments, adults) {
-  const q = new URLSearchParams({ triptype: 'mt' });
-  segments.forEach(([o, d], i) => { q.set(`dcity${i}`, tripCity(o)); q.set(`acity${i}`, tripCity(d)); q.set(`dairport${i}`, o.toLowerCase()); q.set(`aairport${i}`, d.toLowerCase()); });
-  segments.forEach(([, , day], i) => q.set(`ddate${i + 1}`, day));
-  for (const [k, v] of Object.entries({ class: 'y', quantity: adults, locale: 'zh-TW', curr: 'TWD' })) q.set(k, v);
+  const q = new URLSearchParams();
+  segments.forEach(([o, d, day], i) => {
+    q.set(`multdcity${i}`, tripCity(o)); q.set(`multacity${i}`, tripCity(d));
+    q.set(`dairport${i}`, o.toLowerCase()); q.set(`aairport${i}`, d.toLowerCase()); q.set(`multddate${i}`, day);
+  });
+  for (const [k, v] of Object.entries({ triptype: 'mt', class: 'y', quantity: adults, searchboxarg: 't', nonstoponly: 'off', locale: 'zh-TW', curr: 'TWD' })) q.set(k, v);
   return [
     { label: 'Google Flights 多段', url: googleUrl(googleTfs(segments, adults, 3)) },
-    { label: 'Trip.com 多段' + (segments.length > 2 ? '（第3段起日期請手動確認）' : ''), url: `https://www.trip.com/flights/showfarefirst?${q}` },
+    { label: 'Trip.com 多段', url: `${TRIP_BASE}?${q}` },
   ];
 }
 
@@ -1293,13 +1337,13 @@ function bookingLinks(ticket, adults) {
   const yymmdd = iso => iso.slice(2).replace(/-/g, '');
   const sky = `${o}/${d}/${yymmdd(r.dep)}/${r.ret ? yymmdd(r.ret) + '/' : ''}`;
   return [
-    { label: 'Trip.com', url: `https://www.trip.com/flights/showfarefirst?${trip}` },
+    { label: 'Trip.com', url: `${TRIP_BASE}?${trip}` },
     { label: 'Google Flights', url: googleUrl(googleTfs(gSegs, adults, r.ret ? 1 : 2)) },
     { label: 'Skyscanner', url: `https://www.skyscanner.com.tw/transport/flights/${sky}?adultsv2=${adults}&cabinclass=economy` },
   ];
 }
 
-const ISSUER_LABEL = { stub: '示意價 (demo 內建價格表，非即時)', amadeus: 'Amadeus 即時報價', skyscanner: 'Skyscanner API 報價' };
+const ISSUER_LABEL = { google_flights: 'Google Flights 實際票價', stub: '示意價 (demo 內建價格表，非即時)', amadeus: 'Amadeus 即時報價', skyscanner: 'Skyscanner API 報價' };
 
 /* =========================================================================
  * Scoring
@@ -1383,7 +1427,7 @@ function renderResults() {
   const el = document.getElementById('results');
   if (!state.result) { el.hidden = true; return; }
   el.hidden = false;
-  const { plans, matrix, cache } = state.result;
+  const { plans, matrix, cache, fares } = state.result;
 
   document.getElementById('r-plan-count').textContent = plans.length;
   document.getElementById('r-matrix').textContent = matrix;
@@ -1394,6 +1438,15 @@ function renderResults() {
     pill.hidden = false;
     pill.textContent = `Cache ${rate}% · 省 ${cache.hits.toLocaleString()} 次 provider 呼叫`;
   } else pill.hidden = true;
+
+  const farePill = document.getElementById('r-fare-pill');
+  if (fares && fares.real + fares.stub) {
+    farePill.hidden = false;
+    farePill.textContent = fares.real
+      ? `真實票價 ${fares.real} / ${fares.real + fares.stub} 次查詢 · Google Flights ${FARES.generated_at.slice(0, 10)}`
+      : '無真實票價快照涵蓋，全部為示意價';
+    farePill.classList.toggle('none', !fares.real);
+  } else farePill.hidden = true;
 
   const selPill = document.getElementById('r-sel-pill');
   if (state.selected.size) {
@@ -1543,8 +1596,8 @@ function renderPlan(plan, rank) {
               <section class="ticket">
                 <h4>${plan.ticket_roles?.[ti] ? `票 ${ti+1}｜${escapeHtml(plan.ticket_roles[ti])}` : ticketCount > 1 ? `票 ${ti+1}` : '票'} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
                 <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()} · ${t.fare_class || '—'} · ${t.baggage_through_checked ? '行李直掛' : '需提領重掛'}</div>
-                <ol>${t.legs.map(l => `<li>${escapeHtml(l.origin)}→${escapeHtml(l.destination)} · ${escapeHtml(l.flight_number)} · ${l.departure.slice(0,16).replace('T',' ')}</li>`).join('')}</ol>
-                <div class="src">價格來源：${escapeHtml(ISSUER_LABEL[t.issuer] || t.issuer || '—')}
+                <ol>${t.legs.map(l => `<li>${escapeHtml(l.origin)}→${escapeHtml(l.destination)} · ${l.estimated ? `航班待選 · ${l.departure.slice(0, 10)}` : `${escapeHtml(l.flight_number || l.carrier)} · ${l.departure.slice(0,16).replace('T',' ')}`}</li>`).join('')}</ol>
+                <div class="src ${t.issuer === 'google_flights' ? 'real' : ''}">價格來源：${escapeHtml(ISSUER_LABEL[t.issuer] || t.issuer || '—')}${t.issuer === 'google_flights' && FARES.generated_at ? `（${FARES.generated_at.slice(0, 10)} 擷取，1 位成人最低總價）` : ''}
                   <div class="links">${bookingLinks(t, plan.adults || 1).map(b => `<a href="${escapeHtml(b.url)}" target="_blank" rel="noopener noreferrer">${b.label} ↗</a>`).join('')}</div>
                 </div>
               </section>
@@ -1783,7 +1836,7 @@ function runSearch(form) {
   plans = scorePlans(plans, weights);
 
   const cache = CachingProvider.stats();
-  return { plans, matrix, cache, notices };
+  return { plans, matrix, cache, notices, fares: { ...fareStats } };
 }
 
 /* =========================================================================
@@ -1884,8 +1937,9 @@ function updateSlotSummary() {
 }
 
 function wireSlots() {
-  slots.push(slotFromHoliday(holidayByKey.get('lunar_ny'), 2));
-  slots.push(slotFromHoliday(holidayByKey.get('xmas'), 2));
+  // Defaults match the daily fare snapshot (Google Flights sells ~11 months ahead).
+  slots.push(slotFromHoliday(holidayByKey.get('lunar_ny'), 1));
+  slots.push(slotFromHoliday(holidayByKey.get('qingming'), 1));
 
   document.getElementById('holiday-chips').addEventListener('click', e => {
     const chip = e.target.closest('.chip');
@@ -2053,6 +2107,7 @@ function wireTheme() {
 }
 
 function init() {
+  loadFareSnapshot();
   wirePickers();
   wireSlots();
   syncRangeLabels();

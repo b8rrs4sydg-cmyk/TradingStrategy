@@ -10,12 +10,11 @@ Formats were checked by opening the generated links in a real browser
 
 - Google Flights ``tfs`` (round trip / one-way / multi-city): route, dates
   and every segment load correctly.
-- Trip.com: ``dcity``/``acity`` must be Trip.com *city* codes (tyo, osa,
-  sel …) with ``dairport``/``aairport`` pinning the airport. Multi-city
-  (``triptype=mt``) takes ``dcity{i}``/``acity{i}``/``dairport{i}``/
-  ``aairport{i}`` 0-based and ``ddate{i}`` 1-based; only the first two
-  dates are honoured, later segments get auto-filled dates (flagged in the
-  label so the traveller adjusts them).
+- Trip.com (tw.trip.com, zh-TW): ``dcity``/``acity`` must be Trip.com
+  *city* codes (tyo, osa, sel …) with ``dairport``/``aairport`` pinning
+  the airport. Multi-city uses Trip.com's own format — the URL its search
+  button produces: ``multdcity{i}``/``multacity{i}``/``dairport{i}``/
+  ``aairport{i}``/``multddate{i}`` (0-based) + ``triptype=mt``.
 - Skyscanner blocks automated browsers, so only its long-standing
   single-route ``/transport/flights/`` link is offered; no multi-city link.
 """
@@ -52,7 +51,7 @@ _TRIP_CITY = {
     "CTS": "spk", "ICN": "sel", "GMP": "sel", "LHR": "lon", "LGW": "lon",
     "CDG": "par", "ORY": "par", "JFK": "nyc", "EWR": "nyc", "DMK": "bkk",
 }
-_TRIP_MT_DATES = 2  # Trip.com multi-city honours ddate1 and ddate2 only
+_TRIP_BASE = "https://tw.trip.com/flights/showfarefirst"
 
 
 def _trip_city(code: str) -> str:
@@ -108,7 +107,7 @@ def _trip_com(r: _Route, adults: int, cabin: CabinClass) -> str:
     }
     if r.return_:
         params["rdate"] = r.return_.isoformat()
-    return f"https://www.trip.com/flights/showfarefirst?{urlencode(params)}"
+    return f"{_TRIP_BASE}?{urlencode(params)}"
 
 
 def _google_flights(r: _Route, adults: int, cabin: CabinClass) -> str:
@@ -194,26 +193,29 @@ def _google_url(tfs: str) -> str:
 def _multi_city_links(
     segments: Sequence[tuple[str, str, date]], adults: int, cabin: CabinClass
 ) -> list[BookingLink]:
-    params: dict[str, str | int] = {"triptype": "mt"}
-    for i, (o, d, _) in enumerate(segments):
+    # Trip.com's own multi-city search URL (what its search button produces).
+    params: dict[str, str | int] = {}
+    for i, (o, d, day) in enumerate(segments):
         params |= {
-            f"dcity{i}": _trip_city(o),
-            f"acity{i}": _trip_city(d),
+            f"multdcity{i}": _trip_city(o),
+            f"multacity{i}": _trip_city(d),
             f"dairport{i}": o.lower(),
             f"aairport{i}": d.lower(),
+            f"multddate{i}": day.isoformat(),
         }
-    for i, (_, _, day) in enumerate(segments, start=1):
-        params[f"ddate{i}"] = day.isoformat()
-    params |= {"class": _TRIP_CLASS[cabin], "quantity": adults, "locale": "zh-TW", "curr": "TWD"}
-    trip_label = "Trip.com 多段"
-    if len(segments) > _TRIP_MT_DATES:
-        trip_label += f"（第{_TRIP_MT_DATES + 1}段起日期請手動確認）"
+    params |= {
+        "triptype": "mt",
+        "class": _TRIP_CLASS[cabin],
+        "quantity": adults,
+        "searchboxarg": "t",
+        "nonstoponly": "off",
+        "locale": "zh-TW",
+        "curr": "TWD",
+    }
     tfs = google_flights_tfs(segments, adults=adults, cabin=cabin)
     return [
         BookingLink("google_flights", "Google Flights 多段", _google_url(tfs)),
-        BookingLink(
-            "trip_com", trip_label, f"https://www.trip.com/flights/showfarefirst?{urlencode(params)}"
-        ),
+        BookingLink("trip_com", "Trip.com 多段", f"{_TRIP_BASE}?{urlencode(params)}"),
     ]
 
 

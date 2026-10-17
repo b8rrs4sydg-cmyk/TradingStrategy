@@ -32,7 +32,12 @@ logger = logging.getLogger(__name__)
 
 
 def resolve_default_provider() -> FlightOfferProvider:
-    """Pick a provider from env: Amadeus if both credentials are set, else Stub.
+    """Pick a provider from env.
+
+    ``FARE_SNAPSHOT_PATH`` (a Google Flights ``fares.json`` from the daily
+    snapshot job) wins: real fares where covered, stub elsewhere. Otherwise
+    Amadeus if both credentials are set (note: Amadeus Self-Service shut
+    down on 2026-07-17, so only Enterprise keys still work), else Stub.
 
     When ``REDIS_URL`` is set, wrap the chosen provider in a
     :class:`RedisCachingProvider` so repeated searches across users share a
@@ -44,7 +49,14 @@ def resolve_default_provider() -> FlightOfferProvider:
     """
 
     base: FlightOfferProvider = StubFlightProvider()
-    if os.getenv("AMADEUS_CLIENT_ID") and os.getenv("AMADEUS_CLIENT_SECRET"):
+    if snapshot := os.getenv("FARE_SNAPSHOT_PATH"):
+        try:
+            from app.providers.snapshot import SnapshotFareProvider
+
+            base = SnapshotFareProvider.from_path(snapshot)
+        except (OSError, ValueError) as e:
+            logger.warning("fare_snapshot_load_failed", extra={"err": str(e)})
+    elif os.getenv("AMADEUS_CLIENT_ID") and os.getenv("AMADEUS_CLIENT_SECRET"):
         try:
             from app.providers.amadeus import AmadeusError, AmadeusProvider
 
