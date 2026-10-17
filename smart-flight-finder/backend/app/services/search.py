@@ -9,12 +9,12 @@ from __future__ import annotations
 import logging
 import os
 from dataclasses import replace
+from pathlib import Path
 
 from app.data.taiwan_holidays_2027 import LEAVE_STRATEGIES
 from app.models.enums import DateWindowRole, TicketStrategyType, TripType
 from app.providers.base import FlightOfferProvider
 from app.providers.cache import CachingProvider
-from app.providers.stub import StubFlightProvider
 from app.schemas.itinerary import CandidateWindowIn, DateWindowIn, ItineraryRequestIn
 from app.services.date_matrix import expand_window, matrix_cardinality
 from app.services.scoring import score_plans
@@ -25,52 +25,79 @@ from app.services.strategies import (
     StandardPlanner,
     StrategyPlan,
 )
-from app.services.strategies.base import RiskLevel, RiskWarning
 from app.services.strategies.reverse import daomai_country
 from app.services.strategies.two_trip import TripSlot
 
 logger = logging.getLogger(__name__)
 
 
+DEFAULT_FARE_DB = Path(__file__).resolve().parents[3] / "public" / "fares.json"
+
+
+class NoFareSource:
+    """No price source configured: every query answers with no offer."""
+
+    name = "none"
+
+    def search(self, **_kw) -> list:
+        return []
+
+    def search_multi_city(self, **_kw) -> list:
+        return []
+
+
 def resolve_default_provider() -> FlightOfferProvider:
-    """Pick a provider from env.
+    """Pick the fare source from env — real prices only, never simulated.
 
-    ``FARE_SNAPSHOT_PATH`` (a Google Flights ``fares.json`` from the daily
-    snapshot job) wins: real fares where covered, stub elsewhere. Otherwise
-    Amadeus if both credentials are set (note: Amadeus Self-Service shut
-    down on 2026-07-17, so only Enterprise keys still work), else Stub.
+    1. The Google Flights fare database: ``FARE_DB_PATH`` (or the legacy
+       ``FARE_SNAPSHOT_PATH``), else the crawler's ``public/fares.json`` in
+       this repo. ``LIVE_FARES=1`` adds live Google Flights lookups for
+       queries the database lacks (``LIVE_FARE_BUDGET`` per request, default
+       24; needs Playwright + Chromium) and saves them back.
+    2. Amadeus Enterprise / Skyscanner credentials, if set (Amadeus
+       Self-Service shut down 2026-07-17).
+    3. Otherwise :class:`NoFareSource` — searches return no plans and a notice.
 
-    When ``REDIS_URL`` is set, wrap the chosen provider in a
-    :class:`RedisCachingProvider` so repeated searches across users share a
-    TTL cache (default 2h). ``CachingProvider`` is still added per-request
-    on top by :class:`SearchService` to collapse intra-request fan-out.
-
-    Imports are lazy so unit tests that don't need Amadeus or Redis skip
-    the extra imports entirely.
+    When ``REDIS_URL`` is set, the provider is wrapped in a
+    :class:`RedisCachingProvider` shared across requests.
     """
 
-    base: FlightOfferProvider = StubFlightProvider()
-    if snapshot := os.getenv("FARE_SNAPSHOT_PATH"):
+    base: FlightOfferProvider = NoFareSource()
+    db_path = os.getenv("FARE_DB_PATH") or os.getenv("FARE_SNAPSHOT_PATH")
+    if db_path or DEFAULT_FARE_DB.exists():
         try:
-            from app.providers.snapshot import SnapshotFareProvider
+            from app.providers.fare_db import FareDatabaseProvider
 
-            base = SnapshotFareProvider.from_path(snapshot)
+            live = os.getenv("LIVE_FARES") == "1"
+            fetcher = None
+            if live:
+                from app.providers.google_flights import fetch_now
+
+                fetcher = fetch_now
+            path = Path(db_path) if db_path else DEFAULT_FARE_DB
+            if path.exists() or live:
+                base = FareDatabaseProvider.from_path(
+                    path,
+                    fetcher=fetcher,
+                    live_budget=int(os.getenv("LIVE_FARE_BUDGET", "24")) if live else 0,
+                )
         except (OSError, ValueError) as e:
-            logger.warning("fare_snapshot_load_failed", extra={"err": str(e)})
-    elif os.getenv("AMADEUS_CLIENT_ID") and os.getenv("AMADEUS_CLIENT_SECRET"):
-        try:
-            from app.providers.amadeus import AmadeusError, AmadeusProvider
+            logger.warning("fare_db_load_failed", extra={"err": str(e)})
+    if isinstance(base, NoFareSource):
+        if os.getenv("AMADEUS_CLIENT_ID") and os.getenv("AMADEUS_CLIENT_SECRET"):
+            try:
+                from app.providers.amadeus import AmadeusError, AmadeusProvider
 
-            base = AmadeusProvider(env=os.getenv("AMADEUS_ENV", "test"))
-        except AmadeusError as e:
-            logger.warning("amadeus_init_failed", extra={"err": str(e)})
-    elif os.getenv("SKYSCANNER_RAPIDAPI_KEY"):
-        try:
-            from app.providers.skyscanner import SkyscannerError, SkyscannerProvider
+                base = AmadeusProvider(env=os.getenv("AMADEUS_ENV", "test"))
+            except AmadeusError as e:
+                logger.warning("amadeus_init_failed", extra={"err": str(e)})
+        elif os.getenv("SKYSCANNER_RAPIDAPI_KEY"):
+            try:
+                from app.providers.skyscanner import SkyscannerError, SkyscannerProvider
 
-            base = SkyscannerProvider()
-        except SkyscannerError as e:
-            logger.warning("skyscanner_init_failed", extra={"err": str(e)})
+                base = SkyscannerProvider()
+            except SkyscannerError as e:
+                logger.warning("skyscanner_init_failed", extra={"err": str(e)})
 
     if os.getenv("REDIS_URL"):
         try:
@@ -80,6 +107,13 @@ def resolve_default_provider() -> FlightOfferProvider:
         except Exception as e:  # pragma: no cover  # noqa: BLE001 — any Redis failure degrades gracefully
             logger.warning("redis_cache_init_failed", extra={"err": str(e)})
     return base
+
+
+NO_FARE_SOURCE = "尚未設定票價資料庫：請先執行票價爬蟲（Fare snapshot workflow）或設定 FARE_DB_PATH。"
+UNCOVERED = (
+    "{n} 個票價查詢不在 Google Flights 票價資料庫內（爬蟲尚未涵蓋這些機場/日期），"
+    "相關方案已略過；資料庫更新於 {at}。"
+)
 
 
 # Strategies whose whole point is covering TWO trips with interleaved tickets.
@@ -112,9 +146,34 @@ class SearchService:
         slots both produced (same strategy + same tickets) are kept once.
         """
 
-        # Fresh cache per request — never leak offers between users.
-        self.provider = CachingProvider(self._raw_provider)
+        raw = self._raw_provider
+        if hasattr(raw, "prefetch"):
+            # Dry run to learn every query, then fetch missing ones live (if on).
+            from app.providers.recording import RecordingProvider
 
+            rec = RecordingProvider()
+            self.provider = rec
+            self._collect(req)
+            raw.prefetch(rec.keys)
+
+        # Fresh cache per request — never leak offers between users.
+        self.provider = CachingProvider(raw)
+        total_matrix, plans = self._collect(req)
+
+        if req.max_total_budget is not None:
+            plans = [p for p in plans if p.total_cost <= req.max_total_budget]
+
+        if isinstance(raw, NoFareSource):
+            self.notices.insert(0, NO_FARE_SOURCE)
+        elif getattr(raw, "misses", 0):
+            at = (getattr(getattr(raw, "db", None), "generated_at", None) or "—")[:16].replace("T", " ")
+            self.notices.append(UNCOVERED.format(n=raw.misses, at=at))
+
+        ranked = score_plans(plans, weights=req.scoring_weights)
+        stats = self.provider.stats() if isinstance(self.provider, CachingProvider) else {}
+        return total_matrix, ranked, stats
+
+    def _collect(self, req: ItineraryRequestIn) -> tuple[int, list[StrategyPlan]]:
         self.notices = []
         slots: list[tuple[str | None, list[DateWindowIn]]]
         if req.candidate_windows:
@@ -158,13 +217,7 @@ class SearchService:
                 for strategy in paired:
                     for plan in self._run_pair_strategy(strategy, req, a, b):
                         add(plan, f"{a.label} + {b.label}")
-
-        if req.max_total_budget is not None:
-            plans = [p for p in plans if p.total_cost <= req.max_total_budget]
-
-        ranked = score_plans(map(_flag_mixed_sources, plans), weights=req.scoring_weights)
-        stats = self.provider.stats() if isinstance(self.provider, CachingProvider) else {}
-        return total_matrix, ranked, stats
+        return total_matrix, plans
 
     # ------------------------------------------------------------------
     def _run_strategy(
@@ -214,20 +267,6 @@ class SearchService:
             outer_stay_days=req.outer_stay_days,
             adults=req.adults,
         )
-
-
-MIXED_SOURCES = RiskWarning(
-    RiskLevel.HIGH,
-    "mixed_fare_sources",
-    "此方案混用 Google Flights 實際票價與示意價（快照沒涵蓋的票），總價與省下金額僅供參考",
-)
-
-
-def _flag_mixed_sources(plan: StrategyPlan) -> StrategyPlan:
-    issuers = {t.issuer for t in plan.tickets}
-    if "google_flights" in issuers and len(issuers) > 1:
-        return replace(plan, warnings=(MIXED_SOURCES, *plan.warnings))
-    return plan
 
 
 def _slot_pairs(req: ItineraryRequestIn) -> list[tuple[TripSlot, TripSlot]]:

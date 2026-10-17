@@ -89,7 +89,7 @@ def test_two_trip_search_returns_roles_trips_and_multi_city_links_through_csv():
         **{k: v for k, v in SEARCH_PAYLOAD.items() if k != "date_windows"},
         "destinations": ["NRT", "LHR"],
         "strategies": ["reverse", "back_to_back_4leg"],
-        "back_to_back_outer_stations": ["HKG"],
+        "back_to_back_outer_stations": ["HKG", "ICN"],
         "candidate_windows": [
             {"holiday_key": "lunar_ny", "depart": "2027-02-05", "return_date": "2027-02-15"},
             {"holiday_key": "xmas", "depart": "2027-12-23", "return_date": "2027-12-27"},

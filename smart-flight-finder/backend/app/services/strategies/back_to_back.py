@@ -1,21 +1,27 @@
-"""外站四腿票 (四段票) — ONE ticket X→TPE→D→TPE→X covering two trips.
+"""外站四腿票 (四段票) — ONE ticket X→TPE→D→TPE→Y covering two trips.
 
-The ticket is sold from an outstation X (cheaper market than Taiwan, and leg
-1 / leg 4 must be in the same country). For someone living in Taiwan:
+The ticket is sold from an outstation X (a cheaper market than Taiwan). For
+someone living in Taiwan:
 
     旅程 A:  單買初段 TPE→X (day a_dep)  … 外站停留 s 天 …
              leg1 X→TPE + leg2 TPE→D     (same day, <24h connection at TPE)
              … D … leg3 D→TPE            (a_ret; home stopover = the one >24h stop)
-    旅程 B:  leg4 TPE→X                  (b_dep)  … X …
-             單買最後一段 X→TPE           (b_ret)
+    旅程 B:  leg4 TPE→Y                  (b_dep)  … Y …
+             單買最後一段 Y→TPE           (b_ret)
 
 Leg 1 must be flown (skipping it cancels the rest), which is why the loop
 needs the separately bought 初段. The 最後一段 can instead be leg 1 of the
-next 四腿票 — chaining tickets this way is the 循環. 頭尾可以不同: leg 4 may
-land at another outstation Y in the same country as X (double open jaw, e.g.
-札幌→台北→舊金山→台北→東京), and 最後一段 then leaves from Y. Each plan
-prices the closed loop (both one-ways) and is kept only if it beats an
-ordinary round trip to D on trip A plus one to Y on trip B.
+next 四腿票 — chaining tickets this way is the 循環.
+
+頭尾不同國家: trip A already spends the outer stay in X and then visits D,
+so leg 4 must land in a THIRD country (Y not in X's or D's country) —
+otherwise both trips go to the same country. Either end can move: the
+planner tries every (X, Y) pair of the chosen outstations. Such an origin
+open jaw is priced by Google Flights as one multi-city ticket; airline rules
+on it vary, hence a warning. Each plan prices the closed loop (both
+one-ways) against an ordinary round trip to D on trip A plus one to Y on
+trip B; if no combination saves money, the cheapest one is still returned,
+flagged ``no_saving``, so the real comparison stays visible.
 """
 
 from __future__ import annotations
@@ -29,10 +35,21 @@ from app.models.enums import TicketStrategyType
 from app.providers.base import FlightOfferProvider
 from app.services.mct import DEFAULT_MCT, MctPolicy, check_connection
 from app.services.strategies.base import RiskLevel, RiskWarning, StrategyPlan, TicketOffer
-from app.services.strategies.two_trip import TripSlot, cheapest, fmt_day, nearest, quote
+from app.services.strategies.two_trip import (
+    TripSlot,
+    cheapest,
+    fmt_day,
+    nearest,
+    quote,
+    saving_warning,
+)
 
 HUB = "TPE"
 _MAX_DATES_PER_LEG = 5  # multi-city quotes are expensive on real APIs
+
+
+def _name(code: str) -> str:
+    return BY_CODE[code].name_zh if code in BY_CODE else code
 
 
 def _country(code: str) -> str:
@@ -69,11 +86,12 @@ class FourLegPlanner:
         }
         base_y = {y: self._cheapest_rt(y, trip_b, adults) for y in stations}
         base_d = {}
+        losers: list[tuple[int, StrategyPlan]] = []
         for x, y in product(stations, stations):
-            if y != x and _country(y) != _country(x):
-                continue  # leg 1 and leg 4 must be in the same country
+            if _country(y) == _country(x):
+                continue  # 頭尾不同國家: trip B must not revisit the outstation country
             for dest in dict.fromkeys(destinations):
-                if dest in (x, y, HUB) or dest in TW_AIRPORT_CODES:
+                if dest in (x, y, HUB) or dest in TW_AIRPORT_CODES or _country(dest) == _country(y):
                     continue
                 if dest not in base_d:
                     base_d[dest] = self._cheapest_rt(dest, trip_a, adults)
@@ -84,10 +102,16 @@ class FourLegPlanner:
                     x, y, dest, a_deps, a_rets, b_deps, outer_stay_days,
                     first_legs[x], last_legs[y], adults,
                 )
-                if best is None or best[0] >= baseline:
+                if best is None:
                     continue
-                plans.append(self._build(x, y, dest, trip_a, trip_b, outer_stay_days, best, baseline))
+                built = self._build(x, y, dest, trip_a, trip_b, outer_stay_days, best, baseline)
+                if best[0] < baseline:
+                    plans.append(built)
+                else:
+                    losers.append((best[0] - baseline, built))
         plans.sort(key=lambda p: p.total_cost)
+        if not plans and losers:  # show the closest real comparison anyway
+            plans.append(min(losers, key=lambda t: t[0])[1])
         return plans
 
     # ------------------------------------------------------------------
@@ -181,11 +205,17 @@ class FourLegPlanner:
                 "four_leg_loop",
                 f"最後一段 {y}→{HUB} 也可改搭下一張{y}出發四腿票的第1段（循環），省下這張單程",
             ),
-            RiskWarning(
-                RiskLevel.LOW,
+            saving_warning(
                 "four_leg_savings_estimate",
-                f"比旅程A買 {HUB}⇄{dest}、旅程B買 {HUB}⇄{y} 一般來回 (共 {baseline:,})"
-                f" 省 {saving:,} TWD（{saving / baseline:.0%}）",
+                f"旅程A買 {HUB}⇄{dest}、旅程B買 {HUB}⇄{y} 一般來回",
+                baseline,
+                total,
+            ),
+            RiskWarning(
+                RiskLevel.MEDIUM,
+                "four_leg_origin_open_jaw",
+                f"第1段從 {x} 出發、第4段飛 {y}（不同國家）＝起點開口：是否能整張開票依航空公司"
+                "票價規則而定，以 Google Flights / Trip.com 多段整張報價為準",
             ),
         ]
         return StrategyPlan(
@@ -196,8 +226,8 @@ class FourLegPlanner:
             total_travel_days=(a_ret - a_dep).days + 1 + (b_ret - b_dep).days + 1,
             warnings=tuple(warnings),
             explain=f"四腿票 {x}→{HUB}→{dest}→{HUB}→{y}（{x_name} 外站"
-            + ("，頭尾不同" if y != x else "")
-            + f"）＋單買初段/最後一段，兩趟省 {saving:,}",
+            + f"，旅程B {_name(y)}）＋單買初段/最後一段，"
+            + (f"兩趟省 {saving:,}" if saving > 0 else f"比一般來回多 {-saving:,}（實價不划算）"),
             ticket_roles=("單買初段", f"外站四腿票：{x} 出發", "單買最後一段"),
             trips=trips,
         )

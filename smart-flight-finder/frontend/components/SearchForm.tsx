@@ -95,7 +95,7 @@ export function SearchForm({ onResult, onError }: Props) {
     back_to_back_4leg: false,
     hidden_city: false,
   });
-  const [outerStations, setOuterStations] = useState<Set<string>>(new Set(["HKG"]));
+  const [outerStations, setOuterStations] = useState<Set<string>>(new Set(["HKG", "ICN", "BKK"]));
   const [outerStayDays, setOuterStayDays] = useState(2);
   const [weights, setWeights] = useState<ScoringWeights>(DEFAULT_WEIGHTS);
   const [weightsOpen, setWeightsOpen] = useState(false);
@@ -582,7 +582,7 @@ export function SearchForm({ onResult, onError }: Props) {
         {fourLegOn && catalog && (
           <div className="mt-4 space-y-3 border-t border-slate-200 pt-4 dark:border-slate-800">
             <AirportPicker
-              title="四腿票外站 (第1段出發 / 第4段抵達)"
+              title="四腿票外站 (第1段出發、第4段抵達第三國；至少 2 個不同國家)"
               airports={catalog.outstations}
               selected={outerStations}
               onChange={setOuterStations}
@@ -684,7 +684,11 @@ const FALLBACK_AIRPORTS: AirportCatalog = {
     { code: "NRT", name_zh: "東京成田", country: "JP", group: "日本" },
     { code: "KIX", name_zh: "大阪關西", country: "JP", group: "日本" },
   ],
-  outstations: [{ code: "HKG", name_zh: "香港", country: "HK", group: "港澳/中國" }],
+  outstations: [
+    { code: "HKG", name_zh: "香港", country: "HK", group: "港澳/中國" },
+    { code: "ICN", name_zh: "首爾仁川", country: "KR", group: "韓國" },
+    { code: "BKK", name_zh: "曼谷", country: "TH", group: "東南亞" },
+  ],
 };
 
 function AirportPicker({

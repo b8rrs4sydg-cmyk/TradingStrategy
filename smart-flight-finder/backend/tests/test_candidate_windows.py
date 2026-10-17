@@ -6,9 +6,9 @@ import pytest
 from pydantic import ValidationError
 
 from app.models.enums import CabinClass, TicketStrategyType, TripType
-from app.providers.stub import StubFlightProvider
 from app.schemas.itinerary import CandidateWindowIn, ItineraryRequestIn
 from app.services.search import SearchService
+from tests.fake_fares import FakeFareProvider
 
 
 def _req(windows: list[CandidateWindowIn], strategies=(TicketStrategyType.STANDARD,), **kw):
@@ -29,7 +29,7 @@ def _slot(depart, ret, flex=0, **kw):
 
 
 def _run(req):
-    return SearchService(StubFlightProvider()).run(req)
+    return SearchService(FakeFareProvider()).run(req)
 
 
 def test_candidate_windows_replace_date_windows_requirement():

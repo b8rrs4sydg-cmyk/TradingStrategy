@@ -1,4 +1,4 @@
-"""Benchmark the search service against the stub provider.
+"""Benchmark the search service against the configured fare source (the fare DB).
 
 Measures:
 - Wall-clock time per strategy

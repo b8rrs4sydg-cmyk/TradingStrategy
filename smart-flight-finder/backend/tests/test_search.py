@@ -11,9 +11,9 @@ from app.models.enums import (
     TicketStrategyType,
     TripType,
 )
-from app.providers.stub import StubFlightProvider
 from app.schemas.itinerary import DateWindowIn, ItineraryRequestIn
 from app.services.search import SearchService
+from tests.fake_fares import FakeFareProvider
 
 client = TestClient(app)
 
@@ -69,7 +69,7 @@ def test_single_window_pair_strategies_explain_why_empty():
             DateWindowIn(role=DateWindowRole.RETURN, anchor_date=date(2027, 2, 11)),
         ],
     )
-    service = SearchService(StubFlightProvider())
+    service = SearchService(FakeFareProvider())
     _, plans, _ = service.run(req)
     assert plans == []
     assert service.notices and "兩個" in service.notices[0]

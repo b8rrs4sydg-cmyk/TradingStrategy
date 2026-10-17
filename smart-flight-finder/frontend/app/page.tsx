@@ -78,7 +78,7 @@ export default function HomePage() {
       {result && (
         <div className="mt-10 space-y-3">
           <div className="text-xs text-slate-500">
-            查詢耗時 {elapsedMs} ms · 使用 stub provider (Phase 2 — 尚未串實體 API)
+            查詢耗時 {elapsedMs} ms · 票價來源：Google Flights 實價資料庫（每 6 小時爬取）
           </div>
           <ResultBoard result={result} />
         </div>

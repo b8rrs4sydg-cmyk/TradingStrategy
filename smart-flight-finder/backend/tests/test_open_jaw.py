@@ -1,9 +1,9 @@
 from datetime import date
 
 from app.models.enums import DateWindowRole, TicketStrategyType, TripType
-from app.providers.stub import StubFlightProvider
 from app.schemas.itinerary import DateWindowIn, ItineraryRequestIn
 from app.services.search import SearchService
+from tests.fake_fares import FakeFareProvider
 
 
 def _req() -> ItineraryRequestIn:
@@ -24,12 +24,12 @@ def _req() -> ItineraryRequestIn:
 def test_open_jaw_requires_two_destinations():
     req = _req()
     req_single = req.model_copy(update={"destinations": ["NRT"]})
-    _, plans, _ = SearchService(StubFlightProvider()).run(req_single)
+    _, plans, _ = SearchService(FakeFareProvider()).run(req_single)
     assert plans == []
 
 
 def test_open_jaw_pairs_distinct_destinations():
-    _, plans, _ = SearchService(StubFlightProvider()).run(_req())
+    _, plans, _ = SearchService(FakeFareProvider()).run(_req())
     for p in plans:
         assert p.strategy is TicketStrategyType.OPEN_JAW
         assert len(p.tickets) == 2

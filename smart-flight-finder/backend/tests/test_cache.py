@@ -2,8 +2,8 @@ from datetime import date
 
 from app.providers.base import FlightOfferProvider
 from app.providers.cache import CachingProvider
-from app.providers.stub import StubFlightProvider
 from app.services.strategies.base import TicketOffer
+from tests.fake_fares import FakeFareProvider
 
 
 class _CountingStub:
@@ -19,7 +19,7 @@ class _CountingStub:
 
 
 def test_cache_deduplicates_identical_calls():
-    inner = _CountingStub(StubFlightProvider())
+    inner = _CountingStub(FakeFareProvider())
     cached = CachingProvider(inner)
 
     for _ in range(5):
@@ -36,7 +36,7 @@ def test_cache_deduplicates_identical_calls():
 
 
 def test_cache_separate_adults_key():
-    inner = _CountingStub(StubFlightProvider())
+    inner = _CountingStub(FakeFareProvider())
     cached = CachingProvider(inner)
     cached.search(origin="TPE", destination="NRT", departure_date=date(2027, 2, 5), adults=1)
     cached.search(origin="TPE", destination="NRT", departure_date=date(2027, 2, 5), adults=2)

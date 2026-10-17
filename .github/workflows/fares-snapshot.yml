@@ -1,32 +1,37 @@
 name: Fare snapshot (Google Flights)
 
-# Real fares for the demo page and SnapshotFareProvider. The dev sandbox has
-# no open egress, so the Google Flights searches run here once a day and the
-# result is committed as smart-flight-finder/public/fares.json and embedded
+# The fare database: real Google Flights prices for every query the planners
+# make (scripts/build_fare_snapshot.py). The dev sandbox has no open egress,
+# so the crawl runs here every 6 hours; the merged database (with price
+# history) is committed as smart-flight-finder/public/fares.json and embedded
 # into the demo page (public/index.html).
 on:
   schedule:
-    - cron: "17 19 * * *" # 03:17 Asia/Taipei
+    - cron: "23 */6 * * *" # every 6 h (02:23, 08:23, 14:23, 20:23 Asia/Taipei)
   workflow_dispatch:
     inputs:
       holidays:
         description: "holiday keys (comma separated)"
-        default: "lunar_ny,qingming"
+        default: "lunar_ny,qingming,duanwu"
       destinations:
         description: "destination airports"
-        default: "NRT,KIX,LHR"
+        default: "NRT,KIX,ICN,BKK,LHR"
       outer:
-        description: "四腿票 outstations"
-        default: "HKG"
+        description: "四腿票 outstations (≥ 2 countries)"
+        default: "HKG,ICN,BKK"
       flex:
         description: "± days around each holiday"
         default: "1"
+      max_multi_city:
+        description: "cap on slow multi-city searches"
+        default: "260"
   push:
     branches: [claude/zealous-darwin-1kexus]
     paths:
       - ".github/workflows/fares-snapshot.yml"
       - "smart-flight-finder/backend/scripts/build_fare_snapshot.py"
-      - "smart-flight-finder/backend/app/services/fare_snapshot.py"
+      - "smart-flight-finder/backend/app/services/crawl_plan.py"
+      - "smart-flight-finder/backend/app/providers/google_flights.py"
 
 permissions:
   contents: write
@@ -38,7 +43,7 @@ concurrency:
 jobs:
   snapshot:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 100
     defaults:
       run:
         working-directory: smart-flight-finder/backend
@@ -55,11 +60,12 @@ jobs:
       - name: Fetch fares
         run: >-
           python -m scripts.build_fare_snapshot
-          --out ../public/fares.json
-          --holidays "${{ inputs.holidays || 'lunar_ny,qingming' }}"
-          --destinations "${{ inputs.destinations || 'NRT,KIX,LHR' }}"
-          --outer "${{ inputs.outer || 'HKG' }}"
+          --db ../public/fares.json
+          --holidays "${{ inputs.holidays || 'lunar_ny,qingming,duanwu' }}"
+          --destinations "${{ inputs.destinations || 'NRT,KIX,ICN,BKK,LHR' }}"
+          --outer "${{ inputs.outer || 'HKG,ICN,BKK' }}"
           --flex "${{ inputs.flex || '1' }}"
+          --max-multi-city "${{ inputs.max_multi_city || '260' }}"
       - name: Embed into demo page
         run: python -m scripts.embed_fare_snapshot ../public/fares.json ../public/index.html
       - name: Commit snapshot
@@ -69,6 +75,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add smart-flight-finder/public/fares.json smart-flight-finder/public/index.html
           if git diff --cached --quiet; then echo "no change"; exit 0; fi
-          git commit -m "data: Google Flights fare snapshot $(date -u +%F)"
+          git commit -m "data: Google Flights fare database $(date -u +'%F %H:%M') UTC"
           for i in 1 2 3; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done
           exit 1

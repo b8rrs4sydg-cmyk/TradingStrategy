@@ -1,17 +1,18 @@
 """反向票＋倒買法 and 外站四腿票: one purchase, two trips (slot A then slot B)."""
 
+from dataclasses import replace
 from datetime import date, timedelta
 
 import pytest
 
 from app.models.enums import TicketStrategyType as S
 from app.models.enums import TripType
-from app.providers.stub import StubFlightProvider
 from app.schemas.itinerary import CandidateWindowIn, ItineraryRequestIn
 from app.services.search import SearchService
 from app.services.strategies.back_to_back import FourLegPlanner
 from app.services.strategies.reverse import ReverseTicketPlanner
 from app.services.strategies.two_trip import TripSlot
+from tests.fake_fares import FakeFareProvider
 
 LNY = TripSlot("春節", departs=(date(2027, 2, 4), date(2027, 2, 5), date(2027, 2, 6)),
                returns=(date(2027, 2, 14), date(2027, 2, 15), date(2027, 2, 16)))
@@ -20,7 +21,7 @@ XMAS = TripSlot("聖誕", departs=(date(2027, 12, 22), date(2027, 12, 23), date(
 
 
 def _reverse(destinations=("NRT",)):
-    return ReverseTicketPlanner(StubFlightProvider()).plan(
+    return ReverseTicketPlanner(FakeFareProvider()).plan(
         trip_a=LNY, trip_b=XMAS, origins=["TPE"], destinations=list(destinations)
     )
 
@@ -80,8 +81,8 @@ def test_daomai_only_for_japan_thailand_korea():
     assert all(t.legs[0].destination != "LHR" for p in _reverse(("NRT", "LHR")) for t in p.tickets)
 
 
-def _four_leg(stay=2, outer=("HKG",), dests=("NRT",), provider=None):
-    return FourLegPlanner(provider or StubFlightProvider()).plan(
+def _four_leg(stay=2, outer=("HKG", "ICN"), dests=("NRT",), provider=None):
+    return FourLegPlanner(provider or FakeFareProvider()).plan(
         trip_a=LNY, trip_b=XMAS, outer_stations=list(outer), destinations=list(dests),
         outer_stay_days=stay,
     )
@@ -90,15 +91,15 @@ def _four_leg(stay=2, outer=("HKG",), dests=("NRT",), provider=None):
 def test_four_leg_is_one_ticket_plus_first_and_last_one_ways():
     plans = _four_leg(dests=("LHR",))
     assert plans
-    p = plans[0]
+    p = next(p for p in plans if p.tickets[1].legs[0].origin == "HKG")
     first, four, last = p.tickets
     assert p.ticket_roles == ("單買初段", "外站四腿票：HKG 出發", "單買最後一段")
     # 單買初段 gets us to the outstation at the start of trip A
     assert [(leg.origin, leg.destination) for leg in first.legs] == [("TPE", "HKG")]
     assert first.legs[0].departure.date() in LNY.departs
-    # The 四腿票 itself: X→TPE→D→TPE→X on ONE ticket
+    # The 四腿票 itself: X→TPE→D→TPE→Y on ONE ticket, Y in a third country
     assert [(leg.origin, leg.destination) for leg in four.legs] == [
-        ("HKG", "TPE"), ("TPE", "LHR"), ("LHR", "TPE"), ("TPE", "HKG"),
+        ("HKG", "TPE"), ("TPE", "LHR"), ("LHR", "TPE"), ("TPE", "ICN"),
     ]
     leg1, leg2, leg3, leg4 = four.legs
     assert leg1.departure.date() == first.legs[0].departure.date() + timedelta(days=2)
@@ -106,11 +107,12 @@ def test_four_leg_is_one_ticket_plus_first_and_last_one_ways():
     assert leg3.departure.date() in LNY.returns     # back home at the end of trip A
     assert leg4.departure.date() in XMAS.departs    # leg 4 starts trip B
     # 單買最後一段 closes the loop at the end of trip B
-    assert [(leg.origin, leg.destination) for leg in last.legs] == [("HKG", "TPE")]
+    assert [(leg.origin, leg.destination) for leg in last.legs] == [("ICN", "TPE")]
     assert last.legs[0].departure.date() in XMAS.returns
     assert p.total_cost == first.total_price + four.total_price + last.total_price
     codes = {w.code for w in p.warnings}
-    assert {"four_leg_first_segment", "four_leg_loop", "four_leg_savings_estimate"} <= codes
+    assert {"four_leg_first_segment", "four_leg_loop", "four_leg_savings_estimate",
+            "four_leg_origin_open_jaw"} <= codes
 
 
 @pytest.mark.parametrize("stay", [0, 1, 3])
@@ -122,19 +124,27 @@ def test_four_leg_outer_stay_days_respected(stay):
         assert (four.legs[0].departure.date() - first.legs[0].departure.date()).days == stay
 
 
-def test_four_leg_head_and_tail_may_differ_in_the_same_country():
-    plans = _four_leg(outer=("NRT", "KIX"), dests=("LHR",))
-    jaw = [p for p in plans if "頭尾不同" in p.explain]
-    assert jaw
-    first, four, last = jaw[0].tickets
-    x, y = four.legs[0].origin, four.legs[3].destination
-    assert x != y and {x, y} == {"NRT", "KIX"}
-    assert first.legs[0].destination == x and last.legs[0].origin == y
-    # different countries never pair up
-    assert all(
-        p.tickets[1].legs[0].origin == p.tickets[1].legs[3].destination
-        for p in _four_leg(outer=("HKG", "NRT"), dests=("LHR",))
-    )
+def test_four_leg_never_starts_and_ends_in_the_same_country():
+    # same-country outstations alone cannot form a plan …
+    assert _four_leg(outer=("NRT", "KIX"), dests=("LHR",)) == []
+    # … and with a mix, trip B always lands in a third country (not X's, not D's)
+    country = {"HKG": "HK", "ICN": "KR", "NRT": "JP", "KIX": "JP", "BKK": "TH"}
+    plans = _four_leg(outer=("HKG", "NRT", "KIX", "ICN"), dests=("NRT", "BKK"))
+    assert plans
+    for p in plans:
+        x, d, y = p.tickets[1].legs[0].origin, p.tickets[1].legs[1].destination, p.tickets[1].legs[3].destination
+        assert country[y] not in (country[x], country[d])
+        assert p.tickets[0].legs[0].destination == x and p.tickets[2].legs[0].origin == y
+
+
+def test_best_non_saving_plan_is_kept_and_flagged():
+    class Dear(FakeFareProvider):
+        def search_multi_city(self, *, segments, adults=1):
+            return [replace(o, total_price=o.total_price * 5) for o in super().search_multi_city(segments=segments)]
+
+    plans = _four_leg(dests=("LHR",), provider=Dear())
+    assert len(plans) == 1
+    assert any(w.code == "no_saving" for w in plans[0].warnings) and "不划算" in plans[0].explain
 
 
 def test_four_leg_skips_taiwan_and_destination_as_outstation():
@@ -142,7 +152,7 @@ def test_four_leg_skips_taiwan_and_destination_as_outstation():
 
 
 def test_four_leg_needs_a_provider_that_can_quote_multi_city():
-    class NoMultiCity(StubFlightProvider):
+    class NoMultiCity(FakeFareProvider):
         def search_multi_city(self, *, segments, adults=1):
             return []
 
@@ -155,13 +165,13 @@ def test_search_service_labels_pair_plans_with_both_slots():
         origins=["TPE"],
         destinations=["NRT", "LHR"],
         strategies=[S.REVERSE, S.BACK_TO_BACK_4LEG],
-        back_to_back_outer_stations=["HKG"],
+        back_to_back_outer_stations=["HKG", "ICN"],
         candidate_windows=[
             CandidateWindowIn(holiday_key="lunar_ny", depart=date(2027, 2, 5), return_date=date(2027, 2, 15)),
             CandidateWindowIn(holiday_key="xmas", depart=date(2027, 12, 23), return_date=date(2027, 12, 27)),
         ],
     )
-    svc = SearchService(StubFlightProvider())
+    svc = SearchService(FakeFareProvider())
     _, plans, _ = svc.run(req)
     assert {p.strategy for p in plans} == {S.REVERSE, S.BACK_TO_BACK_4LEG}
     assert {p.window_label for p in plans} == {"春節請 2 休 11 + 聖誕請 2 休 5"}

@@ -34,7 +34,14 @@ from app.data.airports import BY_CODE
 from app.models.enums import TicketStrategyType
 from app.providers.base import FlightOfferProvider
 from app.services.strategies.base import RiskLevel, RiskWarning, StrategyPlan, TicketOffer
-from app.services.strategies.two_trip import TripSlot, best_pair, cheapest, fmt_day, quote
+from app.services.strategies.two_trip import (
+    TripSlot,
+    best_pair,
+    cheapest,
+    fmt_day,
+    quote,
+    saving_warning,
+)
 
 _Front = tuple[date, date, tuple[TicketOffer, ...]]  # (a_dep, b_ret, tickets)
 _Back = tuple[date, date, TicketOffer]               # (a_ret, b_dep, 反向票)
@@ -96,16 +103,17 @@ class ReverseTicketPlanner:
                 ("補頭尾", self._one_way_pairs(home, a_in, b_out, a, b, adults)),
             )
         }
-        out = []
+        out, losers = [], []
         for (variant, a_in, b_out), front in fronts.items():
             for (a_out, b_in), back in backs.items():
                 best = best_pair(front, back, _compatible)
-                if best is None or best[0] >= baseline:
+                if best is None:
                     continue
-                out.append(
-                    self._build(variant, home, (a_in, a_out), (b_in, b_out), a, b, best, baseline)
-                )
+                built = self._build(variant, home, (a_in, a_out), (b_in, b_out), a, b, best, baseline)
+                (out if best[0] < baseline else losers).append(built)
         out.sort(key=lambda p: p.total_cost)
+        if not out and losers:  # show the closest real comparison anyway
+            out.append(min(losers, key=lambda p: p.total_cost))
         return out[:_MAX_PLANS_PER_COUNTRY]
 
     # ------------------------------------------------------------------
@@ -185,12 +193,7 @@ class ReverseTicketPlanner:
                 f"反向票須從第1段 {a_out}→{home} 開始依序搭乘，第1段未搭乘後段會被取消；"
                 "各張票分開開票，任一張延誤或改期都不保護另一張",
             ),
-            RiskWarning(
-                RiskLevel.LOW,
-                "reverse_savings_estimate",
-                f"比兩趟各買一般來回 (共 {baseline:,}) 省 {saving:,} TWD"
-                f"（{saving / baseline:.0%}）",
-            ),
+            saving_warning("reverse_savings_estimate", "兩趟各買一般來回", baseline, total),
         ]
         if variant == "倒買法":
             warnings.append(
@@ -209,7 +212,8 @@ class ReverseTicketPlanner:
             total_travel_days=(a_ret - a_dep).days + 1 + (b_ret - b_dep).days + 1,
             warnings=tuple(warnings),
             explain=f"反向票＋{variant}：旅程A {_route(a_in, a_out)}、旅程B {_route(b_in, b_out)}"
-            f"，共 {len(tickets)} 張票，省 {saving:,}",
+            f"，共 {len(tickets)} 張票，"
+            + (f"省 {saving:,}" if saving > 0 else f"比一般來回多 {-saving:,}（實價不划算）"),
             ticket_roles=roles,
             trips=trips,
         )

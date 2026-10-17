@@ -23,7 +23,7 @@ Redis, api, web). Backend hot-reloads via `uvicorn --reload`; frontend via
 app/models/            SQLAlchemy ORM — persistence shape only
 app/schemas/           Pydantic I/O — never imports ORM, only `enums`
 app/data/              Static seed data (2027 TW holidays)
-app/providers/         FlightOfferProvider protocol + Stub, Amadeus, Cache
+app/providers/         FlightOfferProvider protocol + Google Flights fare DB, Amadeus, Cache
 app/services/
   mct.py               Minimum connection time policy
   date_matrix.py       DateWindow → candidate dates, with pruning
@@ -75,13 +75,15 @@ nothing plus a `notices` entry. Shared helpers live in `strategies/two_trip.py`
 country (大阪進東京出); only JP/TH/KR (DAOMAI_COUNTRIES, others → notice):
   包覆票  H→A_in (A start) + B_out→H (B end)   ← or 補頭尾: two one-ways
   反向票  A_out→H (A end)  + H→B_in (B start)  ← foreign-origin, cheap in TW 連假
-外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→Y (Y = X, or 頭尾不同 in X's country):
+外站四腿票 (back_to_back.py), one ticket X→TPE→D→TPE→Y, Y in a THIRD country
+(not X's, not D's — so the two trips never visit the same country):
   A: 單買初段 TPE→X · stay outer_stay_days · leg1+2 X→TPE→D (<24h at TPE) · leg3 D→TPE
   B: leg4 TPE→Y · 單買最後一段 Y→TPE (or next 四腿票 leg1 = 循環)
 ```
 
-Plans are kept only if cheaper than ordinary round trips for both trips,
-carry `ticket_roles` + `trips`, and scoring divides price / flight time /
+Plans that beat ordinary round trips for both trips are kept; if none does,
+the closest one is returned flagged `no_saving` (MEDIUM, "實價不划算，僅供比較")
+so the real comparison stays visible. Plans carry `ticket_roles` + `trips`, and scoring divides price / flight time /
 PTO efficiency by `trip_count` so they compare fairly with single trips.
 Tickets carry `searched_segments`; `booking_links` turns every ticket priced
 over ≥ 2 segments (包覆票 / 反向票 / 四腿票, mirrored pairs included) into
@@ -93,37 +95,39 @@ Google `tfs` (trip 1/2/3) is exact; Trip.com (tw.trip.com) needs city codes
 Skyscanner gets no multi-city link (bot wall, unverifiable). The demo
 (`public/index.html`) mirrors all of this in JS — keep both in sync.
 
-The stub fare model (`providers/stub.py`) makes these strategies
-meaningful: +30% on Taiwan-origin departures during 連假, outstation
-multi-city through TPE at 0.62× summed one-ways.
+## Fares — real Google Flights prices only
 
-## Real fares — Google Flights snapshot
+There is NO simulated price source in the product (the old stub lives on
+only as `tests/fake_fares.py`, a deterministic test double). Amadeus
+Self-Service shut down 2026-07-17; every price comes from Google Flights:
 
-Amadeus Self-Service shut down 2026-07-17, so real prices come from a daily
-GitHub Action (`.github/workflows/fares-snapshot.yml`):
-
-1. `services/fare_snapshot.collect_queries` runs `SearchService` against a
-   `RecordingProvider` (stub prices) → the exact ow / rt / mc searches the
-   planners need for the configured scenario (default TPE → NRT,KIX,LHR,
-   outstation HKG, 春節 + 清明 ±1 day; ≈234 searches, dates beyond Google's
-   ~330-day horizon dropped).
-2. `scripts/build_fare_snapshot.py` opens each as a Google Flights `tfs`
-   search (`hl=en&gl=TW&curr=TWD` — without `gl=TW` round trips show no
-   results) and parses the result rows' aria-labels ("From N New Taiwan
-   dollars … total") → cheapest total + first-segment times.
-3. Result is committed to `public/fares.json`. Keys: `ow|O|D|day`,
-   `rt|O|D|dep|ret`, `mc|O-D-day|…` (`providers/snapshot.fare_key`; the
-   demo JS uses the same strings).
-
-`SnapshotFareProvider` (env `FARE_SNAPSHOT_PATH`) serves it with stub
-fallback; offers get `issuer="google_flights"`, later segments carrier
-`待選` (Google lists only segment 1 before you pick it). The demo embeds the
-snapshot in `<script id="fare-snapshot">` at publish time and shows the
-real-fare coverage pill. Some open-jaw searches have no single-ticket result
-on Google and stay 示意價. Slow multi-city pages get a second, gentler pass;
-a query that still fails keeps the previous snapshot's fare for ≤ 7 days
-(`carry_over`, each entry has its own `at`). Plans mixing real fares and
-示意價 get a HIGH `mixed_fare_sources` warning (demo + `SearchService`).
+- `providers/google_flights.py` — query keys (`ow|O|D|day`, `rt|O|D|dep|ret`,
+  `mc|O-D-day|…`, same strings in the demo JS), the `tfs` search URL
+  (`hl=en&gl=TW&curr=TWD`; without `gl=TW` round trips show no results),
+  aria-label parsing ("From N New Taiwan dollars … total") → cheapest
+  single-ticket total + segment-1 times (rows marked separate tickets are
+  ignored), and the Playwright `scrape`.
+- `providers/fare_db.py` — `FareDatabase` (`public/fares.json`, schema 2:
+  per key price / at / prev / hist, `coverage`, `missing`; `merge` keeps 14
+  history points and drops entries > 7 days old or already departed) and
+  `FareDatabaseProvider`: answers only from the DB (miss → no offer);
+  with `LIVE_FARES=1` it prefetches up to `LIVE_FARE_BUDGET` missing
+  queries live and saves them back. `SearchService.run` first dry-runs the
+  planners on `providers/recording.py` (one placeholder price for every
+  query, so nothing is pruned) to learn the full query list.
+- `services/crawl_plan.py` + `scripts/build_fare_snapshot.py` — the crawler
+  (`.github/workflows/fares-snapshot.yml`, every 6 h; dispatch on the
+  branch until merged — schedules only run on the default branch).
+  Stage 1: every ow/rt query; stage 2: multi-city queries ranked by the real
+  stage-1 prices (四腿票 budget = rt_D + rt_Y − ow(TPE→X) − ow(Y→TPE); up to
+  3 date variants when ≥ 80% of rt_D, else 1; open jaws by mirrored rt),
+  capped at `--max-multi-city`; then a slow retry pass; merged into the DB.
+- Demo: `scripts/embed_fare_snapshot.py` writes the DB into
+  `<script id="fare-snapshot">` (the workflow does it each run);
+  `scripts/export_fare_chunks.py` splits it into `fares/meta` + `fares/cNN`
+  docs that Claude writes to the artifact's `db` — the page subscribes and
+  replaces the embedded copy when newer. Uncovered airports/holidays are
+  marked 無資料; misses are reported, never filled in.
 
 ## Scoring
 
@@ -136,11 +140,12 @@ Risk is the sum of per-warning weights (`low=0.1`, `med=0.4`, `high=1.0`).
 
 `SearchService` calls `resolve_default_provider()`:
 
-- If `FARE_SNAPSHOT_PATH` points at a `fares.json` → `SnapshotFareProvider`.
-- Else if both `AMADEUS_CLIENT_ID` and `AMADEUS_CLIENT_SECRET` are set → use
-  `AmadeusProvider` (Enterprise keys only now). Fail-open to
-  `StubFlightProvider` on `AmadeusError`.
-- Otherwise → `StubFlightProvider` (deterministic prices for dev + tests).
+- `FARE_DB_PATH` (or legacy `FARE_SNAPSHOT_PATH`), else the repo's
+  `public/fares.json` → `FareDatabaseProvider` (+ live lookups with
+  `LIVE_FARES=1`).
+- Else Amadeus (Enterprise keys) / Skyscanner credentials if set.
+- Otherwise `NoFareSource` → no plans + a notice. Tests get
+  `tests/fake_fares.FakeFareProvider` via `tests/conftest.py`.
 
 Every per-request run wraps the resolved provider in `CachingProvider` for
 request-scoped memoization — the single biggest perf lever.

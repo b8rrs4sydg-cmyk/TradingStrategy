@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import date
 
 from app.providers.redis_cache import DEFAULT_TTL_SECONDS, RedisCachingProvider
-from app.providers.stub import StubFlightProvider
+from tests.fake_fares import FakeFareProvider
 
 
 class _FakeRedis:
@@ -29,7 +29,7 @@ class _FakeRedis:
 
 def test_cache_miss_then_hit_round_trips_offers():
     fake = _FakeRedis()
-    provider = RedisCachingProvider(StubFlightProvider(), client=fake)
+    provider = RedisCachingProvider(FakeFareProvider(), client=fake)
 
     first = provider.search(
         origin="TPE", destination="NRT",
@@ -51,7 +51,7 @@ def test_cache_miss_then_hit_round_trips_offers():
 
 
 def test_degrades_gracefully_when_client_is_none():
-    provider = RedisCachingProvider(StubFlightProvider(), client=None)
+    provider = RedisCachingProvider(FakeFareProvider(), client=None)
     offers = provider.search(
         origin="TPE", destination="NRT",
         departure_date=date(2027, 2, 5), return_date=date(2027, 2, 11),
@@ -69,7 +69,7 @@ def test_degrades_gracefully_when_client_raises():
         def setex(self, key: str, ttl: int, value: bytes):
             raise RuntimeError("backend unavailable")
 
-    provider = RedisCachingProvider(StubFlightProvider(), client=_BrokenRedis())
+    provider = RedisCachingProvider(FakeFareProvider(), client=_BrokenRedis())
     offers = provider.search(
         origin="TPE", destination="NRT", departure_date=date(2027, 2, 5),
     )

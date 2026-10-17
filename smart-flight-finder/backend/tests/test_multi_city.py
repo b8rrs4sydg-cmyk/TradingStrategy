@@ -1,9 +1,9 @@
 from datetime import date
 
 from app.models.enums import DateWindowRole, TicketStrategyType, TripType
-from app.providers.stub import StubFlightProvider
 from app.schemas.itinerary import DateWindowIn, ItineraryRequestIn
 from app.services.search import SearchService
+from tests.fake_fares import FakeFareProvider
 
 
 def _multi_city_request() -> ItineraryRequestIn:
@@ -36,7 +36,7 @@ def _multi_city_request() -> ItineraryRequestIn:
 
 
 def test_multi_city_builds_bundles_with_strict_order():
-    _, plans, _ = SearchService(StubFlightProvider()).run(_multi_city_request())
+    _, plans, _ = SearchService(FakeFareProvider()).run(_multi_city_request())
     assert plans, "multi-city search should return at least one bundle"
     for p in plans:
         assert p.strategy is TicketStrategyType.STANDARD
@@ -59,5 +59,5 @@ def test_multi_city_requires_per_segment_od():
             ],
         }
     )
-    _, plans, _ = SearchService(StubFlightProvider()).run(broken)
+    _, plans, _ = SearchService(FakeFareProvider()).run(broken)
     assert plans == []

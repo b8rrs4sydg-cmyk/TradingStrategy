@@ -1,6 +1,20 @@
 # Changelog
 
-All commits on `claude/zealous-darwin-1kexus`, oldest first.
+All commits on `claude/zealous-darwin-1kexus`, oldest first (newest summary on top).
+
+## 2026-10-17 — real fares only
+
+- Removed every simulated fare source from the product: prices come only
+  from the Google Flights fare database (crawled every 6 h, with price
+  history) or live Google Flights lookups; the stub moved to
+  `tests/fake_fares.py`. Searches over uncovered airports/dates say so.
+- 外站四腿票: trip B (leg 4 + 單買最後一段) lands in a third country — never
+  the outstation's or trip A's destination's.
+- Crawler: two-stage plan, multi-city queries ranked by real one-way /
+  round-trip prices; separate-ticket rows ignored.
+- Planners return the closest non-saving plan (flagged) when nothing beats
+  ordinary round trips; demo shows coverage, data age, price changes and
+  reads the artifact's live fare db.
 
 ## 2026-10-15 / 2026-10-16
 

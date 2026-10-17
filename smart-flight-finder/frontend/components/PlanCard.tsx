@@ -18,7 +18,6 @@ const STRATEGY_LABEL: Record<TicketStrategyType, string> = {
 
 const ISSUER_LABEL: Record<string, string> = {
   google_flights: "Google Flights 實際票價（每日快照，1 位成人最低總價）",
-  stub: "示意價 (demo 內建價格表，非即時)",
   amadeus: "Amadeus 即時報價",
   skyscanner: "Skyscanner API 報價",
 };

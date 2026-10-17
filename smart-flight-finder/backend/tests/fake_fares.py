@@ -1,16 +1,10 @@
-"""Deterministic stub provider for local dev + tests.
+"""Deterministic fake fare provider — TESTS ONLY, never a product price source.
 
-Fake prices follow a reproducible hash of (origin, destination, date, carrier)
-so tests can assert stable orderings without network.
-
-The fare model is deliberately simple but reproduces the two market effects
-the 反向票 / 倒買法 / 四腿票 strategies exploit:
-
-* Journeys that *start in Taiwan* during a Taiwan long weekend cost
-  ``TW_HOLIDAY_SURGE`` more; the same dates sold from a foreign market don't.
-* A multi-city journey sold from an outstation that passes through Taipei
-  twice (外站四段票 X→TPE→D→TPE→X) is priced in that cheaper market at
-  ``OUTSTATION_MULTI_CITY_FACTOR`` of the summed one-way fares.
+The app's only fare source is the Google Flights fare database. Planner
+and scoring tests still need prices that make every strategy pay off in a
+predictable way, so this fake keeps the old demo fare model: +30% on
+Taiwan-origin departures during 連假, outstation multi-city through TPE at
+0.62x the summed one-ways, deterministic ±12% jitter.
 """
 
 from __future__ import annotations
@@ -20,7 +14,7 @@ from collections.abc import Sequence
 from datetime import UTC, date, datetime, time, timedelta
 from typing import ClassVar
 
-from app.data.airports import BY_CODE, TW_AIRPORT_CODES
+from app.data.airports import TW_AIRPORT_CODES
 from app.data.taiwan_holidays_2027 import LEAVE_STRATEGIES
 from app.models.enums import CabinClass
 from app.providers.base import FlightOfferProvider, Segment
@@ -44,10 +38,45 @@ def market_factor(origin: str, day: date) -> float:
     return TW_HOLIDAY_SURGE if origin in TW_AIRPORT_CODES and day in _TW_PEAK_DAYS else 1.0
 
 
-class StubFlightProvider:
-    """Reproducible pseudo-random offers; useful before real APIs are wired."""
+# (one-way TWD from TPE, block minutes, carrier) per destination
+_SEED = {
+    "NRT": (12800, 190, 'BR'),
+    "HND": (14200, 185, 'CI'),
+    "KIX": (11800, 180, 'JX'),
+    "NGO": (11500, 175, 'CI'),
+    "FUK": (10200, 150, 'CI'),
+    "CTS": (13800, 245, 'BR'),
+    "OKA": (8200, 90, 'CI'),
+    "ICN": (9800, 160, 'KE'),
+    "PUS": (9200, 135, 'BR'),
+    "HKG": (5100, 90, 'CX'),
+    "MFM": (5300, 95, 'NX'),
+    "XMN": (4100, 90, 'MF'),
+    "BKK": (10800, 230, 'TG'),
+    "CNX": (11200, 245, 'BR'),
+    "SGN": (8900, 215, 'BR'),
+    "HAN": (9300, 200, 'CI'),
+    "MNL": (7800, 140, 'PR'),
+    "CEB": (8600, 170, 'JX'),
+    "KUL": (10200, 285, 'MH'),
+    "SIN": (11600, 280, 'SQ'),
+    "LHR": (32000, 845, 'BR'),
+    "CDG": (31500, 830, 'BR'),
+    "AMS": (30500, 820, 'CI'),
+    "VIE": (30000, 790, 'BR'),
+    "LAX": (26500, 720, 'BR'),
+    "SFO": (25800, 690, 'BR'),
+    "JFK": (30800, 935, 'BR'),
+    "YVR": (24500, 650, 'BR'),
+    "SYD": (22800, 555, 'CI'),
+    "BNE": (21900, 520, 'BR'),
+}
 
-    name: ClassVar[str] = "stub"
+
+class FakeFareProvider:
+    """Reproducible pseudo-random offers for planner tests."""
+
+    name: ClassVar[str] = "fake"
 
     # (base price in TWD, duration in minutes, carrier, direct?)
     _ROUTE_SEEDS: ClassVar[dict[tuple[str, str], tuple[int, int, str, bool]]] = {
@@ -149,16 +178,14 @@ class StubFlightProvider:
         seed = self._ROUTE_SEEDS.get((origin, destination))
         if seed is not None:
             return seed
-        if origin in TW_AIRPORT_CODES and destination in BY_CODE:
-            a = BY_CODE[destination]
-            if a.ow_from_tpe:
-                bump = 1.0 if origin == _HUB else 1.06
-                return (round(a.ow_from_tpe * bump, -2), a.minutes, a.carrier, True)
-        if destination in TW_AIRPORT_CODES and origin in BY_CODE:
-            a = BY_CODE[origin]
-            if a.ow_from_tpe:
-                bump = 0.98 if destination == _HUB else 1.04
-                return (round(a.ow_from_tpe * bump, -2), a.minutes + 10, a.carrier, True)
+        if origin in TW_AIRPORT_CODES and destination in _SEED:
+            ow, minutes, carrier = _SEED[destination]
+            bump = 1.0 if origin == _HUB else 1.06
+            return (round(ow * bump, -2), minutes, carrier, True)
+        if destination in TW_AIRPORT_CODES and origin in _SEED:
+            ow, minutes, carrier = _SEED[origin]
+            bump = 0.98 if destination == _HUB else 1.04
+            return (round(ow * bump, -2), minutes + 10, carrier, True)
         return (15000, 240, "ZZ", False)  # neutral synthetic route
 
     @staticmethod
@@ -200,9 +227,9 @@ class StubFlightProvider:
             currency="TWD",
             fare_class="Y",
             baggage_through_checked=True,
-            issuer="stub",
+            issuer="fake",
         )
 
 
 # sanity: it satisfies the Protocol
-_: FlightOfferProvider = StubFlightProvider()
+_: FlightOfferProvider = FakeFareProvider()

@@ -13,7 +13,7 @@ from datetime import date
 from typing import TypeVar
 
 from app.providers.base import FlightOfferProvider, Segment
-from app.services.strategies.base import TicketOffer
+from app.services.strategies.base import RiskLevel, RiskWarning, TicketOffer
 
 T = TypeVar("T")
 
@@ -96,3 +96,24 @@ def nearest(dates: Sequence[date], k: int) -> tuple[date, ...]:
 
 def fmt_day(d: date) -> str:
     return f"{d.month}/{d.day}"
+
+
+def saving_warning(code: str, baseline_desc: str, baseline: int, total: int) -> RiskWarning:
+    """How the plan compares with ordinary round trips (real prices).
+
+    Saving → LOW ``code``; no saving → MEDIUM ``no_saving`` (the plan is
+    shown only so the real comparison is visible).
+    """
+
+    saving = baseline - total
+    if saving > 0:
+        return RiskWarning(
+            RiskLevel.LOW,
+            code,
+            f"比{baseline_desc} (共 {baseline:,}) 省 {saving:,} TWD（{saving / baseline:.0%}）",
+        )
+    return RiskWarning(
+        RiskLevel.MEDIUM,
+        "no_saving",
+        f"比{baseline_desc} (共 {baseline:,}) 多 {-saving:,} TWD — 目前實價不划算，僅供比較",
+    )
