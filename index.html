@@ -2332,7 +2332,7 @@ function loadLiveCache() {
 
 function noteDiag(e) {
   live.ntfyOk = false;
-  try { live.db?.collection('diag').doc('net').set({ at: new Date().toISOString(), error: String(e?.message || e).slice(0, 200), ua: navigator.userAgent.slice(0, 120) }); } catch {}
+  try { live.db?.collection('diag').doc('net').set({ at: new Date().toISOString(), error: String(e?.message || e).slice(0, 200), ua: navigator.userAgent.slice(0, 120) }).catch(() => {}); } catch {}
 }
 
 function ntfyLookup(keys, rid) {
