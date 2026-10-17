@@ -1,55 +1,39 @@
 // Temporary research probe run on a GitHub runner (open egress).
 import { chromium } from 'playwright';
-const ARTICLES = [
-  'https://huitinchou.tw/2025-reverse-ticket-vs-4-segment-ticket/',
-  'https://huitinchou.tw/reverse-ticketing-guide-%E6%A9%9F%E7%A5%A8%E5%80%92%E8%B2%B7%E6%B3%95/',
-];
 const T = 'https://www.trip.com/flights/showfarefirst?';
 const tail = '&class=y&quantity=1&locale=zh-TW&curr=TWD';
-const idx = segs => segs.map(([dc, ac, d, da, aa], i) => `dcity${i}=${dc}&acity${i}=${ac}&ddate${i}=${d}&dairport${i}=${da}&aairport${i}=${aa}`).join('&');
+const SEGS = [['hkg','tpe','hkg','tpe'],['tpe','tyo','tpe','nrt'],['tyo','tpe','nrt','tpe'],['tpe','hkg','tpe','hkg']];
+const cities = SEGS.map(([dc, ac, da, aa], i) => `dcity${i}=${dc}&acity${i}=${ac}&dairport${i}=${da}&aairport${i}=${aa}`).join('&');
+const dates = (base, ds) => ds.map((d, i) => `ddate${i + base}=${d}`).join('&');
+const FEB = ['2027-02-05', '2027-02-06', '2027-02-17', '2027-02-24'];
+const GAP = ['2027-02-05', '2027-02-06', '2027-02-17', '2027-06-10'];
 const LINKS = {
-  mt_four: `${T}triptype=mt&${idx([['hkg','tpe','2027-02-05','hkg','tpe'],['tpe','tyo','2027-02-06','tpe','nrt'],['tyo','tpe','2027-02-17','nrt','tpe'],['tpe','hkg','2027-06-10','tpe','hkg']])}${tail}`,
-  mt_two_openjaw: `${T}triptype=mt&${idx([['tpe','tyo','2027-02-05','tpe','nrt'],['osa','tpe','2027-06-10','kix','tpe']])}${tail}`,
-  rt_reverse_ticket: `${T}dcity=tyo&acity=tpe&dairport=nrt&aairport=tpe&ddate=2027-02-15&rdate=2027-06-10&triptype=rt${tail}`,
-  ow_airport: `${T}dcity=tpe&acity=hkg&dairport=tpe&aairport=hkg&ddate=2027-02-03&triptype=ow${tail}`,
+  dates0_feb: `${T}triptype=mt&${cities}&${dates(0, FEB)}${tail}`,
+  dates1_feb: `${T}triptype=mt&${cities}&${dates(1, FEB)}${tail}`,
+  dates0_gap: `${T}triptype=mt&${cities}&${dates(0, GAP)}${tail}`,
+  dates1_gap: `${T}triptype=mt&${cities}&${dates(1, GAP)}${tail}`,
+  two_dates1: `${T}triptype=mt&dcity0=tpe&acity0=tyo&dairport0=tpe&aairport0=nrt&dcity1=osa&acity1=tpe&dairport1=kix&aairport1=tpe&ddate1=2027-02-05&ddate2=2027-06-10${tail}`,
 };
-const browser = await chromium.launch({ args: ['--disable-blink-features=AutomationControlled'] });
-const ctx = await browser.newContext({ locale: 'zh-TW', userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36', viewport: { width: 1366, height: 1000 } });
-
-async function readArticle(url) {
-  for (const candidate of [url, `https://web.archive.org/web/2026/${url}`]) {
-    const page = await ctx.newPage();
-    try {
-      await page.goto(candidate, { waitUntil: 'domcontentloaded', timeout: 60000 });
-      for (let i = 0; i < 6; i++) {
-        await page.waitForTimeout(5000);
-        if (!/Just a moment|請稍候/.test(await page.title())) break;
-      }
-      const text = await page.evaluate(() => (document.querySelector('.entry-content, article') || document.body).innerText);
-      if (text.length > 2000) {
-        console.log(`\n######## ARTICLE ${candidate}\ntitle=${await page.title()} len=${text.length}\n${text.replace(/\n{2,}/g, '\n').slice(0, 15000)}\n######## END ARTICLE`);
-        await page.close();
-        return;
-      }
-      console.log(`ARTICLE SHORT ${candidate} title=${await page.title()} len=${text.length}`);
-    } catch (e) { console.log(`ARTICLE FAIL ${candidate} ${e}`); }
-    await page.close();
-  }
+// city codes for the catalog's non-city-code airports
+for (const [city, apt] of [['sel','icn'],['spk','cts'],['lon','lhr'],['par','cdg'],['nyc','jfk'],['txg','rmq'],['osa','kix'],['tyo','hnd'],['ngo','ngo'],['oka','oka']]) {
+  LINKS[`ow_${apt}`] = `${T}dcity=tpe&acity=${city}&dairport=tpe&aairport=${apt}&ddate=2027-03-10&triptype=ow${tail}`;
 }
-for (const u of ARTICLES) await readArticle(u);
-
+const browser = await chromium.launch({ args: ['--disable-blink-features=AutomationControlled'] });
+const ctx = await browser.newContext({ locale: 'en-US', userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36', viewport: { width: 1366, height: 1000 } });
 for (const [name, url] of Object.entries(LINKS)) {
   const page = await ctx.newPage();
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForTimeout(18000);
-    const dateBits = await page.evaluate(() => [...document.querySelectorAll('[data-testid*="date" i], [class*="date" i]')]
-      .map(e => `${e.getAttribute('data-testid') || e.className}::${(e.getAttribute('aria-label') || e.innerText || e.value || '').replace(/\s+/g, ' ')}`)
-      .filter(s => /\d/.test(s)).slice(0, 25));
-    const text = (await page.evaluate(() => document.body.innerText)).replace(/\s+/g, ' ');
-    const at = Math.max(0, text.indexOf('Multi-city'));
-    console.log(`\n######## ${name}\nfinal=${page.url()}\ntitle=${await page.title()}\ndateBits=${JSON.stringify(dateBits)}\ntext=${text.slice(at, at + 900)}\n######## END`);
-  } catch (e) { console.log(`FAIL ${name} ${e}`); }
+    await page.waitForTimeout(name.startsWith('ow_') ? 9000 : 16000);
+    const ds = await page.evaluate(() => [...document.querySelectorAll('[data-testid^="search_date_depart"]')].map(e => `${e.getAttribute('data-testid').slice(-1)}=${e.innerText.trim()}`));
+    const segs = await page.evaluate(() => [...document.querySelectorAll('[aria-label^="Departure airport or city"], [aria-label^="Arrival airport or city"]')].map(e => e.getAttribute('aria-label').replace(/^(Departure|Arrival) airport or city /, '')).slice(0, 8));
+    console.log(`#### ${name} | title=${await page.title()} | dates=${JSON.stringify(ds)} | cities=${JSON.stringify(segs)} | mt2rt=${page.url().includes('mt2rt')}`);
+  } catch (e) { console.log(`#### FAIL ${name} ${e}`); }
   await page.close();
 }
+// Google single-ticket q= link
+const g = await ctx.newPage();
+await g.goto('https://www.google.com/travel/flights?q=' + encodeURIComponent('Flights from TPE to NRT on 2027-02-05 through 2027-02-15 1 adult economy') + '&hl=zh-TW&curr=TWD', { waitUntil: 'domcontentloaded' });
+await g.waitForTimeout(8000);
+console.log(`#### google_q | title=${await g.title()} | inputs=${JSON.stringify(await g.evaluate(() => [...document.querySelectorAll('input')].map(i => i.value).filter(Boolean).slice(0, 6)))}`);
 await browser.close();
