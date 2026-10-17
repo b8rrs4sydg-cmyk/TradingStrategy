@@ -1,9 +1,9 @@
 {
- "at": "2026-10-17T18:13:48+00:00",
+ "at": "2026-10-17T18:15:20+00:00",
  "publishes": {
   "ok": 250,
-  "r429": 67,
-  "fail": 5
+  "r429": 82,
+  "fail": 8
  },
  "fares_saved": 1091,
  "log": [
@@ -125,6 +125,15 @@
   "18:13:10 publish gave up",
   "18:13:37 publish gave up",
   "18:13:39 publish gave up",
-  "18:13:39 request mvcppvdmiwkg7: chunk of 46 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 66, 'fail': 5}"
+  "18:13:39 request mvcppvdmiwkg7: chunk of 46 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 66, 'fail': 5}",
+  "18:14:09 publish gave up",
+  "18:14:13 request received: rid mvcpu4iaem619 9 keys",
+  "18:14:13 handle mvcpu4iaem619: first_chunk=True total=9",
+  "18:14:24 publish gave up",
+  "18:14:34 publish gave up",
+  "18:15:00 request received: rid mvcpv3vjmz5jj 9 keys",
+  "18:15:00 handle mvcpv3vjmz5jj: first_chunk=True total=9",
+  "18:15:00 request mvcpv3vjmz5jj: chunk of 9 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 79, 'fail': 8}",
+  "18:15:01 publish 429 #80: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'"
  ]
 }
