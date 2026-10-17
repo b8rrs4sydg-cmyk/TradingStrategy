@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:50:49+00:00",
+ "at": "2026-10-17T19:52:20+00:00",
  "publishes": {
-  "ok": 161,
+  "ok": 166,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2153,
+ "fares_saved": 2159,
  "log": [
   "19:21:52 http front door: https://below-divx-ton-contrast.trycloudflare.com",
   "19:21:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -85,6 +85,10 @@
   "19:50:31 handle mvct9zbcch7eo: first_chunk=True total=12",
   "19:50:32 request mvct9yxsl1oqw: final sent (9/9); ntfy publishes {'ok': 161, 'r429': 0, 'fail': 0}",
   "19:50:33 request received: rid mvcta10547lo5 12 keys",
-  "19:50:33 handle mvcta10547lo5: first_chunk=True total=12"
+  "19:50:33 handle mvcta10547lo5: first_chunk=True total=12",
+  "19:51:48 request mvcta10547lo5: chunk of 12 keys done in 75s; ntfy publishes {'ok': 164, 'r429': 0, 'fail': 0}",
+  "19:51:49 request mvcta10547lo5: final sent (12/12); ntfy publishes {'ok': 164, 'r429': 0, 'fail': 0}",
+  "19:51:57 request mvct9zbcch7eo: chunk of 12 keys done in 86s; ntfy publishes {'ok': 165, 'r429': 0, 'fail': 0}",
+  "19:51:58 request mvct9zbcch7eo: final sent (12/12); ntfy publishes {'ok': 165, 'r429': 0, 'fail': 0}"
  ]
 }
