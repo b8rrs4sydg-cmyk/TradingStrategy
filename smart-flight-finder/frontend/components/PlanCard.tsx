@@ -16,6 +16,17 @@ const STRATEGY_LABEL: Record<TicketStrategyType, string> = {
   hidden_city: "隱藏城市",
 };
 
+const ISSUER_LABEL: Record<string, string> = {
+  stub: "示意價 (demo 內建價格表，非即時)",
+  amadeus: "Amadeus 即時報價",
+  skyscanner: "Skyscanner API 報價",
+};
+
+function ticketTitle(plan: StrategyPlanOut, i: number): string {
+  if (plan.strategy === "back_to_back_4leg") return i === 0 ? "票甲 (外站)" : "票乙 (中段)";
+  return plan.tickets.length > 1 ? `票 ${i + 1}` : "票";
+}
+
 const RISK_BADGE: Record<RiskLevel, string> = {
   low: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300",
   medium: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
@@ -99,6 +110,11 @@ export function PlanCard({
           <span className="rounded-full bg-brand/10 px-2 py-0.5 text-xs font-medium text-brand-dark dark:text-brand">
             {STRATEGY_LABEL[plan.strategy]}
           </span>
+          {plan.window_label && (
+            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
+              {plan.window_label}
+            </span>
+          )}
           <span className="text-sm text-slate-600 dark:text-slate-400">
             {plan.explain}
           </span>
@@ -152,7 +168,7 @@ export function PlanCard({
                 className="rounded-md border border-slate-200 p-3 text-sm dark:border-slate-800"
               >
                 <h4 className="mb-2 font-semibold">
-                  {plan.tickets.length === 2 ? (i === 0 ? "票甲 (外站)" : "票乙 (中段)") : "票"}
+                  {ticketTitle(plan, i)}
                   <span className="ml-2 font-mono text-xs text-slate-500">
                     {t.offer_id}
                   </span>
@@ -171,6 +187,27 @@ export function PlanCard({
                     </li>
                   ))}
                 </ul>
+                <div className="mt-3 border-t border-slate-200 pt-2 text-xs dark:border-slate-800">
+                  <div className="text-slate-500">
+                    價格來源：{ISSUER_LABEL[t.issuer ?? ""] ?? t.issuer ?? "—"}
+                  </div>
+                  {t.booking_links && t.booking_links.length > 0 && (
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                      <span className="text-slate-500">查即時票價 / 訂票：</span>
+                      {t.booking_links.map((b) => (
+                        <a
+                          key={b.source}
+                          href={b.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded border border-brand/40 px-2 py-0.5 text-brand-dark hover:bg-brand/10 dark:text-brand"
+                        >
+                          {b.label} ↗
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </section>
             ))}
           </div>

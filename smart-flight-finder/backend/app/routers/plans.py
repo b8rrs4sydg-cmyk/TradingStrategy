@@ -12,6 +12,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel
 
 from app.models.enums import CabinClass, TicketStrategyType
+from app.services.booking_links import booking_links
 from app.services.ics_export import render_plan_ics
 from app.services.strategies.base import FlightLeg, StrategyPlan, TicketOffer
 
@@ -47,6 +48,7 @@ class _PlanIn(BaseModel):
     pto_days: int = 0
     total_travel_days: int = 0
     explain: str | None = None
+    window_label: str | None = None
 
 
 def _to_dc(plan_in: _PlanIn) -> StrategyPlan:
@@ -118,9 +120,14 @@ def export_plans_as_csv(req: _CsvRequest) -> Any:
         "leg_idx", "origin", "destination",
         "departure_utc", "arrival_utc",
         "carrier", "flight_number", "cabin", "stops",
+        "window_label", "trip_com_url",
     ])
     for pi, p in enumerate(req.plans):
+        dc_tickets = _to_dc(p).tickets
         for ti, t in enumerate(p.tickets):
+            trip_url = next(
+                b.url for b in booking_links(dc_tickets[ti]) if b.source == "trip_com"
+            )
             for li, leg in enumerate(t.legs):
                 writer.writerow([
                     pi, p.strategy.value, p.total_cost, p.currency,
@@ -129,6 +136,7 @@ def export_plans_as_csv(req: _CsvRequest) -> Any:
                     li, leg.origin, leg.destination,
                     leg.departure.isoformat(), leg.arrival.isoformat(),
                     leg.carrier, leg.flight_number, leg.cabin.value, leg.stops,
+                    p.window_label or "", trip_url,
                 ])
 
     return Response(

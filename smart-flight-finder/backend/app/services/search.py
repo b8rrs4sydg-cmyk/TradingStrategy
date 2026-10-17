@@ -8,13 +8,14 @@ from __future__ import annotations
 
 import logging
 import os
+from dataclasses import replace
 
 from app.data.taiwan_holidays_2027 import LEAVE_STRATEGIES
-from app.models.enums import DateWindowRole, TicketStrategyType
+from app.models.enums import DateWindowRole, TicketStrategyType, TripType
 from app.providers.base import FlightOfferProvider
 from app.providers.cache import CachingProvider
 from app.providers.stub import StubFlightProvider
-from app.schemas.itinerary import DateWindowIn, ItineraryRequestIn
+from app.schemas.itinerary import CandidateWindowIn, DateWindowIn, ItineraryRequestIn
 from app.services.date_matrix import expand_window, matrix_cardinality
 from app.services.scoring import score_plans
 from app.services.strategies import (
@@ -76,34 +77,36 @@ class SearchService:
     ) -> tuple[int, list[StrategyPlan], dict[str, int]]:
         """Return (date_matrix_size, ranked plans, provider cache stats).
 
-        When ``req.holiday_keys`` is set, each key is treated as an independent
-        candidate (outbound, return) window and every strategy is run against
-        each in turn, with results merged — this is how multi-holiday search
-        permutes 春節 / 聖誕 / 元旦 / … to find the best 4-leg across the year.
+        With ``req.candidate_windows`` every strategy runs once per 備選時段;
+        each plan is tagged with its slot's label, and plans that overlapping
+        slots both produced (same strategy + same tickets) are kept once.
         """
 
         # Fresh cache per request — never leak offers between users.
         self.provider = CachingProvider(self._raw_provider)
 
-        plans: list[StrategyPlan] = []
-        total_matrix = 0
-
-        candidate_windows_sets: list[list[DateWindowIn]]
-        if req.holiday_keys:
-            candidate_windows_sets = [
-                _windows_from_holiday(key, flex=req.holiday_flex_days)
-                for key in req.holiday_keys
+        slots: list[tuple[str | None, list[DateWindowIn]]]
+        if req.candidate_windows:
+            slots = [
+                (_slot_label(c), _windows_from_candidate(c, req.trip_type))
+                for c in req.candidate_windows
             ]
-            # Drop keys that don't resolve to a known holiday.
-            candidate_windows_sets = [w for w in candidate_windows_sets if w]
         else:
-            candidate_windows_sets = [req.date_windows]
+            slots = [(None, req.date_windows)]
 
-        for windows in candidate_windows_sets:
+        plans: list[StrategyPlan] = []
+        seen: set[tuple[TicketStrategyType, tuple[str, ...]]] = set()
+        total_matrix = 0
+        for label, windows in slots:
             expanded = [expand_window(w) for w in windows]
             total_matrix += matrix_cardinality(expanded)
             for strategy in req.strategies:
-                plans.extend(self._run_strategy(strategy, req, expanded))
+                for plan in self._run_strategy(strategy, req, expanded):
+                    key = (plan.strategy, tuple(t.offer_id for t in plan.tickets))
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    plans.append(replace(plan, window_label=label) if label else plan)
 
         if req.max_total_budget is not None:
             plans = [p for p in plans if p.total_cost <= req.max_total_budget]
@@ -157,28 +160,33 @@ class SearchService:
         return []
 
 
-def _windows_from_holiday(holiday_key: str, *, flex: int) -> list[DateWindowIn]:
-    """Resolve a 2027 TW leave-strategy key into (outbound, return) windows.
+def _slot_label(c: CandidateWindowIn) -> str:
+    if c.label:
+        return c.label
+    match = next((s for s in LEAVE_STRATEGIES if s.holiday_key == c.holiday_key), None)
+    if match is not None:
+        return match.label_zh
+    if c.return_date is None:
+        return c.depart.isoformat()
+    return f"{c.depart:%m/%d}–{c.return_date:%m/%d}"
 
-    Each selected holiday becomes one candidate (outbound, return) pair; the
-    orchestrator loops the full strategy roster across all pairs so the user
-    can let the engine pick 春節 vs 聖誕 vs 元旦 (etc.) by cost + score.
-    """
 
-    match = next((s for s in LEAVE_STRATEGIES if s.holiday_key == holiday_key), None)
-    if match is None:
-        return []
-    return [
+def _windows_from_candidate(c: CandidateWindowIn, trip_type: TripType) -> list[DateWindowIn]:
+    windows = [
         DateWindowIn(
             role=DateWindowRole.OUTBOUND,
-            anchor_date=match.window_start,
-            flex_before=flex,
-            flex_after=flex,
-        ),
-        DateWindowIn(
-            role=DateWindowRole.RETURN,
-            anchor_date=match.window_end,
-            flex_before=flex,
-            flex_after=flex,
-        ),
+            anchor_date=c.depart,
+            flex_before=c.depart_flex,
+            flex_after=c.depart_flex,
+        )
     ]
+    if trip_type is TripType.ROUND_TRIP and c.return_date is not None:
+        windows.append(
+            DateWindowIn(
+                role=DateWindowRole.RETURN,
+                anchor_date=c.return_date,
+                flex_before=c.return_flex,
+                flex_after=c.return_flex,
+            )
+        )
+    return windows

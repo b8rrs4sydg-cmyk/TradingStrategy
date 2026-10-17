@@ -85,6 +85,7 @@ class StrategyPlan:
     warnings: tuple[RiskWarning, ...] = field(default_factory=tuple)
     score: float | None = None       # populated by scoring engine
     explain: str | None = None       # human-readable one-liner
+    window_label: str | None = None  # candidate time slot this plan came from
 
     @property
     def ticket_count(self) -> int:

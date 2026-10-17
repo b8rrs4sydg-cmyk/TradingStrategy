@@ -2,6 +2,7 @@
 
 from app.schemas.holiday import HolidayOut, LeaveStrategyOut
 from app.schemas.itinerary import (
+    CandidateWindowIn,
     DateWindowIn,
     DateWindowOut,
     ItineraryRequestIn,
@@ -9,6 +10,7 @@ from app.schemas.itinerary import (
     ScoringWeights,
 )
 from app.schemas.plan import (
+    BookingLinkOut,
     FlightLegOut,
     RiskWarningOut,
     SearchResult,
@@ -17,6 +19,8 @@ from app.schemas.plan import (
 )
 
 __all__ = [
+    "BookingLinkOut",
+    "CandidateWindowIn",
     "DateWindowIn",
     "DateWindowOut",
     "FlightLegOut",

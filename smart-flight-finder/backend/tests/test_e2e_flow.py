@@ -59,3 +59,23 @@ def test_metrics_updates_after_search():
     assert "sff_strategy_requested_total" in text
     # at least the strategies we requested appear
     assert 'strategy="standard"' in text
+
+
+def test_search_with_candidate_windows_returns_labels_and_booking_links():
+    payload = {
+        **{k: v for k, v in SEARCH_PAYLOAD.items() if k != "date_windows"},
+        "adults": 2,
+        "strategies": ["standard"],
+        "candidate_windows": [
+            {"holiday_key": "lunar_ny", "depart": "2027-02-06", "return_date": "2027-02-14",
+             "depart_flex": 0, "return_flex": 1},
+            {"label": "聖誕", "depart": "2027-12-23", "return_date": "2027-12-27"},
+        ],
+    }
+    r = client.post("/search", json=payload)
+    assert r.status_code == 200, r.text
+    plans = r.json()["plans"]
+    assert {p["window_label"] for p in plans} == {"春節請 2 休 11", "聖誕"}
+    links = plans[0]["tickets"][0]["booking_links"]
+    assert [link["source"] for link in links] == ["trip_com", "google_flights", "skyscanner"]
+    assert "quantity=2" in links[0]["url"]

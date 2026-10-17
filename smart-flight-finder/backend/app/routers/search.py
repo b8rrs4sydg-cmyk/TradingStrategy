@@ -33,6 +33,6 @@ def search(req: ItineraryRequestIn) -> SearchResult:
     return SearchResult(
         request_echo=req.model_dump(mode="json"),
         date_matrix_size=matrix_size,
-        plans=[StrategyPlanOut.of(p) for p in plans],
+        plans=[StrategyPlanOut.of(p, adults=req.adults, cabin=req.cabin) for p in plans],
         provider_cache=cache_stats,
     )

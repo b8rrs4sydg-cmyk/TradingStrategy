@@ -34,6 +34,27 @@ class DateWindowIn(BaseModel):
         return v.upper() if v else v
 
 
+class CandidateWindowIn(BaseModel):
+    """One 備選時段: a (depart, return) pair with its own ± flex.
+
+    Usually seeded from a 2027 leave strategy (``holiday_key``) and then
+    adjusted by the user; ``label`` is echoed back on every plan it yields.
+    """
+
+    label: str | None = Field(default=None, max_length=40)
+    holiday_key: str | None = Field(default=None, max_length=32)
+    depart: date
+    return_date: date | None = None
+    depart_flex: int = Field(default=1, ge=0, le=14)
+    return_flex: int = Field(default=1, ge=0, le=14)
+
+    @model_validator(mode="after")
+    def _order(self) -> CandidateWindowIn:
+        if self.return_date is not None and self.return_date < self.depart:
+            raise ValueError("候選時段的回程日不可早於去程日")
+        return self
+
+
 class DateWindowOut(DateWindowIn):
     model_config = ConfigDict(from_attributes=True)
 
@@ -59,12 +80,9 @@ class ItineraryRequestIn(BaseModel):
     )
 
     holiday_key: str | None = None
-    # Multi-select candidates: when non-empty, each key is expanded into its own
-    # (outbound, return) window at the search layer and plans run across all of
-    # them. ``date_windows`` is ignored while ``holiday_keys`` is set, so the
-    # UI can offer "search Spring Festival + Christmas + 元旦 at once".
-    holiday_keys: list[str] = Field(default_factory=list, max_length=20)
-    holiday_flex_days: int = Field(default=2, ge=0, le=14)
+    # 備選時段: when non-empty, every strategy runs once per slot and results
+    # are merged + ranked together; ``date_windows`` is then ignored.
+    candidate_windows: list[CandidateWindowIn] = Field(default_factory=list, max_length=20)
 
     max_total_budget: int | None = Field(default=None, ge=0, description="TWD")
     max_pto_days: int | None = Field(default=None, ge=0, le=30)
@@ -84,12 +102,16 @@ class ItineraryRequestIn(BaseModel):
 
     @model_validator(mode="after")
     def _validate_windows(self) -> ItineraryRequestIn:
-        # holiday_keys bypass the window check — the search layer synthesizes
-        # a (outbound, return) pair per selected holiday.
-        if self.holiday_keys:
+        if self.candidate_windows:
+            if self.trip_type is TripType.MULTI_CITY:
+                raise ValueError("multi_city 請使用 date_windows，不支援 candidate_windows")
+            if self.trip_type is TripType.ROUND_TRIP and any(
+                c.return_date is None for c in self.candidate_windows
+            ):
+                raise ValueError("round_trip 的每個候選時段都需要回程日")
             return self
         if not self.date_windows:
-            raise ValueError("需要 date_windows 或 holiday_keys 其一")
+            raise ValueError("需要 date_windows 或 candidate_windows 其一")
         roles = {w.role for w in self.date_windows}
         if self.trip_type is TripType.ROUND_TRIP and not {
             DateWindowRole.OUTBOUND,

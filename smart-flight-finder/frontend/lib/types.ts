@@ -53,6 +53,15 @@ export type DateWindowIn = {
   segment_destination?: string | null;
 };
 
+export type CandidateWindowIn = {
+  label?: string | null;
+  holiday_key?: string | null;
+  depart: string; // ISO date
+  return_date?: string | null;
+  depart_flex: number;
+  return_flex: number;
+};
+
 export type ScoringWeights = {
   price: number;
   pto_efficiency: number;
@@ -70,8 +79,7 @@ export type ItineraryRequestIn = {
   destinations: string[];
   strategies: TicketStrategyType[];
   holiday_key: string | null;
-  holiday_keys?: string[];
-  holiday_flex_days?: number;
+  candidate_windows?: CandidateWindowIn[];
   max_total_budget: number | null;
   max_pto_days: number | null;
   scoring_weights: ScoringWeights | null;
@@ -91,6 +99,12 @@ export type FlightLegOut = {
   stops: number;
 };
 
+export type BookingLinkOut = {
+  source: string;
+  label: string;
+  url: string;
+};
+
 export type TicketOfferOut = {
   offer_id: string;
   legs: FlightLegOut[];
@@ -99,6 +113,7 @@ export type TicketOfferOut = {
   fare_class: string | null;
   baggage_through_checked: boolean;
   issuer: string | null;
+  booking_links?: BookingLinkOut[];
 };
 
 export type RiskWarningOut = {
@@ -117,6 +132,7 @@ export type StrategyPlanOut = {
   warnings: RiskWarningOut[];
   score: number | null;
   explain: string | null;
+  window_label?: string | null;
 };
 
 export type ProviderCacheStats = {
