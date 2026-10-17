@@ -94,12 +94,12 @@ async def main() -> int:
         await page.wait_for_timeout(2500)
         info = await page.evaluate(
             """() => ({fares: Object.keys(FARES.fares).length, slots: slots.length,
-                      triple: typeof planFourLegTriple === 'function', ntfy: typeof ntfyLookup === 'function',
+                      triple: typeof planFourLegTriple === 'function', ntfy: typeof ntfyLookup === 'function' && ntfyLookup.toString().includes('/poll/'),
                       plans: state.result ? state.result.plans.length : -1,
                       cards: document.querySelectorAll('article.plan').length})"""
         )
         log("loaded:", info)
-        check(info["triple"] and info["ntfy"], "page is the latest build")
+        check(info["triple"] and info["ntfy"], "page is the latest build (long-polling lookup)")
         check(info["fares"] > 500, f"fare database loaded ({info['fares']})")
         check(info["slots"] == 3, f"three default time slots ({info['slots']})")
         check(info["plans"] > 0 and info["cards"] > 0, f"default search lists plans ({info['plans']}/{info['cards']} cards)")
