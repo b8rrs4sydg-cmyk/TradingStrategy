@@ -1,26 +1,12 @@
 {
- "at": "2026-10-17T19:04:10+00:00",
+ "at": "2026-10-17T19:05:41+00:00",
  "publishes": {
   "ok": 250,
   "r429": 548,
-  "fail": 73
+  "fail": 74
  },
- "fares_saved": 1188,
+ "fares_saved": 1305,
  "log": [
-  "18:56:18 publish gave up",
-  "18:56:30 request received: rid mvcrcdkqxjjjr 160 keys",
-  "18:56:30 handle mvcrcdkqxjjjr: first_chunk=True total=160",
-  "18:56:45 request received: rid mvcrcu3yt86fn 84 keys",
-  "18:56:45 handle mvcrcu3yt86fn: first_chunk=True total=160",
-  "18:56:45 request received: rid mvcrcu3yt86fn 76 keys",
-  "18:56:45 handle mvcrcu3yt86fn: first_chunk=False total=160",
-  "18:57:00 publish 429 #480: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
-  "18:57:00 request received: rid mvcrd3pt7coc7 30 keys",
-  "18:57:00 handle mvcrd3pt7coc7: first_chunk=True total=30",
-  "18:57:00 request mvcrd3pt7coc7: chunk of 30 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 481, 'fail': 54}",
-  "18:57:00 publish gave up",
-  "18:57:15 request received: rid mvcrdh8yocail 84 keys",
-  "18:57:15 handle mvcrdh8yocail: first_chunk=True total=160",
   "18:57:15 request received: rid mvcrdh8yocail 76 keys",
   "18:57:15 handle mvcrdh8yocail: first_chunk=False total=160",
   "18:57:30 publish gave up",
@@ -156,6 +142,20 @@
   "19:04:00 request received: rid mvcrm0tdmp1fe 160 keys",
   "19:04:00 handle mvcrm0tdmp1fe: first_chunk=True total=160",
   "19:04:00 request mvcrm0tdmp1fe: chunk of 160 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 548, 'fail': 73}",
-  "19:04:04 publish error <urlopen error [Errno 101] Network is unreachable>"
+  "19:04:04 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:04:21 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:04:30 request received: rid mvcrmax3lwgkm 30 keys",
+  "19:04:30 handle mvcrmax3lwgkm: first_chunk=True total=30",
+  "19:04:30 request mvcrmax3lwgkm: chunk of 30 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 548, 'fail': 73}",
+  "19:04:35 request mvcrbeo21kv7j: chunk of 84 keys done in 360s; ntfy publishes {'ok': 250, 'r429': 548, 'fail': 73}",
+  "19:04:38 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:04:54 request mvcrc62do9vor: chunk of 160 keys done in 519s; ntfy publishes {'ok': 250, 'r429': 548, 'fail': 73}",
+  "19:04:55 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:05:00 request received: rid mvcrncfs8wbeo 160 keys",
+  "19:05:00 handle mvcrncfs8wbeo: first_chunk=True total=160",
+  "19:05:12 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:05:29 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:05:31 publish gave up",
+  "19:05:37 subscribe error <urlopen error [Errno 101] Network is unreachable>; reconnecting"
  ]
 }
