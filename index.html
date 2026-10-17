@@ -2532,19 +2532,14 @@ async function discoverDaemonNow(force) {
 
 function ntfyLookup(keys, rid) {
   return new Promise((resolve, reject) => {
-    let es = null, silence = null, opened = false, gotAny = false, finished = false;
-    const cleanup = () => { clearTimeout(silence); if (es) es.close(); live.unsub = null; };
+    let es = null, silence = null, opened = false, gotAny = false, finished = false, pollCtl = null;
+    const cleanup = () => { clearTimeout(silence); if (es) es.close(); if (pollCtl) pollCtl.abort(); live.unsub = null; };
     const fail = err => { if (finished) return; finished = true; cleanup(); err.gotAny = gotAny; reject(err); };
     const arm = ms => { clearTimeout(silence); silence = setTimeout(() => fail(new Error(gotAny ? '爬蟲中途沒有回應' : '爬蟲沒有回應')), ms); };
     const direct = live.transport === 'http' ? live.daemonUrl : null;
-    try { es = new EventSource(direct ? `${direct}/events/${rid}` : `${NTFY}/${T_RES}/sse?since=30s`); } catch (e) { reject(e); return; }
     live.unsub = () => { finished = true; cleanup(); };       // a newer lookup cancels this one
-    arm(8000);                                                // the stream must open quickly
-    es.onerror = () => { if (!opened) fail(new Error('無法連線到 ntfy 中繼')); };
-    es.onmessage = ev => {
-      let m;
-      try { m = JSON.parse(ev.data); if (typeof m.message === 'string') m = JSON.parse(m.message); } catch { return; }
-      if (!m || m.rid !== rid) return;
+    const onMessage = m => {
+      if (!m || m.rid !== rid || finished) return;
       gotAny = true;
       arm(NTFY_SILENCE_MS);
       if (m.error) { fail(new Error(m.error === 'rate_limited' ? '查詢太頻繁，爬蟲暫時拒絕，請稍後再試' : String(m.error))); return; }
@@ -2555,6 +2550,36 @@ function ntfyLookup(keys, rid) {
       renderLookup();
       if (m.final) { finished = true; cleanup(); resolve(); }
     };
+    const markDispatched = () => { if (!finished && live.doc?.status === 'queued') { live.doc = { ...live.doc, status: 'dispatched' }; renderLookup(); } };
+    if (direct) {
+      // Cloudflare quick tunnels do not stream Server-Sent Events: post the request, then long-poll for the answers
+      arm(NTFY_FIRST_MS);
+      (async () => {
+        try {
+          const r = await fetch(`${direct}/lookup`, { method: 'POST', body: JSON.stringify({ rid, total: keys.length, keys }) });
+          if (!r.ok) throw new Error(`爬蟲拒絕請求 (${r.status})`);
+          markDispatched();
+          let next = 0;
+          while (!finished) {
+            pollCtl = new AbortController();
+            const p = await fetch(`${direct}/poll/${rid}?i=${next}`, { signal: pollCtl.signal, cache: 'no-store' });
+            if (!p.ok) throw new Error(`爬蟲回應錯誤 (${p.status})`);
+            const j = await p.json();
+            next = j.next;
+            for (const t of j.msgs) { try { onMessage(JSON.parse(t)); } catch {} }
+          }
+        } catch (e) { if (!finished) fail(e instanceof Error ? e : new Error(String(e))); }
+      })();
+      return;
+    }
+    try { es = new EventSource(`${NTFY}/${T_RES}/sse?since=30s`); } catch (e) { reject(e); return; }
+    arm(8000);                                                // the stream must open quickly
+    es.onerror = () => { if (!opened) fail(new Error('無法連線到 ntfy 中繼')); };
+    es.onmessage = ev => {
+      let m;
+      try { m = JSON.parse(ev.data); if (typeof m.message === 'string') m = JSON.parse(m.message); } catch { return; }
+      onMessage(m);
+    };
     let posted = false;
     es.onopen = async () => {
       opened = true;
@@ -2562,11 +2587,8 @@ function ntfyLookup(keys, rid) {
       posted = true;
       arm(NTFY_FIRST_MS);
       try {
-        if (direct) {
-          const r = await fetch(`${direct}/lookup`, { method: 'POST', body: JSON.stringify({ rid, total: keys.length, keys }) });
-          if (!r.ok) throw new Error(`爬蟲拒絕請求 (${r.status})`);
-        } else for (const chunk of ntfyChunks(rid, keys)) await ntfyPost(JSON.stringify({ rid, total: keys.length, keys: chunk }));
-        if (!finished && live.doc?.status === 'queued') { live.doc = { ...live.doc, status: 'dispatched' }; renderLookup(); }
+        for (const chunk of ntfyChunks(rid, keys)) await ntfyPost(JSON.stringify({ rid, total: keys.length, keys: chunk }));
+        markDispatched();
       } catch (e) { fail(e instanceof Error ? e : new Error(String(e))); }
     };
   });
