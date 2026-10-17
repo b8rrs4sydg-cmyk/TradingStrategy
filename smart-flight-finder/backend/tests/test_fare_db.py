@@ -217,8 +217,9 @@ def test_daemon_results_split_under_the_message_cap_and_finish_once():
     assert len(msgs) > 1 and all(len(m.encode()) <= MSG_BYTES + 200 for m in msgs)
     parsed = [json.loads(m) for m in msgs]
     assert [p["final"] for p in parsed] == [False] * (len(parsed) - 1) + [True]
-    assert {k for p in parsed for k in p["fares"]} == set(fares) and {k for p in parsed for k in p["nf"]} == set(nf)
+    assert {k for p in parsed for k in p["f"]} == set(fares) and {k for p in parsed for k in p["nf"]} == set(nf)
     assert json.loads(split_results("r1", {}, [], 1, 5, final=False)[0])["final"] is False
+    assert len(msgs) <= 3, "compact form must keep the message count (ntfy rate limit) low"
 
 
 def test_daemon_rate_limiter_window():

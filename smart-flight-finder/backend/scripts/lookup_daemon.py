@@ -45,8 +45,8 @@ MSG_BYTES = 3400            # ntfy turns messages over 4096 bytes into attachmen
 RATE_KEYS = 500             # accepted keys per window
 RATE_WINDOW_S = 600
 CACHE_TTL_S = 1800          # a key fetched in the last 30 min is answered from memory
-FLUSH_EVERY_S = 3
-HEARTBEAT_S = 10
+FLUSH_EVERY_S = 6
+HEARTBEAT_S = 20
 PERSIST_EVERY_S = 90
 CONCURRENCY = 5
 _UA = (
@@ -83,12 +83,27 @@ def parse_request(message: str) -> dict | None:
     return {"rid": data["rid"][:40], "total": total, "keys": keys}
 
 
+def compact(entry: dict) -> list:
+    """Wire form of a fare entry: ``[price, dep, arr, stops, airline]`` (``[price]`` if no flight)."""
+
+    first = entry.get("first")
+    if not first:
+        return [entry["price"]]
+    return [entry["price"], first.get("dep"), first.get("arr"), first.get("stops", 0), first.get("airline")]
+
+
 def split_results(rid: str, fares: dict, nf: list, done: int, total: int, *, final: bool) -> list[str]:
-    """Result messages, each under :data:`MSG_BYTES`; the last one carries ``final``."""
+    """Result messages, each under :data:`MSG_BYTES`; the last one carries ``final``.
+
+    ntfy.sh rate-limits anonymous publishers hard (and GitHub runners share IPs),
+    so fares travel in the compact form (~35 per message) under the key ``f``.
+    """
+
+    fares = {k: compact(v) for k, v in fares.items()}
 
     def msg(f: dict, n: list, last: bool) -> str:
         return json.dumps(
-            {"rid": rid, "done": done, "total": total, "fares": f, "nf": n, "final": final and last},
+            {"rid": rid, "done": done, "total": total, "f": f, "nf": n, "final": final and last},
             ensure_ascii=False,
             separators=(",", ":"),
         )
@@ -279,14 +294,16 @@ class Daemon:
 
     async def handle(self, req: dict, ctx, sem: asyncio.Semaphore) -> None:
         rid, keys = req["rid"], req["keys"]
+        first_chunk = rid not in self.requests
         state = self.requests.setdefault(rid, {"total": req["total"], "done": 0})
         if not self.limiter.allow(len(keys)):
             await asyncio.to_thread(publish, self.res, json.dumps({"rid": rid, "error": "rate_limited", "final": True}))
             return
-        await asyncio.to_thread(
-            publish, self.res,
-            json.dumps({"rid": rid, "done": state["done"], "total": state["total"], "fares": {}, "nf": [], "final": False, "hello": True}),
-        )
+        if first_chunk:
+            await asyncio.to_thread(
+                publish, self.res,
+                json.dumps({"rid": rid, "done": 0, "total": state["total"], "f": {}, "nf": [], "final": False, "hello": True}),
+            )
         out_f: dict[str, dict] = {}
         out_n: list[str] = []
         last_flush = time.time()
@@ -351,7 +368,7 @@ def selftest(req: str, res: str, keys: list[str], timeout: float) -> int:
             return
         if m.get("rid") != rid:
             return
-        got.update(m.get("fares", {}))
+        got.update(m.get("f", {}))
         log(f"  {m.get('done')}/{m.get('total')} fares={len(got)} nf={len(m.get('nf', []))} hello={m.get('hello', False)}")
         if m.get("final") or m.get("error"):
             final.set()
