@@ -2021,8 +2021,8 @@ function wirePickers() {
   // Defaults = what the crawler covers, so the first search is all real fares.
   const c = fareCoverage();
   renderPicker('pick-origins', '出發機場', AIRPORTS.filter(a => a.group === '台灣'), new Set(['TPE']));
-  renderPicker('pick-dest', '目的地 (可多選，反向票/倒買法可讓兩趟去不同城市)', AIRPORTS.filter(a => a.group !== '台灣'), new Set(c.destinations.length ? c.destinations : ['NRT', 'KIX']));
-  renderPicker('pick-outer', '四腿票外站 (第1段出發、第4段抵達第三國；至少選 2 個不同國家)', AIRPORTS.filter(a => a.outstation), new Set(c.outer.length ? c.outer : ['HKG', 'ICN']));
+  renderPicker('pick-dest', '目的地 (可多選，反向票/倒買法可讓兩趟去不同城市)', AIRPORTS.filter(a => a.group !== '台灣'), new Set(c.destinations.length ? c.destinations.slice(0, 5) : ['NRT', 'KIX']));
+  renderPicker('pick-outer', '四腿票外站 (第1段出發、第4段抵達第三國；至少選 2 個不同國家)', AIRPORTS.filter(a => a.outstation), new Set(c.outer.length ? c.outer.slice(0, 3) : ['HKG', 'ICN']));
   document.getElementById('f-bulk-flex').value = c.flex;
 }
 
