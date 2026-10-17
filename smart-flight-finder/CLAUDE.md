@@ -145,8 +145,13 @@ page ◀──SSE─────────────────  ntfy.sh/<T
   selftest 40 s after start). Requests are validated (`lookup_fares.valid_keys`,
   ≤ 160 keys, ≤ 500 keys / 10 min), results go to `public/fares-live.json`
   (overlay; committed every ~90 s) and the next crawl folds them in.
-- Preferred front door: the daemon starts a Cloudflare quick tunnel
-  (`cloudflared`) and announces the URL in `public/daemon.json`
+- Preferred front door: the daemon starts TWO independent tunnels (Cloudflare
+  quick tunnel via `cloudflared`, and localhost.run via `ssh`) and announces
+  them in `public/daemon.json` (`urls`; the page uses the first that answers
+  `/health`, tries the other on failure, then ntfy). Anonymous public
+  mailboxes (jsonblob, kvdb, restful-api.dev: 50 req/day, …) were probed with
+  `relay-probe.yml` and none is usable, so a fully tunnel-free path does not
+  exist without an account. Announced in `public/daemon.json`
   (`POST /lookup`, then long-poll `GET /poll/{rid}?i=N` — quick tunnels do
   not carry SSE, so `/events` only serves the python selftest); the page
   discovers it (`discoverDaemon`: raw file with cache-busting query → GitHub
