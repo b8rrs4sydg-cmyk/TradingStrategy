@@ -2,7 +2,7 @@
 
 Opens the page, runs the default search, then asks for more destinations so
 fares are missing and the live lookup (ntfy relay → fare daemon) has to answer.
-Prints a timeline and exits non-zero when something is broken::
+Prints a timeline and exits non-zero when something is broken (rerun after every daemon/page change)::
 
     python -m scripts.e2e_pages https://b8rrs4sydg-cmyk.github.io/TradingStrategy/
 """
