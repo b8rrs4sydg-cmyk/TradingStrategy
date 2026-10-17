@@ -6,7 +6,7 @@ Scenarios (each prints a timeline; exit code 1 if anything is broken)::
   B  UI: sort, filter, select for compare, favourite, booking links
   C  live lookup: widen the search so fares are missing, watch the ntfy relay /
      fare daemon stream them back until the lookup is DONE
-  D  四腿票 (three trips): narrow to NRT + HKG/ICN/BKK at ±0 days, keep looking up what
+  D  四腿票 (three trips): LHR + NRT with HKG/ICN/BKK outstations, keep looking up what
      is missing until the search is complete, then a 四腿票 plan must be listed
      with its three trips, three ticket roles and booking links
 
@@ -146,17 +146,16 @@ async def main() -> int:
         # ---- D: 四腿票, narrowed so the lookup can finish --------------------------
         await page.goto(URL, wait_until="load")   # fresh page: scenario C's campaign must not run on
         await page.wait_for_timeout(2500)
-        await set_checked(page, "pick-dest", ["NRT"])
+        await set_checked(page, "pick-dest", ["LHR", "NRT"])
         await set_checked(page, "pick-outer", ["HKG", "ICN", "BKK"])
-        await page.fill("#f-bulk-flex", "0")
-        await page.click("#btn-apply-flex")
         rounds = 0
-        while time.time() - t_start < BUDGET_S and rounds < 15:
+        d_deadline = time.time() + 900
+        while time.time() < min(d_deadline, t_start + BUDGET_S) and rounds < 15:
             rounds += 1
             await submit(page)
             st = await page.evaluate(STATE)
-            if st["rid"] is None and not st["error"]:
-                break  # nothing left to look up
+            if st["four"] >= 1 or (st["rid"] is None and not st["error"]):
+                break  # a 四腿票 plan is already listed, or nothing is left to look up
             st = await wait_lookup(page, 600, f"D{rounds}")
             if st["error"]:
                 break
