@@ -2177,6 +2177,13 @@ function lookupEta(keys) {
 }
 const fmtSec = s => (s >= 60 ? `${Math.floor(s / 60)} 分 ${Math.round(s % 60)} 秒` : `${Math.max(0, Math.round(s))} 秒`);
 
+function transportText() {
+  if (live.mode !== 'ntfy') return '';
+  if (live.transport === 'http') return '連線：直連爬蟲（Cloudflare 通道）';
+  const why = (live.daemonNotes || []).join('；') || '沒有找到爬蟲通道網址';
+  return `連線：ntfy 中繼（直連失敗：${why}）`;
+}
+
 function campaignText() {
   const c = live.campaign;
   if (!c || !c.batch) return '';
@@ -2199,6 +2206,7 @@ function renderLookup() {
   }
   if (live.error || d?.status === 'error') {
     el.innerHTML = `<div><b>即時查詢失敗</b>：${escapeHtml(live.error || d?.message || d?.error || '工作階段沒有回報原因')}</div>
+      <div class="hint">${escapeHtml(transportText())}</div>
       <button type="button" class="btn-ghost" id="btn-lookup-retry">重新查詢</button>`;
     document.getElementById('btn-lookup-retry').onclick = () => { const k = live.keys; resetLookup(); startLookup(k); };
     return;
@@ -2226,7 +2234,8 @@ function renderLookup() {
   } else {
     head = `<b>即時查詢 ${total} 筆缺少的票價</b>…`;
   }
-  el.innerHTML = `<div class="row">${head}<span class="mono">${status === 'done' ? `共 ${fmtSec(elapsed)}` : `已等 ${fmtSec(elapsed)} · 預估約 ${fmtSec(Math.max(eta - elapsed, 5))}`}</span></div>${campaignText()}
+  el.title = transportText();
+  el.innerHTML = `<div class="row">${head}<span class="mono">${status === 'done' ? `共 ${fmtSec(elapsed)}` : `已等 ${fmtSec(elapsed)} · 預估約 ${fmtSec(Math.max(eta - elapsed, 5))}`}</span></div>${campaignText()}<div class="hint" style="margin-top:2px">${escapeHtml(transportText())}</div>
     <div class="steps">${live.steps.map(([k, label], i) => `<span class="${i < idx ? 'done' : i === idx ? 'on' : ''}">${i < idx ? '✓ ' : ''}${label}</span>`).join('')}</div>
     <div class="bar"><i class="${pct == null ? 'indet' : ''}" style="width:${pct ?? 30}%"></i></div>
     ${stalled ? '<button type="button" class="btn-ghost" id="btn-lookup-retry">重新送出</button>' : ''}`;
@@ -2509,7 +2518,7 @@ async function discoverDaemon(force = false) {
       let info = null;
       try { const r = await get(); if (r.ok) info = await r.json(); } catch {}
       if (!info || !info.url) { live.daemonNotes.push('no info'); continue; }
-      try { const h = await timed(`${info.url}/health`, {}, 6000); if (h.ok) { live.daemonUrl = info.url; break; } live.daemonNotes.push(`health ${h.status}`); } catch (e) { live.daemonNotes.push(`health ${e}`); }
+      try { const h = await timed(`${info.url}/health`, {}, 10000); if (h.ok) { live.daemonUrl = info.url; break; } live.daemonNotes.push(`health ${h.status}`); } catch (e) { live.daemonNotes.push(`health ${e}`); }
     }
   } catch {}
   return live.daemonUrl;
