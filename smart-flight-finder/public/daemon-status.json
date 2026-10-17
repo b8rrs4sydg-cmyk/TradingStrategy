@@ -1,15 +1,12 @@
 {
- "at": "2026-10-17T18:35:03+00:00",
+ "at": "2026-10-17T18:36:34+00:00",
  "publishes": {
   "ok": 250,
-  "r429": 261,
-  "fail": 30
+  "r429": 273,
+  "fail": 32
  },
  "fares_saved": 1188,
  "log": [
-  "18:18:06 request received: rid mupj23xv6p3yg 36 keys",
-  "18:18:06 handle mupj23xv6p3yg: first_chunk=False total=160",
-  "18:18:06 request received: rid mupj23xv6p3yg 36 keys",
   "18:18:06 handle mupj23xv6p3yg: first_chunk=False total=160",
   "18:18:07 request received: rid mupj23xv6p3yg 36 keys",
   "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160",
@@ -156,6 +153,9 @@
   "18:34:38 publish gave up",
   "18:34:38 request mvcqgvaenxpix: chunk of 84 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 257, 'fail': 30}",
   "18:34:46 request mupj23xv6p3yg: chunk of 36 keys done in 999s; ntfy publishes {'ok': 250, 'r429': 259, 'fail': 30}",
-  "18:34:53 publish 429 #260: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'"
+  "18:34:53 publish 429 #260: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
+  "18:36:15 publish gave up",
+  "18:36:15 request mvcqixryg0pvo: chunk of 84 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 271, 'fail': 31}",
+  "18:36:28 publish gave up"
  ]
 }
