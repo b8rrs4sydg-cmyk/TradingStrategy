@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:10:49+00:00",
+ "at": "2026-10-17T19:12:20+00:00",
  "publishes": {
-  "ok": 10,
+  "ok": 36,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1307,
+ "fares_saved": 1356,
  "log": [
   "19:09:19 http front door: https://work-posted-gnu-procedure.trycloudflare.com",
   "19:09:19 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -24,6 +24,10 @@
   "19:10:36 request received: rid mvcrumu97xtns 104 keys",
   "19:10:36 handle mvcrumu97xtns: first_chunk=True total=160",
   "19:10:36 request received: rid mvcrumu97xtns 56 keys",
-  "19:10:36 handle mvcrumu97xtns: first_chunk=False total=160"
+  "19:10:36 handle mvcrumu97xtns: first_chunk=False total=160",
+  "19:11:08 request received: rid mvcrvc07mf5f6 84 keys",
+  "19:11:08 handle mvcrvc07mf5f6: first_chunk=True total=160",
+  "19:11:08 request received: rid mvcrvc07mf5f6 76 keys",
+  "19:11:08 handle mvcrvc07mf5f6: first_chunk=False total=160"
  ]
 }
