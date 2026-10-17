@@ -2487,9 +2487,10 @@ function noteDiag(e) {
 
 /* Where is the crawler? Its Cloudflare tunnel URL (direct HTTPS + SSE, no message quota) if it answers,
  * else null → fall back to the ntfy relay. */
-async function discoverDaemon() {
+async function discoverDaemon(force = false) {
   const now = Date.now();
-  if (live.daemonCheckedAt && now - live.daemonCheckedAt < (live.daemonUrl ? 60000 : 15000)) return live.daemonUrl;
+  if (!force && live.daemonCheckedAt && now - live.daemonCheckedAt < (live.daemonUrl ? 60000 : 15000)) return live.daemonUrl;
+  live.daemonNotes = [];
   live.daemonCheckedAt = now;
   live.daemonUrl = null;
   const timed = (url, opt = {}, ms = 5000) => {
@@ -2507,8 +2508,8 @@ async function discoverDaemon() {
     for (const get of sources) {
       let info = null;
       try { const r = await get(); if (r.ok) info = await r.json(); } catch {}
-      if (!info || !info.url) continue;
-      try { const h = await timed(`${info.url}/health`, {}, 6000); if (h.ok) { live.daemonUrl = info.url; break; } } catch {}
+      if (!info || !info.url) { live.daemonNotes.push('no info'); continue; }
+      try { const h = await timed(`${info.url}/health`, {}, 6000); if (h.ok) { live.daemonUrl = info.url; break; } live.daemonNotes.push(`health ${h.status}`); } catch (e) { live.daemonNotes.push(`health ${e}`); }
     }
   } catch {}
   return live.daemonUrl;
@@ -2602,6 +2603,10 @@ async function startLookup(keys, viaClaude = false) {
         live.retries = (live.retries || 0) + 1;
         rest.forEach(k => live.asked.delete(k));
         return startLookup(rest);
+      }
+      if (live.transport === 'ntfy' && !e.gotAny && !live.rediscovered?.has(rid)) {   // ntfy is silent: maybe the tunnel was just not found in time
+        (live.rediscovered ||= new Set()).add(rid);
+        if (await discoverDaemon(true)) { rest.forEach(k => live.asked.delete(k)); return startLookup(rest); }
       }
       noteDiag(e);
       if (!live.ready || !rest.length) {
