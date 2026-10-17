@@ -14,6 +14,8 @@ import json
 import sys
 from pathlib import Path
 
+from app.providers.fare_db import FareDatabase
+
 MAX_BYTES = 180_000
 
 
@@ -38,13 +40,14 @@ def chunks(db: dict) -> tuple[dict, list[tuple[str, dict]]]:
         "coverage": db.get("coverage", {}),
         "count": len(db.get("fares", {})),
         "chunks": [doc_id for doc_id, _ in docs],
+        "unavailable": db.get("unavailable", [])[:3000],
     }
     return meta, docs
 
 
 def main() -> None:
     src, out = Path(sys.argv[1]), Path(sys.argv[2])
-    meta, docs = chunks(json.loads(src.read_text(encoding="utf-8")))
+    meta, docs = chunks(FareDatabase.load_with_live(src).to_json())  # crawl + live lookups
     out.mkdir(parents=True, exist_ok=True)
     for doc_id, body in docs:
         (out / f"{doc_id}.json").write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")

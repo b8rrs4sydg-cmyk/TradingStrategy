@@ -49,6 +49,8 @@ class FareDatabase:
     generated_at: str | None = None
     coverage: dict[str, Any] = field(default_factory=dict)
     missing: list[str] = field(default_factory=list)
+    # keys a live lookup found no itinerary for (the page does not re-ask)
+    unavailable: list[str] = field(default_factory=list)
 
     @classmethod
     def from_json(cls, data: dict[str, Any]) -> FareDatabase:
@@ -57,12 +59,36 @@ class FareDatabase:
             generated_at=data.get("generated_at"),
             coverage=dict(data.get("coverage") or data.get("config") or {}),
             missing=list(data.get("missing", [])),
+            unavailable=list(data.get("unavailable", [])),
         )
 
     @classmethod
     def load(cls, path: str | Path) -> FareDatabase:
         p = Path(path)
         return cls.from_json(json.loads(p.read_text(encoding="utf-8"))) if p.exists() else cls()
+
+    @classmethod
+    def load_with_live(cls, path: str | Path) -> FareDatabase:
+        """The crawled database plus its live-lookup overlay (``fares-live.json``).
+
+        On-demand lookups are written to the overlay so they never conflict
+        with the 6-hourly full crawl; an overlay entry wins when it is newer.
+        """
+
+        db = cls.load(path)
+        live = cls.load(live_path(path))
+        db.overlay(live)
+        db.unavailable = [k for k in live.missing if k not in db.fares]
+        return db
+
+    def overlay(self, other: FareDatabase) -> None:
+        for key, entry in other.fares.items():
+            mine = self.fares.get(key)
+            if mine is None or (entry.get("at") or "") >= (mine.get("at") or ""):
+                self.fares[key] = entry
+        self.missing = sorted(set(self.missing) - set(other.fares))
+        if other.generated_at and (self.generated_at or "") < other.generated_at:
+            self.generated_at = other.generated_at
 
     def to_json(self) -> dict[str, Any]:
         return {
@@ -74,6 +100,7 @@ class FareDatabase:
             "coverage": self.coverage,
             "fares": dict(sorted(self.fares.items())),
             "missing": sorted(self.missing),
+            **({"unavailable": sorted(self.unavailable)} if self.unavailable else {}),
         }
 
     def save(self, path: str | Path) -> None:
@@ -112,6 +139,11 @@ class FareDatabase:
         self.fares = keep
         self.missing = sorted(k for k in set(missing) if k not in keep)
         self.generated_at = datetime.now(UTC).isoformat(timespec="seconds")
+
+
+def live_path(path: str | Path) -> Path:
+    p = Path(path)
+    return p.with_name(p.stem + "-live" + p.suffix)
 
 
 # --- offers -------------------------------------------------------------------
@@ -194,7 +226,8 @@ class FareDatabaseProvider:
 
     @classmethod
     def from_path(cls, path: str | Path, **kw) -> FareDatabaseProvider:
-        return cls(FareDatabase.load(path), path=path, **kw)
+        # live fetches are saved to the overlay file, the crawl owns the main one
+        return cls(FareDatabase.load_with_live(path), path=live_path(path), **kw)
 
     # ------------------------------------------------------------------
     def search(
@@ -232,12 +265,15 @@ class FareDatabaseProvider:
         except Exception as e:  # noqa: BLE001 — live lookups are best-effort
             logger.warning("live_fare_fetch_failed", extra={"err": str(e)})
             return 0
+        today = datetime.now(UTC).date()
         with self._lock:
-            self.db.merge(fetched, today=datetime.now(UTC).date(), missing=[*self.db.missing, *missing])
-            if self.path:
+            self.db.merge(fetched, today=today, missing=[*self.db.missing, *missing])
+            if self.path:  # only the new lookups go to the overlay file
                 try:
-                    self.db.save(self.path)
-                except OSError as e:
+                    live = FareDatabase.load(self.path)
+                    live.merge(fetched, today=today, missing=[*live.missing, *missing])
+                    live.save(self.path)
+                except (OSError, ValueError) as e:
                     logger.warning("fare_db_save_failed", extra={"err": str(e)})
         self.live_fetched += len(fetched)
         return len(fetched)

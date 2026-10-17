@@ -27,7 +27,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from app.providers.fare_db import FareDatabase
+from app.providers.fare_db import FareDatabase, live_path
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS, scrape
 from app.services.crawl_plan import CrawlConfig, planner_queries, rank_multi_city, split_stages
 
@@ -82,6 +82,7 @@ def main() -> None:
     )
     today = datetime.now(ZoneInfo("Asia/Taipei")).date()
     db = FareDatabase.load(args.db)
+    db.overlay(FareDatabase.load(live_path(args.db)))  # fold in on-demand lookups
     stage1, mc = split_stages(planner_queries(cfg, today=today))
     print(f"plan: {len(stage1)} one-way/round-trip + {len(mc)} multi-city candidates", flush=True)
     if args.dry_run:

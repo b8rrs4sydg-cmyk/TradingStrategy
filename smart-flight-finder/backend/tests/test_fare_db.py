@@ -105,7 +105,7 @@ def test_live_prefetch_fetches_missing_queries_once_and_saves(tmp_path):
         calls.append(list(keys))
         return {k: {"price": 5000} for k in keys if k.startswith(("ow|", "rt|"))}, []
 
-    path = tmp_path / "fares.json"
+    path = tmp_path / "fares-live.json"
     provider = FareDatabaseProvider(FareDatabase(), path=path, fetcher=fetcher, live_budget=50)
     req = ItineraryRequestIn(
         trip_type=TripType.ROUND_TRIP, origins=["TPE"], destinations=["NRT"],
@@ -174,3 +174,21 @@ def test_export_chunks_stay_under_the_document_cap():
     for _, body in docs:
         assert body["gen"] == meta["gen"] and len(json.dumps(body).encode()) < MAX_BYTES + 2000
         assert all("hist" not in e for e in body["fares"].values())
+
+
+def test_live_overlay_wins_when_newer(tmp_path):
+    main, live = tmp_path / "fares.json", tmp_path / "fares-live.json"
+    FareDatabase(fares={RT: {"price": 20000, "at": "2026-10-16"}, "ow|TPE|HKG|2027-02-03": {"price": 2900, "at": "2026-10-16"}},
+                 generated_at="2026-10-16T00:00:00+00:00").save(main)
+    FareDatabase(fares={RT: {"price": 18000, "at": "2026-10-17"}}, generated_at="2026-10-17T05:00:00+00:00").save(live)
+    p = FareDatabaseProvider.from_path(main)
+    assert p.path == live and p.db.fares[RT]["price"] == 18000 and p.db.generated_at.startswith("2026-10-17")
+    assert p.db.fares["ow|TPE|HKG|2027-02-03"]["price"] == 2900
+
+
+def test_lookup_accepts_only_well_formed_keys():
+    from scripts.lookup_fares import valid_keys
+
+    keys = ["mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07", RT, "ow|TPE|HKG|2027-02-03",
+            "ow|TPE|HKG|2027-02-03", "rm -rf /", "ow|tpe|hkg|2027-02-03", 42]
+    assert valid_keys(keys) == [RT, "ow|TPE|HKG|2027-02-03", "mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07"]

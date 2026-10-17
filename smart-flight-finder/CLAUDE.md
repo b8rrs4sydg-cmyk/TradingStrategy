@@ -129,6 +129,34 @@ Self-Service shut down 2026-07-17; every price comes from Google Flights:
   replaces the embedded copy when newer. Uncovered airports/holidays are
   marked 無資料; misses are reported, never filled in.
 
+## Live lookups (missing fares, on demand)
+
+When a demo search needs fares the database lacks, the page:
+1. writes `requests/<rid>` `{keys, total, status:"queued"}` to its artifact db
+   (rule: `requests` read view / write interact), and
+2. calls the built-in **Claude Code Remote** connector `send_message` to the
+   dev session (`WORKER_SESSION` in `public/index.html`) with
+   `FARE_LOOKUP <rid> …`.
+
+The session that receives it (Claude) handles it:
+1. `ArtifactData get requests/<rid>` → save `keys` to a file.
+2. `python -m scripts.relay_lookup dispatch <rid> keys.json` → validates keys
+   (`lookup_fares.valid_keys`, ≤ 80, cheap first), commits
+   `public/live-request.json`, pushes, prints the sha. The "Fare lookup"
+   workflow (`.github/workflows/fare-lookup.yml`) runs `scripts.lookup_fares`
+   for just those keys and posts `fare-lookup` commit statuses `done/total`.
+3. Update `requests/<rid>` → `status:"dispatched"`, then Monitor
+   `python -m scripts.relay_lookup watch <sha>` and write each line back
+   (`running n/N` → `status:"running", done:n`).
+4. On `done`: `status:"saving"`, `python -m scripts.relay_lookup export <dir>`
+   (pull + chunks of crawl ∪ `fares-live.json`), write `fares/c*` + `fares/meta`
+   with a fresh `gen`/`generated_at` (the page swaps data and re-searches),
+   then `status:"done", found, not_found`. On `failed`: `status:"error", message`.
+
+Results live in `public/fares-live.json` (overlay, never conflicts with the
+crawl; the next crawl folds it in). Keys a lookup found nothing for are listed
+as `unavailable` so pages do not re-ask.
+
 ## Scoring
 
 `scoring.score_plans` normalizes four dimensions and takes a weighted sum. The

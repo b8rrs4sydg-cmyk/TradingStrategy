@@ -14,6 +14,8 @@ import re
 import sys
 from pathlib import Path
 
+from app.providers.fare_db import FareDatabase
+
 _TAG = re.compile(r'(<script id="fare-snapshot" type="application/json">)(.*?)(</script>)', re.DOTALL)
 
 
@@ -27,7 +29,7 @@ def embed(snapshot: dict, html: str) -> str:
 
 def main() -> None:
     fares_path, html_path = map(Path, sys.argv[1:3])
-    snapshot = json.loads(fares_path.read_text(encoding="utf-8"))
+    snapshot = FareDatabase.load_with_live(fares_path).to_json()  # crawl + live lookups
     html_path.write_text(embed(snapshot, html_path.read_text(encoding="utf-8")), encoding="utf-8")
     print(f"embedded {len(snapshot.get('fares', {}))} fares into {html_path}")
 

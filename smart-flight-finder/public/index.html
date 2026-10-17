@@ -294,6 +294,20 @@
   .delta.down { color: var(--good) } .delta.up { color: var(--crit) }
   .tag-nosave { margin-left: 6px; padding: 1px 8px; border-radius: 999px; font-size: 11px; background: var(--risk-med-bg); color: var(--risk-med-fg) }
   .empty ul { margin: 8px 0 0 18px; text-align: left }
+  .live-lookup { margin: 0 0 14px; padding: 12px 14px; border: 1px solid var(--brand); border-radius: 12px; background: var(--brand-wash); font-size: 13.5px }
+  .live-lookup.err { border-color: var(--crit); background: var(--risk-high-bg); color: var(--risk-high-fg) }
+  .live-lookup.ok { border-color: var(--good); background: var(--risk-low-bg); color: var(--risk-low-fg) }
+  .live-lookup .row { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline }
+  .live-lookup .steps { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 6px; font-size: 12px; color: var(--fg-muted) }
+  .live-lookup .steps span { padding: 1px 8px; border-radius: 999px; border: 1px solid var(--border) }
+  .live-lookup .steps span.on { border-color: var(--brand); color: var(--brand-ink); font-weight: 600 }
+  .live-lookup .steps span.done { color: var(--good); border-color: var(--good) }
+  .live-lookup .bar { height: 8px; border-radius: 999px; background: var(--card); overflow: hidden }
+  .live-lookup .bar i { display: block; height: 100%; background: var(--brand); transition: width .4s ease }
+  .live-lookup .bar i.indet { width: 30% !important; animation: indet 1.4s ease-in-out infinite }
+  @keyframes indet { 0% { margin-left: -30% } 100% { margin-left: 100% } }
+  @media (prefers-reduced-motion: reduce) { .live-lookup .bar i.indet { animation: none; width: 100% !important; opacity: .4 } }
+  .live-lookup button { margin-top: 8px }
   .pill-fare { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good) }
   .pill-fare.none { background: var(--card-sunken); color: var(--fg-muted) }
   .ticket .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px }
@@ -721,6 +735,7 @@
       </div>
     </div>
 
+    <div id="live-lookup" class="live-lookup" hidden aria-live="polite"></div>
     <div id="notices"></div>
     <div id="compare" class="compare" hidden></div>
     <div id="heatmap" class="heatmap" hidden></div>
@@ -804,6 +819,7 @@ function loadFareSnapshot() {
     const el = document.getElementById('fare-snapshot');
     if (el && el.textContent.trim()) FARES = JSON.parse(el.textContent);
   } catch (e) { console.warn('fare snapshot unreadable', e); }
+  (FARES.unavailable || []).forEach(k => live.notFound.add(k));
 }
 /* What the crawler covers — drives defaults, the 無資料 marks and the status bar. */
 function fareCoverage() {
@@ -1830,7 +1846,7 @@ function runSearch(form) {
 
   const cache = CachingProvider.stats();
   if (fareStats.missing) {
-    notices.push(`${fareStats.missing} 個查詢不在票價資料庫（標「無資料」的機場/連假，或比爬取範圍更大的日期彈性），相關組合已略過 —— 不會用模擬價格補。`);
+    notices.push(`${fareStats.missing} 個查詢不在票價資料庫 —— ${live.ready ? '正在向 Google Flights 即時查詢（見上方進度），查到後結果會自動更新' : '在 Claude 中開啟此頁並允許 Claude Code Remote 連接器即可即時查詢'}；不會用模擬價格補。`);
   }
   return { plans, matrix, cache, notices, fares: { real: fareStats.real, missing: fareStats.missing } };
 }
@@ -2064,6 +2080,7 @@ function wireSubmit() {
         document.getElementById('r-sel-pill').hidden = true;
         renderResults();
         elapsed.textContent = `· 搜尋耗時 ${Math.round(performance.now() - t0)} ms`;
+        maybeLookup();
       } finally {
         btn.textContent = '搜尋';
         updateSlotSummary();
@@ -2121,6 +2138,124 @@ function wireTheme() {
   });
 }
 
+/* =========================================================================
+ * Live lookup — fares the database lacks are fetched from Google Flights now.
+ * The page writes requests/<rid> (keys) and messages the Claude Code session
+ * below through the Claude Code Remote connector; Claude starts the "Fare
+ * lookup" GitHub Action for exactly those keys and writes its progress back
+ * into requests/<rid>, then the new fares into fares/* (which re-runs the
+ * search). Statuses: queued → dispatched → running (done/total) → saving → done.
+ * ========================================================================= */
+const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
+const LOOKUP_MAX = 80;
+const LOOKUP_STEPS = [['queued', '送出請求'], ['dispatched', '啟動爬蟲'], ['running', '查詢 Google Flights'], ['saving', '寫入資料庫'], ['done', '完成']];
+const live = { db: null, mcp: null, ready: false, rid: null, doc: null, keys: [], started: 0, unsub: null, timer: null,
+  asked: new Set(), notFound: new Set(), needsApproval: false, error: null };
+
+function lookupEta(keys) {
+  const mc = keys.filter(k => k.startsWith('mc|')).length;
+  return 60 + Math.ceil((keys.length - mc) / 5) * 4 + Math.ceil(mc / 5) * 18; // seconds
+}
+const fmtSec = s => (s >= 60 ? `${Math.floor(s / 60)} 分 ${Math.round(s % 60)} 秒` : `${Math.max(0, Math.round(s))} 秒`);
+
+function renderLookup() {
+  const el = document.getElementById('live-lookup');
+  const d = live.doc;
+  if (!live.rid && !live.needsApproval && !live.error) { el.hidden = true; return; }
+  el.hidden = false;
+  el.className = 'live-lookup' + (live.error || d?.status === 'error' ? ' err' : d?.status === 'done' ? ' ok' : '');
+  if (live.needsApproval) {
+    el.innerHTML = `<div>有 ${live.keys.length} 個查詢不在票價資料庫。即時查詢要透過 <b>Claude Code Remote</b> 連接器請 Claude 去 Google Flights 查。</div>
+      <button type="button" class="btn-ghost" id="btn-lookup-allow">允許並即時查詢</button>`;
+    document.getElementById('btn-lookup-allow').onclick = () => { live.needsApproval = false; startLookup(live.keys); };
+    return;
+  }
+  if (live.error || d?.status === 'error') {
+    el.innerHTML = `<div><b>即時查詢失敗</b>：${escapeHtml(live.error || d?.message || '未知錯誤')}</div>
+      <button type="button" class="btn-ghost" id="btn-lookup-retry">重新查詢</button>`;
+    document.getElementById('btn-lookup-retry').onclick = () => { const k = live.keys; resetLookup(); startLookup(k); };
+    return;
+  }
+  const status = d?.status || 'queued';
+  const idx = LOOKUP_STEPS.findIndex(([k]) => k === status);
+  const total = d?.total || live.keys.length;
+  const done = Math.min(d?.done || 0, total);
+  const elapsed = (Date.now() - live.started) / 1000;
+  const eta = lookupEta(live.keys);
+  const stalled = status === 'queued' && elapsed > 120;
+  let head, pct = null;
+  if (status === 'done') {
+    head = `<b>即時查詢完成</b>：${d.found ?? done} 筆找到實價${(d.not_found || []).length ? `，${d.not_found.length} 筆 Google Flights 沒有可售行程` : ''} —— 結果已更新`;
+    pct = 100;
+  } else if (status === 'running') {
+    head = `<b>正在即時查詢 Google Flights</b>：${done} / ${total} 筆`;
+    pct = total ? Math.round(done / total * 100) : 0;
+  } else if (status === 'saving') {
+    head = '<b>寫入票價資料庫</b>…'; pct = 100;
+  } else if (stalled) {
+    head = '<b>Claude 工作階段還沒接手</b> —— 它可能正在處理其他事或已休眠，請稍候或重試';
+  } else {
+    head = `<b>即時查詢 ${total} 筆缺少的票價</b>…`;
+  }
+  el.innerHTML = `<div class="row">${head}<span class="mono">${status === 'done' ? `共 ${fmtSec(elapsed)}` : `已等 ${fmtSec(elapsed)} · 預估約 ${fmtSec(Math.max(eta - elapsed, 5))}`}</span></div>
+    <div class="steps">${LOOKUP_STEPS.map(([k, label], i) => `<span class="${i < idx ? 'done' : i === idx ? 'on' : ''}">${i < idx ? '✓ ' : ''}${label}</span>`).join('')}</div>
+    <div class="bar"><i class="${pct == null ? 'indet' : ''}" style="width:${pct ?? 30}%"></i></div>
+    ${stalled ? '<button type="button" class="btn-ghost" id="btn-lookup-retry">重新送出</button>' : ''}`;
+  const retry = document.getElementById('btn-lookup-retry');
+  if (retry) retry.onclick = () => { const k = live.keys; resetLookup(); startLookup(k); };
+}
+
+function resetLookup() {
+  if (live.unsub) live.unsub();
+  clearInterval(live.timer);
+  Object.assign(live, { rid: null, doc: null, unsub: null, timer: null, error: null, needsApproval: false });
+}
+
+/* After every search: look up whatever was missing (once per key). */
+function maybeLookup() {
+  if (!live.ready || (live.rid && live.doc?.status !== 'done' && live.doc?.status !== 'error')) return;
+  const keys = [...fareStats.missingKeys].filter(k => !live.asked.has(k) && !live.notFound.has(k));
+  if (!keys.length) return;
+  keys.sort((a, b) => a.startsWith('mc|') - b.startsWith('mc|'));
+  startLookup(keys.slice(0, LOOKUP_MAX));
+}
+
+async function startLookup(keys) {
+  resetLookup();
+  live.keys = keys;
+  live.rid = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  live.started = Date.now();
+  keys.forEach(k => live.asked.add(k));
+  renderLookup();
+  live.timer = setInterval(renderLookup, 1000);
+  try {
+    const ref = live.db.collection('requests').doc(live.rid);
+    await ref.set({ keys, total: keys.length, status: 'queued', created_at: new Date().toISOString() });
+    live.unsub = ref.onSnapshot(snap => {
+      live.doc = snap.exists ? snap.data() : live.doc;
+      if (live.doc?.status === 'done') {
+        (live.doc.not_found || []).forEach(k => live.notFound.add(k));
+        clearInterval(live.timer);
+        setTimeout(() => { if (live.doc?.status === 'done') { resetLookup(); renderLookup(); } }, 12000);
+      }
+      if (live.doc?.status === 'error') clearInterval(live.timer);
+      renderLookup();
+    }, () => {});
+    await live.mcp.callTool('Claude Code Remote', 'send_message', {
+      session_id: WORKER_SESSION,
+      message: `FARE_LOOKUP ${live.rid} — fare lookup request from the Smart Flight Finder page (${keys.length} keys in requests/${live.rid}).`,
+    }, { cache: false });
+  } catch (e) {
+    clearInterval(live.timer);
+    keys.forEach(k => live.asked.delete(k));
+    if (e && (e.code === 'approval_required' || e.code === 'not_in_manifest' || e.code === 'server_not_connected')) {
+      live.rid = null; live.needsApproval = e.code === 'approval_required';
+      live.error = live.needsApproval ? null : '這個檢視無法使用 Claude Code Remote 連接器（請在 Claude 中開啟此頁並允許連接器）';
+    } else live.error = (e && (e.message || e.code)) || String(e);
+    renderLookup();
+  }
+}
+
 /* Live fare database: the artifact's shared db (collection "fares": a meta doc
  * + chunk docs, written by Claude after each crawl) replaces the embedded copy
  * whenever it is newer — open pages update without a republish. */
@@ -2129,6 +2264,10 @@ async function subscribeLiveFares() {
   let db = null;
   try { db = await window.claude.use('db'); } catch { return; }
   if (!db) return;
+  live.db = db;
+  try { live.mcp = await window.claude.use('mcp'); } catch { live.mcp = null; }
+  live.ready = !!live.mcp;
+  if (live.ready && state.result) maybeLookup();
   db.collection('fares').onSnapshot(snap => {
     const docs = new Map(snap.docs.map(d => [d.id, d.data()]));
     const meta = docs.get('meta');
@@ -2142,6 +2281,7 @@ async function subscribeLiveFares() {
     liveDb = true;
     if (FARES.generated_at && Date.parse(meta.generated_at) <= Date.parse(FARES.generated_at)) { renderDbStatus(); return; }
     FARES = { ...FARES, generated_at: meta.generated_at, coverage: meta.coverage || FARES.coverage, fares };
+    (meta.unavailable || []).forEach(k => live.notFound.add(k));
     applyCoverage();
     document.getElementById('search-form').requestSubmit();
   }, () => {});
