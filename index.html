@@ -282,6 +282,18 @@
   }
   .ticket .src { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--fg-muted) }
   .ticket .src.real { color: var(--good); font-weight: 500 }
+  .db-status { margin: -4px 0 14px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--card-sunken); font-size: 13px; color: var(--fg-muted); line-height: 1.55 }
+  .db-status b { color: var(--fg) }
+  .db-status .live { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 11px; background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good) }
+  .db-status.empty { border-color: var(--crit); color: var(--crit) }
+  .picker label.nodata { opacity: .45 }
+  .picker label.nodata .code::after { content: " 無資料"; font-family: var(--font-body) }
+  .chip.nodata { opacity: .55 }
+  .chip.nodata::after { content: "無資料"; margin-left: 6px; font-size: 10px; color: var(--fg-faint) }
+  .delta { margin-left: 6px; font-size: 11px; font-weight: 600 }
+  .delta.down { color: var(--good) } .delta.up { color: var(--crit) }
+  .tag-nosave { margin-left: 6px; padding: 1px 8px; border-radius: 999px; font-size: 11px; background: var(--risk-med-bg); color: var(--risk-med-fg) }
+  .empty ul { margin: 8px 0 0 18px; text-align: left }
   .pill-fare { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good) }
   .pill-fare.none { background: var(--card-sunken); color: var(--fg-muted) }
   .ticket .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px }
@@ -595,21 +607,22 @@
     <span class="eyebrow">2027 連假 · 進階票規策略</span>
     <h1>以假期為核心的機票湊票引擎</h1>
     <p>
-      以 2027 台灣連假為參考，多選並微調成「備選時段」(各自設定去/回程彈性)，
-      引擎會對每個時段展開日期矩陣、依「標準直購 / 反向票 / Open-jaw / 外站四段票」
-      搜尋；反向票＋倒買法、外站四腿票會把兩個時段配成「一次購票、兩趟旅程」，
-      每張票附 Trip.com / Google Flights / Skyscanner 連結 (多段票給多段搜尋連結)。
+      所有票價都來自 Google Flights 實際搜尋 —— 爬蟲每 6 小時把湊票策略需要的每一個查詢
+      (單程、來回、多段) 爬進票價資料庫，沒有任何模擬價格。以 2027 台灣連假為參考選「備選時段」，
+      引擎依「標準直購 / 反向票＋倒買法 / Open-jaw / 外站四腿票」排列組合，把兩個時段配成
+      「一次購票、兩趟旅程」，每張票附 Trip.com / Google Flights 多段訂票連結。
     </p>
     <div class="hero-stats">
-      <div><b>5</b>種進階票規</div>
-      <div><b>±7</b>天彈性視窗</div>
-      <div><b>MCT</b> 跨票轉機安全檢查</div>
-      <div><b>4-leg</b> 外站四段票湊票</div>
+      <div><b id="hs-count">—</b>筆實價票價</div>
+      <div><b id="hs-age">—</b>資料更新</div>
+      <div><b>每 6h</b>自動爬取</div>
+      <div><b>4-leg</b> 外站四腿票湊票</div>
     </div>
   </header>
 
   <section class="card" id="search-card" aria-labelledby="search-title">
     <h2 id="search-title">搜尋條件</h2>
+    <div id="db-status" class="db-status" role="status"></div>
     <form id="search-form" class="grid" novalidate>
       <div class="grid grid-2">
         <label class="field">
@@ -716,7 +729,7 @@
   </section>
 
   <footer class="site">
-    <div>Smart Flight Finder — demo：標示「Google Flights 實際票價」的票為每日擷取的 Google Flights 最低總價（1 位成人、經濟艙）；快照沒涵蓋的組合顯示內建示意價。訂票前請點各票連結確認即時價格。</div>
+    <div>Smart Flight Finder：票價全部是 Google Flights 實際搜尋結果（1 位成人經濟艙最低總價，每 6 小時更新；多段票只有第 1 段的航班時刻，後段在訂票網站選）。資料庫沒有的查詢不顯示價格；訂票前請點各票連結確認即時價格。</div>
     <div><a href="https://github.com/b8rrs4sydg-cmyk/tradingstrategy/tree/claude/zealous-darwin-1kexus/smart-flight-finder" target="_blank" rel="noopener">GitHub 原始碼</a></div>
   </footer>
 
@@ -727,7 +740,7 @@
   <button class="fab" type="button" id="fab-help">? 快捷鍵</button>
 </div>
 
-<script id="fare-snapshot" type="application/json">{"source":"google_flights","generated_at":"2026-10-17T05:51:31+00:00","currency":"TWD","adults":1,"config":{"origins":["TPE"],"destinations":["NRT","KIX","LHR"],"outer_stations":["HKG"],"holidays":["lunar_ny","qingming"],"flex":1,"outer_stay_days":2},"fares":{"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":50807,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":50807,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":50807,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":37823,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":37823,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":37823,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":34018,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":34018,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":31537,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":44261,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":44261,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":44261,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":35991,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":33096,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":33096,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":29375,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":53494,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":53494,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":40510,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":40510,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":37616,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":37616,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":44261,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":44261,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":41573,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":41573,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":41573,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":34089,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":34089,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":34089,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":45059,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":45059,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":45059,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":32034,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":32034,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":32034,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":29181,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":29181,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":36156,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":36156,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":33096,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":33096,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":25984,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":25984,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-14|TPE-NRT-2027-04-02":{"price":25651,"first":{"dep":"2027-02-14T23:10:00+09:00","arr":"2027-02-15T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-14|TPE-NRT-2027-04-03":{"price":32194,"first":{"dep":"2027-02-14T10:30:00+09:00","arr":"2027-02-14T15:55:00+08:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-14|TPE-NRT-2027-04-04":{"price":22564,"first":{"dep":"2027-02-14T23:10:00+09:00","arr":"2027-02-15T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-15|TPE-NRT-2027-04-04":{"price":17419,"first":{"dep":"2027-02-15T14:00:00+09:00","arr":"2027-02-15T16:20:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-16|TPE-NRT-2027-04-02":{"price":17945,"first":{"dep":"2027-02-16T23:10:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-16|TPE-NRT-2027-04-03":{"price":18775,"first":{"dep":"2027-02-16T12:20:00+09:00","arr":"2027-02-16T14:40:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-14|TPE-KIX-2027-04-02":{"price":21632,"first":{"dep":"2027-02-14T09:10:00+09:00","arr":"2027-02-14T12:15:00+08:00","stops":0,"airline":"JAL"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-14|TPE-KIX-2027-04-03":{"price":21632,"first":{"dep":"2027-02-14T09:10:00+09:00","arr":"2027-02-14T12:15:00+08:00","stops":0,"airline":"JAL"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-14|TPE-KIX-2027-04-04":{"price":25324,"first":{"dep":"2027-02-14T08:30:00+09:00","arr":"2027-02-14T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-15|TPE-KIX-2027-04-02":{"price":19167,"first":{"dep":"2027-02-15T09:10:00+09:00","arr":"2027-02-15T12:15:00+08:00","stops":0,"airline":"JAL"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-15|TPE-KIX-2027-04-03":{"price":19162,"first":{"dep":"2027-02-15T09:10:00+09:00","arr":"2027-02-15T12:15:00+08:00","stops":0,"airline":"JAL"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-15|TPE-KIX-2027-04-04":{"price":20054,"first":{"dep":"2027-02-15T13:45:00+09:00","arr":"2027-02-15T16:50:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-16|TPE-KIX-2027-04-03":{"price":19069,"first":{"dep":"2027-02-16T20:10:00+09:00","arr":"2027-02-16T23:20:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-16|TPE-KIX-2027-04-04":{"price":18323,"first":{"dep":"2027-02-16T22:25:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-04|NRT-TPE-2027-04-10":{"price":25046,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T18:30:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-04|NRT-TPE-2027-04-11":{"price":25046,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T18:30:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-04|NRT-TPE-2027-04-12":{"price":25046,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T18:30:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-05|NRT-TPE-2027-04-10":{"price":26073,"first":{"dep":"2027-02-05T22:25:00+08:00","arr":"2027-02-06T06:20:00+09:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-05|NRT-TPE-2027-04-11":{"price":26323,"first":{"dep":"2027-02-05T22:25:00+08:00","arr":"2027-02-06T06:20:00+09:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-06|NRT-TPE-2027-04-10":{"price":28888,"first":{"dep":"2027-02-06T14:20:00+08:00","arr":"2027-02-06T17:50:00+09:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-06|NRT-TPE-2027-04-11":{"price":29046,"first":{"dep":"2027-02-06T11:05:00+08:00","arr":"2027-02-06T18:30:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-04|KIX-TPE-2027-04-10":{"price":30185,"first":{"dep":"2027-02-04T15:00:00+08:00","arr":"2027-02-04T19:00:00+09:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-04|KIX-TPE-2027-04-11":{"price":30320,"first":{"dep":"2027-02-04T12:50:00+08:00","arr":"2027-02-04T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-04|KIX-TPE-2027-04-12":{"price":28532,"first":{"dep":"2027-02-04T12:50:00+08:00","arr":"2027-02-04T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-05|KIX-TPE-2027-04-10":{"price":28959,"first":{"dep":"2027-02-05T15:20:00+08:00","arr":"2027-02-05T19:20:00+09:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-05|KIX-TPE-2027-04-11":{"price":27910,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-05|KIX-TPE-2027-04-12":{"price":26122,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-06|KIX-TPE-2027-04-11":{"price":28541,"first":{"dep":"2027-02-06T12:50:00+08:00","arr":"2027-02-06T16:50:00+09:00","stops":0,"airline":"Cathay Pacific"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-06|KIX-TPE-2027-04-12":{"price":27914,"first":{"dep":"2027-02-06T12:35:00+08:00","arr":"2027-02-06T16:35:00+09:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"ow|HKG|TPE|2027-04-10":{"price":2539,"first":{"dep":"2027-04-10T14:55:00+08:00","arr":"2027-04-10T16:45:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|HKG|TPE|2027-04-11":{"price":2539,"first":{"dep":"2027-04-11T10:55:00+08:00","arr":"2027-04-11T12:45:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|HKG|TPE|2027-04-12":{"price":2539,"first":{"dep":"2027-04-12T10:55:00+08:00","arr":"2027-04-12T12:45:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|KIX|TPE|2027-04-10":{"price":7060,"first":{"dep":"2027-04-10T20:55:00+09:00","arr":"2027-04-10T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"ow|KIX|TPE|2027-04-11":{"price":7603,"first":{"dep":"2027-04-11T11:45:00+09:00","arr":"2027-04-11T13:45:00+08:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"ow|KIX|TPE|2027-04-12":{"price":5324,"first":{"dep":"2027-04-12T11:15:00+09:00","arr":"2027-04-12T13:10:00+08:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"ow|NRT|TPE|2027-04-10":{"price":6567,"first":{"dep":"2027-04-10T08:00:00+09:00","arr":"2027-04-10T16:45:00+08:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|NRT|TPE|2027-04-11":{"price":6567,"first":{"dep":"2027-04-11T08:00:00+09:00","arr":"2027-04-11T16:45:00+08:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|NRT|TPE|2027-04-12":{"price":5505,"first":{"dep":"2027-04-12T22:40:00+09:00","arr":"2027-04-13T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"ow|TPE|HKG|2027-02-04":{"price":2850,"first":{"dep":"2027-02-04T21:15:00+08:00","arr":"2027-02-04T23:25:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|TPE|HKG|2027-02-05":{"price":2931,"first":{"dep":"2027-02-05T13:55:00+08:00","arr":"2027-02-05T16:00:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|TPE|HKG|2027-02-06":{"price":2931,"first":{"dep":"2027-02-06T17:40:00+08:00","arr":"2027-02-06T19:45:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|TPE|KIX|2027-02-04":{"price":9071,"first":{"dep":"2027-02-04T10:10:00+08:00","arr":"2027-02-04T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"ow|TPE|KIX|2027-02-05":{"price":8439,"first":{"dep":"2027-02-05T10:10:00+08:00","arr":"2027-02-05T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"ow|TPE|KIX|2027-02-06":{"price":10871,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"ow|TPE|NRT|2027-02-04":{"price":14730,"first":{"dep":"2027-02-04T17:15:00+08:00","arr":"2027-02-04T21:30:00+09:00","stops":0,"airline":"Peach Aviation"},"at":"2026-10-17"},"ow|TPE|NRT|2027-02-05":{"price":12343,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"ow|TPE|NRT|2027-02-06":{"price":10955,"first":{"dep":"2027-02-06T21:55:00+08:00","arr":"2027-02-07T13:35:00+09:00","stops":2,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-14|2027-04-02":{"price":22217,"first":{"dep":"2027-02-14T20:55:00+09:00","arr":"2027-02-14T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-14|2027-04-03":{"price":22211,"first":{"dep":"2027-02-14T20:55:00+09:00","arr":"2027-02-14T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-14|2027-04-04":{"price":18236,"first":{"dep":"2027-02-14T20:55:00+09:00","arr":"2027-02-14T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-15|2027-04-02":{"price":17242,"first":{"dep":"2027-02-15T13:25:00+09:00","arr":"2027-02-15T15:45:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-15|2027-04-03":{"price":17247,"first":{"dep":"2027-02-15T13:25:00+09:00","arr":"2027-02-15T15:45:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-15|2027-04-04":{"price":13268,"first":{"dep":"2027-02-15T13:25:00+09:00","arr":"2027-02-15T15:45:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-16|2027-04-02":{"price":16420,"first":{"dep":"2027-02-16T23:10:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-16|2027-04-03":{"price":17242,"first":{"dep":"2027-02-16T20:55:00+09:00","arr":"2027-02-16T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-16|2027-04-04":{"price":13268,"first":{"dep":"2027-02-16T20:55:00+09:00","arr":"2027-02-16T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-14|2027-04-02":{"price":21224,"first":{"dep":"2027-02-14T08:30:00+09:00","arr":"2027-02-14T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-14|2027-04-03":{"price":27918,"first":{"dep":"2027-02-14T08:30:00+09:00","arr":"2027-02-14T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-14|2027-04-04":{"price":18247,"first":{"dep":"2027-02-14T08:30:00+09:00","arr":"2027-02-14T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-15|2027-04-02":{"price":19196,"first":{"dep":"2027-02-15T08:30:00+09:00","arr":"2027-02-15T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-15|2027-04-03":{"price":23228,"first":{"dep":"2027-02-15T12:10:00+09:00","arr":"2027-02-15T15:15:00+08:00","stops":0,"airline":"Scoot"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-15|2027-04-04":{"price":16219,"first":{"dep":"2027-02-15T08:30:00+09:00","arr":"2027-02-15T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-16|2027-04-02":{"price":15954,"first":{"dep":"2027-02-16T07:10:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":1,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-16|2027-04-03":{"price":19952,"first":{"dep":"2027-02-16T20:10:00+09:00","arr":"2027-02-16T23:20:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-16|2027-04-04":{"price":12980,"first":{"dep":"2027-02-16T07:10:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":1,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-02|2027-04-10":{"price":5900,"first":{"dep":"2027-04-02T15:20:00+08:00","arr":"2027-04-02T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-02|2027-04-11":{"price":5900,"first":{"dep":"2027-04-02T15:20:00+08:00","arr":"2027-04-02T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-02|2027-04-12":{"price":5900,"first":{"dep":"2027-04-02T15:20:00+08:00","arr":"2027-04-02T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-03|2027-04-10":{"price":5900,"first":{"dep":"2027-04-03T15:20:00+08:00","arr":"2027-04-03T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-03|2027-04-11":{"price":5900,"first":{"dep":"2027-04-03T15:20:00+08:00","arr":"2027-04-03T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-03|2027-04-12":{"price":5900,"first":{"dep":"2027-04-03T15:20:00+08:00","arr":"2027-04-03T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-04|2027-04-10":{"price":6239,"first":{"dep":"2027-04-04T15:20:00+08:00","arr":"2027-04-04T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-04|2027-04-11":{"price":6239,"first":{"dep":"2027-04-04T15:20:00+08:00","arr":"2027-04-04T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-04|2027-04-12":{"price":6239,"first":{"dep":"2027-04-04T15:20:00+08:00","arr":"2027-04-04T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-02-14":{"price":17473,"first":{"dep":"2027-02-04T10:10:00+08:00","arr":"2027-02-04T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-02-15":{"price":16086,"first":{"dep":"2027-02-04T10:10:00+08:00","arr":"2027-02-04T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-02-16":{"price":14199,"first":{"dep":"2027-02-04T10:10:00+08:00","arr":"2027-02-04T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-04-10":{"price":23736,"first":{"dep":"2027-02-04T21:15:00+08:00","arr":"2027-02-05T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-04-11":{"price":21314,"first":{"dep":"2027-02-04T21:15:00+08:00","arr":"2027-02-05T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-04-12":{"price":22023,"first":{"dep":"2027-02-04T21:15:00+08:00","arr":"2027-02-05T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-02-14":{"price":16841,"first":{"dep":"2027-02-05T10:10:00+08:00","arr":"2027-02-05T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-02-15":{"price":15454,"first":{"dep":"2027-02-05T10:10:00+08:00","arr":"2027-02-05T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-02-16":{"price":13567,"first":{"dep":"2027-02-05T10:10:00+08:00","arr":"2027-02-05T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-04-10":{"price":22283,"first":{"dep":"2027-02-05T14:40:00+08:00","arr":"2027-02-05T17:55:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-04-11":{"price":22283,"first":{"dep":"2027-02-05T14:40:00+08:00","arr":"2027-02-05T17:55:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-04-12":{"price":20183,"first":{"dep":"2027-02-05T14:40:00+08:00","arr":"2027-02-05T17:55:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-02-14":{"price":19273,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-02-15":{"price":17886,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-02-16":{"price":15999,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-04-10":{"price":22399,"first":{"dep":"2027-02-06T21:15:00+08:00","arr":"2027-02-07T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-04-11":{"price":19977,"first":{"dep":"2027-02-06T21:15:00+08:00","arr":"2027-02-07T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-04-12":{"price":20686,"first":{"dep":"2027-02-06T21:15:00+08:00","arr":"2027-02-07T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-02|2027-04-10":{"price":16128,"first":{"dep":"2027-04-02T15:40:00+08:00","arr":"2027-04-02T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-02|2027-04-11":{"price":16672,"first":{"dep":"2027-04-02T15:40:00+08:00","arr":"2027-04-02T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-02|2027-04-12":{"price":14392,"first":{"dep":"2027-04-02T15:40:00+08:00","arr":"2027-04-02T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-03|2027-04-10":{"price":16128,"first":{"dep":"2027-04-03T15:40:00+08:00","arr":"2027-04-03T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-03|2027-04-11":{"price":16438,"first":{"dep":"2027-04-03T21:25:00+08:00","arr":"2027-04-04T19:40:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-03|2027-04-12":{"price":14392,"first":{"dep":"2027-04-03T15:40:00+08:00","arr":"2027-04-03T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-04|2027-04-10":{"price":13224,"first":{"dep":"2027-04-04T15:40:00+08:00","arr":"2027-04-04T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-04|2027-04-11":{"price":13768,"first":{"dep":"2027-04-04T15:40:00+08:00","arr":"2027-04-04T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-04|2027-04-12":{"price":11488,"first":{"dep":"2027-04-04T15:40:00+08:00","arr":"2027-04-04T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-04|2027-02-14":{"price":44599,"first":{"dep":"2027-02-04T17:35:00+08:00","arr":"2027-02-05T15:20:00+00:00","stops":1,"airline":"Singapore Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-04|2027-02-15":{"price":47500,"first":{"dep":"2027-02-04T15:20:00+08:00","arr":"2027-02-05T08:20:00+00:00","stops":2,"airline":"EVA Air, ANA and Austrian"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-04|2027-02-16":{"price":46644,"first":{"dep":"2027-02-04T15:20:00+08:00","arr":"2027-02-05T08:20:00+00:00","stops":2,"airline":"EVA Air, ANA and Austrian"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-05|2027-02-14":{"price":46864,"first":{"dep":"2027-02-05T22:00:00+08:00","arr":"2027-02-06T09:45:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-05|2027-02-15":{"price":42847,"first":{"dep":"2027-02-05T22:00:00+08:00","arr":"2027-02-06T09:45:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-05|2027-02-16":{"price":42847,"first":{"dep":"2027-02-05T22:00:00+08:00","arr":"2027-02-06T09:45:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-06|2027-02-14":{"price":45591,"first":{"dep":"2027-02-06T19:25:00+08:00","arr":"2027-02-07T16:30:00+00:00","stops":1,"airline":"Korean Air"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-06|2027-02-15":{"price":41247,"first":{"dep":"2027-02-06T11:00:00+08:00","arr":"2027-02-06T22:30:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-06|2027-02-16":{"price":41247,"first":{"dep":"2027-02-06T11:00:00+08:00","arr":"2027-02-06T22:30:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-02|2027-04-10":{"price":33846,"first":{"dep":"2027-04-02T19:55:00+08:00","arr":"2027-04-03T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-02|2027-04-11":{"price":29479,"first":{"dep":"2027-04-02T14:40:00+08:00","arr":"2027-04-04T06:25:00+01:00","stops":2,"airline":"Royal Brunei"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-02|2027-04-12":{"price":33846,"first":{"dep":"2027-04-02T19:55:00+08:00","arr":"2027-04-03T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-03|2027-04-10":{"price":33846,"first":{"dep":"2027-04-03T21:05:00+08:00","arr":"2027-04-04T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-03|2027-04-11":{"price":33846,"first":{"dep":"2027-04-03T21:05:00+08:00","arr":"2027-04-04T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-03|2027-04-12":{"price":33846,"first":{"dep":"2027-04-03T21:05:00+08:00","arr":"2027-04-04T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-04|2027-04-10":{"price":33846,"first":{"dep":"2027-04-04T19:55:00+08:00","arr":"2027-04-05T06:20:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-04|2027-04-11":{"price":33846,"first":{"dep":"2027-04-04T19:55:00+08:00","arr":"2027-04-05T06:20:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-04|2027-04-12":{"price":33846,"first":{"dep":"2027-04-04T19:55:00+08:00","arr":"2027-04-05T06:20:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-02-14":{"price":24496,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T20:20:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-02-15":{"price":23546,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T20:20:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-02-16":{"price":21228,"first":{"dep":"2027-02-04T17:15:00+08:00","arr":"2027-02-04T21:30:00+09:00","stops":0,"airline":"Peach Aviation"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-04-10":{"price":23788,"first":{"dep":"2027-02-04T15:35:00+08:00","arr":"2027-02-04T19:35:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-04-11":{"price":24288,"first":{"dep":"2027-02-04T15:35:00+08:00","arr":"2027-02-04T19:35:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-04-12":{"price":22688,"first":{"dep":"2027-02-04T15:35:00+08:00","arr":"2027-02-04T19:35:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-02-14":{"price":24113,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-02-15":{"price":22080,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-02-16":{"price":18841,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-04-10":{"price":21788,"first":{"dep":"2027-02-05T13:30:00+08:00","arr":"2027-02-05T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-04-11":{"price":22288,"first":{"dep":"2027-02-05T13:30:00+08:00","arr":"2027-02-05T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-02-14":{"price":22725,"first":{"dep":"2027-02-06T21:55:00+08:00","arr":"2027-02-07T13:35:00+09:00","stops":2,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-02-15":{"price":20556,"first":{"dep":"2027-02-06T19:25:00+08:00","arr":"2027-02-07T17:20:00+09:00","stops":1,"airline":"Korean Air"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-02-16":{"price":17453,"first":{"dep":"2027-02-06T21:55:00+08:00","arr":"2027-02-07T13:35:00+09:00","stops":2,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-04-10":{"price":21788,"first":{"dep":"2027-02-06T13:30:00+08:00","arr":"2027-02-06T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-04-11":{"price":22288,"first":{"dep":"2027-02-06T13:30:00+08:00","arr":"2027-02-06T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-04-12":{"price":20688,"first":{"dep":"2027-02-06T13:30:00+08:00","arr":"2027-02-06T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-02|2027-04-10":{"price":16711,"first":{"dep":"2027-04-02T02:40:00+08:00","arr":"2027-04-02T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-02|2027-04-11":{"price":16711,"first":{"dep":"2027-04-02T02:40:00+08:00","arr":"2027-04-02T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-02|2027-04-12":{"price":15649,"first":{"dep":"2027-04-02T02:40:00+08:00","arr":"2027-04-02T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-03|2027-04-10":{"price":16934,"first":{"dep":"2027-04-03T17:10:00+08:00","arr":"2027-04-04T10:50:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-03|2027-04-11":{"price":16932,"first":{"dep":"2027-04-03T17:10:00+08:00","arr":"2027-04-04T10:50:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-03|2027-04-12":{"price":15872,"first":{"dep":"2027-04-03T17:10:00+08:00","arr":"2027-04-04T10:50:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-04|2027-04-10":{"price":14241,"first":{"dep":"2027-04-04T02:40:00+08:00","arr":"2027-04-04T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-04|2027-04-11":{"price":14241,"first":{"dep":"2027-04-04T02:40:00+08:00","arr":"2027-04-04T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-04|2027-04-12":{"price":13179,"first":{"dep":"2027-04-04T02:40:00+08:00","arr":"2027-04-04T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"}},"missing":["mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-14|TPE-HKG-2027-04-03","mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-15|TPE-HKG-2027-04-02","mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-16|TPE-HKG-2027-04-04","mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-15|TPE-HKG-2027-04-02","mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-15|TPE-HKG-2027-04-03","mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-14|TPE-HKG-2027-04-02","mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-15|TPE-HKG-2027-04-02","mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-16|TPE-HKG-2027-04-03","mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-14|TPE-HKG-2027-04-03","mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-16|TPE-HKG-2027-04-02","mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-16|TPE-HKG-2027-04-03","mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-14|TPE-HKG-2027-04-02","mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-16|TPE-HKG-2027-04-03","mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-14|TPE-HKG-2027-04-02","mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-15|TPE-HKG-2027-04-04","mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-14|TPE-HKG-2027-04-02","mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-15|TPE-HKG-2027-04-03","mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-16|TPE-HKG-2027-04-03","mc|KIX-TPE-2027-02-15|TPE-NRT-2027-04-02","mc|KIX-TPE-2027-02-15|TPE-NRT-2027-04-03","mc|KIX-TPE-2027-02-16|TPE-NRT-2027-04-04","mc|NRT-TPE-2027-02-16|TPE-KIX-2027-04-02","mc|TPE-KIX-2027-02-05|NRT-TPE-2027-04-12","mc|TPE-KIX-2027-02-06|NRT-TPE-2027-04-12","mc|TPE-NRT-2027-02-06|KIX-TPE-2027-04-10","rt|TPE|NRT|2027-02-05|2027-04-12"]}</script>
+<script id="fare-snapshot" type="application/json">{"schema":2,"source":"google_flights","generated_at":"2026-10-17T08:20:51+00:00","currency":"TWD","adults":1,"coverage":{"origins":["TPE"],"destinations":["NRT","KIX","LHR"],"outer_stations":["HKG"],"holidays":["lunar_ny","qingming"],"flex":1,"outer_stay_days":2},"fares":{"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":50807,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":50809,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":50807,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":37823,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":37823,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":37823,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":34020,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":34020,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-KIX-2027-02-06|KIX-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":31537,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":172293,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-LHR-2027-02-06|LHR-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":44263,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":44261,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":44261,"first":{"dep":"2027-02-06T10:20:00+08:00","arr":"2027-02-06T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":35993,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":35993,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":35991,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":33096,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":33096,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-06|TPE-NRT-2027-02-06|NRT-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":29375,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T12:00:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":53494,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":53497,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":40510,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":40512,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":40510,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":37616,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":37616,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":37616,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":172293,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":172293,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-LHR-2027-02-07|LHR-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":172293,"first":{"dep":"2027-02-07T11:20:00+08:00","arr":"2027-02-07T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":41573,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":41573,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":41573,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":39258,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":39258,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":39258,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":31361,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":31361,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-07|TPE-NRT-2027-02-07|NRT-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":31361,"first":{"dep":"2027-02-07T10:20:00+08:00","arr":"2027-02-07T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":45061,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":45059,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":45059,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":32035,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":32034,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":32034,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":29181,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":29181,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-KIX-2027-02-08|KIX-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":29182,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":172293,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-LHR-2027-02-08|LHR-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":172284,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-14|TPE-HKG-2027-04-02":{"price":36156,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-14|TPE-HKG-2027-04-03":{"price":36156,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-14|TPE-HKG-2027-04-04":{"price":36158,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-15|TPE-HKG-2027-04-02":{"price":33096,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-15|TPE-HKG-2027-04-03":{"price":33096,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-15|TPE-HKG-2027-04-04":{"price":33096,"first":{"dep":"2027-02-08T11:20:00+08:00","arr":"2027-02-08T13:05:00+08:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-16|TPE-HKG-2027-04-02":{"price":25984,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-16|TPE-HKG-2027-04-03":{"price":25984,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|HKG-TPE-2027-02-08|TPE-NRT-2027-02-08|NRT-TPE-2027-02-16|TPE-HKG-2027-04-04":{"price":25984,"first":{"dep":"2027-02-08T10:20:00+08:00","arr":"2027-02-08T12:05:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-14|TPE-NRT-2027-04-02":{"price":25644,"first":{"dep":"2027-02-14T23:10:00+09:00","arr":"2027-02-15T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-14|TPE-NRT-2027-04-03":{"price":32186,"first":{"dep":"2027-02-14T10:30:00+09:00","arr":"2027-02-14T15:55:00+08:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-14|TPE-NRT-2027-04-04":{"price":22564,"first":{"dep":"2027-02-14T23:10:00+09:00","arr":"2027-02-15T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-15|TPE-NRT-2027-04-02":{"price":18770,"first":{"dep":"2027-02-15T14:00:00+09:00","arr":"2027-02-15T16:20:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-15|TPE-NRT-2027-04-03":{"price":18770,"first":{"dep":"2027-02-15T14:00:00+09:00","arr":"2027-02-15T16:20:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-15|TPE-NRT-2027-04-04":{"price":17415,"first":{"dep":"2027-02-15T14:00:00+09:00","arr":"2027-02-15T16:20:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-16|TPE-NRT-2027-04-02":{"price":17945,"first":{"dep":"2027-02-16T23:10:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-16|TPE-NRT-2027-04-03":{"price":18770,"first":{"dep":"2027-02-16T12:20:00+09:00","arr":"2027-02-16T14:40:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|KIX-TPE-2027-02-16|TPE-NRT-2027-04-04":{"price":14865,"first":{"dep":"2027-02-16T23:10:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-14|TPE-KIX-2027-04-02":{"price":21626,"first":{"dep":"2027-02-14T09:10:00+09:00","arr":"2027-02-14T12:15:00+08:00","stops":0,"airline":"JAL"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-14|TPE-KIX-2027-04-03":{"price":21626,"first":{"dep":"2027-02-14T09:10:00+09:00","arr":"2027-02-14T12:15:00+08:00","stops":0,"airline":"JAL"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-14|TPE-KIX-2027-04-04":{"price":25324,"first":{"dep":"2027-02-14T08:30:00+09:00","arr":"2027-02-14T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-15|TPE-KIX-2027-04-02":{"price":19162,"first":{"dep":"2027-02-15T09:10:00+09:00","arr":"2027-02-15T12:15:00+08:00","stops":0,"airline":"JAL"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-15|TPE-KIX-2027-04-03":{"price":19162,"first":{"dep":"2027-02-15T09:10:00+09:00","arr":"2027-02-15T12:15:00+08:00","stops":0,"airline":"JAL"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-15|TPE-KIX-2027-04-04":{"price":20049,"first":{"dep":"2027-02-15T13:45:00+09:00","arr":"2027-02-15T16:50:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-16|TPE-KIX-2027-04-02":{"price":18674,"first":{"dep":"2027-02-16T20:10:00+09:00","arr":"2027-02-16T23:20:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-16|TPE-KIX-2027-04-03":{"price":19064,"first":{"dep":"2027-02-16T20:10:00+09:00","arr":"2027-02-16T23:20:00+08:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|NRT-TPE-2027-02-16|TPE-KIX-2027-04-04":{"price":18323,"first":{"dep":"2027-02-16T22:25:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-04|NRT-TPE-2027-04-10":{"price":25046,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T18:30:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-04|NRT-TPE-2027-04-11":{"price":25046,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T18:30:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-04|NRT-TPE-2027-04-12":{"price":25046,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T18:30:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-05|NRT-TPE-2027-04-10":{"price":26073,"first":{"dep":"2027-02-05T22:25:00+08:00","arr":"2027-02-06T06:20:00+09:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-05|NRT-TPE-2027-04-11":{"price":26323,"first":{"dep":"2027-02-05T22:25:00+08:00","arr":"2027-02-06T06:20:00+09:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-06|NRT-TPE-2027-04-10":{"price":28888,"first":{"dep":"2027-02-06T14:20:00+08:00","arr":"2027-02-06T17:50:00+09:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-06|NRT-TPE-2027-04-11":{"price":29046,"first":{"dep":"2027-02-06T11:05:00+08:00","arr":"2027-02-06T18:30:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"mc|TPE-KIX-2027-02-06|NRT-TPE-2027-04-12":{"price":27359,"first":{"dep":"2027-02-06T18:15:00+08:00","arr":"2027-02-06T21:45:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-04|KIX-TPE-2027-04-10":{"price":30185,"first":{"dep":"2027-02-04T15:00:00+08:00","arr":"2027-02-04T19:00:00+09:00","stops":0,"airline":"STARLUX Airlines"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-04|KIX-TPE-2027-04-11":{"price":30320,"first":{"dep":"2027-02-04T12:50:00+08:00","arr":"2027-02-04T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-04|KIX-TPE-2027-04-12":{"price":28532,"first":{"dep":"2027-02-04T12:50:00+08:00","arr":"2027-02-04T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-05|KIX-TPE-2027-04-10":{"price":28959,"first":{"dep":"2027-02-05T15:20:00+08:00","arr":"2027-02-05T19:20:00+09:00","stops":0,"airline":"EVA Air"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-05|KIX-TPE-2027-04-11":{"price":27910,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-05|KIX-TPE-2027-04-12":{"price":26122,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-06|KIX-TPE-2027-04-10":{"price":28541,"first":{"dep":"2027-02-06T12:50:00+08:00","arr":"2027-02-06T16:50:00+09:00","stops":0,"airline":"Cathay Pacific"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-06|KIX-TPE-2027-04-11":{"price":28541,"first":{"dep":"2027-02-06T12:50:00+08:00","arr":"2027-02-06T16:50:00+09:00","stops":0,"airline":"Cathay Pacific"},"at":"2026-10-17"},"mc|TPE-NRT-2027-02-06|KIX-TPE-2027-04-12":{"price":27914,"first":{"dep":"2027-02-06T12:35:00+08:00","arr":"2027-02-06T16:35:00+09:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"ow|HKG|TPE|2027-04-10":{"price":2539,"first":{"dep":"2027-04-10T14:55:00+08:00","arr":"2027-04-10T16:45:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|HKG|TPE|2027-04-11":{"price":2539,"first":{"dep":"2027-04-11T10:55:00+08:00","arr":"2027-04-11T12:45:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|HKG|TPE|2027-04-12":{"price":2539,"first":{"dep":"2027-04-12T10:55:00+08:00","arr":"2027-04-12T12:45:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|KIX|TPE|2027-04-10":{"price":7060,"first":{"dep":"2027-04-10T20:55:00+09:00","arr":"2027-04-10T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"ow|KIX|TPE|2027-04-11":{"price":7603,"first":{"dep":"2027-04-11T11:45:00+09:00","arr":"2027-04-11T13:45:00+08:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"ow|KIX|TPE|2027-04-12":{"price":5324,"first":{"dep":"2027-04-12T11:15:00+09:00","arr":"2027-04-12T13:10:00+08:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"ow|NRT|TPE|2027-04-10":{"price":6567,"first":{"dep":"2027-04-10T08:00:00+09:00","arr":"2027-04-10T16:45:00+08:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|NRT|TPE|2027-04-11":{"price":6567,"first":{"dep":"2027-04-11T08:00:00+09:00","arr":"2027-04-11T16:45:00+08:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|NRT|TPE|2027-04-12":{"price":5505,"first":{"dep":"2027-04-12T22:40:00+09:00","arr":"2027-04-13T01:30:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"ow|TPE|HKG|2027-02-04":{"price":2850,"first":{"dep":"2027-02-04T21:15:00+08:00","arr":"2027-02-04T23:25:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|TPE|HKG|2027-02-05":{"price":2931,"first":{"dep":"2027-02-05T13:55:00+08:00","arr":"2027-02-05T16:00:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|TPE|HKG|2027-02-06":{"price":2931,"first":{"dep":"2027-02-06T17:40:00+08:00","arr":"2027-02-06T19:45:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"ow|TPE|KIX|2027-02-04":{"price":9071,"first":{"dep":"2027-02-04T10:10:00+08:00","arr":"2027-02-04T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"ow|TPE|KIX|2027-02-05":{"price":8439,"first":{"dep":"2027-02-05T10:10:00+08:00","arr":"2027-02-05T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"ow|TPE|KIX|2027-02-06":{"price":10871,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"ow|TPE|NRT|2027-02-04":{"price":14730,"first":{"dep":"2027-02-04T17:15:00+08:00","arr":"2027-02-04T21:30:00+09:00","stops":0,"airline":"Peach Aviation"},"at":"2026-10-17"},"ow|TPE|NRT|2027-02-05":{"price":12343,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"ow|TPE|NRT|2027-02-06":{"price":10955,"first":{"dep":"2027-02-06T21:55:00+08:00","arr":"2027-02-07T13:35:00+09:00","stops":2,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-14|2027-04-02":{"price":22211,"first":{"dep":"2027-02-14T20:55:00+09:00","arr":"2027-02-14T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-14|2027-04-03":{"price":22211,"first":{"dep":"2027-02-14T20:55:00+09:00","arr":"2027-02-14T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-14|2027-04-04":{"price":18236,"first":{"dep":"2027-02-14T20:55:00+09:00","arr":"2027-02-14T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-15|2027-04-02":{"price":17242,"first":{"dep":"2027-02-15T13:25:00+09:00","arr":"2027-02-15T15:45:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-15|2027-04-03":{"price":17242,"first":{"dep":"2027-02-15T13:25:00+09:00","arr":"2027-02-15T15:45:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-15|2027-04-04":{"price":13268,"first":{"dep":"2027-02-15T13:25:00+09:00","arr":"2027-02-15T15:45:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-16|2027-04-02":{"price":14068,"first":{"dep":"2027-02-16T12:45:00+09:00","arr":"2027-02-16T15:00:00+08:00","stops":0,"airline":"China Airlines"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-16|2027-04-03":{"price":17242,"first":{"dep":"2027-02-16T20:55:00+09:00","arr":"2027-02-16T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|KIX|TPE|2027-02-16|2027-04-04":{"price":13268,"first":{"dep":"2027-02-16T20:55:00+09:00","arr":"2027-02-16T23:15:00+08:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-14|2027-04-02":{"price":21224,"first":{"dep":"2027-02-14T08:30:00+09:00","arr":"2027-02-14T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-14|2027-04-03":{"price":27918,"first":{"dep":"2027-02-14T08:30:00+09:00","arr":"2027-02-14T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-14|2027-04-04":{"price":18247,"first":{"dep":"2027-02-14T08:30:00+09:00","arr":"2027-02-14T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-15|2027-04-02":{"price":19192,"first":{"dep":"2027-02-15T08:30:00+09:00","arr":"2027-02-15T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-15|2027-04-03":{"price":23222,"first":{"dep":"2027-02-15T12:10:00+09:00","arr":"2027-02-15T15:15:00+08:00","stops":0,"airline":"Scoot"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-15|2027-04-04":{"price":16214,"first":{"dep":"2027-02-15T08:30:00+09:00","arr":"2027-02-15T11:50:00+08:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-16|2027-04-02":{"price":15954,"first":{"dep":"2027-02-16T07:10:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":1,"airline":"Jetstar"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-16|2027-04-03":{"price":20981,"first":{"dep":"2027-02-16T11:25:00+09:00","arr":"2027-02-16T14:45:00+08:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|NRT|TPE|2027-02-16|2027-04-04":{"price":12977,"first":{"dep":"2027-02-16T07:10:00+09:00","arr":"2027-02-17T01:30:00+08:00","stops":1,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-02|2027-04-10":{"price":5900,"first":{"dep":"2027-04-02T15:20:00+08:00","arr":"2027-04-02T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-02|2027-04-11":{"price":5900,"first":{"dep":"2027-04-02T15:20:00+08:00","arr":"2027-04-02T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-02|2027-04-12":{"price":5900,"first":{"dep":"2027-04-02T15:20:00+08:00","arr":"2027-04-02T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-03|2027-04-10":{"price":5900,"first":{"dep":"2027-04-03T15:20:00+08:00","arr":"2027-04-03T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-03|2027-04-11":{"price":5900,"first":{"dep":"2027-04-03T15:20:00+08:00","arr":"2027-04-03T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-03|2027-04-12":{"price":5900,"first":{"dep":"2027-04-03T15:20:00+08:00","arr":"2027-04-03T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-04|2027-04-10":{"price":6239,"first":{"dep":"2027-04-04T15:20:00+08:00","arr":"2027-04-04T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-04|2027-04-11":{"price":6239,"first":{"dep":"2027-04-04T15:20:00+08:00","arr":"2027-04-04T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|HKG|2027-04-04|2027-04-12":{"price":6239,"first":{"dep":"2027-04-04T15:20:00+08:00","arr":"2027-04-04T17:10:00+08:00","stops":0,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-02-14":{"price":17471,"first":{"dep":"2027-02-04T10:10:00+08:00","arr":"2027-02-04T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-02-15":{"price":16085,"first":{"dep":"2027-02-04T10:10:00+08:00","arr":"2027-02-04T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-02-16":{"price":14198,"first":{"dep":"2027-02-04T10:10:00+08:00","arr":"2027-02-04T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-04-10":{"price":23736,"first":{"dep":"2027-02-04T21:15:00+08:00","arr":"2027-02-05T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-04-11":{"price":21314,"first":{"dep":"2027-02-04T21:15:00+08:00","arr":"2027-02-05T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-04|2027-04-12":{"price":22023,"first":{"dep":"2027-02-04T21:15:00+08:00","arr":"2027-02-05T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-02-14":{"price":16839,"first":{"dep":"2027-02-05T10:10:00+08:00","arr":"2027-02-05T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-02-15":{"price":15453,"first":{"dep":"2027-02-05T10:10:00+08:00","arr":"2027-02-05T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-02-16":{"price":13566,"first":{"dep":"2027-02-05T10:10:00+08:00","arr":"2027-02-05T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-04-10":{"price":22283,"first":{"dep":"2027-02-05T14:40:00+08:00","arr":"2027-02-05T17:55:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-04-11":{"price":22283,"first":{"dep":"2027-02-05T14:40:00+08:00","arr":"2027-02-05T17:55:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-05|2027-04-12":{"price":20183,"first":{"dep":"2027-02-05T14:40:00+08:00","arr":"2027-02-05T17:55:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-02-14":{"price":19271,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-02-15":{"price":17885,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-02-16":{"price":15998,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-06T20:05:00+09:00","stops":1,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-04-10":{"price":22399,"first":{"dep":"2027-02-06T21:15:00+08:00","arr":"2027-02-07T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-04-11":{"price":19977,"first":{"dep":"2027-02-06T21:15:00+08:00","arr":"2027-02-07T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-02-06|2027-04-12":{"price":20686,"first":{"dep":"2027-02-06T21:15:00+08:00","arr":"2027-02-07T19:20:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-02|2027-04-10":{"price":16126,"first":{"dep":"2027-04-02T15:40:00+08:00","arr":"2027-04-02T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-02|2027-04-11":{"price":16670,"first":{"dep":"2027-04-02T15:40:00+08:00","arr":"2027-04-02T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-02|2027-04-12":{"price":14391,"first":{"dep":"2027-04-02T15:40:00+08:00","arr":"2027-04-02T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-03|2027-04-10":{"price":16126,"first":{"dep":"2027-04-03T15:40:00+08:00","arr":"2027-04-03T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-03|2027-04-11":{"price":16438,"first":{"dep":"2027-04-03T21:25:00+08:00","arr":"2027-04-04T19:40:00+09:00","stops":1,"airline":"Hong Kong Express"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-03|2027-04-12":{"price":14391,"first":{"dep":"2027-04-03T15:40:00+08:00","arr":"2027-04-03T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-04|2027-04-10":{"price":13222,"first":{"dep":"2027-04-04T15:40:00+08:00","arr":"2027-04-04T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-04|2027-04-11":{"price":13766,"first":{"dep":"2027-04-04T15:40:00+08:00","arr":"2027-04-04T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|KIX|2027-04-04|2027-04-12":{"price":11487,"first":{"dep":"2027-04-04T15:40:00+08:00","arr":"2027-04-04T19:30:00+09:00","stops":0,"airline":"AirAsia"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-04|2027-02-14":{"price":44599,"first":{"dep":"2027-02-04T17:35:00+08:00","arr":"2027-02-05T15:20:00+00:00","stops":1,"airline":"Singapore Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-04|2027-02-15":{"price":47500,"first":{"dep":"2027-02-04T15:20:00+08:00","arr":"2027-02-05T08:20:00+00:00","stops":2,"airline":"EVA Air, ANA and Austrian"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-04|2027-02-16":{"price":46644,"first":{"dep":"2027-02-04T15:20:00+08:00","arr":"2027-02-05T08:20:00+00:00","stops":2,"airline":"EVA Air, ANA and Austrian"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-05|2027-02-14":{"price":46808,"first":{"dep":"2027-02-05T22:00:00+08:00","arr":"2027-02-06T09:45:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-05|2027-02-15":{"price":42847,"first":{"dep":"2027-02-05T22:00:00+08:00","arr":"2027-02-06T09:45:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-05|2027-02-16":{"price":42847,"first":{"dep":"2027-02-05T22:00:00+08:00","arr":"2027-02-06T09:45:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-06|2027-02-14":{"price":43790,"first":{"dep":"2027-02-06T10:10:00+08:00","arr":"2027-02-07T06:25:00+00:00","stops":2,"airline":"Philippine Airlines and Qatar Airways"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-06|2027-02-15":{"price":41247,"first":{"dep":"2027-02-06T11:00:00+08:00","arr":"2027-02-06T22:30:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-02-06|2027-02-16":{"price":41247,"first":{"dep":"2027-02-06T11:00:00+08:00","arr":"2027-02-06T22:30:00+00:00","stops":1,"airline":"Turkish Airlines"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-02|2027-04-10":{"price":33846,"first":{"dep":"2027-04-02T19:55:00+08:00","arr":"2027-04-03T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-02|2027-04-11":{"price":29479,"first":{"dep":"2027-04-02T14:40:00+08:00","arr":"2027-04-04T06:25:00+01:00","stops":2,"airline":"Royal Brunei"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-02|2027-04-12":{"price":33846,"first":{"dep":"2027-04-02T19:55:00+08:00","arr":"2027-04-03T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-03|2027-04-10":{"price":33846,"first":{"dep":"2027-04-03T21:05:00+08:00","arr":"2027-04-04T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-03|2027-04-11":{"price":33846,"first":{"dep":"2027-04-03T21:05:00+08:00","arr":"2027-04-04T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-03|2027-04-12":{"price":33846,"first":{"dep":"2027-04-03T21:05:00+08:00","arr":"2027-04-04T15:15:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-04|2027-04-10":{"price":33846,"first":{"dep":"2027-04-04T19:55:00+08:00","arr":"2027-04-05T06:20:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-04|2027-04-11":{"price":33846,"first":{"dep":"2027-04-04T19:55:00+08:00","arr":"2027-04-05T06:20:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|LHR|2027-04-04|2027-04-12":{"price":33846,"first":{"dep":"2027-04-04T19:55:00+08:00","arr":"2027-04-05T06:20:00+01:00","stops":1,"airline":"Cathay Pacific"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-02-14":{"price":24496,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T20:20:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-02-15":{"price":23546,"first":{"dep":"2027-02-04T11:05:00+08:00","arr":"2027-02-04T20:20:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-02-16":{"price":21226,"first":{"dep":"2027-02-04T17:15:00+08:00","arr":"2027-02-04T21:30:00+09:00","stops":0,"airline":"Peach Aviation"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-04-10":{"price":23788,"first":{"dep":"2027-02-04T15:35:00+08:00","arr":"2027-02-04T19:35:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-04-11":{"price":24288,"first":{"dep":"2027-02-04T15:35:00+08:00","arr":"2027-02-04T19:35:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-04|2027-04-12":{"price":22688,"first":{"dep":"2027-02-04T15:35:00+08:00","arr":"2027-02-04T19:35:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-02-14":{"price":24110,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-02-15":{"price":22077,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-02-16":{"price":18839,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-04-10":{"price":21788,"first":{"dep":"2027-02-05T13:30:00+08:00","arr":"2027-02-05T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-04-11":{"price":22288,"first":{"dep":"2027-02-05T13:30:00+08:00","arr":"2027-02-05T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-05|2027-04-12":{"price":20288,"first":{"dep":"2027-02-05T12:50:00+08:00","arr":"2027-02-05T16:55:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-02-14":{"price":22722,"first":{"dep":"2027-02-06T21:55:00+08:00","arr":"2027-02-07T13:35:00+09:00","stops":2,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-02-15":{"price":20556,"first":{"dep":"2027-02-06T19:25:00+08:00","arr":"2027-02-07T17:20:00+09:00","stops":1,"airline":"Korean Air"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-02-16":{"price":17451,"first":{"dep":"2027-02-06T21:55:00+08:00","arr":"2027-02-07T13:35:00+09:00","stops":2,"airline":"Philippine Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-04-10":{"price":21788,"first":{"dep":"2027-02-06T13:30:00+08:00","arr":"2027-02-06T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-04-11":{"price":22288,"first":{"dep":"2027-02-06T13:30:00+08:00","arr":"2027-02-06T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-02-06|2027-04-12":{"price":20688,"first":{"dep":"2027-02-06T13:30:00+08:00","arr":"2027-02-06T17:30:00+09:00","stops":0,"airline":"Tigerair Taiwan"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-02|2027-04-10":{"price":16709,"first":{"dep":"2027-04-02T02:40:00+08:00","arr":"2027-04-02T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-02|2027-04-11":{"price":16709,"first":{"dep":"2027-04-02T02:40:00+08:00","arr":"2027-04-02T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-02|2027-04-12":{"price":15648,"first":{"dep":"2027-04-02T02:40:00+08:00","arr":"2027-04-02T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-03|2027-04-10":{"price":16932,"first":{"dep":"2027-04-03T17:10:00+08:00","arr":"2027-04-04T10:50:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-03|2027-04-11":{"price":16932,"first":{"dep":"2027-04-03T17:10:00+08:00","arr":"2027-04-04T10:50:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-03|2027-04-12":{"price":15871,"first":{"dep":"2027-04-03T17:10:00+08:00","arr":"2027-04-04T10:50:00+09:00","stops":1,"airline":"Asiana Airlines"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-04|2027-04-10":{"price":14239,"first":{"dep":"2027-04-04T02:40:00+08:00","arr":"2027-04-04T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-04|2027-04-11":{"price":14239,"first":{"dep":"2027-04-04T02:40:00+08:00","arr":"2027-04-04T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"},"rt|TPE|NRT|2027-04-04|2027-04-12":{"price":13178,"first":{"dep":"2027-04-04T02:40:00+08:00","arr":"2027-04-04T07:00:00+09:00","stops":0,"airline":"Jetstar"},"at":"2026-10-17"}},"missing":["mc|HKG-TPE-2027-02-07|TPE-KIX-2027-02-07|KIX-TPE-2027-02-14|TPE-HKG-2027-04-02","mc|TPE-KIX-2027-02-05|NRT-TPE-2027-04-12"]}</script>
 <script>
 "use strict";
 
@@ -747,202 +760,140 @@ const LEAVE_STRATEGIES_2027 = [
   { key: 'yearend',   label: '跨年請 3 休 10',  pto: 3, total: 10, start: '2027-12-24', end: '2028-01-02', desc: '跨年黃金 10 天，請 12/28-12/30 共 3 天連休至 2028/1/2(日)。' },
 ];
 
-/* =========================================================================
- * Stub provider — mirrors backend/app/providers/stub.py (same seed table)
- * ========================================================================= */
-const ROUTES = {
-  'TPE-NRT': { base: 12800, dur: 190, carrier: 'BR' },
-  'NRT-TPE': { base: 12500, dur: 200, carrier: 'BR' },
-  'TPE-HND': { base: 14200, dur: 185, carrier: 'CI' },
-  'HND-TPE': { base: 13900, dur: 195, carrier: 'CI' },
-  'TPE-KIX': { base: 11800, dur: 180, carrier: 'JX' },
-  'KIX-TPE': { base: 11600, dur: 190, carrier: 'JX' },
-  'TPE-ICN': { base: 9800,  dur: 160, carrier: 'KE' },
-  'ICN-TPE': { base: 9700,  dur: 170, carrier: 'KE' },
-  'TPE-BKK': { base: 10800, dur: 230, carrier: 'TG' },
-  'BKK-TPE': { base: 10900, dur: 230, carrier: 'TG' },
-  'XMN-TPE': { base: 4200,  dur: 85,  carrier: 'MF' },
-  'TPE-XMN': { base: 4100,  dur: 90,  carrier: 'MF' },
-  'HKG-TPE': { base: 5200,  dur: 90,  carrier: 'CX' },
-  'TPE-HKG': { base: 5100,  dur: 90,  carrier: 'CX' },
-};
-
-/** Stable 0..1 pseudo-random from a string key (FNV-1a 32-bit). */
-function stableFloat(key) {
-  let h = 0x811c9dc5 >>> 0;
-  for (let i = 0; i < key.length; i++) {
-    h ^= key.charCodeAt(i);
-    h = Math.imul(h, 0x01000193) >>> 0;
-  }
-  return (h & 0xffff) / 0xffff;
-}
-
-function jitter(key) {
-  return (stableFloat(key) - 0.5) * 0.24; // ±12%
-}
-
-/* Airport catalog — mirrors backend/app/data/airports.py */
+/* Airport catalog — mirrors backend/app/data/airports.py (no prices here) */
 const AIRPORTS = [
-  // code, name, group, ow fare from TPE (stub), minutes, carrier, outstation?
-  ['TPE','台北桃園','台灣',0,0,'BR',0], ['TSA','台北松山','台灣',0,0,'CI',0], ['KHH','高雄','台灣',0,0,'CI',0], ['RMQ','台中','台灣',0,0,'AE',0],
-  ['NRT','東京成田','日本',12800,190,'BR',1], ['HND','東京羽田','日本',14200,185,'CI',1], ['KIX','大阪關西','日本',11800,180,'JX',1],
-  ['NGO','名古屋','日本',11500,175,'CI',0], ['FUK','福岡','日本',10200,150,'CI',1], ['CTS','札幌','日本',13800,245,'BR',0], ['OKA','沖繩','日本',8200,90,'CI',0],
-  ['ICN','首爾仁川','韓國',9800,160,'KE',1], ['PUS','釜山','韓國',9200,135,'BR',0],
-  ['HKG','香港','港澳/中國',5100,90,'CX',1], ['MFM','澳門','港澳/中國',5300,95,'NX',1], ['XMN','廈門','港澳/中國',4100,90,'MF',1],
-  ['BKK','曼谷','東南亞',10800,230,'TG',1], ['CNX','清邁','東南亞',11200,245,'BR',0], ['SGN','胡志明市','東南亞',8900,215,'BR',1],
-  ['HAN','河內','東南亞',9300,200,'CI',1], ['MNL','馬尼拉','東南亞',7800,140,'PR',1], ['CEB','宿霧','東南亞',8600,170,'JX',1],
-  ['KUL','吉隆坡','東南亞',10200,285,'MH',1], ['SIN','新加坡','東南亞',11600,280,'SQ',1],
-  ['LHR','倫敦','歐洲',32000,845,'BR',0], ['CDG','巴黎','歐洲',31500,830,'BR',0], ['AMS','阿姆斯特丹','歐洲',30500,820,'CI',0], ['VIE','維也納','歐洲',30000,790,'BR',0],
-  ['LAX','洛杉磯','美洲',26500,720,'BR',0], ['SFO','舊金山','美洲',25800,690,'BR',0], ['JFK','紐約','美洲',30800,935,'BR',0], ['YVR','溫哥華','美洲',24500,650,'BR',0],
-  ['SYD','雪梨','紐澳',22800,555,'CI',0], ['BNE','布里斯本','紐澳',21900,520,'BR',0],
-].map(([code, name, group, ow, minutes, carrier, outstation]) => ({ code, name, group, ow, minutes, carrier, outstation: !!outstation }));
+  // code, name, group, outstation?
+  ['TPE','台北桃園','台灣',0], ['TSA','台北松山','台灣',0], ['KHH','高雄','台灣',0], ['RMQ','台中','台灣',0],
+  ['NRT','東京成田','日本',1], ['HND','東京羽田','日本',1], ['KIX','大阪關西','日本',1],
+  ['NGO','名古屋','日本',0], ['FUK','福岡','日本',1], ['CTS','札幌','日本',0], ['OKA','沖繩','日本',0],
+  ['ICN','首爾仁川','韓國',1], ['PUS','釜山','韓國',0],
+  ['HKG','香港','港澳/中國',1], ['MFM','澳門','港澳/中國',1], ['XMN','廈門','港澳/中國',1],
+  ['BKK','曼谷','東南亞',1], ['CNX','清邁','東南亞',0], ['SGN','胡志明市','東南亞',1],
+  ['HAN','河內','東南亞',1], ['MNL','馬尼拉','東南亞',1], ['CEB','宿霧','東南亞',1],
+  ['KUL','吉隆坡','東南亞',1], ['SIN','新加坡','東南亞',1],
+  ['LHR','倫敦','歐洲',0], ['CDG','巴黎','歐洲',0], ['AMS','阿姆斯特丹','歐洲',0], ['VIE','維也納','歐洲',0],
+  ['LAX','洛杉磯','美洲',0], ['SFO','舊金山','美洲',0], ['JFK','紐約','美洲',0], ['YVR','溫哥華','美洲',0],
+  ['SYD','雪梨','紐澳',0], ['BNE','布里斯本','紐澳',0],
+].map(([code, name, group, outstation]) => ({ code, name, group, outstation: !!outstation }));
 const AIRPORT_BY_CODE = new Map(AIRPORTS.map(a => [a.code, a]));
 const COUNTRY = { NRT:'JP', HND:'JP', KIX:'JP', NGO:'JP', FUK:'JP', CTS:'JP', OKA:'JP', ICN:'KR', PUS:'KR',
   HKG:'HK', MFM:'MO', XMN:'CN', BKK:'TH', CNX:'TH', SGN:'VN', HAN:'VN', MNL:'PH', CEB:'PH', KUL:'MY', SIN:'SG',
   LHR:'GB', CDG:'FR', AMS:'NL', VIE:'AT', LAX:'US', SFO:'US', JFK:'US', YVR:'CA', SYD:'AU', BNE:'AU' };
-const countryOf = code => COUNTRY[code] || code;
+const countryOf = code => COUNTRY[code] || (TW_AIRPORTS_LIST.includes(code) ? 'TW' : code);
 // 倒買法 only works where foreign-origin round trips are sold cheaply (mirrors reverse.py).
 const DAOMAI_COUNTRIES = new Set(['JP', 'TH', 'KR']);
 const daomaiCountry = code => (DAOMAI_COUNTRIES.has(COUNTRY[code]) ? COUNTRY[code] : null);
-const TW_AIRPORTS = new Set(['TPE','TSA','KHH','RMQ','TNN','HUN','KNH','MZG','TTT','HCN']);
+const TW_AIRPORTS_LIST = ['TPE','TSA','KHH','RMQ','TNN','HUN','KNH','MZG','TTT','HCN'];
+const TW_AIRPORTS = new Set(TW_AIRPORTS_LIST);
 const HUB = 'TPE';
+// Standard UTC offsets — only used to place 航班待選 placeholder segments.
+const UTC_OFFSET = { JP: '+09:00', KR: '+09:00', HK: '+08:00', MO: '+08:00', CN: '+08:00', TW: '+08:00', TH: '+07:00',
+  VN: '+07:00', PH: '+08:00', MY: '+08:00', SG: '+08:00', GB: '+00:00', FR: '+01:00', NL: '+01:00', AT: '+01:00',
+  US: '-08:00', CA: '-08:00', AU: '+10:00' };
 
-/* Fare model (mirrors stub.py): TW-origin departures in 連假 cost more; an
- * outstation multi-city through TPE (四腿票) is priced in the cheaper market. */
-const TW_HOLIDAY_SURGE = 1.30, MULTI_CITY_FACTOR = 0.85, OUTSTATION_MULTI_CITY_FACTOR = 0.62;
-const TW_PEAK_DAYS = new Set(LEAVE_STRATEGIES_2027.flatMap(s => {
-  const out = [];
-  for (let i = -1; i < daysBetween(s.start, s.end); i++) out.push(addDays(s.start, i));
-  return out;
-}));
-function marketFactor(origin, dateISO) {
-  return TW_AIRPORTS.has(origin) && TW_PEAK_DAYS.has(dateISO) ? TW_HOLIDAY_SURGE : 1;
-}
-
-function routeFor(a, b) {
-  const exact = ROUTES[`${a}-${b}`];
-  if (exact) return exact;
-  const r100 = x => Math.round(x / 100) * 100;
-  if (TW_AIRPORTS.has(a) && AIRPORT_BY_CODE.get(b)?.ow) {
-    const x = AIRPORT_BY_CODE.get(b);
-    return { base: r100(x.ow * (a === HUB ? 1 : 1.06)), dur: x.minutes, carrier: x.carrier };
-  }
-  if (TW_AIRPORTS.has(b) && AIRPORT_BY_CODE.get(a)?.ow) {
-    const x = AIRPORT_BY_CODE.get(a);
-    return { base: r100(x.ow * (b === HUB ? 0.98 : 1.04)), dur: x.minutes + 10, carrier: x.carrier };
-  }
-  return { base: 15000, dur: 240, carrier: 'ZZ' };
-}
-
-function makeLeg(origin, destination, dateISO, hour) {
-  const r = routeFor(origin, destination);
-  const dep = new Date(`${dateISO}T${String(hour).padStart(2,'0')}:00:00Z`);
-  const arr = new Date(dep.getTime() + r.dur * 60000);
-  return {
-    origin,
-    destination,
-    departure: dep.toISOString(),
-    arrival: arr.toISOString(),
-    carrier: r.carrier,
-    flight_number: r.carrier + ((Math.abs(hashCode(`${origin}-${destination}-${dateISO}`)) % 900) + 100),
-    cabin: 'economy',
-    stops: 0,
-  };
-}
-
-function hashCode(s) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
-  return h;
-}
-
-/* Real fares: a Google Flights snapshot (fares.json, refreshed daily by the
- * "Fare snapshot" GitHub Action, mirrors backend/app/providers/snapshot.py).
- * A hit replaces the stub price with the real cheapest total and the first
- * segment's real times; later segments are placeholders (時刻待選). */
-let FARES = { fares: {}, generated_at: null };
-const fareStats = { real: 0, stub: 0 };
+/* =========================================================================
+ * Fare database — the ONLY price source (mirrors backend/app/providers/fare_db.py).
+ * Real Google Flights totals crawled every 6 h by the "Fare snapshot" GitHub
+ * Action; read live from this page's shared db when available, else from the
+ * copy embedded at publish time. A query without an entry has no offer.
+ * ========================================================================= */
+let FARES = { fares: {}, generated_at: null, coverage: {} };
+const fareStats = { real: 0, missing: 0, missingKeys: new Set() };
 function loadFareSnapshot() {
   try {
     const el = document.getElementById('fare-snapshot');
     if (el && el.textContent.trim()) FARES = JSON.parse(el.textContent);
   } catch (e) { console.warn('fare snapshot unreadable', e); }
 }
+/* What the crawler covers — drives defaults, the 無資料 marks and the status bar. */
+function fareCoverage() {
+  const cov = FARES.coverage || {};
+  const airports = new Set();
+  const keys = Object.keys(FARES.fares || {});
+  for (const k of keys) {
+    const [kind, ...rest] = k.split('|');
+    if (kind === 'mc') rest.forEach(part => { const [o, d] = part.split('-'); airports.add(o); airports.add(d); });
+    else { airports.add(rest[0]); airports.add(rest[1]); }
+  }
+  return {
+    count: keys.length, airports,
+    holidays: new Set(cov.holidays || []),
+    destinations: (cov.destinations || []).filter(c => airports.has(c)),
+    outer: (cov.outer_stations || []).filter(c => airports.has(c)),
+    flex: cov.flex ?? 1, stay: cov.outer_stay_days ?? 2,
+  };
+}
+const tpeTime = iso => (iso ? new Date(iso).toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }) : '—');
+function ageText(iso) {
+  if (!iso) return '—';
+  const h = (Date.now() - Date.parse(iso)) / 3600e3;
+  return h < 1 ? '1 小時內' : h < 48 ? `${Math.round(h)} 小時前` : `${Math.round(h / 24)} 天前`;
+}
+let liveDb = false;
+function renderDbStatus() {
+  const c = fareCoverage();
+  const el = document.getElementById('db-status');
+  document.getElementById('hs-count').textContent = c.count.toLocaleString();
+  document.getElementById('hs-age').textContent = ageText(FARES.generated_at);
+  el.classList.toggle('empty', !c.count);
+  if (!c.count) {
+    el.innerHTML = '票價資料庫目前沒有資料 —— 爬蟲尚未完成第一次執行，所有搜尋都不會有結果。';
+    return;
+  }
+  const name = code => AIRPORT_BY_CODE.get(code)?.name || code;
+  const hol = [...c.holidays].map(k => holidayByKey.get(k)?.label.split('請')[0] || k).join('、');
+  el.innerHTML = `票價資料庫：<b>${c.count.toLocaleString()}</b> 筆 Google Flights 實價，更新於 <b>${tpeTime(FARES.generated_at)}</b>（台北時間，${ageText(FARES.generated_at)}）${liveDb ? '<span class="live">● 即時同步</span>' : ''}<br>
+    已爬取：${hol || '—'} ±${c.flex} 天 · 目的地 ${c.destinations.map(name).join('、') || '—'} · 四腿票外站 ${c.outer.map(name).join('、') || '—'}（停留 ${c.stay} 天）。標「無資料」的機場/連假還沒爬，選了不會有價格。`;
+}
+
 const fareKeyOW = (o, d, day) => `ow|${o}|${d}|${day}`;
 const fareKeyRT = (o, d, dep, ret) => `rt|${o}|${d}|${dep}|${ret}`;
 const fareKeyMC = segments => 'mc|' + segments.map(([o, d, day]) => `${o}-${d}-${day}`).join('|');
-function applyRealFare(key, offers, adults) {
-  const e = FARES.fares && FARES.fares[key];
-  if (!e) { fareStats.stub += 1; return offers; }
-  fareStats.real += 1;
-  const t = offers[0];
-  const legs = t.legs.map(l => ({ ...l }));
-  if (e.first) {
-    legs[0] = { ...legs[0], departure: e.first.dep, arrival: e.first.arr, carrier: e.first.airline || legs[0].carrier, flight_number: '', stops: e.first.stops || 0 };
-    for (let i = 1; i < legs.length; i++) {
-      Object.assign(legs[i], { estimated: true, carrier: '待選', flight_number: '' });
-      const prevArr = Date.parse(legs[i - 1].arrival), dep = Date.parse(legs[i].departure);
-      if (legs[i].departure.slice(0, 10) <= legs[i - 1].arrival.slice(0, 10) && dep < prevArr + 150 * 60000) {
-        const dur = Date.parse(legs[i].arrival) - dep;
-        legs[i].departure = new Date(prevArr + 150 * 60000).toISOString();
-        legs[i].arrival = new Date(prevArr + 150 * 60000 + dur).toISOString();
-      }
+const fareEntry = key => (FARES.fares || {})[key];
+
+/* A ticket whose total is the real fare; only segment 1 has real times. */
+function offerFromEntry(key, segments, e, adults) {
+  const legs = [];
+  segments.forEach(([o, d, day], i) => {
+    if (i === 0 && e.first) {
+      legs.push({ origin: o, destination: d, departure: e.first.dep, arrival: e.first.arr, carrier: e.first.airline || '待選', flight_number: '', cabin: 'economy', stops: e.first.stops || 0 });
+      return;
     }
-  }
-  return [{ ...t, offer_id: `gf-${key}`, legs, total_price: e.price * adults, issuer: 'google_flights', fare_at: e.at || (FARES.generated_at || '').slice(0, 10), fare_class: legs.length > 1 ? '後段時刻待選' : null }];
+    let dep = Date.parse(`${day}T12:00:00${UTC_OFFSET[countryOf(o)] || '+00:00'}`);
+    const prev = legs[legs.length - 1];
+    if (prev && prev.destination === o && dep < Date.parse(prev.arrival) + 150 * 60000) dep = Date.parse(prev.arrival) + 150 * 60000;
+    const mirror = legs[0] && legs[0].origin === d && legs[0].destination === o ? Date.parse(legs[0].arrival) - Date.parse(legs[0].departure) : 0;
+    legs.push({ origin: o, destination: d, departure: new Date(dep).toISOString(), arrival: new Date(dep + mirror).toISOString(), carrier: '待選', flight_number: '', cabin: 'economy', stops: 0, estimated: true });
+  });
+  return {
+    offer_id: `gf-${key}`, legs, total_price: e.price * adults, currency: 'TWD',
+    fare_class: legs.length > 1 ? '後段航班待選' : null, baggage_through_checked: true,
+    issuer: 'google_flights', fare_at: e.at || (FARES.generated_at || '').slice(0, 10), unit_price: e.price, prev: e.prev, prev_at: e.prev_at,
+  };
 }
 
 const CachingProvider = (function () {
   const cache = new Map();
   let hits = 0, misses = 0;
-  function key(args) { return [args.origin, args.destination, args.departureDate, args.returnDate || '-', args.adults || 1].join('|'); }
   function stats() { return { hits, misses, total: hits + misses, unique: cache.size }; }
-  function reset() { cache.clear(); hits = 0; misses = 0; fareStats.real = 0; fareStats.stub = 0; }
-  function search(args) {
-    const k = key(args);
-    if (cache.has(k)) { hits += 1; return cache.get(k); }
+  function reset() { cache.clear(); hits = 0; misses = 0; fareStats.real = 0; fareStats.missing = 0; fareStats.missingKeys.clear(); }
+  function lookup(key, segments, adults) {
+    if (cache.has(key)) { hits += 1; return cache.get(key); }
     misses += 1;
-    const r = routeFor(args.origin, args.destination);
-    const outboundLeg = makeLeg(args.origin, args.destination, args.departureDate, 9);
-    let offers;
-    if (!args.returnDate) {
-      const price = Math.round(r.base * marketFactor(args.origin, args.departureDate) * (1 + jitter(`ow|${args.origin}|${args.destination}|${args.departureDate}`)) * (args.adults || 1));
-      offers = applyRealFare(fareKeyOW(args.origin, args.destination, args.departureDate), [{ offer_id: `ow-${r.carrier}-${args.departureDate}`, legs: [outboundLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }], args.adults || 1);
-    } else {
-      const returnLeg = makeLeg(args.destination, args.origin, args.returnDate, 18);
-      const price = Math.round(r.base * 1.7 * marketFactor(args.origin, args.departureDate) * (1 + jitter(`rt|${args.origin}|${args.destination}|${args.departureDate}|${args.returnDate}`)) * (args.adults || 1));
-      offers = applyRealFare(fareKeyRT(args.origin, args.destination, args.departureDate, args.returnDate), [{ offer_id: `rt-${r.carrier}-${args.departureDate}-${args.returnDate}`, legs: [outboundLeg, returnLeg], total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }], args.adults || 1);
-    }
-    cache.set(k, offers);
+    const e = fareEntry(key);
+    let offers = [];
+    if (e && !e.separate) { fareStats.real += 1; offers = [offerFromEntry(key, segments, e, adults || 1)]; }
+    else { fareStats.missing += 1; fareStats.missingKeys.add(key); }
+    cache.set(key, offers);
     return offers;
+  }
+  function search(args) {
+    const { origin: o, destination: d, departureDate: dep, returnDate: ret, adults } = args;
+    return ret ? lookup(fareKeyRT(o, d, dep, ret), [[o, d, dep], [d, o, ret]], adults)
+               : lookup(fareKeyOW(o, d, dep), [[o, d, dep]], adults);
   }
   // One ticket over several segments (四腿票, open-jaw 倒買法 tickets).
-  function searchMultiCity(segments, adults) {
-    const k = 'mc|' + segments.map(s => s.join('-')).join('|') + '|' + adults;
-    if (cache.has(k)) { hits += 1; return cache.get(k); }
-    misses += 1;
-    const seeds = segments.map(([o, d]) => routeFor(o, d));
-    const carrier = seeds.reduce((a, b) => (b.base > a.base ? b : a)).carrier;
-    const legs = [];
-    segments.forEach(([o, d, day], i) => {
-      const prev = legs[legs.length - 1];
-      let dep = new Date(`${day}T14:00:00Z`);
-      if (prev && prev.destination === o && prev.arrival.slice(0, 10) === day) dep = new Date(Date.parse(prev.arrival) + 150 * 60000);
-      legs.push({
-        origin: o, destination: d, departure: dep.toISOString(),
-        arrival: new Date(dep.getTime() + seeds[i].dur * 60000).toISOString(),
-        carrier, flight_number: carrier + ((Math.abs(hashCode(`${o}-${d}-${day}`)) % 900) + 100), cabin: 'economy', stops: 0,
-      });
-    });
-    const [o0, , d0] = segments[0];
-    const hubTouches = segments.filter(([o, d]) => o === HUB || d === HUB).length;
-    const outstation = !TW_AIRPORTS.has(o0) && segments.length >= 4 && hubTouches >= 4;
-    const factor = outstation ? OUTSTATION_MULTI_CITY_FACTOR : MULTI_CITY_FACTOR;
-    const price = Math.round(seeds.reduce((n, sd) => n + sd.base, 0) * factor * marketFactor(o0, d0) * (1 + jitter(k)) * adults);
-    const offers = applyRealFare(fareKeyMC(segments), [{ offer_id: 'mc-' + segments.map(([o, d, day]) => `${o}${d}${day.slice(5).replace('-', '')}`).join('-'), legs, total_price: price, currency: 'TWD', fare_class: 'Y', baggage_through_checked: true, issuer: 'stub' }], adults);
-    cache.set(k, offers);
-    return offers;
-  }
+  function searchMultiCity(segments, adults) { return lookup(fareKeyMC(segments), segments, adults); }
   return { search, searchMultiCity, stats, reset };
 })();
 
@@ -1174,7 +1125,7 @@ function planReversePair(req, A, B) {
       const found = [];
       for (const [variant, aIn, bOut, front] of fronts) for (const [aOut, bIn, back] of backs) {
         const best = bestPair(front, back, compatible);
-        if (!best || best[0] >= baseline) continue;
+        if (!best) continue;
         const [total, fr, bk] = best;
         const revRole = `反向票：${aOut} 出發` + (bIn !== aOut ? `，回程飛 ${bIn}` : '');
         const daomai = variant === '倒買法';
@@ -1184,7 +1135,7 @@ function planReversePair(req, A, B) {
         const saving = baseline - total;
         const warnings = [
           { level: 'medium', code: 'reverse_ticket_order', message: `反向票須從第1段 ${aOut}→${home} 開始依序搭乘，第1段未搭乘後段會被取消；各張票分開開票，任一張延誤或改期都不保護另一張` },
-          { level: 'low', code: 'reverse_savings_estimate', message: `比兩趟各買一般來回 (共 ${baseline.toLocaleString()}) 省 ${saving.toLocaleString()} TWD（${Math.round(saving / baseline * 100)}%）` },
+          savingWarning('reverse_savings_estimate', '兩趟各買一般來回', baseline, total),
         ];
         if (daomai) warnings.push({ level: 'low', code: 'wrap_ticket_validity', message: `包覆票從 ${md(fr.aDep)} 用到 ${md(fr.bRet)}，請確認票價規則的最長停留 / 效期（常見為 1 年）` });
         found.push({
@@ -1195,14 +1146,26 @@ function planReversePair(req, A, B) {
             `旅程 A｜${A.label}：${md(fr.aDep)} ${home}→${aIn}（${firstTag}） ⇢ ${md(bk.aRet)} ${aOut}→${home}（反向票 第1段）`,
             `旅程 B｜${B.label}：${md(bk.bDep)} ${home}→${bIn}（反向票 第2段） ⇢ ${md(fr.bRet)} ${bOut}→${home}（${lastTag}）`,
           ],
-          explain: `反向票＋${variant}：旅程A ${route(aIn, aOut)}、旅程B ${route(bIn, bOut)}，共 ${tickets.length} 張票，省 ${saving.toLocaleString()}`,
+          explain: `反向票＋${variant}：旅程A ${route(aIn, aOut)}、旅程B ${route(bIn, bOut)}，共 ${tickets.length} 張票，${savingText(saving)}`,
+          _extra: -saving,
         });
       }
-      plans.push(...found.sort((a, b) => a.total_cost - b.total_cost).slice(0, 6));
+      const winners = found.filter(p => p._extra < 0).sort((a, b) => a.total_cost - b.total_cost);
+      // Nothing beats ordinary round trips: still show the closest real comparison.
+      plans.push(...(winners.length ? winners.slice(0, 6) : found.sort((a, b) => a._extra - b._extra).slice(0, 1)));
     }
   }
   return plans.sort((a, b) => a.total_cost - b.total_cost);
 }
+
+// How a two-trip plan compares with ordinary round trips (mirrors two_trip.saving_warning).
+function savingWarning(code, desc, baseline, total) {
+  const saving = baseline - total;
+  return saving > 0
+    ? { level: 'low', code, message: `比${desc} (共 ${baseline.toLocaleString()}) 省 ${saving.toLocaleString()} TWD（${Math.round(saving / baseline * 100)}%）` }
+    : { level: 'medium', code: 'no_saving', message: `比${desc} (共 ${baseline.toLocaleString()}) 多 ${(-saving).toLocaleString()} TWD — 目前實價不划算，僅供比較` };
+}
+const savingText = saving => (saving > 0 ? `兩趟省 ${saving.toLocaleString()}` : `比一般來回多 ${(-saving).toLocaleString()}（實價不划算）`);
 
 function nearestDates(dates, k) {
   if (dates.length <= k) return dates;
@@ -1214,16 +1177,18 @@ function planFourLegPair(req, A, B) {
   const plans = [];
   const stay = req.outerStay;
   const aDeps = nearestDates(A.departs, 5), aRets = nearestDates(A.returns, 5), bDeps = nearestDates(B.departs, 5);
-  // 頭尾可不同: leg 4 may land at another outstation y in x's country (mirrors back_to_back.py).
+  // 頭尾不同國家: leg 4 lands in a THIRD country — not x's (trip A's outer stay)
+  // nor dest's — so the two trips never visit the same country (mirrors back_to_back.py).
+  const losers = [];
   const stations = [...new Set(req.outerStations)].filter(x => x !== HUB && !TW_AIRPORTS.has(x));
   const firstBy = new Map(stations.map(x => [x, new Map(aDeps.map(d => [d, quote([[HUB, x, d]], req.adults)]))]));
   const lastBy = new Map(stations.map(y => [y, B.returns.map(d => [d, quote([[y, HUB, d]], req.adults)]).filter(e => e[1])]));
   const baseBy = new Map(stations.map(y => [y, cheapestRoundTrip(HUB, y, B, req.adults)]));
   for (const x of stations) for (const y of stations) {
-    if (y !== x && countryOf(y) !== countryOf(x)) continue;
+    if (countryOf(y) === countryOf(x)) continue;
     const firstLegs = firstBy.get(x), lastLegs = lastBy.get(y), baseX = baseBy.get(y);
     for (const dest of new Set(req.destinations)) {
-      if (dest === x || dest === y || dest === HUB || TW_AIRPORTS.has(dest)) continue;
+      if (dest === x || dest === y || dest === HUB || TW_AIRPORTS.has(dest) || countryOf(dest) === countryOf(y)) continue;
       const baseD = cheapestRoundTrip(HUB, dest, A, req.adults);
       if (!baseX || !baseD) continue;
       const baseline = baseD.total_price + baseX.total_price;
@@ -1247,10 +1212,10 @@ function planFourLegPair(req, A, B) {
         const total = first.total_price + four.total_price + last.total_price;
         if (!best || total < best.total) best = { total, aDep, aRet, bDep, bRet, connect, first, four, last, warns };
       }
-      if (!best || best.total >= baseline) continue;
+      if (!best) continue;
       const saving = baseline - best.total;
-      const xName = AIRPORT_BY_CODE.get(x)?.name || x;
-      plans.push({
+      const xName = AIRPORT_BY_CODE.get(x)?.name || x, yName = AIRPORT_BY_CODE.get(y)?.name || y;
+      (saving > 0 ? plans : losers).push({
         strategy: 'back_to_back_4leg', tickets: [best.first, best.four, best.last], total_cost: best.total, currency: 'TWD',
         total_travel_days: tripDays(best.aDep, best.aRet) + tripDays(best.bDep, best.bRet),
         ticket_roles: ['單買初段', `外站四腿票：${x} 出發`, '單買最後一段'],
@@ -1262,13 +1227,18 @@ function planFourLegPair(req, A, B) {
           ...best.warns,
           { level: 'medium', code: 'four_leg_first_segment', message: `四腿票第1段 ${x}→${HUB} 必須搭乘，未搭乘後續航段全部作廢 —所以要先單買初段飛到外站` },
           { level: 'low', code: 'four_leg_loop', message: `最後一段 ${y}→${HUB} 也可改搭下一張${y}出發四腿票的第1段（循環），省下這張單程` },
-          { level: 'low', code: 'four_leg_savings_estimate', message: `比旅程A買 ${HUB}⇄${dest}、旅程B買 ${HUB}⇄${y} 一般來回 (共 ${baseline.toLocaleString()}) 省 ${saving.toLocaleString()} TWD（${Math.round(saving / baseline * 100)}%）` },
+          savingWarning('four_leg_savings_estimate', `旅程A買 ${HUB}⇄${dest}、旅程B買 ${HUB}⇄${y} 一般來回`, baseline, best.total),
+          { level: 'medium', code: 'four_leg_origin_open_jaw', message: `第1段從 ${x} 出發、第4段飛 ${y}（不同國家）＝起點開口：是否能整張開票依航空公司票價規則而定，以 Google Flights / Trip.com 多段整張報價為準` },
         ],
-        explain: `四腿票 ${x}→${HUB}→${dest}→${HUB}→${y}（${xName} 外站${y !== x ? '，頭尾不同' : ''}）＋單買初段/最後一段，兩趟省 ${saving.toLocaleString()}`,
+        explain: `四腿票 ${x}→${HUB}→${dest}→${HUB}→${y}（${xName} 外站，旅程B ${yName}）＋單買初段/最後一段，${savingText(saving)}`,
+        _extra: -saving,
       });
     }
   }
-  return plans.sort((a, b) => a.total_cost - b.total_cost);
+  plans.sort((a, b) => a.total_cost - b.total_cost);
+  // Nothing beats ordinary round trips: still show the closest real comparison.
+  if (!plans.length && losers.length) plans.push(losers.reduce((a, b) => (b._extra < a._extra ? b : a)));
+  return plans;
 }
 
 /* =========================================================================
@@ -1349,7 +1319,7 @@ function bookingLinks(ticket, adults) {
   ];
 }
 
-const ISSUER_LABEL = { google_flights: 'Google Flights 實際票價', stub: '示意價 (demo 內建價格表，非即時)', amadeus: 'Amadeus 即時報價', skyscanner: 'Skyscanner API 報價' };
+const ISSUER_LABEL = { google_flights: 'Google Flights 實際票價' };
 
 /* =========================================================================
  * Scoring
@@ -1368,13 +1338,6 @@ function flightMinutes(plan) {
 function riskScore(plan) {
   const w = { low: 0.1, medium: 0.4, high: 1.0 };
   return (plan.warnings || []).reduce((s, x) => s + (w[x.level] || 0), 0);
-}
-
-// A plan mixing real Google Flights fares with 示意價 can't claim a real saving.
-function flagMixedSources(plan) {
-  const sources = new Set(plan.tickets.map(t => t.issuer));
-  if (!(sources.has('google_flights') && sources.size > 1)) return plan;
-  return { ...plan, warnings: [{ level: 'high', code: 'mixed_fare_sources', message: '此方案混用 Google Flights 實際票價與示意價（快照沒涵蓋的票），總價與省下金額僅供參考' }, ...plan.warnings] };
 }
 
 function scorePlans(plans, weights) {
@@ -1453,11 +1416,9 @@ function renderResults() {
   } else pill.hidden = true;
 
   const farePill = document.getElementById('r-fare-pill');
-  if (fares && fares.real + fares.stub) {
+  if (fares && fares.real + fares.missing) {
     farePill.hidden = false;
-    farePill.textContent = fares.real
-      ? `真實票價 ${fares.real} / ${fares.real + fares.stub} 次查詢 · Google Flights ${FARES.generated_at.slice(0, 10)}`
-      : '無真實票價快照涵蓋，全部為示意價';
+    farePill.textContent = `實價命中 ${fares.real} / ${fares.real + fares.missing} 次查詢 · 資料 ${tpeTime(FARES.generated_at)}`;
     farePill.classList.toggle('none', !fares.real);
   } else farePill.hidden = true;
 
@@ -1489,7 +1450,14 @@ function renderResults() {
   renderPlanList(visible);
   renderCompare(visible);
 
-  document.getElementById('empty').hidden = visible.length !== 0;
+  const empty = document.getElementById('empty');
+  empty.hidden = visible.length !== 0;
+  if (!visible.length) {
+    const f = state.result.fares || {};
+    empty.innerHTML = '找不到方案。' + (f.missing
+      ? `<ul><li>${f.missing} 個查詢在票價資料庫裡沒有實價 —— 改選沒有「無資料」標記的機場與連假，或把日期彈性調回 ±${fareCoverage().flex} 天。</li><li>反向票＋倒買法 / 四腿票需要兩個不重疊的時段；四腿票外站要選至少 2 個不同國家。</li></ul>`
+      : '試著放寬預算、調大日期彈性，或多勾幾個策略。');
+  }
   document.getElementById('plan-list').hidden = visible.length === 0;
 }
 
@@ -1570,6 +1538,14 @@ function renderPlanList(plans) {
   });
 }
 
+// Change since the previous crawl of the same query (fare database history).
+function priceDelta(t) {
+  if (t.prev == null || t.unit_price == null) return '';
+  const d = t.unit_price - t.prev;
+  if (!d) return '';
+  return `<span class="delta ${d < 0 ? 'down' : 'up'}" title="${t.prev_at} 爬到 ${t.prev.toLocaleString()}">${d < 0 ? '↓' : '↑'} ${Math.abs(d).toLocaleString()} vs ${md(t.prev_at)}</span>`;
+}
+
 function renderPlan(plan, rank) {
   const fav = state.favorites.has(fingerprint(plan));
   const key = `${plan.strategy}-${rank-1}-${plan.tickets[0]?.offer_id || ''}`;
@@ -1591,6 +1567,7 @@ function renderPlan(plan, rank) {
           <div class="meta">
             <span class="rank mono">#${rank}</span>
             <span class="strat">${STRATEGY_LABEL[plan.strategy] || plan.strategy}</span>
+            ${plan.warnings.some(w => w.code === 'no_saving') ? '<span class="tag-nosave">不划算 · 僅供比較</span>' : ''}
             ${plan.window_label ? `<span class="slot-tag">${escapeHtml(plan.window_label)}</span>` : ''}
             <span class="explain">${escapeHtml(plan.explain || '')}</span>
           </div>
@@ -1608,7 +1585,7 @@ function renderPlan(plan, rank) {
             ${plan.tickets.map((t, ti) => `
               <section class="ticket">
                 <h4>${plan.ticket_roles?.[ti] ? `票 ${ti+1}｜${escapeHtml(plan.ticket_roles[ti])}` : ticketCount > 1 ? `票 ${ti+1}` : '票'} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
-                <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()} · ${t.fare_class || '—'} · ${t.baggage_through_checked ? '行李直掛' : '需提領重掛'}</div>
+                <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()}${priceDelta(t)} · ${t.fare_class || '經濟艙'} · ${t.baggage_through_checked ? '行李直掛' : '需提領重掛'}</div>
                 <ol>${t.legs.map(l => `<li>${escapeHtml(l.origin)}→${escapeHtml(l.destination)} · ${l.estimated ? `航班待選 · ${l.departure.slice(0, 10)}` : `${escapeHtml(l.flight_number || l.carrier)} · ${l.departure.slice(0,16).replace('T',' ')}`}</li>`).join('')}</ol>
                 <div class="src ${t.issuer === 'google_flights' ? 'real' : ''}">價格來源：${escapeHtml(ISSUER_LABEL[t.issuer] || t.issuer || '—')}${t.issuer === 'google_flights' ? `（${t.fare_at} 擷取，1 位成人最低總價）` : ''}
                   <div class="links">${bookingLinks(t, plan.adults || 1).map(b => `<a href="${escapeHtml(b.url)}" target="_blank" rel="noopener noreferrer">${b.label} ↗</a>`).join('')}</div>
@@ -1846,10 +1823,13 @@ function runSearch(form) {
     flight: Number(document.getElementById('w-flight').value) || 0,
     risk: Number(document.getElementById('w-risk').value) || 0,
   };
-  plans = scorePlans(plans.map(flagMixedSources), weights);
+  plans = scorePlans(plans, weights);
 
   const cache = CachingProvider.stats();
-  return { plans, matrix, cache, notices, fares: { ...fareStats } };
+  if (fareStats.missing) {
+    notices.push(`${fareStats.missing} 個查詢不在票價資料庫（標「無資料」的機場/連假，或比爬取範圍更大的日期彈性），相關組合已略過 —— 不會用模擬價格補。`);
+  }
+  return { plans, matrix, cache, notices, fares: { real: fareStats.real, missing: fareStats.missing } };
 }
 
 /* =========================================================================
@@ -1902,7 +1882,8 @@ function renderChips() {
   const box = document.getElementById('holiday-chips');
   box.innerHTML = LEAVE_STRATEGIES_2027.map(h => {
     const on = slots.some(s => s.holidayKey === h.key);
-    return `<button type="button" class="chip ${on ? 'on' : ''}" data-key="${h.key}" aria-pressed="${on}" title="${escapeHtml(h.desc)}">${on ? '✓' : '+'} ${h.label}<span class="mono">${h.start.slice(5)}→${h.end.slice(5)}</span></button>`;
+    const nodata = !fareCoverage().holidays.has(h.key);
+    return `<button type="button" class="chip ${on ? 'on' : ''} ${nodata ? 'nodata' : ''}" data-key="${h.key}" aria-pressed="${on}" title="${escapeHtml(h.desc)}${nodata ? '（爬蟲尚未涵蓋：Google Flights 只賣約 11 個月內的機票，或不在爬取清單）' : ''}">${on ? '✓' : '+'} ${h.label}<span class="mono">${h.start.slice(5)}→${h.end.slice(5)}</span></button>`;
   }).join('');
 }
 
@@ -1950,9 +1931,10 @@ function updateSlotSummary() {
 }
 
 function wireSlots() {
-  // Defaults match the daily fare snapshot (Google Flights sells ~11 months ahead).
-  slots.push(slotFromHoliday(holidayByKey.get('lunar_ny'), 1));
-  slots.push(slotFromHoliday(holidayByKey.get('qingming'), 1));
+  // Defaults = the crawled holidays (Google Flights sells ~11 months ahead).
+  const cov = fareCoverage();
+  const crawled = LEAVE_STRATEGIES_2027.filter(h => cov.holidays.has(h.key)).slice(0, 2);
+  for (const h of crawled.length ? crawled : [holidayByKey.get('lunar_ny'), holidayByKey.get('qingming')]) slots.push(slotFromHoliday(h, cov.flex));
 
   document.getElementById('holiday-chips').addEventListener('click', e => {
     const chip = e.target.closest('.chip');
@@ -2006,9 +1988,10 @@ function renderPicker(id, title, airports, selected) {
   const groups = new Map();
   for (const a of airports) groups.set(a.group, [...(groups.get(a.group) || []), a]);
   const el = document.getElementById(id);
+  const covered = fareCoverage().airports;
   el.innerHTML = `<div class="head">${title} · 已選 <span class="n">${selected.size}</span></div>` + [...groups].map(([g, list]) =>
     `<div class="row"><span class="grp">${g}</span>${list.map(a =>
-      `<label><input type="checkbox" value="${a.code}" ${selected.has(a.code) ? 'checked' : ''}>${a.name}<span class="code">${a.code}</span></label>`).join('')}</div>`).join('');
+      `<label class="${covered.has(a.code) ? '' : 'nodata'}" title="${covered.has(a.code) ? '' : '爬蟲尚未涵蓋，選了不會有價格'}"><input type="checkbox" value="${a.code}" ${selected.has(a.code) ? 'checked' : ''}>${a.name}<span class="code">${a.code}</span></label>`).join('')}</div>`).join('');
   el.addEventListener('change', () => {
     el.querySelector('.n').textContent = checkedCodes(id).length;
     updateSlotSummary();
@@ -2020,9 +2003,25 @@ function checkedCodes(id) {
 }
 
 function wirePickers() {
+  // Defaults = what the crawler covers, so the first search is all real fares.
+  const c = fareCoverage();
   renderPicker('pick-origins', '出發機場', AIRPORTS.filter(a => a.group === '台灣'), new Set(['TPE']));
-  renderPicker('pick-dest', '目的地 (可多選，反向票/倒買法可讓兩趟去不同城市)', AIRPORTS.filter(a => a.group !== '台灣'), new Set(['NRT', 'KIX', 'LHR']));
-  renderPicker('pick-outer', '四腿票外站 (第1段出發 / 第4段抵達)', AIRPORTS.filter(a => a.outstation), new Set(['HKG']));
+  renderPicker('pick-dest', '目的地 (可多選，反向票/倒買法可讓兩趟去不同城市)', AIRPORTS.filter(a => a.group !== '台灣'), new Set(c.destinations.length ? c.destinations : ['NRT', 'KIX']));
+  renderPicker('pick-outer', '四腿票外站 (第1段出發、第4段抵達第三國；至少選 2 個不同國家)', AIRPORTS.filter(a => a.outstation), new Set(c.outer.length ? c.outer : ['HKG', 'ICN']));
+  document.getElementById('f-outer-stay').value = c.stay;
+  document.getElementById('f-bulk-flex').value = c.flex;
+}
+
+/* Refresh 無資料 marks after the database changes, keeping what is checked. */
+function applyCoverage() {
+  const covered = fareCoverage().airports;
+  for (const label of document.querySelectorAll('.picker label')) {
+    const ok = covered.has(label.querySelector('input').value);
+    label.classList.toggle('nodata', !ok);
+    label.title = ok ? '' : '爬蟲尚未涵蓋，選了不會有價格';
+  }
+  renderChips();
+  renderDbStatus();
 }
 
 function updatePairHint() {
@@ -2119,8 +2118,36 @@ function wireTheme() {
   });
 }
 
+/* Live fare database: the artifact's shared db (collection "fares": a meta doc
+ * + chunk docs, written by Claude after each crawl) replaces the embedded copy
+ * whenever it is newer — open pages update without a republish. */
+async function subscribeLiveFares() {
+  if (!window.claude || typeof window.claude.use !== 'function') return;
+  let db = null;
+  try { db = await window.claude.use('db'); } catch { return; }
+  if (!db) return;
+  db.collection('fares').onSnapshot(snap => {
+    const docs = new Map(snap.docs.map(d => [d.id, d.data()]));
+    const meta = docs.get('meta');
+    if (!meta || !Array.isArray(meta.chunks)) return;
+    const fares = {};
+    for (const id of meta.chunks) {
+      const c = docs.get(id);
+      if (!c || c.gen !== meta.gen) return; // a sync is mid-way; wait for the rest
+      Object.assign(fares, c.fares);
+    }
+    liveDb = true;
+    if (FARES.generated_at && Date.parse(meta.generated_at) <= Date.parse(FARES.generated_at)) { renderDbStatus(); return; }
+    FARES = { ...FARES, generated_at: meta.generated_at, coverage: meta.coverage || FARES.coverage, fares };
+    applyCoverage();
+    document.getElementById('search-form').requestSubmit();
+  }, () => {});
+}
+
 function init() {
   loadFareSnapshot();
+  renderDbStatus();
+  subscribeLiveFares();
   wirePickers();
   wireSlots();
   syncRangeLabels();
