@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T16:55:38+00:00",
+ "at": "2026-10-17T16:57:11+00:00",
  "publishes": {
-  "ok": 15,
+  "ok": 84,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 434,
+ "fares_saved": 441,
  "log": [
   "16:54:08 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "16:54:50 request received: rid selftest1792256087 30 keys",
@@ -25,6 +25,23 @@
   "16:55:12 request received: rid mvcn0hbu05t87 14 keys",
   "16:55:12 handle mvcn0hbu05t87: first_chunk=False total=160",
   "16:55:12 request received: rid mvcn0hbu05t87 14 keys",
-  "16:55:12 handle mvcn0hbu05t87: first_chunk=False total=160"
+  "16:55:12 handle mvcn0hbu05t87: first_chunk=False total=160",
+  "16:55:41 request received: rid mvcn15adotvie 72 keys",
+  "16:55:41 handle mvcn15adotvie: first_chunk=True total=160",
+  "16:55:41 request received: rid mvcn15adotvie 72 keys",
+  "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
+  "16:55:41 request received: rid mvcn15adotvie 41 keys",
+  "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
+  "16:55:41 request received: rid mvcn15adotvie 41 keys",
+  "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
+  "16:55:41 request received: rid mvcn15adotvie 36 keys",
+  "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
+  "16:55:41 request received: rid mvcn15adotvie 36 keys",
+  "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
+  "16:55:41 request received: rid mvcn15adotvie 11 keys",
+  "16:55:41 request received: rid mvcn15adotvie 11 keys",
+  "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
+  "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
+  "16:56:55 request mvcn15adotvie: 11 keys done in 74s; ntfy publishes {'ok': 80, 'r429': 0, 'fail': 0}"
  ]
 }
