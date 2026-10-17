@@ -3,6 +3,7 @@
 // Docker the proxy keeps "api:8000" out of the public URL).
 
 import type {
+  AirportCatalog,
   Holiday,
   ItineraryRequestIn,
   LeaveStrategy,
@@ -42,6 +43,7 @@ async function postRaw(path: string, body: unknown): Promise<Response> {
 
 export const api = {
   holidays: () => get<Holiday[]>("/holidays/2027"),
+  airports: () => get<AirportCatalog>("/airports"),
   leaveStrategies: () => get<LeaveStrategy[]>("/holidays/2027/leave-strategies"),
   search: (req: ItineraryRequestIn) => post<SearchResult>("/search", req),
   planAsIcs: async (plan: unknown): Promise<Blob> => {

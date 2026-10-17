@@ -187,7 +187,17 @@ export function ResultBoard({ result }: { result: SearchResult }) {
         <ComparePanel plans={selectedPlans} onClose={() => setComparing(false)} />
       )}
 
-      <MatrixHeatmap plans={result.plans} />
+      {result.notices?.map((n) => (
+        <p
+          key={n}
+          className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-200"
+        >
+          {n}
+        </p>
+      ))}
+
+      {/* Two-trip plans span months; the outbound×return grid is per single trip. */}
+      <MatrixHeatmap plans={result.plans.filter((p) => !p.trips?.length)} />
 
       <div className="space-y-3">
         {plans.map((plan, i) => {

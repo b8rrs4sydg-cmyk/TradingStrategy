@@ -11,8 +11,8 @@ import { sharePlanUrl } from "@/lib/share";
 const STRATEGY_LABEL: Record<TicketStrategyType, string> = {
   standard: "一般來回",
   open_jaw: "Open-jaw",
-  reverse: "反向票",
-  back_to_back_4leg: "外站四段票",
+  reverse: "反向票＋倒買法",
+  back_to_back_4leg: "外站四腿票",
   hidden_city: "隱藏城市",
 };
 
@@ -23,7 +23,8 @@ const ISSUER_LABEL: Record<string, string> = {
 };
 
 function ticketTitle(plan: StrategyPlanOut, i: number): string {
-  if (plan.strategy === "back_to_back_4leg") return i === 0 ? "票甲 (外站)" : "票乙 (中段)";
+  const role = plan.ticket_roles?.[i];
+  if (role) return `票 ${i + 1}｜${role}`;
   return plan.tickets.length > 1 ? `票 ${i + 1}` : "票";
 }
 
@@ -124,6 +125,12 @@ export function PlanCard({
             <div className="text-lg font-semibold">
               {plan.currency} {twd}
             </div>
+            {(plan.trips?.length ?? 0) > 1 && (
+              <div className="text-xs text-slate-500">
+                {plan.trips!.length} 趟合計 · 平均每趟{" "}
+                {Math.round(plan.total_cost / plan.trips!.length).toLocaleString("en-US")}
+              </div>
+            )}
             {plan.score !== null && (
               <div className="text-xs text-slate-500">
                 score {plan.score.toFixed(3)}
@@ -159,7 +166,15 @@ export function PlanCard({
               {downloading ? "匯出中…" : "加入日曆 (.ics)"}
             </button>
           </div>
-          <TimelineView plan={plan} />
+          {plan.trips && plan.trips.length > 0 && (
+            <ol className="space-y-1 rounded-md bg-amber-50 p-3 text-xs text-amber-900 dark:bg-amber-900/20 dark:text-amber-200">
+              {plan.trips.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ol>
+          )}
+          {/* A two-trip plan spans months; the hour-scale timeline is unreadable there. */}
+          {!plan.trips?.length && <TimelineView plan={plan} />}
 
           <div className="grid gap-4 md:grid-cols-2">
             {plan.tickets.map((t, i) => (

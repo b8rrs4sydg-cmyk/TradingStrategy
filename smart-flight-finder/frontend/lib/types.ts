@@ -85,7 +85,7 @@ export type ItineraryRequestIn = {
   scoring_weights: ScoringWeights | null;
   date_windows: DateWindowIn[];
   back_to_back_outer_stations: string[];
-  back_to_back_outer_buffer_days: number;
+  outer_stay_days: number;
 };
 
 export type FlightLegOut = {
@@ -133,6 +133,8 @@ export type StrategyPlanOut = {
   score: number | null;
   explain: string | null;
   window_label?: string | null;
+  ticket_roles?: string[];
+  trips?: string[];
 };
 
 export type ProviderCacheStats = {
@@ -147,4 +149,18 @@ export type SearchResult = {
   date_matrix_size: number;
   plans: StrategyPlanOut[];
   provider_cache?: ProviderCacheStats;
+  notices?: string[];
+};
+
+export type AirportOut = {
+  code: string;
+  name_zh: string;
+  country: string;
+  group: string;
+};
+
+export type AirportCatalog = {
+  origins: AirportOut[];
+  destinations: AirportOut[];
+  outstations: AirportOut[];
 };

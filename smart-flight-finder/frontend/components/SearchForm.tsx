@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { api } from "@/lib/api";
 import type {
+  AirportCatalog,
+  AirportOut,
   CandidateWindowIn,
   DateWindowIn,
   ItineraryRequestIn,
@@ -79,8 +81,9 @@ export function SearchForm({ onResult, onError }: Props) {
   const [tripType, setTripType] = useState<TripType>("round_trip");
   const [candidates, setCandidates] = useState<Candidate[]>(INITIAL_CANDIDATES);
   const [bulkFlex, setBulkFlex] = useState(2);
-  const [origins, setOrigins] = useState("TPE");
-  const [destinations, setDestinations] = useState("NRT, HND");
+  const [catalog, setCatalog] = useState<AirportCatalog | null>(null);
+  const [origins, setOrigins] = useState<Set<string>>(new Set(["TPE"]));
+  const [destinations, setDestinations] = useState<Set<string>>(new Set(["NRT", "KIX"]));
   const [adults, setAdults] = useState(1);
   const [budget, setBudget] = useState<string>("");
   const [segments, setSegments] = useState<Segment[]>(INITIAL_SEGMENTS);
@@ -92,8 +95,8 @@ export function SearchForm({ onResult, onError }: Props) {
     back_to_back_4leg: false,
     hidden_city: false,
   });
-  const [outerStations, setOuterStations] = useState("XMN");
-  const [outerBufferDays, setOuterBufferDays] = useState(2);
+  const [outerStations, setOuterStations] = useState<Set<string>>(new Set(["HKG"]));
+  const [outerStayDays, setOuterStayDays] = useState(2);
   const [weights, setWeights] = useState<ScoringWeights>(DEFAULT_WEIGHTS);
   const [weightsOpen, setWeightsOpen] = useState(false);
 
@@ -109,6 +112,10 @@ export function SearchForm({ onResult, onError }: Props) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  useEffect(() => {
+    api.airports().then(setCatalog).catch(() => setCatalog(FALLBACK_AIRPORTS));
   }, []);
 
   useEffect(() => {
@@ -235,8 +242,8 @@ export function SearchForm({ onResult, onError }: Props) {
         adults,
         children: 0,
         infants: 0,
-        origins: origins.split(",").map((s) => s.trim()).filter(Boolean),
-        destinations: destinations.split(",").map((s) => s.trim()).filter(Boolean),
+        origins: [...origins],
+        destinations: [...destinations],
         strategies: selectedStrategies.length ? selectedStrategies : ["standard"],
         holiday_key: null,
         candidate_windows: candidateWindows,
@@ -244,11 +251,8 @@ export function SearchForm({ onResult, onError }: Props) {
         max_pto_days: null,
         scoring_weights: weights,
         date_windows: windows,
-        back_to_back_outer_stations: outerStations
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
-        back_to_back_outer_buffer_days: outerBufferDays,
+        back_to_back_outer_stations: [...outerStations],
+        outer_stay_days: outerStayDays,
       };
       const result = await api.search(req);
       onResult(result, Date.now() - startedAt);
@@ -261,6 +265,8 @@ export function SearchForm({ onResult, onError }: Props) {
 
   const fourLegOn = enabledStrategies.back_to_back_4leg;
   const isMultiCity = tripType === "multi_city";
+  const pairStrategyOn = enabledStrategies.reverse || enabledStrategies.back_to_back_4leg;
+  const airportsMissing = !isMultiCity && (origins.size === 0 || destinations.size === 0);
 
   return (
     <form
@@ -293,26 +299,23 @@ export function SearchForm({ onResult, onError }: Props) {
         </Field>
       </div>
 
-      {!isMultiCity && (
-        <div className="grid gap-4 md:grid-cols-2">
-          <Field label="出發機場 (以逗號分隔)">
-            <input
-              type="text"
-              value={origins}
-              onChange={(e) => setOrigins(e.target.value)}
-              placeholder="TPE, TSA, KHH"
-              className={fieldClass}
-            />
-          </Field>
-          <Field label="目的地 (IATA 或國碼)">
-            <input
-              type="text"
-              value={destinations}
-              onChange={(e) => setDestinations(e.target.value)}
-              placeholder="NRT, HND, KIX"
-              className={fieldClass}
-            />
-          </Field>
+      {!isMultiCity && catalog && (
+        <div className="space-y-3">
+          <AirportPicker
+            title="出發機場"
+            airports={catalog.origins}
+            selected={origins}
+            onChange={setOrigins}
+          />
+          <AirportPicker
+            title="目的地 (可多選，反向票/倒買法可讓兩趟去不同城市)"
+            airports={catalog.destinations}
+            selected={destinations}
+            onChange={setDestinations}
+          />
+          {airportsMissing && (
+            <p className="text-xs text-rose-600">請至少勾選一個出發機場與一個目的地</p>
+          )}
         </div>
       )}
 
@@ -545,8 +548,8 @@ export function SearchForm({ onResult, onError }: Props) {
           {(
             [
               ["standard", "一般來回 / 直購"],
-              ["reverse", "反向票 (A-B-A vs B-A-B)"],
-              ["back_to_back_4leg", "外站四段票"],
+              ["reverse", "反向票＋倒買法 (一次買兩趟)"],
+              ["back_to_back_4leg", "外站四腿票 (一次買兩趟)"],
               ["open_jaw", "Open-jaw (開放式)"],
               ["hidden_city", "隱藏城市 (Skiplag)"],
             ] as const
@@ -564,23 +567,33 @@ export function SearchForm({ onResult, onError }: Props) {
           ))}
         </div>
 
-        {fourLegOn && (
-          <div className="mt-4 grid gap-3 md:grid-cols-2 border-t border-slate-200 pt-4 dark:border-slate-800">
-            <Field label="四段票：外站 (XMN, HKG, ICN ...)">
-              <input
-                type="text"
-                value={outerStations}
-                onChange={(e) => setOuterStations(e.target.value)}
-                className={fieldClass}
-              />
-            </Field>
-            <Field label={`外站緩衝 ±${outerBufferDays} 天`}>
+        {pairStrategyOn && (
+          <p className="mt-3 text-xs text-slate-500">
+            反向票＋倒買法、外站四腿票都是「一次購票、兩趟旅程」：會用備選時段兩兩配對
+            (較早的當旅程 A、較晚的當旅程 B)。
+            {candidates.length < 2 && (
+              <span className="text-amber-700 dark:text-amber-400">
+                {" "}目前只有 {candidates.length} 個時段，請再加入一個 (例如 春節 + 聖誕)。
+              </span>
+            )}
+          </p>
+        )}
+
+        {fourLegOn && catalog && (
+          <div className="mt-4 space-y-3 border-t border-slate-200 pt-4 dark:border-slate-800">
+            <AirportPicker
+              title="四腿票外站 (第1段出發 / 第4段抵達)"
+              airports={catalog.outstations}
+              selected={outerStations}
+              onChange={setOuterStations}
+            />
+            <Field label={`旅程 A 先單買初段到外站，停留 ${outerStayDays} 天後飛四腿票第1+2段`}>
               <input
                 type="range"
                 min={0}
                 max={7}
-                value={outerBufferDays}
-                onChange={(e) => setOuterBufferDays(Number(e.target.value))}
+                value={outerStayDays}
+                onChange={(e) => setOuterStayDays(Number(e.target.value))}
               />
             </Field>
           </div>
@@ -646,7 +659,7 @@ export function SearchForm({ onResult, onError }: Props) {
       <div className="flex items-center gap-3">
         <button
           type="submit"
-          disabled={submitting || candidatesInvalid}
+          disabled={submitting || candidatesInvalid || airportsMissing}
           className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? "搜尋中…" : "搜尋"}
@@ -664,6 +677,61 @@ export function SearchForm({ onResult, onError }: Props) {
 
 const fieldClass =
   "w-full rounded border border-slate-300 bg-white px-2 py-1 text-sm text-slate-900 shadow-sm focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100";
+
+const FALLBACK_AIRPORTS: AirportCatalog = {
+  origins: [{ code: "TPE", name_zh: "台北桃園", country: "TW", group: "台灣" }],
+  destinations: [
+    { code: "NRT", name_zh: "東京成田", country: "JP", group: "日本" },
+    { code: "KIX", name_zh: "大阪關西", country: "JP", group: "日本" },
+  ],
+  outstations: [{ code: "HKG", name_zh: "香港", country: "HK", group: "港澳/中國" }],
+};
+
+function AirportPicker({
+  title,
+  airports,
+  selected,
+  onChange,
+}: {
+  title: string;
+  airports: AirportOut[];
+  selected: Set<string>;
+  onChange: (next: Set<string>) => void;
+}) {
+  const groups = new Map<string, AirportOut[]>();
+  for (const a of airports) groups.set(a.group, [...(groups.get(a.group) ?? []), a]);
+  const toggle = (code: string, on: boolean) => {
+    const next = new Set(selected);
+    if (on) next.add(code);
+    else next.delete(code);
+    onChange(next);
+  };
+  return (
+    <fieldset className="rounded-lg border border-slate-200 p-3 dark:border-slate-800">
+      <legend className="px-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+        {title} · 已選 {selected.size}
+      </legend>
+      <div className="space-y-2">
+        {[...groups.entries()].map(([group, list]) => (
+          <div key={group} className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+            <span className="w-16 shrink-0 text-xs text-slate-500">{group}</span>
+            {list.map((a) => (
+              <label key={a.code} className="inline-flex cursor-pointer items-center gap-1">
+                <input
+                  type="checkbox"
+                  checked={selected.has(a.code)}
+                  onChange={(e) => toggle(a.code, e.target.checked)}
+                />
+                {a.name_zh}
+                <span className="font-mono text-[11px] text-slate-400">{a.code}</span>
+              </label>
+            ))}
+          </div>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
 
 const smallBtn =
   "rounded border border-slate-300 px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800";
