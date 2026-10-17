@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:18:26+00:00",
+ "at": "2026-10-17T19:19:58+00:00",
  "publishes": {
-  "ok": 127,
+  "ok": 144,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1606,
+ "fares_saved": 1635,
  "log": [
   "19:09:19 http front door: https://work-posted-gnu-procedure.trycloudflare.com",
   "19:09:19 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -53,6 +53,17 @@
   "19:17:03 request received: rid mvcs2ye99s1vb 84 keys",
   "19:17:03 handle mvcs2ye99s1vb: first_chunk=True total=160",
   "19:17:04 request received: rid mvcs2ye99s1vb 76 keys",
-  "19:17:04 handle mvcs2ye99s1vb: first_chunk=False total=160"
+  "19:17:04 handle mvcs2ye99s1vb: first_chunk=False total=160",
+  "19:18:33 request mvcs2ye99s1vb: chunk of 76 keys done in 89s; ntfy publishes {'ok': 129, 'r429': 0, 'fail': 0}",
+  "19:18:47 request mvcs2ye99s1vb: chunk of 84 keys done in 103s; ntfy publishes {'ok': 133, 'r429': 0, 'fail': 0}",
+  "19:18:49 request mvcs2ye99s1vb: final sent (160/160); ntfy publishes {'ok': 134, 'r429': 0, 'fail': 0}",
+  "19:18:51 request received: rid mvcs58j3g5aku 9 keys",
+  "19:18:51 handle mvcs58j3g5aku: first_chunk=True total=9",
+  "19:18:51 request mvcs58j3g5aku: chunk of 9 keys done in 0s; ntfy publishes {'ok': 134, 'r429': 0, 'fail': 0}",
+  "19:18:52 request mvcs58j3g5aku: final sent (9/9); ntfy publishes {'ok': 135, 'r429': 0, 'fail': 0}",
+  "19:18:53 request received: rid mvcs5ajlt62xu 12 keys",
+  "19:18:53 handle mvcs5ajlt62xu: first_chunk=True total=12",
+  "19:18:53 request mvcs5ajlt62xu: chunk of 12 keys done in 0s; ntfy publishes {'ok': 135, 'r429': 0, 'fail': 0}",
+  "19:18:54 request mvcs5ajlt62xu: final sent (12/12); ntfy publishes {'ok': 135, 'r429': 0, 'fail': 0}"
  ]
 }
