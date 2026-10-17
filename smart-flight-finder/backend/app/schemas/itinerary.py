@@ -91,9 +91,10 @@ class ItineraryRequestIn(BaseModel):
     date_windows: list[DateWindowIn] = Field(default_factory=list)
 
     # ---- Strategy-specific knobs ------------------------------------------
-    # 四段票：票甲的外站候選 (XMN, HKG, …) 以及可比 inner-dates 彈性的額外天數
+    # 外站四腿票：外站候選 (HKG, BKK, …)；旅程 A 先單買初段飛到外站、停留
+    # outer_stay_days 天後再飛四腿票第1+2段 (0 = 同日接續)
     back_to_back_outer_stations: list[str] = Field(default_factory=list, max_length=8)
-    back_to_back_outer_buffer_days: int = Field(default=2, ge=0, le=14)
+    outer_stay_days: int = Field(default=2, ge=0, le=7)
 
     @field_validator("origins", "destinations", "back_to_back_outer_stations")
     @classmethod

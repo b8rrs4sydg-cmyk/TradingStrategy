@@ -30,6 +30,11 @@ class _LegIn(BaseModel):
     stops: int = 0
 
 
+class _LinkIn(BaseModel):
+    source: str
+    url: str
+
+
 class _TicketIn(BaseModel):
     offer_id: str
     legs: list[_LegIn]
@@ -38,6 +43,7 @@ class _TicketIn(BaseModel):
     fare_class: str | None = None
     baggage_through_checked: bool = True
     issuer: str | None = None
+    booking_links: list[_LinkIn] = []
 
 
 class _PlanIn(BaseModel):
@@ -125,8 +131,11 @@ def export_plans_as_csv(req: _CsvRequest) -> Any:
     for pi, p in enumerate(req.plans):
         dc_tickets = _to_dc(p).tickets
         for ti, t in enumerate(p.tickets):
+            # Prefer the link the search returned: it knows multi-city segments
+            # (四腿票 / 倒買法) that can't be recovered from the legs alone.
             trip_url = next(
-                b.url for b in booking_links(dc_tickets[ti]) if b.source == "trip_com"
+                (b.url for b in t.booking_links if b.source == "trip_com"),
+                next(b.url for b in booking_links(dc_tickets[ti]) if b.source == "trip_com"),
             )
             for li, leg in enumerate(t.legs):
                 writer.writerow([

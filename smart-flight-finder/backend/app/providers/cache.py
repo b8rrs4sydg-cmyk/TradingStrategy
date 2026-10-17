@@ -9,10 +9,11 @@ hook will later feed a Redis-backed cache in production.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from datetime import date
 from typing import TYPE_CHECKING
 
-from app.providers.base import FlightOfferProvider
+from app.providers.base import FlightOfferProvider, Segment
 
 if TYPE_CHECKING:
     from app.services.strategies.base import TicketOffer
@@ -52,6 +53,18 @@ class CachingProvider:
             return_date=return_date,
             adults=adults,
         )
+        self._cache[key] = offers
+        return offers
+
+    def search_multi_city(
+        self, *, segments: Sequence[Segment], adults: int = 1
+    ) -> list[TicketOffer]:
+        key = ("mc", tuple(segments), adults)
+        if key in self._cache:
+            self._hits += 1
+            return self._cache[key]
+        self._misses += 1
+        offers = self._inner.search_multi_city(segments=segments, adults=adults)
         self._cache[key] = offers
         return offers
 

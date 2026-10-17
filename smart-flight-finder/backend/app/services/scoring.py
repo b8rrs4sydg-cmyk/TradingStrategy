@@ -37,10 +37,12 @@ def score_plans(
         w.strategy_risk / w_total,
     )
 
-    prices = [p.total_cost for p in plans]
-    flight_times = [_flight_minutes(p) for p in plans]
+    # Two-trip plans (反向票/倒買法, 四腿票) are compared per trip, otherwise
+    # they would always look twice as expensive as a single round trip.
+    prices = [p.total_cost / p.trip_count for p in plans]
+    flight_times = [_flight_minutes(p) / p.trip_count for p in plans]
     pto_eff = [
-        p.total_travel_days / max(pto_days_used or p.pto_days or 1, 1)
+        p.total_travel_days / p.trip_count / max(pto_days_used or p.pto_days or 1, 1)
         for p in plans
     ]
     risks = [_risk_score(p) for p in plans]

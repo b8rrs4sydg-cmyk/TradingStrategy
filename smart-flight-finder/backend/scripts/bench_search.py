@@ -18,15 +18,19 @@ from datetime import date
 
 from app.models.enums import (
     CabinClass,
-    DateWindowRole,
     TicketStrategyType,
     TripType,
 )
-from app.schemas.itinerary import DateWindowIn, ItineraryRequestIn
+from app.schemas.itinerary import CandidateWindowIn, ItineraryRequestIn
 from app.services.search import SearchService
 
 
-def build_request(flex: int, outer_buffer: int) -> ItineraryRequestIn:
+def build_request(flex: int, outer_stay: int) -> ItineraryRequestIn:
+    def slot(key: str, dep: date, ret: date) -> CandidateWindowIn:
+        return CandidateWindowIn(
+            holiday_key=key, depart=dep, return_date=ret, depart_flex=flex, return_flex=flex
+        )
+
     return ItineraryRequestIn(
         trip_type=TripType.ROUND_TRIP,
         cabin=CabinClass.ECONOMY,
@@ -39,20 +43,10 @@ def build_request(flex: int, outer_buffer: int) -> ItineraryRequestIn:
             TicketStrategyType.BACK_TO_BACK_4LEG,
         ],
         back_to_back_outer_stations=["XMN", "HKG"],
-        back_to_back_outer_buffer_days=outer_buffer,
-        date_windows=[
-            DateWindowIn(
-                role=DateWindowRole.OUTBOUND,
-                anchor_date=date(2027, 2, 5),
-                flex_before=flex,
-                flex_after=flex,
-            ),
-            DateWindowIn(
-                role=DateWindowRole.RETURN,
-                anchor_date=date(2027, 2, 11),
-                flex_before=flex,
-                flex_after=flex,
-            ),
+        outer_stay_days=outer_stay,
+        candidate_windows=[
+            slot("lunar_ny", date(2027, 2, 5), date(2027, 2, 15)),
+            slot("xmas", date(2027, 12, 23), date(2027, 12, 27)),
         ],
     )
 
@@ -60,16 +54,16 @@ def build_request(flex: int, outer_buffer: int) -> ItineraryRequestIn:
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--flex", type=int, default=3, help="±N days per window")
-    p.add_argument("--outer-buffer", type=int, default=2, help="4-leg outer buffer")
+    p.add_argument("--outer-stay", type=int, default=2, help="四腿票 外站停留天數")
     args = p.parse_args()
 
-    req = build_request(args.flex, args.outer_buffer)
+    req = build_request(args.flex, args.outer_stay)
     service = SearchService()
     t0 = time.perf_counter()
     matrix_size, plans, stats = service.run(req)
     elapsed = time.perf_counter() - t0
 
-    print(f"Request:   flex=±{args.flex}, outer_buffer=±{args.outer_buffer}")
+    print(f"Request:   flex=±{args.flex}, outer_stay={args.outer_stay}")
     print(f"Matrix:    {matrix_size} candidate date combinations (pre-prune)")
     print(f"Plans:     {len(plans)}")
     print(

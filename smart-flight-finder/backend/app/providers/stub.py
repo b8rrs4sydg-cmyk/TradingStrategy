@@ -2,17 +2,46 @@
 
 Fake prices follow a reproducible hash of (origin, destination, date, carrier)
 so tests can assert stable orderings without network.
+
+The fare model is deliberately simple but reproduces the two market effects
+the 反向票 / 倒買法 / 四腿票 strategies exploit:
+
+* Journeys that *start in Taiwan* during a Taiwan long weekend cost
+  ``TW_HOLIDAY_SURGE`` more; the same dates sold from a foreign market don't.
+* A multi-city journey sold from an outstation that passes through Taipei
+  twice (外站四段票 X→TPE→D→TPE→X) is priced in that cheaper market at
+  ``OUTSTATION_MULTI_CITY_FACTOR`` of the summed one-way fares.
 """
 
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Sequence
 from datetime import UTC, date, datetime, time, timedelta
 from typing import ClassVar
 
+from app.data.airports import BY_CODE, TW_AIRPORT_CODES
+from app.data.taiwan_holidays_2027 import LEAVE_STRATEGIES
 from app.models.enums import CabinClass
-from app.providers.base import FlightOfferProvider
+from app.providers.base import FlightOfferProvider, Segment
 from app.services.strategies.base import FlightLeg, TicketOffer
+
+TW_HOLIDAY_SURGE = 1.30
+MULTI_CITY_FACTOR = 0.85
+OUTSTATION_MULTI_CITY_FACTOR = 0.62
+_HUB = "TPE"
+
+# Departures from Taiwan on these days (each 連假 from the day before it
+# starts to the day before it ends) are peak.
+_TW_PEAK_DAYS: frozenset[date] = frozenset(
+    s.window_start + timedelta(days=i)
+    for s in LEAVE_STRATEGIES
+    for i in range(-1, (s.window_end - s.window_start).days)
+)
+
+
+def market_factor(origin: str, day: date) -> float:
+    return TW_HOLIDAY_SURGE if origin in TW_AIRPORT_CODES and day in _TW_PEAK_DAYS else 1.0
 
 
 class StubFlightProvider:
@@ -47,23 +76,20 @@ class StubFlightProvider:
         return_date: date | None = None,
         adults: int = 1,
     ) -> list[TicketOffer]:
-        seed = self._ROUTE_SEEDS.get((origin, destination))
-        if seed is None:
-            # fall back to a neutral synthetic route
-            seed = (15000, 240, "ZZ", False)
-        base_price, duration_min, carrier, direct = seed
+        base_price, duration_min, carrier, direct = self._seed(origin, destination)
+        market = market_factor(origin, departure_date)
 
         day_jitter = self._jitter((origin, destination, departure_date, "ow"))
         outbound = self._leg(origin, destination, departure_date, carrier,
                              duration_min, direct, hour=9)
         if return_date is None:
-            price = int(base_price * (1 + day_jitter) * adults)
+            price = int(base_price * market * (1 + day_jitter) * adults)
             return [self._ticket(f"ow-{carrier}-{departure_date}", (outbound,), price)]
 
         return_leg = self._leg(destination, origin, return_date, carrier,
                                duration_min + 15, direct, hour=18)
         day_jitter_rt = self._jitter((origin, destination, departure_date, return_date, "rt"))
-        price = int((base_price * 1.7) * (1 + day_jitter_rt) * adults)
+        price = int((base_price * 1.7) * market * (1 + day_jitter_rt) * adults)
         return [
             self._ticket(
                 f"rt-{carrier}-{departure_date}-{return_date}",
@@ -72,9 +98,69 @@ class StubFlightProvider:
             )
         ]
 
+    def search_multi_city(
+        self, *, segments: Sequence[Segment], adults: int = 1
+    ) -> list[TicketOffer]:
+        if len(segments) < 2:
+            return []
+        seeds = [self._seed(o, d) for o, d, _ in segments]
+        carrier = max(seeds, key=lambda sd: sd[0])[2]
+        legs: list[FlightLeg] = []
+        for (o, d, day), (_, minutes, _, direct) in zip(segments, seeds, strict=True):
+            prev = legs[-1] if legs else None
+            if prev and prev.destination == o and prev.arrival.date() == day:
+                dep = prev.arrival + timedelta(minutes=150)  # same-ticket connection
+            else:
+                dep = datetime.combine(day, time(14, 0), tzinfo=UTC)
+            legs.append(
+                FlightLeg(
+                    origin=o,
+                    destination=d,
+                    departure=dep,
+                    arrival=dep + timedelta(minutes=minutes),
+                    carrier=carrier,
+                    flight_number=f"{carrier}{(hash((o, d, day)) % 900) + 100}",
+                    cabin=CabinClass.ECONOMY,
+                    stops=0 if direct else 1,
+                )
+            )
+
+        first_origin, _, first_day = segments[0]
+        hub_touches = sum(1 for o, d, _ in segments if _HUB in (o, d))
+        outstation = (
+            first_origin not in TW_AIRPORT_CODES and len(segments) >= 4 and hub_touches >= 4
+        )
+        factor = OUTSTATION_MULTI_CITY_FACTOR if outstation else MULTI_CITY_FACTOR
+        jitter = self._jitter(("mc", *segments))
+        price = int(
+            sum(sd[0] for sd in seeds)
+            * factor
+            * market_factor(first_origin, first_day)
+            * (1 + jitter)
+            * adults
+        )
+        offer_id = "mc-" + "-".join(f"{o}{d}{day:%m%d}" for o, d, day in segments)
+        return [self._ticket(offer_id, tuple(legs), price)]
+
     # ------------------------------------------------------------------
     # helpers
     # ------------------------------------------------------------------
+    def _seed(self, origin: str, destination: str) -> tuple[int, int, str, bool]:
+        seed = self._ROUTE_SEEDS.get((origin, destination))
+        if seed is not None:
+            return seed
+        if origin in TW_AIRPORT_CODES and destination in BY_CODE:
+            a = BY_CODE[destination]
+            if a.ow_from_tpe:
+                bump = 1.0 if origin == _HUB else 1.06
+                return (round(a.ow_from_tpe * bump, -2), a.minutes, a.carrier, True)
+        if destination in TW_AIRPORT_CODES and origin in BY_CODE:
+            a = BY_CODE[origin]
+            if a.ow_from_tpe:
+                bump = 0.98 if destination == _HUB else 1.04
+                return (round(a.ow_from_tpe * bump, -2), a.minutes + 10, a.carrier, True)
+        return (15000, 240, "ZZ", False)  # neutral synthetic route
+
     @staticmethod
     def _jitter(key: tuple[object, ...]) -> float:
         """Deterministic ±12% price jitter from a stable key."""

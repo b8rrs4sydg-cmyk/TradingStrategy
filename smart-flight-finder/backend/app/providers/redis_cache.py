@@ -19,11 +19,12 @@ from __future__ import annotations
 import json
 import logging
 import os
+from collections.abc import Sequence
 from dataclasses import asdict, is_dataclass
 from datetime import date, datetime
 from typing import TYPE_CHECKING, Any
 
-from app.providers.base import FlightOfferProvider
+from app.providers.base import FlightOfferProvider, Segment
 
 if TYPE_CHECKING:
     import redis
@@ -85,6 +86,20 @@ class RedisCachingProvider:
             return_date=return_date,
             adults=adults,
         )
+        self._safe_set(key, _encode_offers(offers))
+        return offers
+
+    def search_multi_city(
+        self, *, segments: Sequence[Segment], adults: int = 1
+    ) -> list[TicketOffer]:
+        parts = ":".join(f"{o}-{d}-{day.isoformat()}" for o, d, day in segments)
+        key = f"{_KEY_PREFIX}:mc:{parts}:{adults}"
+        cached = self._safe_get(key)
+        if cached is not None:
+            self._hits += 1
+            return _decode_offers(cached)
+        self._misses += 1
+        offers = self._inner.search_multi_city(segments=segments, adults=adults)
         self._safe_set(key, _encode_offers(offers))
         return offers
 

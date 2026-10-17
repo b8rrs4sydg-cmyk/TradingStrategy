@@ -25,6 +25,7 @@ from app.services.strategies import (
     StandardPlanner,
     StrategyPlan,
 )
+from app.services.strategies.two_trip import TripSlot
 
 logger = logging.getLogger(__name__)
 
@@ -67,10 +68,20 @@ def resolve_default_provider() -> FlightOfferProvider:
     return base
 
 
+# Strategies whose whole point is covering TWO trips with interleaved tickets.
+PAIR_STRATEGIES = frozenset({TicketStrategyType.REVERSE, TicketStrategyType.BACK_TO_BACK_4LEG})
+
+NEED_TWO_SLOTS = (
+    "反向票＋倒買法 與 外站四腿票 都是「一次購票、兩趟旅程」的買法，"
+    "需要至少兩個不重疊的備選時段（例如 春節 + 聖誕）且行程類型為來回。"
+)
+
+
 class SearchService:
     def __init__(self, provider: FlightOfferProvider | None = None) -> None:
         self._raw_provider = provider or resolve_default_provider()
         self.provider: CachingProvider | FlightOfferProvider = self._raw_provider
+        self.notices: list[str] = []
 
     def run(
         self, req: ItineraryRequestIn
@@ -85,6 +96,7 @@ class SearchService:
         # Fresh cache per request — never leak offers between users.
         self.provider = CachingProvider(self._raw_provider)
 
+        self.notices = []
         slots: list[tuple[str | None, list[DateWindowIn]]]
         if req.candidate_windows:
             slots = [
@@ -96,17 +108,33 @@ class SearchService:
 
         plans: list[StrategyPlan] = []
         seen: set[tuple[TicketStrategyType, tuple[str, ...]]] = set()
+
+        def add(plan: StrategyPlan, label: str | None) -> None:
+            key = (plan.strategy, tuple(t.offer_id for t in plan.tickets))
+            if key in seen:
+                return
+            seen.add(key)
+            plans.append(replace(plan, window_label=label) if label else plan)
+
+        single = [s for s in req.strategies if s not in PAIR_STRATEGIES]
+        paired = [s for s in req.strategies if s in PAIR_STRATEGIES]
+
         total_matrix = 0
         for label, windows in slots:
             expanded = [expand_window(w) for w in windows]
             total_matrix += matrix_cardinality(expanded)
-            for strategy in req.strategies:
+            for strategy in single:
                 for plan in self._run_strategy(strategy, req, expanded):
-                    key = (plan.strategy, tuple(t.offer_id for t in plan.tickets))
-                    if key in seen:
-                        continue
-                    seen.add(key)
-                    plans.append(replace(plan, window_label=label) if label else plan)
+                    add(plan, label)
+
+        if paired:
+            pairs = _slot_pairs(req)
+            if not pairs:
+                self.notices.append(NEED_TWO_SLOTS)
+            for a, b in pairs:
+                for strategy in paired:
+                    for plan in self._run_pair_strategy(strategy, req, a, b):
+                        add(plan, f"{a.label} + {b.label}")
 
         if req.max_total_budget is not None:
             plans = [p for p in plans if p.total_cost <= req.max_total_budget]
@@ -130,24 +158,6 @@ class SearchService:
                 trip_type=req.trip_type,
                 adults=req.adults,
             )
-        if strategy is TicketStrategyType.REVERSE:
-            return ReverseTicketPlanner(self.provider).plan(
-                expanded=expanded,
-                origins=req.origins,
-                destinations=req.destinations,
-                adults=req.adults,
-            )
-        if strategy is TicketStrategyType.BACK_TO_BACK_4LEG:
-            outer = req.back_to_back_outer_stations
-            if not outer:
-                return []
-            return FourLegPlanner(self.provider).plan(
-                expanded=expanded,
-                outer_stations=outer,
-                destinations=req.destinations,
-                outer_buffer_days=req.back_to_back_outer_buffer_days,
-                adults=req.adults,
-            )
         if strategy is TicketStrategyType.OPEN_JAW:
             return OpenJawPlanner(self.provider).plan(
                 expanded=expanded,
@@ -158,6 +168,51 @@ class SearchService:
         # Hidden-city planner intentionally left out — needs careful fare-rule
         # review before shipping, and the UX implications are non-trivial.
         return []
+
+
+    def _run_pair_strategy(
+        self, strategy: TicketStrategyType, req: ItineraryRequestIn, a: TripSlot, b: TripSlot
+    ) -> list[StrategyPlan]:
+        if strategy is TicketStrategyType.REVERSE:
+            return ReverseTicketPlanner(self.provider).plan(
+                trip_a=a,
+                trip_b=b,
+                origins=req.origins,
+                destinations=req.destinations,
+                adults=req.adults,
+            )
+        if not req.back_to_back_outer_stations:
+            return []
+        return FourLegPlanner(self.provider).plan(
+            trip_a=a,
+            trip_b=b,
+            outer_stations=req.back_to_back_outer_stations,
+            destinations=req.destinations,
+            outer_stay_days=req.outer_stay_days,
+            adults=req.adults,
+        )
+
+
+def _slot_pairs(req: ItineraryRequestIn) -> list[tuple[TripSlot, TripSlot]]:
+    """Ordered (earlier, later) pairs of round-trip slots that don't overlap."""
+
+    if req.trip_type is not TripType.ROUND_TRIP:
+        return []
+    slots = [
+        TripSlot(
+            label=_slot_label(c),
+            departs=expand_window(ws[0]).candidates,
+            returns=expand_window(ws[1]).candidates,
+        )
+        for c in req.candidate_windows
+        if len(ws := _windows_from_candidate(c, req.trip_type)) == 2
+    ]
+    return [
+        (a, b)
+        for a in slots
+        for b in slots
+        if a is not b and max(a.returns) < min(b.departs)
+    ]
 
 
 def _slot_label(c: CandidateWindowIn) -> str:

@@ -51,3 +51,47 @@ def test_connecting_round_trip_finds_turnaround():
     )
     q = parse_qs(urlparse(_by_source(TicketOffer("x", legs, 1))["trip_com"]).query)
     assert q["acity"] == ["bkk"] and q["rdate"] == ["2027-02-12"]
+
+
+# Produced by fast-flights' generated flights_pb2 (Info message) for the same
+# itinerary — our hand-rolled encoder must stay byte-identical.
+FOUR_LEG_TFS = "GhoSCjIwMjctMDItMDdqBRIDSEtHcgUSA1RQRRoaEgoyMDI3LTAyLTA3agUSA1RQRXIFEgNOUlQaGhIKMjAyNy0wMi0xNWoFEgNOUlRyBRIDVFBFGhoSCjIwMjctMTItMjJqBRIDVFBFcgUSA0hLR0IBAUgBmAED"
+
+
+def _four_leg_ticket():
+    from dataclasses import replace
+    from datetime import date
+
+    segs = (("HKG", "TPE", date(2027, 2, 7)), ("TPE", "NRT", date(2027, 2, 7)),
+            ("NRT", "TPE", date(2027, 2, 15)), ("TPE", "HKG", date(2027, 12, 22)))
+    legs = tuple(_leg(o, d, day.year, day.month, day.day) for o, d, day in segs)
+    return replace(TicketOffer("mc", legs, 1), searched_segments=segs)
+
+
+def test_multi_city_ticket_gets_multi_city_links_on_every_site():
+    from app.services.booking_links import google_flights_tfs
+
+    t = _four_leg_ticket()
+    links = {b.source: b for b in booking_links(t)}
+    assert all("多段" in b.label for b in links.values())
+
+    assert google_flights_tfs(t.searched_segments, adults=1, cabin=CabinClass.ECONOMY) == FOUR_LEG_TFS
+    g = urlparse(links["google_flights"].url)
+    assert unquote(parse_qs(g.query, keep_blank_values=True)["tfs"][0]) == FOUR_LEG_TFS or         parse_qs(g.query)["tfs"][0] == FOUR_LEG_TFS
+
+    q = {k: v[0] for k, v in parse_qs(urlparse(links["trip_com"].url).query).items()}
+    assert q["triptype"] == "mt"
+    assert q["dcity"] == "hkg,tpe,nrt,tpe" and q["acity"] == "tpe,nrt,tpe,hkg"
+    assert q["ddate"] == "2027-02-07,2027-02-07,2027-02-15,2027-12-22"
+
+    assert "/transport/d/hkg/2027-02-07/tpe/tpe/2027-02-07/nrt/nrt/2027-02-15/tpe/tpe/2027-12-22/hkg/" in links["skyscanner"].url
+
+
+def test_mirrored_two_segment_ticket_from_daomai_still_uses_multi_city():
+    from dataclasses import replace
+    from datetime import date
+
+    segs = (("NRT", "TPE", date(2027, 2, 14)), ("TPE", "NRT", date(2027, 12, 23)))
+    t = replace(TicketOffer("rt", (_leg("NRT", "TPE", 2027, 2, 14), _leg("TPE", "NRT", 2027, 12, 23)), 1),
+                searched_segments=segs)
+    assert {b.label for b in booking_links(t)} == {"Trip.com 多段", "Google Flights 多段", "Skyscanner 多段"}

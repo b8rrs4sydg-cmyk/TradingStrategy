@@ -97,6 +97,8 @@ class StrategyPlanOut(BaseModel):
     score: float | None = None
     explain: str | None = None
     window_label: str | None = None
+    ticket_roles: list[str] = Field(default_factory=list)
+    trips: list[str] = Field(default_factory=list)
 
     @classmethod
     def of(
@@ -113,6 +115,8 @@ class StrategyPlanOut(BaseModel):
             score=p.score,
             explain=p.explain,
             window_label=p.window_label,
+            ticket_roles=list(p.ticket_roles),
+            trips=list(p.trips),
         )
 
 
@@ -121,3 +125,4 @@ class SearchResult(BaseModel):
     date_matrix_size: int
     plans: list[StrategyPlanOut]
     provider_cache: dict[str, int] = Field(default_factory=dict)
+    notices: list[str] = Field(default_factory=list)

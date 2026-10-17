@@ -24,6 +24,7 @@ from __future__ import annotations
 import logging
 import os
 import time
+from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date, datetime
 from typing import ClassVar
@@ -31,7 +32,7 @@ from typing import ClassVar
 import httpx
 
 from app.models.enums import CabinClass
-from app.providers.base import FlightOfferProvider
+from app.providers.base import FlightOfferProvider, Segment
 from app.services.strategies.base import FlightLeg, TicketOffer
 
 logger = logging.getLogger(__name__)
@@ -110,6 +111,45 @@ class AmadeusProvider:
                 raise AmadeusError(f"Amadeus search failed: {resp.status_code} {resp.text[:200]}")
             payload = resp.json()
 
+        return [_parse_offer(raw) for raw in payload.get("data", [])]
+
+    def search_multi_city(
+        self, *, segments: Sequence[Segment], adults: int = 1
+    ) -> list[TicketOffer]:
+        body = {
+            "currencyCode": "TWD",
+            "originDestinations": [
+                {
+                    "id": str(i),
+                    "originLocationCode": o,
+                    "destinationLocationCode": d,
+                    "departureDateTimeRange": {"date": day.isoformat()},
+                }
+                for i, (o, d, day) in enumerate(segments, start=1)
+            ],
+            "travelers": [
+                {"id": str(i), "travelerType": "ADULT"} for i in range(1, adults + 1)
+            ],
+            "sources": ["GDS"],
+            "searchCriteria": {"maxFlightOffers": 10},
+        }
+        token = self._bearer()
+        url = f"{self.base}/v2/shopping/flight-offers"
+        with httpx.Client(timeout=self.timeout) as client:
+            resp = client.post(
+                url,
+                json=body,
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "X-HTTP-Method-Override": "GET",
+                },
+            )
+            if resp.status_code >= 400:
+                logger.warning("amadeus_multi_city_failed", extra={"status": resp.status_code})
+                raise AmadeusError(
+                    f"Amadeus multi-city search failed: {resp.status_code} {resp.text[:200]}"
+                )
+            payload = resp.json()
         return [_parse_offer(raw) for raw in payload.get("data", [])]
 
     # ------------------------------------------------------------------

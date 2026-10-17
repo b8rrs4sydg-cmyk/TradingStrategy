@@ -35,4 +35,5 @@ def search(req: ItineraryRequestIn) -> SearchResult:
         date_matrix_size=matrix_size,
         plans=[StrategyPlanOut.of(p, adults=req.adults, cabin=req.cabin) for p in plans],
         provider_cache=cache_stats,
+        notices=service.notices,
     )

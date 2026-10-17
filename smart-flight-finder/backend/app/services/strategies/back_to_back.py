@@ -1,283 +1,189 @@
-"""Back-to-back 四段票 (XMN-TPE-NRT-TPE-XMN) pairing engine.
+"""外站四腿票 (四段票) — ONE ticket X→TPE→D→TPE→X covering two trips.
 
-拼湊兩張互相獨立 PNR 的機票：
+The ticket is sold from an outstation X (cheaper market than Taiwan, and leg
+1 / leg 4 must be in the same country). For someone living in Taiwan:
 
-    票甲 (outer, 頭尾段)：外站 → TPE → 外站   (leg1, leg4)
-    票乙 (inner, 中間段)：TPE → 目的地 → TPE  (leg2, leg3)
+    旅程 A:  單買初段 TPE→X (day a_dep)  … 外站停留 s 天 …
+             leg1 X→TPE + leg2 TPE→D     (same day, <24h connection at TPE)
+             … D … leg3 D→TPE            (a_ret; home stopover = the one >24h stop)
+    旅程 B:  leg4 TPE→X                  (b_dep)  … X …
+             單買最後一段 X→TPE           (b_ret)
 
-Timeline 必須合法：
-
-    leg1 ──flight─→ TPE ─(MCT)─ TPE ─flight─→ 目的地 … (停留) …
-                 目的地 ─flight─→ TPE ─(MCT)─ TPE ─flight─→ 外站 (leg4)
-
-此實作的核心是：
-
-1. 枚舉 (外站, 目的地, outer-dates, inner-dates) 的笛卡兒積，含剪枝；
-2. 查詢票甲與票乙的最便宜 offer；
-3. 兩次交接點做 MCT 驗證（跨票、國際線）；
-4. 總價 = 甲 + 乙；若比 ``direct_round_trip_baseline`` 便宜一定門檻才錄取。
+Leg 1 must be flown (skipping it cancels the rest), which is why the loop
+needs the separately bought 初段. The 最後一段 can instead be leg 1 of the
+next 四腿票 — chaining tickets this way is the 循環. Each plan prices the
+closed loop (both one-ways) and is kept only if it beats an ordinary round
+trip to D on trip A plus one to X on trip B.
 """
 
 from __future__ import annotations
 
-from collections.abc import Iterable
-from dataclasses import dataclass
-from datetime import date, timedelta
+from collections.abc import Sequence
+from datetime import timedelta
 from itertools import product
 
-from app.models.enums import DateWindowRole, TicketStrategyType
+from app.data.airports import BY_CODE, TW_AIRPORT_CODES
+from app.models.enums import TicketStrategyType
 from app.providers.base import FlightOfferProvider
-from app.services.date_matrix import ExpandedWindow
-from app.services.mct import DEFAULT_MCT, MctPolicy, check_cross_ticket_handoff
-from app.services.strategies.base import (
-    RiskLevel,
-    RiskWarning,
-    StrategyPlan,
-    TicketOffer,
-)
+from app.services.mct import DEFAULT_MCT, MctPolicy, check_connection
+from app.services.strategies.base import RiskLevel, RiskWarning, StrategyPlan, TicketOffer
+from app.services.strategies.two_trip import TripSlot, cheapest, fmt_day, nearest, quote
 
-
-@dataclass(frozen=True, slots=True)
-class _OuterDates:
-    leg1_date: date   # 外站 → TPE
-    leg4_date: date   # TPE → 外站
-
-
-@dataclass(frozen=True, slots=True)
-class _InnerDates:
-    leg2_date: date   # TPE → 目的地
-    leg3_date: date   # 目的地 → TPE
+HUB = "TPE"
+_MAX_DATES_PER_LEG = 5  # multi-city quotes are expensive on real APIs
 
 
 class FourLegPlanner:
     strategy = TicketStrategyType.BACK_TO_BACK_4LEG
 
-    # 兩票總價至少要省到 baseline 直飛來回的 10% 才給建議
-    MIN_SAVINGS_PCT = 0.10
-
-    def __init__(
-        self,
-        provider: FlightOfferProvider,
-        *,
-        hub: str = "TPE",
-        mct: MctPolicy = DEFAULT_MCT,
-    ) -> None:
+    def __init__(self, provider: FlightOfferProvider, *, mct: MctPolicy = DEFAULT_MCT) -> None:
         self.provider = provider
-        self.hub = hub
         self.mct = mct
 
     def plan(
         self,
         *,
-        expanded: list[ExpandedWindow],
-        outer_stations: Iterable[str],
-        destinations: Iterable[str],
-        outer_buffer_days: int = 2,
+        trip_a: TripSlot,
+        trip_b: TripSlot,
+        outer_stations: Sequence[str],
+        destinations: Sequence[str],
+        outer_stay_days: int = 2,
         adults: int = 1,
-        max_results: int = 20,
     ) -> list[StrategyPlan]:
-        inner_pairs = list(self._iter_inner_dates(expanded))
-        if not inner_pairs:
-            return []
-
+        a_deps = nearest(trip_a.departs, _MAX_DATES_PER_LEG)
+        a_rets = nearest(trip_a.returns, _MAX_DATES_PER_LEG)
+        b_deps = nearest(trip_b.departs, _MAX_DATES_PER_LEG)
         plans: list[StrategyPlan] = []
-
-        # Baseline and inner_ticket both depend only on destination, not on
-        # outer_station — precompute once per destination so adding a second
-        # or third outer station is nearly free (fetches are deduped by the
-        # provider cache anyway, but this also skips the Python call overhead).
-        baseline_by_dest: dict[str, int] = {}
-        inner_tickets_by_dest: dict[str, dict[_InnerDates, TicketOffer]] = {}
-        for destination in destinations:
-            baseline_by_dest[destination] = self._baseline_direct_round_trip(
-                destination=destination,
-                inner_pairs=inner_pairs,
-                adults=adults,
-            )
-            per_dest: dict[_InnerDates, TicketOffer] = {}
-            for inner in inner_pairs:
-                tkt = self._cheapest_inner(
-                    destination=destination, inner=inner, adults=adults
-                )
-                if tkt is not None:
-                    per_dest[inner] = tkt
-            inner_tickets_by_dest[destination] = per_dest
-
-        for outer_station in outer_stations:
-            for destination in destinations:
-                baseline = baseline_by_dest[destination]
-                inner_tickets = inner_tickets_by_dest[destination]
-                for inner, inner_ticket in inner_tickets.items():
-                    for outer in self._iter_outer_dates(inner, outer_buffer_days):
-                        outer_ticket = self._cheapest_outer(
-                            outer_station=outer_station,
-                            outer=outer,
-                            adults=adults,
-                        )
-                        if outer_ticket is None:
-                            continue
-                        plan = self._assemble(
-                            outer_ticket=outer_ticket,
-                            inner_ticket=inner_ticket,
-                            outer=outer,
-                            inner=inner,
-                            baseline_price=baseline,
-                            outer_station=outer_station,
-                            destination=destination,
-                        )
-                        if plan is not None:
-                            plans.append(plan)
-        plans.sort(key=lambda p: p.total_cost)
-        return plans[:max_results]
-
-    # ------------------------------------------------------------------
-    # Date enumeration
-    # ------------------------------------------------------------------
-    @staticmethod
-    def _iter_inner_dates(expanded: list[ExpandedWindow]) -> Iterable[_InnerDates]:
-        out = sorted({c for w in expanded if w.role is DateWindowRole.OUTBOUND for c in w.candidates})
-        ret = sorted({c for w in expanded if w.role is DateWindowRole.RETURN for c in w.candidates})
-        for leg2_date, leg3_date in product(out, ret):
-            if leg3_date > leg2_date:
-                yield _InnerDates(leg2_date=leg2_date, leg3_date=leg3_date)
-
-    @staticmethod
-    def _iter_outer_dates(inner: _InnerDates, buffer_days: int) -> Iterable[_OuterDates]:
-        """票甲的頭段落地日 ∈ [leg2_date - buffer, leg2_date]
-           票甲的尾段起飛日 ∈ [leg3_date, leg3_date + buffer]。
-        """
-        for leg1_offset in range(buffer_days + 1):
-            leg1_date = inner.leg2_date - timedelta(days=leg1_offset)
-            for leg4_offset in range(buffer_days + 1):
-                leg4_date = inner.leg3_date + timedelta(days=leg4_offset)
-                yield _OuterDates(leg1_date=leg1_date, leg4_date=leg4_date)
-
-    # ------------------------------------------------------------------
-    # Provider calls
-    # ------------------------------------------------------------------
-    def _cheapest_inner(self, *, destination, inner, adults) -> TicketOffer | None:
-        offers = self.provider.search(
-            origin=self.hub,
-            destination=destination,
-            departure_date=inner.leg2_date,
-            return_date=inner.leg3_date,
-            adults=adults,
-        )
-        return min(offers, key=lambda o: o.total_price) if offers else None
-
-    def _cheapest_outer(self, *, outer_station, outer, adults) -> TicketOffer | None:
-        offers = self.provider.search(
-            origin=outer_station,
-            destination=self.hub,
-            departure_date=outer.leg1_date,
-            return_date=outer.leg4_date,
-            adults=adults,
-        )
-        return min(offers, key=lambda o: o.total_price) if offers else None
-
-    def _baseline_direct_round_trip(
-        self, *, destination, inner_pairs: list[_InnerDates], adults: int
-    ) -> int:
-        """Take the cheapest direct hub→destination round-trip over the inner matrix
-        as the "do-nothing" baseline that we need to undercut.
-        """
-        best = None
-        for pair in inner_pairs:
-            offers = self.provider.search(
-                origin=self.hub,
-                destination=destination,
-                departure_date=pair.leg2_date,
-                return_date=pair.leg3_date,
-                adults=adults,
-            )
-            if not offers:
+        for x in dict.fromkeys(outer_stations):
+            if x == HUB or x in TW_AIRPORT_CODES:
                 continue
-            cheapest = min(o.total_price for o in offers)
-            if best is None or cheapest < best:
-                best = cheapest
-        return best or 0
+            first_legs = {d: quote(self.provider, [(HUB, x, d)], adults) for d in a_deps}
+            last_legs = {d: quote(self.provider, [(x, HUB, d)], adults) for d in trip_b.returns}
+            base_x = self._cheapest_rt(x, trip_b, adults)
+            for dest in dict.fromkeys(destinations):
+                if dest in (x, HUB) or dest in TW_AIRPORT_CODES:
+                    continue
+                base_d = self._cheapest_rt(dest, trip_a, adults)
+                if base_x is None or base_d is None:
+                    continue
+                baseline = base_d.total_price + base_x.total_price
+                best = self._best_loop(
+                    x, dest, a_deps, a_rets, b_deps, trip_b.returns,
+                    outer_stay_days, first_legs, last_legs, adults,
+                )
+                if best is None or best[0] >= baseline:
+                    continue
+                plans.append(self._build(x, dest, trip_a, trip_b, outer_stay_days, best, baseline))
+        plans.sort(key=lambda p: p.total_cost)
+        return plans
 
     # ------------------------------------------------------------------
-    # Assembly + validation
-    # ------------------------------------------------------------------
-    def _assemble(
-        self,
-        *,
-        outer_ticket: TicketOffer,
-        inner_ticket: TicketOffer,
-        outer: _OuterDates,
-        inner: _InnerDates,
-        baseline_price: int,
-        outer_station: str,
-        destination: str,
-    ) -> StrategyPlan | None:
-        total = outer_ticket.total_price + inner_ticket.total_price
-        if baseline_price and total >= baseline_price * (1 - self.MIN_SAVINGS_PCT):
-            return None
+    def _cheapest_rt(self, dest: str, slot: TripSlot, adults: int) -> TicketOffer | None:
+        return cheapest([
+            t
+            for dep, ret in product(slot.departs, slot.returns)
+            if ret > dep
+            for t in self.provider.search(
+                origin=HUB, destination=dest, departure_date=dep, return_date=ret, adults=adults
+            )
+        ])
 
-        warnings: list[RiskWarning] = list(
-            check_cross_ticket_handoff(
-                _half_ticket(outer_ticket, 0),      # XMN→TPE arrival half
-                _half_ticket(inner_ticket, 0),      # TPE→NRT departure half
-                policy=self.mct,
+    def _best_loop(self, x, dest, a_deps, a_rets, b_deps, b_rets, stay, first_legs, last_legs, adults):
+        best = None
+        for a_dep, a_ret, b_dep in product(a_deps, a_rets, b_deps):
+            connect = a_dep + timedelta(days=stay)
+            if not (connect < a_ret < b_dep):
+                continue
+            first = first_legs.get(a_dep)
+            last_options = [
+                (t.total_price, d, t) for d, t in last_legs.items() if t and d > b_dep
+            ]
+            if first is None or not last_options:
+                continue
+            _, b_ret, last = min(last_options, key=lambda o: o[0])
+            if best and first.total_price + last.total_price >= best[0]:
+                continue
+            four = quote(
+                self.provider,
+                [(x, HUB, connect), (HUB, dest, connect), (dest, HUB, a_ret), (HUB, x, b_dep)],
+                adults,
             )
-        )
-        warnings.extend(
-            check_cross_ticket_handoff(
-                _half_ticket(inner_ticket, 1),      # NRT→TPE arrival half
-                _half_ticket(outer_ticket, 1),      # TPE→XMN departure half
-                policy=self.mct,
-            )
-        )
-        if any(w.level is RiskLevel.HIGH for w in warnings):
-            # Timeline invalid — skip rather than recommend.
-            return None
+            if four is None or len(four.legs) < 4:
+                continue
+            warnings = self._connection_warnings(first, four, stay)
+            if any(w.level is RiskLevel.HIGH for w in warnings):
+                continue
+            total = first.total_price + four.total_price + last.total_price
+            if best is None or total < best[0]:
+                best = (total, (a_dep, a_ret, b_dep, b_ret), (first, four, last), warnings)
+        return best
 
-        warnings.append(
-            RiskWarning(
-                level=RiskLevel.MEDIUM,
-                code="back_to_back_awareness",
-                message=(
-                    "四段票為兩張獨立 PNR，任何改期/取消/延誤皆不互相保護；"
-                    "行李須入境提領後重新託運。"
-                ),
-            )
-        )
-        savings = baseline_price - total if baseline_price else 0
-        if savings > 0:
-            warnings.append(
+    def _connection_warnings(self, first: TicketOffer, four: TicketOffer, stay: int) -> list[RiskWarning]:
+        out: list[RiskWarning] = []
+        leg1, leg2 = four.legs[0], four.legs[1]
+        if stay == 0:
+            w = check_connection(first.last_leg(), leg1, cross_ticket=True, policy=self.mct)
+            if w:
+                out.append(w)
+        w = check_connection(leg1, leg2, cross_ticket=False, policy=self.mct)
+        if w:
+            out.append(w)
+        if leg2.departure - leg1.arrival >= timedelta(hours=24):
+            out.append(
                 RiskWarning(
-                    level=RiskLevel.LOW,
-                    code="back_to_back_savings_estimate",
-                    message=f"較直飛來回估省 {savings:,} TWD",
+                    RiskLevel.HIGH,
+                    "four_leg_second_stopover",
+                    "第1→2段在台北超過 24 小時會變成第二次中停，票價規則通常不允許或要加價",
                 )
             )
+        return out
 
-        total_travel_days = (inner.leg3_date - inner.leg2_date).days + 1
-        return StrategyPlan(
-            strategy=self.strategy,
-            tickets=(outer_ticket, inner_ticket),
-            total_cost=total,
-            currency=outer_ticket.currency,
-            total_travel_days=total_travel_days,
-            warnings=tuple(warnings),
-            explain=(
-                f"四段票：{outer_station}-{self.hub}-{destination}-{self.hub}-{outer_station}; "
-                f"票甲 {outer.leg1_date}/{outer.leg4_date}, 票乙 {inner.leg2_date}/{inner.leg3_date}"
+    def _build(self, x, dest, a: TripSlot, b: TripSlot, stay, best, baseline) -> StrategyPlan:
+        total, (a_dep, a_ret, b_dep, b_ret), (first, four, last), conn_warnings = best
+        connect = a_dep + timedelta(days=stay)
+        x_name = BY_CODE[x].name_zh if x in BY_CODE else x
+        stay_txt = f"外站停留 {stay} 天" if stay else "同日接續"
+        trips = (
+            (
+                f"旅程 A｜{a.label}：{fmt_day(a_dep)} {HUB}→{x}（單買初段）· {stay_txt}"
+                f" ⇢ {fmt_day(connect)} {x}→{HUB}→{dest}（四腿票 第1+2段，台北轉機 <24h）"
+                f" ⇢ {fmt_day(a_ret)} {dest}→{HUB}（第3段，回台中停）"
+            ),
+            (
+                f"旅程 B｜{b.label}：{fmt_day(b_dep)} {HUB}→{x}（四腿票 第4段）"
+                f" ⇢ {fmt_day(b_ret)} {x}→{HUB}（單買最後一段 或 下一張四腿票第1段＝循環）"
             ),
         )
-
-
-def _half_ticket(ticket: TicketOffer, leg_index: int) -> TicketOffer:
-    """Return a lightweight view containing just one leg (for MCT checks)."""
-
-    leg = ticket.legs[leg_index]
-    return TicketOffer(
-        offer_id=f"{ticket.offer_id}#{leg_index}",
-        legs=(leg,),
-        total_price=ticket.total_price,
-        currency=ticket.currency,
-        fare_class=ticket.fare_class,
-        baggage_through_checked=ticket.baggage_through_checked,
-        issuer=ticket.issuer,
-    )
+        saving = baseline - total
+        warnings = [
+            *conn_warnings,
+            RiskWarning(
+                RiskLevel.MEDIUM,
+                "four_leg_first_segment",
+                f"四腿票第1段 {x}→{HUB} 必須搭乘，未搭乘後續航段全部作廢 —"
+                "所以要先單買初段飛到外站",
+            ),
+            RiskWarning(
+                RiskLevel.LOW,
+                "four_leg_loop",
+                f"最後一段 {x}→{HUB} 也可改搭下一張四腿票的第1段（循環），省下這張單程",
+            ),
+            RiskWarning(
+                RiskLevel.LOW,
+                "four_leg_savings_estimate",
+                f"比旅程A買 {HUB}⇄{dest}、旅程B買 {HUB}⇄{x} 一般來回 (共 {baseline:,})"
+                f" 省 {saving:,} TWD（{saving / baseline:.0%}）",
+            ),
+        ]
+        return StrategyPlan(
+            strategy=self.strategy,
+            tickets=(first, four, last),
+            total_cost=total,
+            currency=four.currency,
+            total_travel_days=(a_ret - a_dep).days + 1 + (b_ret - b_dep).days + 1,
+            warnings=tuple(warnings),
+            explain=f"四腿票 {x}→{HUB}→{dest}→{HUB}→{x}（{x_name} 外站）＋單買初段/最後一段，"
+            f"兩趟省 {saving:,}",
+            ticket_roles=("單買初段", f"外站四腿票：{x} 出發", "單買最後一段"),
+            trips=trips,
+        )

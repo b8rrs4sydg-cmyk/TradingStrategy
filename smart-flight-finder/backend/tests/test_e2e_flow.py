@@ -20,7 +20,7 @@ SEARCH_PAYLOAD = {
     "destinations": ["NRT", "HND"],
     "strategies": ["standard", "reverse", "back_to_back_4leg"],
     "back_to_back_outer_stations": ["XMN"],
-    "back_to_back_outer_buffer_days": 2,
+    "outer_stay_days": 2,
     "date_windows": [
         {"role": "outbound", "anchor_date": "2027-02-05", "flex_before": 1, "flex_after": 1},
         {"role": "return", "anchor_date": "2027-02-11", "flex_before": 1, "flex_after": 1},
@@ -79,3 +79,34 @@ def test_search_with_candidate_windows_returns_labels_and_booking_links():
     links = plans[0]["tickets"][0]["booking_links"]
     assert [link["source"] for link in links] == ["trip_com", "google_flights", "skyscanner"]
     assert "quantity=2" in links[0]["url"]
+
+
+def test_two_trip_search_returns_roles_trips_and_multi_city_links_through_csv():
+    import csv
+    import io
+
+    payload = {
+        **{k: v for k, v in SEARCH_PAYLOAD.items() if k != "date_windows"},
+        "destinations": ["NRT", "LHR"],
+        "strategies": ["reverse", "back_to_back_4leg"],
+        "back_to_back_outer_stations": ["HKG"],
+        "candidate_windows": [
+            {"holiday_key": "lunar_ny", "depart": "2027-02-05", "return_date": "2027-02-15"},
+            {"holiday_key": "xmas", "depart": "2027-12-23", "return_date": "2027-12-27"},
+        ],
+    }
+    body = client.post("/search", json=payload).json()
+    assert body["notices"] == []
+    four = next(p for p in body["plans"] if p["strategy"] == "back_to_back_4leg")
+    assert four["ticket_roles"][1].startswith("外站四腿票") and len(four["trips"]) == 2
+    trip_link = next(b for b in four["tickets"][1]["booking_links"] if b["source"] == "trip_com")
+    assert "triptype=mt" in trip_link["url"]
+
+    rows = list(csv.DictReader(io.StringIO(client.post("/plans/csv", json={"plans": [four]}).text)))
+    assert any("triptype=mt" in r["trip_com_url"] for r in rows)
+
+
+def test_single_slot_two_trip_strategies_return_notice():
+    payload = {**SEARCH_PAYLOAD, "strategies": ["reverse"]}
+    body = client.post("/search", json=payload).json()
+    assert body["plans"] == [] and body["notices"]

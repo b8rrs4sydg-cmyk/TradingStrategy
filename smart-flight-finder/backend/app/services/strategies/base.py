@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from enum import StrEnum
 
 from app.models.enums import CabinClass, TicketStrategyType
@@ -52,6 +52,10 @@ class TicketOffer:
     fare_class: str | None = None
     baggage_through_checked: bool = True
     issuer: str | None = None
+    # Segments exactly as searched (origin, destination, date) — set by planners
+    # that price one ticket over several segments, so booking links can rebuild
+    # the same multi-city search.
+    searched_segments: tuple[tuple[str, str, date], ...] = ()
 
     def first_leg(self) -> FlightLeg:
         return self.legs[0]
@@ -86,6 +90,12 @@ class StrategyPlan:
     score: float | None = None       # populated by scoring engine
     explain: str | None = None       # human-readable one-liner
     window_label: str | None = None  # candidate time slot this plan came from
+    ticket_roles: tuple[str, ...] = ()  # one per ticket, e.g. "反向票：NRT 出發"
+    trips: tuple[str, ...] = ()         # human-readable outline of each trip
+
+    @property
+    def trip_count(self) -> int:
+        return max(1, len(self.trips))
 
     @property
     def ticket_count(self) -> int:

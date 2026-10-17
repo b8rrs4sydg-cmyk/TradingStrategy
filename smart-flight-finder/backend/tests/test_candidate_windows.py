@@ -92,11 +92,19 @@ def test_one_way_slot_ignores_return():
     assert all(len(p.tickets[0].legs) == 1 for p in plans)
 
 
-def test_four_leg_runs_per_slot():
+def test_pair_strategies_only_pair_non_overlapping_slots():
+    from app.services.search import _slot_pairs
+
     req = _req(
-        [_slot(date(2027, 2, 5), date(2027, 2, 15), flex=1), _slot(date(2027, 6, 9), date(2027, 6, 13), flex=1)],
-        strategies=(TicketStrategyType.BACK_TO_BACK_4LEG, TicketStrategyType.STANDARD),
+        [
+            _slot(date(2027, 2, 5), date(2027, 2, 15), flex=1, holiday_key="lunar_ny"),
+            _slot(date(2027, 2, 12), date(2027, 2, 20), flex=1, label="overlaps LNY"),
+            _slot(date(2027, 12, 23), date(2027, 12, 27), flex=1, holiday_key="xmas"),
+        ],
+        strategies=(TicketStrategyType.REVERSE,),
     )
-    matrix, plans, _ = _run(req)
-    assert matrix == 9 + 9
-    assert {p.tickets[0].legs[0].departure.month for p in plans} >= {2, 6}
+    pairs = [(a.label, b.label) for a, b in _slot_pairs(req)]
+    assert ("春節請 2 休 11", "聖誕請 2 休 5") in pairs
+    assert ("overlaps LNY", "聖誕請 2 休 5") in pairs
+    assert all("overlaps LNY" not in (a, b) or "聖誕請 2 休 5" in (a, b) for a, b in pairs)
+    assert ("聖誕請 2 休 5", "春節請 2 休 11") not in pairs  # B must come after A

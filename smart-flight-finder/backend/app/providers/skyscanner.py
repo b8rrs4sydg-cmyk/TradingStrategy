@@ -20,13 +20,14 @@ from __future__ import annotations
 
 import logging
 import os
+from collections.abc import Sequence
 from datetime import date, datetime
 from typing import Any, ClassVar
 
 import httpx
 
 from app.models.enums import CabinClass
-from app.providers.base import FlightOfferProvider
+from app.providers.base import FlightOfferProvider, Segment
 from app.services.strategies.base import FlightLeg, TicketOffer
 
 logger = logging.getLogger(__name__)
@@ -96,6 +97,15 @@ class SkyscannerProvider:
                 f"Skyscanner search failed: {resp.status_code} {resp.text[:200]}"
             )
         return _parse_payload(resp.json())
+
+
+    def search_multi_city(
+        self, *, segments: Sequence[Segment], adults: int = 1
+    ) -> list[TicketOffer]:
+        # The RapidAPI wrapper exposes one-way / round-trip only; a single
+        # multi-city fare can't be quoted, so 四腿票-style plans get no offer.
+        logger.info("skyscanner_multi_city_unsupported", extra={"segments": len(segments)})
+        return []
 
 
 # ---------------------------------------------------------------------------

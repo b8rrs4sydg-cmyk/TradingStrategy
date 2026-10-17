@@ -57,48 +57,22 @@ def test_search_standard_returns_plans_sorted_by_score():
     assert scores == sorted(scores, reverse=True)
 
 
-def test_four_leg_requires_outer_stations_and_passes_mct():
+def test_single_window_pair_strategies_explain_why_empty():
     req = ItineraryRequestIn(
         trip_type=TripType.ROUND_TRIP,
         origins=["TPE"],
         destinations=["NRT"],
-        strategies=[TicketStrategyType.BACK_TO_BACK_4LEG],
-        back_to_back_outer_stations=["XMN"],
-        back_to_back_outer_buffer_days=2,
-        date_windows=[
-            DateWindowIn(role=DateWindowRole.OUTBOUND, anchor_date=date(2027, 2, 5),
-                         flex_before=0, flex_after=1),
-            DateWindowIn(role=DateWindowRole.RETURN, anchor_date=date(2027, 2, 11),
-                         flex_before=0, flex_after=1),
-        ],
-    )
-    service = SearchService(StubFlightProvider())
-    matrix, plans, stats = service.run(req)
-    assert matrix > 0
-    assert stats["hits"] >= stats["misses"]  # cache paid for itself
-    for p in plans:
-        assert p.strategy is TicketStrategyType.BACK_TO_BACK_4LEG
-        assert len(p.tickets) == 2
-        codes = {w.code for w in p.warnings}
-        assert "back_to_back_awareness" in codes
-        assert "mct_too_tight" not in codes
-        assert "mct_negative_overlap" not in codes
-
-
-def test_four_leg_without_outer_stations_yields_no_plans():
-    req = ItineraryRequestIn(
-        trip_type=TripType.ROUND_TRIP,
-        origins=["TPE"],
-        destinations=["NRT"],
-        strategies=[TicketStrategyType.BACK_TO_BACK_4LEG],
-        back_to_back_outer_stations=[],
+        strategies=[TicketStrategyType.BACK_TO_BACK_4LEG, TicketStrategyType.REVERSE],
+        back_to_back_outer_stations=["HKG"],
         date_windows=[
             DateWindowIn(role=DateWindowRole.OUTBOUND, anchor_date=date(2027, 2, 5)),
             DateWindowIn(role=DateWindowRole.RETURN, anchor_date=date(2027, 2, 11)),
         ],
     )
-    _, plans, _ = SearchService(StubFlightProvider()).run(req)
+    service = SearchService(StubFlightProvider())
+    _, plans, _ = service.run(req)
     assert plans == []
+    assert service.notices and "兩個" in service.notices[0]
 
 
 def test_budget_filter():

@@ -118,3 +118,34 @@ def test_search_oauth_failure():
         provider.search(
             origin="TPE", destination="NRT", departure_date=date(2027, 2, 5)
         )
+
+
+def test_multi_city_posts_origin_destinations():
+    provider = AmadeusProvider(client_id="k", client_secret="s", env="test")
+    calls = []
+
+    class _Recording(_FakeClient):
+        def post(self, url, *a, **kw):
+            calls.append((url, kw))
+            if url.endswith("/oauth2/token"):
+                return self.token_resp
+            return self.search_resp
+
+    fake = _Recording(
+        token_resp=_FakeResponse(200, {"access_token": "tok", "expires_in": 1800}),
+        search_resp=_FakeResponse(200, SAMPLE_PAYLOAD),
+    )
+    segs = [("HKG", "TPE", date(2027, 2, 6)), ("TPE", "NRT", date(2027, 2, 6)),
+            ("NRT", "TPE", date(2027, 2, 14)), ("TPE", "HKG", date(2027, 12, 23))]
+    with patch.object(httpx, "Client", return_value=fake):
+        offers = provider.search_multi_city(segments=segs, adults=2)
+    assert len(offers) == 1
+    url, kw = calls[-1]
+    assert url.endswith("/v2/shopping/flight-offers")
+    assert kw["headers"]["X-HTTP-Method-Override"] == "GET"
+    ods = kw["json"]["originDestinations"]
+    assert [(o["originLocationCode"], o["destinationLocationCode"], o["departureDateTimeRange"]["date"]) for o in ods] == [
+        ("HKG", "TPE", "2027-02-06"), ("TPE", "NRT", "2027-02-06"),
+        ("NRT", "TPE", "2027-02-14"), ("TPE", "HKG", "2027-12-23"),
+    ]
+    assert len(kw["json"]["travelers"]) == 2
