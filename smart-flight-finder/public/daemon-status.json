@@ -1,21 +1,12 @@
 {
- "at": "2026-10-17T18:39:36+00:00",
+ "at": "2026-10-17T18:44:07+00:00",
  "publishes": {
   "ok": 250,
-  "r429": 283,
-  "fail": 35
+  "r429": 297,
+  "fail": 36
  },
  "fares_saved": 1188,
  "log": [
-  "18:18:07 request received: rid mupj23xv6p3yg 13 keys",
-  "18:18:07 handle mupj23xv6p3yg: first_chunk=False total=160",
-  "18:18:56 publish 429 #100: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
-  "18:19:55 publish gave up",
-  "18:20:00 request received: rid mvcq1k33r557r 160 keys",
-  "18:20:00 handle mvcq1k33r557r: first_chunk=True total=160",
-  "18:20:03 request mupj23xv6p3yg: chunk of 13 keys done in 116s; ntfy publishes {'ok': 250, 'r429': 105, 'fail': 12}",
-  "18:20:45 request received: rid mvcq2je9m9qst 84 keys",
-  "18:20:45 handle mvcq2je9m9qst: first_chunk=True total=160",
   "18:20:45 request received: rid mvcq2je9m9qst 76 keys",
   "18:20:45 handle mvcq2je9m9qst: first_chunk=False total=160",
   "18:20:51 publish gave up",
@@ -156,6 +147,15 @@
   "18:37:08 request mvcqk2ziymwil: chunk of 84 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 276, 'fail': 34}",
   "18:37:33 request mupj23xv6p3yg: chunk of 36 keys done in 1167s; ntfy publishes {'ok': 250, 'r429': 277, 'fail': 34}",
   "18:38:43 publish 429 #280: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
-  "18:39:13 publish gave up"
+  "18:39:13 publish gave up",
+  "18:40:13 request mupj23xv6p3yg: chunk of 36 keys done in 1327s; ntfy publishes {'ok': 250, 'r429': 285, 'fail': 35}",
+  "18:41:59 publish gave up",
+  "18:43:12 request mupj23xv6p3yg: chunk of 36 keys done in 1505s; ntfy publishes {'ok': 250, 'r429': 293, 'fail': 36}",
+  "18:43:30 request received: rid mvcqvc185ndhe 30 keys",
+  "18:43:30 handle mvcqvc185ndhe: first_chunk=True total=30",
+  "18:43:59 request received: rid mvcqwehq4ov6o 97 keys",
+  "18:43:59 handle mvcqwehq4ov6o: first_chunk=True total=136",
+  "18:43:59 request received: rid mvcqwehq4ov6o 39 keys",
+  "18:43:59 handle mvcqwehq4ov6o: first_chunk=False total=136"
  ]
 }
