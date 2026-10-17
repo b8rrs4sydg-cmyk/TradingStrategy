@@ -1,5 +1,5 @@
 {
- "at": "2026-10-17T19:05:41+00:00",
+ "at": "2026-10-17T19:07:12+00:00",
  "publishes": {
   "ok": 250,
   "r429": 548,
@@ -7,18 +7,6 @@
  },
  "fares_saved": 1305,
  "log": [
-  "18:57:15 request received: rid mvcrdh8yocail 76 keys",
-  "18:57:15 handle mvcrdh8yocail: first_chunk=False total=160",
-  "18:57:30 publish gave up",
-  "18:57:38 request received: rid mvcrdzj2mqyfp 84 keys",
-  "18:57:38 handle mvcrdzj2mqyfp: first_chunk=True total=160",
-  "18:57:38 request received: rid mvcrdzj2mqyfp 76 keys",
-  "18:57:38 handle mvcrdzj2mqyfp: first_chunk=False total=160",
-  "18:57:39 request mvcrdh8yocail: chunk of 76 keys done in 24s; ntfy publishes {'ok': 250, 'r429': 494, 'fail': 56}",
-  "18:57:43 request mvcrcu3yt86fn: chunk of 76 keys done in 58s; ntfy publishes {'ok': 250, 'r429': 495, 'fail': 56}",
-  "18:57:46 request received: rid mvcre5g8kssb7 30 keys",
-  "18:57:46 handle mvcre5g8kssb7: first_chunk=True total=30",
-  "18:57:47 publish gave up",
   "18:57:53 request mvcrcdkqxjjjr: chunk of 160 keys done in 84s; ntfy publishes {'ok': 250, 'r429': 499, 'fail': 57}",
   "18:57:54 publish 429 #500: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
   "18:57:54 publish gave up",
@@ -156,6 +144,18 @@
   "19:05:12 publish error <urlopen error [Errno 101] Network is unreachable>",
   "19:05:29 publish error <urlopen error [Errno 101] Network is unreachable>",
   "19:05:31 publish gave up",
-  "19:05:37 subscribe error <urlopen error [Errno 101] Network is unreachable>; reconnecting"
+  "19:05:37 subscribe error <urlopen error [Errno 101] Network is unreachable>; reconnecting",
+  "19:05:47 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:06:00 request received: rid mvcrom196wfa5 160 keys",
+  "19:06:00 handle mvcrom196wfa5: first_chunk=True total=160",
+  "19:06:00 request mvcrom196wfa5: chunk of 160 keys done in 0s; ntfy publishes {'ok': 250, 'r429': 548, 'fail': 74}",
+  "19:06:04 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:06:21 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:06:30 request received: rid mvcrpce5om1te 9 keys",
+  "19:06:30 handle mvcrpce5om1te: first_chunk=True total=9",
+  "19:06:38 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:06:46 request mvcrpce5om1te: chunk of 9 keys done in 16s; ntfy publishes {'ok': 250, 'r429': 548, 'fail': 74}",
+  "19:06:55 publish error <urlopen error [Errno 101] Network is unreachable>",
+  "19:07:12 publish error <urlopen error [Errno 101] Network is unreachable>"
  ]
 }
