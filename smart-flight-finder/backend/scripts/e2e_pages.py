@@ -197,7 +197,9 @@ async def main() -> int:
             )
             check(any("multdcity3" in h or "tfs=" in h for h in hrefs), "multi-city booking links on the 四腿票")
 
-        real = [e for e in errors if "favicon" not in e and "net::ERR" not in e]
+        # probes of a stale tunnel URL (CORS-less Cloudflare error) and the rate-limited GitHub API are handled by the page
+        expected = ("favicon", "net::ERR", "status of 403", "trycloudflare.com/health")
+        real = [e for e in errors if not any(x in e for x in expected)]
         check(not real, f"no page errors {real[:3]}")
         await browser.close()
     if problems:
