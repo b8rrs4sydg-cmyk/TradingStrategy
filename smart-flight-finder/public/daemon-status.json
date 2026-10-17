@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T19:49:17+00:00",
+ "at": "2026-10-17T19:50:49+00:00",
  "publishes": {
-  "ok": 157,
+  "ok": 161,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2111,
+ "fares_saved": 2153,
  "log": [
   "19:21:52 http front door: https://below-divx-ton-contrast.trycloudflare.com",
   "19:21:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
@@ -73,6 +73,18 @@
   "19:47:46 request received: rid mvct6gaqxxzi9 27 keys",
   "19:47:46 handle mvct6gaqxxzi9: first_chunk=True total=27",
   "19:47:47 request received: rid mvct6h2gygqvu 160 keys",
-  "19:47:47 handle mvct6h2gygqvu: first_chunk=True total=160"
+  "19:47:47 handle mvct6h2gygqvu: first_chunk=True total=160",
+  "19:50:25 request mvct6h2gygqvu: chunk of 160 keys done in 158s; ntfy publishes {'ok': 160, 'r429': 0, 'fail': 0}",
+  "19:50:27 request mvct6h2gygqvu: final sent (160/160); ntfy publishes {'ok': 160, 'r429': 0, 'fail': 0}",
+  "19:50:28 request received: rid mvct9xeuv1ziw 30 keys",
+  "19:50:28 handle mvct9xeuv1ziw: first_chunk=True total=30",
+  "19:50:30 request received: rid mvct9yxsl1oqw 9 keys",
+  "19:50:30 handle mvct9yxsl1oqw: first_chunk=True total=9",
+  "19:50:30 request mvct9yxsl1oqw: chunk of 9 keys done in 0s; ntfy publishes {'ok': 161, 'r429': 0, 'fail': 0}",
+  "19:50:31 request received: rid mvct9zbcch7eo 12 keys",
+  "19:50:31 handle mvct9zbcch7eo: first_chunk=True total=12",
+  "19:50:32 request mvct9yxsl1oqw: final sent (9/9); ntfy publishes {'ok': 161, 'r429': 0, 'fail': 0}",
+  "19:50:33 request received: rid mvcta10547lo5 12 keys",
+  "19:50:33 handle mvcta10547lo5: first_chunk=True total=12"
  ]
 }
