@@ -1,11 +1,11 @@
 {
- "at": "2026-10-17T16:57:11+00:00",
+ "at": "2026-10-17T16:59:05+00:00",
  "publishes": {
-  "ok": 84,
-  "r429": 0,
+  "ok": 109,
+  "r429": 79,
   "fail": 0
  },
- "fares_saved": 441,
+ "fares_saved": 445,
  "log": [
   "16:54:08 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "16:54:50 request received: rid selftest1792256087 30 keys",
@@ -42,6 +42,14 @@
   "16:55:41 request received: rid mvcn15adotvie 11 keys",
   "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
   "16:55:41 handle mvcn15adotvie: first_chunk=False total=160",
-  "16:56:55 request mvcn15adotvie: 11 keys done in 74s; ntfy publishes {'ok': 80, 'r429': 0, 'fail': 0}"
+  "16:56:55 request mvcn15adotvie: 11 keys done in 74s; ntfy publishes {'ok': 80, 'r429': 0, 'fail': 0}",
+  "16:57:13 publish 429 #1: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "16:57:13 publish 429 #2: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "16:57:14 publish 429 #3: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "16:57:14 publish 429 #4: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "16:57:18 publish 429 #5: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "16:57:30 publish 429 #20: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "16:58:00 publish 429 #40: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'",
+  "16:58:32 publish 429 #60: b'{\"code\":42901,\"http\":429,\"error\":\"limit reached: too many requests; increase your limits with a paid plan, see https://n'"
  ]
 }
