@@ -1,9 +1,9 @@
 {
- "at": "2026-10-17T17:33:39+00:00",
+ "at": "2026-10-17T17:36:41+00:00",
  "publishes": {
   "ok": 247,
-  "r429": 36,
-  "fail": 1
+  "r429": 53,
+  "fail": 4
  },
  "fares_saved": 652,
  "log": [
@@ -110,6 +110,18 @@
   "17:32:13 request received: rid mvcoc4tvngf1u 30 keys",
   "17:32:13 handle mvcoc4tvngf1u: first_chunk=True total=30",
   "17:32:14 publish gave up",
-  "17:33:16 request mvcnxlurewq6w: chunk of 36 keys done in 741s; ntfy publishes {'ok': 247, 'r429': 33, 'fail': 1}"
+  "17:33:16 request mvcnxlurewq6w: chunk of 36 keys done in 741s; ntfy publishes {'ok': 247, 'r429': 33, 'fail': 1}",
+  "17:34:00 publish gave up",
+  "17:34:04 request mvcnxlurewq6w: chunk of 36 keys done in 789s; ntfy publishes {'ok': 247, 'r429': 38, 'fail': 2}",
+  "17:34:33 publish 429 #40: b'{\"code\":42908,\"http\":429,\"error\":\"limit reached: daily message quota reached; increase your limits with a paid plan, see'",
+  "17:34:56 request mvcoauc85zbgr: chunk of 30 keys done in 56s; ntfy publishes {'ok': 247, 'r429': 40, 'fail': 2}",
+  "17:35:00 publish gave up",
+  "17:35:00 request mvcoc4tvngf1u: chunk of 30 keys done in 0s; ntfy publishes {'ok': 247, 'r429': 40, 'fail': 3}",
+  "17:35:03 publish gave up",
+  "17:35:36 request mvcnrx3wqlty1: chunk of 36 keys done in 1146s; ntfy publishes {'ok': 247, 'r429': 44, 'fail': 4}",
+  "17:35:54 request received: rid mvcogv9ww3rtu 9 keys",
+  "17:35:54 handle mvcogv9ww3rtu: first_chunk=True total=9",
+  "17:36:15 request received: rid mvcohb6iyla8e 9 keys",
+  "17:36:15 handle mvcohb6iyla8e: first_chunk=True total=9"
  ]
 }
