@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T07:43:41+00:00",
+ "generated_at": "2026-10-18T07:45:12+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -99,6 +99,22 @@
     [
      "2026-10-18",
      84183
+    ]
+   ]
+  },
+  "mc|BKK-TPE-2027-01-03|TPE-LHR-2027-02-04|LHR-TPE-2027-02-14|TPE-HKG-2027-02-26": {
+   "price": 89195,
+   "first": {
+    "dep": "2027-01-03T02:15:00+07:00",
+    "arr": "2027-01-03T06:50:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     89195
     ]
    ]
   },
@@ -3823,7 +3839,6 @@
   "mc|BKK-TPE-2027-01-03|TPE-ICN-2027-04-29|ICN-TPE-2027-05-02|TPE-SGN-2027-06-09",
   "mc|BKK-TPE-2027-01-03|TPE-KIX-2027-02-04|KIX-TPE-2027-02-14|TPE-HKG-2027-02-25",
   "mc|BKK-TPE-2027-01-03|TPE-LAX-2027-02-04|LAX-TPE-2027-02-14|TPE-HKG-2027-02-25",
-  "mc|BKK-TPE-2027-01-03|TPE-LHR-2027-02-04|LHR-TPE-2027-02-14|TPE-HKG-2027-02-26",
   "mc|BKK-TPE-2027-01-03|TPE-LHR-2027-02-04|LHR-TPE-2027-02-14|TPE-ICN-2027-02-26",
   "mc|BKK-TPE-2027-01-03|TPE-MNL-2027-02-04|MNL-TPE-2027-02-14|TPE-ICN-2027-02-25",
   "mc|BKK-TPE-2027-01-03|TPE-MNL-2027-02-26|MNL-TPE-2027-03-01|TPE-HAN-2027-06-09",
