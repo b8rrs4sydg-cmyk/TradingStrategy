@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T11:32:25+00:00",
+ "at": "2026-10-18T11:33:56+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -17,6 +17,8 @@
   "11:27:18 request httptest1792322836: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "11:27:50 git retry 0: b\"-1kexus': is at fe50098efbad7923d9c1bf505068a477102899f7 but expected e4d7409019d8488b699e2526e25a97ca112f1c41)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:31:00 request received: rid mvdqvf38lwhyn.2 19 keys",
-  "11:31:00 handle mvdqvf38lwhyn.2: first_chunk=True total=19"
+  "11:31:00 handle mvdqvf38lwhyn.2: first_chunk=True total=19",
+  "11:32:34 request mvdqvf38lwhyn.2: chunk of 19 keys done in 94s; paths {'http': 32, 'browser-none': 7}, browser waits 7 max 75s sum 385s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 7, 'blocked': 0, 'tries': 38, 'empty': 6}, audit 2/2 agree",
+  "11:32:34 request mvdqvf38lwhyn.2: final sent (19/19); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
