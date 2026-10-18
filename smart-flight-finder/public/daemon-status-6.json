@@ -1,25 +1,21 @@
 {
- "at": "2026-10-18T11:25:01+00:00",
+ "at": "2026-10-18T11:28:14+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 105,
  "log": [
-  "11:23:21 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:23:26 git retry 0: b\"-1kexus': is at d8644e066cf361bd1fe1be1005ba24e844c4afb1 but expected f2201e7f4c36f1a93567b857c8710b4d5bf064e7)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "11:23:31 http front door: ['https://pgp-mistress-mar-yacht.trycloudflare.com', 'https://7b3d697d4e3e5e.lhr.life']",
-  "11:23:31 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:24:23 rtc losbbrr0pw: answered",
-  "11:24:24 rtc losbbrr0pw: data channel open",
-  "11:24:30 request received: rid httptest1792322669 20 keys",
-  "11:24:30 handle httptest1792322669: first_chunk=True total=20",
-  "11:24:31 request httptest1792322669: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "11:24:33 request httptest1792322669: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:24:59 rtc zzj1pv9qai: answered",
-  "11:25:01 rtc zzj1pv9qai: data channel open",
-  "11:25:01 request received: rid mvdqno2nc5elg.6 20 keys",
-  "11:25:01 handle mvdqno2nc5elg.6: first_chunk=True total=20"
+  "11:26:17 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:26:22 git retry 0: b\"-1kexus': is at b1457eaafd0abe30120f9d4e214495b59df81b4a but expected 45455822265a778181956519c14ec57a636a0121)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:26:26 git retry 1: b\"-1kexus': is at 011d81bd8b1995712123bc429a9f26d5172e2d89 but expected b1457eaafd0abe30120f9d4e214495b59df81b4a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:26:34 git retry 2: b\"-1kexus': is at 5d445b71d23a8a29f645c3f25a5eea6eb255043c but expected 011d81bd8b1995712123bc429a9f26d5172e2d89)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:26:44 http front door: ['https://penetration-asian-accommodations-adsl.trycloudflare.com', 'https://971de69f4fde3b.lhr.life']",
+  "11:26:44 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:27:25 request received: rid httptest1792322844 20 keys",
+  "11:27:25 handle httptest1792322844: first_chunk=True total=20",
+  "11:27:27 request httptest1792322844: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "11:27:28 request httptest1792322844: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
