@@ -2,6 +2,7 @@
 
 import json
 from datetime import date
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -184,6 +185,30 @@ def test_live_overlay_wins_when_newer(tmp_path):
     p = FareDatabaseProvider.from_path(main)
     assert p.path == live and p.db.fares[RT]["price"] == 18000 and p.db.generated_at.startswith("2026-10-17")
     assert p.db.fares["ow|TPE|HKG|2027-02-03"]["price"] == 2900
+
+
+def test_parallel_daemons_overlays_are_all_folded_in(tmp_path):
+    main = tmp_path / "fares.json"
+    FareDatabase(fares={}, generated_at="2026-10-16T00:00:00+00:00").save(main)
+    FareDatabase(fares={RT: {"price": 18000, "at": "2026-10-17"}}).save(tmp_path / "fares-live.json")
+    FareDatabase(fares={"ow|TPE|HKG|2027-02-03": {"price": 2900, "at": "2026-10-17"}}).save(tmp_path / "fares-live-1.json")
+    FareDatabase(fares={RT: {"price": 17000, "at": "2026-10-18"}}).save(tmp_path / "fares-live-2.json")
+    db = FareDatabase.load_with_live(main)
+    assert db.fares["ow|TPE|HKG|2027-02-03"]["price"] == 2900   # found by instance 1
+    assert db.fares[RT]["price"] == 17000                       # instance 2 saw it newer
+
+
+def test_daemon_instances_only_answer_their_own_offers():
+    import asyncio
+
+    from scripts.lookup_daemon import Daemon
+
+    d = Daemon("q", "r", Path("/tmp/none-live.json"), instance=2)
+    assert d.persist.suffix == "-2" and Daemon("q", "r", Path("/tmp/none-live.json")).persist.suffix == ""
+    # an offer addressed to another instance is ignored before aiortc is even touched
+    offer = json.dumps({"type": "offer", "sid": "abcd1234", "inst": 1, "sdp": "v=0"})
+    asyncio.run(d.rtc_answer(offer))
+    assert d.rtc == {}
 
 
 def test_lookup_accepts_only_well_formed_keys():

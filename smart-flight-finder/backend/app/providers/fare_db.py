@@ -76,7 +76,11 @@ class FareDatabase:
         """
 
         db = cls.load(path)
-        live = cls.load(live_path(path))
+        live_file = live_path(path)
+        live = cls.load(live_file)
+        # parallel lookup daemons (instances 1, 2, …) write fares-live-<n>.json next to the first overlay
+        for extra in sorted(live_file.parent.glob(f"{live_file.stem}-*{live_file.suffix}")):
+            live.overlay(cls.load(extra))
         db.overlay(live)
         db.unavailable = [k for k in live.missing if k not in db.fares]
         return db

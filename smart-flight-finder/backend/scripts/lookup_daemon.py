@@ -49,7 +49,7 @@ from app.providers.google_flights import _fetch_one
 from scripts.lookup_fares import MAX_KEYS, valid_keys
 
 NTFY = os.getenv("NTFY_URL", "https://ntfy.sh")
-STUN = "stun:stun.l.google.com:19302"   # public STUN: no account, only tells each side its public address
+STUN = "stun:stun.l.google.com:19302"  # public STUN: no account, only tells each side its public address
 MSG_BYTES = 3400  # ntfy turns messages over 4096 bytes into attachments
 RATE_KEYS = 2500  # accepted keys per window
 RATE_WINDOW_S = 600
@@ -252,8 +252,11 @@ def subscribe(topic: str, since: str, stop: threading.Event, handler) -> None:
 class Persister:
     """Merges fetched fares into the live overlay file and pushes it to git."""
 
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Path, suffix: str = "") -> None:
         self.path = path.resolve()  # git -C <root> needs a path inside the repo
+        self.suffix = (
+            suffix  # "" for instance 0, "-1", "-2", … for the others: each instance owns its files
+        )
         self.db = FareDatabase.load(self.path)
         self.pending: dict[str, dict] = {}
         self.missing: list[str] = []
@@ -285,7 +288,7 @@ class Persister:
     def announce(self, urls: list[str]) -> None:
         """Tell pages where to reach this daemon (daemon.json: independent tunnels, the page tries each)."""
 
-        (self.path.parent / "daemon.json").write_text(
+        (self.path.parent / f"daemon{self.suffix}.json").write_text(
             json.dumps(
                 {
                     "url": urls[0] if urls else None,
@@ -307,7 +310,7 @@ class Persister:
             "log": list(RING),
         }
         try:
-            (self.path.parent / "daemon-status.json").write_text(
+            (self.path.parent / f"daemon-status{self.suffix}.json").write_text(
                 json.dumps(status, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
             )
         except OSError:
@@ -316,37 +319,43 @@ class Persister:
     def _git_push(self, n: int) -> None:
         root = Path(__file__).resolve().parents[3]
         branch = os.getenv("GITHUB_REF_NAME", "")
-        for attempt in range(4):
+        committed = False
+        for attempt in range(6):
             try:
                 git = lambda *a: subprocess.run(
                     ["git", "-C", str(root), *a], check=True, capture_output=True
                 )
-                git(
-                    "add",
-                    str(self.path),
-                    str(self.path.parent / "daemon-status.json"),
-                    str(self.path.parent / "daemon.json"),
-                )
-                if (
-                    subprocess.run(
-                        ["git", "-C", str(root), "diff", "--cached", "--quiet"], check=False
-                    ).returncode
-                    == 0
-                ):
-                    return
-                git("commit", "-q", "-m", f"data: live fare lookups (+{n})")
+                if not committed:
+                    git(
+                        "add",
+                        str(self.path),
+                        str(self.path.parent / f"daemon-status{self.suffix}.json"),
+                        str(self.path.parent / f"daemon{self.suffix}.json"),
+                    )
+                    if (
+                        subprocess.run(
+                            ["git", "-C", str(root), "diff", "--cached", "--quiet"], check=False
+                        ).returncode
+                        == 0
+                    ):
+                        return
+                    git("commit", "-q", "-m", f"data: live fare lookups (+{n})")
+                    committed = True  # a lost push race (several instances push) must retry the push, not the commit
                 git("pull", "-q", "--rebase", "origin", branch)
                 git("push", "-q", "origin", f"HEAD:{branch}")
                 return
             except subprocess.CalledProcessError as e:
                 log(f"git retry {attempt}: {e.stderr[-200:] if e.stderr else e}")
-                time.sleep(3)
+                time.sleep(2 + attempt * 2)
 
 
 class Daemon:
-    def __init__(self, req: str, res: str, db_path: Path) -> None:
+    def __init__(self, req: str, res: str, db_path: Path, instance: int = 0) -> None:
         self.req, self.res = req, res
-        self.persist = Persister(db_path)
+        # several daemons run side by side (one GitHub job each, each with its own IP, browser and tunnels):
+        # the page splits a lookup between them. Instance 0 also owns the ntfy relay and the legacy file names.
+        self.instance = instance
+        self.persist = Persister(db_path, "" if instance == 0 else f"-{instance}")
         self.limiter = RateLimiter()
         self.cache: dict[str, tuple[float, dict | None]] = {}
         self.requests: dict[str, dict] = {}  # rid → {total, done}
@@ -355,7 +364,7 @@ class Daemon:
         self.buffers: dict[str, dict] = {}  # rid -> {msgs, t}: what SSE subscribers read
         self.tunnel_url: str | None = None
         self.tunnel_urls: list[str] = []
-        self.rtc: dict[str, dict] = {}   # peer-to-peer sessions by id: {pc, ch, t}
+        self.rtc: dict[str, dict] = {}  # peer-to-peer sessions by id: {pc, ch, t}
         self.seq = 0
 
     async def run(self, duration: float) -> None:
@@ -370,11 +379,14 @@ class Daemon:
             self.seen.add(ev.get("id"))
             loop.call_soon_threadsafe(self.queue.put_nowait, ("ntfy", ev.get("message", "")))
 
-        threading.Thread(
-            target=subscribe,
-            args=(self.req, str(int(time.time()) - 5), stop, on_message),
-            daemon=True,
-        ).start()
+        if (
+            self.instance == 0
+        ):  # the ntfy relay is a single shared mailbox: only one instance listens
+            threading.Thread(
+                target=subscribe,
+                args=(self.req, str(int(time.time()) - 5), stop, on_message),
+                daemon=True,
+            ).start()
         async with async_playwright() as pw:
             browser = await pw.chromium.launch(
                 args=["--disable-blink-features=AutomationControlled"]
@@ -521,27 +533,41 @@ class Daemon:
             return
 
         def on_offer(ev: dict) -> None:
-            loop.call_soon_threadsafe(lambda: asyncio.ensure_future(self.rtc_answer(ev.get("message", ""))))
+            loop.call_soon_threadsafe(
+                lambda: asyncio.ensure_future(self.rtc_answer(ev.get("message", "")))
+            )
 
         threading.Thread(
-            target=subscribe, args=(self.req + "-sig", str(int(time.time()) - 2), stop, on_offer), daemon=True
+            target=subscribe,
+            args=(self.req + "-sig", str(int(time.time()) - 2), stop, on_offer),
+            daemon=True,
         ).start()
         log(f"peer-to-peer front door: signalling on {self.req}-sig")
 
     async def rtc_answer(self, message: str) -> None:
-        from aiortc import RTCConfiguration, RTCIceServer, RTCPeerConnection, RTCSessionDescription
-
         try:
             m = json.loads(message)
         except ValueError:
             return
         if not isinstance(m, dict) or m.get("type") != "offer":
             return
-        sid, sdp = str(m.get("sid", "")), m.get("sdp")
-        if not re.fullmatch(r"[A-Za-z0-9_-]{4,24}", sid) or not isinstance(sdp, str) or len(sdp) > 20000:
+        try:
+            target = int(m.get("inst", 0))  # pages that predate instances address instance 0
+        except (TypeError, ValueError):
             return
+        if target != self.instance:
+            return
+        sid, sdp = str(m.get("sid", "")), m.get("sdp")
+        if (
+            not re.fullmatch(r"[A-Za-z0-9_-]{4,24}", sid)
+            or not isinstance(sdp, str)
+            or len(sdp) > 20000
+        ):
+            return
+        from aiortc import RTCConfiguration, RTCIceServer, RTCPeerConnection, RTCSessionDescription
+
         now = time.time()
-        for old, sess in list(self.rtc.items()):   # forget sessions that never connected or ended
+        for old, sess in list(self.rtc.items()):  # forget sessions that never connected or ended
             if now - sess["t"] > 6 * 3600 or sess["pc"].connectionState in ("failed", "closed"):
                 await sess["pc"].close()
                 self.rtc.pop(old, None)
@@ -565,7 +591,16 @@ class Daemon:
             await pc.setRemoteDescription(RTCSessionDescription(sdp=sdp, type="offer"))
             await pc.setLocalDescription(await pc.createAnswer())
             await asyncio.to_thread(
-                publish, self.res + "-sig", json.dumps({"type": "answer", "sid": sid, "sdp": pc.localDescription.sdp})
+                publish,
+                self.res + "-sig",
+                json.dumps(
+                    {
+                        "type": "answer",
+                        "sid": sid,
+                        "inst": self.instance,
+                        "sdp": pc.localDescription.sdp,
+                    }
+                ),
             )
             log(f"rtc {sid}: answered")
         except Exception as e:  # noqa: BLE001
@@ -634,6 +669,7 @@ def make_app(daemon: Daemon):
     async def health() -> dict:
         return {
             "ok": True,
+            "instance": daemon.instance,
             "at": datetime.now(UTC).isoformat(timespec="seconds"),
             "requests": len(daemon.requests),
         }
@@ -866,6 +902,7 @@ def main() -> None:
     r.add_argument("--req", required=True)
     r.add_argument("--res", required=True)
     r.add_argument("--db", type=Path, required=True)
+    r.add_argument("--instance", type=int, default=int(os.getenv("DAEMON_INSTANCE", "0")))
     r.add_argument("--duration", type=float, default=5.2 * 3600)
     s = sub.add_parser("selftest")
     s.add_argument("--req", required=True)
@@ -890,7 +927,7 @@ def main() -> None:
         ]
         sys.exit(selftest_http(args.daemon_json, keys, args.timeout))
     if args.cmd == "run":
-        asyncio.run(Daemon(args.req, args.res, args.db).run(args.duration))
+        asyncio.run(Daemon(args.req, args.res, args.db, args.instance).run(args.duration))
     else:
         keys = args.keys.split(",")
         if args.count:

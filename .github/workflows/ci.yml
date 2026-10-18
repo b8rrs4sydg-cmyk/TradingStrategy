@@ -8,9 +8,12 @@ on:
       # data-only commits from the crawler / lookup daemon don't need CI
       - "!smart-flight-finder/public/fares.json"
       - "!smart-flight-finder/public/fares-live.json"
+      - "!smart-flight-finder/public/fares-live-*.json"
       - "!smart-flight-finder/public/live-request.json"
       - "!smart-flight-finder/public/daemon-status.json"
+      - "!smart-flight-finder/public/daemon-status-*.json"
       - "!smart-flight-finder/public/daemon.json"
+      - "!smart-flight-finder/public/daemon-*.json"
   pull_request:
     paths:
       - "smart-flight-finder/**"
