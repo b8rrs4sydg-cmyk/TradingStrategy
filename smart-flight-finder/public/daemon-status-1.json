@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:48:26+00:00",
+ "at": "2026-10-18T12:49:58+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1239,
+ "fares_saved": 1244,
  "log": [
   "11:26:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:13 http front door: ['https://vegetables-defining-facial-granted.trycloudflare.com', 'https://17c1d95da2fbab.lhr.life']",
@@ -138,6 +138,8 @@
   "12:46:01 request received: rid mvdtjx0198xje.1 16 keys",
   "12:46:01 handle mvdtjx0198xje.1: first_chunk=True total=16",
   "12:47:29 request mvdtjx0198xje.1: chunk of 16 keys done in 88s; paths {'http': 118, 'browser': 47, 'browser-none': 352}, browser waits 399 max 236s sum 25719s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 118, 'miss': 121, 'blocked': 0, 'tries': 202, 'empty': 84}, audit 5/5 agr",
-  "12:47:30 request mvdtjx0198xje.1: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "12:47:30 request mvdtjx0198xje.1: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:48:29 request received: rid mvdtn3iltwypi.1 15 keys",
+  "12:48:29 handle mvdtn3iltwypi.1: first_chunk=True total=15"
  ]
 }
