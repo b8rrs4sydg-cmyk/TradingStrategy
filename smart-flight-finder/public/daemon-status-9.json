@@ -1,0 +1,26 @@
+{
+ "at": "2026-10-18T11:03:26+00:00",
+ "publishes": {
+  "ok": 0,
+  "r429": 0,
+  "fail": 0
+ },
+ "fares_saved": 20,
+ "log": [
+  "11:00:30 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:00:34 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
+  "11:00:39 git retry 1: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
+  "11:00:43 git retry 2: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
+  "11:00:50 git retry 3: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
+  "11:00:58 git retry 4: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
+  "11:01:10 git retry 5: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
+  "11:01:24 git retry 6: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
+  "11:01:39 git retry 7: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
+  "11:01:56 http front door: ['https://residence-grand-tahoe-void.trycloudflare.com', 'https://461df1669f3e35.lhr.life']",
+  "11:01:56 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:01:56 request received: rid httptest1792321299 20 keys",
+  "11:01:56 handle httptest1792321299: first_chunk=True total=20",
+  "11:02:00 request httptest1792321299: chunk of 20 keys done in 4s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
+  "11:02:02 request httptest1792321299: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+ ]
+}
