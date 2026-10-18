@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T06:49:33+00:00",
+ "at": "2026-10-18T06:51:05+00:00",
  "publishes": {
-  "ok": 214,
+  "ok": 216,
   "r429": 0,
   "fail": 0
  },
@@ -122,6 +122,10 @@
   "06:48:18 request received: rid mvdgrvlizhfc9.0 54 keys",
   "06:48:18 handle mvdgrvlizhfc9.0: first_chunk=True total=54",
   "06:48:34 request mvdgolgnfn0tk.0: chunk of 54 keys done in 170s; ntfy publishes {'ok': 214, 'r429': 0, 'fail': 0}",
-  "06:48:35 request mvdgolgnfn0tk.0: final sent (54/54); ntfy publishes {'ok': 214, 'r429': 0, 'fail': 0}"
+  "06:48:35 request mvdgolgnfn0tk.0: final sent (54/54); ntfy publishes {'ok': 214, 'r429': 0, 'fail': 0}",
+  "06:50:52 request received: rid mvdgv6j7hh213 98 keys",
+  "06:50:52 handle mvdgv6j7hh213: first_chunk=True total=139",
+  "06:50:53 request received: rid mvdgv6j7hh213 41 keys",
+  "06:50:53 handle mvdgv6j7hh213: first_chunk=False total=139"
  ]
 }
