@@ -1,14 +1,12 @@
 {
- "at": "2026-10-18T15:20:25+00:00",
+ "at": "2026-10-18T15:23:27+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4657,
+ "fares_saved": 4675,
  "log": [
-  "13:13:41 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
-  "13:13:42 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:45 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:46 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:20:19 request received: rid mvdus132ib8io.0 20 keys",
@@ -156,6 +154,8 @@
   "15:17:56 request received: rid mvdyz9qa1rblb.0 16 keys",
   "15:17:56 handle mvdyz9qa1rblb.0: first_chunk=True total=16",
   "15:19:28 request mvdyz9qa1rblb.0: chunk of 16 keys done in 91s; paths {'http': 338, 'browser': 85, 'browser-none': 813}, browser waits 898 max 211s sum 58152s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 338, 'miss': 367, 'blocked': 0, 'tries': 715, 'empty': 377}, audit 7/7 ag",
-  "15:19:28 request mvdyz9qa1rblb.0: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "15:19:28 request mvdyz9qa1rblb.0: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:22:33 request received: rid mvdz58ghuswdl.0 27 keys",
+  "15:22:33 handle mvdz58ghuswdl.0: first_chunk=True total=27"
  ]
 }
