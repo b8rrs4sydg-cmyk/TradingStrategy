@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:24:15+00:00",
+ "at": "2026-10-18T10:25:47+00:00",
  "publishes": {
   "ok": 16,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4005,
+ "fares_saved": 4046,
  "log": [
   "08:41:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:41:58 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -140,6 +140,14 @@
   "10:21:47 request received: rid mvdoefma4ilwh.0 27 keys",
   "10:21:47 handle mvdoefma4ilwh.0: first_chunk=True total=27",
   "10:22:52 request received: rid mvdofttvm1mr8.0 27 keys",
-  "10:22:52 handle mvdofttvm1mr8.0: first_chunk=True total=27"
+  "10:22:52 handle mvdofttvm1mr8.0: first_chunk=True total=27",
+  "10:24:24 request received: rid mvdohst9h6yky.0 27 keys",
+  "10:24:24 handle mvdohst9h6yky.0: first_chunk=True total=27",
+  "10:24:28 request mvdofttvm1mr8.0: chunk of 27 keys done in 96s; ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 147, 'miss': 193, 'blocked': 11, 'tries': 163, 'empty': 16}, audit 4/4 agree",
+  "10:24:30 request mvdofttvm1mr8.0: final sent (27/27); ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}",
+  "10:24:51 request mvdoefma4ilwh.0: chunk of 27 keys done in 184s; ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 147, 'miss': 193, 'blocked': 11, 'tries': 163, 'empty': 16}, audit 4/4 agree",
+  "10:24:52 request mvdoefma4ilwh.0: final sent (27/27); ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}",
+  "10:25:31 request received: rid mvdoj8tiltid4.0 27 keys",
+  "10:25:31 handle mvdoj8tiltid4.0: first_chunk=True total=27"
  ]
 }
