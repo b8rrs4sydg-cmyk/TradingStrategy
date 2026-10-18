@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:50:46+00:00",
+ "at": "2026-10-18T13:52:21+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 1259,
  "log": [
-  "12:04:47 handle mvds2wisp31cv.1: first_chunk=True total=17",
-  "12:07:07 request mvds2wisp31cv.1: chunk of 17 keys done in 140s; paths {'http': 59, 'browser': 38, 'browser-none': 216}, browser waits 254 max 236s sum 16307s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 72, 'blocked': 0, 'tries': 84, 'empty': 25}, audit 5/5 agree",
-  "12:07:09 request mvds2wisp31cv.1: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:07:43 request received: rid mvds6nyh5n4is.1 15 keys",
   "12:07:43 handle mvds6nyh5n4is.1: first_chunk=True total=15",
   "12:09:19 request mvds6nyh5n4is.1: chunk of 15 keys done in 97s; paths {'http': 59, 'browser': 38, 'browser-none': 231}, browser waits 269 max 236s sum 17354s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 72, 'blocked': 0, 'tries': 84, 'empty': 25}, audit 5/5 agree",
@@ -156,6 +153,9 @@
   "13:48:49 request mvdvpm7xd6s8y.1: chunk of 21 keys done in 143s; paths {'http': 125, 'browser': 69, 'browser-none': 558}, browser waits 627 max 236s sum 39232s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 125, 'miss': 185, 'blocked': 0, 'tries': 249, 'empty': 124}, audit 5/5 a",
   "13:48:49 request mvdvpm7xd6s8y.1: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:49:36 request mvdvs7vl0pzkl.1: chunk of 20 keys done in 69s; paths {'http': 125, 'browser': 69, 'browser-none': 565}, browser waits 634 max 236s sum 39645s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 125, 'miss': 185, 'blocked': 0, 'tries': 249, 'empty': 124}, audit 5/5 ag",
-  "13:49:36 request mvdvs7vl0pzkl.1: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "13:49:36 request mvdvs7vl0pzkl.1: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:50:47 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "13:50:57 request received: rid mvdvvfsqv12at.1 11 keys",
+  "13:50:57 handle mvdvvfsqv12at.1: first_chunk=True total=11"
  ]
 }
