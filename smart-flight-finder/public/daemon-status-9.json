@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T15:19:42+00:00",
+ "at": "2026-10-18T15:21:14+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 422,
  "log": [
-  "13:13:20 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
-  "13:13:23 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:27 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:30 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:34 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
@@ -156,6 +154,8 @@
   "15:15:40 request mvdytcbnzw9jz.9: chunk of 23 keys done in 141s; paths {'http': 301, 'browser-none': 719, 'browser': 48}, browser waits 767 max 146s sum 47676s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 301, 'miss': 332, 'blocked': 0, 'tries': 648, 'empty': 347}, audit 8/8 a",
   "15:15:40 request mvdytcbnzw9jz.9: final sent (23/23); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "15:17:56 request received: rid mvdyz9qa1rblb.8 21 keys",
-  "15:17:56 handle mvdyz9qa1rblb.8: first_chunk=True total=21"
+  "15:17:56 handle mvdyz9qa1rblb.8: first_chunk=True total=21",
+  "15:20:20 request mvdyz9qa1rblb.8: chunk of 21 keys done in 144s; paths {'http': 301, 'browser-none': 740, 'browser': 48}, browser waits 788 max 146s sum 49544s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 301, 'miss': 332, 'blocked': 0, 'tries': 648, 'empty': 347}, audit 8/8 a",
+  "15:20:22 request mvdyz9qa1rblb.8: final sent (21/21); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
