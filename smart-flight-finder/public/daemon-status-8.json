@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:40:59+00:00",
+ "at": "2026-10-18T12:42:31+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 211,
+ "fares_saved": 222,
  "log": [
   "11:26:11 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:15 http front door: ['https://organic-asthma-bios-passive.trycloudflare.com', 'https://a455d0c2cfea05.lhr.life']",
@@ -114,6 +114,8 @@
   "12:38:38 request received: rid mvdtaf8zalrpu.8 13 keys",
   "12:38:38 handle mvdtaf8zalrpu.8: first_chunk=True total=13",
   "12:40:10 request mvdtaf8zalrpu.8: chunk of 13 keys done in 92s; paths {'http': 113, 'browser-none': 231, 'browser': 9}, browser waits 240 max 147s sum 15282s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 113, 'miss': 123, 'blocked': 0, 'tries': 233, 'empty': 120}, audit 1/1 agr",
-  "12:40:12 request mvdtaf8zalrpu.8: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "12:40:12 request mvdtaf8zalrpu.8: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:41:05 request received: rid mvdtdjwntntwn.7 23 keys",
+  "12:41:05 handle mvdtdjwntntwn.7: first_chunk=True total=23"
  ]
 }
