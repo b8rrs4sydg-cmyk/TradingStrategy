@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:13:15+00:00",
+ "at": "2026-10-18T12:14:47+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 761,
+ "fares_saved": 765,
  "log": [
   "11:26:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:07 http front door: ['https://rugby-lime-feb-packages.trycloudflare.com', 'https://31a5df0d9304d4.lhr.life']",
@@ -87,6 +87,10 @@
   "12:12:19 request received: rid mvdscl8r2y6s1.3 16 keys",
   "12:12:19 handle mvdscl8r2y6s1.3: first_chunk=True total=16",
   "12:13:00 request mvdsad9pusjjw.3: chunk of 21 keys done in 145s; paths {'http': 115, 'browser': 8, 'browser-none': 197}, browser waits 205 max 145s sum 13634s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 115, 'miss': 112, 'blocked': 0, 'tries': 171, 'empty': 56}, audit 3/3 agr",
-  "12:13:02 request mvdsad9pusjjw.3: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "12:13:02 request mvdsad9pusjjw.3: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "12:13:58 request mvdscl8r2y6s1.3: chunk of 16 keys done in 99s; paths {'http': 115, 'browser': 8, 'browser-none': 206}, browser waits 214 max 145s sum 14317s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 115, 'miss': 112, 'blocked': 0, 'tries': 171, 'empty': 56}, audit 3/3 agre",
+  "12:13:59 request mvdscl8r2y6s1.3: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "12:14:00 request received: rid mvdserbuovnpn.3 22 keys",
+  "12:14:00 handle mvdserbuovnpn.3: first_chunk=True total=22"
  ]
 }
