@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T12:38:09+00:00",
+ "generated_at": "2026-10-18T12:40:00+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -10374,6 +10374,22 @@
     ]
    ]
   },
+  "rt|SDJ|TPE|2026-12-27|2027-02-10": {
+   "price": 27300,
+   "first": {
+    "dep": "2026-12-27T15:00:00+09:00",
+    "arr": "2026-12-28T13:55:00+08:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     27300
+    ]
+   ]
+  },
   "rt|TPE|AOJ|2027-01-02|2027-01-03": {
    "price": 30344,
    "first": {
@@ -15261,6 +15277,7 @@
   "mc|XMN-TPE-2027-03-01|TPE-PUS-2027-04-29|PUS-TPE-2027-05-02|TPE-MFM-2027-06-09",
   "mc|XMN-TPE-2027-03-01|TPE-PUS-2027-04-29|PUS-TPE-2027-05-02|TPE-SGN-2027-06-09",
   "ow|BKK|TPE|2027-09-19",
+  "ow|BKK|TSA|2027-09-19",
   "ow|CEB|TPE|2027-09-19",
   "ow|CJU|TSA|2027-06-13",
   "ow|CNX|TPE|2027-09-19",
@@ -15282,15 +15299,20 @@
   "ow|MNL|TSA|2027-12-27",
   "ow|NRT|TPE|2027-09-19",
   "ow|OKA|TPE|2027-09-19",
+  "ow|OKJ|RMQ|2027-09-19",
+  "ow|PQC|TSA|2027-09-19",
   "ow|PUS|RMQ|2027-09-19",
   "ow|PUS|TSA|2026-12-26",
   "ow|PUS|TSA|2027-05-02",
   "ow|PUS|TSA|2027-12-27",
   "ow|RMQ|BKK|2027-12-23",
+  "ow|RMQ|ITM|2027-09-15",
   "ow|RMQ|KIX|2027-09-15",
   "ow|RMQ|KOJ|2027-02-10",
   "ow|RMQ|MNL|2027-12-23",
   "ow|RMQ|NRT|2027-09-15",
+  "ow|RMQ|OKA|2027-09-15",
+  "ow|RMQ|SDJ|2027-09-15",
   "ow|RMQ|SGN|2027-09-15",
   "ow|SHA|RMQ|2027-06-13",
   "ow|SHA|TPE|2027-09-19",
@@ -15318,6 +15340,7 @@
   "ow|TSA|SGN|2027-12-23",
   "ow|TSA|UEO|2027-09-15",
   "ow|TSA|USM|2027-02-10",
+  "ow|UEO|RMQ|2027-09-19",
   "ow|UEO|TPE|2027-02-14",
   "ow|UKB|RMQ|2027-06-13",
   "ow|USM|RMQ|2027-05-02",
