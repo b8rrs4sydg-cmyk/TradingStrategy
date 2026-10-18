@@ -3185,15 +3185,36 @@ async function crawlerOfflineNote() {
   } catch { return ''; }
 }
 
-// The lookup runs on every crawler instance that answers: the keys are split between them (round robin) and each
-// share goes over that instance's data channel or tunnel, so a search is about as many times faster as there are
+// Which crawler owns a fare key: rendezvous hashing (the highest score wins), the same function as dispatch.py's
+// owner(). A key always goes to the same crawler, so no two crawlers fetch it for two pages or a retry, and when a
+// crawler is down only ITS keys move. tests/test_dispatch.py runs both implementations on the same vectors.
+function hashScore(instance, key) {
+  let h = 0x811C9DC5;
+  for (const b of new TextEncoder().encode(`${instance}|${key}`)) h = Math.imul(h ^ b, 0x01000193) >>> 0;
+  h = (h ^ (h >>> 16)) >>> 0; h = Math.imul(h, 0x85EBCA6B) >>> 0;
+  h = (h ^ (h >>> 13)) >>> 0; h = Math.imul(h, 0xC2B2AE35) >>> 0;
+  return (h ^ (h >>> 16)) >>> 0;
+}
+function ownerOf(key, instances) {
+  let best = -1, bestScore = -1;
+  for (const i of [...instances].sort((a, b) => a - b)) {
+    const sc = hashScore(i, key);
+    if (sc > bestScore) { best = i; bestScore = sc; }
+  }
+  return best;
+}
+
+// The lookup runs on every crawler instance that answers: each key goes to the instance that owns it (ownerOf) and
+// the share goes over that instance's data channel or tunnel, so a search is about as many times faster as there are
 // instances. Progress is the sum of the shares; one failing share is retried by the caller with the others' help.
 function peersLookup(keys, rid) {
   return new Promise((resolve, reject) => {
     const peers = [...(live.peerList || [])];
     if (!peers.length) { const err = new Error('沒有可用的爬蟲'); err.gotAny = false; err.failedPeers = []; reject(err); return; }
+    keys = [...new Set(keys)];                                   // one ask per key
+    const ids = peers.map(p => p.i), slot = new Map(ids.map((i, s) => [i, s]));
     const shards = peers.map(() => []);
-    keys.forEach((k, idx) => shards[idx % peers.length].push(k));
+    keys.forEach(k => shards[slot.get(ownerOf(k, ids))].push(k));
     const st = shards.map(ks => ({ done: 0, final: !ks.length, failed: null }));
     const timers = st.map(() => null), ctls = [];
     let finished = false, gotAny = false;
