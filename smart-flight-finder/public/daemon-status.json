@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T05:56:21+00:00",
+ "at": "2026-10-18T05:57:52+00:00",
  "publishes": {
-  "ok": 53,
+  "ok": 59,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3226,
+ "fares_saved": 3250,
  "log": [
   "05:45:35 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:45:41 http front door: ['https://general-vbulletin-uni-rights.trycloudflare.com', 'https://557e83ce6d948d.lhr.life']",
@@ -47,6 +47,9 @@
   "05:53:56 request probemvdetsjt.0: chunk of 3 keys done in 9s; ntfy publishes {'ok': 46, 'r429': 0, 'fail': 0}",
   "05:53:58 request probemvdetsjt.0: final sent (3/3); ntfy publishes {'ok': 47, 'r429': 0, 'fail': 0}",
   "05:54:01 request mvdeto19ml7mj.0: chunk of 54 keys done in 14s; ntfy publishes {'ok': 47, 'r429': 0, 'fail': 0}",
-  "05:54:02 request mvdeto19ml7mj.0: final sent (54/54); ntfy publishes {'ok': 47, 'r429': 0, 'fail': 0}"
+  "05:54:02 request mvdeto19ml7mj.0: final sent (54/54); ntfy publishes {'ok': 47, 'r429': 0, 'fail': 0}",
+  "05:56:51 rtc 2oid0sofdf: answered",
+  "05:57:03 request received: rid mvdexmgdcuhnb.0 18 keys",
+  "05:57:03 handle mvdexmgdcuhnb.0: first_chunk=True total=18"
  ]
 }
