@@ -94,7 +94,7 @@ async def main() -> int:
         await page.wait_for_timeout(2500)
         info = await page.evaluate(
             """() => ({fares: Object.keys(FARES.fares).length, slots: slots.length,
-                      triple: typeof planFourLegTriple === 'function', ntfy: typeof ntfyLookup === 'function' && ntfyLookup.toString().includes('/poll/'),
+                      triple: typeof planFourLegTriple === 'function', ntfy: typeof peersLookup === 'function' && peersLookup.toString().includes('/poll/'),
                       plans: state.result ? state.result.plans.length : -1,
                       cards: document.querySelectorAll('article.plan').length})"""
         )
@@ -202,7 +202,7 @@ async def main() -> int:
         )
         check((st["found"] or 0) > 0, "fares streamed back from the crawler")
         check(
-            st["transport"] in ("rtc", "http"),
+            st["transport"] == "peers",
             f"page reached the crawler directly, not through ntfy (transport={st['transport']})",
         )
         check(not st["error"], f"no lookup error ({st['error']})")
@@ -250,7 +250,14 @@ async def main() -> int:
             )
 
         # probes of a stale tunnel URL (CORS-less Cloudflare error) and the rate-limited GitHub API are handled by the page
-        expected = ("favicon", "net::ERR", "status of 403", "trycloudflare.com/health")
+        expected = (
+            "favicon",
+            "net::ERR",
+            "status of 403",
+            "status of 404",
+            "trycloudflare.com/health",
+            "lhr.life/health",
+        )
         real = [e for e in errors if not any(x in e for x in expected)]
         check(not real, f"no page errors {real[:3]}")
         await browser.close()
