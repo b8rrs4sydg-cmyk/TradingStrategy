@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T05:58:15+00:00",
+ "at": "2026-10-18T05:59:48+00:00",
  "publishes": {
   "ok": 7,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 129,
+ "fares_saved": 141,
  "log": [
   "05:45:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:45:30 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-1.json' did not match any files\\n\"",
@@ -45,6 +45,10 @@
   "05:54:22 request mvdeto19ml7mj.1: final sent (53/53); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
   "05:56:51 rtc 34ct7jvxoo: answered",
   "05:57:03 request received: rid mvdexmgdcuhnb.1 18 keys",
-  "05:57:03 handle mvdexmgdcuhnb.1: first_chunk=True total=18"
+  "05:57:03 handle mvdexmgdcuhnb.1: first_chunk=True total=18",
+  "05:58:28 request mvdexmgdcuhnb.1: chunk of 18 keys done in 86s; ntfy publishes {'ok': 7, 'r429': 0, 'fail': 0}",
+  "05:58:30 request mvdexmgdcuhnb.1: final sent (18/18); ntfy publishes {'ok': 7, 'r429': 0, 'fail': 0}",
+  "05:58:46 request received: rid mvdf06qd7jibk.1 53 keys",
+  "05:58:46 handle mvdf06qd7jibk.1: first_chunk=True total=53"
  ]
 }
