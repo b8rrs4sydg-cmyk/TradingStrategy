@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:08:16+00:00",
+ "at": "2026-10-18T14:09:47+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 588,
  "log": [
-  "12:17:17 request mvdshwzhdvehp.4: chunk of 3 keys done in 50s; paths {'http': 65, 'browser': 35, 'browser-none': 260}, browser waits 295 max 185s sum 18982s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 65, 'miss': 100, 'blocked': 0, 'tries': 115, 'empty': 50}, audit 8/8 agree",
-  "12:17:19 request mvdshwzhdvehp.4: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:31:41 request received: rid mvdt1gqtew69c.3 18 keys",
   "12:31:41 handle mvdt1gqtew69c.3: first_chunk=True total=18",
   "12:32:30 request mvdt1gqtew69c.3: chunk of 18 keys done in 49s; paths {'http': 82, 'browser': 35, 'browser-none': 261}, browser waits 296 max 185s sum 19029s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 82, 'miss': 101, 'blocked': 0, 'tries': 134, 'empty': 52}, audit 8/8 agree",
@@ -156,6 +154,8 @@
   "14:04:54 request mvdwbcpnn1vep.4: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:06:37 request received: rid mvdwfkuufgxco.4 20 keys",
   "14:06:37 handle mvdwfkuufgxco.4: first_chunk=True total=20",
-  "14:06:40 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\""
+  "14:06:40 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "14:08:58 request mvdwfkuufgxco.4: chunk of 20 keys done in 141s; paths {'http': 185, 'browser': 38, 'browser-none': 643}, browser waits 681 max 185s sum 44689s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 185, 'miss': 257, 'blocked': 0, 'tries': 412, 'empty': 227}, audit 8/8 a",
+  "14:09:01 request mvdwfkuufgxco.4: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
