@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:08:00+00:00",
+ "at": "2026-10-18T12:09:31+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 168,
+ "fares_saved": 170,
  "log": [
   "11:26:17 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:22 git retry 0: b\"-1kexus': is at b1457eaafd0abe30120f9d4e214495b59df81b4a but expected 45455822265a778181956519c14ec57a636a0121)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -85,6 +85,8 @@
   "12:06:17 request mvds2wisp31cv.6: chunk of 11 keys done in 90s; paths {'http': 80, 'browser-none': 140, 'browser': 2}, browser waits 142 max 136s sum 8297s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 67, 'blocked': 0, 'tries': 104, 'empty': 24}, audit 2/2 agree",
   "12:06:18 request mvds2wisp31cv.6: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:07:43 request received: rid mvds6nyh5n4is.6 14 keys",
-  "12:07:43 handle mvds6nyh5n4is.6: first_chunk=True total=14"
+  "12:07:43 handle mvds6nyh5n4is.6: first_chunk=True total=14",
+  "12:09:18 request mvds6nyh5n4is.6: chunk of 14 keys done in 95s; paths {'http': 80, 'browser-none': 151, 'browser': 5}, browser waits 156 max 136s sum 9071s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 67, 'blocked': 0, 'tries': 104, 'empty': 24}, audit 2/2 agree",
+  "12:09:20 request mvds6nyh5n4is.6: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
