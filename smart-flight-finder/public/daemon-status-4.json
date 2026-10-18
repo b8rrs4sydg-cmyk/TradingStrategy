@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:44:52+00:00",
+ "at": "2026-10-18T14:46:23+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 636,
  "log": [
-  "12:53:23 handle mvdttemfkl6n6.4: first_chunk=True total=19",
-  "12:55:59 request mvdttemfkl6n6.4: chunk of 19 keys done in 156s; paths {'http': 119, 'browser': 35, 'browser-none': 395}, browser waits 430 max 185s sum 28611s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 119, 'miss': 159, 'blocked': 0, 'tries': 228, 'empty': 109}, audit 8/8 a",
   "12:56:01 request mvdttemfkl6n6.4: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:56:21 request received: rid mvdtx7hj8r15t.4 15 keys",
   "12:56:21 handle mvdtx7hj8r15t.4: first_chunk=True total=15",
@@ -156,6 +154,8 @@
   "14:42:15 handle mvdxpelbl6r2e.4: first_chunk=True total=13",
   "14:43:15 git retry 0: b\"-1kexus': is at 28c25537c4de768eb54efa4bb757613a8750e678 but expected 1d93a3445606d70addf39e00e53c64a1843ca9e6)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "14:43:50 request mvdxpelbl6r2e.4: chunk of 13 keys done in 95s; paths {'http': 238, 'browser': 43, 'browser-none': 735}, browser waits 778 max 185s sum 50204s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 238, 'miss': 302, 'blocked': 0, 'tries': 530, 'empty': 292}, audit 9/9 ag",
-  "14:43:51 request mvdxpelbl6r2e.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:43:51 request mvdxpelbl6r2e.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:45:30 request received: rid mvdxtlbuzssqu.4 2 keys",
+  "14:45:30 handle mvdxtlbuzssqu.4: first_chunk=True total=2"
  ]
 }
