@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T05:29:31+00:00",
+ "at": "2026-10-18T05:31:02+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
@@ -27,6 +27,9 @@
   "05:28:23 request probe1mvddw32a: chunk of 3 keys done in 49s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "05:28:24 request probe1mvddw32a: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "05:28:32 request httptest1792301254: chunk of 20 keys done in 57s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "05:28:32 request httptest1792301254: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "05:28:32 request httptest1792301254: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "05:29:34 rtc 706bouazmv: answered",
+  "05:30:51 request received: rid mvde09xltuelu 153 keys",
+  "05:30:51 handle mvde09xltuelu: first_chunk=True total=153"
  ]
 }
