@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T15:37:53+00:00",
+ "at": "2026-10-18T15:39:25+00:00",
  "publishes": {
-  "ok": 38,
+  "ok": 50,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3822,
+ "fares_saved": 3842,
  "log": [
   "15:31:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:31:48 http front door: ['https://gibraltar-scores-bestsellers-caroline.trycloudflare.com', 'https://f77548944bc5e8.lhr.life']",
@@ -16,6 +16,8 @@
   "15:32:53 handle mvdzihyynmua5: first_chunk=True total=160",
   "15:32:53 request received: rid mvdzihyynmua5 37 keys",
   "15:32:53 handle mvdzihyynmua5: first_chunk=False total=160",
-  "15:34:49 request mvdzihyynmua5: chunk of 37 keys done in 116s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}"
+  "15:34:49 request mvdzihyynmua5: chunk of 37 keys done in 116s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "15:39:22 request httptest1792337572: chunk of 20 keys done in 390s; ntfy publishes {'ok': 50, 'r429': 0, 'fail': 0}",
+  "15:39:24 request httptest1792337572: final sent (20/20); ntfy publishes {'ok': 50, 'r429': 0, 'fail': 0}"
  ]
 }
