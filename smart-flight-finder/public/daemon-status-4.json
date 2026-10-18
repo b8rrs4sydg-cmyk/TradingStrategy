@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T11:44:59+00:00",
+ "at": "2026-10-18T11:46:30+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -57,6 +57,8 @@
   "11:43:37 request mvdr9kyr2z95g.4: chunk of 15 keys done in 98s; paths {'http': 46, 'browser': 33, 'browser-none': 85}, browser waits 118 max 185s sum 6910s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 36, 'blocked': 0, 'tries': 64, 'empty': 18}, audit 8/8 agree",
   "11:43:38 request mvdr9kyr2z95g.4: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:44:00 request received: rid mvdrc6ae2in9l.4 14 keys",
-  "11:44:00 handle mvdrc6ae2in9l.4: first_chunk=True total=14"
+  "11:44:00 handle mvdrc6ae2in9l.4: first_chunk=True total=14",
+  "11:45:37 request mvdrc6ae2in9l.4: chunk of 14 keys done in 97s; paths {'http': 46, 'browser': 33, 'browser-none': 99}, browser waits 132 max 185s sum 7861s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 36, 'blocked': 0, 'tries': 64, 'empty': 18}, audit 8/8 agree",
+  "11:45:39 request mvdrc6ae2in9l.4: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
