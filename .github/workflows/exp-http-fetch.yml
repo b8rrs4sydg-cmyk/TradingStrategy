@@ -9,6 +9,7 @@ on:
       - "smart-flight-finder/backend/scripts/exp_http_fetch.py"
       - "smart-flight-finder/backend/scripts/exp_http_inspect.py"
       - "smart-flight-finder/backend/scripts/exp_http_reliability.py"
+      - "smart-flight-finder/backend/scripts/exp_mc_probe.py"
   workflow_dispatch:
 
 permissions:
@@ -26,5 +27,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -e . requests
-      - run: python -m scripts.exp_http_reliability ../public/fares.json
+      - run: pip install -e . requests "playwright>=1.50,<2"
+      - run: playwright install --with-deps chromium
+      - run: python -m scripts.exp_mc_probe ../public/fares.json
