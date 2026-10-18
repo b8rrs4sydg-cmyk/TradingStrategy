@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:10:58+00:00",
+ "at": "2026-10-18T11:12:30+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 33,
+ "fares_saved": 35,
  "log": [
   "11:00:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:32 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-7.json' did not match any files\\n\"",
@@ -29,6 +29,14 @@
   "11:08:36 request mvdq18d0uxyoh.7: chunk of 12 keys done in 62s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 29, 'miss': 3, 'blocked': 0, 'tries': 29, 'empty': 0}, audit 2/2 agree",
   "11:08:37 request mvdq18d0uxyoh.7: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:09:22 request received: rid mvdq3n0swicud.7 17 keys",
-  "11:09:22 handle mvdq3n0swicud.7: first_chunk=True total=17"
+  "11:09:22 handle mvdq3n0swicud.7: first_chunk=True total=17",
+  "11:11:11 request mvdq3n0swicud.7: chunk of 17 keys done in 109s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 33, 'miss': 16, 'blocked': 0, 'tries': 33, 'empty': 0}, audit 2/2 agree",
+  "11:11:11 request mvdq3n0swicud.7: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:11:13 request received: rid mvdq60py73tla.7 11 keys",
+  "11:11:13 handle mvdq60py73tla.7: first_chunk=True total=11",
+  "11:11:51 rtc espr4ia6qo: answered",
+  "11:11:52 rtc espr4ia6qo: data channel open",
+  "11:11:52 request received: rid mvdq6pts6akym.7 11 keys",
+  "11:11:52 handle mvdq6pts6akym.7: first_chunk=True total=11"
  ]
 }
