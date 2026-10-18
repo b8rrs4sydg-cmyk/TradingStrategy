@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T07:40:36+00:00",
+ "at": "2026-10-18T07:42:10+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
@@ -13,6 +13,13 @@
   "07:40:10 request received: rid httptest1792309210 20 keys",
   "07:40:10 handle httptest1792309210: first_chunk=True total=20",
   "07:40:14 request httptest1792309210: chunk of 20 keys done in 4s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
-  "07:40:16 request httptest1792309210: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "07:40:16 request httptest1792309210: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "07:40:37 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "07:41:04 rtc eeudvnkyjf: answered",
+  "07:41:05 rtc eeudvnkyjf: data channel open",
+  "07:41:05 request received: rid mvdins6aqwgno.3 1 keys",
+  "07:41:05 handle mvdins6aqwgno.3: first_chunk=True total=1",
+  "07:41:14 request mvdins6aqwgno.3: chunk of 1 keys done in 9s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 2/2 agree",
+  "07:41:16 request mvdins6aqwgno.3: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
