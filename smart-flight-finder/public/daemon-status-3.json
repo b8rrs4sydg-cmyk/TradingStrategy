@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:30:40+00:00",
+ "at": "2026-10-18T11:32:11+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 696,
+ "fares_saved": 701,
  "log": [
   "11:26:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:07 http front door: ['https://rugby-lime-feb-packages.trycloudflare.com', 'https://31a5df0d9304d4.lhr.life']",
@@ -25,6 +25,12 @@
   "11:29:27 request received: rid mvdqtfrxe9o9k.2 32 keys",
   "11:29:27 handle mvdqtfrxe9o9k.2: first_chunk=True total=32",
   "11:29:59 request mvdqr8q72ppmz.2: chunk of 36 keys done in 135s; paths {'http': 55, 'browser': 1, 'browser-none': 16}, browser waits 17 max 100s sum 897s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 30, 'blocked': 0, 'tries': 77, 'empty': 22}, audit 3/3 agree",
-  "11:30:01 request mvdqr8q72ppmz.2: final sent (36/36); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:30:01 request mvdqr8q72ppmz.2: final sent (36/36); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:31:00 request received: rid mvdqvf38lwhyn.3 9 keys",
+  "11:31:00 handle mvdqvf38lwhyn.3: first_chunk=True total=9",
+  "11:32:04 request mvdqvf38lwhyn.3: chunk of 9 keys done in 64s; paths {'http': 62, 'browser': 1, 'browser-none': 37}, browser waits 38 max 111s sum 2316s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 62, 'miss': 39, 'blocked': 0, 'tries': 88, 'empty': 26}, audit 3/3 agree",
+  "11:32:05 request mvdqvf38lwhyn.3: final sent (9/9); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:32:06 request mvdqtfrxe9o9k.2: chunk of 32 keys done in 159s; paths {'http': 62, 'browser': 1, 'browser-none': 38}, browser waits 39 max 120s sum 2437s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 62, 'miss': 39, 'blocked': 0, 'tries': 88, 'empty': 26}, audit 3/3 agree",
+  "11:32:07 request mvdqtfrxe9o9k.2: final sent (32/32); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
