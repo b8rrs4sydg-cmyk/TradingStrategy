@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:57:00+00:00",
+ "at": "2026-10-18T10:58:31+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1011,
+ "fares_saved": 1027,
  "log": [
   "10:53:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:53:59 http front door: ['https://gilbert-directories-usr-random.trycloudflare.com', 'https://a013e39277b3ef.lhr.life']",
@@ -29,6 +29,8 @@
   "10:56:05 request received: rid mvdpmjn1vcbbl.0 40 keys",
   "10:56:05 handle mvdpmjn1vcbbl.0: first_chunk=True total=40",
   "10:56:09 request mvdpmjn1vcbbl.0: chunk of 40 keys done in 4s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 79, 'miss': 6, 'blocked': 0, 'tries': 83, 'empty': 4}, audit 5/5 agree",
-  "10:56:09 request mvdpmjn1vcbbl.0: final sent (40/40); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "10:56:09 request mvdpmjn1vcbbl.0: final sent (40/40); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "10:57:32 request received: rid mvdpoebct1wgi.0 36 keys",
+  "10:57:32 handle mvdpoebct1wgi.0: first_chunk=True total=36"
  ]
 }
