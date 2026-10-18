@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:55:38+00:00",
+ "at": "2026-10-18T10:57:10+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 260,
+ "fares_saved": 278,
  "log": [
   "10:54:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:54:08 http front door: ['https://ton-filling-kiss-redeem.trycloudflare.com', 'https://9a0d81aae186f6.lhr.life']",
@@ -19,6 +19,14 @@
   "10:55:15 request received: rid mvdplefxxoaln.2 9 keys",
   "10:55:15 handle mvdplefxxoaln.2: first_chunk=True total=9",
   "10:55:15 request received: rid httptest1792320915 20 keys",
-  "10:55:15 handle httptest1792320915: first_chunk=True total=20"
+  "10:55:15 handle httptest1792320915: first_chunk=True total=20",
+  "10:55:54 request httptest1792320915: chunk of 20 keys done in 39s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 13, 'blocked': 0, 'tries': 50, 'empty': 18}, audit 1/1 agree",
+  "10:55:56 request httptest1792320915: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "10:56:02 request mvdplefxxoaln.2: chunk of 9 keys done in 46s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 13, 'blocked': 0, 'tries': 50, 'empty': 18}, audit 1/1 agree",
+  "10:56:03 request mvdplefxxoaln.2: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "10:56:05 request received: rid mvdpmjn1vcbbl.2 40 keys",
+  "10:56:05 handle mvdpmjn1vcbbl.2: first_chunk=True total=40",
+  "10:56:41 request mvdpl2y29ko1z.4: chunk of 25 keys done in 101s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 13, 'blocked': 0, 'tries': 50, 'empty': 18}, audit 2/2 agree",
+  "10:56:42 request mvdpl2y29ko1z.4: final sent (25/25); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
