@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T11:15:50+00:00",
+ "at": "2026-10-18T11:17:21+00:00",
  "publishes": {
   "ok": 6,
   "r429": 0,
@@ -74,6 +74,12 @@
   "11:15:14 request mvdqb344zwtrk.1: chunk of 12 keys done in 0s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 75, 'miss': 27, 'blocked': 0, 'tries': 113, 'empty': 38}, audit 6/6 agree",
   "11:15:16 request mvdqb344zwtrk.1: final sent (12/12); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
   "11:15:17 request received: rid mvdqb8zfaos5a.1 11 keys",
-  "11:15:17 handle mvdqb8zfaos5a.1: first_chunk=True total=11"
+  "11:15:17 handle mvdqb8zfaos5a.1: first_chunk=True total=11",
+  "11:16:41 request mvdqb8zfaos5a.1: chunk of 11 keys done in 84s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 76, 'miss': 31, 'blocked': 0, 'tries': 114, 'empty': 38}, audit 6/6 agree",
+  "11:16:42 request mvdqb8zfaos5a.1: final sent (11/11); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:16:46 request mvdqajk5xvkpm.1: chunk of 12 keys done in 121s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 76, 'miss': 31, 'blocked': 0, 'tries': 114, 'empty': 38}, audit 6/6 agree",
+  "11:16:47 request mvdqajk5xvkpm.1: final sent (12/12); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:17:15 request received: rid mvdqdru6p0hdt.1 17 keys",
+  "11:17:15 handle mvdqdru6p0hdt.1: first_chunk=True total=17"
  ]
 }
