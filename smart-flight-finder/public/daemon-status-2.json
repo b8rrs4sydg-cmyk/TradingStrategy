@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:11:23+00:00",
+ "at": "2026-10-18T11:12:59+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1090,
+ "fares_saved": 1111,
  "log": [
   "11:00:37 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:42 http front door: ['https://lined-screensaver-originally-twist.trycloudflare.com', 'https://8840e93f86c12f.lhr.life']",
@@ -40,6 +40,15 @@
   "11:10:12 request mvdq3n0swicud.2: chunk of 14 keys done in 49s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 79, 'miss': 9, 'blocked': 0, 'tries': 99, 'empty': 20}, audit 7/7 agree",
   "11:10:14 request mvdq3n0swicud.2: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "11:11:13 request received: rid mvdq60py73tla.2 20 keys",
-  "11:11:13 handle mvdq60py73tla.2: first_chunk=True total=20"
+  "11:11:13 handle mvdq60py73tla.2: first_chunk=True total=20",
+  "11:11:24 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "11:11:51 rtc d0034timna: answered",
+  "11:11:52 rtc d0034timna: data channel open",
+  "11:11:52 request received: rid mvdq6pts6akym.2 17 keys",
+  "11:11:52 handle mvdq6pts6akym.2: first_chunk=True total=17",
+  "11:12:46 request mvdq6pts6akym.2: chunk of 17 keys done in 54s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 109, 'miss': 15, 'blocked': 0, 'tries': 141, 'empty': 32}, audit 7/7 agree",
+  "11:12:48 request mvdq6pts6akym.2: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "11:12:50 request mvdq60py73tla.2: chunk of 20 keys done in 96s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 109, 'miss': 15, 'blocked': 0, 'tries': 141, 'empty': 32}, audit 7/7 agree",
+  "11:12:51 request mvdq60py73tla.2: final sent (20/20); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
