@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:45:03+00:00",
+ "at": "2026-10-18T12:46:35+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 807,
+ "fares_saved": 813,
  "log": [
   "11:26:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:07 http front door: ['https://rugby-lime-feb-packages.trycloudflare.com', 'https://31a5df0d9304d4.lhr.life']",
@@ -123,6 +123,8 @@
   "12:43:33 request received: rid mvdtgqu565myx.3 12 keys",
   "12:43:33 handle mvdtgqu565myx.3: first_chunk=True total=12",
   "12:44:54 request mvdtgqu565myx.3: chunk of 12 keys done in 81s; paths {'http': 145, 'browser': 24, 'browser-none': 275}, browser waits 299 max 145s sum 18833s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 145, 'miss': 148, 'blocked': 0, 'tries': 262, 'empty': 117}, audit 3/3 ag",
-  "12:44:55 request mvdtgqu565myx.3: final sent (12/12); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "12:44:55 request mvdtgqu565myx.3: final sent (12/12); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "12:46:00 request received: rid mvdtjx0198xje.3 23 keys",
+  "12:46:00 handle mvdtjx0198xje.3: first_chunk=True total=23"
  ]
 }
