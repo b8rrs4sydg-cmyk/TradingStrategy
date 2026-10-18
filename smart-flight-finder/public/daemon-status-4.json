@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:55:36+00:00",
+ "at": "2026-10-18T14:57:07+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 662,
  "log": [
-  "13:05:06 request received: rid mvdu8gogkouz6.4 10 keys",
-  "13:05:06 handle mvdu8gogkouz6.4: first_chunk=True total=10",
   "13:06:41 request mvdu8gogkouz6.4: chunk of 10 keys done in 96s; paths {'http': 121, 'browser': 35, 'browser-none': 442}, browser waits 477 max 185s sum 31423s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 121, 'miss': 172, 'blocked': 0, 'tries': 230, 'empty': 109}, audit 8/8 ag",
   "13:06:44 request mvdu8gogkouz6.4: final sent (10/10); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:12:50 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
@@ -156,6 +154,8 @@
   "14:52:26 request mvdy0c3x5nt44.4: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:52:31 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "14:55:18 request received: rid mvdy65hviu419.3 18 keys",
-  "14:55:18 handle mvdy65hviu419.3: first_chunk=True total=18"
+  "14:55:18 handle mvdy65hviu419.3: first_chunk=True total=18",
+  "14:56:18 request mvdy65hviu419.3: chunk of 18 keys done in 61s; paths {'http': 272, 'browser': 43, 'browser-none': 755}, browser waits 798 max 185s sum 51341s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 272, 'miss': 319, 'blocked': 0, 'tries': 598, 'empty': 326}, audit 9/9 ag",
+  "14:56:20 request mvdy65hviu419.3: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
