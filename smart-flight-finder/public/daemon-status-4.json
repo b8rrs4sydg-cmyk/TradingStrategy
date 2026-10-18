@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:40:39+00:00",
+ "at": "2026-10-18T13:42:11+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 534,
  "log": [
-  "11:50:15 request mvdri4aarid9h.3: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:51:16 request received: rid mvdrlhseif870.3 17 keys",
-  "11:51:16 handle mvdrlhseif870.3: first_chunk=True total=17",
-  "11:53:17 request mvdrlhseif870.3: chunk of 17 keys done in 121s; paths {'http': 49, 'browser': 33, 'browser-none': 127}, browser waits 160 max 185s sum 9664s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 49, 'miss': 50, 'blocked': 0, 'tries': 67, 'empty': 18}, audit 8/8 agree",
   "11:53:17 request mvdrlhseif870.3: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:54:02 request received: rid mvdrp1j4ku5iu.4 14 keys",
   "11:54:02 handle mvdrp1j4ku5iu.4: first_chunk=True total=14",
@@ -156,6 +152,10 @@
   "13:39:40 request mvdvexj30iihf.4: chunk of 14 keys done in 93s; paths {'http': 121, 'browser': 35, 'browser-none': 543}, browser waits 578 max 185s sum 38139s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 121, 'miss': 199, 'blocked': 0, 'tries': 245, 'empty': 124}, audit 8/8 ag",
   "13:39:43 request mvdvexj30iihf.4: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:40:30 request received: rid mvdvhzoqtvuve.3 3 keys",
-  "13:40:30 handle mvdvhzoqtvuve.3: first_chunk=True total=3"
+  "13:40:30 handle mvdvhzoqtvuve.3: first_chunk=True total=3",
+  "13:41:20 request mvdvhzoqtvuve.3: chunk of 3 keys done in 50s; paths {'http': 121, 'browser': 35, 'browser-none': 546}, browser waits 581 max 185s sum 38284s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 121, 'miss': 199, 'blocked': 0, 'tries': 245, 'empty': 124}, audit 8/8 agr",
+  "13:41:21 request mvdvhzoqtvuve.3: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:41:43 request received: rid mvdvjjp2nbsao.3 18 keys",
+  "13:41:43 handle mvdvjjp2nbsao.3: first_chunk=True total=18"
  ]
 }
