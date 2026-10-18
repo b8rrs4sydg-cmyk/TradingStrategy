@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T13:43:20+00:00",
+ "at": "2026-10-18T13:44:52+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 238,
+ "fares_saved": 239,
  "log": [
-  "11:53:44 request mvdrlhseif870.7: chunk of 23 keys done in 147s; paths {'http': 51, 'browser-none': 103, 'browser': 1}, browser waits 104 max 147s sum 7521s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 51, 'miss': 40, 'blocked': 0, 'tries': 59, 'empty': 8}, audit 1/1 agree",
-  "11:53:45 request mvdrlhseif870.7: final sent (23/23); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:54:02 request received: rid mvdrp1j4ku5iu.8 7 keys",
-  "11:54:02 handle mvdrp1j4ku5iu.8: first_chunk=True total=7",
   "11:55:04 request mvdrp1j4ku5iu.8: chunk of 7 keys done in 62s; paths {'http': 54, 'browser-none': 107, 'browser': 1}, browser waits 108 max 147s sum 7710s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 54, 'miss': 44, 'blocked': 0, 'tries': 62, 'empty': 8}, audit 1/1 agree",
   "11:55:06 request mvdrp1j4ku5iu.8: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:56:33 request received: rid mvdrsbjgetlnm.8 10 keys",
@@ -156,6 +152,10 @@
   "13:41:42 request received: rid mvdvjjp2nbsao.7 14 keys",
   "13:41:42 handle mvdvjjp2nbsao.7: first_chunk=True total=14",
   "13:43:18 request mvdvjjp2nbsao.7: chunk of 14 keys done in 96s; paths {'http': 133, 'browser-none': 515, 'browser': 16}, browser waits 531 max 169s sum 36673s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 185, 'blocked': 0, 'tries': 277, 'empty': 144}, audit 1/1 ag",
-  "13:43:20 request mvdvjjp2nbsao.7: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:43:20 request mvdvjjp2nbsao.7: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:44:33 rtc tw0aj31jac: answered",
+  "13:44:35 rtc tw0aj31jac: data channel open",
+  "13:44:35 request received: rid mvdvn5tvdtxf1.8 21 keys",
+  "13:44:35 handle mvdvn5tvdtxf1.8: first_chunk=True total=21"
  ]
 }
