@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:33:40+00:00",
+ "at": "2026-10-18T13:35:12+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 852,
  "log": [
-  "11:31:00 handle mvdqvf38lwhyn.3: first_chunk=True total=9",
-  "11:32:04 request mvdqvf38lwhyn.3: chunk of 9 keys done in 64s; paths {'http': 62, 'browser': 1, 'browser-none': 37}, browser waits 38 max 111s sum 2316s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 62, 'miss': 39, 'blocked': 0, 'tries': 88, 'empty': 26}, audit 3/3 agree",
   "11:32:05 request mvdqvf38lwhyn.3: final sent (9/9); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:32:06 request mvdqtfrxe9o9k.2: chunk of 32 keys done in 159s; paths {'http': 62, 'browser': 1, 'browser-none': 38}, browser waits 39 max 120s sum 2437s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 62, 'miss': 39, 'blocked': 0, 'tries': 88, 'empty': 26}, audit 3/3 agree",
   "11:32:07 request mvdqtfrxe9o9k.2: final sent (32/32); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "13:30:35 request mvdv381qvx5x6.3: chunk of 12 keys done in 94s; paths {'http': 168, 'browser': 46, 'browser-none': 413}, browser waits 459 max 145s sum 28120s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 168, 'miss': 198, 'blocked': 0, 'tries': 314, 'empty': 146}, audit 3/3 ag",
   "13:30:36 request mvdv381qvx5x6.3: final sent (12/12); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "13:31:41 request received: rid mvdv6nwpunm7z.3 17 keys",
-  "13:31:41 handle mvdv6nwpunm7z.3: first_chunk=True total=17"
+  "13:31:41 handle mvdv6nwpunm7z.3: first_chunk=True total=17",
+  "13:34:16 request mvdv6nwpunm7z.3: chunk of 17 keys done in 154s; paths {'http': 168, 'browser': 46, 'browser-none': 430}, browser waits 476 max 145s sum 29262s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 168, 'miss': 215, 'blocked': 0, 'tries': 314, 'empty': 146}, audit 3/3 a",
+  "13:34:17 request mvdv6nwpunm7z.3: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
