@@ -1,17 +1,12 @@
 {
- "at": "2026-10-18T13:45:14+00:00",
+ "at": "2026-10-18T13:46:49+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 534,
+ "fares_saved": 545,
  "log": [
-  "11:56:33 handle mvdrsbjgetlnm.4: first_chunk=True total=16",
-  "11:58:10 request mvdrsbjgetlnm.4: chunk of 16 keys done in 97s; paths {'http': 49, 'browser': 35, 'browser-none': 155}, browser waits 190 max 185s sum 11547s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 49, 'miss': 50, 'blocked': 0, 'tries': 67, 'empty': 18}, audit 8/8 agree",
-  "11:58:11 request mvdrsbjgetlnm.4: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:59:01 request received: rid mvdrvh555plbi.4 14 keys",
-  "11:59:01 handle mvdrvh555plbi.4: first_chunk=True total=14",
   "12:00:29 request mvdrvh555plbi.4: chunk of 14 keys done in 89s; paths {'http': 49, 'browser': 35, 'browser-none': 169}, browser waits 204 max 185s sum 12422s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 49, 'miss': 50, 'blocked': 0, 'tries': 67, 'empty': 18}, audit 8/8 agree",
   "12:00:30 request mvdrvh555plbi.4: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:02:18 request received: rid mvdrzp8py2zrf.4 16 keys",
@@ -156,6 +151,11 @@
   "13:44:33 rtc 7bzituzgnb: answered",
   "13:44:34 rtc 7bzituzgnb: data channel open",
   "13:44:35 request received: rid mvdvn5tvdtxf1.4 18 keys",
-  "13:44:35 handle mvdvn5tvdtxf1.4: first_chunk=True total=18"
+  "13:44:35 handle mvdvn5tvdtxf1.4: first_chunk=True total=18",
+  "13:45:15 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "13:45:38 request mvdvn5tvdtxf1.4: chunk of 18 keys done in 63s; paths {'http': 131, 'browser': 38, 'browser-none': 569}, browser waits 607 max 185s sum 39851s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 207, 'blocked': 0, 'tries': 266, 'empty': 135}, audit 8/8 ag",
+  "13:45:39 request mvdvn5tvdtxf1.4: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:46:26 request received: rid mvdvpm7xd6s8y.4 16 keys",
+  "13:46:26 handle mvdvpm7xd6s8y.4: first_chunk=True total=16"
  ]
 }
