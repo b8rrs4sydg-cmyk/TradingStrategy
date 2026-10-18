@@ -1,0 +1,33 @@
+{
+ "at": "2026-10-18T05:47:52+00:00",
+ "publishes": {
+  "ok": 3,
+  "r429": 0,
+  "fail": 0
+ },
+ "fares_saved": 72,
+ "log": [
+  "05:45:36 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:45:40 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-2.json' did not match any files\\n\"",
+  "05:45:42 git retry 1: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-2.json' did not match any files\\n\"",
+  "05:45:46 git retry 2: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-2.json' did not match any files\\n\"",
+  "05:45:52 git retry 3: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-2.json' did not match any files\\n\"",
+  "05:46:00 git retry 4: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-2.json' did not match any files\\n\"",
+  "05:46:10 git retry 5: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-2.json' did not match any files\\n\"",
+  "05:46:22 http front door: ['https://stages-ambient-coordinates-reputation.trycloudflare.com', 'https://090c5de3f07dff.lhr.life']",
+  "05:46:22 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:46:35 rtc isiu0b3w6e: answered",
+  "05:46:35 rtc isiu0b3w6e: data channel open",
+  "05:46:35 request received: rid mvdekj143gko1.2 53 keys",
+  "05:46:35 handle mvdekj143gko1.2: first_chunk=True total=53",
+  "05:46:44 rtc gt83d552ly: answered",
+  "05:46:44 rtc gt83d552ly: data channel open",
+  "05:46:49 request received: rid httptest1792302408 20 keys",
+  "05:46:49 handle httptest1792302408: first_chunk=True total=20",
+  "05:47:17 request httptest1792302408: chunk of 20 keys done in 28s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:47:18 request httptest1792302408: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:47:36 request mvdekj143gko1.2: chunk of 53 keys done in 60s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:47:37 request mvdekj143gko1.2: final sent (53/53); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:47:48 rtc icq3o5qs35: answered"
+ ]
+}
