@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T08:00:19+00:00",
+ "at": "2026-10-18T08:01:50+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -33,6 +33,10 @@
   "07:58:23 rtc lkormcs8r9: answered",
   "07:58:24 rtc lkormcs8r9: data channel open",
   "07:58:25 request received: rid mvdj9zqa3i070.3 27 keys",
-  "07:58:25 handle mvdj9zqa3i070.3: first_chunk=True total=27"
+  "07:58:25 handle mvdj9zqa3i070.3: first_chunk=True total=27",
+  "08:01:39 request mvdj9zqa3i070.3: chunk of 27 keys done in 194s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 53, 'blocked': 0, 'tries': 23, 'empty': 1}, audit 2/2 agree",
+  "08:01:39 request mvdj9zqa3i070.3: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "08:01:42 request received: rid mvdjea8w2c5eq.3 27 keys",
+  "08:01:42 handle mvdjea8w2c5eq.3: first_chunk=True total=27"
  ]
 }
