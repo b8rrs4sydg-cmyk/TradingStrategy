@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:08:04+00:00",
+ "at": "2026-10-18T11:09:39+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 691,
+ "fares_saved": 698,
  "log": [
   "11:00:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:31 http front door: ['https://mia-jake-discovery-pasta.trycloudflare.com', 'https://981fbb61bf5387.lhr.life']",
@@ -21,6 +21,11 @@
   "11:07:32 rtc 83dagfk62v: answered",
   "11:07:33 rtc 83dagfk62v: data channel open",
   "11:07:34 request received: rid mvdq18d0uxyoh.5 20 keys",
-  "11:07:34 handle mvdq18d0uxyoh.5: first_chunk=True total=20"
+  "11:07:34 handle mvdq18d0uxyoh.5: first_chunk=True total=20",
+  "11:08:05 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "11:08:40 request mvdq18d0uxyoh.5: chunk of 20 keys done in 66s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 56, 'miss': 10, 'blocked': 0, 'tries': 73, 'empty': 17}, audit 1/1 agree",
+  "11:08:41 request mvdq18d0uxyoh.5: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:09:22 request received: rid mvdq3n0swicud.5 14 keys",
+  "11:09:22 handle mvdq3n0swicud.5: first_chunk=True total=14"
  ]
 }
