@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T20:44:29+00:00",
+ "at": "2026-10-18T20:46:01+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3877,
+ "fares_saved": 3885,
  "log": [
   "20:32:15 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:32:20 http front door: ['https://bennett-completing-unix-gel.trycloudflare.com', 'https://9ee1b8a86c1ec5.lhr.life']",
@@ -25,6 +25,26 @@
   "20:43:05 request mvea90c5wqc3v.0: chunk of 61 keys done in 577s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:43:06 request mvea90c5wqc3v.0: final sent (61/61); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:43:14 request httptest1792355604: chunk of 20 keys done in 590s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "20:43:14 request httptest1792355604: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "20:43:14 request httptest1792355604: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:45:38 request received: rid mveaonx7egabp.0 85 keys",
+  "20:45:38 handle mveaonx7egabp.0: first_chunk=True total=85",
+  "20:45:38 request received: rid mveaonx7egabp.1 75 keys",
+  "20:45:38 handle mveaonx7egabp.1: first_chunk=True total=75",
+  "20:45:38 rtc ghra8ckqat: answered",
+  "20:45:38 rtc rvk3z17yu8: answered",
+  "20:45:38 rtc 363lac4zuh: answered",
+  "20:45:38 rtc 5s6u1qflyv: answered",
+  "20:45:38 rtc wojamwcaay: answered",
+  "20:45:38 rtc l41mbv0hb4: answered",
+  "20:45:38 rtc hvqa3l2whu: answered",
+  "20:45:38 rtc 4lbl7ogb3r: answered",
+  "20:45:40 rtc 5s6u1qflyv: data channel open",
+  "20:45:40 rtc 363lac4zuh: data channel open",
+  "20:45:40 rtc ghra8ckqat: data channel open",
+  "20:45:40 rtc wojamwcaay: data channel open",
+  "20:45:40 rtc l41mbv0hb4: data channel open",
+  "20:45:40 rtc hvqa3l2whu: data channel open",
+  "20:45:40 rtc rvk3z17yu8: data channel open",
+  "20:45:40 rtc 4lbl7ogb3r: data channel open"
  ]
 }
