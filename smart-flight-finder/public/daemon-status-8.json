@@ -1,22 +1,18 @@
 {
- "at": "2026-10-18T11:24:59+00:00",
+ "at": "2026-10-18T11:27:45+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 109,
  "log": [
-  "11:23:20 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:23:26 git retry 0: b\"-1kexus': is at d8644e066cf361bd1fe1be1005ba24e844c4afb1 but expected f2201e7f4c36f1a93567b857c8710b4d5bf064e7)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "11:23:29 http front door: ['https://polyester-deutschland-shirts-administrator.trycloudflare.com', 'https://fe639540e14394.lhr.life']",
-  "11:23:29 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:24:23 rtc hgyb7phz2b: answered",
-  "11:24:24 rtc hgyb7phz2b: data channel open",
-  "11:24:30 request received: rid httptest1792322669 20 keys",
-  "11:24:30 handle httptest1792322669: first_chunk=True total=20",
-  "11:24:31 request httptest1792322669: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "11:24:31 request httptest1792322669: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:24:58 rtc wge5kb7i4h: answered"
+  "11:26:11 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:26:15 http front door: ['https://organic-asthma-bios-passive.trycloudflare.com', 'https://a455d0c2cfea05.lhr.life']",
+  "11:26:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:27:19 request received: rid httptest1792322839 20 keys",
+  "11:27:19 handle httptest1792322839: first_chunk=True total=20",
+  "11:27:21 request httptest1792322839: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "11:27:21 request httptest1792322839: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
