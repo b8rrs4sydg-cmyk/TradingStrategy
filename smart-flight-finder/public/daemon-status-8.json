@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:35:31+00:00",
+ "at": "2026-10-18T11:37:08+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 122,
+ "fares_saved": 126,
  "log": [
   "11:26:11 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:15 http front door: ['https://organic-asthma-bios-passive.trycloudflare.com', 'https://a455d0c2cfea05.lhr.life']",
@@ -23,6 +23,11 @@
   "11:34:17 rtc a73h0xmd2j: answered",
   "11:34:18 request received: rid mvdqznepk7epz.8 17 keys",
   "11:34:18 handle mvdqznepk7epz.8: first_chunk=True total=17",
-  "11:34:19 rtc a73h0xmd2j: data channel open"
+  "11:34:19 rtc a73h0xmd2j: data channel open",
+  "11:35:32 git retry 0: b\"-1kexus': is at 2f519f0985500e10ae53d64485dfe6615c7a79f2 but expected d01eb27e268774997edc2775e72a77db0fae12e7)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:36:07 request mvdqznepk7epz.8: chunk of 17 keys done in 108s; paths {'http': 32, 'browser-none': 13, 'browser': 1}, browser waits 14 max 81s sum 713s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 14, 'blocked': 0, 'tries': 36, 'empty': 4}, audit 1/1 agree",
+  "11:36:09 request mvdqznepk7epz.8: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:36:35 request received: rid mvdr2mz5gwiw5.8 10 keys",
+  "11:36:35 handle mvdr2mz5gwiw5.8: first_chunk=True total=10"
  ]
 }
