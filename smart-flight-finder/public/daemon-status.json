@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:43:13+00:00",
+ "at": "2026-10-18T10:44:46+00:00",
  "publishes": {
   "ok": 12,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3376,
+ "fares_saved": 3440,
  "log": [
   "10:32:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:32:33 http front door: ['https://symptoms-involved-still-arguments.trycloudflare.com', 'https://2c4a17ec210344.lhr.life']",
@@ -125,6 +125,24 @@
   "10:42:43 request mvdp43c54g24s.4: chunk of 26 keys done in 55s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
   "10:42:44 request mvdp43c54g24s.4: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
   "10:43:10 request mvdp43c54g24s.3: chunk of 27 keys done in 82s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
-  "10:43:12 request mvdp43c54g24s.3: final sent (27/27); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
+  "10:43:12 request mvdp43c54g24s.3: final sent (27/27); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:43:33 request received: rid mvdp6fxjf2awn.1 27 keys",
+  "10:43:33 request received: rid mvdp6fxjf2awn.0 27 keys",
+  "10:43:33 request received: rid mvdp6fxjf2awn.2 27 keys",
+  "10:43:33 handle mvdp6fxjf2awn.1: first_chunk=True total=27",
+  "10:43:33 handle mvdp6fxjf2awn.0: first_chunk=True total=27",
+  "10:43:33 handle mvdp6fxjf2awn.2: first_chunk=True total=27",
+  "10:43:33 request received: rid mvdp6fxjf2awn.3 27 keys",
+  "10:43:33 request received: rid mvdp6fxjf2awn.5 26 keys",
+  "10:43:33 request received: rid mvdp6fxjf2awn.4 26 keys",
+  "10:43:33 handle mvdp6fxjf2awn.3: first_chunk=True total=27",
+  "10:43:33 handle mvdp6fxjf2awn.5: first_chunk=True total=26",
+  "10:43:33 handle mvdp6fxjf2awn.4: first_chunk=True total=26",
+  "10:43:37 request mvdp43c54g24s.2: chunk of 27 keys done in 109s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:43:38 request mvdp43c54g24s.2: final sent (27/27); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:44:07 request mvdp6fxjf2awn.4: chunk of 26 keys done in 34s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:44:09 request mvdp6fxjf2awn.4: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:44:31 request mvdp6fxjf2awn.5: chunk of 26 keys done in 58s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:44:32 request mvdp6fxjf2awn.5: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
  ]
 }
