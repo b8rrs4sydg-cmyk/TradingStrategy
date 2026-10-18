@@ -26,7 +26,7 @@ async (allKeys) => {
     mark(`instance ${i}: tunnel ${url} alt=${JSON.stringify(live.tunnels[i].alt)}`);
   }
   // 2. all instances at once, the way a search uses them
-  live.peerMap = new Map(); live.peersAt = 0; live.rtcFail = {}; live.tunnelFail = {};
+  if (live.peersBusy) await live.peersBusy;   // the page connects on its own at load: never swap its tables under it
   const peers = await connectPeers();
   out.peers = peers.map(p => `${p.i}:${p.kind}`);
   mark(`peers: ${out.peers.join(' ')}`);
