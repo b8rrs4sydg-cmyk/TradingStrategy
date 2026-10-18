@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T06:55:03+00:00",
+ "at": "2026-10-18T06:56:35+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -11,6 +11,8 @@
   "06:53:33 http front door: ['https://fossil-allied-unavailable-milan.trycloudflare.com', 'https://d1d507a6144aae.lhr.life']",
   "06:53:33 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "06:54:35 request received: rid httptest1792306475 20 keys",
-  "06:54:35 handle httptest1792306475: first_chunk=True total=20"
+  "06:54:35 handle httptest1792306475: first_chunk=True total=20",
+  "06:55:32 request httptest1792306475: chunk of 20 keys done in 56s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "06:55:33 request httptest1792306475: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
