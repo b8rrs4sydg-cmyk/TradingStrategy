@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:32:06+00:00",
+ "at": "2026-10-18T14:33:42+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 295,
  "log": [
-  "12:47:46 request mvdtjx0198xje.7: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:48:29 request received: rid mvdtn3iltwypi.7 11 keys",
   "12:48:29 handle mvdtn3iltwypi.7: first_chunk=True total=11",
   "12:50:04 request mvdtn3iltwypi.7: chunk of 11 keys done in 95s; paths {'http': 98, 'browser-none': 363, 'browser': 24}, browser waits 387 max 190s sum 27031s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 98, 'miss': 109, 'blocked': 0, 'tries': 206, 'empty': 108}, audit 1/1 agre",
   "12:50:05 request mvdtn3iltwypi.7: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "14:28:22 request mvdx5hwcuvefe.7: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:30:29 request received: rid mvdxa8axe2509.6 20 keys",
   "14:30:29 handle mvdxa8axe2509.6: first_chunk=True total=20",
-  "14:32:05 request mvdxa8axe2509.6: chunk of 20 keys done in 96s; paths {'http': 198, 'browser-none': 763, 'browser': 40}, browser waits 803 max 190s sum 55705s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 198, 'miss': 265, 'blocked': 0, 'tries': 434, 'empty': 236}, audit 1/1 ag"
+  "14:32:05 request mvdxa8axe2509.6: chunk of 20 keys done in 96s; paths {'http': 198, 'browser-none': 763, 'browser': 40}, browser waits 803 max 190s sum 55705s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 198, 'miss': 265, 'blocked': 0, 'tries': 434, 'empty': 236}, audit 1/1 ag",
+  "14:32:06 request mvdxa8axe2509.6: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:32:06 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\""
  ]
 }
