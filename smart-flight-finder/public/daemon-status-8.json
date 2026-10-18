@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T15:26:40+00:00",
+ "at": "2026-10-18T15:28:16+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 387,
  "log": [
-  "13:25:25 request mvduvnbnyqdms.8: chunk of 21 keys done in 137s; paths {'http': 133, 'browser-none': 406, 'browser': 16}, browser waits 422 max 147s sum 28096s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 173, 'blocked': 0, 'tries': 277, 'empty': 144}, audit 1/1 a",
-  "13:25:25 request mvduvnbnyqdms.8: final sent (21/21); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:25:51 request received: rid mvduz5ua8wmki.8 25 keys",
   "13:25:51 handle mvduz5ua8wmki.8: first_chunk=True total=25",
   "13:28:41 request mvduz5ua8wmki.8: chunk of 25 keys done in 169s; paths {'http': 133, 'browser-none': 431, 'browser': 16}, browser waits 447 max 169s sum 30350s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 173, 'blocked': 0, 'tries': 277, 'empty': 144}, audit 1/1 a",
   "13:28:42 request mvduz5ua8wmki.8: final sent (25/25); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +153,9 @@
   "15:23:35 request mvdz58ghuswdl.8: chunk of 12 keys done in 62s; paths {'http': 296, 'browser-none': 768, 'browser': 16}, browser waits 784 max 169s sum 52436s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 296, 'miss': 316, 'blocked': 0, 'tries': 675, 'empty': 379}, audit 1/1 ag",
   "15:23:37 request mvdz58ghuswdl.8: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:25:54 request received: rid mvdz9jqta82r6.8 10 keys",
-  "15:25:54 handle mvdz9jqta82r6.8: first_chunk=True total=10"
+  "15:25:54 handle mvdz9jqta82r6.8: first_chunk=True total=10",
+  "15:26:40 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "15:26:44 request mvdz9jqta82r6.8: chunk of 10 keys done in 49s; paths {'http': 304, 'browser-none': 770, 'browser': 16}, browser waits 786 max 169s sum 52532s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 304, 'miss': 318, 'blocked': 0, 'tries': 687, 'empty': 383}, audit 1/1 ag",
+  "15:26:46 request mvdz9jqta82r6.8: final sent (10/10); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
