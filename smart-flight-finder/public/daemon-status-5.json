@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:28:15+00:00",
+ "at": "2026-10-18T14:29:47+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1005,
  "log": [
-  "12:38:10 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "12:38:16 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "12:38:22 git retry 2: b\"-1kexus': is at 73f8b4b1ae9722445782ca6715b720e4fb1880fb but expected 28eca6c322d4193606dc7b885b81cf2ece30fc78)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "12:38:38 request received: rid mvdtaf8zalrpu.5 20 keys",
   "12:38:38 handle mvdtaf8zalrpu.5: first_chunk=True total=20",
@@ -156,6 +154,8 @@
   "14:23:59 request mvdx0ua9zmg5h.5: chunk of 10 keys done in 50s; paths {'http': 223, 'browser': 47, 'browser-none': 675}, browser waits 722 max 289s sum 47624s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 223, 'miss': 299, 'blocked': 20, 'tries': 484, 'empty': 261}, audit 4/4 a",
   "14:24:02 request mvdx0ua9zmg5h.5: final sent (10/10); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:26:46 request received: rid mvdx5hwcuvefe.5 21 keys",
-  "14:26:46 handle mvdx5hwcuvefe.5: first_chunk=True total=21"
+  "14:26:46 handle mvdx5hwcuvefe.5: first_chunk=True total=21",
+  "14:28:21 request mvdx5hwcuvefe.5: chunk of 21 keys done in 94s; paths {'http': 234, 'browser': 47, 'browser-none': 685}, browser waits 732 max 289s sum 48186s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 234, 'miss': 307, 'blocked': 20, 'tries': 506, 'empty': 272}, audit 4/4 a",
+  "14:28:22 request mvdx5hwcuvefe.5: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
