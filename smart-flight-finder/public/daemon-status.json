@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T22:53:37+00:00",
+ "at": "2026-10-18T22:55:08+00:00",
  "publishes": {
   "ok": 15,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 4729,
  "log": [
-  "21:55:40 request mved1efgi4hq6.5: chunk of 20 keys done in 249s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
-  "21:55:42 request mved1efgi4hq6.5: final sent (20/20); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
   "21:56:02 request mved1efgi4hq6.2: chunk of 17 keys done in 271s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
   "21:56:04 request mved1efgi4hq6.2: final sent (17/17); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
   "21:56:54 request mved1efgi4hq6.3: chunk of 22 keys done in 323s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "22:52:37 request received: rid mvef80yg8wfdt.9 8 keys",
   "22:52:37 request received: rid mvef80yg8wfdt.7 16 keys",
   "22:52:37 handle mvef80yg8wfdt.9: first_chunk=True total=8",
-  "22:52:37 handle mvef80yg8wfdt.7: first_chunk=True total=16"
+  "22:52:37 handle mvef80yg8wfdt.7: first_chunk=True total=16",
+  "22:54:44 request mvef80yg8wfdt.7: chunk of 16 keys done in 126s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
+  "22:54:44 request mvef80yg8wfdt.7: final sent (16/16); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}"
  ]
 }
