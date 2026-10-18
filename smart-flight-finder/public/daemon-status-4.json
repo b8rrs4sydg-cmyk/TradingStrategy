@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T10:28:42+00:00",
+ "at": "2026-10-18T10:30:16+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 248,
+ "fares_saved": 249,
  "log": [
-  "08:42:00 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "08:42:04 git retry 0: b\"-1kexus': is at 798daaa50302da8f5e8935e9850d769175fdd266 but expected f95e2bb5d858bc7c6be6c6d8b8bfb2e860291c6a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "08:42:08 http front door: ['https://transcription-purple-articles-primary.trycloudflare.com', 'https://a5cdfde4c7b37f.lhr.life']",
-  "08:42:08 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "08:43:07 request received: rid httptest1792312987 20 keys",
   "08:43:07 handle httptest1792312987: first_chunk=True total=20",
   "08:43:09 request httptest1792312987: chunk of 20 keys done in 1s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
@@ -153,6 +149,13 @@
   "10:26:49 request received: rid mvdokwtc5pmdk.4 26 keys",
   "10:26:49 handle mvdokwtc5pmdk.4: first_chunk=True total=26",
   "10:26:57 request mvdofttvm1mr8.4: chunk of 26 keys done in 246s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 89, 'miss': 208, 'blocked': 0, 'tries': 131, 'empty': 42}, audit 5/5 agree",
-  "10:26:58 request mvdofttvm1mr8.4: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "10:26:58 request mvdofttvm1mr8.4: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:28:43 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "10:29:25 request mvdokwtc5pmdk.4: chunk of 26 keys done in 156s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 89, 'miss': 208, 'blocked': 0, 'tries': 131, 'empty': 42}, audit 5/5 agree",
+  "10:29:27 request mvdokwtc5pmdk.4: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:29:29 request received: rid mvdoocbqq1kth.4 26 keys",
+  "10:29:29 handle mvdoocbqq1kth.4: first_chunk=True total=26",
+  "10:29:31 request mvdoefma4ilwh.4: chunk of 26 keys done in 464s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 89, 'miss': 208, 'blocked': 0, 'tries': 131, 'empty': 42}, audit 5/5 agree",
+  "10:29:31 request mvdoefma4ilwh.4: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
