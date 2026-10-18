@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:34:03+00:00",
+ "at": "2026-10-18T10:35:35+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3085,
+ "fares_saved": 3136,
  "log": [
   "10:32:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:32:33 http front door: ['https://symptoms-involved-still-arguments.trycloudflare.com', 'https://2c4a17ec210344.lhr.life']",
@@ -47,6 +47,20 @@
   "10:34:01 request received: rid mvdou69kdqulr.2 32 keys",
   "10:34:01 request received: rid mvdou69kdqulr.4 32 keys",
   "10:34:01 handle mvdou69kdqulr.2: first_chunk=True total=32",
-  "10:34:01 handle mvdou69kdqulr.4: first_chunk=True total=32"
+  "10:34:01 handle mvdou69kdqulr.4: first_chunk=True total=32",
+  "10:34:14 request mvdoteoflwbiv.4: chunk of 3 keys done in 45s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:34:14 request mvdoteoflwbiv.4: final sent (3/3); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:34:21 request mvdoteoflwbiv.3: chunk of 3 keys done in 52s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:34:21 request mvdoteoflwbiv.3: final sent (3/3); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:34:36 request received: rid mvdoux95fij60.1 32 keys",
+  "10:34:36 handle mvdoux95fij60.1: first_chunk=True total=32",
+  "10:34:36 request received: rid mvdoux95fij60.0 32 keys",
+  "10:34:36 handle mvdoux95fij60.0: first_chunk=True total=32",
+  "10:34:36 request received: rid mvdoux95fij60.2 32 keys",
+  "10:34:36 handle mvdoux95fij60.2: first_chunk=True total=32",
+  "10:34:36 request received: rid mvdoux95fij60.3 32 keys",
+  "10:34:36 handle mvdoux95fij60.3: first_chunk=True total=32",
+  "10:34:36 request received: rid mvdoux95fij60.4 32 keys",
+  "10:34:36 handle mvdoux95fij60.4: first_chunk=True total=32"
  ]
 }
