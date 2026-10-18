@@ -1,0 +1,24 @@
+{
+ "at": "2026-10-18T06:55:40+00:00",
+ "publishes": {
+  "ok": 0,
+  "r429": 0,
+  "fail": 0
+ },
+ "fares_saved": 20,
+ "log": [
+  "06:53:25 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "06:53:28 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-5.json' did not match any files\\n\"",
+  "06:53:30 git retry 1: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-5.json' did not match any files\\n\"",
+  "06:53:34 git retry 2: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-5.json' did not match any files\\n\"",
+  "06:53:40 git retry 3: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-5.json' did not match any files\\n\"",
+  "06:53:48 git retry 4: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-5.json' did not match any files\\n\"",
+  "06:53:58 git retry 5: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-5.json' did not match any files\\n\"",
+  "06:54:10 http front door: ['https://aspect-paper-household-diego.trycloudflare.com', 'https://3fef313874411d.lhr.life']",
+  "06:54:10 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "06:54:34 request received: rid httptest1792306474 20 keys",
+  "06:54:34 handle httptest1792306474: first_chunk=True total=20",
+  "06:54:58 request httptest1792306474: chunk of 20 keys done in 23s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "06:54:59 request httptest1792306474: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+ ]
+}
