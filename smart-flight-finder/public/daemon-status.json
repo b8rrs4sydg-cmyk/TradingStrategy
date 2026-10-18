@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:36:51+00:00",
+ "at": "2026-10-18T11:38:23+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4345,
+ "fares_saved": 4346,
  "log": [
   "11:26:05 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:12 http front door: ['https://samuel-emerald-roommate-tobacco.trycloudflare.com', 'https://32a93706ba4f74.lhr.life']",
@@ -37,6 +37,10 @@
   "11:35:13 request mvdqznepk7epz.0: chunk of 20 keys done in 56s; paths {'http': 42, 'browser': 33, 'browser-none': 55}, browser waits 88 max 211s sum 6582s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 22, 'blocked': 0, 'tries': 64, 'empty': 22}, audit 5/5 agree",
   "11:35:15 request mvdqznepk7epz.0: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:36:35 request received: rid mvdr2mz5gwiw5.0 19 keys",
-  "11:36:35 handle mvdr2mz5gwiw5.0: first_chunk=True total=19"
+  "11:36:35 handle mvdr2mz5gwiw5.0: first_chunk=True total=19",
+  "11:37:33 request mvdr2mz5gwiw5.0: chunk of 19 keys done in 58s; paths {'http': 45, 'browser': 42, 'browser-none': 62}, browser waits 104 max 211s sum 6984s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 22, 'blocked': 0, 'tries': 67, 'empty': 22}, audit 5/5 agree",
+  "11:37:35 request mvdr2mz5gwiw5.0: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:38:16 request received: rid mvdr4siu9xe7c.0 9 keys",
+  "11:38:16 handle mvdr4siu9xe7c.0: first_chunk=True total=9"
  ]
 }
