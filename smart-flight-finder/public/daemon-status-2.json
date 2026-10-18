@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T09:16:56+00:00",
+ "at": "2026-10-18T09:18:27+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 765,
+ "fares_saved": 766,
  "log": [
   "08:41:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:41:57 http front door: ['https://convinced-loved-joke-sheer.trycloudflare.com', 'https://bfc61994f7fab6.lhr.life']",
@@ -49,6 +49,10 @@
   "09:14:05 request mvdlvv2mqeg0l.2: chunk of 27 keys done in 164s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 47, 'blocked': 0, 'tries': 40, 'empty': 0}, audit 0/0 agree",
   "09:14:06 request mvdlvv2mqeg0l.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "09:14:36 request received: rid mvdm01uhaecc4.2 27 keys",
-  "09:14:36 handle mvdm01uhaecc4.2: first_chunk=True total=27"
+  "09:14:36 handle mvdm01uhaecc4.2: first_chunk=True total=27",
+  "09:17:15 request mvdm01uhaecc4.2: chunk of 27 keys done in 159s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 48, 'miss': 66, 'blocked': 0, 'tries': 48, 'empty': 0}, audit 0/0 agree",
+  "09:17:17 request mvdm01uhaecc4.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "09:18:00 request received: rid mvdm4f0s1dws9.2 27 keys",
+  "09:18:00 handle mvdm4f0s1dws9.2: first_chunk=True total=27"
  ]
 }
