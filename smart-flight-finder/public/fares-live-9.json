@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T11:07:57+00:00",
+ "generated_at": "2026-10-18T11:09:29+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -503,5 +503,12 @@
    ]
   }
  },
- "missing": []
+ "missing": [
+  "rt|FUK|TPE|2027-01-04|2027-02-25",
+  "rt|KIX|TPE|2027-01-02|2027-02-05",
+  "rt|NGO|TPE|2027-01-02|2027-02-25",
+  "rt|NGO|TPE|2027-01-04|2027-02-25",
+  "rt|TPE|NGO|2027-01-02|2027-02-28",
+  "rt|TPE|NGO|2027-01-02|2027-03-02"
+ ]
 }
