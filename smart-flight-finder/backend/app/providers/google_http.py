@@ -23,6 +23,7 @@ import asyncio
 import json
 import re
 import time
+from collections import deque
 from collections.abc import Iterator, Sequence
 from datetime import datetime
 from urllib.parse import quote
@@ -45,6 +46,9 @@ _SOCS = "CAESHAgBEhJnd3NfMjAyMzA4MTAtMF9SQzIaAmVuIAEaBgiAo_CmBg"
 _AF = re.compile(r"AF_initDataCallback\(\{key: 'ds:\d+', hash: '[^']*', data:")
 _SESSION_TTL_S = 1800
 _PAUSE_S = 300
+_WINDOW = 12  # outcomes per kind that are looked at
+_MIN_RATE = 0.25  # below this share of keys read, the kind is paused
+_KIND_PAUSE_S = 600
 _BLOCK_LIMIT = 6  # this many 403/429/captcha answers in a row → stop asking for a while
 
 
@@ -252,6 +256,10 @@ class HttpFetcher:
         self.blocked = 0
         self.pause_until = 0.0
         self.stats = {"hit": 0, "miss": 0, "blocked": 0, "tries": 0, "empty": 0}
+        # per kind (ow / rt / mc): recent outcomes; a kind that mostly fails is not tried for a while (the browser
+        # would only be asked after the wasted tries)
+        self.recent: dict[str, deque[bool]] = {}
+        self.kind_pause: dict[str, float] = {}
 
     async def aclose(self) -> None:
         await self.client.aclose()
@@ -298,6 +306,9 @@ class HttpFetcher:
 
         if time.time() < self.pause_until:
             return None
+        kind = key.split("|", 1)[0]
+        if time.time() < self.kind_pause.get(kind, 0.0):
+            return None
         _, segments = parse_key(key)
         async with self.sem:
             for _ in range(self.attempts):
@@ -321,6 +332,15 @@ class HttpFetcher:
                 if entry:
                     self.blocked = 0
                     self.stats["hit"] += 1
+                    self._record(kind, True)
                     return entry
             self.stats["miss"] += 1
+            self._record(kind, False)
             return None
+
+    def _record(self, kind: str, ok: bool) -> None:
+        recent = self.recent.setdefault(kind, deque(maxlen=_WINDOW))
+        recent.append(ok)
+        if len(recent) >= _WINDOW and recent.count(True) < _MIN_RATE * len(recent):
+            self.kind_pause[kind] = time.time() + _KIND_PAUSE_S
+            recent.clear()

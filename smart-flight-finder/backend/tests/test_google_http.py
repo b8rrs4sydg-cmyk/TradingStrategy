@@ -86,3 +86,18 @@ def test_midnight_times_come_with_a_missing_hour():
     assert _clock([20]) == (20, 0)
     assert _clock([23, 30]) == (23, 30)
     assert _clock([]) == (0, 0)
+
+
+def test_a_kind_that_mostly_fails_is_paused():
+    import time
+
+    from app.providers.google_http import HttpFetcher
+
+    f = HttpFetcher()
+    for _ in range(12):
+        f._record("mc", False)
+    assert f.kind_pause["mc"] > time.time() + 500
+    assert "ow" not in f.kind_pause
+    for _ in range(12):
+        f._record("ow", True)
+    assert "ow" not in f.kind_pause
