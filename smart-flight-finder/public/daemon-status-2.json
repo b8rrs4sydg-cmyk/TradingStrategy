@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:15:15+00:00",
+ "at": "2026-10-18T14:16:47+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1399,
  "log": [
-  "12:17:17 request mvdshwzhdvehp.2: chunk of 1 keys done in 50s; paths {'http': 78, 'browser-none': 150, 'browser': 25}, browser waits 175 max 95s sum 8723s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 78, 'miss': 88, 'blocked': 0, 'tries': 140, 'empty': 62}, audit 3/3 agree",
-  "12:17:19 request mvdshwzhdvehp.2: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:31:41 request received: rid mvdt1gqtew69c.2 22 keys",
   "12:31:41 handle mvdt1gqtew69c.2: first_chunk=True total=22",
   "12:33:15 request mvdt1gqtew69c.2: chunk of 22 keys done in 94s; paths {'http': 94, 'browser-none': 156, 'browser': 25}, browser waits 181 max 95s sum 9053s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 94, 'miss': 94, 'blocked': 0, 'tries': 168, 'empty': 74}, audit 3/3 agree",
@@ -156,6 +154,8 @@
   "14:12:30 request mvdwk3m53e01y.2: chunk of 17 keys done in 142s; paths {'http': 174, 'browser-none': 535, 'browser': 58}, browser waits 593 max 142s sum 34339s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 174, 'miss': 223, 'blocked': 0, 'tries': 402, 'empty': 228}, audit 3/3 a",
   "14:12:32 request mvdwk3m53e01y.2: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "14:13:39 request received: rid mvdwomsbqll4d.2 17 keys",
-  "14:13:39 handle mvdwomsbqll4d.2: first_chunk=True total=17"
+  "14:13:39 handle mvdwomsbqll4d.2: first_chunk=True total=17",
+  "14:15:59 request mvdwomsbqll4d.2: chunk of 17 keys done in 139s; paths {'http': 174, 'browser-none': 552, 'browser': 58}, browser waits 610 max 142s sum 35619s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 174, 'miss': 223, 'blocked': 0, 'tries': 402, 'empty': 228}, audit 3/3 a",
+  "14:16:00 request mvdwomsbqll4d.2: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
