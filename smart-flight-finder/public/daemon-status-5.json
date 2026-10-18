@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:35:31+00:00",
+ "at": "2026-10-18T07:37:05+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 225,
+ "fares_saved": 231,
  "log": [
   "07:18:42 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:47 http front door: ['https://rising-dir-jersey-celebration.trycloudflare.com', 'https://36dbb7245894ab.lhr.life']",
@@ -64,6 +64,7 @@
   "07:35:00 request mvdi7uqsdlz09.1: chunk of 80 keys done in 377s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 141, 'miss': 150, 'blocked': 3, 'tries': 141, 'empty': 0}, audit 8/8 agree",
   "07:35:01 request mvdi7uqsdlz09.1: final sent (80/80); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "07:35:04 request received: rid mvdig1vjqyz3k.5 26 keys",
-  "07:35:04 handle mvdig1vjqyz3k.5: first_chunk=True total=26"
+  "07:35:04 handle mvdig1vjqyz3k.5: first_chunk=True total=26",
+  "07:35:32 git retry 0: b\"-1kexus': is at aa2f8fb3d3cb82ccf6d4f110412558861742f149 but expected ddfd7f3e3f080e7b18355103d00df74ca6e820e6)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\""
  ]
 }
