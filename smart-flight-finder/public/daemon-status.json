@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T16:29:41+00:00",
+ "at": "2026-10-18T16:31:12+00:00",
  "publishes": {
   "ok": 63,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 3877,
  "log": [
-  "15:42:35 rtc nzdwnarkp3: data channel open",
-  "15:42:35 rtc c8fwicv7zf: data channel open",
-  "15:42:36 rtc 9pdtsoyic5: data channel open",
-  "15:42:36 rtc wuc8lv467w: data channel open",
   "15:42:36 rtc 9qpea616l0: data channel open",
   "15:42:36 rtc w1qyhlkn1d: data channel open",
   "15:42:36 rtc q51n1r9bdg: data channel open",
@@ -156,6 +152,10 @@
   "16:27:36 handle mve1gw5p3zyhd.5: first_chunk=True total=20",
   "16:27:36 handle mve1gw5p3zyhd.6: first_chunk=True total=11",
   "16:27:36 request received: rid mve1gw5p3zyhd.9 12 keys",
-  "16:27:36 handle mve1gw5p3zyhd.9: first_chunk=True total=12"
+  "16:27:36 handle mve1gw5p3zyhd.9: first_chunk=True total=12",
+  "16:29:42 request mve1gw5p3zyhd.9: chunk of 12 keys done in 126s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:29:42 request mve1gw5p3zyhd.9: final sent (12/12); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:30:24 request mve1gw5p3zyhd.6: chunk of 11 keys done in 167s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:30:25 request mve1gw5p3zyhd.6: final sent (11/11); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
  ]
 }
