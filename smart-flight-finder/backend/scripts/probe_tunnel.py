@@ -30,6 +30,7 @@ async (allKeys) => {
   const peers = await connectPeers();
   out.peers = peers.map(p => `${p.i}:${p.kind}`);
   mark(`peers: ${out.peers.join(' ')}`);
+  mark(`debug map=${JSON.stringify([...live.peerMap.entries()])} rtcs=${JSON.stringify(Object.entries(live.rtcs || {}).map(([k, c]) => [k, c.dc.readyState, c.pc.connectionState]))} rtcFail=${JSON.stringify(live.rtcFail)}`);
   live.peerList = peers; live.transport = 'peers';
   const keys = allKeys.slice(0, 9);
   const rid = 'probe' + Date.now().toString(36);

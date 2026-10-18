@@ -2669,6 +2669,7 @@ async function crawlerOfflineNote() {
 function peersLookup(keys, rid) {
   return new Promise((resolve, reject) => {
     const peers = [...(live.peerList || [])];
+    if (!peers.length) { const err = new Error('沒有可用的爬蟲'); err.gotAny = false; err.failedPeers = []; reject(err); return; }
     const shards = peers.map(() => []);
     keys.forEach((k, idx) => shards[idx % peers.length].push(k));
     const st = shards.map(ks => ({ done: 0, final: !ks.length, failed: null }));
