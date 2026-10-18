@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T12:37:54+00:00",
+ "generated_at": "2026-10-18T12:39:26+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -2694,6 +2694,22 @@
     ]
    ]
   },
+  "rt|TSA|CTS|2026-12-25|2027-02-14": {
+   "price": 43021,
+   "first": {
+    "dep": "2026-12-25T14:05:00+08:00",
+    "arr": "2026-12-26T13:10:00+09:00",
+    "stops": 1,
+    "airline": "Trinity Airways"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     43021
+    ]
+   ]
+  },
   "rt|TSA|HKT|2027-06-09|2027-06-13": {
    "price": 93248,
    "first": {
@@ -3075,6 +3091,7 @@
   "ow|PQC|TPE|2027-09-19",
   "ow|PUS|TSA|2027-05-02",
   "ow|RMQ|KKJ|2027-06-09",
+  "ow|RMQ|SGN|2027-09-15",
   "ow|RMQ|UEO|2026-12-25",
   "ow|RMQ|UEO|2027-04-30",
   "ow|RMQ|USM|2027-02-10",
