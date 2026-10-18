@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T16:25:06+00:00",
+ "at": "2026-10-18T16:26:38+00:00",
  "publishes": {
   "ok": 63,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 3877,
  "log": [
-  "15:31:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:31:48 http front door: ['https://gibraltar-scores-bestsellers-caroline.trycloudflare.com', 'https://f77548944bc5e8.lhr.life']",
-  "15:31:48 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
-  "15:32:53 request received: rid httptest1792337572 20 keys",
   "15:32:53 handle httptest1792337572: first_chunk=True total=20",
   "15:32:53 request received: rid mvdzihyynmua5 123 keys",
   "15:32:53 handle mvdzihyynmua5: first_chunk=True total=160",
@@ -156,6 +152,10 @@
   "16:22:24 request mve0x2qzlsj2y.5: chunk of 14 keys done in 613s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "16:22:26 request mve0x2qzlsj2y.5: final sent (14/14); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "16:24:23 request mve0x2qzlsj2y.1: chunk of 22 keys done in 731s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
-  "16:24:25 request mve0x2qzlsj2y.1: final sent (22/22); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
+  "16:24:25 request mve0x2qzlsj2y.1: final sent (22/22); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:25:08 request mve0x2qzlsj2y.2: chunk of 12 keys done in 776s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:25:08 request mve0x2qzlsj2y.2: final sent (12/12); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:25:50 request mve0x2qzlsj2y.0: chunk of 18 keys done in 818s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:25:51 request mve0x2qzlsj2y.0: final sent (18/18); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
  ]
 }
