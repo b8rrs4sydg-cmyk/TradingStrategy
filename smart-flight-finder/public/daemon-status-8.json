@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:37:08+00:00",
+ "at": "2026-10-18T11:38:39+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 126,
+ "fares_saved": 128,
  "log": [
   "11:26:11 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:15 http front door: ['https://organic-asthma-bios-passive.trycloudflare.com', 'https://a455d0c2cfea05.lhr.life']",
@@ -28,6 +28,10 @@
   "11:36:07 request mvdqznepk7epz.8: chunk of 17 keys done in 108s; paths {'http': 32, 'browser-none': 13, 'browser': 1}, browser waits 14 max 81s sum 713s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 14, 'blocked': 0, 'tries': 36, 'empty': 4}, audit 1/1 agree",
   "11:36:09 request mvdqznepk7epz.8: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:36:35 request received: rid mvdr2mz5gwiw5.8 10 keys",
-  "11:36:35 handle mvdr2mz5gwiw5.8: first_chunk=True total=10"
+  "11:36:35 handle mvdr2mz5gwiw5.8: first_chunk=True total=10",
+  "11:37:23 request mvdr2mz5gwiw5.8: chunk of 10 keys done in 48s; paths {'http': 36, 'browser-none': 19, 'browser': 1}, browser waits 20 max 81s sum 995s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 14, 'blocked': 0, 'tries': 40, 'empty': 4}, audit 1/1 agree",
+  "11:37:24 request mvdr2mz5gwiw5.8: final sent (10/10); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:38:16 request received: rid mvdr4siu9xe7c.8 5 keys",
+  "11:38:16 handle mvdr4siu9xe7c.8: first_chunk=True total=5"
  ]
 }
