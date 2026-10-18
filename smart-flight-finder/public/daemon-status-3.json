@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:28:05+00:00",
+ "at": "2026-10-18T07:29:37+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 196,
+ "fares_saved": 217,
  "log": [
   "07:18:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:56 http front door: ['https://ottawa-preparing-tony-separation.trycloudflare.com', 'https://5c3cd1d9eb564c.lhr.life']",
@@ -42,6 +42,10 @@
   "07:21:18 request mvdhwjco9od60.0: chunk of 18 keys done in 81s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 90, 'miss': 21, 'blocked': 0, 'tries': 92, 'empty': 2}, audit 8/8 agree",
   "07:21:19 request mvdhwjco9od60.0: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "07:21:21 request received: rid mvdhyej0cs7mj.0 80 keys",
-  "07:21:21 handle mvdhyej0cs7mj.0: first_chunk=True total=80"
+  "07:21:21 handle mvdhyej0cs7mj.0: first_chunk=True total=80",
+  "07:28:37 request mvdhyej0cs7mj.0: chunk of 80 keys done in 436s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 103, 'miss': 106, 'blocked': 4, 'tries': 105, 'empty': 2}, audit 8/8 agree",
+  "07:28:39 request mvdhyej0cs7mj.0: final sent (80/80); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "07:28:44 request received: rid mvdi7uqsdlz09.0 80 keys",
+  "07:28:44 handle mvdi7uqsdlz09.0: first_chunk=True total=80"
  ]
 }
