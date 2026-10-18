@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:33:58+00:00",
+ "at": "2026-10-18T07:35:30+00:00",
  "publishes": {
-  "ok": 4,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3623,
+ "fares_saved": 3624,
  "log": [
   "07:18:47 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:52 http front door: ['https://pose-pack-hopes-barbie.trycloudflare.com', 'https://c50c26f55800bb.lhr.life']",
@@ -48,6 +48,11 @@
   "07:33:20 request received: rid mvdidt5v9id4v.0 27 keys",
   "07:33:20 handle mvdidt5v9id4v.0: first_chunk=True total=27",
   "07:33:20 request mvdidt5v9id4v.0: chunk of 27 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 88, 'miss': 25, 'blocked': 0, 'tries': 88, 'empty': 0}, audit 10/10 agree",
-  "07:33:21 request mvdidt5v9id4v.0: final sent (27/27); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "07:33:21 request mvdidt5v9id4v.0: final sent (27/27); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "07:34:27 request received: rid mvdif9bjdojeh.0 27 keys",
+  "07:34:27 handle mvdif9bjdojeh.0: first_chunk=True total=27",
+  "07:34:37 rtc ivuboe3668: answered",
+  "07:35:04 request received: rid mvdig1vjqyz3k.0 27 keys",
+  "07:35:04 handle mvdig1vjqyz3k.0: first_chunk=True total=27"
  ]
 }
