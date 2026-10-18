@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T06:55:05+00:00",
+ "at": "2026-10-18T06:56:37+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -11,6 +11,8 @@
   "06:53:35 http front door: ['https://pct-minimal-relatives-reaching.trycloudflare.com', 'https://2f746121943ae3.lhr.life']",
   "06:53:35 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "06:54:38 request received: rid httptest1792306478 20 keys",
-  "06:54:38 handle httptest1792306478: first_chunk=True total=20"
+  "06:54:38 handle httptest1792306478: first_chunk=True total=20",
+  "06:56:02 request httptest1792306478: chunk of 20 keys done in 84s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "06:56:03 request httptest1792306478: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
