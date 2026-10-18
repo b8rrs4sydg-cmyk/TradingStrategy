@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:35:14+00:00",
+ "at": "2026-10-18T14:36:45+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 301,
  "log": [
-  "12:50:05 request mvdtn3iltwypi.7: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:50:55 request received: rid mvdtq88z7zvuk.7 17 keys",
   "12:50:55 handle mvdtq88z7zvuk.7: first_chunk=True total=17",
   "12:52:38 request mvdtq88z7zvuk.7: chunk of 17 keys done in 103s; paths {'http': 98, 'browser-none': 375, 'browser': 29}, browser waits 404 max 190s sum 27800s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 98, 'miss': 126, 'blocked': 0, 'tries': 209, 'empty': 111}, audit 1/1 agr",
   "12:52:39 request mvdtq88z7zvuk.7: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "14:32:06 request mvdxa8axe2509.6: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:32:06 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "14:34:23 request received: rid mvdxfaioyk7ai.7 16 keys",
-  "14:34:23 handle mvdxfaioyk7ai.7: first_chunk=True total=16"
+  "14:34:23 handle mvdxfaioyk7ai.7: first_chunk=True total=16",
+  "14:35:59 request mvdxfaioyk7ai.7: chunk of 16 keys done in 96s; paths {'http': 204, 'browser-none': 773, 'browser': 40}, browser waits 813 max 190s sum 56306s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 204, 'miss': 275, 'blocked': 0, 'tries': 460, 'empty': 256}, audit 1/1 ag",
+  "14:35:59 request mvdxfaioyk7ai.7: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
