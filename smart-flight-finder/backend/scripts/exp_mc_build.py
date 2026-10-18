@@ -92,11 +92,21 @@ def main() -> None:
         k, want = item
         body = build_body(tmpl, k, tok)
         t = time.time()
-        r = s.post(ENDPOINT, params=params, data=body, headers=hdr, timeout=30)
+        try:
+            r = s.post(ENDPOINT, params=params, data=body, headers=hdr, timeout=12)
+        except requests.RequestException as e:
+            return f"{label:10s} {type(e).__name__} after {time.time()-t:.1f}s  {k[3:60]}"
         ps = prices(r.text)
         got = ps[0] if ps else None
         return f"{label:10s} HTTP {r.status_code} len={len(r.text):6d} {time.time() - t:.2f}s min={got} db={want} {'MATCH' if got == want else ''}  {k[3:60]}"
 
+    print("\n-- captured URL params + captured body, plain-GET cookies")
+    r0 = s.post(ENDPOINT, params=cap_params, data=cap["body"], headers=hdr, timeout=12)
+    print("  ", r0.status_code, len(r0.text), prices(r0.text)[:4])
+    print("-- captured URL params + rebuilt body")
+    r1 = s.post(ENDPOINT, params=cap_params, data=rebuilt, headers=hdr, timeout=12)
+    print("  ", r1.status_code, len(r1.text), prices(r1.text)[:4])
+    params = cap_params
     for label, tok in (("with-token", token), ("null-token", None)):
         print(f"\n-- sequential, {label}")
         res = [one(it, tok, label) for it in sample]
