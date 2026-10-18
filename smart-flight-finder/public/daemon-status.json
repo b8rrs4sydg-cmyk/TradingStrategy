@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:38:38+00:00",
+ "at": "2026-10-18T10:40:09+00:00",
  "publishes": {
-  "ok": 5,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3221,
+ "fares_saved": 3274,
  "log": [
   "10:32:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:32:33 http front door: ['https://symptoms-involved-still-arguments.trycloudflare.com', 'https://2c4a17ec210344.lhr.life']",
@@ -71,6 +71,22 @@
   "10:37:42 request mvdoux95fij60.0: chunk of 32 keys done in 186s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
   "10:37:44 request mvdoux95fij60.0: final sent (32/32); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
   "10:38:29 request mvdou69kdqulr.4: chunk of 32 keys done in 268s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
-  "10:38:29 request mvdou69kdqulr.4: final sent (32/32); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
+  "10:38:29 request mvdou69kdqulr.4: final sent (32/32); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:38:44 request mvdoux95fij60.1: chunk of 32 keys done in 248s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:38:45 request mvdoux95fij60.1: final sent (32/32); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:38:52 request received: rid mvdp0dvs0ind6.0 32 keys",
+  "10:38:52 handle mvdp0dvs0ind6.0: first_chunk=True total=32",
+  "10:38:52 request received: rid mvdp0dvs0ind6.1 32 keys",
+  "10:38:52 request received: rid mvdp0dvs0ind6.2 32 keys",
+  "10:38:52 handle mvdp0dvs0ind6.1: first_chunk=True total=32",
+  "10:38:52 handle mvdp0dvs0ind6.2: first_chunk=True total=32",
+  "10:38:52 request received: rid mvdp0dvs0ind6.4 32 keys",
+  "10:38:52 request received: rid mvdp0dvs0ind6.3 32 keys",
+  "10:38:52 handle mvdp0dvs0ind6.4: first_chunk=True total=32",
+  "10:38:52 handle mvdp0dvs0ind6.3: first_chunk=True total=32",
+  "10:38:53 rtc md91na4msm: answered",
+  "10:38:54 rtc md91na4msm: data channel open",
+  "10:39:57 request mvdp0dvs0ind6.3: chunk of 32 keys done in 65s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "10:39:57 request mvdp0dvs0ind6.3: final sent (32/32); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
  ]
 }
