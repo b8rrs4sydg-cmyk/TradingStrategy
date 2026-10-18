@@ -1,11 +1,27 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T12:06:28+00:00",
+ "generated_at": "2026-10-18T12:08:00+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
  "fares": {
+  "mc|DAD-TPE-2026-12-27|TPE-HKG-2027-02-10|HKG-TPE-2027-02-14|TPE-NRT-2027-06-09": {
+   "price": 62932,
+   "first": {
+    "dep": "2026-12-27T13:00:00+07:00",
+    "arr": "2026-12-27T16:50:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     62932
+    ]
+   ]
+  },
   "mc|DAD-TPE-2027-02-14|TPE-OKA-2027-02-27|OKA-TPE-2027-03-01|TPE-DMK-2027-04-30": {
    "price": 115326,
    "first": {
