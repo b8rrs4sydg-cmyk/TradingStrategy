@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T20:49:03+00:00",
+ "at": "2026-10-18T20:50:35+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3932,
+ "fares_saved": 3947,
  "log": [
   "20:32:15 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:32:20 http front door: ['https://bennett-completing-unix-gel.trycloudflare.com', 'https://9ee1b8a86c1ec5.lhr.life']",
@@ -45,6 +45,8 @@
   "20:45:40 rtc l41mbv0hb4: data channel open",
   "20:45:40 rtc hvqa3l2whu: data channel open",
   "20:45:40 rtc rvk3z17yu8: data channel open",
-  "20:45:40 rtc 4lbl7ogb3r: data channel open"
+  "20:45:40 rtc 4lbl7ogb3r: data channel open",
+  "20:49:20 request mveaonx7egabp.1: chunk of 75 keys done in 223s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:49:23 request mveaonx7egabp.1: final sent (75/75); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
  ]
 }
