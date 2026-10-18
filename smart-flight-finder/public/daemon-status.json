@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T06:11:35+00:00",
+ "at": "2026-10-18T06:13:06+00:00",
  "publishes": {
-  "ok": 99,
+  "ok": 104,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3308,
+ "fares_saved": 3314,
  "log": [
   "05:45:35 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:45:41 http front door: ['https://general-vbulletin-uni-rights.trycloudflare.com', 'https://557e83ce6d948d.lhr.life']",
@@ -64,6 +64,8 @@
   "06:08:36 request mvdf6c2mkozna.0: final sent (54/54); ntfy publishes {'ok': 90, 'r429': 0, 'fail': 0}",
   "06:08:40 request received: rid mvdfcw8u129f8.0 54 keys",
   "06:08:40 handle mvdfcw8u129f8.0: first_chunk=True total=54",
-  "06:11:31 rtc 2853dke4hz: answered"
+  "06:11:31 rtc 2853dke4hz: answered",
+  "06:11:42 request received: rid mvdfghbtl49jo.0 54 keys",
+  "06:11:42 handle mvdfghbtl49jo.0: first_chunk=True total=54"
  ]
 }
