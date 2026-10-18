@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:05:02+00:00",
+ "at": "2026-10-18T11:08:04+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 676,
+ "fares_saved": 691,
  "log": [
   "11:00:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:31 http front door: ['https://mia-jake-discovery-pasta.trycloudflare.com', 'https://981fbb61bf5387.lhr.life']",
@@ -17,6 +17,10 @@
   "11:03:55 request received: rid mvdpwl7sqfww0.5 26 keys",
   "11:03:55 handle mvdpwl7sqfww0.5: first_chunk=True total=26",
   "11:04:45 request mvdpwl7sqfww0.5: chunk of 26 keys done in 50s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 39, 'miss': 7, 'blocked': 0, 'tries': 54, 'empty': 15}, audit 1/1 agree",
-  "11:04:46 request mvdpwl7sqfww0.5: final sent (26/26); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "11:04:46 request mvdpwl7sqfww0.5: final sent (26/26); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:07:32 rtc 83dagfk62v: answered",
+  "11:07:33 rtc 83dagfk62v: data channel open",
+  "11:07:34 request received: rid mvdq18d0uxyoh.5 20 keys",
+  "11:07:34 handle mvdq18d0uxyoh.5: first_chunk=True total=20"
  ]
 }
