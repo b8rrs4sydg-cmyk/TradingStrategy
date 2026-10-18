@@ -1,18 +1,23 @@
 {
- "at": "2026-10-18T11:24:55+00:00",
+ "at": "2026-10-18T11:27:42+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 4282,
  "log": [
-  "11:23:20 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:23:25 http front door: ['https://inline-parameters-operating-hayes.trycloudflare.com', 'https://9699a0b1744e44.lhr.life']",
-  "11:23:25 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:24:28 request received: rid httptest1792322668 20 keys",
-  "11:24:28 handle httptest1792322668: first_chunk=True total=20",
-  "11:24:30 request httptest1792322668: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "11:24:31 request httptest1792322668: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "11:26:05 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:26:12 http front door: ['https://samuel-emerald-roommate-tobacco.trycloudflare.com', 'https://32a93706ba4f74.lhr.life']",
+  "11:26:12 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:27:14 request received: rid httptest1792322834 20 keys",
+  "11:27:14 handle httptest1792322834: first_chunk=True total=20",
+  "11:27:15 request httptest1792322834: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "11:27:16 request httptest1792322834: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:27:23 rtc be0w1gej76: answered",
+  "11:27:24 rtc be0w1gej76: data channel open",
+  "11:27:25 request received: rid mvdqqs310j5lz.0 3 keys",
+  "11:27:25 handle mvdqqs310j5lz.0: first_chunk=True total=3",
+  "11:27:41 request mvdqqs310j5lz.0: chunk of 3 keys done in 15s; paths {'http': 22, 'browser': 1}, browser waits 1 max 2s sum 2s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 4/4 agree"
  ]
 }
