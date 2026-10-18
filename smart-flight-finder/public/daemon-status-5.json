@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:21:03+00:00",
+ "at": "2026-10-18T13:22:35+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 900,
  "log": [
-  "11:31:00 request received: rid mvdqvf38lwhyn.5 20 keys",
-  "11:31:00 handle mvdqvf38lwhyn.5: first_chunk=True total=20",
   "11:34:13 request mvdqvf38lwhyn.5: chunk of 20 keys done in 193s; paths {'http': 46, 'browser': 7, 'browser-none': 54}, browser waits 61 max 285s sum 6296s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 20, 'blocked': 0, 'tries': 70, 'empty': 24}, audit 2/2 agree",
   "11:34:15 request mvdqvf38lwhyn.5: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:34:16 request mvdqtfrxe9o9k.4: chunk of 34 keys done in 289s; paths {'http': 46, 'browser': 7, 'browser-none': 57}, browser waits 64 max 289s sum 7158s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 20, 'blocked': 0, 'tries': 70, 'empty': 24}, audit 2/2 agree",
@@ -156,6 +154,8 @@
   "13:13:41 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:44 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:20:19 request received: rid mvdus132ib8io.5 14 keys",
-  "13:20:19 handle mvdus132ib8io.5: first_chunk=True total=14"
+  "13:20:19 handle mvdus132ib8io.5: first_chunk=True total=14",
+  "13:22:02 request mvdus132ib8io.5: chunk of 14 keys done in 103s; paths {'http': 123, 'browser': 36, 'browser-none': 467}, browser waits 503 max 289s sum 35132s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 123, 'miss': 193, 'blocked': 20, 'tries': 239, 'empty': 116}, audit 4/4 ",
+  "13:22:03 request mvdus132ib8io.5: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
