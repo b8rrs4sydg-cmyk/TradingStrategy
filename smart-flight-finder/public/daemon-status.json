@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:51:11+00:00",
+ "at": "2026-10-18T07:52:43+00:00",
  "publishes": {
-  "ok": 73,
+  "ok": 84,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3693,
+ "fares_saved": 3696,
  "log": [
   "07:38:56 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:00 http front door: ['https://spin-qty-sensitivity-medicare.trycloudflare.com', 'https://6776783f0b9063.lhr.life']",
@@ -43,6 +43,7 @@
   "07:46:21 rtc 9ft4ak7omw: answered",
   "07:49:00 request mvditsbdelwze.0: chunk of 27 keys done in 195s; ntfy publishes {'ok': 59, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 86, 'miss': 118, 'blocked': 0, 'tries': 86, 'empty': 0}, audit 4/4 agree",
   "07:49:01 request mvditsbdelwze.0: final sent (27/27); ntfy publishes {'ok': 59, 'r429': 0, 'fail': 0}",
-  "07:50:24 request mvdioh3gt2nl3: chunk of 16 keys done in 525s; ntfy publishes {'ok': 68, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 86, 'miss': 118, 'blocked': 0, 'tries': 86, 'empty': 0}, audit 4/4 agree"
+  "07:50:24 request mvdioh3gt2nl3: chunk of 16 keys done in 525s; ntfy publishes {'ok': 68, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 86, 'miss': 118, 'blocked': 0, 'tries': 86, 'empty': 0}, audit 4/4 agree",
+  "07:52:10 request mvdioh3gt2nl3: chunk of 36 keys done in 631s; ntfy publishes {'ok': 80, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 86, 'miss': 118, 'blocked': 0, 'tries': 86, 'empty': 0}, audit 4/4 agree"
  ]
 }
