@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:01:26+00:00",
+ "at": "2026-10-18T13:02:58+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 899,
  "log": [
-  "11:26:33 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:27:23 rtc kmi5bm7zrj: answered",
   "11:27:25 rtc kmi5bm7zrj: data channel open",
   "11:27:25 request received: rid mvdqqs310j5lz.4 5 keys",
   "11:27:25 handle mvdqqs310j5lz.4: first_chunk=True total=5",
@@ -156,6 +154,8 @@
   "12:59:01 request received: rid mvdu0njwqw7q9.5 13 keys",
   "12:59:01 handle mvdu0njwqw7q9.5: first_chunk=True total=13",
   "13:00:39 request mvdu0njwqw7q9.5: chunk of 13 keys done in 97s; paths {'http': 122, 'browser': 36, 'browser-none': 433}, browser waits 469 max 289s sum 33086s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 122, 'miss': 183, 'blocked': 17, 'tries': 232, 'empty': 110}, audit 4/4 a",
-  "13:00:41 request mvdu0njwqw7q9.5: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:00:41 request mvdu0njwqw7q9.5: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:01:39 request received: rid mvdu41h7b76yp.5 14 keys",
+  "13:01:39 handle mvdu41h7b76yp.5: first_chunk=True total=14"
  ]
 }
