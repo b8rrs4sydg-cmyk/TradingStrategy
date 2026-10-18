@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:17:25+00:00",
+ "at": "2026-10-18T11:18:57+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 620,
+ "fares_saved": 655,
  "log": [
   "11:00:34 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:40 http front door: ['https://pierre-created-barely-circulation.trycloudflare.com', 'https://cd4409eff22c9f.lhr.life']",
@@ -71,6 +71,12 @@
   "11:17:15 request received: rid mvdqdru6p0hdt.3 11 keys",
   "11:17:15 handle mvdqdru6p0hdt.3: first_chunk=True total=11",
   "11:17:22 request received: rid mvdqdxcqhjkkb.3 20 keys",
-  "11:17:22 handle mvdqdxcqhjkkb.3: first_chunk=True total=20"
+  "11:17:22 handle mvdqdxcqhjkkb.3: first_chunk=True total=20",
+  "11:18:02 request received: rid mvdqes7wvs5wy.3 18 keys",
+  "11:18:02 handle mvdqes7wvs5wy.3: first_chunk=True total=18",
+  "11:18:18 request mvdqdru6p0hdt.3: chunk of 11 keys done in 63s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 62, 'blocked': 0, 'tries': 194, 'empty': 63}, audit 5/5 agree",
+  "11:18:19 request mvdqdru6p0hdt.3: final sent (11/11); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:18:38 request received: rid mvdqfjooxeaci.3 17 keys",
+  "11:18:38 handle mvdqfjooxeaci.3: first_chunk=True total=17"
  ]
 }
