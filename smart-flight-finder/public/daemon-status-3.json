@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:32:40+00:00",
+ "at": "2026-10-18T07:34:12+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 225,
+ "fares_saved": 227,
  "log": [
   "07:18:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:56 http front door: ['https://ottawa-preparing-tony-separation.trycloudflare.com', 'https://5c3cd1d9eb564c.lhr.life']",
@@ -46,6 +46,14 @@
   "07:28:37 request mvdhyej0cs7mj.0: chunk of 80 keys done in 436s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 103, 'miss': 106, 'blocked': 4, 'tries': 105, 'empty': 2}, audit 8/8 agree",
   "07:28:39 request mvdhyej0cs7mj.0: final sent (80/80); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "07:28:44 request received: rid mvdi7uqsdlz09.0 80 keys",
-  "07:28:44 handle mvdi7uqsdlz09.0: first_chunk=True total=80"
+  "07:28:44 handle mvdi7uqsdlz09.0: first_chunk=True total=80",
+  "07:33:13 rtc oepk5l8xse: answered",
+  "07:33:14 rtc oepk5l8xse: data channel open",
+  "07:33:14 request received: rid mvdidog5osv1u.3 1 keys",
+  "07:33:14 handle mvdidog5osv1u.3: first_chunk=True total=1",
+  "07:33:14 request mvdidog5osv1u.3: chunk of 1 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 162, 'blocked': 11, 'tries': 122, 'empty': 2}, audit 8/8 agree",
+  "07:33:16 request mvdidog5osv1u.3: final sent (1/1); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "07:33:20 request received: rid mvdidt5v9id4v.3 27 keys",
+  "07:33:20 handle mvdidt5v9id4v.3: first_chunk=True total=27"
  ]
 }
