@@ -207,6 +207,26 @@ async def main() -> int:
         )
         check(not st["error"], f"no lookup error ({st['error']})")
 
+        # ---- C2: "look up every multi-city permutation" button ---------------------
+        has_btn = await page.evaluate(
+            "typeof renderAllButton === 'function' && !!document.getElementById('lookup-all')"
+        )
+        check(has_btn, "page has the look-up-all-permutations control")
+        try:
+            await page.wait_for_selector("#btn-lookup-all:not([disabled])", timeout=90000)
+            page.once("dialog", lambda d: asyncio.ensure_future(d.accept()))
+            label = await page.inner_text("#lookup-all")
+            log("look-up-all control:", label[:160])
+            await page.click("#btn-lookup-all")
+            await page.wait_for_timeout(4000)
+            started = await page.evaluate("live.campaign.all === true && live.campaign.batch > 0")
+            check(started, "the button starts a campaign over every permutation")
+        except Exception as e:  # noqa: BLE001
+            log(
+                "look-up-all button not clickable (nothing left to ask or still busy):",
+                repr(e)[:120],
+            )
+
         # ---- D: 四腿票, narrowed so the lookup can finish --------------------------
         await page.goto(URL, wait_until="load")  # fresh page: scenario C's campaign must not run on
         await page.wait_for_timeout(2500)
