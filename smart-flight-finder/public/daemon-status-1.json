@@ -1,26 +1,24 @@
 {
- "at": "2026-10-18T11:25:05+00:00",
+ "at": "2026-10-18T11:27:43+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1094,
+ "fares_saved": 1097,
  "log": [
-  "11:23:20 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:23:24 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "11:23:28 git retry 1: b\"-1kexus': is at ee0a3267cd463a85a25b3c728cee44c6399a805e but expected d8644e066cf361bd1fe1be1005ba24e844c4afb1)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "11:23:35 http front door: ['https://identify-surgeon-mountain-wholesale.trycloudflare.com', 'https://550413f16d7f0a.lhr.life']",
-  "11:23:35 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:24:23 rtc 5wc3biy8oa: answered",
-  "11:24:24 rtc 5wc3biy8oa: data channel open",
-  "11:24:29 request received: rid httptest1792322669 20 keys",
-  "11:24:29 handle httptest1792322669: first_chunk=True total=20",
-  "11:24:31 request httptest1792322669: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "11:24:31 request httptest1792322669: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:24:59 rtc cp9qewzozs: answered",
-  "11:25:00 rtc cp9qewzozs: data channel open",
-  "11:25:01 request received: rid mvdqno2nc5elg.1 12 keys",
-  "11:25:01 handle mvdqno2nc5elg.1: first_chunk=True total=12"
+  "11:26:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:26:13 http front door: ['https://vegetables-defining-facial-granted.trycloudflare.com', 'https://17c1d95da2fbab.lhr.life']",
+  "11:26:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:27:17 request received: rid httptest1792322837 20 keys",
+  "11:27:17 handle httptest1792322837: first_chunk=True total=20",
+  "11:27:19 request httptest1792322837: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "11:27:19 request httptest1792322837: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:27:23 rtc 92khwm1f7c: answered",
+  "11:27:25 rtc 92khwm1f7c: data channel open",
+  "11:27:25 request received: rid mvdqqs310j5lz.1 3 keys",
+  "11:27:25 handle mvdqqs310j5lz.1: first_chunk=True total=3",
+  "11:27:41 request mvdqqs310j5lz.1: chunk of 3 keys done in 16s; paths {'http': 21, 'browser': 2}, browser waits 2 max 3s sum 6s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 2, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 2/2 agree",
+  "11:27:41 request mvdqqs310j5lz.1: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
