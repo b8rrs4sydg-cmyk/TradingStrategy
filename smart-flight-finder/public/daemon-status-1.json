@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:17:21+00:00",
+ "at": "2026-10-18T11:18:52+00:00",
  "publishes": {
   "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1081,
+ "fares_saved": 1087,
  "log": [
   "11:00:26 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:31 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -80,6 +80,12 @@
   "11:16:46 request mvdqajk5xvkpm.1: chunk of 12 keys done in 121s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 76, 'miss': 31, 'blocked': 0, 'tries': 114, 'empty': 38}, audit 6/6 agree",
   "11:16:47 request mvdqajk5xvkpm.1: final sent (12/12); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
   "11:17:15 request received: rid mvdqdru6p0hdt.1 17 keys",
-  "11:17:15 handle mvdqdru6p0hdt.1: first_chunk=True total=17"
+  "11:17:15 handle mvdqdru6p0hdt.1: first_chunk=True total=17",
+  "11:17:22 request received: rid mvdqdxcqhjkkb.1 16 keys",
+  "11:17:22 handle mvdqdxcqhjkkb.1: first_chunk=True total=16",
+  "11:18:02 request received: rid mvdqes7wvs5wy.1 21 keys",
+  "11:18:02 handle mvdqes7wvs5wy.1: first_chunk=True total=21",
+  "11:18:38 request received: rid mvdqfjooxeaci.1 13 keys",
+  "11:18:38 handle mvdqfjooxeaci.1: first_chunk=True total=13"
  ]
 }
