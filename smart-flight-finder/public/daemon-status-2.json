@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:38:31+00:00",
+ "at": "2026-10-18T11:40:03+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1221,
+ "fares_saved": 1227,
  "log": [
   "11:26:06 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:12 git retry 0: b\"-1kexus': is at 157fae3f04ad0e206020ae93d610851b7f66be33 but expected 53b6681c237f3526571c0698a51d8b76429bf8f3)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -31,6 +31,14 @@
   "11:37:21 request mvdr2mz5gwiw5.2: chunk of 11 keys done in 46s; paths {'http': 45, 'browser-none': 13, 'browser': 1}, browser waits 14 max 75s sum 664s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 14, 'blocked': 0, 'tries': 55, 'empty': 10}, audit 3/3 agree",
   "11:37:23 request mvdr2mz5gwiw5.2: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:38:16 request received: rid mvdr4siu9xe7c.2 5 keys",
-  "11:38:16 handle mvdr4siu9xe7c.2: first_chunk=True total=5"
+  "11:38:16 handle mvdr4siu9xe7c.2: first_chunk=True total=5",
+  "11:39:05 request mvdr4siu9xe7c.2: chunk of 5 keys done in 49s; paths {'http': 49, 'browser-none': 14, 'browser': 1}, browser waits 15 max 75s sum 713s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 49, 'miss': 15, 'blocked': 0, 'tries': 61, 'empty': 12}, audit 3/3 agree",
+  "11:39:05 request mvdr4siu9xe7c.2: final sent (5/5); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:39:15 request received: rid mvdr623air1zi.2 1 keys",
+  "11:39:15 handle mvdr623air1zi.2: first_chunk=True total=1",
+  "11:39:15 request mvdr623air1zi.2: chunk of 1 keys done in 0s; paths {'http': 50, 'browser-none': 14, 'browser': 1}, browser waits 15 max 75s sum 713s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 15, 'blocked': 0, 'tries': 62, 'empty': 12}, audit 3/3 agree",
+  "11:39:16 request mvdr623air1zi.2: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:39:22 request received: rid mvdr67xtjeugt.2 12 keys",
+  "11:39:22 handle mvdr67xtjeugt.2: first_chunk=True total=12"
  ]
 }
