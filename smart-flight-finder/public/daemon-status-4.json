@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:23:33+00:00",
+ "at": "2026-10-18T07:25:04+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 114,
+ "fares_saved": 115,
  "log": [
   "07:18:53 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:58 http front door: ['https://hardware-wheel-promising-steve.trycloudflare.com', 'https://3b3f95ddac16d3.lhr.life']",
@@ -31,6 +31,10 @@
   "07:20:42 handle mvdhxkhy45w9s.4: first_chunk=True total=26",
   "07:21:56 request mvdhx7tzwrdv5.4: chunk of 26 keys done in 86s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 48, 'miss': 38, 'blocked': 0, 'tries': 59, 'empty': 11}, audit 3/3 agree",
   "07:21:57 request mvdhx7tzwrdv5.4: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "07:22:00 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\""
+  "07:22:00 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "07:24:49 request mvdhxkhy45w9s.4: chunk of 26 keys done in 247s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 56, 'blocked': 0, 'tries': 61, 'empty': 11}, audit 3/3 agree",
+  "07:24:50 request mvdhxkhy45w9s.4: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "07:25:02 request mvdhxepvyloyl.4: chunk of 26 keys done in 267s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 56, 'blocked': 0, 'tries': 61, 'empty': 11}, audit 3/3 agree",
+  "07:25:04 request mvdhxepvyloyl.4: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
