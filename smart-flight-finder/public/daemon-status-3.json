@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T13:38:15+00:00",
+ "at": "2026-10-18T13:45:46+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 852,
  "log": [
-  "11:34:17 handle mvdqznepk7epz.3: first_chunk=True total=16",
-  "11:35:53 request mvdqznepk7epz.3: chunk of 16 keys done in 95s; paths {'http': 69, 'browser': 1, 'browser-none': 47}, browser waits 48 max 120s sum 2899s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 69, 'miss': 48, 'blocked': 0, 'tries': 105, 'empty': 36}, audit 3/3 agree",
-  "11:35:53 request mvdqznepk7epz.3: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:36:35 request received: rid mvdr2mz5gwiw5.3 17 keys",
   "11:36:35 handle mvdr2mz5gwiw5.3: first_chunk=True total=17",
   "11:37:40 request mvdr2mz5gwiw5.3: chunk of 17 keys done in 65s; paths {'http': 82, 'browser': 1, 'browser-none': 51}, browser waits 52 max 120s sum 3089s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 82, 'miss': 52, 'blocked': 0, 'tries': 118, 'empty': 36}, audit 3/3 agree",
   "11:37:42 request mvdr2mz5gwiw5.3: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "13:35:24 request received: rid mvdvbfhuwgne6.3 16 keys",
   "13:35:24 handle mvdvbfhuwgne6.3: first_chunk=True total=16",
   "13:37:02 request mvdvbfhuwgne6.3: chunk of 16 keys done in 99s; paths {'http': 168, 'browser': 46, 'browser-none': 446}, browser waits 492 max 145s sum 30412s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 168, 'miss': 215, 'blocked': 0, 'tries': 314, 'empty': 146}, audit 3/3 ag",
-  "13:37:04 request mvdvbfhuwgne6.3: final sent (16/16); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "13:37:04 request mvdvbfhuwgne6.3: final sent (16/16); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "13:44:33 rtc 1dc1oljc17: answered",
+  "13:44:35 rtc 1dc1oljc17: data channel open",
+  "13:44:35 request received: rid mvdvn5tvdtxf1.3 19 keys",
+  "13:44:35 handle mvdvn5tvdtxf1.3: first_chunk=True total=19"
  ]
 }
