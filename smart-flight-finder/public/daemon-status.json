@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:15:47+00:00",
+ "at": "2026-10-18T11:17:18+00:00",
  "publishes": {
-  "ok": 67,
+  "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4279,
+ "fares_saved": 4280,
  "log": [
   "11:00:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:34 http front door: ['https://friday-examines-headset-lodging.trycloudflare.com', 'https://d279c6097889d3.lhr.life']",
@@ -73,6 +73,15 @@
   "11:15:14 request mvdqb344zwtrk.0: chunk of 11 keys done in 0s; ntfy publishes {'ok': 66, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 160, 'blocked': 2, 'tries': 237, 'empty': 173}, audit 2/2 agree",
   "11:15:16 request mvdqb344zwtrk.0: final sent (11/11); ntfy publishes {'ok': 66, 'r429': 0, 'fail': 0}",
   "11:15:17 request received: rid mvdqb8zfaos5a.0 8 keys",
-  "11:15:17 handle mvdqb8zfaos5a.0: first_chunk=True total=8"
+  "11:15:17 handle mvdqb8zfaos5a.0: first_chunk=True total=8",
+  "11:16:28 request mvdqb8zfaos5a.0: chunk of 8 keys done in 71s; ntfy publishes {'ok': 69, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 163, 'blocked': 2, 'tries': 237, 'empty': 173}, audit 2/2 agree",
+  "11:16:29 request mvdqb8zfaos5a.0: final sent (8/8); ntfy publishes {'ok': 69, 'r429': 0, 'fail': 0}",
+  "11:17:07 request mvdqajk5xvkpm.0: chunk of 19 keys done in 143s; ntfy publishes {'ok': 71, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 163, 'blocked': 2, 'tries': 237, 'empty': 173}, audit 2/2 agree",
+  "11:17:09 request mvdqajk5xvkpm.0: final sent (19/19); ntfy publishes {'ok': 71, 'r429': 0, 'fail': 0}",
+  "11:17:12 request mvdq90xy2rp1d.0: chunk of 16 keys done in 218s; ntfy publishes {'ok': 71, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 163, 'blocked': 2, 'tries': 237, 'empty': 173}, audit 2/2 agree",
+  "11:17:13 request mvdq90xy2rp1d.0: final sent (16/16); ntfy publishes {'ok': 71, 'r429': 0, 'fail': 0}",
+  "11:17:15 request received: rid mvdqdru6p0hdt.0 12 keys",
+  "11:17:15 handle mvdqdru6p0hdt.0: first_chunk=True total=12",
+  "11:17:18 request mvdq60py73tla.0: chunk of 14 keys done in 365s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 163, 'blocked': 2, 'tries': 237, 'empty': 173}, audit 2/2 agree"
  ]
 }
