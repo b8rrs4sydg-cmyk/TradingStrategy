@@ -145,6 +145,15 @@ page ◀──SSE─────────────────  ntfy.sh/<T
   selftest 40 s after start). Requests are validated (`lookup_fares.valid_keys`,
   ≤ 160 keys, ≤ 500 keys / 10 min), results go to `public/fares-live.json`
   (overlay; committed every ~90 s) and the next crawl folds them in.
+- THREE daemons run side by side (`fare-daemon.yml` matrix, `Daemon(instance=i)`):
+  own IP, browser, tunnels and files (`daemon-<i>.json`, `daemon-status-<i>.json`,
+  `fares-live-<i>.json`; instance 0 keeps the legacy names and alone listens to
+  ntfy). The page connects to every instance that answers (`connectPeers`) and
+  `peersLookup` splits the keys between them round-robin, so a search is ~3x
+  faster; a failing share is retried by the others. `load_with_live` folds in
+  every `fares-live-*.json`. Scheduled restarts only exist on the default
+  branch; lookups need at least one instance online (the page says so when
+  `daemon-status.json` is older than 15 min).
 - Preferred front door is peer to peer (WebRTC, `rtcEnsure` in the page,
   `Daemon.start_rtc/rtc_answer` with aiortc): the page offers through the ntfy
   topic `<T_REQ>-sig`, the daemon answers on `<T_RES>-sig` (two small
