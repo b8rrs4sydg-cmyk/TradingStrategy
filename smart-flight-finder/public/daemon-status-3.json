@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:54:56+00:00",
+ "at": "2026-10-18T13:56:28+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 862,
  "log": [
-  "11:44:00 handle mvdrc6ae2in9l.3: first_chunk=True total=14",
-  "11:45:34 request mvdrc6ae2in9l.3: chunk of 14 keys done in 94s; paths {'http': 97, 'browser': 7, 'browser-none': 88}, browser waits 95 max 120s sum 5370s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 97, 'miss': 81, 'blocked': 0, 'tries': 135, 'empty': 38}, audit 3/3 agree",
   "11:45:35 request mvdrc6ae2in9l.3: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:54:02 rtc v59u7uyad9: answered",
   "11:54:03 rtc v59u7uyad9: data channel open",
@@ -156,6 +154,8 @@
   "13:52:34 request mvdvvfsqv12at.3: chunk of 16 keys done in 96s; paths {'http': 177, 'browser': 46, 'browser-none': 484}, browser waits 530 max 145s sum 32772s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 177, 'miss': 225, 'blocked': 0, 'tries': 334, 'empty': 157}, audit 3/3 ag",
   "13:52:35 request mvdvvfsqv12at.3: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "13:54:12 request received: rid mvdvzm7py87si.3 15 keys",
-  "13:54:12 handle mvdvzm7py87si.3: first_chunk=True total=15"
+  "13:54:12 handle mvdvzm7py87si.3: first_chunk=True total=15",
+  "13:55:02 request mvdvzm7py87si.3: chunk of 15 keys done in 50s; paths {'http': 187, 'browser': 46, 'browser-none': 489}, browser waits 535 max 145s sum 33013s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 187, 'miss': 227, 'blocked': 0, 'tries': 349, 'empty': 162}, audit 3/3 ag",
+  "13:55:04 request mvdvzm7py87si.3: final sent (15/15); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
