@@ -1,18 +1,12 @@
 {
- "at": "2026-10-18T13:43:07+00:00",
+ "at": "2026-10-18T13:44:38+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 4511,
  "log": [
-  "12:02:18 handle mvdrzp8py2zrf.0: first_chunk=True total=19",
-  "12:04:40 request mvdrzp8py2zrf.0: chunk of 19 keys done in 142s; paths {'http': 73, 'browser': 42, 'browser-none': 184}, browser waits 226 max 211s sum 15278s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 73, 'miss': 76, 'blocked': 0, 'tries': 103, 'empty': 30}, audit 6/6 agree",
-  "12:04:41 request mvdrzp8py2zrf.0: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:04:47 request received: rid mvds2wisp31cv.0 19 keys",
-  "12:04:47 handle mvds2wisp31cv.0: first_chunk=True total=19",
-  "12:07:08 request mvds2wisp31cv.0: chunk of 19 keys done in 140s; paths {'http': 73, 'browser': 42, 'browser-none': 203}, browser waits 245 max 211s sum 16833s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 73, 'miss': 76, 'blocked': 0, 'tries': 103, 'empty': 30}, audit 6/6 agree",
   "12:07:09 request mvds2wisp31cv.0: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:07:43 request received: rid mvds6nyh5n4is.0 16 keys",
   "12:07:43 handle mvds6nyh5n4is.0: first_chunk=True total=16",
@@ -156,6 +150,12 @@
   "13:41:18 request mvdvhzoqtvuve.0: chunk of 2 keys done in 48s; paths {'http': 176, 'browser': 76, 'browser-none': 512}, browser waits 588 max 211s sum 37595s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 176, 'miss': 237, 'blocked': 0, 'tries': 346, 'empty': 170}, audit 7/7 agr",
   "13:41:19 request mvdvhzoqtvuve.0: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:41:42 request received: rid mvdvjjp2nbsao.0 23 keys",
-  "13:41:42 handle mvdvjjp2nbsao.0: first_chunk=True total=23"
+  "13:41:42 handle mvdvjjp2nbsao.0: first_chunk=True total=23",
+  "13:44:08 request mvdvjjp2nbsao.0: chunk of 23 keys done in 146s; paths {'http': 176, 'browser': 76, 'browser-none': 535}, browser waits 611 max 211s sum 39720s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 176, 'miss': 237, 'blocked': 0, 'tries': 346, 'empty': 170}, audit 7/7 a",
+  "13:44:09 request mvdvjjp2nbsao.0: final sent (23/23); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:44:33 rtc dhacktyykc: answered",
+  "13:44:34 rtc dhacktyykc: data channel open",
+  "13:44:35 request received: rid mvdvn5tvdtxf1.0 11 keys",
+  "13:44:35 handle mvdvn5tvdtxf1.0: first_chunk=True total=11"
  ]
 }
