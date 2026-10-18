@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T06:55:40+00:00",
+ "at": "2026-10-18T07:00:12+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 20,
+ "fares_saved": 62,
  "log": [
   "06:53:25 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:28 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-5.json' did not match any files\\n\"",
@@ -19,6 +19,16 @@
   "06:54:34 request received: rid httptest1792306474 20 keys",
   "06:54:34 handle httptest1792306474: first_chunk=True total=20",
   "06:54:58 request httptest1792306474: chunk of 20 keys done in 23s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "06:54:59 request httptest1792306474: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "06:54:59 request httptest1792306474: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "06:58:53 rtc s3mq06pyjl: answered",
+  "06:58:55 rtc s3mq06pyjl: data channel open",
+  "06:58:55 request received: rid mvdh5h0v1rvig.5 26 keys",
+  "06:58:55 handle mvdh5h0v1rvig.5: first_chunk=True total=26",
+  "06:59:19 request mvdh5h0v1rvig.5: chunk of 26 keys done in 24s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "06:59:20 request mvdh5h0v1rvig.5: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "06:59:23 request received: rid mvdh65fgwizsm.5 26 keys",
+  "06:59:23 handle mvdh65fgwizsm.5: first_chunk=True total=26",
+  "06:59:39 request received: rid mvdh6hr3iqbqd.5 26 keys",
+  "06:59:39 handle mvdh6hr3iqbqd.5: first_chunk=True total=26"
  ]
 }

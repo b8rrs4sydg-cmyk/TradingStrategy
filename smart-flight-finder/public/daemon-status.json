@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T06:56:35+00:00",
+ "at": "2026-10-18T07:01:09+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3528,
+ "fares_saved": 3546,
  "log": [
   "06:53:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:33 http front door: ['https://fossil-allied-unavailable-milan.trycloudflare.com', 'https://d1d507a6144aae.lhr.life']",
@@ -13,6 +13,16 @@
   "06:54:35 request received: rid httptest1792306475 20 keys",
   "06:54:35 handle httptest1792306475: first_chunk=True total=20",
   "06:55:32 request httptest1792306475: chunk of 20 keys done in 56s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "06:55:33 request httptest1792306475: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "06:55:33 request httptest1792306475: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "06:58:53 rtc rk212mk5vh: answered",
+  "06:58:54 rtc rk212mk5vh: data channel open",
+  "06:58:55 request received: rid mvdh5h0v1rvig.0 27 keys",
+  "06:58:55 handle mvdh5h0v1rvig.0: first_chunk=True total=27",
+  "06:59:21 request mvdh5h0v1rvig.0: chunk of 27 keys done in 26s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "06:59:22 request mvdh5h0v1rvig.0: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "06:59:23 request received: rid mvdh65fgwizsm.0 27 keys",
+  "06:59:23 handle mvdh65fgwizsm.0: first_chunk=True total=27",
+  "06:59:39 request received: rid mvdh6hr3iqbqd.0 27 keys",
+  "06:59:39 handle mvdh6hr3iqbqd.0: first_chunk=True total=27"
  ]
 }
