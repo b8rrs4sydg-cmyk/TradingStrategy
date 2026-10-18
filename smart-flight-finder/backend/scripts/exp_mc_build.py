@@ -75,6 +75,15 @@ def main() -> None:
     sample = [(k, db["fares"][k]["price"]) for k in mc[::step][:10]]
     s, info = session()
     print("scraped from page:", info, "cookies:", sorted(s.cookies.keys()))
+    rebuilt = build_body(tmpl, ka, token)
+    print("rebuilt body identical to the captured one:", rebuilt == cap["body"], len(rebuilt), len(cap["body"]))
+    if rebuilt != cap["body"]:
+        i = next((i for i, (x, y) in enumerate(zip(rebuilt, cap["body"])) if x != y), 0)
+        print("  first difference at", i, repr(rebuilt[max(0, i - 20) : i + 40]), "|", repr(cap["body"][max(0, i - 20) : i + 40]))
+    from urllib.parse import parse_qs, urlsplit
+
+    cap_params = {k: v[0] for k, v in parse_qs(urlsplit(cap["url"]).query).items()}
+    print("captured headers:", {k: v[:50] for k, v in cap["headers"].items() if k.lower() != "cookie"})
     params = {
         "f.sid": info["sid"] or "",
         "bl": info["bl"] or "",
@@ -101,11 +110,17 @@ def main() -> None:
         return f"{label:10s} HTTP {r.status_code} len={len(r.text):6d} {time.time() - t:.2f}s min={got} db={want} {'MATCH' if got == want else ''}  {k[3:60]}"
 
     print("\n-- captured URL params + captured body, plain-GET cookies")
-    r0 = s.post(ENDPOINT, params=cap_params, data=cap["body"], headers=hdr, timeout=12)
-    print("  ", r0.status_code, len(r0.text), prices(r0.text)[:4])
+    try:
+        r0 = s.post(ENDPOINT, params=cap_params, data=cap["body"], headers=hdr, timeout=12)
+        print("  ", r0.status_code, len(r0.text), prices(r0.text)[:4])
+    except requests.RequestException as e:
+        print("  ", type(e).__name__)
     print("-- captured URL params + rebuilt body")
-    r1 = s.post(ENDPOINT, params=cap_params, data=rebuilt, headers=hdr, timeout=12)
-    print("  ", r1.status_code, len(r1.text), prices(r1.text)[:4])
+    try:
+        r1 = s.post(ENDPOINT, params=cap_params, data=rebuilt, headers=hdr, timeout=12)
+        print("  ", r1.status_code, len(r1.text), prices(r1.text)[:4])
+    except requests.RequestException as e:
+        print("  ", type(e).__name__)
     params = cap_params
     for label, tok in (("with-token", token), ("null-token", None)):
         print(f"\n-- sequential, {label}")
