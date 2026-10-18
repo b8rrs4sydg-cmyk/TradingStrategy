@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:03:38+00:00",
+ "at": "2026-10-18T13:05:09+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 4508,
  "log": [
-  "11:27:15 request httptest1792322834: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "11:27:16 request httptest1792322834: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "11:27:23 rtc be0w1gej76: answered",
-  "11:27:24 rtc be0w1gej76: data channel open",
   "11:27:25 request received: rid mvdqqs310j5lz.0 3 keys",
   "11:27:25 handle mvdqqs310j5lz.0: first_chunk=True total=3",
   "11:27:41 request mvdqqs310j5lz.0: chunk of 3 keys done in 15s; paths {'http': 22, 'browser': 1}, browser waits 1 max 2s sum 2s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 4/4 agree",
@@ -156,6 +152,10 @@
   "13:00:20 request mvdu0njwqw7q9.0: chunk of 19 keys done in 79s; paths {'http': 170, 'browser': 74, 'browser-none': 353}, browser waits 427 max 211s sum 25891s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 170, 'miss': 177, 'blocked': 0, 'tries': 299, 'empty': 129}, audit 7/7 ag",
   "13:00:21 request mvdu0njwqw7q9.0: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:01:39 request received: rid mvdu41h7b76yp.0 25 keys",
-  "13:01:39 handle mvdu41h7b76yp.0: first_chunk=True total=25"
+  "13:01:39 handle mvdu41h7b76yp.0: first_chunk=True total=25",
+  "13:04:14 request mvdu41h7b76yp.0: chunk of 25 keys done in 154s; paths {'http': 175, 'browser': 74, 'browser-none': 373}, browser waits 447 max 211s sum 27398s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 175, 'miss': 197, 'blocked': 0, 'tries': 322, 'empty': 147}, audit 7/7 a",
+  "13:04:16 request mvdu41h7b76yp.0: final sent (25/25); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:05:06 request received: rid mvdu8gogkouz6.0 13 keys",
+  "13:05:06 handle mvdu8gogkouz6.0: first_chunk=True total=13"
  ]
 }
