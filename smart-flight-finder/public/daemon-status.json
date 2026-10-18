@@ -1,0 +1,28 @@
+{
+ "at": "2026-10-18T05:28:00+00:00",
+ "publishes": {
+  "ok": 1,
+  "r429": 0,
+  "fail": 0
+ },
+ "fares_saved": 3072,
+ "log": [
+  "05:26:25 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:26:30 http front door: ['https://pam-xml-universities-crafts.trycloudflare.com', 'https://7e63c42e8ecda4.lhr.life']",
+  "05:26:30 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
+  "05:27:21 rtc zpj3zbm9jv: answered",
+  "05:27:22 rtc zpj3zbm9jv: data channel open",
+  "05:27:22 request received: rid probertcmvddvtn3 3 keys",
+  "05:27:22 handle probertcmvddvtn3: first_chunk=True total=3",
+  "05:27:26 request probertcmvddvtn3: chunk of 3 keys done in 4s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "05:27:28 request received: rid probe0mvddvy20 3 keys",
+  "05:27:28 handle probe0mvddvy20: first_chunk=True total=3",
+  "05:27:28 request probertcmvddvtn3: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "05:27:32 request probe0mvddvy20: chunk of 3 keys done in 4s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "05:27:34 request probe0mvddvy20: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "05:27:34 request received: rid httptest1792301254 20 keys",
+  "05:27:34 handle httptest1792301254: first_chunk=True total=20",
+  "05:27:34 request received: rid probe1mvddw32a 3 keys",
+  "05:27:34 handle probe1mvddw32a: first_chunk=True total=3"
+ ]
+}

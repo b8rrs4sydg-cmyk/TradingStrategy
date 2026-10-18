@@ -1,0 +1,174 @@
+name: Fill fare database (big sharded crawl)
+
+# Fills smart-flight-finder/public/fares.json as widely as Google Flights' ~11 month
+# horizon allows: every one-way / round-trip for a wide destination list, then the
+# multi-city fares that look worth it (ranked by the REAL stage-1 prices, see
+# scripts/fill_fares.py). Runs as parallel jobs; the result is committed once.
+on:
+  workflow_dispatch:
+    inputs:
+      max_multi_city:
+        description: "cap on multi-city fares (all shards together)"
+        default: "6000"
+  # New workflows cannot be dispatched before they reach the default branch,
+  # so touching this file or public/.fill-request on the branch starts a fill.
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths:
+      - ".github/workflows/fares-fill.yml"
+      - "smart-flight-finder/public/.fill-request"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fares-fill
+  cancel-in-progress: false
+
+env:
+  MAX_MC: ${{ inputs.max_multi_city || '6000' }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - run: python -m scripts.fill_fares plan --out plan.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plan
+          path: smart-flight-finder/backend/plan.json
+
+  stage1:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: |
+          pip install -e . "playwright>=1.50,<2"
+          python -m playwright install --with-deps chromium
+      - uses: actions/download-artifact@v4
+        with:
+          name: plan
+          path: smart-flight-finder/backend
+      - run: python -m scripts.fill_fares stage1 --plan plan.json --db ../public/fares.json --shard ${{ matrix.shard }}/8 --out part.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s1-${{ matrix.shard }}
+          path: smart-flight-finder/backend/part.json
+
+  merge1:
+    needs: stage1
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: s1-*
+          path: parts
+      - run: python -m scripts.fill_fares merge --db ../public/fares.json --out merged.json $(find parts -name part.json)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: merged
+          path: smart-flight-finder/backend/merged.json
+
+  stage2:
+    needs: merge1
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: |
+          pip install -e . "playwright>=1.50,<2"
+          python -m playwright install --with-deps chromium
+      - uses: actions/download-artifact@v4
+        with:
+          name: plan
+          path: smart-flight-finder/backend
+      - uses: actions/download-artifact@v4
+        with:
+          name: merged
+          path: smart-flight-finder/backend
+      - run: python -m scripts.fill_fares stage2 --plan plan.json --db merged.json --shard ${{ matrix.shard }}/12 --max-multi-city "$MAX_MC" --out part.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: s2-${{ matrix.shard }}
+          path: smart-flight-finder/backend/part.json
+
+  final:
+    needs: stage2
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: merged
+          path: smart-flight-finder/backend
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: s2-*
+          path: parts
+      - run: python -m scripts.fill_fares final --db merged.json --out ../public/fares.json $(find parts -name part.json)
+      - run: python -m scripts.embed_fare_snapshot ../public/fares.json ../public/index.html
+      - name: Commit database
+        working-directory: .
+        run: |
+          git config user.name "fare-fill-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add smart-flight-finder/public/fares.json smart-flight-finder/public/index.html
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -m "data: wide Google Flights fare database $(date -u +'%F %H:%M') UTC"
+          for i in 1 2 3 4 5; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done
+          exit 1

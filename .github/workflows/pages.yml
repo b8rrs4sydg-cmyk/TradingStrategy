@@ -1,0 +1,58 @@
+name: Deploy demo to GitHub Pages (dormant)
+
+# Deployment target for this project is the Claude Artifact at
+# https://claude.ai/artifact/RzaFsGWZg3phJHoUZYem2F — the user picked that
+# over GitHub Pages after we found Pages Source is pointed at the default
+# branch of an unrelated project in this repo (admin:write needed to
+# re-point it, which the Claude GitHub App integration lacks).
+#
+# Workflow kept so if someone later moves Pages Source → "Deploy from
+# branch gh-pages / root" in Settings, every push already stages the
+# built site there. No verify step: Pages is not the live target, so
+# there is nothing to prove green here.
+
+on:
+  push:
+    branches:
+      - claude/zealous-darwin-1kexus
+      - main
+    paths:
+      - "smart-flight-finder/public/**"
+      - ".github/workflows/pages.yml"
+      - "!smart-flight-finder/public/fares.json"
+      - "!smart-flight-finder/public/fares-live.json"
+      - "!smart-flight-finder/public/live-request.json"
+      - "!smart-flight-finder/public/daemon-status.json"
+      - "!smart-flight-finder/public/daemon.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  stage-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare site
+        run: |
+          mkdir -p _site
+          cp -R smart-flight-finder/public/* _site/
+          touch _site/.nojekyll
+          test -f _site/index.html
+
+      - name: Push to gh-pages branch
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e  # v4.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: ${{ github.event.head_commit.message }}
+# redeploy for fresh fares 2026-10-17T22:26:25Z
