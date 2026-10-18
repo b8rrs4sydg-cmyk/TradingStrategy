@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:15:05+00:00",
+ "at": "2026-10-18T07:16:36+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 471,
+ "fares_saved": 476,
  "log": [
   "06:53:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:35 http front door: ['https://pct-minimal-relatives-reaching.trycloudflare.com', 'https://2f746121943ae3.lhr.life']",
@@ -52,6 +52,10 @@
   "07:12:43 request mvdhko9pr3n4l.1: chunk of 20 keys done in 123s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:12:44 request mvdhko9pr3n4l.1: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:13:32 request received: rid mvdhocejt64pd.1 27 keys",
-  "07:13:32 handle mvdhocejt64pd.1: first_chunk=True total=27"
+  "07:13:32 handle mvdhocejt64pd.1: first_chunk=True total=27",
+  "07:15:52 request mvdhocejt64pd.1: chunk of 27 keys done in 140s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:15:53 request mvdhocejt64pd.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:16:02 request received: rid mvdhrk1c7du6x.1 27 keys",
+  "07:16:02 handle mvdhrk1c7du6x.1: first_chunk=True total=27"
  ]
 }
