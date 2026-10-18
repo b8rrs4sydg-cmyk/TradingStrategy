@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:12:13+00:00",
+ "at": "2026-10-18T12:13:44+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 160,
+ "fares_saved": 172,
  "log": [
   "11:26:11 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:15 http front door: ['https://organic-asthma-bios-passive.trycloudflare.com', 'https://a455d0c2cfea05.lhr.life']",
@@ -80,6 +80,10 @@
   "12:09:13 request mvds6nyh5n4is.8: chunk of 9 keys done in 91s; paths {'http': 58, 'browser-none': 161, 'browser': 7}, browser waits 168 max 147s sum 11173s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 58, 'miss': 59, 'blocked': 0, 'tries': 77, 'empty': 19}, audit 1/1 agree",
   "12:09:15 request mvds6nyh5n4is.8: final sent (9/9); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:10:35 request received: rid mvdsad9pusjjw.8 15 keys",
-  "12:10:35 handle mvdsad9pusjjw.8: first_chunk=True total=15"
+  "12:10:35 handle mvdsad9pusjjw.8: first_chunk=True total=15",
+  "12:12:19 request received: rid mvdscl8r2y6s1.8 23 keys",
+  "12:12:19 handle mvdscl8r2y6s1.8: first_chunk=True total=23",
+  "12:12:22 request mvdsad9pusjjw.8: chunk of 15 keys done in 107s; paths {'http': 74, 'browser-none': 170, 'browser': 7}, browser waits 177 max 147s sum 11640s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 74, 'miss': 80, 'blocked': 0, 'tries': 123, 'empty': 49}, audit 1/1 agree",
+  "12:12:23 request mvdsad9pusjjw.8: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
