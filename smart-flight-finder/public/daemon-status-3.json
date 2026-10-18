@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:04:48+00:00",
+ "at": "2026-10-18T07:06:19+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 92,
+ "fares_saved": 104,
  "log": [
   "06:53:26 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:30 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-3.json' did not match any files\\n\"",
@@ -39,6 +39,10 @@
   "07:03:09 request mvdh9z9txgeay.3: chunk of 10 keys done in 48s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:03:11 request mvdh9z9txgeay.3: final sent (10/10); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:03:47 request received: rid mvdhbt6a3o15x.3 27 keys",
-  "07:03:47 handle mvdhbt6a3o15x.3: first_chunk=True total=27"
+  "07:03:47 handle mvdhbt6a3o15x.3: first_chunk=True total=27",
+  "07:05:10 request mvdhbt6a3o15x.3: chunk of 27 keys done in 83s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:05:12 request mvdhbt6a3o15x.3: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:05:57 request received: rid mvdhelgxdkags.3 27 keys",
+  "07:05:57 handle mvdhelgxdkags.3: first_chunk=True total=27"
  ]
 }
