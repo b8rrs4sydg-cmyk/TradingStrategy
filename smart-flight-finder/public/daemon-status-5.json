@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:28:41+00:00",
+ "at": "2026-10-18T10:30:13+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 615,
+ "fares_saved": 638,
  "log": [
   "08:41:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:42:04 http front door: ['https://breathing-card-reseller-courses.trycloudflare.com', 'https://7f29aa3e6f9db3.lhr.life']",
@@ -150,6 +150,8 @@
   "10:26:49 request received: rid mvdokwtc5pmdk.5 26 keys",
   "10:26:49 handle mvdokwtc5pmdk.5: first_chunk=True total=26",
   "10:27:38 request mvdokwtc5pmdk.5: chunk of 26 keys done in 50s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 306, 'miss': 208, 'blocked': 0, 'tries': 349, 'empty': 43}, audit 2/2 agree",
-  "10:27:40 request mvdokwtc5pmdk.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "10:27:40 request mvdokwtc5pmdk.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "10:29:29 request received: rid mvdoocbqq1kth.5 26 keys",
+  "10:29:29 handle mvdoocbqq1kth.5: first_chunk=True total=26"
  ]
 }
