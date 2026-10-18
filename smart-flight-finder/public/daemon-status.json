@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T21:01:15+00:00",
+ "at": "2026-10-18T21:05:46+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4075,
+ "fares_saved": 4085,
  "log": [
   "20:32:15 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:32:20 http front door: ['https://bennett-completing-unix-gel.trycloudflare.com', 'https://9ee1b8a86c1ec5.lhr.life']",
@@ -89,6 +89,26 @@
   "21:00:36 request mveb0xuquty77.1: chunk of 13 keys done in 328s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "21:00:37 request mveb0xuquty77.1: final sent (13/13); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "21:01:00 request mveb0xuquty77.0: chunk of 21 keys done in 352s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:01:02 request mveb0xuquty77.0: final sent (21/21); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
+  "21:01:02 request mveb0xuquty77.0: final sent (21/21); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "21:04:49 request received: rid mvebde02mi6a7.0 13 keys",
+  "21:04:49 handle mvebde02mi6a7.0: first_chunk=True total=13",
+  "21:04:49 request received: rid mvebde02mi6a7.3 13 keys",
+  "21:04:49 handle mvebde02mi6a7.3: first_chunk=True total=13",
+  "21:04:49 request received: rid mvebde02mi6a7.1 21 keys",
+  "21:04:49 handle mvebde02mi6a7.1: first_chunk=True total=21",
+  "21:04:49 request received: rid mvebde02mi6a7.2 11 keys",
+  "21:04:49 handle mvebde02mi6a7.2: first_chunk=True total=11",
+  "21:04:49 request received: rid mvebde02mi6a7.5 17 keys",
+  "21:04:49 request received: rid mvebde02mi6a7.4 18 keys",
+  "21:04:49 request received: rid mvebde02mi6a7.6 22 keys",
+  "21:04:49 handle mvebde02mi6a7.5: first_chunk=True total=17",
+  "21:04:49 handle mvebde02mi6a7.4: first_chunk=True total=18",
+  "21:04:49 handle mvebde02mi6a7.6: first_chunk=True total=22",
+  "21:04:49 request received: rid mvebde02mi6a7.8 16 keys",
+  "21:04:49 request received: rid mvebde02mi6a7.7 17 keys",
+  "21:04:49 request received: rid mvebde02mi6a7.9 12 keys",
+  "21:04:49 handle mvebde02mi6a7.8: first_chunk=True total=16",
+  "21:04:49 handle mvebde02mi6a7.7: first_chunk=True total=17",
+  "21:04:49 handle mvebde02mi6a7.9: first_chunk=True total=12"
  ]
 }
