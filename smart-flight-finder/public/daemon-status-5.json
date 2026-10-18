@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:43:46+00:00",
+ "at": "2026-10-18T07:45:17+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 226,
+ "fares_saved": 227,
  "log": [
   "07:39:05 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:09 http front door: ['https://owned-carriers-tea-treating.trycloudflare.com', 'https://593bb252e8e264.lhr.life']",
@@ -22,6 +22,8 @@
   "07:42:03 request mvdins6aqwgno.5: chunk of 1 keys done in 58s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 3/3 agree",
   "07:42:04 request mvdins6aqwgno.5: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:42:15 request received: rid mvdipa9ae83zn.5 26 keys",
-  "07:42:15 handle mvdipa9ae83zn.5: first_chunk=True total=26"
+  "07:42:15 handle mvdipa9ae83zn.5: first_chunk=True total=26",
+  "07:45:03 request mvdipa9ae83zn.5: chunk of 26 keys done in 168s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 23, 'blocked': 0, 'tries': 24, 'empty': 0}, audit 3/3 agree",
+  "07:45:03 request mvdipa9ae83zn.5: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
