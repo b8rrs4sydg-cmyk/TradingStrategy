@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:21:59+00:00",
+ "at": "2026-10-18T13:23:30+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 238,
  "log": [
-  "11:32:23 git retry 1: b\"-1kexus': is at d819cc37489ea5163d62054427879ecba5b49d9f but expected 1ecd7eb04a6dccbaa2a0a9f69d53210b5bebc515)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "11:34:17 rtc a73h0xmd2j: answered",
-  "11:34:18 request received: rid mvdqznepk7epz.8 17 keys",
-  "11:34:18 handle mvdqznepk7epz.8: first_chunk=True total=17",
   "11:34:19 rtc a73h0xmd2j: data channel open",
   "11:35:32 git retry 0: b\"-1kexus': is at 2f519f0985500e10ae53d64485dfe6615c7a79f2 but expected d01eb27e268774997edc2775e72a77db0fae12e7)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:36:07 request mvdqznepk7epz.8: chunk of 17 keys done in 108s; paths {'http': 32, 'browser-none': 13, 'browser': 1}, browser waits 14 max 81s sum 713s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 14, 'blocked': 0, 'tries': 36, 'empty': 4}, audit 1/1 agree",
@@ -156,6 +152,10 @@
   "13:13:41 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:45 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:20:19 request received: rid mvdus132ib8io.8 18 keys",
-  "13:20:19 handle mvdus132ib8io.8: first_chunk=True total=18"
+  "13:20:19 handle mvdus132ib8io.8: first_chunk=True total=18",
+  "13:22:36 request mvdus132ib8io.8: chunk of 18 keys done in 137s; paths {'http': 133, 'browser-none': 385, 'browser': 16}, browser waits 401 max 147s sum 26368s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 173, 'blocked': 0, 'tries': 277, 'empty': 144}, audit 1/1 a",
+  "13:22:37 request mvdus132ib8io.8: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:23:07 request received: rid mvduvnbnyqdms.8 21 keys",
+  "13:23:07 handle mvduvnbnyqdms.8: first_chunk=True total=21"
  ]
 }
