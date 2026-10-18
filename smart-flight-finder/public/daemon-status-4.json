@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:06:47+00:00",
+ "at": "2026-10-18T11:08:19+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 296,
+ "fares_saved": 312,
  "log": [
   "11:00:38 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:44 http front door: ['https://premises-tier-references-tide.trycloudflare.com', 'https://552c01b2cfb02a.lhr.life']",
@@ -17,6 +17,10 @@
   "11:03:55 request received: rid mvdpwl7sqfww0.4 26 keys",
   "11:03:55 handle mvdpwl7sqfww0.4: first_chunk=True total=26",
   "11:05:28 request mvdpwl7sqfww0.4: chunk of 26 keys done in 93s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 38, 'miss': 8, 'blocked': 0, 'tries': 57, 'empty': 19}, audit 2/2 agree",
-  "11:05:30 request mvdpwl7sqfww0.4: final sent (26/26); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "11:05:30 request mvdpwl7sqfww0.4: final sent (26/26); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:07:32 rtc sn3oi877mc: answered",
+  "11:07:34 rtc sn3oi877mc: data channel open",
+  "11:07:34 request received: rid mvdq18d0uxyoh.4 18 keys",
+  "11:07:34 handle mvdq18d0uxyoh.4: first_chunk=True total=18"
  ]
 }
