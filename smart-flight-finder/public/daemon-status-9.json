@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T15:24:17+00:00",
+ "at": "2026-10-18T15:27:19+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 431,
+ "fares_saved": 440,
  "log": [
-  "13:13:40 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
-  "13:13:43 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
-  "13:20:19 request received: rid mvdus132ib8io.9 18 keys",
-  "13:20:19 handle mvdus132ib8io.9: first_chunk=True total=18",
   "13:21:53 request mvdus132ib8io.9: chunk of 18 keys done in 94s; paths {'http': 153, 'browser-none': 346, 'browser': 47}, browser waits 393 max 143s sum 21727s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 153, 'miss': 200, 'blocked': 0, 'tries': 300, 'empty': 147}, audit 2/2 ag",
   "13:21:55 request mvdus132ib8io.9: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:23:07 request received: rid mvduvnbnyqdms.9 16 keys",
@@ -156,6 +152,10 @@
   "15:22:33 request received: rid mvdz58ghuswdl.9 16 keys",
   "15:22:33 handle mvdz58ghuswdl.9: first_chunk=True total=16",
   "15:23:36 request mvdz58ghuswdl.9: chunk of 16 keys done in 62s; paths {'http': 312, 'browser-none': 745, 'browser': 48}, browser waits 793 max 146s sum 49786s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 312, 'miss': 337, 'blocked': 0, 'tries': 664, 'empty': 352}, audit 8/8 ag",
-  "15:23:37 request mvdz58ghuswdl.9: final sent (16/16); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "15:23:37 request mvdz58ghuswdl.9: final sent (16/16); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:25:54 request received: rid mvdz9jqta82r6.9 11 keys",
+  "15:25:54 handle mvdz9jqta82r6.9: first_chunk=True total=11",
+  "15:26:42 request mvdz9jqta82r6.9: chunk of 11 keys done in 48s; paths {'http': 322, 'browser-none': 746, 'browser': 48}, browser waits 794 max 146s sum 49833s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 322, 'miss': 338, 'blocked': 0, 'tries': 676, 'empty': 354}, audit 8/8 ag",
+  "15:26:44 request mvdz9jqta82r6.9: final sent (11/11); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
