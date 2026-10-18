@@ -10,6 +10,11 @@ Both answers are searched for itinerary rows (``[flight details, [[None, price],
 answers without the flight data (or never answers), so :meth:`HttpFetcher.fetch` retries a few times and
 returns ``None`` when it could not read a price — that means *unknown*, not *no itinerary*: the caller falls
 back to the browser, which decides. Rows Google marks as separate tickets cannot be told apart here.
+
+NOT USED BY THE DAEMON. Measured against the browser-made fare database on a GitHub runner, 7-13 of 20 keys of
+each kind came back with data and a share of the round trips were priced 20-35% too high (Google sometimes answers
+with a partial list, which cannot be told from a complete one), so a plain-HTTP price is not trustworthy as the
+source of truth. Kept as a documented experiment; see scripts/exp_http_*.py and exp_mc_*.py.
 """
 
 from __future__ import annotations

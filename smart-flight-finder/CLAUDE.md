@@ -252,3 +252,16 @@ CI runs all of the above on every push touching `smart-flight-finder/**`.
 - Hidden-city planner intentionally not implemented (ethical + legal risk).
 - Open follow-ups: Redis-backed cross-request cache; real Skyscanner adapter;
   rate limiting on `/search`; structured JSON logging.
+
+## Plain-HTTP pricing (experiment, rejected)
+
+`app/providers/google_http.py` prices keys without a browser (≈0.3 s each; multi-city by rebuilding the page's own
+`GetShoppingResults` request, which needs no per-search token, only the cookies a plain GET hands out). Measured on a
+runner it is **not reliable enough to replace the browser**: only 7-13 of 20 keys of each kind return data (retrying
+helps), and some round trips come back 20-35% too high because Google answers with a partial itinerary list that
+looks complete. The daemon therefore still prices with the browser. Trip.com, Skyscanner, Kayak, Momondo, Expedia,
+Skiplagged and Wego all refuse plain HTTP from a datacenter IP (bot walls / 403 / 429 / 430). The experiments are the
+`scripts/exp_http_*.py`, `exp_mc_*.py` files and `.github/workflows/exp-http-fetch.yml`.
+
+The page has a "查找所有排列組合" button: the normal campaign asks only the likeliest multi-city routes (budgeted); the
+button asks every remaining multi-city permutation, spread over the crawlers (`live.campaign.all`).
