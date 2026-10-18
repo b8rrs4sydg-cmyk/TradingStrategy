@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:19:26+00:00",
+ "at": "2026-10-18T10:20:57+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 810,
+ "fares_saved": 835,
  "log": [
   "08:41:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:41:57 http front door: ['https://convinced-loved-joke-sheer.trycloudflare.com', 'https://bfc61994f7fab6.lhr.life']",
@@ -127,6 +127,10 @@
   "10:17:01 request received: rid mvdo8b06ubmct.2 27 keys",
   "10:17:01 handle mvdo8b06ubmct.2: first_chunk=True total=27",
   "10:19:20 request received: rid mvdobaio9iiwt.2 27 keys",
-  "10:19:20 handle mvdobaio9iiwt.2: first_chunk=True total=27"
+  "10:19:20 handle mvdobaio9iiwt.2: first_chunk=True total=27",
+  "10:20:14 request mvdo8b06ubmct.2: chunk of 27 keys done in 193s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 104, 'miss': 172, 'blocked': 0, 'tries': 107, 'empty': 3}, audit 0/0 agree",
+  "10:20:14 request mvdo8b06ubmct.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:20:23 request mvdobaio9iiwt.2: chunk of 27 keys done in 63s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 104, 'miss': 172, 'blocked': 0, 'tries': 107, 'empty': 3}, audit 0/0 agree",
+  "10:20:23 request mvdobaio9iiwt.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
