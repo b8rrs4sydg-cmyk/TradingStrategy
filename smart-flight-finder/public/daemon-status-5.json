@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:49:52+00:00",
+ "at": "2026-10-18T07:58:53+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 227,
+ "fares_saved": 238,
  "log": [
   "07:39:05 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:09 http front door: ['https://owned-carriers-tea-treating.trycloudflare.com', 'https://593bb252e8e264.lhr.life']",
@@ -29,6 +29,10 @@
   "07:45:45 handle mvditsbdelwze.5: first_chunk=True total=26",
   "07:46:21 rtc g3g98ucvaf: answered",
   "07:48:51 request mvditsbdelwze.5: chunk of 26 keys done in 186s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 23, 'blocked': 0, 'tries': 24, 'empty': 0}, audit 3/3 agree",
-  "07:48:52 request mvditsbdelwze.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "07:48:52 request mvditsbdelwze.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "07:58:23 rtc dw2mjxnxu2: answered",
+  "07:58:24 rtc dw2mjxnxu2: data channel open",
+  "07:58:25 request received: rid mvdj9zqa3i070.5 26 keys",
+  "07:58:25 handle mvdj9zqa3i070.5: first_chunk=True total=26"
  ]
 }
