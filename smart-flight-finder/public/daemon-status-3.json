@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:20:26+00:00",
+ "at": "2026-10-18T07:21:58+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 167,
+ "fares_saved": 178,
  "log": [
   "07:18:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:56 http front door: ['https://ottawa-preparing-tony-separation.trycloudflare.com', 'https://5c3cd1d9eb564c.lhr.life']",
@@ -19,6 +19,29 @@
   "07:20:09 rtc 1b1qd94bb1: answered",
   "07:20:10 rtc 1b1qd94bb1: data channel open",
   "07:20:10 request received: rid mvdhwvgdpm0ai.3 1 keys",
-  "07:20:10 handle mvdhwvgdpm0ai.3: first_chunk=True total=1"
+  "07:20:10 handle mvdhwvgdpm0ai.3: first_chunk=True total=1",
+  "07:20:28 rtc 3r679eib7d: answered",
+  "07:20:29 request mvdhwvgdpm0ai.3: chunk of 1 keys done in 19s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 25, 'miss': 10, 'blocked': 0, 'tries': 25, 'empty': 0}, audit 0/0 agree",
+  "07:20:30 request mvdhwvgdpm0ai.3: final sent (1/1); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "07:20:30 request received: rid mvdhx7tzwrdv5.3 27 keys",
+  "07:20:30 handle mvdhx7tzwrdv5.3: first_chunk=True total=27",
+  "07:20:32 request received: rid mvdhxczwvgihz.3 27 keys",
+  "07:20:32 handle mvdhxczwvgihz.3: first_chunk=True total=27",
+  "07:20:33 request httptest1792308000: chunk of 20 keys done in 33s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 34, 'miss': 11, 'blocked': 0, 'tries': 34, 'empty': 0}, audit 2/2 agree",
+  "07:20:34 request httptest1792308000: final sent (20/20); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "07:20:35 request received: rid mvdhxepvyloyl.3 27 keys",
+  "07:20:35 handle mvdhxepvyloyl.3: first_chunk=True total=27",
+  "07:20:42 request received: rid mvdhxkhy45w9s.3 27 keys",
+  "07:20:42 handle mvdhxkhy45w9s.3: first_chunk=True total=27",
+  "07:21:05 request mvdhx7tzwrdv5.3: chunk of 27 keys done in 35s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 87, 'miss': 17, 'blocked': 0, 'tries': 89, 'empty': 2}, audit 8/8 agree",
+  "07:21:05 request mvdhx7tzwrdv5.3: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "07:21:08 request mvdhxczwvgihz.3: chunk of 27 keys done in 36s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 87, 'miss': 18, 'blocked': 0, 'tries': 89, 'empty': 2}, audit 8/8 agree",
+  "07:21:08 request mvdhxepvyloyl.3: chunk of 27 keys done in 34s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 89, 'miss': 18, 'blocked': 0, 'tries': 91, 'empty': 2}, audit 8/8 agree",
+  "07:21:10 request mvdhxczwvgihz.3: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "07:21:10 request mvdhxepvyloyl.3: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "07:21:18 request mvdhwjco9od60.0: chunk of 18 keys done in 81s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 90, 'miss': 21, 'blocked': 0, 'tries': 92, 'empty': 2}, audit 8/8 agree",
+  "07:21:19 request mvdhwjco9od60.0: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "07:21:21 request received: rid mvdhyej0cs7mj.0 80 keys",
+  "07:21:21 handle mvdhyej0cs7mj.0: first_chunk=True total=80"
  ]
 }
