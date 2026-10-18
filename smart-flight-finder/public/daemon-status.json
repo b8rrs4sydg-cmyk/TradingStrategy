@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:17:18+00:00",
+ "at": "2026-10-18T11:18:50+00:00",
  "publishes": {
-  "ok": 72,
+  "ok": 79,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4280,
+ "fares_saved": 4282,
  "log": [
   "11:00:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:34 http front door: ['https://friday-examines-headset-lodging.trycloudflare.com', 'https://d279c6097889d3.lhr.life']",
@@ -82,6 +82,13 @@
   "11:17:13 request mvdq90xy2rp1d.0: final sent (16/16); ntfy publishes {'ok': 71, 'r429': 0, 'fail': 0}",
   "11:17:15 request received: rid mvdqdru6p0hdt.0 12 keys",
   "11:17:15 handle mvdqdru6p0hdt.0: first_chunk=True total=12",
-  "11:17:18 request mvdq60py73tla.0: chunk of 14 keys done in 365s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 163, 'blocked': 2, 'tries': 237, 'empty': 173}, audit 2/2 agree"
+  "11:17:18 request mvdq60py73tla.0: chunk of 14 keys done in 365s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 163, 'blocked': 2, 'tries': 237, 'empty': 173}, audit 2/2 agree",
+  "11:17:19 request mvdq60py73tla.0: final sent (14/14); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "11:17:22 request received: rid mvdqdxcqhjkkb.0 18 keys",
+  "11:17:22 handle mvdqdxcqhjkkb.0: first_chunk=True total=18",
+  "11:18:02 request received: rid mvdqes7wvs5wy.0 13 keys",
+  "11:18:02 handle mvdqes7wvs5wy.0: first_chunk=True total=13",
+  "11:18:38 request received: rid mvdqfjooxeaci.0 18 keys",
+  "11:18:38 handle mvdqfjooxeaci.0: first_chunk=True total=18"
  ]
 }
