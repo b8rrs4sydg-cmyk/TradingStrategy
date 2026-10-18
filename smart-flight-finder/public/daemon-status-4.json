@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T12:58:04+00:00",
+ "at": "2026-10-18T12:59:36+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 534,
  "log": [
-  "11:26:10 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:26:15 git retry 0: b\"-1kexus': is at 003c03e9ffadef9e5624bf90ded5fd1d4da9e03e but expected 498ad7e11feca9df8a58a15169d89de03b400c1e)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:26:21 http front door: ['https://adventure-dylan-warned-juvenile.trycloudflare.com', 'https://22e81ed30193c9.lhr.life']",
   "11:26:21 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "11:27:20 request received: rid httptest1792322839 20 keys",
@@ -154,6 +152,10 @@
   "12:55:59 request mvdttemfkl6n6.4: chunk of 19 keys done in 156s; paths {'http': 119, 'browser': 35, 'browser-none': 395}, browser waits 430 max 185s sum 28611s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 119, 'miss': 159, 'blocked': 0, 'tries': 228, 'empty': 109}, audit 8/8 a",
   "12:56:01 request mvdttemfkl6n6.4: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:56:21 request received: rid mvdtx7hj8r15t.4 15 keys",
-  "12:56:21 handle mvdtx7hj8r15t.4: first_chunk=True total=15"
+  "12:56:21 handle mvdtx7hj8r15t.4: first_chunk=True total=15",
+  "12:58:11 request mvdtx7hj8r15t.4: chunk of 15 keys done in 110s; paths {'http': 121, 'browser': 35, 'browser-none': 408}, browser waits 443 max 185s sum 29343s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 121, 'miss': 172, 'blocked': 0, 'tries': 230, 'empty': 109}, audit 8/8 a",
+  "12:58:11 request mvdtx7hj8r15t.4: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:59:01 request received: rid mvdu0njwqw7q9.4 11 keys",
+  "12:59:01 handle mvdu0njwqw7q9.4: first_chunk=True total=11"
  ]
 }
