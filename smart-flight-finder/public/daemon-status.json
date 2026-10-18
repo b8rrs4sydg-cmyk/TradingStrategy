@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T06:48:02+00:00",
+ "at": "2026-10-18T06:49:33+00:00",
  "publishes": {
   "ok": 214,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3505,
+ "fares_saved": 3528,
  "log": [
   "05:45:35 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:45:41 http front door: ['https://general-vbulletin-uni-rights.trycloudflare.com', 'https://557e83ce6d948d.lhr.life']",
@@ -118,6 +118,10 @@
   "06:46:26 request received: rid mvdgpgu6s6zk6.0 54 keys",
   "06:46:26 handle mvdgpgu6s6zk6.0: first_chunk=True total=54",
   "06:48:00 request mvdgpgu6s6zk6.0: chunk of 54 keys done in 94s; ntfy publishes {'ok': 214, 'r429': 0, 'fail': 0}",
-  "06:48:02 request mvdgpgu6s6zk6.0: final sent (54/54); ntfy publishes {'ok': 214, 'r429': 0, 'fail': 0}"
+  "06:48:02 request mvdgpgu6s6zk6.0: final sent (54/54); ntfy publishes {'ok': 214, 'r429': 0, 'fail': 0}",
+  "06:48:18 request received: rid mvdgrvlizhfc9.0 54 keys",
+  "06:48:18 handle mvdgrvlizhfc9.0: first_chunk=True total=54",
+  "06:48:34 request mvdgolgnfn0tk.0: chunk of 54 keys done in 170s; ntfy publishes {'ok': 214, 'r429': 0, 'fail': 0}",
+  "06:48:35 request mvdgolgnfn0tk.0: final sent (54/54); ntfy publishes {'ok': 214, 'r429': 0, 'fail': 0}"
  ]
 }
