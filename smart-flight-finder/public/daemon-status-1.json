@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T11:29:19+00:00",
+ "at": "2026-10-18T11:30:50+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -22,6 +22,10 @@
   "11:27:41 request mvdqqs310j5lz.1: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:27:43 request received: rid mvdqr8q72ppmz.1 31 keys",
   "11:27:43 handle mvdqr8q72ppmz.1: first_chunk=True total=31",
-  "11:27:43 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\""
+  "11:27:43 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "11:29:27 request received: rid mvdqtfrxe9o9k.1 25 keys",
+  "11:29:27 handle mvdqtfrxe9o9k.1: first_chunk=True total=25",
+  "11:29:46 request mvdqr8q72ppmz.1: chunk of 31 keys done in 122s; paths {'http': 31, 'browser': 8, 'browser-none': 15}, browser waits 23 max 81s sum 816s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 23, 'blocked': 0, 'tries': 41, 'empty': 10}, audit 4/4 agree",
+  "11:29:46 request mvdqr8q72ppmz.1: final sent (31/31); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
