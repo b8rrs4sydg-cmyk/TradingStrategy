@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T07:48:24+00:00",
+ "at": "2026-10-18T07:49:55+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -29,6 +29,8 @@
   "07:45:45 request received: rid mvditsbdelwze.4 26 keys",
   "07:45:45 handle mvditsbdelwze.4: first_chunk=True total=26",
   "07:46:20 rtc 9ncpewmaxk: answered",
-  "07:46:51 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\""
+  "07:46:51 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "07:48:28 request mvditsbdelwze.4: chunk of 26 keys done in 163s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 24, 'blocked': 0, 'tries': 24, 'empty': 1}, audit 0/0 agree",
+  "07:48:29 request mvditsbdelwze.4: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
