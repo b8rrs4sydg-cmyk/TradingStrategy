@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:34:17+00:00",
+ "at": "2026-10-18T13:35:49+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 206,
  "log": [
-  "11:43:08 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "11:43:35 request mvdr9kyr2z95g.7: chunk of 12 keys done in 95s; paths {'http': 37, 'browser-none': 69, 'browser': 11}, browser waits 80 max 134s sum 4759s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 29, 'blocked': 0, 'tries': 55, 'empty': 18}, audit 1/1 agree",
-  "11:43:36 request mvdr9kyr2z95g.7: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:44:00 request received: rid mvdrc6ae2in9l.7 16 keys",
   "11:44:00 handle mvdrc6ae2in9l.7: first_chunk=True total=16",
   "11:45:38 request mvdrc6ae2in9l.7: chunk of 16 keys done in 98s; paths {'http': 37, 'browser-none': 85, 'browser': 11}, browser waits 96 max 134s sum 5893s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 29, 'blocked': 0, 'tries': 55, 'empty': 18}, audit 1/1 agree",
   "11:45:40 request mvdrc6ae2in9l.7: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "13:31:21 request mvdv381qvx5x6.7: chunk of 17 keys done in 141s; paths {'http': 100, 'browser-none': 511, 'browser': 40}, browser waits 551 max 190s sum 37369s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 100, 'miss': 162, 'blocked': 0, 'tries': 226, 'empty': 126}, audit 1/1 a",
   "13:31:22 request mvdv381qvx5x6.7: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:31:41 request received: rid mvdv6nwpunm7z.7 26 keys",
-  "13:31:41 handle mvdv6nwpunm7z.7: first_chunk=True total=26"
+  "13:31:41 handle mvdv6nwpunm7z.7: first_chunk=True total=26",
+  "13:35:04 request mvdv6nwpunm7z.7: chunk of 26 keys done in 202s; paths {'http': 100, 'browser-none': 537, 'browser': 40}, browser waits 577 max 190s sum 39542s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 100, 'miss': 188, 'blocked': 0, 'tries': 230, 'empty': 130}, audit 1/1 a",
+  "13:35:05 request mvdv6nwpunm7z.7: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:35:24 request received: rid mvdvbfhuwgne6.7 22 keys",
+  "13:35:24 handle mvdvbfhuwgne6.7: first_chunk=True total=22"
  ]
 }
