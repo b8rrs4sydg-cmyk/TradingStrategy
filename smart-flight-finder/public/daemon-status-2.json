@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:12:59+00:00",
+ "at": "2026-10-18T11:14:31+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1111,
+ "fares_saved": 1129,
  "log": [
   "11:00:37 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:42 http front door: ['https://lined-screensaver-originally-twist.trycloudflare.com', 'https://8840e93f86c12f.lhr.life']",
@@ -49,6 +49,14 @@
   "11:12:46 request mvdq6pts6akym.2: chunk of 17 keys done in 54s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 109, 'miss': 15, 'blocked': 0, 'tries': 141, 'empty': 32}, audit 7/7 agree",
   "11:12:48 request mvdq6pts6akym.2: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "11:12:50 request mvdq60py73tla.2: chunk of 20 keys done in 96s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 109, 'miss': 15, 'blocked': 0, 'tries': 141, 'empty': 32}, audit 7/7 agree",
-  "11:12:51 request mvdq60py73tla.2: final sent (20/20); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "11:12:51 request mvdq60py73tla.2: final sent (20/20); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "11:13:11 rtc ed3af2rb1r: answered",
+  "11:13:11 rtc ed3af2rb1r: data channel open",
+  "11:13:11 request received: rid mvdq8fchrh2ij.2 17 keys",
+  "11:13:11 handle mvdq8fchrh2ij.2: first_chunk=True total=17",
+  "11:13:11 request mvdq8fchrh2ij.2: chunk of 17 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 109, 'miss': 15, 'blocked': 0, 'tries': 141, 'empty': 32}, audit 7/7 agree",
+  "11:13:13 request mvdq8fchrh2ij.2: final sent (17/17); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "11:13:34 request received: rid mvdq90xy2rp1d.2 25 keys",
+  "11:13:34 handle mvdq90xy2rp1d.2: first_chunk=True total=25"
  ]
 }
