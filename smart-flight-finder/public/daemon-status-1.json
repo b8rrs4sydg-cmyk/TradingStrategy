@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:21:45+00:00",
+ "at": "2026-10-18T13:23:21+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,11 +7,6 @@
  },
  "fares_saved": 1256,
  "log": [
-  "11:34:17 handle mvdqznepk7epz.1: first_chunk=True total=21",
-  "11:35:51 request mvdqznepk7epz.1: chunk of 21 keys done in 94s; paths {'http': 40, 'browser': 16, 'browser-none': 61}, browser waits 77 max 236s sum 5431s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 26, 'blocked': 0, 'tries': 56, 'empty': 16}, audit 4/4 agree",
-  "11:35:52 request mvdqznepk7epz.1: final sent (21/21); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:36:35 request received: rid mvdr2mz5gwiw5.1 21 keys",
-  "11:36:35 handle mvdr2mz5gwiw5.1: first_chunk=True total=21",
   "11:37:24 request mvdr2mz5gwiw5.1: chunk of 21 keys done in 49s; paths {'http': 45, 'browser': 26, 'browser-none': 67}, browser waits 93 max 236s sum 5805s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 26, 'blocked': 0, 'tries': 61, 'empty': 16}, audit 4/4 agree",
   "11:37:26 request mvdr2mz5gwiw5.1: final sent (21/21); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:38:16 request received: rid mvdr4siu9xe7c.1 9 keys",
@@ -156,6 +151,11 @@
   "13:13:41 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:44 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:20:19 request received: rid mvdus132ib8io.1 16 keys",
-  "13:20:19 handle mvdus132ib8io.1: first_chunk=True total=16"
+  "13:20:19 handle mvdus132ib8io.1: first_chunk=True total=16",
+  "13:21:46 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "13:22:01 request mvdus132ib8io.1: chunk of 16 keys done in 102s; paths {'http': 120, 'browser': 62, 'browser-none': 446}, browser waits 508 max 236s sum 31620s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 160, 'blocked': 0, 'tries': 223, 'empty': 103}, audit 5/5 a",
+  "13:22:02 request mvdus132ib8io.1: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:23:07 request received: rid mvduvnbnyqdms.1 7 keys",
+  "13:23:07 handle mvduvnbnyqdms.1: first_chunk=True total=7"
  ]
 }
