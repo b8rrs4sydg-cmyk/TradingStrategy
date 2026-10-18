@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T08:03:34+00:00",
+ "at": "2026-10-18T08:05:06+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 548,
+ "fares_saved": 550,
  "log": [
   "07:39:12 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:18 http front door: ['https://accomplish-slots-leading-element.trycloudflare.com', 'https://9aee7fc354edc6.lhr.life']",
@@ -39,6 +39,8 @@
   "08:01:42 request received: rid mvdjea8w2c5eq.2 27 keys",
   "08:01:42 handle mvdjea8w2c5eq.2: first_chunk=True total=27",
   "08:03:32 request mvdjea8w2c5eq.2: chunk of 27 keys done in 111s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 78, 'miss': 51, 'blocked': 0, 'tries': 79, 'empty': 1}, audit 3/3 agree",
-  "08:03:33 request mvdjea8w2c5eq.2: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "08:03:33 request mvdjea8w2c5eq.2: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "08:04:56 request received: rid mvdjign1mzkc0.2 27 keys",
+  "08:04:56 handle mvdjign1mzkc0.2: first_chunk=True total=27"
  ]
 }
