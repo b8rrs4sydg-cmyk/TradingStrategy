@@ -45,6 +45,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 
+from app.providers.atomic_io import atomic_write_text
 from app.providers.fare_db import FareDatabase
 from app.providers.google_flights import _fetch_one
 from app.providers.google_http import HttpFetcher
@@ -263,8 +264,13 @@ class Persister:
         self.db = FareDatabase.load(self.path)
         self.pending: dict[str, dict] = {}
         self.missing: list[str] = []
-        self.lock = threading.Lock()
+        self.lock = threading.Lock()  # guards pending / missing / dirty
+        self.flush_lock = threading.Lock()  # one flush at a time: the periodic and the final one run in threads
         self.dirty = False  # request activity since the last push → publish daemon-status.json
+
+    def mark_dirty(self) -> None:
+        with self.lock:
+            self.dirty = True
 
     def add(self, fares: dict, nf: list) -> None:
         with self.lock:
@@ -272,26 +278,28 @@ class Persister:
             self.missing += nf
 
     def flush(self, push: bool) -> int:
-        with self.lock:
-            fares, missing = self.pending, self.missing
-            self.pending, self.missing = {}, []
-        if not fares and not missing and not self.dirty:
-            return 0
-        self.dirty = False
-        if fares or missing:
-            self.db.merge(
-                fares, today=datetime.now(UTC).date(), missing=[*self.db.missing, *missing]
-            )
-            self.db.save(self.path)
-        self.write_status({"fares_saved": len(self.db.fares)})
-        if push and os.getenv("GITHUB_TOKEN"):
-            self._git_push(len(fares))
-        return len(fares)
+        with self.flush_lock:
+            with self.lock:
+                fares, missing = self.pending, self.missing
+                self.pending, self.missing = {}, []
+                dirty, self.dirty = self.dirty, False
+            if not fares and not missing and not dirty:
+                return 0
+            if fares or missing:
+                # read-modify-write under a file lock: whatever is on disk now is merged, nothing is overwritten
+                self.db = FareDatabase.merge_into_file(
+                    self.path, fares, today=datetime.now(UTC).date(), missing=missing
+                )
+            self.write_status({"fares_saved": len(self.db.fares)})
+            if push and os.getenv("GITHUB_TOKEN"):
+                self._git_push(len(fares))
+            return len(fares)
 
     def announce(self, urls: list[str]) -> None:
         """Tell pages where to reach this daemon (daemon.json: independent tunnels, the page tries each)."""
 
-        (self.path.parent / f"daemon{self.suffix}.json").write_text(
+        atomic_write_text(
+            self.path.parent / f"daemon{self.suffix}.json",
             json.dumps(
                 {
                     "url": urls[0] if urls else None,
@@ -300,7 +308,6 @@ class Persister:
                 }
             )
             + "\n",
-            encoding="utf-8",
         )
         if os.getenv("GITHUB_TOKEN"):
             self._git_push(0)
@@ -313,8 +320,9 @@ class Persister:
             "log": list(RING),
         }
         try:
-            (self.path.parent / f"daemon-status{self.suffix}.json").write_text(
-                json.dumps(status, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
+            atomic_write_text(
+                self.path.parent / f"daemon-status{self.suffix}.json",
+                json.dumps(status, ensure_ascii=False, indent=1) + "\n",
             )
         except OSError:
             pass
@@ -323,7 +331,7 @@ class Persister:
         root = Path(__file__).resolve().parents[3]
         branch = os.getenv("GITHUB_REF_NAME", "")
         committed = False
-        for attempt in range(6):
+        for attempt in range(8):
             try:
                 git = lambda *a: subprocess.run(
                     ["git", "-C", str(root), *a], check=True, capture_output=True
@@ -344,12 +352,13 @@ class Persister:
                         return
                     git("commit", "-q", "-m", f"data: live fare lookups (+{n})")
                     committed = True  # a lost push race (several instances push) must retry the push, not the commit
-                git("pull", "-q", "--rebase", "origin", branch)
+                # --autostash: the status/overlay files are rewritten while a push is being retried
+                git("pull", "-q", "--rebase", "--autostash", "origin", branch)
                 git("push", "-q", "origin", f"HEAD:{branch}")
                 return
             except subprocess.CalledProcessError as e:
                 log(f"git retry {attempt}: {e.stderr[-200:] if e.stderr else e}")
-                time.sleep(2 + attempt * 2)
+                time.sleep(2 + attempt * 2 + random.random() * 3)  # jitter: the instances push at the same moments
 
 
 class Daemon:
@@ -370,6 +379,9 @@ class Daemon:
             maxlen=40
         )  # does a sampled HTTP price agree with the browser's?
         self.cache: dict[str, tuple[float, dict | None]] = {}
+        # key → the lookup that is running for it now: a second ask (another page, a retry, a re-routed share) waits for
+        # that one instead of fetching the same fare again
+        self.inflight: dict[str, asyncio.Future] = {}
         self.requests: dict[str, dict] = {}  # rid → {total, done}
         self.seen: set[str] = set()
         self.queue: asyncio.Queue = asyncio.Queue()
@@ -431,7 +443,7 @@ class Daemon:
                 log(
                     f"request received: {'rid ' + req['rid'] + ' ' + str(len(req['keys'])) + ' keys' if req else 'REJECTED ' + message[:80]}"
                 )
-                self.persist.dirty = True
+                self.persist.mark_dirty()
                 if req:
                     t = asyncio.create_task(self.handle(req, ctx, sem))
                     tasks.add(t)
@@ -499,16 +511,7 @@ class Daemon:
             )
 
         async def one(key: str) -> None:
-            hit = self.cache.get(key)
-            failed = False
-            if hit and time.time() - hit[0] < CACHE_TTL_S:
-                entry = hit[1]
-            else:
-                entry, failed = await self.price(key, ctx, sem, seq)
-                if (
-                    not failed
-                ):  # a crash is not "no itinerary": do not cache or report it as unavailable
-                    self.cache[key] = (time.time(), entry)
+            entry, failed = await self.priced(key, ctx, sem, seq)
             state["done"] += 1
             state["last_activity"] = time.time()
             if entry:
@@ -530,6 +533,28 @@ class Daemon:
                 else ""
             )
         )
+
+    async def priced(self, key: str, ctx, sem: PriorityGate, seq: int) -> tuple[dict | None, bool]:
+        """(entry, crashed) for ``key``: from the cache, from the lookup already running for it, or a new one."""
+
+        hit = self.cache.get(key)
+        if hit and time.time() - hit[0] < CACHE_TTL_S:
+            return hit[1], False
+        running = self.inflight.get(key)
+        if running is not None:
+            return await asyncio.shield(running)
+        fut: asyncio.Future = asyncio.get_running_loop().create_future()
+        self.inflight[key] = fut
+        result: tuple[dict | None, bool] = (None, True)
+        try:
+            result = await self.price(key, ctx, sem, seq)
+            if not result[1]:  # a crash is not "no itinerary": do not cache or report it as unavailable
+                self.cache[key] = (time.time(), result[0])
+            return result
+        finally:
+            del self.inflight[key]
+            if not fut.done():
+                fut.set_result(result)
 
     async def browser_price(
         self, key: str, ctx, sem: PriorityGate, seq: int

@@ -273,11 +273,25 @@ What the experiments (`scripts/exp_http_*.py`, `exp_mc_*.py`, `exp-http-fetch.ym
 The page has a "查找所有排列組合" button: the normal campaign asks only the likeliest multi-city routes (budgeted); the
 button asks every remaining multi-city permutation, spread over the crawlers (`live.campaign.all`).
 
-## Crawler count
+## Crawler count, dispatch and database safety
 
 `fare-daemon.yml` runs six daemon instances (matrix `[0..5]`, one GitHub job each: own IP, browser, tunnels, `daemon[-i].json`,
-`fares-live[-i].json`). The page's `INSTANCES` constant must match the matrix. Every extra instance costs the visiting page two
-ntfy signalling messages for its WebRTC offer/answer (anonymous quota ≈250/day per IP), which is why it stops at six.
+`fares-live[-i].json`). The page's `INSTANCES` constant must match the matrix (`test_concurrent_db.py` checks it). Six is a
+trade-off, not a limit of the code. The real ceilings: GitHub's concurrent-job cap (≈20 on a free account, shared with the other
+workflows), two ntfy signalling messages per instance per page load (anonymous quota ≈250/day per IP) plus one WebRTC connection
+each, one git commit stream per instance, and Google's per-IP throttling (more instances on GitHub's shared IP ranges means more
+403/429, not more prices). 100+ crawlers would need paid/self-hosted runners and a signalling path that does not scale per page.
+
+**Dispatch** (`app/services/dispatch.py`, JS port `ownerOf` in the page, same test vectors): rendezvous hashing assigns every fare
+key to exactly one live instance, identically on every page and run, so no two crawlers fetch the same key; a lost crawler's keys
+move to the others and nothing else moves. The page dedupes keys before sharding. Inside a daemon `Daemon.priced` is single-flight
+(`inflight` table + TTL cache): a key asked twice at once is fetched once.
+
+**Database** (`app/providers/atomic_io.py`): every file is written atomically (temp + fsync + `os.replace`), so readers and `git add`
+never see a torn file. Read-modify-write goes through `FareDatabase.merge_into_file` (`flock` on `<file>.lock`, re-read, merge, save),
+so concurrent processes lose no update; `Persister.flush` serialises threads with `flush_lock`. Each instance still owns its own
+files (single writer by construction); git pushes use `pull --rebase --autostash` with jittered retries. Workflows that write
+`fares.json` keep their `concurrency:` groups.
 
 ## One-way screening of multi-city tickets (四腿票 / 反向票＋倒買法)
 
