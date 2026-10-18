@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T06:47:01+00:00",
+ "at": "2026-10-18T06:48:33+00:00",
  "publishes": {
   "ok": 12,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 341,
+ "fares_saved": 392,
  "log": [
   "05:45:36 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:45:40 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-2.json' did not match any files\\n\"",
@@ -89,6 +89,12 @@
   "06:45:44 request received: rid mvdgolgnfn0tk.2 53 keys",
   "06:45:44 handle mvdgolgnfn0tk.2: first_chunk=True total=53",
   "06:46:26 request received: rid mvdgpgu6s6zk6.2 53 keys",
-  "06:46:26 handle mvdgpgu6s6zk6.2: first_chunk=True total=53"
+  "06:46:26 handle mvdgpgu6s6zk6.2: first_chunk=True total=53",
+  "06:48:14 request mvdgpgu6s6zk6.2: chunk of 53 keys done in 108s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "06:48:15 request mvdgpgu6s6zk6.2: final sent (53/53); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "06:48:18 request received: rid mvdgrvlizhfc9.2 53 keys",
+  "06:48:18 handle mvdgrvlizhfc9.2: first_chunk=True total=53",
+  "06:48:29 request mvdgolgnfn0tk.2: chunk of 53 keys done in 165s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "06:48:30 request mvdgolgnfn0tk.2: final sent (53/53); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
  ]
 }
