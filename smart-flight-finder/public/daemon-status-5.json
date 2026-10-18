@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:40:00+00:00",
+ "at": "2026-10-18T12:41:32+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 881,
+ "fares_saved": 882,
  "log": [
   "11:26:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:33 http front door: ['https://beef-makes-hire-grow.trycloudflare.com', 'https://39b8e78c080491.lhr.life']",
@@ -124,6 +124,10 @@
   "12:38:16 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "12:38:22 git retry 2: b\"-1kexus': is at 73f8b4b1ae9722445782ca6715b720e4fb1880fb but expected 28eca6c322d4193606dc7b885b81cf2ece30fc78)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "12:38:38 request received: rid mvdtaf8zalrpu.5 20 keys",
-  "12:38:38 handle mvdtaf8zalrpu.5: first_chunk=True total=20"
+  "12:38:38 handle mvdtaf8zalrpu.5: first_chunk=True total=20",
+  "12:40:57 request mvdtaf8zalrpu.5: chunk of 20 keys done in 140s; paths {'http': 114, 'browser': 27, 'browser-none': 326}, browser waits 353 max 289s sum 25449s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 114, 'miss': 148, 'blocked': 15, 'tries': 221, 'empty': 107}, audit 4/4 ",
+  "12:40:58 request mvdtaf8zalrpu.5: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:41:05 request received: rid mvdtdjwntntwn.4 21 keys",
+  "12:41:05 handle mvdtdjwntntwn.4: first_chunk=True total=21"
  ]
 }
