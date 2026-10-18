@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:01:20+00:00",
+ "at": "2026-10-18T12:02:51+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1162,
+ "fares_saved": 1170,
  "log": [
   "11:26:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:13 http front door: ['https://vegetables-defining-facial-granted.trycloudflare.com', 'https://17c1d95da2fbab.lhr.life']",
@@ -77,6 +77,8 @@
   "11:59:01 handle mvdrvh555plbi.1: first_chunk=True total=13",
   "11:59:46 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "12:00:24 request mvdrvh555plbi.1: chunk of 13 keys done in 83s; paths {'http': 53, 'browser': 35, 'browser-none': 192}, browser waits 227 max 236s sum 14668s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 53, 'miss': 62, 'blocked': 0, 'tries': 77, 'empty': 24}, audit 5/5 agree",
-  "12:00:25 request mvdrvh555plbi.1: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "12:00:25 request mvdrvh555plbi.1: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:02:18 request received: rid mvdrzp8py2zrf.1 16 keys",
+  "12:02:18 handle mvdrzp8py2zrf.1: first_chunk=True total=16"
  ]
 }
