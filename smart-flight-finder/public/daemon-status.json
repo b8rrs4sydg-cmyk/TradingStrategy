@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T05:53:18+00:00",
+ "at": "2026-10-18T05:54:49+00:00",
  "publishes": {
-  "ok": 44,
+  "ok": 49,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3211,
+ "fares_saved": 3212,
  "log": [
   "05:45:35 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:45:41 http front door: ['https://general-vbulletin-uni-rights.trycloudflare.com', 'https://557e83ce6d948d.lhr.life']",
@@ -37,6 +37,16 @@
   "05:51:40 rtc gh43z7wyrs: data channel open",
   "05:52:59 rtc 6u5s83hax0: answered",
   "05:53:09 request received: rid mvdesns4ulmzs 160 keys",
-  "05:53:09 handle mvdesns4ulmzs: first_chunk=True total=160"
+  "05:53:09 handle mvdesns4ulmzs: first_chunk=True total=160",
+  "05:53:46 rtc vvoqbr8as5: answered",
+  "05:53:47 rtc vvoqbr8as5: data channel open",
+  "05:53:47 request received: rid mvdeto19ml7mj.0 54 keys",
+  "05:53:47 handle mvdeto19ml7mj.0: first_chunk=True total=54",
+  "05:53:47 request received: rid probemvdetsjt.0 3 keys",
+  "05:53:47 handle probemvdetsjt.0: first_chunk=True total=3",
+  "05:53:56 request probemvdetsjt.0: chunk of 3 keys done in 9s; ntfy publishes {'ok': 46, 'r429': 0, 'fail': 0}",
+  "05:53:58 request probemvdetsjt.0: final sent (3/3); ntfy publishes {'ok': 47, 'r429': 0, 'fail': 0}",
+  "05:54:01 request mvdeto19ml7mj.0: chunk of 54 keys done in 14s; ntfy publishes {'ok': 47, 'r429': 0, 'fail': 0}",
+  "05:54:02 request mvdeto19ml7mj.0: final sent (54/54); ntfy publishes {'ok': 47, 'r429': 0, 'fail': 0}"
  ]
 }
