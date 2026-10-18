@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:19:41+00:00",
+ "at": "2026-10-18T10:21:12+00:00",
  "publishes": {
   "ok": 16,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3957,
+ "fares_saved": 3971,
  "log": [
   "08:41:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:41:58 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -130,6 +130,12 @@
   "10:17:01 request received: rid mvdo8b06ubmct.0 27 keys",
   "10:17:01 handle mvdo8b06ubmct.0: first_chunk=True total=27",
   "10:19:20 request received: rid mvdobaio9iiwt.0 27 keys",
-  "10:19:20 handle mvdobaio9iiwt.0: first_chunk=True total=27"
+  "10:19:20 handle mvdobaio9iiwt.0: first_chunk=True total=27",
+  "10:20:12 request mvdo8b06ubmct.0: chunk of 27 keys done in 191s; ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 132, 'miss': 181, 'blocked': 11, 'tries': 147, 'empty': 15}, audit 4/4 agree",
+  "10:20:13 request mvdo8b06ubmct.0: final sent (27/27); ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}",
+  "10:20:59 request mvdobaio9iiwt.0: chunk of 27 keys done in 99s; ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 132, 'miss': 181, 'blocked': 11, 'tries': 147, 'empty': 15}, audit 4/4 agree",
+  "10:21:00 request mvdobaio9iiwt.0: final sent (27/27); ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}",
+  "10:21:01 request received: rid mvdodgq94k98d.0 27 keys",
+  "10:21:01 handle mvdodgq94k98d.0: first_chunk=True total=27"
  ]
 }
