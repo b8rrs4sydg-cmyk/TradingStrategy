@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T05:38:38+00:00",
+ "at": "2026-10-18T05:40:09+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -30,6 +30,8 @@
   "05:28:32 request httptest1792301254: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "05:29:34 rtc 706bouazmv: answered",
   "05:30:51 request received: rid mvde09xltuelu 153 keys",
-  "05:30:51 handle mvde09xltuelu: first_chunk=True total=153"
+  "05:30:51 handle mvde09xltuelu: first_chunk=True total=153",
+  "05:40:02 request mvde09xltuelu: chunk of 153 keys done in 551s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:40:03 request mvde09xltuelu: final sent (153/153); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
