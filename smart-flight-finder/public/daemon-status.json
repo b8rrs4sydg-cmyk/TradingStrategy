@@ -1,19 +1,12 @@
 {
- "at": "2026-10-18T10:44:46+00:00",
+ "at": "2026-10-18T10:46:20+00:00",
  "publishes": {
   "ok": 12,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3440,
+ "fares_saved": 3539,
  "log": [
-  "10:32:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:32:33 http front door: ['https://symptoms-involved-still-arguments.trycloudflare.com', 'https://2c4a17ec210344.lhr.life']",
-  "10:32:33 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
-  "10:33:27 rtc p4xippd9me: answered",
-  "10:33:27 rtc wcqhfengam: answered",
-  "10:33:27 rtc jo2rhc2og1: answered",
-  "10:33:27 rtc 5ggw2uxw3u: answered",
   "10:33:27 rtc flmrzfj4rz: answered",
   "10:33:28 rtc p4xippd9me: data channel open",
   "10:33:28 rtc wcqhfengam: data channel open",
@@ -143,6 +136,26 @@
   "10:44:07 request mvdp6fxjf2awn.4: chunk of 26 keys done in 34s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
   "10:44:09 request mvdp6fxjf2awn.4: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
   "10:44:31 request mvdp6fxjf2awn.5: chunk of 26 keys done in 58s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
-  "10:44:32 request mvdp6fxjf2awn.5: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
+  "10:44:32 request mvdp6fxjf2awn.5: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:44:57 request mvdp6fxjf2awn.3: chunk of 27 keys done in 83s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:44:58 request mvdp6fxjf2awn.3: final sent (27/27); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:45:24 request mvdp6fxjf2awn.2: chunk of 27 keys done in 110s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:45:25 request mvdp6fxjf2awn.2: final sent (27/27); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:45:49 request mvdp6fxjf2awn.0: chunk of 27 keys done in 136s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:45:52 request mvdp6fxjf2awn.0: final sent (27/27); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:46:16 request mvdp6fxjf2awn.1: chunk of 27 keys done in 162s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:46:17 request mvdp6fxjf2awn.1: final sent (27/27); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:46:18 request received: rid mvdp9yzhw4feg.0 27 keys",
+  "10:46:18 handle mvdp9yzhw4feg.0: first_chunk=True total=27",
+  "10:46:18 request received: rid mvdp9yzhw4feg.1 27 keys",
+  "10:46:18 handle mvdp9yzhw4feg.1: first_chunk=True total=27",
+  "10:46:18 request received: rid mvdp9yzhw4feg.2 27 keys",
+  "10:46:18 handle mvdp9yzhw4feg.2: first_chunk=True total=27",
+  "10:46:18 request received: rid mvdp9yzhw4feg.3 27 keys",
+  "10:46:18 request received: rid mvdp9yzhw4feg.4 26 keys",
+  "10:46:18 handle mvdp9yzhw4feg.3: first_chunk=True total=27",
+  "10:46:18 handle mvdp9yzhw4feg.4: first_chunk=True total=26",
+  "10:46:18 request received: rid mvdp9yzhw4feg.5 26 keys",
+  "10:46:18 handle mvdp9yzhw4feg.5: first_chunk=True total=26"
  ]
 }
