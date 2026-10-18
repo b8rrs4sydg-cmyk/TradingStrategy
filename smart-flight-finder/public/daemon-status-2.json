@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T07:40:48+00:00",
+ "at": "2026-10-18T07:42:19+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
@@ -13,6 +13,14 @@
   "07:40:21 request received: rid httptest1792309221 20 keys",
   "07:40:21 handle httptest1792309221: first_chunk=True total=20",
   "07:40:27 request httptest1792309221: chunk of 20 keys done in 5s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 3/3 agree",
-  "07:40:28 request httptest1792309221: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "07:40:28 request httptest1792309221: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "07:41:05 rtc g5czjhjnmg: answered",
+  "07:41:05 rtc g5czjhjnmg: data channel open",
+  "07:41:05 request received: rid mvdins6aqwgno.2 1 keys",
+  "07:41:05 handle mvdins6aqwgno.2: first_chunk=True total=1",
+  "07:41:13 request mvdins6aqwgno.2: chunk of 1 keys done in 7s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 1}, audit 3/3 agree",
+  "07:41:14 request mvdins6aqwgno.2: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:42:15 request received: rid mvdipa9ae83zn.2 27 keys",
+  "07:42:15 handle mvdipa9ae83zn.2: first_chunk=True total=27"
  ]
 }
