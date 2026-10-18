@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:08:47+00:00",
+ "at": "2026-10-18T07:16:26+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3589,
+ "fares_saved": 3612,
  "log": [
   "06:53:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:33 http front door: ['https://fossil-allied-unavailable-milan.trycloudflare.com', 'https://d1d507a6144aae.lhr.life']",
@@ -41,6 +41,18 @@
   "07:08:10 request mvdhelgxdkags.0: chunk of 27 keys done in 133s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:08:11 request mvdhelgxdkags.0: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:08:18 request received: rid mvdhhmomck4d7.0 27 keys",
-  "07:08:18 handle mvdhhmomck4d7.0: first_chunk=True total=27"
+  "07:08:18 handle mvdhhmomck4d7.0: first_chunk=True total=27",
+  "07:10:29 request mvdhhmomck4d7.0: chunk of 27 keys done in 130s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:10:30 request mvdhhmomck4d7.0: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:10:40 request received: rid mvdhko9pr3n4l.0 20 keys",
+  "07:10:40 handle mvdhko9pr3n4l.0: first_chunk=True total=20",
+  "07:12:19 request mvdhko9pr3n4l.0: chunk of 20 keys done in 99s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:12:20 request mvdhko9pr3n4l.0: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:13:32 request received: rid mvdhocejt64pd.0 27 keys",
+  "07:13:32 handle mvdhocejt64pd.0: first_chunk=True total=27",
+  "07:15:57 request mvdhocejt64pd.0: chunk of 27 keys done in 145s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:15:59 request mvdhocejt64pd.0: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:16:02 request received: rid mvdhrk1c7du6x.0 27 keys",
+  "07:16:02 handle mvdhrk1c7du6x.0: first_chunk=True total=27"
  ]
 }
