@@ -337,3 +337,8 @@ return date, "hide 不划算", favourites. Each facet's counts are computed with
 ticket has real times (Google's result carries one slice), so the outbound time / stops / airline are real while the return flight's
 time is usually unknown: a plan with an unknown time is never hidden by a time or stops filter, and the return-time group is
 disabled when no plan has one (use the return-date range). The strategy `<select>` stays separate but shares "全部重設".
+
+Grouping: `state.group` (none / holiday / place / country, the `#r-group` select) → `groupPlans` reorders the visible plans into groups
+(holidays by first departure, places by cheapest plan; a 外站四腿票 has no single destination and gets its own group) and
+`renderPlanList` wraps each in a collapsible `.group` (folded keys in `state.collapsed`; a folded body is hidden, not unrendered, so
+the `.plan` DOM order still equals the plan array the card handlers index into).
