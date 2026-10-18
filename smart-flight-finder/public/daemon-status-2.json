@@ -1,14 +1,12 @@
 {
- "at": "2026-10-18T14:33:29+00:00",
+ "at": "2026-10-18T14:35:01+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1439,
+ "fares_saved": 1442,
  "log": [
-  "12:41:05 rtc 2jd70sa4aw: answered",
-  "12:41:07 rtc 2jd70sa4aw: data channel open",
   "12:43:33 request received: rid mvdtgqu565myx.2 18 keys",
   "12:43:33 handle mvdtgqu565myx.2: first_chunk=True total=18",
   "12:43:54 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -156,6 +154,8 @@
   "14:30:29 request received: rid mvdxa8axe2509.2 19 keys",
   "14:30:29 handle mvdxa8axe2509.2: first_chunk=True total=19",
   "14:32:05 request mvdxa8axe2509.2: chunk of 19 keys done in 96s; paths {'http': 225, 'browser-none': 581, 'browser': 58}, browser waits 639 max 142s sum 37338s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 225, 'miss': 251, 'blocked': 0, 'tries': 498, 'empty': 273}, audit 3/3 ag",
-  "14:32:05 request mvdxa8axe2509.2: final sent (19/19); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "14:32:05 request mvdxa8axe2509.2: final sent (19/19); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "14:34:23 request received: rid mvdxfaioyk7ai.2 21 keys",
+  "14:34:23 handle mvdxfaioyk7ai.2: first_chunk=True total=21"
  ]
 }
