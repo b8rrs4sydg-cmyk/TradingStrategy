@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T10:29:00+00:00",
+ "at": "2026-10-18T10:30:31+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 473,
+ "fares_saved": 496,
  "log": [
-  "08:42:01 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "08:42:04 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "08:42:10 http front door: ['https://men-grid-generation-archive.trycloudflare.com', 'https://9f12b9005e73bc.lhr.life']",
-  "08:42:10 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "08:43:18 request received: rid httptest1792312985 20 keys",
   "08:43:18 handle httptest1792312985: first_chunk=True total=20",
   "08:43:22 request httptest1792312985: chunk of 20 keys done in 5s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
@@ -156,6 +152,10 @@
   "10:26:49 request received: rid mvdokwtc5pmdk.3 27 keys",
   "10:26:49 handle mvdokwtc5pmdk.3: first_chunk=True total=27",
   "10:27:38 request mvdokwtc5pmdk.3: chunk of 27 keys done in 49s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 229, 'miss': 181, 'blocked': 0, 'tries': 260, 'empty': 31}, audit 1/1 agree",
-  "10:27:39 request mvdokwtc5pmdk.3: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "10:27:39 request mvdokwtc5pmdk.3: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:29:29 request received: rid mvdoocbqq1kth.3 27 keys",
+  "10:29:29 handle mvdoocbqq1kth.3: first_chunk=True total=27",
+  "10:30:19 request mvdoocbqq1kth.3: chunk of 27 keys done in 50s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 252, 'miss': 185, 'blocked': 0, 'tries': 291, 'empty': 39}, audit 1/1 agree",
+  "10:30:20 request mvdoocbqq1kth.3: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
