@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:39:16+00:00",
+ "at": "2026-10-18T13:40:48+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 279,
  "log": [
-  "11:45:45 request mvdrc6ae2in9l.6: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:47:29 request received: rid mvdrgnlvchabm.5 1 keys",
-  "11:47:29 handle mvdrgnlvchabm.5: first_chunk=True total=1",
-  "11:48:31 request mvdrgnlvchabm.5: chunk of 1 keys done in 62s; paths {'http': 78, 'browser-none': 54}, browser waits 54 max 79s sum 2791s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 78, 'miss': 54, 'blocked': 0, 'tries': 100, 'empty': 22}, audit 2/2 agree",
   "11:48:34 request mvdrgnlvchabm.5: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:48:37 request received: rid mvdri4aarid9h.5 9 keys",
   "11:48:37 handle mvdri4aarid9h.5: first_chunk=True total=9",
@@ -156,6 +152,10 @@
   "13:37:26 request mvdvbfhuwgne6.6: chunk of 17 keys done in 122s; paths {'http': 179, 'browser-none': 431, 'browser': 13}, browser waits 444 max 192s sum 27899s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 242, 'blocked': 0, 'tries': 357, 'empty': 178}, audit 3/3 a",
   "13:37:28 request mvdvbfhuwgne6.6: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:38:07 request received: rid mvdvexj30iihf.6 16 keys",
-  "13:38:07 handle mvdvexj30iihf.6: first_chunk=True total=16"
+  "13:38:07 handle mvdvexj30iihf.6: first_chunk=True total=16",
+  "13:39:43 request mvdvexj30iihf.6: chunk of 16 keys done in 96s; paths {'http': 179, 'browser-none': 445, 'browser': 15}, browser waits 460 max 192s sum 28866s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 242, 'blocked': 0, 'tries': 357, 'empty': 178}, audit 3/3 ag",
+  "13:39:46 request mvdvexj30iihf.6: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:40:30 request received: rid mvdvhzoqtvuve.5 5 keys",
+  "13:40:30 handle mvdvhzoqtvuve.5: first_chunk=True total=5"
  ]
 }
