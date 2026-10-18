@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T11:12:46+00:00",
+ "at": "2026-10-18T11:14:18+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
@@ -44,6 +44,18 @@
   "11:11:51 rtc yw5za3tfhs: answered",
   "11:11:52 rtc yw5za3tfhs: data channel open",
   "11:11:52 request received: rid mvdq6pts6akym.1 13 keys",
-  "11:11:52 handle mvdq6pts6akym.1: first_chunk=True total=13"
+  "11:11:52 handle mvdq6pts6akym.1: first_chunk=True total=13",
+  "11:13:11 rtc 9qa9fulzyh: answered",
+  "11:13:11 rtc 9qa9fulzyh: data channel open",
+  "11:13:11 request received: rid mvdq8fchrh2ij.1 13 keys",
+  "11:13:11 handle mvdq8fchrh2ij.1: first_chunk=True total=13",
+  "11:13:34 request received: rid mvdq90xy2rp1d.1 15 keys",
+  "11:13:34 handle mvdq90xy2rp1d.1: first_chunk=True total=15",
+  "11:13:34 request mvdq6pts6akym.1: chunk of 13 keys done in 102s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 75, 'miss': 27, 'blocked': 0, 'tries': 113, 'empty': 38}, audit 6/6 agree",
+  "11:13:34 request mvdq8fchrh2ij.1: chunk of 13 keys done in 23s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 75, 'miss': 27, 'blocked': 0, 'tries': 113, 'empty': 38}, audit 6/6 agree",
+  "11:13:35 request mvdq6pts6akym.1: final sent (13/13); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "11:13:35 request mvdq8fchrh2ij.1: final sent (13/13); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "11:13:38 request mvdq60py73tla.1: chunk of 14 keys done in 144s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 75, 'miss': 27, 'blocked': 0, 'tries': 113, 'empty': 38}, audit 6/6 agree",
+  "11:13:40 request mvdq60py73tla.1: final sent (14/14); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
