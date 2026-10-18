@@ -1,17 +1,12 @@
 {
- "at": "2026-10-18T13:44:00+00:00",
+ "at": "2026-10-18T13:45:32+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 905,
+ "fares_saved": 907,
  "log": [
-  "11:48:37 request received: rid mvdri4aarid9h.4 19 keys",
-  "11:48:37 handle mvdri4aarid9h.4: first_chunk=True total=19",
-  "11:50:27 request mvdri4aarid9h.4: chunk of 19 keys done in 109s; paths {'http': 55, 'browser': 16, 'browser-none': 139}, browser waits 155 max 289s sum 12500s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 38, 'blocked': 2, 'tries': 86, 'empty': 31}, audit 2/2 agree",
-  "11:50:29 request mvdri4aarid9h.4: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:51:16 request received: rid mvdrlhseif870.4 20 keys",
   "11:51:16 handle mvdrlhseif870.4: first_chunk=True total=20",
   "11:52:42 request mvdrlhseif870.4: chunk of 20 keys done in 85s; paths {'http': 64, 'browser': 21, 'browser-none': 145}, browser waits 166 max 289s sum 12809s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 47, 'blocked': 4, 'tries': 97, 'empty': 33}, audit 2/2 agree",
   "11:52:43 request mvdrlhseif870.4: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +151,11 @@
   "13:41:42 request received: rid mvdvjjp2nbsao.4 22 keys",
   "13:41:42 handle mvdvjjp2nbsao.4: first_chunk=True total=22",
   "13:43:54 request mvdvjjp2nbsao.4: chunk of 22 keys done in 132s; paths {'http': 123, 'browser': 41, 'browser-none': 571}, browser waits 612 max 289s sum 41827s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 123, 'miss': 206, 'blocked': 20, 'tries': 239, 'empty': 116}, audit 4/4 ",
-  "13:43:56 request mvdvjjp2nbsao.4: final sent (22/22); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:43:56 request mvdvjjp2nbsao.4: final sent (22/22); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:44:33 rtc xwgwopxccm: answered",
+  "13:44:35 rtc xwgwopxccm: data channel open",
+  "13:44:35 request received: rid mvdvn5tvdtxf1.5 20 keys",
+  "13:44:35 handle mvdvn5tvdtxf1.5: first_chunk=True total=20",
+  "13:45:30 request mvdvn5tvdtxf1.5: chunk of 20 keys done in 55s; paths {'http': 135, 'browser': 46, 'browser-none': 574}, browser waits 620 max 289s sum 41976s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 135, 'miss': 214, 'blocked': 20, 'tries': 262, 'empty': 127}, audit 4/4 a"
  ]
 }
