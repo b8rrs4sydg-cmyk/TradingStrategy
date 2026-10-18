@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:33:55+00:00",
+ "at": "2026-10-18T07:35:26+00:00",
  "publishes": {
-  "ok": 4,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 484,
+ "fares_saved": 488,
  "log": [
   "07:18:44 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:48 http front door: ['https://ross-dean-gary-combat.trycloudflare.com', 'https://4407a1be7daa2d.lhr.life']",
@@ -48,6 +48,11 @@
   "07:33:20 request received: rid mvdidt5v9id4v.1 27 keys",
   "07:33:20 handle mvdidt5v9id4v.1: first_chunk=True total=27",
   "07:33:20 request mvdidt5v9id4v.1: chunk of 27 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 78, 'miss': 29, 'blocked': 0, 'tries': 78, 'empty': 0}, audit 6/6 agree",
-  "07:33:21 request mvdidt5v9id4v.1: final sent (27/27); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "07:33:21 request mvdidt5v9id4v.1: final sent (27/27); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "07:34:27 request received: rid mvdif9bjdojeh.1 27 keys",
+  "07:34:27 handle mvdif9bjdojeh.1: first_chunk=True total=27",
+  "07:34:37 rtc wq6xu1mtv: answered",
+  "07:35:04 request received: rid mvdig1vjqyz3k.1 27 keys",
+  "07:35:04 handle mvdig1vjqyz3k.1: first_chunk=True total=27"
  ]
 }
