@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T08:48:16+00:00",
+ "at": "2026-10-18T08:49:48+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
@@ -18,6 +18,10 @@
   "08:45:24 request received: rid mvdky8vc656ar.0 40 keys",
   "08:45:24 handle mvdky8vc656ar.0: first_chunk=True total=40",
   "08:47:57 request mvdky8vc656ar.0: chunk of 40 keys done in 153s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 15, 'blocked': 0, 'tries': 45, 'empty': 0}, audit 0/0 agree",
-  "08:47:57 request mvdky8vc656ar.0: final sent (40/40); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "08:47:57 request mvdky8vc656ar.0: final sent (40/40); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "08:49:43 rtc fzmz1p8x0c: answered",
+  "08:49:44 rtc fzmz1p8x0c: data channel open",
+  "08:49:45 request received: rid mvdl3zxnhxceb.1 27 keys",
+  "08:49:45 handle mvdl3zxnhxceb.1: first_chunk=True total=27"
  ]
 }
