@@ -1,14 +1,12 @@
 {
- "at": "2026-10-18T10:46:20+00:00",
+ "at": "2026-10-18T10:47:52+00:00",
  "publishes": {
   "ok": 12,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3539,
+ "fares_saved": 3589,
  "log": [
-  "10:33:27 rtc flmrzfj4rz: answered",
-  "10:33:28 rtc p4xippd9me: data channel open",
   "10:33:28 rtc wcqhfengam: data channel open",
   "10:33:28 rtc flmrzfj4rz: data channel open",
   "10:33:28 rtc 5ggw2uxw3u: data channel open",
@@ -156,6 +154,8 @@
   "10:46:18 handle mvdp9yzhw4feg.3: first_chunk=True total=27",
   "10:46:18 handle mvdp9yzhw4feg.4: first_chunk=True total=26",
   "10:46:18 request received: rid mvdp9yzhw4feg.5 26 keys",
-  "10:46:18 handle mvdp9yzhw4feg.5: first_chunk=True total=26"
+  "10:46:18 handle mvdp9yzhw4feg.5: first_chunk=True total=26",
+  "10:47:26 request mvdp9yzhw4feg.5: chunk of 26 keys done in 68s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:47:27 request mvdp9yzhw4feg.5: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
  ]
 }
