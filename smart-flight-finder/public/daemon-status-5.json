@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:38:45+00:00",
+ "at": "2026-10-18T11:40:17+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 799,
+ "fares_saved": 803,
  "log": [
   "11:26:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:33 http front door: ['https://beef-makes-hire-grow.trycloudflare.com', 'https://39b8e78c080491.lhr.life']",
@@ -41,6 +41,14 @@
   "11:38:11 request mvdr2mz5gwiw5.5: chunk of 15 keys done in 96s; paths {'http': 49, 'browser': 7, 'browser-none': 80}, browser waits 87 max 289s sum 8555s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 49, 'miss': 21, 'blocked': 1, 'tries': 73, 'empty': 24}, audit 2/2 agree",
   "11:38:12 request mvdr2mz5gwiw5.5: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:38:16 request received: rid mvdr4siu9xe7c.5 7 keys",
-  "11:38:16 handle mvdr4siu9xe7c.5: first_chunk=True total=7"
+  "11:38:16 handle mvdr4siu9xe7c.5: first_chunk=True total=7",
+  "11:39:12 request mvdr4siu9xe7c.5: chunk of 7 keys done in 56s; paths {'http': 51, 'browser': 7, 'browser-none': 85}, browser waits 92 max 289s sum 8794s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 51, 'miss': 26, 'blocked': 1, 'tries': 82, 'empty': 31}, audit 2/2 agree",
+  "11:39:13 request mvdr4siu9xe7c.5: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:39:15 request received: rid mvdr623air1zi.5 2 keys",
+  "11:39:15 handle mvdr623air1zi.5: first_chunk=True total=2",
+  "11:39:15 request mvdr623air1zi.5: chunk of 2 keys done in 0s; paths {'http': 53, 'browser': 7, 'browser-none': 85}, browser waits 92 max 289s sum 8794s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 53, 'miss': 26, 'blocked': 1, 'tries': 84, 'empty': 31}, audit 2/2 agree",
+  "11:39:17 request mvdr623air1zi.5: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:39:22 request received: rid mvdr67xtjeugt.5 15 keys",
+  "11:39:22 handle mvdr67xtjeugt.5: first_chunk=True total=15"
  ]
 }
