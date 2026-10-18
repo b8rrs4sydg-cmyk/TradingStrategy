@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T05:47:42+00:00",
+ "at": "2026-10-18T05:55:14+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 73,
+ "fares_saved": 126,
  "log": [
   "05:45:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:45:30 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-1.json' did not match any files\\n\"",
@@ -27,6 +27,21 @@
   "05:46:58 request httptest1792302397: chunk of 20 keys done in 20s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "05:46:59 request httptest1792302397: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "05:47:20 request mvdekj143gko1.1: chunk of 53 keys done in 45s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:47:22 request mvdekj143gko1.1: final sent (53/53); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "05:47:22 request mvdekj143gko1.1: final sent (53/53); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:47:48 rtc a8jp3j76nd: answered",
+  "05:48:44 rtc 99ij2qops3: answered",
+  "05:48:45 rtc 99ij2qops3: data channel open",
+  "05:51:39 rtc dbk8444vty: answered",
+  "05:51:40 rtc dbk8444vty: data channel open",
+  "05:53:46 rtc zsc6kq2dym: answered",
+  "05:53:47 rtc zsc6kq2dym: data channel open",
+  "05:53:47 request received: rid mvdeto19ml7mj.1 53 keys",
+  "05:53:47 handle mvdeto19ml7mj.1: first_chunk=True total=53",
+  "05:53:47 request received: rid probemvdetsjt.1 3 keys",
+  "05:53:47 handle probemvdetsjt.1: first_chunk=True total=3",
+  "05:53:57 request probemvdetsjt.1: chunk of 3 keys done in 10s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "05:53:59 request probemvdetsjt.1: final sent (3/3); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "05:54:20 request mvdeto19ml7mj.1: chunk of 53 keys done in 33s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "05:54:22 request mvdeto19ml7mj.1: final sent (53/53); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
  ]
 }
