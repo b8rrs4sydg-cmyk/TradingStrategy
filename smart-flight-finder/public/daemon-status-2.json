@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:37:09+00:00",
+ "at": "2026-10-18T13:38:40+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 1361,
  "log": [
-  "11:39:22 request received: rid mvdr67xtjeugt.2 12 keys",
-  "11:39:22 handle mvdr67xtjeugt.2: first_chunk=True total=12",
-  "11:40:34 request mvdr67xtjeugt.2: chunk of 12 keys done in 72s; paths {'http': 55, 'browser-none': 21, 'browser': 1}, browser waits 22 max 75s sum 1038s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 22, 'blocked': 0, 'tries': 67, 'empty': 12}, audit 3/3 agree",
-  "11:40:35 request mvdr67xtjeugt.2: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:41:59 request received: rid mvdr9kyr2z95g.2 21 keys",
   "11:41:59 handle mvdr9kyr2z95g.2: first_chunk=True total=21",
   "11:43:53 request mvdr9kyr2z95g.2: chunk of 21 keys done in 114s; paths {'http': 58, 'browser-none': 34, 'browser': 6}, browser waits 40 max 75s sum 1813s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 58, 'miss': 40, 'blocked': 0, 'tries': 70, 'empty': 12}, audit 3/3 agree",
@@ -156,6 +152,10 @@
   "13:33:29 request mvdv6nwpunm7z.2: chunk of 15 keys done in 107s; paths {'http': 134, 'browser-none': 371, 'browser': 56}, browser waits 427 max 141s sum 23647s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 134, 'miss': 176, 'blocked': 0, 'tries': 280, 'empty': 146}, audit 3/3 a",
   "13:33:29 request mvdv6nwpunm7z.2: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:35:24 request received: rid mvdvbfhuwgne6.2 18 keys",
-  "13:35:24 handle mvdvbfhuwgne6.2: first_chunk=True total=18"
+  "13:35:24 handle mvdvbfhuwgne6.2: first_chunk=True total=18",
+  "13:37:36 request mvdvbfhuwgne6.2: chunk of 18 keys done in 132s; paths {'http': 134, 'browser-none': 389, 'browser': 56}, browser waits 445 max 141s sum 25004s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 134, 'miss': 176, 'blocked': 0, 'tries': 280, 'empty': 146}, audit 3/3 a",
+  "13:37:37 request mvdvbfhuwgne6.2: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:38:07 request received: rid mvdvexj30iihf.2 15 keys",
+  "13:38:07 handle mvdvexj30iihf.2: first_chunk=True total=15"
  ]
 }
