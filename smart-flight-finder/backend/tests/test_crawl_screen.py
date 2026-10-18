@@ -58,19 +58,19 @@ def test_with_leg_keys_adds_each_leg_once(plan):
 def test_cheap_legs_keep_the_combinations_dear_legs_prune_them(plan):
     stage1, _, four = plan
     cheap = prices_for(stage1, four, ow=500, leg=500)  # floor 0.95 x 2000 << room
-    kept, pruned = screen_four_leg(four, cheap, CFG, drop_unknown=True)
-    assert pruned == 0 and set(kept) == set(four)
+    kept, audit, pruned = screen_four_leg(four, cheap, CFG, drop_unknown=True)
+    assert pruned == 0 and audit == [] and set(kept) == set(four)
     dear = prices_for(stage1, four, ow=1000, leg=9000)  # floor 0.95 x 36000 > room (36000 - 2000)
-    kept, pruned = screen_four_leg(four, dear, CFG, drop_unknown=True, audit=3)
-    assert pruned == len(four) and len(kept) == 3  # only the audit sample is still fetched
+    kept, audit, pruned = screen_four_leg(four, dear, CFG, drop_unknown=True, audit=3)
+    assert kept == [] and len(audit) == 3 and pruned == len(four) - 3  # only the audit sample is still fetched
 
 
 def test_unknown_legs_are_kept_unless_asked_to_drop_them(plan):
     stage1, _, four = plan
     prices = {k: (20000 if "|NRT|" in k else 8000) if k.startswith("rt|") else 1000 for k in stage1}
-    kept, pruned = screen_four_leg(four, prices, CFG)
+    kept, _, pruned = screen_four_leg(four, prices, CFG)
     assert kept == list(four) and pruned == 0
-    kept, _ = screen_four_leg(four, prices, CFG, drop_unknown=True)
+    kept, _, _ = screen_four_leg(four, prices, CFG, drop_unknown=True)
     assert (
         kept == []
     )  # the legs were asked for but Google has no flight: the itinerary cannot exist
@@ -88,5 +88,20 @@ def test_two_segment_keys_are_not_screened(plan):
     two = [k for k in mc if len(parse_key(k)[1]) == 2]
     if not two:
         pytest.skip("this scenario makes no open-jaw queries")
-    kept, pruned = screen_four_leg(two, {}, CFG, drop_unknown=True)
+    kept, _, pruned = screen_four_leg(two, {}, CFG, drop_unknown=True)
     assert kept == two and pruned == 0
+
+
+def test_audit_keys_survive_ranking_when_the_caller_appends_them(plan):
+    """rank_multi_city keeps one key per group: audit keys would never be fetched if they went through it."""
+
+    from app.services.crawl_plan import rank_multi_city
+
+    stage1, mc, four = plan
+    dear = prices_for(stage1, four, ow=1000, leg=9000)
+    kept, audit, _ = screen_four_leg(mc, dear, CFG, audit=5)
+    assert len(audit) == 5
+    ranked = rank_multi_city(kept, dear, CFG, max_multi_city=260)
+    assert not set(audit) & set(ranked)  # ranking alone loses them ...
+    ranked += [k for k in audit if k not in ranked]
+    assert set(audit) <= set(ranked)  # ... appending them afterwards keeps them

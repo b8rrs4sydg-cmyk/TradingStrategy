@@ -101,8 +101,10 @@ def main() -> None:
         sys.exit(f"only {len(fares1)}/{len(stage1)} fares — Google may be blocking; keeping the old database")
 
     known = {k: e["price"] for k, e in db.fares.items()} | {k: e["price"] for k, e in fares1.items()}
-    mc_left, pruned = screen_four_leg(mc, known, cfg, drop_unknown=True)
+    # a leg missing from `known` may just have failed to load, so such keys stay (drop_unknown=False)
+    mc_left, audit, pruned = screen_four_leg(mc, known, cfg)
     picked = rank_multi_city(mc_left, known, cfg, max_multi_city=args.max_multi_city)
+    picked += [k for k in audit if k not in picked]  # after ranking, which would drop them
     print(
         f"stage2: {len(picked)} of {len(mc)} multi-city queries worth fetching "
         f"({pruned} four-leg combinations cannot beat round trips by their one-way floor)",

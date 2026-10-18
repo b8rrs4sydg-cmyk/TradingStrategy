@@ -161,8 +161,9 @@ def main() -> None:
         fares, missing = crawl(keys, f"s1-{i}", concurrency=args.concurrency, timeout_ms=25000)
     else:
         known = {k: e["price"] for k, e in db.fares.items()}
-        mc_left, _ = screen_four_leg(plan["mc"], known, cfg, drop_unknown=True)
+        mc_left, audit, _ = screen_four_leg(plan["mc"], known, cfg)  # unknown legs may be failed loads: keep
         ranked = rank_multi_city(mc_left, known, cfg, max_multi_city=args.max_multi_city)
+        ranked += [k for k in audit if k not in ranked]  # after ranking, which would drop them
         keys = stale(ranked, db, args.fresh_hours)[i::n]
         print(f"stage2 shard {i}/{n}: {len(keys)} of {len(ranked)} ranked multi-city queries "
               f"({len(plan['mc'])} candidates)", flush=True)

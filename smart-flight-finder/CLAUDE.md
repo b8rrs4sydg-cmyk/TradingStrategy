@@ -306,8 +306,9 @@ and shared by thousands of combinations, so:
   stage-1 one-way keys); the 10 closest pruned calls are still asked (audit) and `checkScreening` switches screening off if
   one comes back below its floor; "查找所有排列組合" (`SCREEN.all`) turns screening off; a user search resets it;
 * backend crawl (`crawl_plan.with_leg_keys` / `screen_four_leg`, used by `build_fare_snapshot.py` and `fill_fares.py`): the legs
-  join stage 1, 四腿票 keys whose floor reaches the room are dropped (audit sample kept); two-segment keys are not screened
-  there (a pair forms a plan);
+  join stage 1, 四腿票 keys whose floor reaches the room are dropped; a key with an unknown leg is KEPT (a failed load looks
+  like "no flight", so the scripts never pass `drop_unknown`); the audit sample is returned separately and appended AFTER
+  `rank_multi_city` (ranking would drop it); two-segment keys are not screened there (a pair forms a plan);
 * browser tuning does not help (`exp_browser_speed.py`: blocking images/fonts or a shorter settle wait changed nothing —
   multi-city pages are slow on Google's side); speed comes from asking less and from more crawlers.
 

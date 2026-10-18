@@ -181,15 +181,17 @@ def screen_four_leg(
     *,
     drop_unknown: bool = False,
     audit: int = SCREEN_AUDIT,
-) -> tuple[list[str], int]:
-    """(keys worth fetching, how many were pruned).
+) -> tuple[list[str], list[str], int]:
+    """(keys worth fetching, audit keys, how many were left out).
 
     A four-leg key is pruned when its one-way floor already reaches the money
     it may cost to save (:func:`four_leg_room`). A key whose legs are unknown is
-    kept, or dropped with ``drop_unknown`` (the legs were asked for and Google
-    has no flight on one of them, so the itinerary cannot exist). The ``audit``
-    closest calls among the pruned keys are kept to keep testing the bound.
-    Two-segment keys are not screened (a pair of them forms a plan).
+    kept, or dropped with ``drop_unknown`` (only for a caller that KNOWS Google has no
+    flight on one of the legs: a leg that merely failed to load is just as absent from
+    ``prices``, so the crawl scripts keep such keys). The ``audit`` closest calls among
+    the pruned keys come back separately: the caller must fetch them AFTER
+    ``rank_multi_city``, which would drop them (their budgets are the lowest) and leave the
+    bound untested. Two-segment keys are not screened (a pair of them forms a plan).
     """
 
     kept: list[str] = []
@@ -209,8 +211,8 @@ def screen_four_leg(
         else:
             pruned.append((floor / max(room, 1), key))
     pruned.sort()
-    kept += [key for _, key in pruned[:audit]]
-    return kept, len(pruned)
+    sample = [key for _, key in pruned[:audit]]
+    return kept, sample, len(pruned) - len(sample)
 
 
 def open_jaw_score(key: str, prices: Mapping[str, int]) -> tuple[float | None, tuple]:
