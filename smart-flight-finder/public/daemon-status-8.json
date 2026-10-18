@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:28:05+00:00",
+ "at": "2026-10-18T13:29:37+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 238,
  "log": [
-  "11:36:35 request received: rid mvdr2mz5gwiw5.8 10 keys",
-  "11:36:35 handle mvdr2mz5gwiw5.8: first_chunk=True total=10",
-  "11:37:23 request mvdr2mz5gwiw5.8: chunk of 10 keys done in 48s; paths {'http': 36, 'browser-none': 19, 'browser': 1}, browser waits 20 max 81s sum 995s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 14, 'blocked': 0, 'tries': 40, 'empty': 4}, audit 1/1 agree",
-  "11:37:24 request mvdr2mz5gwiw5.8: final sent (10/10); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:38:16 request received: rid mvdr4siu9xe7c.8 5 keys",
   "11:38:16 handle mvdr4siu9xe7c.8: first_chunk=True total=5",
   "11:39:04 request mvdr4siu9xe7c.8: chunk of 5 keys done in 49s; paths {'http': 38, 'browser-none': 22, 'browser': 1}, browser waits 23 max 81s sum 1138s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 38, 'miss': 16, 'blocked': 0, 'tries': 46, 'empty': 8}, audit 1/1 agree",
@@ -156,6 +152,10 @@
   "13:25:25 request mvduvnbnyqdms.8: chunk of 21 keys done in 137s; paths {'http': 133, 'browser-none': 406, 'browser': 16}, browser waits 422 max 147s sum 28096s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 173, 'blocked': 0, 'tries': 277, 'empty': 144}, audit 1/1 a",
   "13:25:25 request mvduvnbnyqdms.8: final sent (21/21); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:25:51 request received: rid mvduz5ua8wmki.8 25 keys",
-  "13:25:51 handle mvduz5ua8wmki.8: first_chunk=True total=25"
+  "13:25:51 handle mvduz5ua8wmki.8: first_chunk=True total=25",
+  "13:28:41 request mvduz5ua8wmki.8: chunk of 25 keys done in 169s; paths {'http': 133, 'browser-none': 431, 'browser': 16}, browser waits 447 max 169s sum 30350s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 173, 'blocked': 0, 'tries': 277, 'empty': 144}, audit 1/1 a",
+  "13:28:42 request mvduz5ua8wmki.8: final sent (25/25); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:29:01 request received: rid mvdv381qvx5x6.8 23 keys",
+  "13:29:01 handle mvdv381qvx5x6.8: first_chunk=True total=23"
  ]
 }
