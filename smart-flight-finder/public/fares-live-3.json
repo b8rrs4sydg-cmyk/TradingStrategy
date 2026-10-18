@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T14:26:58+00:00",
+ "generated_at": "2026-10-18T14:28:30+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -6043,6 +6043,22 @@
    "first": {
     "dep": "2027-01-04T22:30:00+08:00",
     "arr": "2027-01-05T09:25:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific, Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     5675
+    ]
+   ]
+  },
+  "ow|SHA|RMQ|2027-02-16": {
+   "price": 5675,
+   "first": {
+    "dep": "2027-02-16T13:35:00+08:00",
+    "arr": "2027-02-16T19:50:00+08:00",
     "stops": 1,
     "airline": "Cathay Pacific, Hong Kong Express"
    },
@@ -16313,6 +16329,7 @@
   "ow|RMQ|OKA|2027-09-15",
   "ow|RMQ|PVG|2027-09-15",
   "ow|RMQ|SZX|2027-01-02",
+  "ow|RMQ|TFU|2027-02-05",
   "ow|RMQ|UEO|2027-01-02",
   "ow|RMQ|UKB|2027-06-09",
   "ow|RMQ|USM|2027-01-01",
@@ -16349,6 +16366,7 @@
   "ow|TSA|OKA|2027-12-23",
   "ow|TSA|PUS|2027-06-09",
   "ow|TSA|USM|2026-12-31",
+  "ow|UEO|RMQ|2027-02-16",
   "ow|UEO|TPE|2027-01-04",
   "ow|UEO|TPE|2027-02-14",
   "ow|UEO|TSA|2027-03-01",
