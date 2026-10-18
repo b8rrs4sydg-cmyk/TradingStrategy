@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:24:00+00:00",
+ "at": "2026-10-18T10:25:32+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 898,
+ "fares_saved": 921,
  "log": [
   "08:41:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:41:57 http front door: ['https://convinced-loved-joke-sheer.trycloudflare.com', 'https://bfc61994f7fab6.lhr.life']",
@@ -141,6 +141,14 @@
   "10:22:56 request mvdoefma4ilwh.2: chunk of 27 keys done in 70s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 168, 'miss': 189, 'blocked': 0, 'tries': 186, 'empty': 18}, audit 0/0 agree",
   "10:22:59 request mvdoefma4ilwh.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "10:23:02 request mvdodgq94k98d.2: chunk of 27 keys done in 121s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 168, 'miss': 189, 'blocked': 0, 'tries': 186, 'empty': 18}, audit 0/0 agree",
-  "10:23:03 request mvdodgq94k98d.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "10:23:03 request mvdodgq94k98d.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:24:24 request received: rid mvdohst9h6yky.2 27 keys",
+  "10:24:24 handle mvdohst9h6yky.2: first_chunk=True total=27",
+  "10:24:26 request mvdofttvm1mr8.2: chunk of 27 keys done in 94s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 190, 'miss': 190, 'blocked': 0, 'tries': 210, 'empty': 20}, audit 0/0 agree",
+  "10:24:27 request mvdofttvm1mr8.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:25:26 request mvdohst9h6yky.2: chunk of 27 keys done in 62s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 191, 'miss': 193, 'blocked': 0, 'tries': 211, 'empty': 20}, audit 0/0 agree",
+  "10:25:28 request mvdohst9h6yky.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:25:31 request received: rid mvdoj8tiltid4.2 27 keys",
+  "10:25:31 handle mvdoj8tiltid4.2: first_chunk=True total=27"
  ]
 }
