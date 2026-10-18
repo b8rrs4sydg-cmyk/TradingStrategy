@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T11:40:17+00:00",
+ "at": "2026-10-18T11:41:49+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -49,6 +49,8 @@
   "11:39:15 request mvdr623air1zi.5: chunk of 2 keys done in 0s; paths {'http': 53, 'browser': 7, 'browser-none': 85}, browser waits 92 max 289s sum 8794s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 53, 'miss': 26, 'blocked': 1, 'tries': 84, 'empty': 31}, audit 2/2 agree",
   "11:39:17 request mvdr623air1zi.5: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:39:22 request received: rid mvdr67xtjeugt.5 15 keys",
-  "11:39:22 handle mvdr67xtjeugt.5: first_chunk=True total=15"
+  "11:39:22 handle mvdr67xtjeugt.5: first_chunk=True total=15",
+  "11:41:12 request mvdr67xtjeugt.5: chunk of 15 keys done in 110s; paths {'http': 55, 'browser': 7, 'browser-none': 98}, browser waits 105 max 289s sum 9536s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 38, 'blocked': 2, 'tries': 86, 'empty': 31}, audit 2/2 agree",
+  "11:41:13 request mvdr67xtjeugt.5: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
