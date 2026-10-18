@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:21:27+00:00",
+ "at": "2026-10-18T13:22:59+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 852,
  "log": [
-  "11:27:11 handle httptest1792322831: first_chunk=True total=20",
-  "11:27:12 request httptest1792322831: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
   "11:27:13 request httptest1792322831: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "11:27:23 rtc glu45aa3xu: answered",
   "11:27:25 rtc glu45aa3xu: data channel open",
@@ -156,6 +154,8 @@
   "13:13:29 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:15:12 subscribe error <urlopen error _ssl.c:993: The handshake operation timed out>; reconnecting",
   "13:20:19 request received: rid mvdus132ib8io.3 15 keys",
-  "13:20:19 handle mvdus132ib8io.3: first_chunk=True total=15"
+  "13:20:19 handle mvdus132ib8io.3: first_chunk=True total=15",
+  "13:22:01 request mvdus132ib8io.3: chunk of 15 keys done in 102s; paths {'http': 168, 'browser': 46, 'browser-none': 366}, browser waits 412 max 145s sum 24643s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 168, 'miss': 198, 'blocked': 0, 'tries': 314, 'empty': 146}, audit 3/3 a",
+  "13:22:03 request mvdus132ib8io.3: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
