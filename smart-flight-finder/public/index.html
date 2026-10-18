@@ -2603,6 +2603,20 @@ async function discoverDaemonNow(force) {
   return live.daemonUrl;
 }
 
+// Is the crawler (a GitHub Actions job) running at all? daemon-status.json is committed every ~90 s while it is.
+async function crawlerOfflineNote() {
+  try {
+    const url = DAEMON_RAW.replace('daemon.json', 'daemon-status.json') + `?_=${Date.now()}`;
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) return '';
+    const at = Date.parse((await r.json()).at);
+    const min = Math.round((Date.now() - at) / 60000);
+    if (!(min > 15)) return '';
+    const age = min >= 120 ? `${Math.round(min / 60)} 小時` : `${min} 分鐘`;
+    return `。爬蟲常駐程式已離線約 ${age}（最後一次更新 ${new Date(at).toLocaleString('zh-TW')}），需要重新啟動，不是你的網路問題`;
+  } catch { return ''; }
+}
+
 function ntfyLookup(keys, rid) {
   return new Promise((resolve, reject) => {
     let es = null, silence = null, opened = false, gotAny = false, finished = false, pollCtl = null;
@@ -2739,7 +2753,7 @@ async function startLookup(keys, viaClaude = false) {
       if (!live.ready || !rest.length) {
         clearInterval(live.timer);
         rest.forEach(k => live.asked.delete(k));
-        live.error = `${e.message || e}${live.ready ? '' : '（且無法改用 Claude 中繼）'}`;
+        live.error = `${e.message || e}${live.ready ? '' : '（且無法改用 Claude 中繼）'}${await crawlerOfflineNote()}`;
         renderLookup();
         return;
       }

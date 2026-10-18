@@ -4,7 +4,8 @@ name: Fare lookup daemon (always on)
 # demo page posts lookup requests there; the daemon fetches the fares from
 # Google Flights and streams them back, so lookups skip Claude entirely.
 # See smart-flight-finder/backend/scripts/lookup_daemon.py. Runs ~5h, restarted
-# every 5h by cron (a newer run cancels the previous one — a pushed fix takes over at once).
+# every 5h by cron — but schedules only fire on the DEFAULT branch, so until this branch is merged the
+# daemon must be restarted by pushing (a newer run cancels the previous one).
 on:
   schedule:
     - cron: "7 */5 * * *"
@@ -12,7 +13,7 @@ on:
     inputs:
       duration_minutes:
         description: "how long to stay up"
-        default: "310"
+        default: "340"
   push:
     branches: [claude/zealous-darwin-1kexus]
     paths:
