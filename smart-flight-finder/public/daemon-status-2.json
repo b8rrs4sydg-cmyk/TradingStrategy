@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:11:54+00:00",
+ "at": "2026-10-18T07:13:26+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 454,
+ "fares_saved": 457,
  "log": [
   "06:53:31 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:37 http front door: ['https://significant-pharmacology-mozilla-forge.trycloudflare.com', 'https://85e1f912d235f9.lhr.life']",
@@ -45,6 +45,8 @@
   "07:10:29 request mvdhhmomck4d7.2: chunk of 27 keys done in 131s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:10:31 request mvdhhmomck4d7.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:10:40 request received: rid mvdhko9pr3n4l.2 20 keys",
-  "07:10:40 handle mvdhko9pr3n4l.2: first_chunk=True total=20"
+  "07:10:40 handle mvdhko9pr3n4l.2: first_chunk=True total=20",
+  "07:12:43 request mvdhko9pr3n4l.2: chunk of 20 keys done in 122s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:12:43 request mvdhko9pr3n4l.2: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
