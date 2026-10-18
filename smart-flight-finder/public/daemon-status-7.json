@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:12:19+00:00",
+ "at": "2026-10-18T14:13:51+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 255,
  "log": [
-  "12:34:10 request mvdt3lqe1gaxb.7: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:34:27 request received: rid mvdt51s25md0i.7 15 keys",
-  "12:34:27 handle mvdt51s25md0i.7: first_chunk=True total=15",
-  "12:35:17 request mvdt51s25md0i.7: chunk of 15 keys done in 50s; paths {'http': 93, 'browser-none': 279, 'browser': 15}, browser waits 294 max 190s sum 20806s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 93, 'miss': 95, 'blocked': 0, 'tries': 180, 'empty': 87}, audit 1/1 agree",
   "12:35:17 request mvdt51s25md0i.7: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:36:06 request received: rid mvdt76lpchuwy.7 14 keys",
   "12:36:06 handle mvdt76lpchuwy.7: first_chunk=True total=14",
@@ -156,6 +152,10 @@
   "14:08:14 request mvdwfkuufgxco.7: chunk of 18 keys done in 97s; paths {'http': 153, 'browser-none': 691, 'browser': 40}, browser waits 731 max 190s sum 50791s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 153, 'miss': 232, 'blocked': 0, 'tries': 356, 'empty': 203}, audit 1/1 ag",
   "14:08:16 request mvdwfkuufgxco.7: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:10:08 request received: rid mvdwk3m53e01y.7 18 keys",
-  "14:10:08 handle mvdwk3m53e01y.7: first_chunk=True total=18"
+  "14:10:08 handle mvdwk3m53e01y.7: first_chunk=True total=18",
+  "14:12:28 request mvdwk3m53e01y.7: chunk of 18 keys done in 140s; paths {'http': 153, 'browser-none': 709, 'browser': 40}, browser waits 749 max 190s sum 52206s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 153, 'miss': 232, 'blocked': 0, 'tries': 356, 'empty': 203}, audit 1/1 a",
+  "14:12:30 request mvdwk3m53e01y.7: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:13:39 request received: rid mvdwomsbqll4d.7 19 keys",
+  "14:13:39 handle mvdwomsbqll4d.7: first_chunk=True total=19"
  ]
 }
