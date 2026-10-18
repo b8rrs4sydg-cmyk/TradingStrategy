@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T08:15:33+00:00",
+ "at": "2026-10-18T08:17:04+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 533,
+ "fares_saved": 535,
  "log": [
   "07:39:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:05 http front door: ['https://amend-carlo-subscribers-textbook.trycloudflare.com', 'https://76b8fa2d09e0dc.lhr.life']",
@@ -52,6 +52,8 @@
   "08:14:39 request mvdjqutevc6xe.1: chunk of 27 keys done in 191s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 49, 'miss': 53, 'blocked': 0, 'tries': 49, 'empty': 0}, audit 1/1 agree",
   "08:14:39 request mvdjqutevc6xe.1: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "08:14:51 request received: rid mvdjv7lucup7v.1 27 keys",
-  "08:14:51 handle mvdjv7lucup7v.1: first_chunk=True total=27"
+  "08:14:51 handle mvdjv7lucup7v.1: first_chunk=True total=27",
+  "08:16:54 request mvdjv7lucup7v.1: chunk of 27 keys done in 123s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 61, 'miss': 68, 'blocked': 0, 'tries': 61, 'empty': 0}, audit 1/1 agree",
+  "08:16:55 request mvdjv7lucup7v.1: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
