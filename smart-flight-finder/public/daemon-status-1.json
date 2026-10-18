@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:52:21+00:00",
+ "at": "2026-10-18T13:53:52+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1259,
  "log": [
-  "12:07:43 request received: rid mvds6nyh5n4is.1 15 keys",
-  "12:07:43 handle mvds6nyh5n4is.1: first_chunk=True total=15",
   "12:09:19 request mvds6nyh5n4is.1: chunk of 15 keys done in 97s; paths {'http': 59, 'browser': 38, 'browser-none': 231}, browser waits 269 max 236s sum 17354s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 72, 'blocked': 0, 'tries': 84, 'empty': 25}, audit 5/5 agree",
   "12:09:20 request mvds6nyh5n4is.1: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:10:35 request received: rid mvdsad9pusjjw.1 19 keys",
@@ -156,6 +154,8 @@
   "13:49:36 request mvdvs7vl0pzkl.1: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:50:47 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "13:50:57 request received: rid mvdvvfsqv12at.1 11 keys",
-  "13:50:57 handle mvdvvfsqv12at.1: first_chunk=True total=11"
+  "13:50:57 handle mvdvvfsqv12at.1: first_chunk=True total=11",
+  "13:52:32 request mvdvvfsqv12at.1: chunk of 11 keys done in 95s; paths {'http': 125, 'browser': 69, 'browser-none': 576}, browser waits 645 max 236s sum 40306s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 125, 'miss': 185, 'blocked': 0, 'tries': 249, 'empty': 124}, audit 5/5 ag",
+  "13:52:34 request mvdvvfsqv12at.1: final sent (11/11); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
