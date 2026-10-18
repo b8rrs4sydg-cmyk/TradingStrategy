@@ -275,8 +275,8 @@ button asks every remaining multi-city permutation, spread over the crawlers (`l
 
 ## Crawler count, dispatch and database safety
 
-`fare-daemon.yml` runs six daemon instances (matrix `[0..5]`, one GitHub job each: own IP, browser, tunnels, `daemon[-i].json`,
-`fares-live[-i].json`). The page's `INSTANCES` constant must match the matrix (`test_concurrent_db.py` checks it). Six is a
+`fare-daemon.yml` runs ten daemon instances (matrix `[0..9]`, one GitHub job each: own IP, browser, tunnels, `daemon[-i].json`,
+`fares-live[-i].json`). The page's `INSTANCES` constant must match the matrix (`test_concurrent_db.py` checks it). Ten (was six) is a
 trade-off, not a limit of the code. The real ceilings: GitHub's concurrent-job cap (≈20 on a free account, shared with the other
 workflows), two ntfy signalling messages per instance per page load (anonymous quota ≈250/day per IP) plus one WebRTC connection
 each, one git commit stream per instance, and Google's per-IP throttling (more instances on GitHub's shared IP ranges means more
