@@ -293,6 +293,9 @@ so concurrent processes lose no update; `Persister.flush` serialises threads wit
 files (single writer by construction); git pushes use `pull --rebase --autostash` with jittered retries. Workflows that write
 `fares.json` keep their `concurrency:` groups.
 
+The 10 % HTTP-vs-browser audit runs in the BACKGROUND (`Daemon.audit_key`): the page gets the HTTP price at once instead of waiting for a
+browser tab. Each request's log line breaks the time down (`paths {...}`, `browser waits N max Xs sum Ys`) — read it before tuning.
+
 ## One-way screening of multi-city tickets (四腿票 / 反向票＋倒買法)
 
 Measured on real fares (`scripts/exp_mc_vs_ow.py`, 70 multi-city fares priced leg by leg): a multi-city fare is never below the

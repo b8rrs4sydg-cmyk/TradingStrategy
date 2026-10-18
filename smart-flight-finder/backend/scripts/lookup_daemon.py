@@ -37,7 +37,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
-from collections import deque
+from collections import Counter, deque
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -382,6 +382,10 @@ class Daemon:
         # key → the lookup that is running for it now: a second ask (another page, a retry, a re-routed share) waits for
         # that one instead of fetching the same fare again
         self.inflight: dict[str, asyncio.Future] = {}
+        # where the time goes (logged per request): keys by path, and seconds spent waiting for the browser
+        self.path: Counter[str] = Counter()
+        self.browser_s: list[float] = []
+        self.audits: set[asyncio.Task] = set()
         self.requests: dict[str, dict] = {}  # rid → {total, done}
         self.seen: set[str] = set()
         self.queue: asyncio.Queue = asyncio.Queue()
@@ -526,7 +530,9 @@ class Daemon:
             state["active"] -= 1
             state["last_activity"] = time.time()
         log(
-            f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}"
+            f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; paths {dict(self.path)}, "
+            f"browser waits {len(self.browser_s)} max {max(self.browser_s, default=0):.0f}s "
+            f"sum {sum(self.browser_s):.0f}s; ntfy publishes {PUB}"
             + (
                 f"; plain HTTP {self.http.stats}, audit {self.audit.count(True)}/{len(self.audit)} agree"
                 if self.http
@@ -581,20 +587,31 @@ class Daemon:
                 quick = await self.http.fetch(key)
             except Exception as e:  # noqa: BLE001
                 log(f"http fetch failed {key}: {e}")
-        if quick is not None and random.random() >= HTTP_AUDIT:
-            return quick, False
-        entry, crashed = await self.browser_price(key, ctx, sem, seq)
         if quick is not None:
-            if entry is None:  # the browser could not confirm: keep the HTTP price
-                return quick, False
-            self.audit.append(abs(quick["price"] - entry["price"]) <= 0.03 * entry["price"])
-            if len(self.audit) >= 20 and self.audit.count(False) > 0.2 * len(self.audit):
-                log(
-                    f"plain-HTTP prices disagree with the browser ({self.audit.count(False)}/{len(self.audit)}): paused"
-                )
-                self.http.pause_until = time.time() + 1800
-                self.audit.clear()
+            self.path["http"] += 1
+            if random.random() < HTTP_AUDIT:
+                # the check against the browser runs in the background: the page already has its price
+                task = asyncio.create_task(self.audit_key(key, quick, ctx, sem, seq))
+                self.audits.add(task)
+                task.add_done_callback(self.audits.discard)
+            return quick, False
+        t0 = time.time()
+        entry, crashed = await self.browser_price(key, ctx, sem, seq)
+        self.browser_s.append(time.time() - t0)
+        self.path["browser-crashed" if crashed else "browser" if entry else "browser-none"] += 1
         return entry, crashed
+
+    async def audit_key(self, key: str, quick: dict, ctx, sem: PriorityGate, seq: int) -> None:
+        """Compare a plain-HTTP price with the browser's; when they disagree too often, switch HTTP off for a while."""
+
+        entry, _ = await self.browser_price(key, ctx, sem, seq)
+        if entry is None:  # the browser could not confirm: nothing to compare
+            return
+        self.audit.append(abs(quick["price"] - entry["price"]) <= 0.03 * entry["price"])
+        if self.http is not None and len(self.audit) >= 20 and self.audit.count(False) > 0.2 * len(self.audit):
+            log(f"plain-HTTP prices disagree with the browser ({self.audit.count(False)}/{len(self.audit)}): paused")
+            self.http.pause_until = time.time() + 1800
+            self.audit.clear()
 
     # --- peer-to-peer front door (WebRTC): no tunnel, no GitHub API -------------------------------
     def start_rtc(self, loop, stop: threading.Event) -> None:
