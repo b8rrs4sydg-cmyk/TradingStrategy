@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T14:24:58+00:00",
+ "at": "2026-10-18T14:27:59+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 355,
+ "fares_saved": 364,
  "log": [
-  "12:40:13 request mvdtaf8zalrpu.9: chunk of 15 keys done in 96s; paths {'http': 128, 'browser-none': 236, 'browser': 12}, browser waits 248 max 143s sum 15199s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 128, 'miss': 127, 'blocked': 0, 'tries': 239, 'empty': 111}, audit 2/2 ag",
-  "12:40:14 request mvdtaf8zalrpu.9: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:41:05 request received: rid mvdtdjwntntwn.8 15 keys",
-  "12:41:05 handle mvdtdjwntntwn.8: first_chunk=True total=15",
   "12:42:55 request mvdtdjwntntwn.8: chunk of 15 keys done in 110s; paths {'http': 131, 'browser-none': 248, 'browser': 12}, browser waits 260 max 143s sum 15911s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 139, 'blocked': 0, 'tries': 247, 'empty': 116}, audit 2/2 a",
   "12:42:56 request mvdtdjwntntwn.8: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:43:33 request received: rid mvdtgqu565myx.9 11 keys",
@@ -156,6 +152,10 @@
   "14:23:09 request received: rid mvdx0ua9zmg5h.9 15 keys",
   "14:23:09 handle mvdx0ua9zmg5h.9: first_chunk=True total=15",
   "14:23:59 request mvdx0ua9zmg5h.9: chunk of 15 keys done in 50s; paths {'http': 229, 'browser-none': 600, 'browser': 47}, browser waits 647 max 145s sum 39235s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 229, 'miss': 271, 'blocked': 0, 'tries': 478, 'empty': 249}, audit 2/2 ag",
-  "14:24:01 request mvdx0ua9zmg5h.9: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:24:01 request mvdx0ua9zmg5h.9: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:26:46 request received: rid mvdx5hwcuvefe.9 15 keys",
+  "14:26:46 handle mvdx5hwcuvefe.9: first_chunk=True total=15",
+  "14:27:44 request mvdx5hwcuvefe.9: chunk of 15 keys done in 58s; paths {'http': 239, 'browser-none': 604, 'browser': 48}, browser waits 652 max 145s sum 39408s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 239, 'miss': 275, 'blocked': 0, 'tries': 495, 'empty': 256}, audit 3/3 ag",
+  "14:27:46 request mvdx5hwcuvefe.9: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
