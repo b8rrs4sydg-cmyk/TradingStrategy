@@ -1,20 +1,12 @@
 {
- "at": "2026-10-18T21:36:09+00:00",
+ "at": "2026-10-18T21:37:41+00:00",
  "publishes": {
   "ok": 13,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4482,
+ "fares_saved": 4510,
  "log": [
-  "20:59:54 request mveb0xuquty77.3: chunk of 15 keys done in 286s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "20:59:55 request mveb0xuquty77.3: final sent (15/15); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:00:14 request mveb0xuquty77.2: chunk of 18 keys done in 305s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:00:15 request mveb0xuquty77.2: final sent (18/18); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:00:36 request mveb0xuquty77.1: chunk of 13 keys done in 328s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:00:37 request mveb0xuquty77.1: final sent (13/13); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:01:00 request mveb0xuquty77.0: chunk of 21 keys done in 352s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:01:02 request mveb0xuquty77.0: final sent (21/21); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "21:04:49 request received: rid mvebde02mi6a7.0 13 keys",
   "21:04:49 handle mvebde02mi6a7.0: first_chunk=True total=13",
   "21:04:49 request received: rid mvebde02mi6a7.3 13 keys",
@@ -156,6 +148,14 @@
   "21:35:49 request mvecf35ab9zsk.4: chunk of 12 keys done in 99s; ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
   "21:35:50 request mvecf35ab9zsk.4: final sent (12/12); ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
   "21:36:07 request mvecf35ab9zsk.5: chunk of 20 keys done in 117s; ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
-  "21:36:08 request mvecf35ab9zsk.5: final sent (20/20); ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}"
+  "21:36:08 request mvecf35ab9zsk.5: final sent (20/20); ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "21:36:28 request mvecf35ab9zsk.3: chunk of 21 keys done in 138s; ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "21:36:29 request mvecf35ab9zsk.3: final sent (21/21); ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "21:36:40 request mvecf35ab9zsk.2: chunk of 15 keys done in 150s; ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "21:36:40 request mvecf35ab9zsk.2: final sent (15/15); ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "21:36:50 request mvecf35ab9zsk.0: chunk of 16 keys done in 161s; ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "21:36:51 request mvecf35ab9zsk.0: final sent (16/16); ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "21:36:51 request mvecf35ab9zsk.1: chunk of 24 keys done in 162s; ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}",
+  "21:36:53 request mvecf35ab9zsk.1: final sent (24/24); ntfy publishes {'ok': 13, 'r429': 0, 'fail': 0}"
  ]
 }
