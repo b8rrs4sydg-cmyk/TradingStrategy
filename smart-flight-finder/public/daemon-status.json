@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:41:26+00:00",
+ "at": "2026-10-18T11:42:57+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4360,
+ "fares_saved": 4363,
  "log": [
   "11:26:05 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:12 http front door: ['https://samuel-emerald-roommate-tobacco.trycloudflare.com', 'https://32a93706ba4f74.lhr.life']",
@@ -51,6 +51,8 @@
   "11:39:22 request received: rid mvdr67xtjeugt.0 13 keys",
   "11:39:22 handle mvdr67xtjeugt.0: first_chunk=True total=13",
   "11:40:45 request mvdr67xtjeugt.0: chunk of 13 keys done in 82s; paths {'http': 59, 'browser': 42, 'browser-none': 71}, browser waits 113 max 211s sum 7428s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 31, 'blocked': 0, 'tries': 85, 'empty': 26}, audit 6/6 agree",
-  "11:40:46 request mvdr67xtjeugt.0: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:40:46 request mvdr67xtjeugt.0: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:41:59 request received: rid mvdr9kyr2z95g.0 9 keys",
+  "11:41:59 handle mvdr9kyr2z95g.0: first_chunk=True total=9"
  ]
 }
