@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:00:38+00:00",
+ "at": "2026-10-18T13:02:09+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 1256,
  "log": [
-  "11:26:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:26:13 http front door: ['https://vegetables-defining-facial-granted.trycloudflare.com', 'https://17c1d95da2fbab.lhr.life']",
-  "11:26:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:27:17 request received: rid httptest1792322837 20 keys",
   "11:27:17 handle httptest1792322837: first_chunk=True total=20",
   "11:27:19 request httptest1792322837: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
   "11:27:19 request httptest1792322837: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "12:57:29 request mvdtx7hj8r15t.1: chunk of 7 keys done in 68s; paths {'http': 120, 'browser': 62, 'browser-none': 391}, browser waits 453 max 236s sum 27998s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 144, 'blocked': 0, 'tries': 204, 'empty': 84}, audit 5/5 agre",
   "12:57:30 request mvdtx7hj8r15t.1: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:59:01 request received: rid mvdu0njwqw7q9.1 16 keys",
-  "12:59:01 handle mvdu0njwqw7q9.1: first_chunk=True total=16"
+  "12:59:01 handle mvdu0njwqw7q9.1: first_chunk=True total=16",
+  "13:00:38 request mvdu0njwqw7q9.1: chunk of 16 keys done in 97s; paths {'http': 120, 'browser': 62, 'browser-none': 407}, browser waits 469 max 236s sum 29132s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 144, 'blocked': 0, 'tries': 204, 'empty': 84}, audit 5/5 agr",
+  "13:00:40 request mvdu0njwqw7q9.1: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:01:39 request received: rid mvdu41h7b76yp.1 8 keys",
+  "13:01:39 handle mvdu41h7b76yp.1: first_chunk=True total=8"
  ]
 }
