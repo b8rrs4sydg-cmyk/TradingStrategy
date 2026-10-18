@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:44:50+00:00",
+ "at": "2026-10-18T14:46:22+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 376,
  "log": [
-  "12:49:34 request mvdtn3iltwypi.6: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:50:55 request received: rid mvdtq88z7zvuk.6 19 keys",
-  "12:50:55 handle mvdtq88z7zvuk.6: first_chunk=True total=19",
-  "12:52:37 request mvdtq88z7zvuk.6: chunk of 19 keys done in 102s; paths {'http': 170, 'browser-none': 273, 'browser': 11}, browser waits 284 max 145s sum 16555s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 170, 'miss': 186, 'blocked': 0, 'tries': 326, 'empty': 156}, audit 3/3 a",
   "12:52:38 request mvdtq88z7zvuk.6: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:53:23 request received: rid mvdttemfkl6n6.6 14 keys",
   "12:53:23 handle mvdttemfkl6n6.6: first_chunk=True total=14",
@@ -156,6 +152,10 @@
   "14:42:15 request received: rid mvdxpelbl6r2e.6 16 keys",
   "14:42:15 handle mvdxpelbl6r2e.6: first_chunk=True total=16",
   "14:43:54 request mvdxpelbl6r2e.6: chunk of 16 keys done in 99s; paths {'http': 284, 'browser-none': 649, 'browser': 27}, browser waits 676 max 192s sum 41519s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 284, 'miss': 365, 'blocked': 0, 'tries': 651, 'empty': 367}, audit 3/3 ag",
-  "14:43:56 request mvdxpelbl6r2e.6: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:43:56 request mvdxpelbl6r2e.6: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:45:30 request received: rid mvdxtlbuzssqu.6 2 keys",
+  "14:45:30 handle mvdxtlbuzssqu.6: first_chunk=True total=2",
+  "14:46:17 request mvdxtlbuzssqu.6: chunk of 2 keys done in 46s; paths {'http': 284, 'browser-none': 651, 'browser': 27}, browser waits 678 max 192s sum 41611s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 284, 'miss': 365, 'blocked': 0, 'tries': 651, 'empty': 367}, audit 3/3 agr",
+  "14:46:18 request mvdxtlbuzssqu.6: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
