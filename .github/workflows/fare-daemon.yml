@@ -19,6 +19,8 @@ on:
     paths:
       - ".github/workflows/fare-daemon.yml"
       - "smart-flight-finder/backend/scripts/lookup_daemon.py"
+      - "smart-flight-finder/backend/app/providers/google_http.py"
+      - "smart-flight-finder/backend/app/providers/google_flights.py"
 
 permissions:
   contents: write
