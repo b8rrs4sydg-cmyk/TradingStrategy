@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T13:52:55+00:00",
+ "at": "2026-10-18T13:54:27+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 557,
+ "fares_saved": 566,
  "log": [
-  "12:07:35 request mvds2wisp31cv.4: chunk of 24 keys done in 168s; paths {'http': 58, 'browser': 35, 'browser-none': 200}, browser waits 235 max 185s sum 14525s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 58, 'miss': 81, 'blocked': 0, 'tries': 78, 'empty': 20}, audit 8/8 agree",
-  "12:07:37 request mvds2wisp31cv.4: final sent (24/24); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:07:43 request received: rid mvds6nyh5n4is.4 20 keys",
-  "12:07:43 handle mvds6nyh5n4is.4: first_chunk=True total=20",
   "12:09:23 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "12:10:07 request mvds6nyh5n4is.4: chunk of 20 keys done in 144s; paths {'http': 58, 'browser': 35, 'browser-none': 220}, browser waits 255 max 185s sum 16245s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 58, 'miss': 81, 'blocked': 0, 'tries': 78, 'empty': 20}, audit 8/8 agree",
   "12:10:09 request mvds6nyh5n4is.4: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "13:49:17 request mvdvs7vl0pzkl.4: chunk of 13 keys done in 50s; paths {'http': 147, 'browser': 38, 'browser-none': 582}, browser waits 620 max 185s sum 40459s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 147, 'miss': 220, 'blocked': 0, 'tries': 308, 'empty': 161}, audit 8/8 ag",
   "13:49:19 request mvdvs7vl0pzkl.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:50:57 request received: rid mvdvvfsqv12at.4 22 keys",
-  "13:50:57 handle mvdvvfsqv12at.4: first_chunk=True total=22"
+  "13:50:57 handle mvdvvfsqv12at.4: first_chunk=True total=22",
+  "13:53:18 request mvdvvfsqv12at.4: chunk of 22 keys done in 141s; paths {'http': 154, 'browser': 38, 'browser-none': 597}, browser waits 635 max 185s sum 41558s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 154, 'miss': 235, 'blocked': 0, 'tries': 343, 'empty': 189}, audit 8/8 a",
+  "13:53:19 request mvdvvfsqv12at.4: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:54:12 request received: rid mvdvzm7py87si.4 13 keys",
+  "13:54:12 handle mvdvzm7py87si.4: first_chunk=True total=13"
  ]
 }
