@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T08:15:47+00:00",
+ "at": "2026-10-18T08:17:18+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 618,
+ "fares_saved": 619,
  "log": [
   "07:39:12 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:18 http front door: ['https://accomplish-slots-leading-element.trycloudflare.com', 'https://9aee7fc354edc6.lhr.life']",
@@ -53,6 +53,8 @@
   "08:13:19 request mvdjqutevc6xe.2: chunk of 27 keys done in 111s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 134, 'miss': 76, 'blocked': 0, 'tries': 135, 'empty': 1}, audit 3/3 agree",
   "08:13:22 request mvdjqutevc6xe.2: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "08:14:51 request received: rid mvdjv7lucup7v.2 27 keys",
-  "08:14:51 handle mvdjv7lucup7v.2: first_chunk=True total=27"
+  "08:14:51 handle mvdjv7lucup7v.2: first_chunk=True total=27",
+  "08:16:51 request mvdjv7lucup7v.2: chunk of 27 keys done in 120s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 149, 'miss': 88, 'blocked': 0, 'tries': 150, 'empty': 1}, audit 3/3 agree",
+  "08:16:52 request mvdjv7lucup7v.2: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
