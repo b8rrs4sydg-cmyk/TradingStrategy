@@ -1,0 +1,34 @@
+{
+ "at": "2026-10-18T11:10:55+00:00",
+ "publishes": {
+  "ok": 1,
+  "r429": 0,
+  "fail": 0
+ },
+ "fares_saved": 39,
+ "log": [
+  "11:00:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:00:28 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
+  "11:00:30 git retry 1: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
+  "11:00:34 git retry 2: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
+  "11:00:42 git retry 3: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
+  "11:00:52 git retry 4: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
+  "11:01:05 git retry 5: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
+  "11:01:19 git retry 6: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
+  "11:01:33 git retry 7: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
+  "11:01:50 http front door: ['https://jose-payday-whose-sodium.trycloudflare.com', 'https://e4dfb908706291.lhr.life']",
+  "11:01:50 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:01:50 request received: rid httptest1792321294 20 keys",
+  "11:01:50 handle httptest1792321294: first_chunk=True total=20",
+  "11:01:54 request httptest1792321294: chunk of 20 keys done in 4s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
+  "11:01:56 request httptest1792321294: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:07:32 rtc 9z8r7azojk: answered",
+  "11:07:34 rtc 9z8r7azojk: data channel open",
+  "11:07:34 request received: rid mvdq18d0uxyoh.6 20 keys",
+  "11:07:34 handle mvdq18d0uxyoh.6: first_chunk=True total=20",
+  "11:08:49 request mvdq18d0uxyoh.6: chunk of 20 keys done in 74s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 34, 'miss': 6, 'blocked': 0, 'tries': 36, 'empty': 2}, audit 2/2 agree",
+  "11:08:50 request mvdq18d0uxyoh.6: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:09:22 request received: rid mvdq3n0swicud.6 17 keys",
+  "11:09:22 handle mvdq3n0swicud.6: first_chunk=True total=17"
+ ]
+}
