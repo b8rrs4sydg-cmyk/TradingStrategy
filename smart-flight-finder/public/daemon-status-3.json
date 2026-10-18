@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:17:50+00:00",
+ "at": "2026-10-18T12:34:22+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 765,
+ "fares_saved": 777,
  "log": [
   "11:26:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:07 http front door: ['https://rugby-lime-feb-packages.trycloudflare.com', 'https://31a5df0d9304d4.lhr.life']",
@@ -97,6 +97,12 @@
   "12:16:28 request received: rid mvdshwzhdvehp.3 3 keys",
   "12:16:28 handle mvdshwzhdvehp.3: first_chunk=True total=3",
   "12:17:17 request mvdshwzhdvehp.3: chunk of 3 keys done in 50s; paths {'http': 119, 'browser': 8, 'browser-none': 227}, browser waits 235 max 145s sum 15844s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 119, 'miss': 130, 'blocked': 0, 'tries': 203, 'empty': 84}, audit 3/3 agree",
-  "12:17:18 request mvdshwzhdvehp.3: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "12:17:18 request mvdshwzhdvehp.3: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "12:31:42 rtc dzzwltagp7: answered",
+  "12:31:43 rtc dzzwltagp7: data channel open",
+  "12:33:19 request received: rid mvdt3lqe1gaxb.3 15 keys",
+  "12:33:19 handle mvdt3lqe1gaxb.3: first_chunk=True total=15",
+  "12:34:10 request mvdt3lqe1gaxb.3: chunk of 15 keys done in 50s; paths {'http': 131, 'browser': 8, 'browser-none': 230}, browser waits 238 max 145s sum 15983s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 133, 'blocked': 0, 'tries': 221, 'empty': 90}, audit 3/3 agre",
+  "12:34:12 request mvdt3lqe1gaxb.3: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
