@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:33:13+00:00",
+ "at": "2026-10-18T12:34:45+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1290,
+ "fares_saved": 1317,
  "log": [
   "11:26:06 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:12 git retry 0: b\"-1kexus': is at 157fae3f04ad0e206020ae93d610851b7f66be33 but expected 53b6681c237f3526571c0698a51d8b76429bf8f3)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -99,6 +99,14 @@
   "12:17:17 request mvdshwzhdvehp.2: chunk of 1 keys done in 50s; paths {'http': 78, 'browser-none': 150, 'browser': 25}, browser waits 175 max 95s sum 8723s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 78, 'miss': 88, 'blocked': 0, 'tries': 140, 'empty': 62}, audit 3/3 agree",
   "12:17:19 request mvdshwzhdvehp.2: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:31:41 request received: rid mvdt1gqtew69c.2 22 keys",
-  "12:31:41 handle mvdt1gqtew69c.2: first_chunk=True total=22"
+  "12:31:41 handle mvdt1gqtew69c.2: first_chunk=True total=22",
+  "12:33:15 request mvdt1gqtew69c.2: chunk of 22 keys done in 94s; paths {'http': 94, 'browser-none': 156, 'browser': 25}, browser waits 181 max 95s sum 9053s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 94, 'miss': 94, 'blocked': 0, 'tries': 168, 'empty': 74}, audit 3/3 agree",
+  "12:33:17 request mvdt1gqtew69c.2: final sent (22/22); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:33:19 request received: rid mvdt3lqe1gaxb.2 13 keys",
+  "12:33:19 handle mvdt3lqe1gaxb.2: first_chunk=True total=13",
+  "12:34:15 request mvdt3lqe1gaxb.2: chunk of 13 keys done in 56s; paths {'http': 103, 'browser-none': 160, 'browser': 25}, browser waits 185 max 95s sum 9241s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 103, 'miss': 98, 'blocked': 0, 'tries': 185, 'empty': 82}, audit 3/3 agree",
+  "12:34:16 request mvdt3lqe1gaxb.2: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:34:27 request received: rid mvdt51s25md0i.2 20 keys",
+  "12:34:27 handle mvdt51s25md0i.2: first_chunk=True total=20"
  ]
 }
