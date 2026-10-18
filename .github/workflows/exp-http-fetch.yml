@@ -13,6 +13,7 @@ on:
       - "smart-flight-finder/backend/scripts/exp_mc_replay.py"
       - "smart-flight-finder/backend/scripts/exp_mc_build.py"
       - "smart-flight-finder/backend/scripts/exp_http_validate.py"
+      - "smart-flight-finder/backend/scripts/exp_http_xhr.py"
       - "smart-flight-finder/backend/app/providers/google_http.py"
   workflow_dispatch:
 
@@ -33,4 +34,4 @@ jobs:
           python-version: "3.12"
       - run: pip install -e . requests "playwright>=1.50,<2"
       - run: playwright install --with-deps chromium
-      - run: python -m scripts.exp_http_validate ../public/fares.json 20
+      - run: python -m scripts.exp_http_xhr ../public/fares.json
