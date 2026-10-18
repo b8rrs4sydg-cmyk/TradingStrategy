@@ -1,14 +1,12 @@
 {
- "at": "2026-10-18T15:02:30+00:00",
+ "at": "2026-10-18T15:05:32+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 341,
+ "fares_saved": 354,
  "log": [
-  "13:05:06 handle mvdu8gogkouz6.7: first_chunk=True total=18",
-  "13:06:52 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "13:06:57 git retry 1: b\"-1kexus': is at febd77b6e46d273ca11866e89b6e39b2d15afa92 but expected 741e942a6d582e7f07607e82a49b0a7e55ad78b1)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "13:07:15 request mvdu8gogkouz6.7: chunk of 18 keys done in 130s; paths {'http': 100, 'browser-none': 452, 'browser': 39}, browser waits 491 max 190s sum 33238s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 100, 'miss': 144, 'blocked': 0, 'tries': 211, 'empty': 111}, audit 1/1 a",
   "13:07:16 request mvdu8gogkouz6.7: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "14:59:38 request received: rid mvdybqcnh7f91.6 16 keys",
   "14:59:38 handle mvdybqcnh7f91.6: first_chunk=True total=16",
   "15:01:15 request mvdybqcnh7f91.6: chunk of 16 keys done in 97s; paths {'http': 253, 'browser-none': 827, 'browser': 40}, browser waits 867 max 190s sum 59351s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 253, 'miss': 327, 'blocked': 0, 'tries': 580, 'empty': 327}, audit 1/1 ag",
-  "15:01:16 request mvdybqcnh7f91.6: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "15:01:16 request mvdybqcnh7f91.6: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:04:10 request received: rid mvdyhlkogi3ru.7 28 keys",
+  "15:04:10 handle mvdyhlkogi3ru.7: first_chunk=True total=28"
  ]
 }
