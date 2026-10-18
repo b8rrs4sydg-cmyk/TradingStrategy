@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:23:28+00:00",
+ "at": "2026-10-18T07:24:59+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 473,
+ "fares_saved": 474,
  "log": [
   "07:18:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:55 http front door: ['https://logic-guy-cook-released.trycloudflare.com', 'https://b2335e4f30e263.lhr.life']",
@@ -34,6 +34,8 @@
   "07:21:47 request mvdhxczwvgihz.2: chunk of 27 keys done in 74s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 24, 'blocked': 0, 'tries': 80, 'empty': 0}, audit 8/9 agree",
   "07:21:48 request mvdhxczwvgihz.2: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "07:21:52 request mvdhxepvyloyl.2: chunk of 27 keys done in 78s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 27, 'blocked': 0, 'tries': 80, 'empty': 0}, audit 8/9 agree",
-  "07:21:55 request mvdhxepvyloyl.2: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "07:21:55 request mvdhxepvyloyl.2: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "07:23:42 request mvdhxkhy45w9s.2: chunk of 27 keys done in 180s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 28, 'blocked': 0, 'tries': 80, 'empty': 0}, audit 8/9 agree",
+  "07:23:43 request mvdhxkhy45w9s.2: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
