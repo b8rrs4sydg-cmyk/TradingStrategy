@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:33:34+00:00",
+ "at": "2026-10-18T12:35:06+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 867,
+ "fares_saved": 877,
  "log": [
   "11:26:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:33 http front door: ['https://beef-makes-hire-grow.trycloudflare.com', 'https://39b8e78c080491.lhr.life']",
@@ -109,6 +109,10 @@
   "12:32:29 request mvdt1gqtew69c.4: chunk of 8 keys done in 48s; paths {'http': 95, 'browser': 24, 'browser-none': 287}, browser waits 311 max 289s sum 22771s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 95, 'miss': 121, 'blocked': 12, 'tries': 172, 'empty': 77}, audit 2/2 agree",
   "12:32:29 request mvdt1gqtew69c.4: final sent (8/8); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:33:19 request received: rid mvdt3lqe1gaxb.5 14 keys",
-  "12:33:19 handle mvdt3lqe1gaxb.5: first_chunk=True total=14"
+  "12:33:19 handle mvdt3lqe1gaxb.5: first_chunk=True total=14",
+  "12:34:24 request mvdt3lqe1gaxb.5: chunk of 14 keys done in 64s; paths {'http': 104, 'browser': 25, 'browser-none': 291}, browser waits 316 max 289s sum 22957s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 104, 'miss': 125, 'blocked': 13, 'tries': 185, 'empty': 81}, audit 4/4 ag",
+  "12:34:25 request mvdt3lqe1gaxb.5: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:34:27 request received: rid mvdt51s25md0i.5 9 keys",
+  "12:34:27 handle mvdt51s25md0i.5: first_chunk=True total=9"
  ]
 }
