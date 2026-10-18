@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T09:04:48+00:00",
+ "at": "2026-10-18T09:09:19+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 327,
+ "fares_saved": 330,
  "log": [
   "08:41:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:42:04 http front door: ['https://breathing-card-reseller-courses.trycloudflare.com', 'https://7f29aa3e6f9db3.lhr.life']",
@@ -33,6 +33,8 @@
   "09:04:38 request mvdlizt0lfaec.5: chunk of 26 keys done in 189s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 44, 'miss': 28, 'blocked': 0, 'tries': 46, 'empty': 2}, audit 1/1 agree",
   "09:04:39 request mvdlizt0lfaec.5: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "09:04:46 rtc yhkdh4vt5e: answered",
-  "09:04:47 rtc yhkdh4vt5e: data channel open"
+  "09:04:47 rtc yhkdh4vt5e: data channel open",
+  "09:08:06 request received: rid mvdlroadz0eb1.5 26 keys",
+  "09:08:06 handle mvdlroadz0eb1.5: first_chunk=True total=26"
  ]
 }
