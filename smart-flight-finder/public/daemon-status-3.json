@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:06:43+00:00",
+ "at": "2026-10-18T11:08:15+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 553,
+ "fares_saved": 568,
  "log": [
   "11:00:34 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:40 http front door: ['https://pierre-created-barely-circulation.trycloudflare.com', 'https://cd4409eff22c9f.lhr.life']",
@@ -17,6 +17,10 @@
   "11:03:55 request received: rid mvdpwl7sqfww0.3 27 keys",
   "11:03:55 handle mvdpwl7sqfww0.3: first_chunk=True total=27",
   "11:05:32 request mvdpwl7sqfww0.3: chunk of 27 keys done in 97s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 39, 'miss': 8, 'blocked': 0, 'tries': 57, 'empty': 18}, audit 4/4 agree",
-  "11:05:34 request mvdpwl7sqfww0.3: final sent (27/27); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "11:05:34 request mvdpwl7sqfww0.3: final sent (27/27); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:07:32 rtc pfp3q9eohf: answered",
+  "11:07:34 rtc pfp3q9eohf: data channel open",
+  "11:07:34 request received: rid mvdq18d0uxyoh.3 19 keys",
+  "11:07:34 handle mvdq18d0uxyoh.3: first_chunk=True total=19"
  ]
 }
