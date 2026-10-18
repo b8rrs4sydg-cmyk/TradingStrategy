@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T15:24:20+00:00",
+ "at": "2026-10-18T15:27:21+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 443,
+ "fares_saved": 453,
  "log": [
-  "13:22:05 request mvdus132ib8io.6: chunk of 16 keys done in 106s; paths {'http': 179, 'browser-none': 357, 'browser': 13}, browser waits 370 max 192s sum 22855s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 229, 'blocked': 0, 'tries': 357, 'empty': 178}, audit 3/3 a",
-  "13:22:07 request mvdus132ib8io.6: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:23:07 request received: rid mvduvnbnyqdms.6 17 keys",
-  "13:23:07 handle mvduvnbnyqdms.6: first_chunk=True total=17",
   "13:25:27 request mvduvnbnyqdms.6: chunk of 17 keys done in 139s; paths {'http': 179, 'browser-none': 374, 'browser': 13}, browser waits 387 max 192s sum 24133s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 229, 'blocked': 0, 'tries': 357, 'empty': 178}, audit 3/3 a",
   "13:25:29 request mvduvnbnyqdms.6: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:25:51 request received: rid mvduz5ua8wmki.6 15 keys",
@@ -156,6 +152,10 @@
   "15:22:33 request received: rid mvdz58ghuswdl.6 12 keys",
   "15:22:33 handle mvdz58ghuswdl.6: first_chunk=True total=12",
   "15:23:34 request mvdz58ghuswdl.6: chunk of 12 keys done in 61s; paths {'http': 362, 'browser-none': 706, 'browser': 27}, browser waits 733 max 192s sum 44781s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 362, 'miss': 401, 'blocked': 0, 'tries': 789, 'empty': 427}, audit 3/3 ag",
-  "15:23:35 request mvdz58ghuswdl.6: final sent (12/12); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "15:23:35 request mvdz58ghuswdl.6: final sent (12/12); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:25:54 request received: rid mvdz9jqta82r6.6 13 keys",
+  "15:25:54 handle mvdz9jqta82r6.6: first_chunk=True total=13",
+  "15:26:45 request mvdz9jqta82r6.6: chunk of 13 keys done in 50s; paths {'http': 372, 'browser-none': 709, 'browser': 27}, browser waits 736 max 192s sum 44923s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 372, 'miss': 404, 'blocked': 0, 'tries': 805, 'empty': 433}, audit 3/3 ag",
+  "15:26:46 request mvdz9jqta82r6.6: final sent (13/13); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
