@@ -1,22 +1,19 @@
 {
- "at": "2026-10-18T11:24:53+00:00",
+ "at": "2026-10-18T11:27:48+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1191,
  "log": [
-  "11:23:18 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:23:23 http front door: ['https://hash-obj-patrick-incredible.trycloudflare.com', 'https://a380d82c0aefb0.lhr.life']",
-  "11:23:23 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:24:23 rtc uqvilvc0zp: answered",
-  "11:24:24 rtc uqvilvc0zp: data channel open",
-  "11:24:25 request received: rid mvdqmwqfjtfhv.1 1 keys",
-  "11:24:25 handle mvdqmwqfjtfhv.1: first_chunk=True total=1",
-  "11:24:28 request received: rid httptest1792322668 20 keys",
-  "11:24:28 handle httptest1792322668: first_chunk=True total=20",
-  "11:24:29 request httptest1792322668: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "11:24:31 request httptest1792322668: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:26:06 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:26:12 git retry 0: b\"-1kexus': is at 157fae3f04ad0e206020ae93d610851b7f66be33 but expected 53b6681c237f3526571c0698a51d8b76429bf8f3)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:26:18 http front door: ['https://artwork-jason-wisconsin-fame.trycloudflare.com', 'https://ac7ffe8a357fbe.lhr.life']",
+  "11:26:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:27:16 request received: rid httptest1792322836 20 keys",
+  "11:27:16 handle httptest1792322836: first_chunk=True total=20",
+  "11:27:18 request httptest1792322836: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "11:27:18 request httptest1792322836: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
