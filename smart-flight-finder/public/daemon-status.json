@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T20:56:40+00:00",
+ "at": "2026-10-18T20:58:12+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3992,
+ "fares_saved": 4026,
  "log": [
   "20:32:15 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:32:20 http front door: ['https://bennett-completing-unix-gel.trycloudflare.com', 'https://9ee1b8a86c1ec5.lhr.life']",
@@ -69,6 +69,14 @@
   "20:55:08 handle mveb0xuquty77.7: first_chunk=True total=11",
   "20:55:08 handle mveb0xuquty77.6: first_chunk=True total=12",
   "20:55:08 request received: rid mveb0xuquty77.9 24 keys",
-  "20:55:08 handle mveb0xuquty77.9: first_chunk=True total=24"
+  "20:55:08 handle mveb0xuquty77.9: first_chunk=True total=24",
+  "20:56:45 request mveb0xuquty77.9: chunk of 24 keys done in 97s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:56:47 request mveb0xuquty77.9: final sent (24/24); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:57:16 request mveb0xuquty77.6: chunk of 12 keys done in 127s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:57:17 request mveb0xuquty77.6: final sent (12/12); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:57:26 request mveb0xuquty77.7: chunk of 11 keys done in 138s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:57:28 request mveb0xuquty77.7: final sent (11/11); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:58:03 request mveb0xuquty77.8: chunk of 17 keys done in 174s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:58:04 request mveb0xuquty77.8: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
  ]
 }
