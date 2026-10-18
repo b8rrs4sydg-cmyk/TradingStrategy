@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:24:59+00:00",
+ "at": "2026-10-18T07:35:32+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 474,
+ "fares_saved": 485,
  "log": [
   "07:18:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:55 http front door: ['https://logic-guy-cook-released.trycloudflare.com', 'https://b2335e4f30e263.lhr.life']",
@@ -36,6 +36,23 @@
   "07:21:52 request mvdhxepvyloyl.2: chunk of 27 keys done in 78s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 27, 'blocked': 0, 'tries': 80, 'empty': 0}, audit 8/9 agree",
   "07:21:55 request mvdhxepvyloyl.2: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "07:23:42 request mvdhxkhy45w9s.2: chunk of 27 keys done in 180s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 28, 'blocked': 0, 'tries': 80, 'empty': 0}, audit 8/9 agree",
-  "07:23:43 request mvdhxkhy45w9s.2: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "07:23:43 request mvdhxkhy45w9s.2: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "07:28:44 rtc g8lpp664jo: answered",
+  "07:28:45 rtc g8lpp664jo: data channel open",
+  "07:33:13 rtc k9hhwvsxs0: answered",
+  "07:33:13 rtc k9hhwvsxs0: data channel open",
+  "07:33:14 request received: rid mvdidog5osv1u.2 1 keys",
+  "07:33:14 handle mvdidog5osv1u.2: first_chunk=True total=1",
+  "07:33:14 request mvdidog5osv1u.2: chunk of 1 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 28, 'blocked': 0, 'tries': 80, 'empty': 0}, audit 8/9 agree",
+  "07:33:16 request mvdidog5osv1u.2: final sent (1/1); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "07:33:20 request received: rid mvdidt5v9id4v.2 27 keys",
+  "07:33:20 handle mvdidt5v9id4v.2: first_chunk=True total=27",
+  "07:33:20 request mvdidt5v9id4v.2: chunk of 27 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 28, 'blocked': 0, 'tries': 80, 'empty': 0}, audit 8/9 agree",
+  "07:33:22 request mvdidt5v9id4v.2: final sent (27/27); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "07:34:27 request received: rid mvdif9bjdojeh.2 27 keys",
+  "07:34:27 handle mvdif9bjdojeh.2: first_chunk=True total=27",
+  "07:34:37 rtc 1576g363ez: answered",
+  "07:35:04 request received: rid mvdig1vjqyz3k.2 27 keys",
+  "07:35:04 handle mvdig1vjqyz3k.2: first_chunk=True total=27"
  ]
 }
