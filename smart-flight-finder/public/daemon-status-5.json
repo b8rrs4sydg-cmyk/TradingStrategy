@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:17:23+00:00",
+ "at": "2026-10-18T11:18:54+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 729,
+ "fares_saved": 738,
  "log": [
   "11:00:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:31 http front door: ['https://mia-jake-discovery-pasta.trycloudflare.com', 'https://981fbb61bf5387.lhr.life']",
@@ -73,6 +73,10 @@
   "11:17:15 request received: rid mvdqdru6p0hdt.5 24 keys",
   "11:17:15 handle mvdqdru6p0hdt.5: first_chunk=True total=24",
   "11:17:22 request received: rid mvdqdxcqhjkkb.5 18 keys",
-  "11:17:22 handle mvdqdxcqhjkkb.5: first_chunk=True total=18"
+  "11:17:22 handle mvdqdxcqhjkkb.5: first_chunk=True total=18",
+  "11:18:02 request received: rid mvdqes7wvs5wy.5 23 keys",
+  "11:18:02 handle mvdqes7wvs5wy.5: first_chunk=True total=23",
+  "11:18:38 request received: rid mvdqfjooxeaci.5 23 keys",
+  "11:18:38 handle mvdqfjooxeaci.5: first_chunk=True total=23"
  ]
 }
