@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T11:43:19+00:00",
+ "at": "2026-10-18T11:44:51+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -45,6 +45,10 @@
   "11:41:19 request mvdr67xtjeugt.9: chunk of 20 keys done in 117s; paths {'http': 63, 'browser-none': 31}, browser waits 31 max 79s sum 1595s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 63, 'miss': 31, 'blocked': 0, 'tries': 81, 'empty': 18}, audit 2/2 agree",
   "11:41:21 request mvdr67xtjeugt.9: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:41:59 request received: rid mvdr9kyr2z95g.9 17 keys",
-  "11:41:59 handle mvdr9kyr2z95g.9: first_chunk=True total=17"
+  "11:41:59 handle mvdr9kyr2z95g.9: first_chunk=True total=17",
+  "11:43:51 request mvdr9kyr2z95g.9: chunk of 17 keys done in 112s; paths {'http': 69, 'browser-none': 42}, browser waits 42 max 82s sum 2216s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 69, 'miss': 42, 'blocked': 0, 'tries': 87, 'empty': 18}, audit 2/2 agree",
+  "11:43:53 request mvdr9kyr2z95g.9: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:44:00 request received: rid mvdrc6ae2in9l.9 17 keys",
+  "11:44:00 handle mvdrc6ae2in9l.9: first_chunk=True total=17"
  ]
 }
