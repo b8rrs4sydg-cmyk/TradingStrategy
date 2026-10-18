@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T08:43:27+00:00",
+ "at": "2026-10-18T08:46:29+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 730,
+ "fares_saved": 745,
  "log": [
   "08:41:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:41:57 http front door: ['https://convinced-loved-joke-sheer.trycloudflare.com', 'https://bfc61994f7fab6.lhr.life']",
@@ -13,6 +13,8 @@
   "08:43:01 request received: rid httptest1792312981 20 keys",
   "08:43:01 handle httptest1792312981: first_chunk=True total=20",
   "08:43:03 request httptest1792312981: chunk of 20 keys done in 1s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "08:43:04 request httptest1792312981: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "08:43:04 request httptest1792312981: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "08:45:24 request received: rid mvdky8vc656ar.1 40 keys",
+  "08:45:24 handle mvdky8vc656ar.1: first_chunk=True total=40"
  ]
 }
