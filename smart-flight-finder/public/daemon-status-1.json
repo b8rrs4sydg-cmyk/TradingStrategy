@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T14:53:11+00:00",
+ "at": "2026-10-18T15:05:13+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1395,
+ "fares_saved": 1407,
  "log": [
-  "13:02:29 request mvdu41h7b76yp.1: chunk of 8 keys done in 50s; paths {'http': 120, 'browser': 62, 'browser-none': 415}, browser waits 477 max 236s sum 29514s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 144, 'blocked': 0, 'tries': 204, 'empty': 84}, audit 5/5 agre",
-  "13:02:30 request mvdu41h7b76yp.1: final sent (8/8); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:05:06 request received: rid mvdu8gogkouz6.1 15 keys",
-  "13:05:06 handle mvdu8gogkouz6.1: first_chunk=True total=15",
   "13:06:43 request mvdu8gogkouz6.1: chunk of 15 keys done in 97s; paths {'http': 120, 'browser': 62, 'browser-none': 430}, browser waits 492 max 236s sum 30557s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 144, 'blocked': 0, 'tries': 204, 'empty': 84}, audit 5/5 agr",
   "13:06:44 request mvdu8gogkouz6.1: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:12:48 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
@@ -156,6 +152,10 @@
   "14:50:47 request received: rid mvdy0c3x5nt44.1 18 keys",
   "14:50:47 handle mvdy0c3x5nt44.1: first_chunk=True total=18",
   "14:52:22 request mvdy0c3x5nt44.1: chunk of 18 keys done in 95s; paths {'http': 270, 'browser': 73, 'browser-none': 755}, browser waits 828 max 236s sum 53660s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 270, 'miss': 286, 'blocked': 0, 'tries': 587, 'empty': 317}, audit 5/5 ag",
-  "14:52:23 request mvdy0c3x5nt44.1: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:52:23 request mvdy0c3x5nt44.1: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:59:38 rtc x75174vr6d: answered",
+  "14:59:40 rtc x75174vr6d: data channel open",
+  "15:04:10 request received: rid mvdyhlkogi3ru.1 16 keys",
+  "15:04:10 handle mvdyhlkogi3ru.1: first_chunk=True total=16"
  ]
 }
