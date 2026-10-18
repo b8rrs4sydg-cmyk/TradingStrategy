@@ -1,15 +1,12 @@
 {
- "at": "2026-10-18T14:52:30+00:00",
+ "at": "2026-10-18T14:55:36+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 654,
+ "fares_saved": 662,
  "log": [
-  "13:01:39 handle mvdu41h7b76yp.4: first_chunk=True total=13",
-  "13:03:16 request mvdu41h7b76yp.4: chunk of 13 keys done in 97s; paths {'http': 121, 'browser': 35, 'browser-none': 432}, browser waits 467 max 185s sum 30859s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 121, 'miss': 172, 'blocked': 0, 'tries': 230, 'empty': 109}, audit 8/8 ag",
-  "13:03:18 request mvdu41h7b76yp.4: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:05:06 request received: rid mvdu8gogkouz6.4 10 keys",
   "13:05:06 handle mvdu8gogkouz6.4: first_chunk=True total=10",
   "13:06:41 request mvdu8gogkouz6.4: chunk of 10 keys done in 96s; paths {'http': 121, 'browser': 35, 'browser-none': 442}, browser waits 477 max 185s sum 31423s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 121, 'miss': 172, 'blocked': 0, 'tries': 230, 'empty': 109}, audit 8/8 ag",
@@ -156,6 +153,9 @@
   "14:50:47 request received: rid mvdy0c3x5nt44.4 17 keys",
   "14:50:47 handle mvdy0c3x5nt44.4: first_chunk=True total=17",
   "14:52:25 request mvdy0c3x5nt44.4: chunk of 17 keys done in 98s; paths {'http': 259, 'browser': 43, 'browser-none': 750}, browser waits 793 max 185s sum 51109s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 259, 'miss': 314, 'blocked': 0, 'tries': 577, 'empty': 318}, audit 9/9 ag",
-  "14:52:26 request mvdy0c3x5nt44.4: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:52:26 request mvdy0c3x5nt44.4: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:52:31 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "14:55:18 request received: rid mvdy65hviu419.3 18 keys",
+  "14:55:18 handle mvdy65hviu419.3: first_chunk=True total=18"
  ]
 }
