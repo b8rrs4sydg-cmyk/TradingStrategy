@@ -1,33 +1,18 @@
 {
- "at": "2026-10-18T10:58:47+00:00",
+ "at": "2026-10-18T11:02:01+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 657,
  "log": [
-  "10:54:06 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:54:10 git retry 0: b\"-1kexus': is at 18fa397791b4f4ade6f58d183a65eb5a3c1c9eca but expected a19cec5951e83f41f27c3074cfbc0066f3bc3851)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "10:54:15 http front door: ['https://rebound-nuts-toys-respiratory.trycloudflare.com', 'https://3ac6a9adb7be90.lhr.life']",
-  "10:54:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:54:58 rtc xlimcvotc7: answered",
-  "10:54:59 rtc xlimcvotc7: data channel open",
-  "10:55:00 request received: rid mvdpl2y29ko1z.5 29 keys",
-  "10:55:00 handle mvdpl2y29ko1z.5: first_chunk=True total=29",
-  "10:55:13 rtc p8uqcnvq9u: answered",
-  "10:55:14 request received: rid httptest1792320914 20 keys",
-  "10:55:14 handle httptest1792320914: first_chunk=True total=20",
-  "10:55:15 rtc p8uqcnvq9u: data channel open",
-  "10:55:15 request received: rid mvdplefxxoaln.3 9 keys",
-  "10:55:15 handle mvdplefxxoaln.3: first_chunk=True total=9",
-  "10:55:30 request httptest1792320914: chunk of 20 keys done in 16s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 22, 'blocked': 0, 'tries': 57, 'empty': 30}, audit 4/4 agree",
-  "10:55:32 request httptest1792320914: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "10:55:59 request mvdplefxxoaln.3: chunk of 9 keys done in 44s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 22, 'blocked': 0, 'tries': 57, 'empty': 30}, audit 4/4 agree",
-  "10:56:01 request mvdplefxxoaln.3: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "10:56:05 request received: rid mvdpmjn1vcbbl.3 40 keys",
-  "10:56:05 handle mvdpmjn1vcbbl.3: first_chunk=True total=40",
-  "10:57:32 request received: rid mvdpoebct1wgi.4 31 keys",
-  "10:57:32 handle mvdpoebct1wgi.4: first_chunk=True total=31"
+  "11:00:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:00:31 http front door: ['https://mia-jake-discovery-pasta.trycloudflare.com', 'https://981fbb61bf5387.lhr.life']",
+  "11:00:31 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:01:34 request received: rid httptest1792321293 20 keys",
+  "11:01:34 handle httptest1792321293: first_chunk=True total=20",
+  "11:01:37 request httptest1792321293: chunk of 20 keys done in 4s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
+  "11:01:39 request httptest1792321293: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
