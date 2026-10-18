@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:01:17+00:00",
+ "at": "2026-10-18T07:02:52+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 434,
+ "fares_saved": 443,
  "log": [
   "06:53:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:35 http front door: ['https://pct-minimal-relatives-reaching.trycloudflare.com', 'https://2f746121943ae3.lhr.life']",
@@ -25,6 +25,13 @@
   "06:59:39 request received: rid mvdh6hr3iqbqd.1 27 keys",
   "06:59:39 handle mvdh6hr3iqbqd.1: first_chunk=True total=27",
   "06:59:39 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "06:59:42 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\""
+  "06:59:42 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "07:01:19 git retry 0: b\"-1kexus': is at 9533c22a41c00157499c391bdb178c445de5e5ce but expected cf4f9f411af4b1bacedbf73684e1f77b683d0161)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "07:01:46 request mvdh65fgwizsm.1: chunk of 27 keys done in 143s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:01:46 request mvdh65fgwizsm.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:19 request mvdh6hr3iqbqd.1: chunk of 27 keys done in 160s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:19 request mvdh6hr3iqbqd.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:21 request received: rid mvdh9z9txgeay.1 11 keys",
+  "07:02:21 handle mvdh9z9txgeay.1: first_chunk=True total=11"
  ]
 }
