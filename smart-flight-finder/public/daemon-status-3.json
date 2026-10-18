@@ -1,13 +1,12 @@
 {
- "at": "2026-10-18T10:27:28+00:00",
+ "at": "2026-10-18T10:29:00+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 470,
+ "fares_saved": 473,
  "log": [
-  "08:41:56 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:42:01 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "08:42:04 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "08:42:10 http front door: ['https://men-grid-generation-archive.trycloudflare.com', 'https://9f12b9005e73bc.lhr.life']",
@@ -155,6 +154,8 @@
   "10:26:21 request mvdoj8tiltid4.3: chunk of 27 keys done in 50s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 203, 'miss': 180, 'blocked': 0, 'tries': 230, 'empty': 27}, audit 1/1 agree",
   "10:26:22 request mvdoj8tiltid4.3: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "10:26:49 request received: rid mvdokwtc5pmdk.3 27 keys",
-  "10:26:49 handle mvdokwtc5pmdk.3: first_chunk=True total=27"
+  "10:26:49 handle mvdokwtc5pmdk.3: first_chunk=True total=27",
+  "10:27:38 request mvdokwtc5pmdk.3: chunk of 27 keys done in 49s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 229, 'miss': 181, 'blocked': 0, 'tries': 260, 'empty': 31}, audit 1/1 agree",
+  "10:27:39 request mvdokwtc5pmdk.3: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
