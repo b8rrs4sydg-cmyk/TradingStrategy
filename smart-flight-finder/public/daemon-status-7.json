@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:48:00+00:00",
+ "at": "2026-10-18T13:49:31+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 206,
  "log": [
-  "12:02:11 request mvdrvh555plbi.7: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:02:18 request received: rid mvdrzp8py2zrf.7 19 keys",
-  "12:02:18 handle mvdrzp8py2zrf.7: first_chunk=True total=19",
-  "12:04:11 request mvdrzp8py2zrf.7: chunk of 19 keys done in 113s; paths {'http': 43, 'browser-none': 197, 'browser': 11}, browser waits 208 max 190s sum 15109s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 43, 'miss': 62, 'blocked': 0, 'tries': 68, 'empty': 25}, audit 1/1 agree",
   "12:04:12 request mvdrzp8py2zrf.7: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:04:47 request received: rid mvds2wisp31cv.7 21 keys",
   "12:04:47 handle mvds2wisp31cv.7: first_chunk=True total=21",
@@ -156,6 +152,10 @@
   "13:45:38 request mvdvn5tvdtxf1.7: chunk of 12 keys done in 62s; paths {'http': 104, 'browser-none': 607, 'browser': 40}, browser waits 647 max 190s sum 45139s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 104, 'miss': 196, 'blocked': 0, 'tries': 244, 'empty': 140}, audit 1/1 ag",
   "13:45:39 request mvdvn5tvdtxf1.7: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:46:26 request received: rid mvdvpm7xd6s8y.7 19 keys",
-  "13:46:26 handle mvdvpm7xd6s8y.7: first_chunk=True total=19"
+  "13:46:26 handle mvdvpm7xd6s8y.7: first_chunk=True total=19",
+  "13:48:27 request received: rid mvdvs7vl0pzkl.7 22 keys",
+  "13:48:27 handle mvdvs7vl0pzkl.7: first_chunk=True total=22",
+  "13:48:46 request mvdvpm7xd6s8y.7: chunk of 19 keys done in 141s; paths {'http': 104, 'browser-none': 626, 'browser': 40}, browser waits 666 max 190s sum 46698s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 104, 'miss': 196, 'blocked': 0, 'tries': 244, 'empty': 140}, audit 1/1 a",
+  "13:48:48 request mvdvpm7xd6s8y.7: final sent (19/19); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
