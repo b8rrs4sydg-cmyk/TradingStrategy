@@ -398,6 +398,50 @@
   .pill-sel { background: var(--brand-wash); color: var(--brand-ink) }
   .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
 
+
+  /* --- Filters --- */
+  .filters { background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 14px }
+  .f-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 10px 14px }
+  .f-bar .f-shown { margin-left: auto; font-size: 12.5px; color: var(--fg-muted) }
+  .f-actives { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0 }
+  .f-active { appearance: none; cursor: pointer; font: 500 12px/1 var(--font-body); padding: 5px 9px; border-radius: 999px; border: 1px solid var(--brand); background: var(--brand-wash); color: var(--brand-ink); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+  .f-active:hover { background: color-mix(in srgb, var(--brand) 22%, var(--brand-wash)) }
+  .f-active b { margin-left: 4px }
+  .f-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 20px; padding: 4px 14px 14px; border-top: 1px solid var(--border); padding-top: 12px }
+  .filters .f-group { border: 0; margin: 0; padding: 0; min-width: 0; background: none; align-self: start }
+  .f-group.f-wide { grid-column: 1 / -1 }
+  .f-group legend { font: 600 11.5px/1.4 var(--font-body); letter-spacing: .04em; color: var(--fg-muted); padding: 0; margin-bottom: 6px; display: flex; align-items: center; width: 100% }
+  .f-group legend .psearch { margin-left: 10px; width: 15em; max-width: 60%; font: 400 12.5px/1.2 var(--font-body); padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--fg) }
+  .f-chips { display: flex; flex-wrap: wrap; gap: 6px }
+  .f-chips.f-scroll { max-height: 8.5em; overflow-y: auto; padding: 2px }
+  .f-chip { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font: 400 12.5px/1 var(--font-body); padding: 6px 10px; border: 1px solid var(--border-strong); border-radius: 999px; background: transparent; color: var(--fg); user-select: none }
+  .f-chip input { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0 }
+  .f-chip i { font: 500 11px/1 var(--font-mono); font-style: normal; color: var(--fg-faint) }
+  .f-chip:hover { background: var(--card-sunken) }
+  .f-chip.on { background: var(--brand-wash); border-color: var(--brand); color: var(--brand-ink) }
+  .f-chip.on i { color: var(--brand-ink) }
+  .f-chip.zero { opacity: .45 }
+  .f-chip:focus-within { outline: 2px solid var(--brand); outline-offset: 1px }
+  .f-range { display: flex; align-items: center; gap: 8px }
+  .f-range .num { flex: 1; min-width: 0 }
+  .f-range .num:disabled { opacity: .5 }
+  .f-slider { width: 100%; margin: 8px 0 0; accent-color: var(--brand) }
+  .f-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px }
+  .f-preset { appearance: none; cursor: pointer; font: 500 12px/1 var(--font-body); padding: 6px 9px; border: 1px solid var(--border-strong); border-radius: 6px; background: transparent; color: var(--fg) }
+  .f-preset small { color: var(--fg-faint); font-family: var(--font-mono); font-size: 10.5px }
+  .f-preset.on { background: var(--brand-wash); border-color: var(--brand); color: var(--brand-ink) }
+  .f-hint { display: block; margin-top: 6px; color: var(--fg-faint); font-size: 11.5px; line-height: 1.45 }
+  .f-none { color: var(--fg-faint) }
+  .f-reset-link { margin-left: 8px }
+  .plan .head-main { display: flex; flex-direction: column; gap: 6px; min-width: 0 }
+  .plan .facts { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; color: var(--fg-muted) }
+  .plan .facts .good { color: var(--good); font-weight: 500 }
+  .plan .facts span + span::before { content: '·'; margin-right: 12px; color: var(--fg-faint) }
+  @media (max-width: 640px) {
+    .f-panel { grid-template-columns: 1fr }
+    .f-bar .f-shown { margin-left: 0; width: 100% }
+  }
+
   /* --- Heatmap --- */
   .heatmap {
     background: var(--card);
@@ -740,10 +784,22 @@
         <select id="r-sort" class="btn-ghost" aria-label="排序">
           <option value="score">綜合分數</option>
           <option value="price">總價 (低→高)</option>
+          <option value="price_desc">總價 (高→低)</option>
+          <option value="depart">去程出發 (早→晚)</option>
           <option value="pto">停留天數 (多→少)</option>
         </select>
       </div>
     </div>
+
+    <section id="filters" class="filters" aria-label="篩選方案" hidden>
+      <div class="f-bar">
+        <button type="button" id="f-toggle" class="btn-ghost" aria-expanded="true" aria-controls="f-panel">篩選 <span id="f-count" class="pill pill-sel" hidden>0</span></button>
+        <div id="f-chips" class="f-actives"></div>
+        <span id="f-shown" class="f-shown"></span>
+        <button type="button" id="f-reset" class="btn-ghost" hidden>全部重設</button>
+      </div>
+      <div id="f-panel" class="f-panel"></div>
+    </section>
 
     <div id="live-lookup" class="live-lookup" hidden aria-live="polite"></div>
     <div id="lookup-all" class="hint" hidden style="margin:6px 0"></div>
@@ -1843,6 +1899,296 @@ const state = {
   favorites: readFavs(),
 };
 
+/* =========================================================================
+ * Plan filters (client side, over state.result.plans)
+ *
+ * Only the FIRST flight of a ticket has real times (Google's result carries one slice): the outbound departure time,
+ * stops and airline are real; the return flight is picked on the booking site, so its date is known but its time
+ * usually is not. Plans whose time is unknown are never hidden by a time/stops filter.
+ * ========================================================================= */
+const pfEmpty = () => ({
+  labels: new Set(), origins: new Set(), dests: new Set(), airlines: new Set(),
+  priceMin: null, priceMax: null, outFrom: null, outTo: null, retFrom: null, retTo: null,
+  outDateFrom: '', outDateTo: '', retDateFrom: '', retDateTo: '',
+  stops: 'any', daysMin: null, daysMax: null, hideNoSave: false, favOnly: false,
+});
+let PF = pfEmpty();
+const PF_OPEN_KEY = 'sff-filters-open';
+const PF_PRESETS = [['凌晨', 0, 360], ['上午', 360, 720], ['下午', 720, 1080], ['晚上', 1080, 1440]];
+const pfToMin = s => { const m = /^(\d{1,2}):(\d{2})/.exec(s || ''); return m ? +m[1] * 60 + +m[2] : null; };
+const pfClock = n => n == null ? '' : `${String(Math.floor(n / 60) % 24).padStart(2, '0')}:${String(n % 60).padStart(2, '0')}`;
+const WEEKDAY = ['日', '一', '二', '三', '四', '五', '六'];
+const weekdayOf = iso => WEEKDAY[new Date(`${iso}T00:00:00Z`).getUTCDay()];
+const mdDay = iso => `${iso.slice(5, 7)}/${iso.slice(8, 10)}（${weekdayOf(iso)}）`;
+
+const pfFactsCache = new WeakMap();
+function planFacts(p) {
+  let f = pfFactsCache.get(p);
+  if (f) return f;
+  const legs = p.tickets.flatMap(t => t.legs);
+  const first = legs[0], last = legs[legs.length - 1];
+  const home = first?.origin || '';
+  const places = new Set();
+  legs.forEach(l => { places.add(l.origin); places.add(l.destination); });
+  places.delete(home);
+  const real = l => !!l && !l.estimated;
+  const carrier = real(first) && first.carrier && first.carrier !== '待選' ? first.carrier : '';
+  f = {
+    home, places: [...places], label: p.window_label || '(未命名時段)',
+    outDate: first ? first.departure.slice(0, 10) : '',
+    outMin: real(first) ? pfToMin(first.departure.slice(11, 16)) : null,
+    arrMin: real(first) ? pfToMin((first.arrival || '').slice(11, 16)) : null,
+    retDate: legs.length > 1 ? last.departure.slice(0, 10) : '',
+    retMin: legs.length > 1 && real(last) ? pfToMin(last.departure.slice(11, 16)) : null,
+    stops: real(first) ? first.stops : null,
+    airlines: carrier ? carrier.split(/,\s*/) : [],
+    nosave: p.warnings.some(w => w.code === 'no_saving'),
+  };
+  pfFactsCache.set(p, f);
+  return f;
+}
+
+// in [lo, hi] (minutes); lo > hi means across midnight (22:00–02:00); an unknown time is never excluded
+const pfInClock = (v, lo, hi) => v == null || (lo == null && hi == null) || (lo != null && hi != null && lo > hi
+  ? v >= lo || v <= hi : (lo == null || v >= lo) && (hi == null || v <= hi));
+
+// does the plan pass every filter except the facet named in `skip` (so each facet's counts show what ticking it would give)
+function pfPass(p, skip) {
+  const f = planFacts(p), c = PF, price = p.total_cost;
+  if (skip !== 'labels' && c.labels.size && !c.labels.has(f.label)) return false;
+  if (skip !== 'origins' && c.origins.size && !c.origins.has(f.home)) return false;
+  if (skip !== 'dests' && c.dests.size && !f.places.some(x => c.dests.has(x))) return false;
+  if (skip !== 'airlines' && c.airlines.size && !f.airlines.some(a => c.airlines.has(a))) return false;
+  if (c.priceMin != null && price < c.priceMin) return false;
+  if (c.priceMax != null && price > c.priceMax) return false;
+  if (!pfInClock(f.outMin, c.outFrom, c.outTo)) return false;
+  if (!pfInClock(f.retMin, c.retFrom, c.retTo)) return false;
+  if (c.outDateFrom && f.outDate < c.outDateFrom) return false;
+  if (c.outDateTo && f.outDate > c.outDateTo) return false;
+  if (c.retDateFrom || c.retDateTo) {
+    if (!f.retDate || (c.retDateFrom && f.retDate < c.retDateFrom) || (c.retDateTo && f.retDate > c.retDateTo)) return false;
+  }
+  if (c.stops !== 'any' && f.stops != null && f.stops > Number(c.stops)) return false;
+  const days = p.total_travel_days;
+  if (c.daysMin != null && days < c.daysMin) return false;
+  if (c.daysMax != null && days > c.daysMax) return false;
+  if (c.hideNoSave && f.nosave) return false;
+  if (c.favOnly && !state.favorites.has(fingerprint(p))) return false;
+  return true;
+}
+
+function pfActive() {
+  const c = PF, out = [];
+  const add = (key, text) => out.push({ key, text });
+  const names = set => [...set].join('、');
+  if (state.filter !== 'all') add('strategy', `策略：${STRATEGY_LABEL[state.filter] || state.filter}`);
+  if (c.labels.size) add('labels', `時間段：${names(c.labels)}`);
+  if (c.origins.size) add('origins', `出發地：${names(c.origins)}`);
+  if (c.dests.size) add('dests', `目的地：${names(c.dests)}`);
+  if (c.priceMin != null || c.priceMax != null) add('price', `價格 ${c.priceMin != null ? c.priceMin.toLocaleString() : '不限'} – ${c.priceMax != null ? c.priceMax.toLocaleString() : '不限'}`);
+  if (c.outFrom != null || c.outTo != null) add('out', `去程出發 ${pfClock(c.outFrom) || '00:00'}–${pfClock(c.outTo) || '24:00'}`);
+  if (c.retFrom != null || c.retTo != null) add('ret', `回程出發 ${pfClock(c.retFrom) || '00:00'}–${pfClock(c.retTo) || '24:00'}`);
+  if (c.outDateFrom || c.outDateTo) add('outDate', `去程日期 ${c.outDateFrom || '…'} ~ ${c.outDateTo || '…'}`);
+  if (c.retDateFrom || c.retDateTo) add('retDate', `回程日期 ${c.retDateFrom || '…'} ~ ${c.retDateTo || '…'}`);
+  if (c.stops !== 'any') add('stops', c.stops === '0' ? '去程直飛' : '去程最多 1 轉');
+  if (c.airlines.size) add('airlines', `航空公司：${names(c.airlines)}`);
+  if (c.daysMin != null || c.daysMax != null) add('days', `旅行天數 ${c.daysMin ?? '不限'} – ${c.daysMax ?? '不限'}`);
+  if (c.hideNoSave) add('hideNoSave', '隱藏「不划算」');
+  if (c.favOnly) add('favOnly', '只看收藏');
+  return out;
+}
+
+function pfClear(key) {
+  const e = pfEmpty();
+  const map = {
+    labels: ['labels'], origins: ['origins'], dests: ['dests'], airlines: ['airlines'], price: ['priceMin', 'priceMax'],
+    out: ['outFrom', 'outTo'], ret: ['retFrom', 'retTo'], outDate: ['outDateFrom', 'outDateTo'], retDate: ['retDateFrom', 'retDateTo'],
+    stops: ['stops'], days: ['daysMin', 'daysMax'], hideNoSave: ['hideNoSave'], favOnly: ['favOnly'],
+  };
+  if (key === 'strategy') state.filter = 'all';
+  else (map[key] || []).forEach(k => { PF[k] = e[k]; });
+}
+
+// option lists come from ALL plans (so an option stays visible at 0), counts from the plans passing the other facets
+function pfOptions(plans) {
+  const facets = { labels: f => [f.label], origins: f => [f.home], dests: f => f.places, airlines: f => f.airlines };
+  const all = {}, counts = {};
+  for (const [k, pick] of Object.entries(facets)) {
+    all[k] = new Set();
+    counts[k] = new Map();
+    for (const p of plans) pick(planFacts(p)).forEach(v => all[k].add(v));
+    for (const p of plans) if (pfPass(p, k)) pick(planFacts(p)).forEach(v => counts[k].set(v, (counts[k].get(v) || 0) + 1));
+  }
+  const prices = plans.map(p => p.total_cost);
+  const days = plans.map(p => p.total_travel_days);
+  return {
+    all, counts, plans,
+    priceLo: prices.length ? Math.min(...prices) : 0, priceHi: prices.length ? Math.max(...prices) : 0,
+    daysLo: days.length ? Math.min(...days) : 0, daysHi: days.length ? Math.max(...days) : 0,
+    retKnown: plans.filter(p => planFacts(p).retMin != null).length,
+    stopsKnown: plans.filter(p => planFacts(p).stops != null).length,
+  };
+}
+
+const pfCode = c => (AIRPORT_BY_CODE.get(c) ? `${c} ${AIRPORT_BY_CODE.get(c).name}` : c);
+function pfChips(facet, o, nameOf = v => v) {
+  const keys = [...o.all[facet]].sort((a, b) => (o.counts[facet].get(b) || 0) - (o.counts[facet].get(a) || 0) || String(a).localeCompare(String(b)));
+  if (!keys.length) return '<span class="f-none">—</span>';
+  return keys.map(v => {
+    const n = o.counts[facet].get(v) || 0;
+    const on = PF[facet].has(v);
+    return `<label class="f-chip ${on ? 'on' : ''} ${n || on ? '' : 'zero'}"><input type="checkbox" data-facet="${facet}" value="${escapeHtml(v)}" ${on ? 'checked' : ''}>${escapeHtml(nameOf(v))}<i>${n}</i></label>`;
+  }).join('');
+}
+
+function pfPanelHtml(o) {
+  const range = (title, kMin, kMax, type, extra = '', phLo = '', phHi = '') => `
+    <div class="f-range"><input class="num" type="${type}" data-k="${kMin}" aria-label="${title} 起" placeholder="${phLo}" ${extra}><span>~</span><input class="num" type="${type}" data-k="${kMax}" aria-label="${title} 迄" placeholder="${phHi}" ${extra}></div>`;
+  const presets = which => `<div class="f-presets">${PF_PRESETS.map(([n, a, b]) => `<button type="button" class="f-preset" data-preset="${which}:${a}-${b}">${n} <small>${pfClock(a)}–${a === 1080 ? '24:00' : pfClock(b)}</small></button>`).join('')}</div>`;
+  const destCount = o.all.dests.size;
+  return `
+    <fieldset class="f-group"><legend>時間段名稱</legend><div class="f-chips">${pfChips('labels', o)}</div></fieldset>
+    <fieldset class="f-group"><legend>出發地</legend><div class="f-chips">${pfChips('origins', o, pfCode)}</div></fieldset>
+    <fieldset class="f-group f-wide"><legend>目的地／途經地點${destCount > 12 ? '<input type="search" class="psearch" id="f-dsearch" placeholder="搜尋機場代碼或名稱" aria-label="搜尋目的地">' : ''}</legend>
+      <div class="f-chips f-scroll" id="f-dest-chips">${pfChips('dests', o, pfCode)}</div></fieldset>
+    <fieldset class="f-group"><legend>價格區間（TWD）</legend>
+      ${range('價格', 'priceMin', 'priceMax', 'number', 'min="0" step="500"', `最低 ${o.priceLo}`, `最高 ${o.priceHi}`)}
+      <input type="range" class="f-slider" data-k="priceMax" min="${o.priceLo}" max="${o.priceHi}" step="500" aria-label="價格上限" ${o.priceHi <= o.priceLo ? 'disabled' : ''}>
+      <small class="f-hint">資料範圍 ${o.priceLo.toLocaleString()} – ${o.priceHi.toLocaleString()}</small></fieldset>
+    <fieldset class="f-group"><legend>去程出發時間（當地）</legend>
+      ${range('去程出發時間', 'outFrom', 'outTo', 'time')}${presets('out')}
+      <small class="f-hint">${o.stopsKnown ? 'Google 回傳的去程航班時刻；沒有時刻的方案不會被排除' : '這批方案沒有去程航班時刻'}</small></fieldset>
+    <fieldset class="f-group"><legend>回程出發時間（當地）</legend>
+      ${range('回程出發時間', 'retFrom', 'retTo', 'time', o.retKnown ? '' : 'disabled')}${o.retKnown ? presets('ret') : ''}
+      <small class="f-hint">${o.retKnown ? `${o.retKnown} 個方案有回程航班時刻；其餘回程航班要到訂票網站選，不會被排除` : 'Google 結果只含去程航班時刻，回程時刻要到訂票網站才選得到，所以這批方案無法依回程時間篩選 —— 請用下面的回程日期'}</small></fieldset>
+    <fieldset class="f-group"><legend>去程日期</legend>${range('去程日期', 'outDateFrom', 'outDateTo', 'date')}</fieldset>
+    <fieldset class="f-group"><legend>回程日期</legend>${range('回程日期', 'retDateFrom', 'retDateTo', 'date')}</fieldset>
+    <fieldset class="f-group"><legend>去程轉機</legend>
+      <div class="f-seg" role="radiogroup">${[['any', '不限'], ['0', '直飛'], ['1', '最多 1 轉']].map(([v, n]) => `<label class="f-chip ${PF.stops === v ? 'on' : ''}"><input type="radio" name="f-stops" data-k="stops" value="${v}" ${PF.stops === v ? 'checked' : ''}>${n}</label>`).join('')}</div></fieldset>
+    <fieldset class="f-group"><legend>航空公司（去程）</legend><div class="f-chips f-scroll">${pfChips('airlines', o)}</div></fieldset>
+    <fieldset class="f-group"><legend>旅行天數</legend>
+      ${range('旅行天數', 'daysMin', 'daysMax', 'number', 'min="1" step="1"', `最少 ${o.daysLo}`, `最多 ${o.daysHi}`)}</fieldset>
+    <fieldset class="f-group"><legend>其他</legend>
+      <label class="f-chip ${PF.hideNoSave ? 'on' : ''}"><input type="checkbox" data-k="hideNoSave" ${PF.hideNoSave ? 'checked' : ''}>隱藏「不划算」</label>
+      <label class="f-chip ${PF.favOnly ? 'on' : ''}"><input type="checkbox" data-k="favOnly" ${PF.favOnly ? 'checked' : ''}>只看收藏 ★</label></fieldset>`;
+}
+
+// write PF into the inputs (not the one being typed in)
+function pfSyncInputs(panel) {
+  panel.querySelectorAll('[data-k]').forEach(el => {
+    if (el === document.activeElement || el.type === 'radio' || el.type === 'checkbox') return;
+    const v = PF[el.dataset.k];
+    if (el.type === 'time') el.value = pfClock(v);
+    else if (el.type === 'range') el.value = v == null ? el.max : v;
+    else el.value = v == null ? '' : v;
+  });
+  panel.querySelectorAll('.f-preset').forEach(b => {
+    const [w, r] = b.dataset.preset.split(':'), [a, z] = r.split('-').map(Number);
+    const on = (w === 'out' ? PF.outFrom === a && PF.outTo === z : PF.retFrom === a && PF.retTo === z);
+    b.classList.toggle('on', on);
+  });
+}
+
+let pfSignature = '';
+function renderFilters(plans) {
+  const bar = document.getElementById('filters');
+  bar.hidden = !plans.length;
+  if (!plans.length) return [];
+  const o = pfOptions(plans);
+  const panel = document.getElementById('f-panel');
+  const sig = JSON.stringify([[...o.all.labels], [...o.all.origins], [...o.all.dests], [...o.all.airlines], o.priceLo, o.priceHi, o.daysLo, o.daysHi, !!o.retKnown, !!o.stopsKnown]);
+  if (sig !== pfSignature) {
+    // keep only choices that still exist after a new search
+    for (const k of ['labels', 'origins', 'dests', 'airlines']) PF[k] = new Set([...PF[k]].filter(v => o.all[k].has(v)));
+    pfSignature = sig;
+    panel.innerHTML = pfPanelHtml(o);
+  } else {
+    // same options: only counts / on-states change
+    for (const [facet, nameOf] of [['labels', v => v], ['origins', pfCode], ['dests', pfCode], ['airlines', v => v]]) {
+      panel.querySelectorAll(`input[data-facet="${facet}"]`).forEach(inp => {
+        const n = o.counts[facet].get(inp.value) || 0, lab = inp.closest('label');
+        inp.checked = PF[facet].has(inp.value);
+        lab.classList.toggle('on', inp.checked);
+        lab.classList.toggle('zero', !n && !inp.checked);
+        lab.querySelector('i').textContent = n;
+      });
+    }
+    panel.querySelectorAll('input[data-k][type=checkbox], input[data-k][type=radio]').forEach(inp => {
+      if (inp.type === 'radio') inp.checked = PF.stops === inp.value;
+      else inp.checked = !!PF[inp.dataset.k];
+      inp.closest('label')?.classList.toggle('on', inp.checked);
+    });
+  }
+  pfSyncInputs(panel);
+  const q = (document.getElementById('f-dsearch')?.value || '').trim().toLowerCase();
+  panel.querySelectorAll('#f-dest-chips label').forEach(l => { l.hidden = !!q && !l.textContent.toLowerCase().includes(q) && !l.classList.contains('on'); });
+
+  const active = pfActive();
+  document.getElementById('f-chips').innerHTML = active.map(a => `<button type="button" class="f-active" data-clear="${a.key}" title="取消這個篩選">${escapeHtml(a.text)} <b aria-hidden="true">×</b></button>`).join('');
+  const badge = document.getElementById('f-count');
+  badge.hidden = !active.length;
+  badge.textContent = active.length;
+  document.getElementById('f-reset').hidden = !active.length;
+  return active;
+}
+
+function wirePlanFilters() {
+  const bar = document.getElementById('filters'), panel = document.getElementById('f-panel');
+  let open = window.innerWidth >= 900;                              // a phone shows the results first
+  try { const v = localStorage.getItem(PF_OPEN_KEY); if (v != null) open = v === '1'; } catch {}
+  const setOpen = v => {
+    open = v; panel.hidden = !v;
+    document.getElementById('f-toggle').setAttribute('aria-expanded', String(v));
+    try { localStorage.setItem(PF_OPEN_KEY, v ? '1' : '0'); } catch {}
+  };
+  setOpen(open);
+  document.getElementById('f-toggle').addEventListener('click', () => setOpen(!open));
+  let timer = null;
+  const later = () => { clearTimeout(timer); timer = setTimeout(renderResults, 140); };
+  panel.addEventListener('change', e => {
+    const t = e.target;
+    if (t.dataset.facet) {
+      const set = PF[t.dataset.facet];
+      if (t.checked) set.add(t.value); else set.delete(t.value);
+      renderResults();
+    } else if (t.dataset.k === 'stops') { PF.stops = t.value; renderResults(); }
+    else if (t.type === 'checkbox' && t.dataset.k) { PF[t.dataset.k] = t.checked; renderResults(); }
+  });
+  panel.addEventListener('input', e => {
+    const t = e.target, k = t.dataset.k;
+    if (t.id === 'f-dsearch') { renderResults(); return; }
+    if (!k || t.type === 'checkbox' || t.type === 'radio') return;
+    if (t.type === 'time') PF[k] = t.value === '' ? null : pfToMin(t.value);
+    else if (t.type === 'number') PF[k] = t.value === '' ? null : Number(t.value);
+    else if (t.type === 'range') PF[k] = Number(t.value) >= Number(t.max) ? null : Number(t.value);
+    else PF[k] = t.value;                                            // dates ('' or YYYY-MM-DD)
+    // the slider and the number box show the same value
+    if (t.type === 'range') panel.querySelectorAll(`input.num[data-k="${k}"]`).forEach(n => { if (n !== t) n.value = PF[k] == null ? '' : PF[k]; });
+    later();
+  });
+  panel.addEventListener('click', e => {
+    const b = e.target.closest('.f-preset');
+    if (!b) return;
+    const [w, r] = b.dataset.preset.split(':'), [a, z] = r.split('-').map(Number);
+    const [kf, kt] = w === 'out' ? ['outFrom', 'outTo'] : ['retFrom', 'retTo'];
+    if (PF[kf] === a && PF[kt] === z) { PF[kf] = PF[kt] = null; } else { PF[kf] = a; PF[kt] = z; }
+    renderResults();
+  });
+  bar.addEventListener('click', e => {
+    const c = e.target.closest('[data-clear]');
+    if (c) { pfClear(c.dataset.clear); renderResults(); }
+  });
+  document.getElementById('f-reset').addEventListener('click', () => resetPlanFilters());
+  document.getElementById('empty').addEventListener('click', e => { if (e.target.closest('.f-reset-link')) resetPlanFilters(); });
+}
+
+function resetPlanFilters() {
+  PF = pfEmpty();
+  state.filter = 'all';
+  pfSignature = '';
+  renderResults();
+}
+
 function renderResults() {
   const el = document.getElementById('results');
   if (!state.result) { el.hidden = true; return; }
@@ -1881,22 +2227,29 @@ function renderResults() {
   filterSel.value = counts.has(prev) || prev === 'all' ? prev : 'all';
 
   // Filter + sort
-  let visible = plans.slice();
-  if (state.filter !== 'all') visible = visible.filter(p => p.strategy === state.filter);
+  const activeFilters = renderFilters(plans);
+  let visible = plans.filter(p => (state.filter === 'all' || p.strategy === state.filter) && pfPass(p));
+  const startOf = p => { const f = planFacts(p); return `${f.outDate}T${pfClock(f.outMin ?? 720)}`; };
   if (state.sort === 'price') visible.sort((a,b) => a.total_cost - b.total_cost);
+  else if (state.sort === 'price_desc') visible.sort((a,b) => b.total_cost - a.total_cost);
   else if (state.sort === 'pto') visible.sort((a,b) => b.total_travel_days - a.total_travel_days);
+  else if (state.sort === 'depart') visible.sort((a,b) => startOf(a).localeCompare(startOf(b)) || a.total_cost - b.total_cost);
   else visible.sort((a,b) => (b.score||0) - (a.score||0));
+  document.getElementById('r-plan-count').textContent = visible.length;
+  document.getElementById('f-shown').textContent = visible.length === plans.length ? `共 ${plans.length} 個方案` : `顯示 ${visible.length} / ${plans.length} 個方案`;
   // Favorites bubble to top within whatever order picked
   visible.sort((a,b) => (state.favorites.has(fingerprint(b)) ? 1 : 0) - (state.favorites.has(fingerprint(a)) ? 1 : 0));
 
   document.getElementById('notices').innerHTML = (state.result.notices || []).map(n => `<div class="notice">${escapeHtml(n)}</div>`).join('');
-  renderHeatmap(plans.filter(p => !(p.trips || []).length));
+  renderHeatmap(plans.filter(p => !(p.trips || []).length && pfPass(p)));
   renderPlanList(visible);
   renderCompare(visible);
 
   const empty = document.getElementById('empty');
   empty.hidden = visible.length !== 0;
-  if (!visible.length) {
+  if (!visible.length && plans.length && activeFilters.length) {
+    empty.innerHTML = `${plans.length} 個方案都被篩選條件排除了 —— <button type="button" class="btn-ghost f-reset-link">清除所有篩選</button>`;
+  } else if (!visible.length) {
     const f = state.result.fares || {};
     empty.innerHTML = '找不到方案。' + (f.missing
       ? `<ul><li>${f.missing} 個查詢在票價資料庫裡沒有實價 —— 改選沒有「無資料」標記的機場與連假，或把日期彈性調回 ±${fareCoverage().flex} 天。</li><li>反向票＋倒買法需要兩個、四腿票需要三個不重疊的時段；四腿票外站要選至少 2 個不同國家。</li></ul>`
@@ -1992,6 +2345,17 @@ function priceDelta(t) {
   return `<span class="delta ${d < 0 ? 'down' : 'up'}" title="${t.prev_at} 爬到 ${t.prev.toLocaleString()}">${d < 0 ? '↓' : '↑'} ${Math.abs(d).toLocaleString()} vs ${md(t.prev_at)}</span>`;
 }
 
+// One line under the title: what you would otherwise have to open the card for.
+function planFactsHtml(plan) {
+  const f = planFacts(plan), bits = [];
+  if (f.outDate) bits.push(`<span title="去程出發（當地時間）">去 ${mdDay(f.outDate)}${f.outMin != null ? ` ${pfClock(f.outMin)}` : ''}${f.arrMin != null ? `→${pfClock(f.arrMin)}` : ''}</span>`);
+  if (f.retDate) bits.push(`<span title="回程出發；航班時刻在訂票網站選">回 ${mdDay(f.retDate)}${f.retMin != null ? ` ${pfClock(f.retMin)}` : ''}</span>`);
+  if (plan.total_travel_days > 1) bits.push(`<span>${plan.total_travel_days} 天</span>`);
+  if (f.stops != null) bits.push(`<span class="${f.stops ? '' : 'good'}">${f.stops ? `${f.stops} 轉` : '直飛'}</span>`);
+  if (f.airlines.length) bits.push(`<span>${escapeHtml(f.airlines.join('、'))}</span>`);
+  return bits.length ? `<div class="facts">${bits.join('')}</div>` : '';
+}
+
 function renderPlan(plan, rank) {
   const fav = state.favorites.has(fingerprint(plan));
   const key = `${plan.strategy}-${rank-1}-${plan.tickets[0]?.offer_id || ''}`;
@@ -2010,12 +2374,15 @@ function renderPlan(plan, rank) {
       </div>
       <div class="plan-body">
         <div class="plan-head">
+          <div class="head-main">
           <div class="meta">
             <span class="rank mono">#${rank}</span>
             <span class="strat">${STRATEGY_LABEL[plan.strategy] || plan.strategy}</span>
             ${plan.warnings.some(w => w.code === 'no_saving') ? '<span class="tag-nosave">不划算 · 僅供比較</span>' : ''}
             ${plan.window_label ? `<span class="slot-tag">${escapeHtml(plan.window_label)}</span>` : ''}
             <span class="explain">${escapeHtml(plan.explain || '')}</span>
+          </div>
+          ${planFactsHtml(plan)}
           </div>
           <div>
             <div class="price mono">${plan.currency} ${plan.total_cost.toLocaleString()}</div>
@@ -2580,6 +2947,7 @@ function wireSubmit() {
 }
 
 function wireResultsControls() {
+  wirePlanFilters();
   document.getElementById('r-filter').addEventListener('change', e => { state.filter = e.target.value; renderResults(); });
   document.getElementById('r-sort').addEventListener('change', e => { state.sort = e.target.value; renderResults(); });
   document.getElementById('btn-compare').addEventListener('click', () => {

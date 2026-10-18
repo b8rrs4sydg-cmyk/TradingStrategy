@@ -324,3 +324,12 @@ airport needs one) and `COUNTRY_ZH` (picker search by country name). The demo pa
 have a search box (name / city / code / country) and per-group 全選 / 清除. Airports the fare database does not cover are
 marked 無資料 and priced on demand by the crawlers. Trip.com needs metropolitan city codes for multi-airport cities: add them
 to `_TRIP_CITY` (`services/booking_links.py`) and `TRIP_CITY` (page) together. The Next.js `frontend/` reads `/airports`.
+
+## Plan filters (page)
+
+`PF` / `pfPass` / `planFacts` in `public/index.html` filter `state.result.plans` client-side: time-slot label, origin, destination
+(any airport a plan passes through), price range, outbound departure time (local), outbound stops, airline, travel days, outbound /
+return date, "hide 不划算", favourites. Each facet's counts are computed with the OTHER filters applied. Only the FIRST flight of a
+ticket has real times (Google's result carries one slice), so the outbound time / stops / airline are real while the return flight's
+time is usually unknown: a plan with an unknown time is never hidden by a time or stops filter, and the return-time group is
+disabled when no plan has one (use the return-date range). The strategy `<select>` stays separate but shares "全部重設".

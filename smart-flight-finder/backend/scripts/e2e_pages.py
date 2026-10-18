@@ -151,6 +151,42 @@ async def main() -> int:
             n = await page.evaluate("document.querySelectorAll('article.plan').length")
             check(n >= 0, f"filter {v}: {n} plans")
         await page.select_option("#r-filter", "all")
+        # plan filters: price ceiling, outbound time window, a destination, reset
+        total = await page.evaluate("state.result.plans.length")
+        if total >= 4:
+            top = await page.evaluate(
+                "[...state.result.plans].map(p => p.total_cost).sort((a, b) => a - b)[Math.floor(state.result.plans.length / 2)]"
+            )
+            if await page.evaluate("document.getElementById('f-panel').hidden"):
+                await page.click("#f-toggle")
+            await page.fill("#f-panel input.num[data-k=priceMax]", str(top))
+            await page.wait_for_timeout(400)
+            got = await page.evaluate(
+                "[document.querySelectorAll('#plan-list .plan').length, Math.max(0, ...state.result.plans.filter(p => pfPass(p)).map(p => p.total_cost))]"
+            )
+            check(
+                0 < got[0] < total and got[1] <= top,
+                f"price filter keeps {got[0]}/{total} plans, max {got[1]} <= {top}",
+            )
+            await page.click("#f-reset")
+            await page.wait_for_timeout(300)
+            check(
+                await page.evaluate("document.querySelectorAll('#plan-list .plan').length")
+                == total,
+                "reset restores every plan",
+            )
+            dest = await page.evaluate(
+                "document.querySelector('#f-panel input[data-facet=dests]')?.value"
+            )
+            if dest:
+                await page.click(f'#f-panel input[data-facet=dests][value="{dest}"]', force=True)
+                await page.wait_for_timeout(300)
+                ok = await page.evaluate(
+                    "state.result.plans.filter(p => pfPass(p)).every(p => planFacts(p).places.includes(document.querySelector('#f-panel input[data-facet=dests]:checked').value))"
+                )
+                check(ok, f"destination filter {dest} only keeps plans through it")
+                await page.click("#f-reset")
+                await page.wait_for_timeout(300)
         # 反向票＋倒買法 is always exactly two tickets; an open jaw never crosses countries
         shape = await page.evaluate(
             """() => {
