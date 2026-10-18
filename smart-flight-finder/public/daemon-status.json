@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:35:35+00:00",
+ "at": "2026-10-18T10:37:06+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3136,
+ "fares_saved": 3184,
  "log": [
   "10:32:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:32:33 http front door: ['https://symptoms-involved-still-arguments.trycloudflare.com', 'https://2c4a17ec210344.lhr.life']",
@@ -61,6 +61,10 @@
   "10:34:36 request received: rid mvdoux95fij60.3 32 keys",
   "10:34:36 handle mvdoux95fij60.3: first_chunk=True total=32",
   "10:34:36 request received: rid mvdoux95fij60.4 32 keys",
-  "10:34:36 handle mvdoux95fij60.4: first_chunk=True total=32"
+  "10:34:36 handle mvdoux95fij60.4: first_chunk=True total=32",
+  "10:35:58 request mvdoux95fij60.4: chunk of 32 keys done in 83s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:35:59 request mvdoux95fij60.4: final sent (32/32); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:36:50 request mvdoux95fij60.3: chunk of 32 keys done in 134s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "10:36:52 request mvdoux95fij60.3: final sent (32/32); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
  ]
 }
