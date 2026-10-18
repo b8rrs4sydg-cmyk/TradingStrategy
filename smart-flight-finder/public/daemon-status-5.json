@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:06:56+00:00",
+ "at": "2026-10-18T14:08:28+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 955,
  "log": [
-  "12:12:57 request mvdsad9pusjjw.5: chunk of 18 keys done in 142s; paths {'http': 84, 'browser': 21, 'browser-none': 258}, browser waits 279 max 289s sum 20819s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 84, 'miss': 101, 'blocked': 9, 'tries': 142, 'empty': 58}, audit 2/2 agre",
-  "12:12:58 request mvdsad9pusjjw.5: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:13:56 request mvdscl8r2y6s1.5: chunk of 17 keys done in 97s; paths {'http': 84, 'browser': 21, 'browser-none': 267}, browser waits 288 max 289s sum 21299s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 84, 'miss': 101, 'blocked': 9, 'tries': 142, 'empty': 58}, audit 2/2 agree",
   "12:13:58 request mvdscl8r2y6s1.5: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:14:00 request received: rid mvdserbuovnpn.5 26 keys",
@@ -156,6 +154,8 @@
   "14:04:56 request mvdwbcpnn1vep.5: chunk of 13 keys done in 97s; paths {'http': 178, 'browser': 47, 'browser-none': 631}, browser waits 678 max 289s sum 45197s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 178, 'miss': 255, 'blocked': 20, 'tries': 386, 'empty': 208}, audit 4/4 a",
   "14:04:57 request mvdwbcpnn1vep.5: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:06:37 request received: rid mvdwfkuufgxco.5 15 keys",
-  "14:06:37 handle mvdwfkuufgxco.5: first_chunk=True total=15"
+  "14:06:37 handle mvdwfkuufgxco.5: first_chunk=True total=15",
+  "14:08:13 request mvdwfkuufgxco.5: chunk of 15 keys done in 96s; paths {'http': 182, 'browser': 47, 'browser-none': 642}, browser waits 689 max 289s sum 45818s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 182, 'miss': 266, 'blocked': 20, 'tries': 408, 'empty': 226}, audit 4/4 a",
+  "14:08:15 request mvdwfkuufgxco.5: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
