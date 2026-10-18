@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:20:26+00:00",
+ "at": "2026-10-18T11:21:57+00:00",
  "publishes": {
   "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 755,
+ "fares_saved": 761,
  "log": [
   "11:00:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:31 http front door: ['https://mia-jake-discovery-pasta.trycloudflare.com', 'https://981fbb61bf5387.lhr.life']",
@@ -78,6 +78,14 @@
   "11:18:02 handle mvdqes7wvs5wy.5: first_chunk=True total=23",
   "11:18:38 request received: rid mvdqfjooxeaci.5 23 keys",
   "11:18:38 handle mvdqfjooxeaci.5: first_chunk=True total=23",
-  "11:19:03 rtc shws7b3umw: answered"
+  "11:19:03 rtc shws7b3umw: answered",
+  "11:20:41 request mvdqdxcqhjkkb.5: chunk of 18 keys done in 199s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 74, 'miss': 37, 'blocked': 0, 'tries': 102, 'empty': 28}, audit 1/1 agree",
+  "11:20:42 request mvdqdxcqhjkkb.5: final sent (18/18); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:21:23 request mvdqdru6p0hdt.5: chunk of 24 keys done in 248s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 74, 'miss': 37, 'blocked': 0, 'tries': 102, 'empty': 28}, audit 1/1 agree",
+  "11:21:23 request mvdqes7wvs5wy.5: chunk of 23 keys done in 201s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 74, 'miss': 37, 'blocked': 0, 'tries': 102, 'empty': 28}, audit 1/1 agree",
+  "11:21:23 request mvdqfjooxeaci.5: chunk of 23 keys done in 165s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 74, 'miss': 37, 'blocked': 0, 'tries': 102, 'empty': 28}, audit 1/1 agree",
+  "11:21:24 request mvdqdru6p0hdt.5: final sent (24/24); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:21:24 request mvdqes7wvs5wy.5: final sent (23/23); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:21:24 request mvdqfjooxeaci.5: final sent (23/23); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
  ]
 }
