@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T11:03:35+00:00",
+ "at": "2026-10-18T11:05:07+00:00",
  "publishes": {
-  "ok": 16,
+  "ok": 22,
   "r429": 0,
   "fail": 0
  },
@@ -19,6 +19,12 @@
   "11:01:44 rtc xm1d7mdz06: answered",
   "11:01:46 rtc xm1d7mdz06: data channel open",
   "11:01:46 request received: rid mvdptswpdqzeu.0 16 keys",
-  "11:01:46 handle mvdptswpdqzeu.0: first_chunk=True total=16"
+  "11:01:46 handle mvdptswpdqzeu.0: first_chunk=True total=16",
+  "11:03:50 request mvdptswpdqzeu.0: chunk of 16 keys done in 124s; ntfy publishes {'ok': 17, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 47, 'miss': 132, 'blocked': 1, 'tries': 201, 'empty': 154}, audit 2/2 agree",
+  "11:03:51 request mvdptswpdqzeu.0: final sent (16/16); ntfy publishes {'ok': 17, 'r429': 0, 'fail': 0}",
+  "11:03:55 request received: rid mvdpwl7sqfww0.0 27 keys",
+  "11:03:55 handle mvdpwl7sqfww0.0: first_chunk=True total=27",
+  "11:04:38 request httptest1792321298: chunk of 20 keys done in 179s; ntfy publishes {'ok': 19, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 47, 'miss': 132, 'blocked': 1, 'tries': 201, 'empty': 154}, audit 2/2 agree",
+  "11:04:39 request httptest1792321298: final sent (20/20); ntfy publishes {'ok': 20, 'r429': 0, 'fail': 0}"
  ]
 }
