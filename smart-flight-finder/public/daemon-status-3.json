@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:54:56+00:00",
+ "at": "2026-10-18T11:56:27+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 749,
+ "fares_saved": 750,
  "log": [
   "11:26:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:07 http front door: ['https://rugby-lime-feb-packages.trycloudflare.com', 'https://31a5df0d9304d4.lhr.life']",
@@ -59,6 +59,8 @@
   "11:54:02 rtc v59u7uyad9: answered",
   "11:54:03 rtc v59u7uyad9: data channel open",
   "11:54:12 request received: rid mvdrp1j4ku5iu.3 19 keys",
-  "11:54:12 handle mvdrp1j4ku5iu.3: first_chunk=True total=19"
+  "11:54:12 handle mvdrp1j4ku5iu.3: first_chunk=True total=19",
+  "11:56:02 request mvdrp1j4ku5iu.3: chunk of 19 keys done in 110s; paths {'http': 104, 'browser': 8, 'browser-none': 99}, browser waits 107 max 120s sum 6027s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 104, 'miss': 93, 'blocked': 0, 'tries': 143, 'empty': 39}, audit 3/3 agree",
+  "11:56:04 request mvdrp1j4ku5iu.3: final sent (19/19); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
