@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T15:33:18+00:00",
+ "generated_at": "2026-10-18T15:34:50+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -6906,6 +6906,38 @@
     ]
    ]
   },
+  "ow|BKK|TSA|2027-05-01": {
+   "price": 56150,
+   "first": {
+    "dep": "2027-05-01T19:10:00+07:00",
+    "arr": "2027-05-02T18:15:00+08:00",
+    "stops": 2,
+    "airline": "Cathay Pacific and China Airlines"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     56150
+    ]
+   ]
+  },
+  "ow|BKK|TSA|2027-05-03": {
+   "price": 56150,
+   "first": {
+    "dep": "2027-05-03T19:10:00+07:00",
+    "arr": "2027-05-04T18:15:00+08:00",
+    "stops": 2,
+    "airline": "Cathay Pacific and China Airlines"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     56150
+    ]
+   ]
+  },
   "ow|BKK|TSA|2027-06-13": {
    "price": 65340,
    "first": {
@@ -7693,6 +7725,54 @@
     [
      "2026-10-17",
      33847
+    ]
+   ]
+  },
+  "ow|CTU|RMQ|2027-05-01": {
+   "price": 13969,
+   "first": {
+    "dep": "2027-05-01T08:10:00+00:00",
+    "arr": "2027-05-01T18:10:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific and Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     13969
+    ]
+   ]
+  },
+  "ow|CTU|RMQ|2027-05-02": {
+   "price": 15666,
+   "first": {
+    "dep": "2027-05-02T13:55:00+00:00",
+    "arr": "2027-05-02T19:55:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific and Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     15666
+    ]
+   ]
+  },
+  "ow|CTU|RMQ|2027-05-03": {
+   "price": 13969,
+   "first": {
+    "dep": "2027-05-03T08:10:00+00:00",
+    "arr": "2027-05-03T18:10:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific and Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     13969
     ]
    ]
   },
@@ -10520,6 +10600,54 @@
     ]
    ]
   },
+  "ow|PVG|RMQ|2027-05-01": {
+   "price": 15375,
+   "first": {
+    "dep": "2027-05-01T13:20:00+00:00",
+    "arr": "2027-05-01T19:55:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific and Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     15375
+    ]
+   ]
+  },
+  "ow|PVG|RMQ|2027-05-02": {
+   "price": 14648,
+   "first": {
+    "dep": "2027-05-02T07:20:00+00:00",
+    "arr": "2027-05-02T18:10:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific and Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     14648
+    ]
+   ]
+  },
+  "ow|PVG|RMQ|2027-05-03": {
+   "price": 14648,
+   "first": {
+    "dep": "2027-05-03T12:20:00+00:00",
+    "arr": "2027-05-03T18:10:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific and Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     14648
+    ]
+   ]
+  },
   "ow|RMQ|BKK|2027-01-01": {
    "price": 4391,
    "first": {
@@ -10565,6 +10693,22 @@
     [
      "2026-10-17",
      9929
+    ]
+   ]
+  },
+  "ow|RMQ|BKK|2027-04-28": {
+   "price": 5533,
+   "first": {
+    "dep": "2027-04-28T10:25:00+08:00",
+    "arr": "2027-04-28T15:30:00+07:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     5533
     ]
    ]
   },
@@ -10789,6 +10933,54 @@
     [
      "2026-10-17",
      20236
+    ]
+   ]
+  },
+  "ow|RMQ|CTU|2027-04-28": {
+   "price": 10624,
+   "first": {
+    "dep": "2027-04-28T13:35:00+08:00",
+    "arr": "2027-04-28T21:55:00+00:00",
+    "stops": 1,
+    "airline": "Hong Kong Express and Cathay Pacific"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     10624
+    ]
+   ]
+  },
+  "ow|RMQ|CTU|2027-04-29": {
+   "price": 10624,
+   "first": {
+    "dep": "2027-04-29T13:35:00+08:00",
+    "arr": "2027-04-29T21:55:00+00:00",
+    "stops": 1,
+    "airline": "Hong Kong Express and Cathay Pacific"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     10624
+    ]
+   ]
+  },
+  "ow|RMQ|CTU|2027-04-30": {
+   "price": 11594,
+   "first": {
+    "dep": "2027-04-30T13:35:00+08:00",
+    "arr": "2027-04-30T21:55:00+00:00",
+    "stops": 1,
+    "airline": "Hong Kong Express and Cathay Pacific"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     11594
     ]
    ]
   },
@@ -11544,6 +11736,22 @@
     ]
    ]
   },
+  "ow|RMQ|PVG|2027-04-30": {
+   "price": 7824,
+   "first": {
+    "dep": "2027-04-30T20:40:00+08:00",
+    "arr": "2027-05-01T12:05:00+00:00",
+    "stops": 1,
+    "airline": "Hong Kong Express and Cathay Pacific"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     7824
+    ]
+   ]
+  },
   "ow|RMQ|SGN|2027-02-05": {
    "price": 12299,
    "first": {
@@ -11592,6 +11800,54 @@
     ]
    ]
   },
+  "ow|RMQ|SHA|2027-04-28": {
+   "price": 11144,
+   "first": {
+    "dep": "2027-04-28T20:40:00+08:00",
+    "arr": "2027-04-29T12:05:00+00:00",
+    "stops": 1,
+    "airline": "Hong Kong Express and Cathay Pacific"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     11144
+    ]
+   ]
+  },
+  "ow|RMQ|SHA|2027-04-29": {
+   "price": 7824,
+   "first": {
+    "dep": "2027-04-29T20:40:00+08:00",
+    "arr": "2027-04-30T15:35:00+00:00",
+    "stops": 1,
+    "airline": "Hong Kong Express and Cathay Pacific"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     7824
+    ]
+   ]
+  },
+  "ow|RMQ|SHA|2027-04-30": {
+   "price": 11144,
+   "first": {
+    "dep": "2027-04-30T20:40:00+08:00",
+    "arr": "2027-05-01T12:05:00+00:00",
+    "stops": 1,
+    "airline": "Hong Kong Express and Cathay Pacific"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     11144
+    ]
+   ]
+  },
   "ow|RMQ|SIN|2027-02-05": {
    "price": 13705,
    "first": {
@@ -11637,6 +11893,22 @@
     [
      "2026-10-17",
      4608
+    ]
+   ]
+  },
+  "ow|RMQ|SZX|2027-04-29": {
+   "price": 57281,
+   "first": {
+    "dep": "2027-04-29T11:20:00+08:00",
+    "arr": "2027-04-29T19:40:00+00:00",
+    "stops": 1,
+    "airline": "Shandong and China Southern"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     57281
     ]
    ]
   },
@@ -11861,6 +12133,38 @@
     [
      "2026-10-17",
      66059
+    ]
+   ]
+  },
+  "ow|SHA|RMQ|2027-05-02": {
+   "price": 20904,
+   "first": {
+    "dep": "2027-05-02T13:20:00+00:00",
+    "arr": "2027-05-02T19:55:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific and Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     20904
+    ]
+   ]
+  },
+  "ow|SHA|RMQ|2027-05-03": {
+   "price": 20904,
+   "first": {
+    "dep": "2027-05-03T13:20:00+00:00",
+    "arr": "2027-05-03T19:55:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific and Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     20904
     ]
    ]
   },
@@ -16619,6 +16923,38 @@
     [
      "2026-10-17",
      123452
+    ]
+   ]
+  },
+  "ow|UTP|TSA|2027-05-02": {
+   "price": 135933,
+   "first": {
+    "dep": "2027-05-02T17:20:00+00:00",
+    "arr": "2027-05-03T12:05:00+08:00",
+    "stops": 3,
+    "airline": "Bangkok Airways, THAI and ANA"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     135933
+    ]
+   ]
+  },
+  "ow|UTP|TSA|2027-05-03": {
+   "price": 75343,
+   "first": {
+    "dep": "2027-05-03T17:20:00+00:00",
+    "arr": "2027-05-04T13:10:00+08:00",
+    "stops": 3,
+    "airline": "Bangkok Airways, THAI and Uni Airways"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     75343
     ]
    ]
   },
@@ -61204,6 +61540,8 @@
   "ow|CTS|RMQ|2027-12-27",
   "ow|CTS|TPE|2027-12-27",
   "ow|CTS|TSA|2027-12-27",
+  "ow|DMK|RMQ|2027-05-01",
+  "ow|DMK|RMQ|2027-05-02",
   "ow|FUK|RMQ|2027-12-27",
   "ow|FUK|TPE|2027-09-19",
   "ow|FUK|TPE|2027-12-27",
@@ -61264,6 +61602,7 @@
   "ow|PUS|TSA|2027-12-27",
   "ow|RMQ|BKK|2027-12-23",
   "ow|RMQ|CEB|2027-12-23",
+  "ow|RMQ|CJU|2027-04-29",
   "ow|RMQ|CNX|2027-12-23",
   "ow|RMQ|CTS|2027-12-23",
   "ow|RMQ|FUK|2027-12-23",
@@ -61281,15 +61620,27 @@
   "ow|RMQ|PUS|2027-12-23",
   "ow|RMQ|SGN|2027-12-23",
   "ow|RMQ|SIN|2027-12-23",
+  "ow|RMQ|SZX|2027-04-28",
+  "ow|RMQ|SZX|2027-04-30",
+  "ow|RMQ|TFU|2027-04-28",
+  "ow|RMQ|TFU|2027-04-29",
+  "ow|RMQ|TFU|2027-04-30",
   "ow|RMQ|XMN|2027-12-23",
   "ow|SGN|RMQ|2027-12-27",
   "ow|SGN|TPE|2027-09-19",
   "ow|SGN|TPE|2027-12-27",
   "ow|SGN|TSA|2027-12-27",
+  "ow|SHA|RMQ|2027-05-01",
   "ow|SIN|RMQ|2027-12-27",
   "ow|SIN|TPE|2027-09-19",
   "ow|SIN|TPE|2027-12-27",
   "ow|SIN|TSA|2027-12-27",
+  "ow|SZX|RMQ|2027-05-01",
+  "ow|SZX|RMQ|2027-05-02",
+  "ow|SZX|RMQ|2027-05-03",
+  "ow|TFU|RMQ|2027-05-01",
+  "ow|TFU|RMQ|2027-05-02",
+  "ow|TFU|RMQ|2027-05-03",
   "ow|TPE|BKK|2027-12-23",
   "ow|TPE|CEB|2027-12-23",
   "ow|TPE|CNX|2027-12-23",
