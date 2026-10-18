@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:29:25+00:00",
+ "at": "2026-10-18T07:30:57+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 197,
+ "fares_saved": 220,
  "log": [
   "07:18:42 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:47 http front door: ['https://rising-dir-jersey-celebration.trycloudflare.com', 'https://36dbb7245894ab.lhr.life']",
@@ -46,6 +46,8 @@
   "07:28:32 request mvdhyej0cs7mj.1: chunk of 80 keys done in 431s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 110, 'miss': 89, 'blocked': 2, 'tries': 110, 'empty': 0}, audit 8/8 agree",
   "07:28:33 request mvdhyej0cs7mj.1: final sent (80/80); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "07:28:44 request received: rid mvdi7uqsdlz09.1 80 keys",
-  "07:28:44 handle mvdi7uqsdlz09.1: first_chunk=True total=80"
+  "07:28:44 handle mvdi7uqsdlz09.1: first_chunk=True total=80",
+  "07:29:27 request mvdhxkhy45w9s.5: chunk of 26 keys done in 525s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 116, 'miss': 103, 'blocked': 3, 'tries': 116, 'empty': 0}, audit 8/8 agree",
+  "07:29:27 request mvdhxkhy45w9s.5: final sent (26/26); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
