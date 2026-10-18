@@ -18,6 +18,9 @@ on:
       - "smart-flight-finder/backend/scripts/exp_http_diag2.py"
       - "smart-flight-finder/backend/scripts/exp_http_stream.py"
       - "smart-flight-finder/backend/scripts/exp_http_rate.py"
+      - "smart-flight-finder/backend/scripts/exp_mc_vs_ow.py"
+      - "smart-flight-finder/backend/scripts/exp_browser_speed.py"
+      - "smart-flight-finder/backend/scripts/exp_http_hedge.py"
       - "smart-flight-finder/backend/app/providers/google_http.py"
   workflow_dispatch:
 
@@ -27,7 +30,7 @@ permissions:
 jobs:
   experiment:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: smart-flight-finder/backend
@@ -38,4 +41,8 @@ jobs:
           python-version: "3.12"
       - run: pip install -e . requests "playwright>=1.50,<2"
       - run: playwright install --with-deps chromium
-      - run: python -m scripts.exp_http_rate ../public/fares.json
+      - run: python -m scripts.exp_mc_vs_ow ../public/fares.json
+      - run: python -m scripts.exp_browser_speed ../public/fares.json
+        if: always()
+      - run: python -m scripts.exp_http_hedge ../public/fares.json
+        if: always()

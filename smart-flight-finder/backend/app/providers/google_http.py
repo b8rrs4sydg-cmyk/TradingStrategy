@@ -238,9 +238,21 @@ def multi_city_body(segments: Sequence[Segment]) -> str:
 class HttpFetcher:
     """Async client; one instance is shared by every concurrent lookup."""
 
-    def __init__(self, *, timeout: float = 8.0, attempts: int = 5, concurrency: int = 16):
+    def __init__(
+        self,
+        *,
+        timeout: float = 8.0,
+        attempts: int = 5,
+        concurrency: int = 16,
+        hedge: int = 1,
+        streamed: bool = True,
+    ):
         self.timeout = timeout
         self.attempts = attempts
+        self.hedge = max(
+            1, hedge
+        )  # identical requests in flight per attempt: the first readable answer wins
+        self.streamed = streamed
         self.sem = asyncio.Semaphore(concurrency)
         self.client = httpx.AsyncClient(
             headers={"User-Agent": _UA, "Accept-Language": "en-US,en;q=0.9"},
@@ -286,7 +298,7 @@ class HttpFetcher:
             "soc-platform": "1",
             "soc-device": "1",
             "_reqid": str(self.reqid),
-            "rt": "c",
+            **({"rt": "c"} if self.streamed else {}),
         }
         r = await self.client.post(
             ENDPOINT,
@@ -301,6 +313,20 @@ class HttpFetcher:
             raise PermissionError(str(r.status_code))
         return r.text
 
+    async def _try(self, key: str, segments: Sequence[Segment]) -> dict | None:
+        """One request: the entry, or ``None`` (hung / error / no itineraries). Raises PermissionError when blocked."""
+
+        try:
+            text = await self._answer(key, segments)
+        except httpx.HTTPError:
+            self.sid = ""  # maybe a stale session: take a fresh one next time
+            return None
+        self.stats["tries"] += 1
+        entry = entry_from(rpc_payloads(text), segments)
+        if not entry:
+            self.stats["empty"] += 1
+        return entry
+
     async def fetch(self, key: str) -> dict | None:
         """Entry for ``key`` or ``None`` (unreadable → ask the browser)."""
 
@@ -312,8 +338,13 @@ class HttpFetcher:
         _, segments = parse_key(key)
         async with self.sem:
             for _ in range(self.attempts):
+                tasks = [asyncio.create_task(self._try(key, segments)) for _ in range(self.hedge)]
+                entry = None
                 try:
-                    text = await self._answer(key, segments)
+                    for done in asyncio.as_completed(tasks):
+                        entry = await done
+                        if entry:
+                            break
                 except PermissionError:
                     self.blocked += 1
                     self.stats["blocked"] += 1
@@ -321,14 +352,10 @@ class HttpFetcher:
                         self.pause_until = time.time() + _PAUSE_S
                         self.blocked = 0
                     return None
-                except httpx.HTTPError:
-                    self.sid = ""  # maybe a stale session: take a fresh one next time
-                    continue
-                self.stats["tries"] += 1
-                payloads = rpc_payloads(text)
-                entry = entry_from(payloads, segments)
-                if not entry:
-                    self.stats["empty"] += 1
+                finally:
+                    for t in tasks:
+                        t.cancel()
+                    await asyncio.gather(*tasks, return_exceptions=True)
                 if entry:
                     self.blocked = 0
                     self.stats["hit"] += 1
