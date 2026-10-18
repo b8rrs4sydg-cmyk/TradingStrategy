@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:49:44+00:00",
+ "at": "2026-10-18T07:58:46+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 494,
+ "fares_saved": 499,
  "log": [
   "07:39:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:05 http front door: ['https://amend-carlo-subscribers-textbook.trycloudflare.com', 'https://76b8fa2d09e0dc.lhr.life']",
@@ -28,6 +28,10 @@
   "07:45:45 handle mvditsbdelwze.1: first_chunk=True total=27",
   "07:46:21 rtc 523mvvxk10: answered",
   "07:48:34 request mvditsbdelwze.1: chunk of 27 keys done in 169s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 20, 'blocked': 0, 'tries': 28, 'empty': 0}, audit 0/0 agree",
-  "07:48:37 request mvditsbdelwze.1: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "07:48:37 request mvditsbdelwze.1: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "07:58:23 rtc i8c2uwflw8: answered",
+  "07:58:25 rtc i8c2uwflw8: data channel open",
+  "07:58:25 request received: rid mvdj9zqa3i070.1 27 keys",
+  "07:58:25 handle mvdj9zqa3i070.1: first_chunk=True total=27"
  ]
 }
