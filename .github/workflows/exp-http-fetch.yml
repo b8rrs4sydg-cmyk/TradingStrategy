@@ -1,0 +1,28 @@
+name: Experiment - Google Flights over plain HTTP
+
+# Not part of the product. Question: can fares be read without a browser (about 1 s instead of 10-40 s)?
+on:
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths:
+      - ".github/workflows/exp-http-fetch.yml"
+      - "smart-flight-finder/backend/scripts/exp_http_fetch.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e . requests
+      - run: python -m scripts.exp_http_fetch ../public/fares.json
