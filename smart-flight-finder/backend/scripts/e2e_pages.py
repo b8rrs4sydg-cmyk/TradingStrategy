@@ -179,7 +179,8 @@ async def main() -> int:
                 "document.querySelector('#f-panel input[data-facet=dests]')?.value"
             )
             if dest:
-                await page.click(f'#f-panel input[data-facet=dests][value="{dest}"]', force=True)
+                # the checkbox itself is visually hidden: click its label
+                await page.click(f'#f-panel label:has(input[data-facet=dests][value="{dest}"])')
                 await page.wait_for_timeout(300)
                 ok = await page.evaluate(
                     "state.result.plans.filter(p => pfPass(p)).every(p => planFacts(p).places.includes(document.querySelector('#f-panel input[data-facet=dests]:checked').value))"
