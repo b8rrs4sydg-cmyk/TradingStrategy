@@ -72,3 +72,8 @@ def test_multi_city_body_lists_every_leg_in_order():
         ("TPE", "HKG", "2027-04-02"),
     ]
     assert segs[0][2] == date(2027, 2, 6)
+
+
+def test_a_foreign_entry_in_the_list_does_not_hide_the_rows():
+    rows = [_row(9000), "a header", None, [1, 2], _row(8000)]
+    assert sorted(r[1][0][1] for r in itineraries([[rows]])) == [8000, 9000]

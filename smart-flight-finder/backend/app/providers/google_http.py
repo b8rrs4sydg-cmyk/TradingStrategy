@@ -85,20 +85,35 @@ def rpc_payloads(text: str) -> Iterator[object]:
 
 
 def _is_itinerary(x: object) -> bool:
+    """An itinerary row: ``[[code, [airlines], [legs...], ...], [[None, price], token], ...]``."""
+
     try:
         price = x[1][0][1]  # type: ignore[index]
-        return isinstance(x[0], list) and isinstance(price, int) and 500 <= price <= 3_000_000  # type: ignore[index]
+        legs = x[0][2]  # type: ignore[index]
+        return (
+            isinstance(price, int)
+            and not isinstance(price, bool)
+            and 500 <= price <= 3_000_000
+            and isinstance(legs, list)
+            and bool(legs)
+            and isinstance(legs[0], list)
+        )
     except (IndexError, TypeError, KeyError):
         return False
 
 
 def itineraries(node: object, depth: int = 0) -> Iterator[list]:
-    """Rows of every list made only of itinerary rows (price graphs and other number pairs do not qualify)."""
+    """Every itinerary row anywhere in ``node``.
 
-    if depth > 14 or not isinstance(node, list):
+    Rows are recognised one by one: Google puts other kinds of entries into the same lists, and demanding that a
+    whole list consist of rows threw away the cheapest flights along with it (price graphs and number pairs do not
+    have the row shape, so they never qualify).
+    """
+
+    if depth > 16 or not isinstance(node, list):
         return
-    if node and all(_is_itinerary(x) for x in node):
-        yield from node
+    if _is_itinerary(node):
+        yield node
         return
     for child in node:
         yield from itineraries(child, depth + 1)
@@ -168,14 +183,21 @@ def _leg(origin: str, dest: str, day: str) -> list:
     ]
 
 
-def multi_city_body(segments: Sequence[Segment]) -> str:
+_TRIP = {
+    "ow": 2,
+    "rt": 1,
+    "mc": 3,
+}  # the page's own trip-type code for one-way / round trip / multi-city
+
+
+def search_body(kind: str, segments: Sequence[Segment]) -> str:
     legs = [_leg(o, d, day.isoformat()) for o, d, day in segments]
     inner = [
         [None, None, None, None],
         [
             None,
             None,
-            3,
+            _TRIP[kind],
             None,
             [],
             1,
@@ -201,10 +223,14 @@ def multi_city_body(segments: Sequence[Segment]) -> str:
     return "f.req=" + quote(json.dumps([None, flat], separators=(",", ":")), safe="") + "&"
 
 
+def multi_city_body(segments: Sequence[Segment]) -> str:
+    return search_body("mc", segments)
+
+
 class HttpFetcher:
     """Async client; one instance is shared by every concurrent lookup."""
 
-    def __init__(self, *, timeout: float = 7.0, attempts: int = 3, concurrency: int = 16):
+    def __init__(self, *, timeout: float = 6.0, attempts: int = 4, concurrency: int = 16):
         self.timeout = timeout
         self.attempts = attempts
         self.sem = asyncio.Semaphore(concurrency)
@@ -221,7 +247,7 @@ class HttpFetcher:
         self.reqid = 100000
         self.blocked = 0
         self.pause_until = 0.0
-        self.stats = {"hit": 0, "miss": 0, "blocked": 0}
+        self.stats = {"hit": 0, "miss": 0, "blocked": 0, "tries": 0, "empty": 0}
 
     async def aclose(self) -> None:
         await self.client.aclose()
@@ -237,31 +263,28 @@ class HttpFetcher:
                 self.sid, self.bl, self.session_at = sid.group(1), bl.group(1), time.time()
 
     async def _answer(self, key: str, segments: Sequence[Segment]) -> str:
-        if key.startswith("mc|"):
-            await self._prepare()
-            self.reqid += 100000
-            params = {
-                "f.sid": self.sid,
-                "bl": self.bl,
-                "hl": "en",
-                "gl": "TW",
-                "soc-app": "162",
-                "soc-platform": "1",
-                "soc-device": "1",
-                "_reqid": str(self.reqid),
-                "rt": "c",
-            }
-            r = await self.client.post(
-                ENDPOINT,
-                params=params,
-                content=multi_city_body(segments),
-                headers={
-                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-                    "X-Same-Domain": "1",
-                },
-            )
-        else:
-            r = await self.client.get(url_for(key))
+        await self._prepare()
+        self.reqid += 100000
+        params = {
+            "f.sid": self.sid,
+            "bl": self.bl,
+            "hl": "en",
+            "gl": "TW",
+            "soc-app": "162",
+            "soc-platform": "1",
+            "soc-device": "1",
+            "_reqid": str(self.reqid),
+            "rt": "c",
+        }
+        r = await self.client.post(
+            ENDPOINT,
+            params=params,
+            content=search_body(key.split("|", 1)[0], segments),
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                "X-Same-Domain": "1",
+            },
+        )
         if r.status_code in (403, 429) or "unusual traffic" in r.text[:4000]:
             raise PermissionError(str(r.status_code))
         return r.text
@@ -286,8 +309,11 @@ class HttpFetcher:
                 except httpx.HTTPError:
                     self.sid = ""  # maybe a stale session: take a fresh one next time
                     continue
-                payloads = rpc_payloads(text) if key.startswith("mc|") else html_payloads(text)
+                self.stats["tries"] += 1
+                payloads = rpc_payloads(text)
                 entry = entry_from(payloads, segments)
+                if not entry:
+                    self.stats["empty"] += 1
                 if entry:
                     self.blocked = 0
                     self.stats["hit"] += 1
