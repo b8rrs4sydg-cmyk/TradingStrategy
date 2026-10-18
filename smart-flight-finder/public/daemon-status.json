@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T21:10:20+00:00",
+ "at": "2026-10-18T21:11:52+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4147,
+ "fares_saved": 4170,
  "log": [
   "20:32:15 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:32:20 http front door: ['https://bennett-completing-unix-gel.trycloudflare.com', 'https://9ee1b8a86c1ec5.lhr.life']",
@@ -123,6 +123,12 @@
   "21:09:49 request mvebde02mi6a7.5: chunk of 17 keys done in 300s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "21:09:50 request mvebde02mi6a7.5: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "21:10:17 request mvebde02mi6a7.2: chunk of 11 keys done in 328s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:10:18 request mvebde02mi6a7.2: final sent (11/11); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
+  "21:10:18 request mvebde02mi6a7.2: final sent (11/11); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "21:11:03 request mvebde02mi6a7.0: chunk of 13 keys done in 374s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "21:11:04 request mvebde02mi6a7.1: chunk of 21 keys done in 375s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "21:11:04 request mvebde02mi6a7.0: final sent (13/13); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "21:11:04 request mvebde02mi6a7.1: final sent (21/21); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "21:11:29 request mvebde02mi6a7.3: chunk of 13 keys done in 400s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "21:11:31 request mvebde02mi6a7.3: final sent (13/13); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
  ]
 }
