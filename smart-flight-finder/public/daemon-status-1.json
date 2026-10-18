@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T10:29:02+00:00",
+ "at": "2026-10-18T10:30:34+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 936,
+ "fares_saved": 959,
  "log": [
-  "08:42:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "08:43:13 request received: rid httptest1792312992 20 keys",
-  "08:43:13 handle httptest1792312992: first_chunk=True total=20",
-  "08:43:14 request httptest1792312992: chunk of 20 keys done in 1s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
   "08:43:15 request httptest1792312992: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "08:45:24 request received: rid mvdky8vc656ar.0 40 keys",
   "08:45:24 handle mvdky8vc656ar.0: first_chunk=True total=40",
@@ -156,6 +152,10 @@
   "10:26:49 request received: rid mvdokwtc5pmdk.1 27 keys",
   "10:26:49 handle mvdokwtc5pmdk.1: first_chunk=True total=27",
   "10:27:39 request mvdokwtc5pmdk.1: chunk of 27 keys done in 51s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 370, 'miss': 235, 'blocked': 0, 'tries': 404, 'empty': 34}, audit 2/2 agree",
-  "10:27:40 request mvdokwtc5pmdk.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "10:27:40 request mvdokwtc5pmdk.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:29:29 request received: rid mvdoocbqq1kth.1 27 keys",
+  "10:29:29 handle mvdoocbqq1kth.1: first_chunk=True total=27",
+  "10:30:18 request mvdoocbqq1kth.1: chunk of 27 keys done in 49s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 393, 'miss': 239, 'blocked': 0, 'tries': 437, 'empty': 44}, audit 2/2 agree",
+  "10:30:19 request mvdoocbqq1kth.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
