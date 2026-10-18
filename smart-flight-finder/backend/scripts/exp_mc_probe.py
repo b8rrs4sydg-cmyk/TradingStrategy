@@ -57,7 +57,7 @@ def part_a(key: str, price: int) -> None:
             if "google.com" in u and r.request.method == "POST":
                 try:
                     body = r.text()
-                except Exception:
+                except Exception:  # noqa: BLE001
                     body = ""
                 seen.append(
                     {
@@ -117,7 +117,7 @@ def part_b(key: str) -> None:
     parts = [x.split("-") for x in legs]
     d = [f"{p[2]}-{p[3]}-{p[4]}" for p in parts]  # YYYY-MM-DD
     o = [(p[0], p[1]) for p in parts]
-    ck = lambda i: o[i][0].lower()  # noqa: E731
+    ck = lambda i: o[i][0].lower()
     tests = {
         "skyscanner.com.tw": f"https://www.skyscanner.com.tw/transport/flights/{ck(0)}/{o[0][1].lower()}/{d[0][2:].replace('-', '')}/",
         "skyscanner.net(api)": "https://www.skyscanner.net/g/radar/api/v2/web-unified-search/",

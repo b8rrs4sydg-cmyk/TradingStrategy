@@ -60,7 +60,7 @@ def browser_capture(key: str) -> dict:
                     calls.append(
                         {"url": r.url, "body": r.request.post_data or "", "text": r.text()}
                     )
-                except Exception:  # noqa: BLE001
+                except Exception:  # noqa: BLE001, S110 — a response without a body is skipped
                     pass
 
         page.on("response", on_resp)
@@ -108,9 +108,9 @@ def main() -> None:
         )
 
         def with_token(tok):
-            inner = json.loads(json.dumps(tmpl))
+            inner = json.loads(json.dumps(tmpl))  # noqa: B023 — called inside the loop it belongs to
             inner[0][3] = tok
-            body = body_from(inner, segs)
+            body = body_from(inner, segs)  # noqa: B023
             return (
                 body
                 if tok is None

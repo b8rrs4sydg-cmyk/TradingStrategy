@@ -62,7 +62,7 @@ def main() -> int:
         for key, db_price in sample(db, kind, n):
             tries, prices, secs = 0, [], 0.0
             for tries in range(1, 4):
-                prices, s, nblocks, status = attempt(session, key)
+                prices, s, _nblocks, _status = attempt(session, key)
                 secs += s
                 if prices:
                     break

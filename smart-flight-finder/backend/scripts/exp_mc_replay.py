@@ -30,7 +30,7 @@ SOCS = "CAESHAgBEhJnd3NfMjAyMzA4MTAtMF9SQzIaAmVuIAEaBgiAo_CmBg"
 def mc_keys(db: dict) -> list[tuple[str, int]]:
     ks = sorted(k for k, e in db["fares"].items() if k.startswith("mc|") and e.get("price"))
     a = next(k for k in ks if "TPE-KIX" in k)
-    stem, last = a.rsplit("-", 1)
+    stem, _last = a.rsplit("-", 1)
     b = next((k for k in ks if k.startswith(stem.rsplit("-", 2)[0]) and k != a), ks[1])
     return [(a, db["fares"][a]["price"]), (b, db["fares"][b]["price"])]
 
@@ -77,7 +77,7 @@ def main() -> None:
     print("\ncookies seen in browser:", sorted(ca["cookies"]))
     print("url params:", {k: v[0][:60] for k, v in parse_qs(urlsplit(ca["url"]).query).items()})
     oa, ia = decode(ca["body"])
-    ob, ib = decode(cb["body"])
+    _ob, ib = decode(cb["body"])
     print("\nouter A:", json.dumps(oa)[:100], "... tail:", json.dumps(oa)[-120:])
     print("\ninner A:", json.dumps(ia))
     print("\ninner B:", json.dumps(ib))

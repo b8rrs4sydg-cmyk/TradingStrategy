@@ -66,7 +66,7 @@ def session() -> tuple[requests.Session, dict]:
 
 def main() -> None:
     db = json.loads(Path(sys.argv[1]).read_text())
-    (ka, pa), _ = mc_keys(db)
+    (ka, _pa), _ = mc_keys(db)
     cap = capture(ka)
     _, tmpl = decode(cap["body"])
     token = tmpl[0][3]

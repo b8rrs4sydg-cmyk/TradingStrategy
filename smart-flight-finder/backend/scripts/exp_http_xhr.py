@@ -97,7 +97,7 @@ def main() -> None:
                     r = s.post(
                         ENDPOINT,
                         params=params,
-                        data=body_from(tmpl, segs),
+                        data=body_from(tmpl, segs),  # noqa: B023
                         headers=hdr,
                         timeout=TIMEOUT,
                     )

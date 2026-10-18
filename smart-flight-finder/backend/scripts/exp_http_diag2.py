@@ -7,7 +7,6 @@ database price (as a number) inside each response, inside the plain-GET HTML blo
 from __future__ import annotations
 
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -67,7 +66,7 @@ def main() -> None:
                 if r.request.method == "POST" and "google.com" in r.url:
                     try:
                         posts.append((r.url.split("?")[0].split("/")[-1], r.status, r.text()))
-                    except Exception:  # noqa: BLE001
+                    except Exception:  # noqa: BLE001, S110
                         pass
 
             page.on("response", on)
