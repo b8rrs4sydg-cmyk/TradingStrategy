@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:24:07+00:00",
+ "at": "2026-10-18T10:25:38+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 545,
+ "fares_saved": 591,
  "log": [
   "08:41:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:42:04 http front door: ['https://breathing-card-reseller-courses.trycloudflare.com', 'https://7f29aa3e6f9db3.lhr.life']",
@@ -138,6 +138,12 @@
   "10:22:52 request received: rid mvdofttvm1mr8.5 26 keys",
   "10:22:52 handle mvdofttvm1mr8.5: first_chunk=True total=26",
   "10:23:43 request mvdofttvm1mr8.5: chunk of 26 keys done in 51s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 236, 'miss': 200, 'blocked': 0, 'tries': 257, 'empty': 21}, audit 2/2 agree",
-  "10:23:45 request mvdofttvm1mr8.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "10:23:45 request mvdofttvm1mr8.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "10:24:24 request received: rid mvdohst9h6yky.5 26 keys",
+  "10:24:24 handle mvdohst9h6yky.5: first_chunk=True total=26",
+  "10:25:14 request mvdohst9h6yky.5: chunk of 26 keys done in 51s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 260, 'miss': 202, 'blocked': 0, 'tries': 286, 'empty': 26}, audit 2/2 agree",
+  "10:25:16 request mvdohst9h6yky.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "10:25:31 request received: rid mvdoj8tiltid4.5 26 keys",
+  "10:25:31 handle mvdoj8tiltid4.5: first_chunk=True total=26"
  ]
 }
