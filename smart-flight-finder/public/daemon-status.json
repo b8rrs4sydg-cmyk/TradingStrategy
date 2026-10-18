@@ -1,18 +1,12 @@
 {
- "at": "2026-10-18T21:28:35+00:00",
+ "at": "2026-10-18T21:30:06+00:00",
  "publishes": {
   "ok": 12,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4336,
+ "fares_saved": 4364,
  "log": [
-  "20:49:20 request mveaonx7egabp.1: chunk of 75 keys done in 223s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "20:49:23 request mveaonx7egabp.1: final sent (75/75); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "20:52:24 request mveaonx7egabp.0: chunk of 85 keys done in 406s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "20:52:26 request mveaonx7egabp.0: final sent (85/85); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "20:55:08 request received: rid mveb0xuquty77.0 21 keys",
-  "20:55:08 handle mveb0xuquty77.0: first_chunk=True total=21",
   "20:55:08 request received: rid mveb0xuquty77.1 13 keys",
   "20:55:08 request received: rid mveb0xuquty77.2 18 keys",
   "20:55:08 handle mveb0xuquty77.1: first_chunk=True total=13",
@@ -156,6 +150,12 @@
   "21:27:41 request mvec2hsv4ne87.4: chunk of 15 keys done in 199s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
   "21:27:42 request mvec2hsv4ne87.4: final sent (15/15); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
   "21:28:13 request mvec2hsv4ne87.3: chunk of 17 keys done in 230s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
-  "21:28:14 request mvec2hsv4ne87.3: final sent (17/17); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
+  "21:28:14 request mvec2hsv4ne87.3: final sent (17/17); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "21:28:44 request mvec2hsv4ne87.0: chunk of 15 keys done in 261s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "21:28:45 request mvec2hsv4ne87.0: final sent (15/15); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "21:29:32 request mvec2hsv4ne87.2: chunk of 26 keys done in 310s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "21:29:34 request mvec2hsv4ne87.2: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "21:29:57 request mvec2hsv4ne87.1: chunk of 26 keys done in 334s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "21:29:58 request mvec2hsv4ne87.1: final sent (26/26); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
  ]
 }
