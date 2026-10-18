@@ -1,17 +1,12 @@
 {
- "at": "2026-10-18T14:36:24+00:00",
+ "at": "2026-10-18T14:39:31+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1372,
+ "fares_saved": 1375,
  "log": [
-  "12:48:29 handle mvdtn3iltwypi.1: first_chunk=True total=15",
-  "12:49:59 request mvdtn3iltwypi.1: chunk of 15 keys done in 90s; paths {'http': 118, 'browser': 52, 'browser-none': 362}, browser waits 414 max 236s sum 26370s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 118, 'miss': 121, 'blocked': 0, 'tries': 202, 'empty': 84}, audit 5/5 agr",
-  "12:50:00 request mvdtn3iltwypi.1: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:50:55 request received: rid mvdtq88z7zvuk.1 16 keys",
-  "12:50:55 handle mvdtq88z7zvuk.1: first_chunk=True total=16",
   "12:52:27 request mvdtq88z7zvuk.1: chunk of 16 keys done in 92s; paths {'http': 118, 'browser': 56, 'browser-none': 374}, browser waits 430 max 236s sum 27172s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 118, 'miss': 121, 'blocked': 0, 'tries': 202, 'empty': 84}, audit 5/5 agr",
   "12:52:28 request mvdtq88z7zvuk.1: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:53:23 request received: rid mvdttemfkl6n6.1 18 keys",
@@ -156,6 +151,11 @@
   "14:34:23 request received: rid mvdxfaioyk7ai.1 22 keys",
   "14:34:23 handle mvdxfaioyk7ai.1: first_chunk=True total=22",
   "14:36:02 request mvdxfaioyk7ai.1: chunk of 22 keys done in 99s; paths {'http': 244, 'browser': 73, 'browser-none': 707}, browser waits 780 max 236s sum 49745s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 244, 'miss': 270, 'blocked': 0, 'tries': 527, 'empty': 283}, audit 5/5 ag",
-  "14:36:02 request mvdxfaioyk7ai.1: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:36:02 request mvdxfaioyk7ai.1: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:36:25 git retry 0: b\"-1kexus': is at 5b4309f86c582221f471fe5352210faf4048aada but expected 05562cf56e411b4f3c78a8b0c4f0d4ee0f1d62f2)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "14:38:20 request received: rid mvdxkdifvwt9b.1 10 keys",
+  "14:38:20 handle mvdxkdifvwt9b.1: first_chunk=True total=10",
+  "14:39:17 request mvdxkdifvwt9b.1: chunk of 10 keys done in 57s; paths {'http': 247, 'browser': 73, 'browser-none': 714}, browser waits 787 max 236s sum 50076s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 247, 'miss': 277, 'blocked': 0, 'tries': 543, 'empty': 296}, audit 5/5 ag",
+  "14:39:19 request mvdxkdifvwt9b.1: final sent (10/10); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
