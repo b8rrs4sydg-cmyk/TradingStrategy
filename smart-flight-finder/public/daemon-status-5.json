@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:32:28+00:00",
+ "at": "2026-10-18T07:33:59+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 222,
+ "fares_saved": 223,
  "log": [
   "07:18:42 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:47 http front door: ['https://rising-dir-jersey-celebration.trycloudflare.com', 'https://36dbb7245894ab.lhr.life']",
@@ -48,6 +48,16 @@
   "07:28:44 request received: rid mvdi7uqsdlz09.1 80 keys",
   "07:28:44 handle mvdi7uqsdlz09.1: first_chunk=True total=80",
   "07:29:27 request mvdhxkhy45w9s.5: chunk of 26 keys done in 525s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 116, 'miss': 103, 'blocked': 3, 'tries': 116, 'empty': 0}, audit 8/8 agree",
-  "07:29:27 request mvdhxkhy45w9s.5: final sent (26/26); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "07:29:27 request mvdhxkhy45w9s.5: final sent (26/26); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "07:33:13 rtc 3lf4td4ihd: answered",
+  "07:33:13 rtc 3lf4td4ihd: data channel open",
+  "07:33:14 request received: rid mvdidog5osv1u.5 1 keys",
+  "07:33:14 handle mvdidog5osv1u.5: first_chunk=True total=1",
+  "07:33:14 request mvdidog5osv1u.5: chunk of 1 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 140, 'miss': 138, 'blocked': 3, 'tries': 140, 'empty': 0}, audit 8/8 agree",
+  "07:33:16 request mvdidog5osv1u.5: final sent (1/1); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "07:33:20 request received: rid mvdidt5v9id4v.5 26 keys",
+  "07:33:20 handle mvdidt5v9id4v.5: first_chunk=True total=26",
+  "07:33:20 request mvdidt5v9id4v.5: chunk of 26 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 140, 'miss': 138, 'blocked': 3, 'tries': 140, 'empty': 0}, audit 8/8 agree",
+  "07:33:20 request mvdidt5v9id4v.5: final sent (26/26); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
