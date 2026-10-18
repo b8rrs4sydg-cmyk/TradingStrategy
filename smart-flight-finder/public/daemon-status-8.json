@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:42:44+00:00",
+ "at": "2026-10-18T14:44:15+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 323,
  "log": [
-  "12:50:05 request mvdtn3iltwypi.8: chunk of 13 keys done in 96s; paths {'http': 124, 'browser-none': 275, 'browser': 16}, browser waits 291 max 147s sum 18185s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 124, 'miss': 145, 'blocked': 0, 'tries': 251, 'empty': 127}, audit 1/1 ag",
-  "12:50:07 request mvdtn3iltwypi.8: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:50:55 request received: rid mvdtq88z7zvuk.8 20 keys",
   "12:50:55 handle mvdtq88z7zvuk.8: first_chunk=True total=20",
   "12:53:18 request mvdtq88z7zvuk.8: chunk of 20 keys done in 143s; paths {'http': 124, 'browser-none': 295, 'browser': 16}, browser waits 311 max 147s sum 19904s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 124, 'miss': 145, 'blocked': 0, 'tries': 251, 'empty': 127}, audit 1/1 a",
@@ -156,6 +154,8 @@
   "14:39:57 request mvdxkdifvwt9b.8: chunk of 14 keys done in 97s; paths {'http': 232, 'browser-none': 692, 'browser': 16}, browser waits 708 max 169s sum 47801s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 232, 'miss': 278, 'blocked': 0, 'tries': 552, 'empty': 320}, audit 1/1 ag",
   "14:39:59 request mvdxkdifvwt9b.8: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:42:15 request received: rid mvdxpelbl6r2e.8 11 keys",
-  "14:42:15 handle mvdxpelbl6r2e.8: first_chunk=True total=11"
+  "14:42:15 handle mvdxpelbl6r2e.8: first_chunk=True total=11",
+  "14:43:51 request mvdxpelbl6r2e.8: chunk of 11 keys done in 96s; paths {'http': 232, 'browser-none': 703, 'browser': 16}, browser waits 719 max 169s sum 48471s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 232, 'miss': 278, 'blocked': 0, 'tries': 552, 'empty': 320}, audit 1/1 ag",
+  "14:43:52 request mvdxpelbl6r2e.8: final sent (11/11); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
