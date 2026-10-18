@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T22:49:04+00:00",
+ "at": "2026-10-18T22:50:36+00:00",
  "publishes": {
   "ok": 15,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 4729,
  "log": [
-  "21:51:31 handle mved1efgi4hq6.1: first_chunk=True total=12",
-  "21:51:31 handle mved1efgi4hq6.3: first_chunk=True total=22",
-  "21:51:31 request received: rid mved1efgi4hq6.2 17 keys",
   "21:51:31 handle mved1efgi4hq6.2: first_chunk=True total=17",
   "21:51:31 request received: rid mved1efgi4hq6.5 20 keys",
   "21:51:31 request received: rid mved1efgi4hq6.6 23 keys",
@@ -156,6 +153,9 @@
   "22:47:00 request mveemtb97p91x.3: final sent (16/16); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
   "22:48:19 request mveemtb97p91x.2: chunk of 15 keys done in 732s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
   "22:48:21 request mveemtb97p91x.2: final sent (15/15); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
-  "22:49:02 request mveemtb97p91x.1: chunk of 11 keys done in 775s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}"
+  "22:49:02 request mveemtb97p91x.1: chunk of 11 keys done in 775s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
+  "22:49:04 request mveemtb97p91x.1: final sent (11/11); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
+  "22:49:44 request mveemtb97p91x.0: chunk of 18 keys done in 816s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}",
+  "22:49:45 request mveemtb97p91x.0: final sent (18/18); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}"
  ]
 }
