@@ -2181,9 +2181,13 @@ const fmtSec = s => (s >= 60 ? `${Math.floor(s / 60)} 分 ${Math.round(s % 60)} 
 
 function transportText() {
   if (live.mode !== 'ntfy') return '';
-  if (live.transport === 'rtc') return '連線：點對點（WebRTC，不經通道）';
-  if (live.transport === 'http') return '連線：直連爬蟲（通道）';
-  const why = [live.rtcNote, ...(live.daemonNotes || [])].filter(Boolean).join('；') || '沒有找到爬蟲通道網址';
+  if (live.transport === 'peers') {
+    const p = live.peerList || [];
+    const r = p.filter(x => x.kind === 'rtc').length;
+    return `連線：${p.length} 個爬蟲並行查詢（點對點 ${r}、通道 ${p.length - r}）`;
+  }
+  const notes = Object.values(live.rtcFail || {}).map(x => x.note);
+  const why = [...new Set([...notes, ...(live.daemonNotes || [])])].filter(Boolean).join('；') || '沒有找到爬蟲';
   return `連線：ntfy 中繼（直連失敗：${why}）`;
 }
 
@@ -2386,19 +2390,20 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 /* Peer-to-peer front door (WebRTC): two tiny ntfy messages (offer / answer) are the only signalling;
  * the lookups and the fares then flow over a data channel straight to the crawler — no tunnel to find,
- * no GitHub API, no ntfy quota for the data. */
+ * no GitHub API, no ntfy quota for the data. Every crawler instance has its own channel (offer.inst). */
 const T_SIG = T_REQ + '-sig', T_SIGR = T_RES + '-sig';
 const STUN = 'stun:stun.l.google.com:19302';
 const RTC_CONNECT_MS = 15000;
-function rtcClose() {
-  const c = live.rtc;
-  live.rtc = null;
+function rtcClose(i = 0) {
+  const c = live.rtcs?.[i];
+  if (live.rtcs) delete live.rtcs[i];
   if (c) { try { c.pc.close(); } catch {} }
 }
-function rtcEnsure() {
-  if (live.rtc && live.rtc.dc.readyState === 'open') return Promise.resolve(live.rtc);
-  if (live.rtcPending) return live.rtcPending;
-  if (live.rtcFailedAt && Date.now() - live.rtcFailedAt < 300000) return Promise.reject(new Error(live.rtcNote || '點對點連線最近失敗'));
+function rtcEnsure(i = 0) {
+  const rt = (live.rtcs ||= {}), pend = (live.rtcPending ||= {}), fail = (live.rtcFail ||= {});
+  if (rt[i] && rt[i].dc.readyState === 'open') return Promise.resolve(rt[i]);
+  if (pend[i]) return pend[i];
+  if (fail[i] && Date.now() - fail[i].at < 300000) return Promise.reject(new Error(fail[i].note));
   if (typeof RTCPeerConnection === 'undefined') return Promise.reject(new Error('瀏覽器不支援 WebRTC'));
   const p = new Promise((resolve, reject) => {
     const sid = Math.random().toString(36).slice(2, 12);
@@ -2411,14 +2416,14 @@ function rtcEnsure() {
       if (es) es.close();
       if (err) { try { pc.close(); } catch {} reject(err); }
     };
-    const timer = setTimeout(() => end(new Error('點對點連線逾時')), RTC_CONNECT_MS);
-    dc.onopen = () => { const conn = { pc, dc, sid }; live.rtc = conn; end(); resolve(conn); };
+    const timer = setTimeout(() => end(new Error(`點對點連線逾時（爬蟲 ${i}）`)), RTC_CONNECT_MS);
+    dc.onopen = () => { const conn = { pc, dc, sid }; rt[i] = conn; end(); resolve(conn); };
     dc.onmessage = ev => { try { const m = JSON.parse(ev.data); live.rtcHandlers?.get(m.rid)?.(m); } catch {} };
-    dc.onclose = () => { if (live.rtc && live.rtc.dc === dc) live.rtc = null; };
+    dc.onclose = () => { if (rt[i] && rt[i].dc === dc) delete rt[i]; };
     pc.onconnectionstatechange = () => {
       if (pc.connectionState !== 'failed' && pc.connectionState !== 'closed') return;
-      if (live.rtc && live.rtc.pc === pc) live.rtc = null;
-      end(new Error('點對點連線失敗'));
+      if (rt[i] && rt[i].pc === pc) delete rt[i];
+      end(new Error(`點對點連線失敗（爬蟲 ${i}）`));
     };
     (async () => {
       try {
@@ -2436,13 +2441,47 @@ function rtcEnsure() {
           pc.onicegatheringstatechange = () => pc.iceGatheringState === 'complete' && res();
           setTimeout(res, 4000);
         });
-        await ntfyPost(JSON.stringify({ type: 'offer', sid, sdp: pc.localDescription.sdp }), T_SIG);
+        await ntfyPost(JSON.stringify({ type: 'offer', sid, inst: i, sdp: pc.localDescription.sdp }), T_SIG);
       } catch (e) { end(e instanceof Error ? e : new Error(String(e))); }
     })();
   });
-  p.catch(e => { live.rtcFailedAt = Date.now(); live.rtcNote = e.message; });
-  live.rtcPending = p.finally(() => { live.rtcPending = null; });
-  return live.rtcPending;
+  p.catch(e => { fail[i] = { at: Date.now(), note: e.message }; });
+  pend[i] = p.finally(() => { delete pend[i]; });
+  return pend[i];
+}
+
+// Every crawler instance that answers right now, over a data channel or one of its tunnels: [{i, kind, url?}]
+function peersNow() {
+  return [...(live.peerMap || new Map()).values()]
+    .filter(p => p.kind !== 'rtc' || live.rtcs?.[p.i]?.dc.readyState === 'open')
+    .sort((a, b) => a.i - b.i);
+}
+function connectPeers() {
+  const map = (live.peerMap ||= new Map());
+  if (live.peersAt && Date.now() - live.peersAt < 60000 && peersNow().length) return Promise.resolve(peersNow());
+  if (live.peersBusy) return live.peersBusy;
+  live.peersBusy = (async () => {
+    const attempt = async i => {
+      try { await rtcEnsure(i); map.set(i, { i, kind: 'rtc' }); return true; } catch {}
+      const url = await instanceTunnel(i);
+      if (url) { map.set(i, { i, kind: 'http', url }); return true; }
+      map.delete(i);
+      return false;
+    };
+    const all = [...Array(INSTANCES).keys()].map(attempt);
+    // the first working crawler ends the wait, with a short grace for the others to join
+    await Promise.race([Promise.any(all.map(p => p.then(ok => (ok ? true : Promise.reject())))).catch(() => {}), Promise.allSettled(all)]);
+    await Promise.race([Promise.allSettled(all), sleep(1500)]);
+    live.peersAt = Date.now();
+    return peersNow();
+  })().finally(() => { live.peersBusy = null; });
+  return live.peersBusy;
+}
+function markPeerFailed(i, note) {
+  rtcClose(i);
+  (live.rtcFail ||= {})[i] = { at: Date.now(), note: note || '點對點連線最近失敗' };
+  (live.tunnelFail ||= {})[i] = Date.now();
+  live.peerMap?.delete(i);
 }
 
 function ntfyChunks(rid, keys) {
@@ -2535,7 +2574,7 @@ function loadLiveCache() {
  * (staged by pages.yml): take whichever entries are newer than the embedded copy. */
 async function loadSiblingFares() {
   let changed = false;
-  for (const name of ['fares.json', 'fares-live.json']) {
+  for (const name of ['fares.json', 'fares-live.json', ...Array.from({ length: INSTANCES - 1 }, (_, i) => `fares-live-${i + 1}.json`)]) {
     try {
       const r = await fetch(name, { cache: 'no-cache' });
       if (!r.ok) continue;
@@ -2560,48 +2599,55 @@ function noteDiag(e) {
 
 /* Where is the crawler? Its Cloudflare tunnel URL (direct HTTPS + SSE, no message quota) if it answers,
  * else null → fall back to the ntfy relay. */
-function discoverDaemon(force = false) {
-  if (live.discovering) return live.discovering;          // share one probe between concurrent lookups
-  const p = discoverDaemonNow(force).finally(() => { live.discovering = null; });
-  live.discovering = p;
-  return p;
-}
-async function discoverDaemonNow(force) {
-  const now = Date.now();
-  if (!force && live.daemonCheckedAt && now - live.daemonCheckedAt < (live.daemonUrl ? 60000 : 15000)) return live.daemonUrl;
-  live.daemonNotes = [];
-  live.daemonCheckedAt = now;
-  live.daemonUrl = null;
-  const timed = (url, opt = {}, ms = 5000) => {
-    const ctl = new AbortController();
-    const t = setTimeout(() => ctl.abort(), ms);
-    return fetch(url, { ...opt, signal: ctl.signal, cache: 'no-store' }).finally(() => clearTimeout(t));
+const INSTANCES = 3;   // parallel crawler daemons (fare-daemon.yml matrix): lookups are split between them
+const DAEMON_BRANCHES = ['claude/zealous-darwin-1kexus', 'claude/tender-cray-46zevd'];   // the daemon commits to the branch that started it
+const daemonFile = i => (i === 0 ? 'daemon.json' : `daemon-${i}.json`);
+const rawUrl = (branch, file) => `https://raw.githubusercontent.com/b8rrs4sydg-cmyk/TradingStrategy/${branch}/smart-flight-finder/public/${file}`;
+const timed = (url, opt = {}, ms = 5000) => {
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), ms);
+  return fetch(url, { ...opt, signal: ctl.signal, cache: 'no-store' }).finally(() => clearTimeout(t));
+};
+
+// Where is instance i? The newest announcement among the raw files of both branches (a cache-busting query
+// skips the CDN cache, no rate limit), the file beside the page, and — last resort — the GitHub API.
+async function instanceInfos(i) {
+  const file = daemonFile(i);
+  const get = async (url, opt) => {
+    try { const r = await timed(url + (url.includes('?') ? '&' : '?') + `_=${Date.now()}`, opt); return r.ok ? await r.json() : null; } catch { return null; }
   };
-  try {
-    // raw file (a cache-busting query skips the CDN cache, no rate limit) → GitHub API (60 requests/hour per IP,
-    // may be exhausted or blocked) → file next to the page (only as fresh as the last Pages deploy).
-    // Any one of them is enough, and a stale URL simply fails its health check and moves on.
-    const sources = [
-      () => timed(`${DAEMON_RAW}?_=${Date.now()}`),
-      () => timed(DAEMON_API, { headers: { Accept: 'application/vnd.github.raw' } }),
-      () => timed(`daemon.json?_=${Date.now()}`),
-    ];
-    for (const get of sources) {
-      let info = null;
-      try { const r = await get(); if (r.ok) info = await r.json(); } catch {}
-      const urls = info ? (info.urls && info.urls.length ? info.urls : [info.url]).filter(Boolean) : [];
-      if (!urls.length) { live.daemonNotes.push('no info'); continue; }
-      // the daemon runs independent tunnels (Cloudflare + localhost.run): the first healthy one wins
-      const alive = await Promise.all(urls.map(async u => {
-        try { const h = await timed(`${u}/health`, {}, 10000); if (h.ok) return u; live.daemonNotes.push(`health ${h.status}`); } catch (e) { live.daemonNotes.push(`health ${e}`); }
-        return null;
-      }));
-      const ok = alive.find(Boolean);
-      if (ok) { live.daemonUrl = ok; live.daemonAlt = alive.filter(u => u && u !== ok); break; }
-    }
-  } catch {}
-  return live.daemonUrl;
+  let found = (await Promise.all([...DAEMON_BRANCHES.map(b => get(rawUrl(b, file))), get(file)])).filter(x => x && (x.urls?.length || x.url));
+  if (!found.length) {
+    const api = await get(`https://api.github.com/repos/b8rrs4sydg-cmyk/TradingStrategy/contents/smart-flight-finder/public/${file}?ref=${DAEMON_BRANCHES[0]}`, { headers: { Accept: 'application/vnd.github.raw' } });
+    if (api && (api.urls?.length || api.url)) found = [api];
+  }
+  return found.sort((a, b) => String(b.at).localeCompare(String(a.at)));
 }
+
+// A healthy tunnel URL of instance i (each instance announces two independent tunnels), or null.
+function instanceTunnel(i, force = false) {
+  const cache = (live.tunnels ||= {}), busy = (live.tunnelBusy ||= {});
+  const c = cache[i];
+  if (!force && c && Date.now() - c.at < (c.url ? 60000 : 15000)) return Promise.resolve(c.url);
+  if (!force && live.tunnelFail?.[i] && Date.now() - live.tunnelFail[i] < 120000) return Promise.resolve(null);
+  if (busy[i]) return busy[i];                                 // share one probe between concurrent lookups
+  busy[i] = (async () => {
+    const notes = [];
+    const infos = await instanceInfos(i);
+    const urls = [...new Set(infos.flatMap(x => (x.urls?.length ? x.urls : [x.url])).filter(Boolean))];
+    if (!urls.length) notes.push('no info');
+    const alive = await Promise.all(urls.map(async u => {
+      try { const h = await timed(`${u}/health`, {}, 10000); if (h.ok) return u; notes.push(`health ${h.status}`); } catch (e) { notes.push(`health ${e}`); }
+      return null;
+    }));
+    const url = alive.find(Boolean) || null;
+    cache[i] = { at: Date.now(), url, alt: alive.filter(u => u && u !== url), notes };
+    if (i === 0) { live.daemonUrl = url; live.daemonAlt = cache[i].alt; live.daemonNotes = notes; }
+    return url;
+  })().finally(() => { delete busy[i]; });
+  return busy[i];
+}
+const discoverDaemon = force => instanceTunnel(0, force);   // instance 0 (kept for the diagnostics)
 
 // Is the crawler (a GitHub Actions job) running at all? daemon-status.json is committed every ~90 s while it is.
 async function crawlerOfflineNote() {
@@ -2617,13 +2663,87 @@ async function crawlerOfflineNote() {
   } catch { return ''; }
 }
 
-function ntfyLookup(keys, rid) {
+// The lookup runs on every crawler instance that answers: the keys are split between them (round robin) and each
+// share goes over that instance's data channel or tunnel, so a search is about as many times faster as there are
+// instances. Progress is the sum of the shares; one failing share is retried by the caller with the others' help.
+function peersLookup(keys, rid) {
   return new Promise((resolve, reject) => {
-    let es = null, silence = null, opened = false, gotAny = false, finished = false, pollCtl = null;
-    const cleanup = () => { clearTimeout(silence); if (es) es.close(); if (pollCtl) pollCtl.abort(); live.rtcHandlers?.delete(rid); live.unsub = null; };
+    const peers = [...(live.peerList || [])];
+    const shards = peers.map(() => []);
+    keys.forEach((k, idx) => shards[idx % peers.length].push(k));
+    const st = shards.map(ks => ({ done: 0, final: !ks.length, failed: null }));
+    const timers = st.map(() => null), ctls = [];
+    let finished = false, gotAny = false;
+    const cleanup = () => {
+      timers.forEach(clearTimeout); ctls.forEach(c => c.abort());
+      peers.forEach((p, s) => live.rtcHandlers?.delete(`${rid}.${s}`));
+      live.unsub = null;
+    };
+    const settle = () => {
+      if (finished || st.some(x => !x.final && !x.failed)) return;
+      finished = true; cleanup();
+      const bad = st.map((x, s) => (x.failed ? s : -1)).filter(s => s >= 0);
+      if (!bad.length) return resolve();
+      const err = new Error(st[bad[0]].failed);
+      err.gotAny = gotAny; err.failedPeers = bad.map(s => peers[s].i);
+      reject(err);
+    };
+    const fail = (s, why) => { if (st[s].final || st[s].failed) return; st[s].failed = why; clearTimeout(timers[s]); settle(); };
+    const arm = (s, ms) => { clearTimeout(timers[s]); timers[s] = setTimeout(() => fail(s, gotAny ? '爬蟲中途沒有回應' : '爬蟲沒有回應'), ms); };
+    live.unsub = () => { finished = true; cleanup(); };       // a newer lookup cancels this one
+    const onShard = (s, m) => {
+      if (finished || !m || m.rid !== `${rid}.${s}`) return;
+      gotAny = true;
+      arm(s, NTFY_SILENCE_MS);
+      if (m.error) { fail(s, m.error === 'rate_limited' ? '查詢太頻繁，爬蟲暫時拒絕，請稍後再試' : String(m.error)); return; }
+      st[s].done = Math.max(st[s].done, m.done || 0);
+      if (m.final) { st[s].final = true; clearTimeout(timers[s]); }
+      const got = mergeLiveFares(m.f || m.fares, m.nf);
+      const found = (live.doc?.found || 0) + got;
+      live.doc = { ...live.doc, status: 'running', done: st.reduce((a, x) => a + x.done, 0), total: keys.length, found };
+      if (got) scheduleRefresh();
+      renderLookup();
+      settle();
+    };
+    peers.forEach((p, s) => {
+      if (!shards[s].length) return;
+      const sub = `${rid}.${s}`;
+      const body = JSON.stringify({ rid: sub, total: shards[s].length, keys: shards[s] });
+      arm(s, NTFY_FIRST_MS);
+      if (p.kind === 'rtc') {
+        (live.rtcHandlers ||= new Map()).set(sub, m => onShard(s, m));
+        rtcEnsure(p.i).then(c => c.dc.send(body)).catch(e => fail(s, e.message || String(e)));
+        return;
+      }
+      // Cloudflare / localhost.run quick tunnels do not stream Server-Sent Events: post, then long-poll
+      const ctl = new AbortController(); ctls.push(ctl);
+      (async () => {
+        try {
+          const r = await fetch(`${p.url}/lookup`, { method: 'POST', body, signal: ctl.signal });
+          if (!r.ok) throw new Error(`爬蟲拒絕請求 (${r.status})`);
+          let next = 0;
+          while (!finished && !st[s].final && !st[s].failed) {
+            const q = await fetch(`${p.url}/poll/${sub}?i=${next}`, { signal: ctl.signal, cache: 'no-store' });
+            if (!q.ok) throw new Error(`爬蟲回應錯誤 (${q.status})`);
+            const j = await q.json();
+            next = j.next;
+            for (const t of j.msgs) { try { onShard(s, JSON.parse(t)); } catch {} }
+          }
+        } catch (e) { fail(s, e.message || String(e)); }
+      })();
+    });
+    if (live.doc?.status === 'queued') { live.doc = { ...live.doc, status: 'dispatched' }; renderLookup(); }
+    settle();
+  });
+}
+
+function ntfyLookup(keys, rid) {
+  if (live.transport === 'peers') return peersLookup(keys, rid);
+  return new Promise((resolve, reject) => {
+    let es = null, silence = null, opened = false, gotAny = false, finished = false;
+    const cleanup = () => { clearTimeout(silence); if (es) es.close(); live.unsub = null; };
     const fail = err => { if (finished) return; finished = true; cleanup(); err.gotAny = gotAny; reject(err); };
     const arm = ms => { clearTimeout(silence); silence = setTimeout(() => fail(new Error(gotAny ? '爬蟲中途沒有回應' : '爬蟲沒有回應')), ms); };
-    const direct = live.transport === 'http' ? live.daemonUrl : null;
     live.unsub = () => { finished = true; cleanup(); };       // a newer lookup cancels this one
     const onMessage = m => {
       if (!m || m.rid !== rid || finished) return;
@@ -2637,36 +2757,6 @@ function ntfyLookup(keys, rid) {
       renderLookup();
       if (m.final) { finished = true; cleanup(); resolve(); }
     };
-    const markDispatched = () => { if (!finished && live.doc?.status === 'queued') { live.doc = { ...live.doc, status: 'dispatched' }; renderLookup(); } };
-    if (live.transport === 'rtc') {
-      arm(NTFY_FIRST_MS);
-      (live.rtcHandlers ||= new Map()).set(rid, onMessage);
-      rtcEnsure()
-        .then(c => { c.dc.send(JSON.stringify({ rid, total: keys.length, keys })); markDispatched(); })
-        .catch(e => fail(e instanceof Error ? e : new Error(String(e))));
-      return;
-    }
-    if (direct) {
-      // Cloudflare quick tunnels do not stream Server-Sent Events: post the request, then long-poll for the answers
-      arm(NTFY_FIRST_MS);
-      (async () => {
-        try {
-          const r = await fetch(`${direct}/lookup`, { method: 'POST', body: JSON.stringify({ rid, total: keys.length, keys }) });
-          if (!r.ok) throw new Error(`爬蟲拒絕請求 (${r.status})`);
-          markDispatched();
-          let next = 0;
-          while (!finished) {
-            pollCtl = new AbortController();
-            const p = await fetch(`${direct}/poll/${rid}?i=${next}`, { signal: pollCtl.signal, cache: 'no-store' });
-            if (!p.ok) throw new Error(`爬蟲回應錯誤 (${p.status})`);
-            const j = await p.json();
-            next = j.next;
-            for (const t of j.msgs) { try { onMessage(JSON.parse(t)); } catch {} }
-          }
-        } catch (e) { if (!finished) fail(e instanceof Error ? e : new Error(String(e))); }
-      })();
-      return;
-    }
     try { es = new EventSource(`${NTFY}/${T_RES}/sse?since=30s`); } catch (e) { reject(e); return; }
     arm(8000);                                                // the stream must open quickly
     es.onerror = () => { if (!opened) fail(new Error('無法連線到 ntfy 中繼')); };
@@ -2683,7 +2773,7 @@ function ntfyLookup(keys, rid) {
       arm(NTFY_FIRST_MS);
       try {
         for (const chunk of ntfyChunks(rid, keys)) await ntfyPost(JSON.stringify({ rid, total: keys.length, keys: chunk }));
-        markDispatched();
+        if (!finished && live.doc?.status === 'queued') { live.doc = { ...live.doc, status: 'dispatched' }; renderLookup(); }
       } catch (e) { fail(e instanceof Error ? e : new Error(String(e))); }
     };
   });
@@ -2717,9 +2807,9 @@ async function startLookup(keys, viaClaude = false) {
     live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
     renderLookup();
     const rid = live.rid;
-    // peer to peer first (no tunnel, no GitHub API); the tunnels and then ntfy are the fallbacks
-    const [peer, tunnel] = await Promise.allSettled([rtcEnsure(), discoverDaemon()]);
-    live.transport = peer.status === 'fulfilled' ? 'rtc' : tunnel.value ? 'http' : 'ntfy';
+    // every crawler instance that answers — peer to peer first (no tunnel, no GitHub API), else a tunnel; none → ntfy
+    live.peerList = await connectPeers();
+    live.transport = live.peerList.length ? 'peers' : 'ntfy';
     if (live.rid !== rid) return;
     try {
       await ntfyLookup(keys, rid);
@@ -2728,20 +2818,16 @@ async function startLookup(keys, viaClaude = false) {
     } catch (e) {
       if (live.rid !== rid) return;                       // superseded
       const rest = keys.filter(k => !live.answered.has(k));
-      if (live.transport === 'rtc' && !e.gotAny) {   // the peer never answered: drop it and use a tunnel / ntfy
-        live.rtcFailedAt = Date.now(); live.rtcNote = e.message; rtcClose();
-        rest.forEach(k => live.asked.delete(k));
-        return startLookup(rest);
-      }
-      if (live.transport === 'http' && !e.gotAny) {   // the tunnel did not answer: try the other one, then the ntfy relay
-        const alt = (live.daemonAlt || []).shift();
-        live.daemonUrl = alt || null; live.daemonCheckedAt = alt ? Date.now() : Date.now() + 45000;
-        rest.forEach(k => live.asked.delete(k));
-        return startLookup(rest);
+      if (live.transport === 'peers') {   // forget the crawlers that failed; the rest (or ntfy) takes over what is left
+        (e.failedPeers || live.peerList.map(p => p.i)).forEach(i => markPeerFailed(i, e.message));
+        if (!e.gotAny || (live.retries || 0) < 2) {
+          if (e.gotAny) live.retries = (live.retries || 0) + 1;
+          rest.forEach(k => live.asked.delete(k));
+          return startLookup(rest);
+        }
       }
       if (e.gotAny && rest.length && (live.retries || 0) < 2) {   // crawler went quiet mid-run: ask again for what is left
         live.retries = (live.retries || 0) + 1;
-        if (live.transport === 'http') { live.daemonUrl = null; live.daemonCheckedAt = 0; }   // the tunnel may have moved: look it up again
         rest.forEach(k => live.asked.delete(k));
         return startLookup(rest);
       }
