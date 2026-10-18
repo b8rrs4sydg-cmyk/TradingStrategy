@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T18:19:26+00:00",
+ "at": "2026-10-18T18:20:58+00:00",
  "publishes": {
   "ok": 63,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 3877,
  "log": [
-  "17:25:37 request mve37cfk32t91.3: chunk of 13 keys done in 567s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
-  "17:25:39 request mve37cfk32t91.3: final sent (13/13); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "17:26:22 request mve37cfk32t91.4: chunk of 13 keys done in 612s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "17:26:24 request mve37cfk32t91.4: final sent (13/13); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "17:27:43 request mve37cfk32t91.2: chunk of 16 keys done in 693s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "18:18:28 handle mve5fgmhpuqky.6: first_chunk=True total=19",
   "18:18:28 handle mve5fgmhpuqky.8: first_chunk=True total=18",
   "18:18:28 request received: rid mve5fgmhpuqky.9 13 keys",
-  "18:18:28 handle mve5fgmhpuqky.9: first_chunk=True total=13"
+  "18:18:28 handle mve5fgmhpuqky.9: first_chunk=True total=13",
+  "18:20:34 request mve5fgmhpuqky.9: chunk of 13 keys done in 126s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "18:20:36 request mve5fgmhpuqky.9: final sent (13/13); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
  ]
 }
