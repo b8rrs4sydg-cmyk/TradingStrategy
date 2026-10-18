@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:14:10+00:00",
+ "at": "2026-10-18T11:15:41+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 66,
+ "fares_saved": 79,
  "log": [
   "11:00:32 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:35 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-8.json' did not match any files\\n\"",
@@ -53,6 +53,24 @@
   "11:13:11 request mvdq8fchrh2ij.8: chunk of 16 keys done in 0s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 57, 'miss': 23, 'blocked': 0, 'tries': 73, 'empty': 16}, audit 3/3 agree",
   "11:13:13 request mvdq8fchrh2ij.8: final sent (16/16); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "11:13:34 request received: rid mvdq90xy2rp1d.8 15 keys",
-  "11:13:34 handle mvdq90xy2rp1d.8: first_chunk=True total=15"
+  "11:13:34 handle mvdq90xy2rp1d.8: first_chunk=True total=15",
+  "11:14:29 request mvdq90xy2rp1d.8: chunk of 15 keys done in 56s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 66, 'miss': 29, 'blocked': 0, 'tries': 94, 'empty': 28}, audit 3/3 agree",
+  "11:14:30 request mvdq90xy2rp1d.8: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "11:14:35 rtc qgl4l6v5ij: answered",
+  "11:14:36 rtc qgl4l6v5ij: data channel open",
+  "11:14:36 request received: rid mvdqa8mzdjzfo.8 16 keys",
+  "11:14:36 handle mvdqa8mzdjzfo.8: first_chunk=True total=16",
+  "11:14:36 request mvdqa8mzdjzfo.8: chunk of 16 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 66, 'miss': 29, 'blocked': 0, 'tries': 94, 'empty': 28}, audit 3/3 agree",
+  "11:14:38 request mvdqa8mzdjzfo.8: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "11:14:44 request received: rid mvdqajk5xvkpm.8 19 keys",
+  "11:14:44 handle mvdqajk5xvkpm.8: first_chunk=True total=19",
+  "11:15:12 rtc wm2kkh7s6q: answered",
+  "11:15:13 rtc wm2kkh7s6q: data channel open",
+  "11:15:14 request received: rid mvdqb344zwtrk.8 21 keys",
+  "11:15:14 handle mvdqb344zwtrk.8: first_chunk=True total=21",
+  "11:15:14 request mvdqb344zwtrk.8: chunk of 21 keys done in 0s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 77, 'miss': 37, 'blocked': 0, 'tries': 109, 'empty': 32}, audit 3/3 agree",
+  "11:15:15 request mvdqb344zwtrk.8: final sent (21/21); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:15:17 request received: rid mvdqb8zfaos5a.8 10 keys",
+  "11:15:17 handle mvdqb8zfaos5a.8: first_chunk=True total=10"
  ]
 }
