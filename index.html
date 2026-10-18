@@ -442,6 +442,19 @@
     .f-bar .f-shown { margin-left: 0; width: 100% }
   }
 
+  /* --- Groups --- */
+  .g-tools { display: flex; gap: 8px; justify-content: flex-end; margin: 0 0 8px }
+  .group { margin-bottom: 14px }
+  .group-head { width: 100%; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; text-align: left; cursor: pointer; appearance: none; background: var(--card-sunken); color: var(--fg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; font: 400 14px/1.4 var(--font-body); position: sticky; top: 0; z-index: 2 }
+  .group-head:hover { border-color: var(--border-strong) }
+  .group-head .chev { display: inline-block; transition: transform .15s; color: var(--fg-muted) }
+  .group.folded .chev { transform: rotate(-90deg) }
+  .group-head .gname { font: 600 15px/1.3 var(--font-display) }
+  .group-head .gmeta { color: var(--fg-muted); font-size: 12.5px }
+  .group-head .faint { color: var(--fg-faint) }
+  .group.folded .group-head { margin-bottom: 0 }
+  @media (prefers-reduced-motion: reduce) { .group-head .chev { transition: none } }
+
   /* --- Heatmap --- */
   .heatmap {
     background: var(--card);
@@ -781,6 +794,12 @@
         <select id="r-filter" class="btn-ghost" aria-label="策略篩選">
           <option value="all">全部策略</option>
         </select>
+        <select id="r-group" class="btn-ghost" aria-label="分類方式">
+          <option value="none">不分類</option>
+          <option value="holiday">按假期分類</option>
+          <option value="place">按目的地分類</option>
+          <option value="country">按國家／地區分類</option>
+        </select>
         <select id="r-sort" class="btn-ghost" aria-label="排序">
           <option value="score">綜合分數</option>
           <option value="price">總價 (低→高)</option>
@@ -806,6 +825,10 @@
     <div id="notices"></div>
     <div id="compare" class="compare" hidden></div>
     <div id="heatmap" class="heatmap" hidden></div>
+    <div id="g-tools" class="g-tools" hidden>
+      <button type="button" id="g-collapse" class="btn-ghost">全部收合</button>
+      <button type="button" id="g-expand" class="btn-ghost">全部展開</button>
+    </div>
     <div id="plan-list"></div>
     <div id="empty" class="empty" hidden>找不到符合條件的方案 — 試著放寬預算、調大日期彈性，或多勾幾個策略。</div>
   </section>
@@ -1894,6 +1917,8 @@ const STRATEGY_LABEL = {
 const state = {
   result: null,
   sort: 'score',
+  group: 'none',            // none | holiday | place | country
+  collapsed: new Set(),     // group keys the user folded
   filter: 'all',
   selected: new Set(),      // keys = plan rank index
   favorites: readFavs(),
@@ -1935,6 +1960,7 @@ function planFacts(p) {
   const carrier = real(first) && first.carrier && first.carrier !== '待選' ? first.carrier : '';
   f = {
     home, places: [...places], label: p.window_label || '(未命名時段)',
+    dest: p.strategy === 'back_to_back_4leg' ? '' : (first?.destination || ''),
     outDate: first ? first.departure.slice(0, 10) : '',
     outMin: real(first) ? pfToMin(first.departure.slice(11, 16)) : null,
     arrMin: real(first) ? pfToMin((first.arrival || '').slice(11, 16)) : null,
@@ -2235,6 +2261,9 @@ function renderResults() {
   else if (state.sort === 'pto') visible.sort((a,b) => b.total_travel_days - a.total_travel_days);
   else if (state.sort === 'depart') visible.sort((a,b) => startOf(a).localeCompare(startOf(b)) || a.total_cost - b.total_cost);
   else visible.sort((a,b) => (b.score||0) - (a.score||0));
+  const grouped = groupPlans(visible, state.group);
+  visible = grouped.plans;
+  document.getElementById('g-tools').hidden = !grouped.groups;
   document.getElementById('r-plan-count').textContent = visible.length;
   document.getElementById('f-shown').textContent = visible.length === plans.length ? `共 ${plans.length} 個方案` : `顯示 ${visible.length} / ${plans.length} 個方案`;
   // Favorites bubble to top within whatever order picked
@@ -2242,7 +2271,7 @@ function renderResults() {
 
   document.getElementById('notices').innerHTML = (state.result.notices || []).map(n => `<div class="notice">${escapeHtml(n)}</div>`).join('');
   renderHeatmap(plans.filter(p => !(p.trips || []).length && pfPass(p)));
-  renderPlanList(visible);
+  renderPlanList(visible, grouped.groups);
   renderCompare(visible);
 
   const empty = document.getElementById('empty');
@@ -2297,10 +2326,65 @@ function renderHeatmap(plans) {
     </table></div>`;
 }
 
-function renderPlanList(plans) {
+// Group the (already filtered and sorted) plans by holiday / destination / country. Plans keep their order inside a
+// group; groups are ordered by first departure (holidays) or by their cheapest plan (places).
+const MULTI_PLACE = '外站四腿票（多地點）';
+function groupPlans(plans, mode) {
+  if (mode === 'none') return { plans, groups: null };
+  const keyOf = p => {
+    const f = planFacts(p);
+    if (mode === 'holiday') return f.label;
+    if (!f.dest) return MULTI_PLACE;
+    return mode === 'country' ? countryOf(f.dest) : f.dest;
+  };
+  const nameOf = k => {
+    if (mode === 'holiday' || k === MULTI_PLACE) return k;
+    if (mode === 'country') return COUNTRY_ZH[k] || k;
+    return `${AIRPORT_BY_CODE.get(k)?.name || k}（${k}）`;
+  };
+  const map = new Map();
+  for (const p of plans) {
+    const k = keyOf(p);
+    if (!map.has(k)) map.set(k, []);
+    map.get(k).push(p);
+  }
+  const groups = [...map].map(([key, ps]) => ({
+    key: `${mode}:${key}`, name: nameOf(key), plans: ps,
+    min: Math.min(...ps.map(p => p.total_cost)), max: Math.max(...ps.map(p => p.total_cost)),
+    first: ps.map(p => planFacts(p).outDate).filter(Boolean).sort()[0] || '',
+  }));
+  groups.sort(mode === 'holiday' ? (a, b) => a.first.localeCompare(b.first) || a.min - b.min : (a, b) => a.min - b.min);
+  return { plans: groups.flatMap(g => g.plans), groups };
+}
+
+function renderPlanList(plans, groups) {
   const list = document.getElementById('plan-list');
   if (!plans.length) { list.innerHTML = ''; return; }
-  list.innerHTML = plans.map((p, i) => renderPlan(p, i+1)).join('');
+  if (groups) {
+    let rank = 0;
+    list.innerHTML = groups.map(g => {
+      const folded = state.collapsed.has(g.key);
+      const body = g.plans.map(p => renderPlan(p, ++rank)).join('');
+      return `<section class="group ${folded ? 'folded' : ''}" data-group="${escapeHtml(g.key)}">
+        <button type="button" class="group-head" aria-expanded="${!folded}">
+          <span class="chev" aria-hidden="true">▾</span>
+          <b class="gname">${escapeHtml(g.name)}</b>
+          <span class="gmeta">${g.plans.length} 個方案 · 最低 <b class="mono">TWD ${g.min.toLocaleString()}</b>${g.max > g.min ? ` <span class="faint">（最高 ${g.max.toLocaleString()}）</span>` : ''}</span>
+        </button>
+        <div class="group-body"${folded ? ' hidden' : ''}>${body}</div>
+      </section>`;
+    }).join('');
+    list.querySelectorAll('.group-head').forEach(h => h.addEventListener('click', () => {
+      const sec = h.closest('.group'), key = sec.dataset.group;
+      const folded = !state.collapsed.has(key);
+      if (folded) state.collapsed.add(key); else state.collapsed.delete(key);
+      sec.classList.toggle('folded', folded);
+      sec.querySelector('.group-body').hidden = folded;
+      h.setAttribute('aria-expanded', String(!folded));
+    }));
+  } else {
+    list.innerHTML = plans.map((p, i) => renderPlan(p, i+1)).join('');
+  }
 
   // Wire interactions
   list.querySelectorAll('.plan').forEach((node, idx) => {
@@ -2950,6 +3034,15 @@ function wireResultsControls() {
   wirePlanFilters();
   document.getElementById('r-filter').addEventListener('change', e => { state.filter = e.target.value; renderResults(); });
   document.getElementById('r-sort').addEventListener('change', e => { state.sort = e.target.value; renderResults(); });
+  document.getElementById('r-group').addEventListener('change', e => { state.group = e.target.value; state.collapsed.clear(); renderResults(); });
+  const fold = all => () => {
+    document.querySelectorAll('#plan-list .group').forEach(sec => {
+      if (all) state.collapsed.add(sec.dataset.group); else state.collapsed.delete(sec.dataset.group);
+    });
+    renderResults();
+  };
+  document.getElementById('g-collapse').addEventListener('click', fold(true));
+  document.getElementById('g-expand').addEventListener('click', fold(false));
   document.getElementById('btn-compare').addEventListener('click', () => {
     // The compare table is driven by state.selected; just scroll to it if hidden.
     renderResults();
