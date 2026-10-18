@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:18:03+00:00",
+ "at": "2026-10-18T10:19:35+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 156,
+ "fares_saved": 178,
  "log": [
   "08:42:00 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:42:04 git retry 0: b\"-1kexus': is at 798daaa50302da8f5e8935e9850d769175fdd266 but expected f95e2bb5d858bc7c6be6c6d8b8bfb2e860291c6a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -129,6 +129,8 @@
   "10:16:46 request mvdo466xjp40s.4: chunk of 26 keys done in 178s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 26, 'miss': 190, 'blocked': 0, 'tries': 51, 'empty': 25}, audit 0/0 agree",
   "10:16:48 request mvdo466xjp40s.4: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "10:17:01 request received: rid mvdo8b06ubmct.4 26 keys",
-  "10:17:01 handle mvdo8b06ubmct.4: first_chunk=True total=26"
+  "10:17:01 handle mvdo8b06ubmct.4: first_chunk=True total=26",
+  "10:19:20 request received: rid mvdobaio9iiwt.4 26 keys",
+  "10:19:20 handle mvdobaio9iiwt.4: first_chunk=True total=26"
  ]
 }
