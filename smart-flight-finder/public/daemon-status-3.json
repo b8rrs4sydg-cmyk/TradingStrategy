@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:02:10+00:00",
+ "at": "2026-10-18T11:05:12+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 534,
+ "fares_saved": 553,
  "log": [
   "11:00:34 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:40 http front door: ['https://pierre-created-barely-circulation.trycloudflare.com', 'https://cd4409eff22c9f.lhr.life']",
@@ -13,6 +13,8 @@
   "11:01:43 request received: rid httptest1792321303 20 keys",
   "11:01:43 handle httptest1792321303: first_chunk=True total=20",
   "11:01:49 request httptest1792321303: chunk of 20 keys done in 6s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
-  "11:01:50 request httptest1792321303: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "11:01:50 request httptest1792321303: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:03:55 request received: rid mvdpwl7sqfww0.3 27 keys",
+  "11:03:55 handle mvdpwl7sqfww0.3: first_chunk=True total=27"
  ]
 }
