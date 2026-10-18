@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T14:47:18+00:00",
+ "at": "2026-10-18T14:48:50+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 323,
+ "fares_saved": 331,
  "log": [
-  "12:53:23 request received: rid mvdttemfkl6n6.8 15 keys",
-  "12:53:23 handle mvdttemfkl6n6.8: first_chunk=True total=15",
-  "12:55:00 request mvdttemfkl6n6.8: chunk of 15 keys done in 97s; paths {'http': 124, 'browser-none': 310, 'browser': 16}, browser waits 326 max 147s sum 20948s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 124, 'miss': 145, 'blocked': 0, 'tries': 251, 'empty': 127}, audit 1/1 ag",
-  "12:55:01 request mvdttemfkl6n6.8: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:56:21 request received: rid mvdtx7hj8r15t.8 19 keys",
   "12:56:21 handle mvdtx7hj8r15t.8: first_chunk=True total=19",
   "12:58:12 request mvdtx7hj8r15t.8: chunk of 19 keys done in 111s; paths {'http': 131, 'browser-none': 322, 'browser': 16}, browser waits 338 max 147s sum 21633s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 157, 'blocked': 0, 'tries': 258, 'empty': 127}, audit 1/1 a",
@@ -156,6 +152,10 @@
   "14:45:30 request received: rid mvdxtlbuzssqu.8 2 keys",
   "14:45:30 handle mvdxtlbuzssqu.8: first_chunk=True total=2",
   "14:46:29 request mvdxtlbuzssqu.8: chunk of 2 keys done in 59s; paths {'http': 232, 'browser-none': 705, 'browser': 16}, browser waits 721 max 169s sum 48562s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 232, 'miss': 280, 'blocked': 0, 'tries': 554, 'empty': 322}, audit 1/1 agr",
-  "14:46:31 request mvdxtlbuzssqu.8: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:46:31 request mvdxtlbuzssqu.8: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:47:51 request received: rid mvdxwkx50yog0.8 13 keys",
+  "14:47:51 handle mvdxwkx50yog0.8: first_chunk=True total=13",
+  "14:48:42 request mvdxwkx50yog0.8: chunk of 13 keys done in 50s; paths {'http': 242, 'browser-none': 708, 'browser': 16}, browser waits 724 max 169s sum 48705s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 242, 'miss': 283, 'blocked': 0, 'tries': 573, 'empty': 331}, audit 1/1 ag",
+  "14:48:42 request mvdxwkx50yog0.8: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
