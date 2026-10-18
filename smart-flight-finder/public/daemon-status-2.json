@@ -1,14 +1,12 @@
 {
- "at": "2026-10-18T13:55:28+00:00",
+ "at": "2026-10-18T13:58:30+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1372,
+ "fares_saved": 1380,
  "log": [
-  "12:04:47 request received: rid mvds2wisp31cv.2 11 keys",
-  "12:04:47 handle mvds2wisp31cv.2: first_chunk=True total=11",
   "12:06:01 request mvds2wisp31cv.2: chunk of 11 keys done in 73s; paths {'http': 64, 'browser-none': 111, 'browser': 25}, browser waits 136 max 95s sum 6491s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 60, 'blocked': 0, 'tries': 81, 'empty': 17}, audit 3/3 agree",
   "12:06:03 request mvds2wisp31cv.2: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:07:43 request received: rid mvds6nyh5n4is.2 14 keys",
@@ -156,6 +154,8 @@
   "13:54:12 request received: rid mvdvzm7py87si.2 15 keys",
   "13:54:12 handle mvdvzm7py87si.2: first_chunk=True total=15",
   "13:55:01 request mvdvzm7py87si.2: chunk of 15 keys done in 49s; paths {'http': 147, 'browser-none': 480, 'browser': 58}, browser waits 538 max 141s sum 30911s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 147, 'miss': 185, 'blocked': 0, 'tries': 305, 'empty': 158}, audit 3/3 ag",
-  "13:55:03 request mvdvzm7py87si.2: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "13:55:03 request mvdvzm7py87si.2: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "13:57:07 request received: rid mvdw3d77bgerw.2 20 keys",
+  "13:57:07 handle mvdw3d77bgerw.2: first_chunk=True total=20"
  ]
 }
