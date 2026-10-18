@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:14:22+00:00",
+ "at": "2026-10-18T11:15:53+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 602,
+ "fares_saved": 613,
  "log": [
   "11:00:34 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:40 http front door: ['https://pierre-created-barely-circulation.trycloudflare.com', 'https://cd4409eff22c9f.lhr.life']",
@@ -45,6 +45,26 @@
   "11:13:11 request mvdq8fchrh2ij.3: chunk of 23 keys done in 0s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 29, 'blocked': 0, 'tries': 116, 'empty': 36}, audit 5/5 agree",
   "11:13:14 request mvdq8fchrh2ij.3: final sent (23/23); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "11:13:34 request received: rid mvdq90xy2rp1d.3 14 keys",
-  "11:13:34 handle mvdq90xy2rp1d.3: first_chunk=True total=14"
+  "11:13:34 handle mvdq90xy2rp1d.3: first_chunk=True total=14",
+  "11:14:35 rtc ghjl79gh5e: answered",
+  "11:14:36 request mvdq90xy2rp1d.3: chunk of 14 keys done in 62s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 87, 'miss': 36, 'blocked': 0, 'tries': 131, 'empty': 44}, audit 5/5 agree",
+  "11:14:36 rtc ghjl79gh5e: data channel open",
+  "11:14:36 request received: rid mvdqa8mzdjzfo.3 23 keys",
+  "11:14:36 handle mvdqa8mzdjzfo.3: first_chunk=True total=23",
+  "11:14:36 request mvdqa8mzdjzfo.3: chunk of 23 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 87, 'miss': 36, 'blocked': 0, 'tries': 131, 'empty': 44}, audit 5/5 agree",
+  "11:14:37 request mvdq90xy2rp1d.3: final sent (14/14); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "11:14:37 request mvdqa8mzdjzfo.3: final sent (23/23); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "11:14:44 request received: rid mvdqajk5xvkpm.3 14 keys",
+  "11:14:44 handle mvdqajk5xvkpm.3: first_chunk=True total=14",
+  "11:15:12 rtc pcpng5omvw: answered",
+  "11:15:14 rtc pcpng5omvw: data channel open",
+  "11:15:14 request received: rid mvdqb344zwtrk.3 19 keys",
+  "11:15:14 handle mvdqb344zwtrk.3: first_chunk=True total=19",
+  "11:15:14 request mvdqb344zwtrk.3: chunk of 19 keys done in 0s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 95, 'miss': 42, 'blocked': 0, 'tries': 144, 'empty': 49}, audit 5/5 agree",
+  "11:15:16 request mvdqb344zwtrk.3: final sent (19/19); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:15:17 request received: rid mvdqb8zfaos5a.3 15 keys",
+  "11:15:17 handle mvdqb8zfaos5a.3: first_chunk=True total=15",
+  "11:15:46 request mvdqajk5xvkpm.3: chunk of 14 keys done in 62s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 97, 'miss': 49, 'blocked': 0, 'tries': 146, 'empty': 49}, audit 5/5 agree",
+  "11:15:47 request mvdqajk5xvkpm.3: final sent (14/14); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
  ]
 }
