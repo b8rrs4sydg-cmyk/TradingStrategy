@@ -1,25 +1,22 @@
 {
- "at": "2026-10-18T11:25:11+00:00",
+ "at": "2026-10-18T11:27:37+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 658,
+ "fares_saved": 661,
  "log": [
-  "11:23:30 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:23:35 git retry 0: b\"-1kexus': is at f8277b8f128218893ef418445643ebcfc05a37b2 but expected 25ac6b3ba04232b2d73ccc4333a02862537cc3f7)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "11:23:41 http front door: ['https://chubby-marvel-whenever-useful.trycloudflare.com', 'https://0d2e9f8680cfb0.lhr.life']",
-  "11:23:41 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:24:23 rtc wu0p4ianhi: answered",
-  "11:24:25 rtc wu0p4ianhi: data channel open",
-  "11:24:38 request received: rid httptest1792322678 20 keys",
-  "11:24:38 handle httptest1792322678: first_chunk=True total=20",
-  "11:24:40 request httptest1792322678: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "11:24:42 request httptest1792322678: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:24:59 rtc b2evfw5f39: answered",
-  "11:25:01 rtc b2evfw5f39: data channel open",
-  "11:25:01 request received: rid mvdqno2nc5elg.3 19 keys",
-  "11:25:01 handle mvdqno2nc5elg.3: first_chunk=True total=19"
+  "11:26:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:26:07 http front door: ['https://rugby-lime-feb-packages.trycloudflare.com', 'https://31a5df0d9304d4.lhr.life']",
+  "11:26:07 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:27:11 request received: rid httptest1792322831 20 keys",
+  "11:27:11 handle httptest1792322831: first_chunk=True total=20",
+  "11:27:12 request httptest1792322831: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "11:27:13 request httptest1792322831: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:27:23 rtc glu45aa3xu: answered",
+  "11:27:25 rtc glu45aa3xu: data channel open",
+  "11:27:25 request received: rid mvdqqs310j5lz.2 4 keys",
+  "11:27:25 handle mvdqqs310j5lz.2: first_chunk=True total=4"
  ]
 }
