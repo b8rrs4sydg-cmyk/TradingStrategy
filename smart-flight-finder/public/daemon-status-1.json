@@ -1,14 +1,12 @@
 {
- "at": "2026-10-18T15:24:56+00:00",
+ "at": "2026-10-18T15:26:27+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1437,
+ "fares_saved": 1441,
  "log": [
-  "13:20:19 handle mvdus132ib8io.1: first_chunk=True total=16",
-  "13:21:46 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "13:22:01 request mvdus132ib8io.1: chunk of 16 keys done in 102s; paths {'http': 120, 'browser': 62, 'browser-none': 446}, browser waits 508 max 236s sum 31620s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 160, 'blocked': 0, 'tries': 223, 'empty': 103}, audit 5/5 a",
   "13:22:02 request mvdus132ib8io.1: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:23:07 request received: rid mvduvnbnyqdms.1 7 keys",
@@ -156,6 +154,8 @@
   "15:22:33 request received: rid mvdz58ghuswdl.1 15 keys",
   "15:22:33 handle mvdz58ghuswdl.1: first_chunk=True total=15",
   "15:23:26 request mvdz58ghuswdl.1: chunk of 15 keys done in 53s; paths {'http': 304, 'browser': 86, 'browser-none': 799}, browser waits 885 max 236s sum 56617s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 304, 'miss': 302, 'blocked': 0, 'tries': 637, 'empty': 333}, audit 7/7 ag",
-  "15:23:28 request mvdz58ghuswdl.1: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "15:23:28 request mvdz58ghuswdl.1: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:25:54 request received: rid mvdz9jqta82r6.1 12 keys",
+  "15:25:54 handle mvdz9jqta82r6.1: first_chunk=True total=12"
  ]
 }
