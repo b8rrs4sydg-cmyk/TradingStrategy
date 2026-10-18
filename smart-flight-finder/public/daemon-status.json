@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T08:11:05+00:00",
+ "at": "2026-10-18T08:12:36+00:00",
  "publishes": {
   "ok": 123,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3751,
+ "fares_saved": 3764,
  "log": [
   "07:38:56 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:00 http front door: ['https://spin-qty-sensitivity-medicare.trycloudflare.com', 'https://6776783f0b9063.lhr.life']",
@@ -67,6 +67,8 @@
   "08:08:11 request received: rid mvdjmmt2cysaw.0 27 keys",
   "08:08:11 handle mvdjmmt2cysaw.0: first_chunk=True total=27",
   "08:10:04 request mvdjmmt2cysaw.0: chunk of 27 keys done in 113s; ntfy publishes {'ok': 123, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 99, 'miss': 132, 'blocked': 0, 'tries': 99, 'empty': 0}, audit 4/4 agree",
-  "08:10:04 request mvdjmmt2cysaw.0: final sent (27/27); ntfy publishes {'ok': 123, 'r429': 0, 'fail': 0}"
+  "08:10:04 request mvdjmmt2cysaw.0: final sent (27/27); ntfy publishes {'ok': 123, 'r429': 0, 'fail': 0}",
+  "08:11:28 request received: rid mvdjqutevc6xe.0 27 keys",
+  "08:11:28 handle mvdjqutevc6xe.0: first_chunk=True total=27"
  ]
 }
