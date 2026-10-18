@@ -77,3 +77,12 @@ def test_multi_city_body_lists_every_leg_in_order():
 def test_a_foreign_entry_in_the_list_does_not_hide_the_rows():
     rows = [_row(9000), "a header", None, [1, 2], _row(8000)]
     assert sorted(r[1][0][1] for r in itineraries([[rows]])) == [8000, 9000]
+
+
+def test_midnight_times_come_with_a_missing_hour():
+    from app.providers.google_http import _clock
+
+    assert _clock([None, 35]) == (0, 35)
+    assert _clock([20]) == (20, 0)
+    assert _clock([23, 30]) == (23, 30)
+    assert _clock([]) == (0, 0)

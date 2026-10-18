@@ -37,4 +37,4 @@ jobs:
           python-version: "3.12"
       - run: pip install -e . requests "playwright>=1.50,<2"
       - run: playwright install --with-deps chromium
-      - run: python -m scripts.exp_http_stream ../public/fares.json
+      - run: python -m scripts.exp_http_validate ../public/fares.json 40

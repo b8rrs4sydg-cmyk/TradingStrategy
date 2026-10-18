@@ -119,8 +119,12 @@ def itineraries(node: object, depth: int = 0) -> Iterator[list]:
         yield from itineraries(child, depth + 1)
 
 
-def _clock(t: Sequence[int]) -> tuple[int, int]:
-    return (t[0] if t else 0), (t[1] if len(t) > 1 else 0)
+def _clock(t: Sequence[int | None]) -> tuple[int, int]:
+    """[hour, minute] where a zero is sent as null or left out (00:35 arrives as [None, 35], 20:00 as [20])."""
+
+    hour = t[0] if t and t[0] is not None else 0
+    minute = t[1] if len(t) > 1 and t[1] is not None else 0
+    return hour, minute
 
 
 def first_slice(item: list, segments: Sequence[Segment]) -> dict | None:
@@ -230,7 +234,7 @@ def multi_city_body(segments: Sequence[Segment]) -> str:
 class HttpFetcher:
     """Async client; one instance is shared by every concurrent lookup."""
 
-    def __init__(self, *, timeout: float = 6.0, attempts: int = 4, concurrency: int = 16):
+    def __init__(self, *, timeout: float = 8.0, attempts: int = 5, concurrency: int = 16):
         self.timeout = timeout
         self.attempts = attempts
         self.sem = asyncio.Semaphore(concurrency)
