@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:06:56+00:00",
+ "at": "2026-10-18T13:20:27+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,18 +7,6 @@
  },
  "fares_saved": 236,
  "log": [
-  "11:26:11 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:26:15 http front door: ['https://organic-asthma-bios-passive.trycloudflare.com', 'https://a455d0c2cfea05.lhr.life']",
-  "11:26:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:27:19 request received: rid httptest1792322839 20 keys",
-  "11:27:19 handle httptest1792322839: first_chunk=True total=20",
-  "11:27:21 request httptest1792322839: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "11:27:21 request httptest1792322839: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "11:31:00 request received: rid mvdqvf38lwhyn.8 9 keys",
-  "11:31:00 handle mvdqvf38lwhyn.8: first_chunk=True total=9",
-  "11:32:06 request mvdqvf38lwhyn.8: chunk of 9 keys done in 66s; paths {'http': 26, 'browser-none': 3}, browser waits 3 max 47s sum 140s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 26, 'miss': 3, 'blocked': 0, 'tries': 26, 'empty': 0}, audit 1/1 agree",
-  "11:32:07 request mvdqvf38lwhyn.8: final sent (9/9); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "11:32:18 git retry 0: b\"-1kexus': is at 1ecd7eb04a6dccbaa2a0a9f69d53210b5bebc515 but expected 21c41ccdc23705ae8c681359332affad8965f5de)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:32:23 git retry 1: b\"-1kexus': is at d819cc37489ea5163d62054427879ecba5b49d9f but expected 1ecd7eb04a6dccbaa2a0a9f69d53210b5bebc515)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:34:17 rtc a73h0xmd2j: answered",
   "11:34:18 request received: rid mvdqznepk7epz.8 17 keys",
@@ -154,6 +142,20 @@
   "13:05:06 request received: rid mvdu8gogkouz6.8 14 keys",
   "13:05:06 handle mvdu8gogkouz6.8: first_chunk=True total=14",
   "13:06:42 request mvdu8gogkouz6.8: chunk of 14 keys done in 96s; paths {'http': 131, 'browser-none': 369, 'browser': 16}, browser waits 385 max 147s sum 25284s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 157, 'blocked': 0, 'tries': 258, 'empty': 127}, audit 1/1 ag",
-  "13:06:44 request mvdu8gogkouz6.8: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:06:44 request mvdu8gogkouz6.8: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:12:47 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:12:50 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:13 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:18 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:21 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:24 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:29 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:32 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:35 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:38 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:41 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:13:45 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
+  "13:20:19 request received: rid mvdus132ib8io.8 18 keys",
+  "13:20:19 handle mvdus132ib8io.8: first_chunk=True total=18"
  ]
 }
