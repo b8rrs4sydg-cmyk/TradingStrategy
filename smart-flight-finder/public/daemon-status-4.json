@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T07:26:36+00:00",
+ "at": "2026-10-18T07:34:07+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
@@ -37,6 +37,18 @@
   "07:25:02 request mvdhxepvyloyl.4: chunk of 26 keys done in 267s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 56, 'blocked': 0, 'tries': 61, 'empty': 11}, audit 3/3 agree",
   "07:25:04 request mvdhxepvyloyl.4: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "07:25:34 request mvdhxczwvgihz.4: chunk of 26 keys done in 301s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 56, 'blocked': 0, 'tries': 61, 'empty': 11}, audit 3/3 agree",
-  "07:25:35 request mvdhxczwvgihz.4: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "07:25:35 request mvdhxczwvgihz.4: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "07:28:43 rtc zkxf2uuy0w: answered",
+  "07:28:45 rtc zkxf2uuy0w: data channel open",
+  "07:33:13 rtc 4b6icldnmq: answered",
+  "07:33:14 rtc 4b6icldnmq: data channel open",
+  "07:33:14 request received: rid mvdidog5osv1u.4 1 keys",
+  "07:33:14 handle mvdidog5osv1u.4: first_chunk=True total=1",
+  "07:33:14 request mvdidog5osv1u.4: chunk of 1 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 56, 'blocked': 0, 'tries': 61, 'empty': 11}, audit 3/3 agree",
+  "07:33:15 request mvdidog5osv1u.4: final sent (1/1); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "07:33:20 request received: rid mvdidt5v9id4v.4 26 keys",
+  "07:33:20 handle mvdidt5v9id4v.4: first_chunk=True total=26",
+  "07:33:20 request mvdidt5v9id4v.4: chunk of 26 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 56, 'blocked': 0, 'tries': 61, 'empty': 11}, audit 3/3 agree",
+  "07:33:21 request mvdidt5v9id4v.4: final sent (26/26); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
