@@ -90,14 +90,14 @@ async def run(mode: str, keys: list[str], db: dict) -> None:
 
 async def main() -> None:
     db = json.loads(Path(sys.argv[1]).read_text())
+    modes = sys.argv[2].split(",") if len(sys.argv) > 2 else ["baseline", "block", "block+fast"]
     ks = sorted(db["fares"])
     keys = []
     for kind in ("ow", "rt", "mc"):
         sub = [k for k in ks if k.startswith(kind + "|")]
         keys += sub[:: max(1, len(sub) // 6)][:6]
-    for mode in ("baseline", "block", "block+fast", "baseline", "block+fast"):
+    for mode in modes:
         await run(mode, keys, db)
-        await asyncio.sleep(10)
 
 
 if __name__ == "__main__":

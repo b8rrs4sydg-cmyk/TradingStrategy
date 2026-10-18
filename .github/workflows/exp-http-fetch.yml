@@ -42,7 +42,5 @@ jobs:
       - run: pip install -e . requests "playwright>=1.50,<2"
       - run: playwright install --with-deps chromium
       - run: python -m scripts.exp_mc_vs_ow ../public/fares.json
-      - run: python -m scripts.exp_browser_speed ../public/fares.json
-        if: always()
       - run: python -m scripts.exp_http_hedge ../public/fares.json
         if: always()
