@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:17:29+00:00",
+ "at": "2026-10-18T11:19:00+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 357,
+ "fares_saved": 395,
  "log": [
   "11:00:38 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:44 http front door: ['https://premises-tier-references-tide.trycloudflare.com', 'https://552c01b2cfb02a.lhr.life']",
@@ -71,6 +71,16 @@
   "11:17:15 request received: rid mvdqdru6p0hdt.4 17 keys",
   "11:17:15 handle mvdqdru6p0hdt.4: first_chunk=True total=17",
   "11:17:22 request received: rid mvdqdxcqhjkkb.4 16 keys",
-  "11:17:22 handle mvdqdxcqhjkkb.4: first_chunk=True total=16"
+  "11:17:22 handle mvdqdxcqhjkkb.4: first_chunk=True total=16",
+  "11:18:02 request received: rid mvdqes7wvs5wy.4 18 keys",
+  "11:18:02 handle mvdqes7wvs5wy.4: first_chunk=True total=18",
+  "11:18:13 request mvdqdru6p0hdt.4: chunk of 17 keys done in 58s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 127, 'miss': 50, 'blocked': 0, 'tries': 192, 'empty': 65}, audit 6/6 agree",
+  "11:18:14 request mvdqdru6p0hdt.4: final sent (17/17); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:18:38 request received: rid mvdqfjooxeaci.4 18 keys",
+  "11:18:38 handle mvdqfjooxeaci.4: first_chunk=True total=18",
+  "11:18:46 request mvdqes7wvs5wy.4: chunk of 18 keys done in 44s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 136, 'miss': 54, 'blocked': 0, 'tries': 209, 'empty': 73}, audit 6/6 agree",
+  "11:18:47 request mvdqes7wvs5wy.4: final sent (18/18); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:18:49 request mvdqdxcqhjkkb.4: chunk of 16 keys done in 87s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 139, 'miss': 54, 'blocked': 0, 'tries': 212, 'empty': 73}, audit 6/6 agree",
+  "11:18:51 request mvdqdxcqhjkkb.4: final sent (16/16); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
  ]
 }
