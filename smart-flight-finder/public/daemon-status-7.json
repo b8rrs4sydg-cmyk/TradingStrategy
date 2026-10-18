@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T15:26:44+00:00",
+ "at": "2026-10-18T15:28:21+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 372,
  "log": [
-  "13:22:35 request mvdus132ib8io.7: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:23:07 request received: rid mvduvnbnyqdms.7 18 keys",
-  "13:23:07 handle mvduvnbnyqdms.7: first_chunk=True total=18",
   "13:25:27 request mvduvnbnyqdms.7: chunk of 18 keys done in 140s; paths {'http': 100, 'browser-none': 487, 'browser': 40}, browser waits 527 max 190s sum 35754s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 100, 'miss': 162, 'blocked': 0, 'tries': 226, 'empty': 126}, audit 1/1 a",
   "13:25:29 request mvduvnbnyqdms.7: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:25:51 request received: rid mvduz5ua8wmki.7 7 keys",
@@ -156,6 +153,9 @@
   "15:23:22 request mvdz58ghuswdl.7: chunk of 12 keys done in 49s; paths {'http': 278, 'browser-none': 894, 'browser': 40}, browser waits 934 max 190s sum 64077s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 278, 'miss': 363, 'blocked': 0, 'tries': 629, 'empty': 351}, audit 2/2 ag",
   "15:23:24 request mvdz58ghuswdl.7: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:25:54 request received: rid mvdz9jqta82r6.7 16 keys",
-  "15:25:54 handle mvdz9jqta82r6.7: first_chunk=True total=16"
+  "15:25:54 handle mvdz9jqta82r6.7: first_chunk=True total=16",
+  "15:26:46 git retry 0: b\"-1kexus': is at fd06092b82d96ef1c767d448f266172d989da394 but expected 23eadeb53a31c78ad0aefbe278376710de2576fe)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "15:26:51 request mvdz9jqta82r6.7: chunk of 16 keys done in 57s; paths {'http': 288, 'browser-none': 900, 'browser': 40}, browser waits 940 max 190s sum 64357s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 288, 'miss': 369, 'blocked': 0, 'tries': 651, 'empty': 363}, audit 2/2 ag",
+  "15:26:52 request mvdz9jqta82r6.7: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
