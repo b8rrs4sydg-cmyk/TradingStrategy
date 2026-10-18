@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:27:37+00:00",
+ "at": "2026-10-18T11:29:08+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 661,
+ "fares_saved": 682,
  "log": [
   "11:26:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:07 http front door: ['https://rugby-lime-feb-packages.trycloudflare.com', 'https://31a5df0d9304d4.lhr.life']",
@@ -17,6 +17,10 @@
   "11:27:23 rtc glu45aa3xu: answered",
   "11:27:25 rtc glu45aa3xu: data channel open",
   "11:27:25 request received: rid mvdqqs310j5lz.2 4 keys",
-  "11:27:25 handle mvdqqs310j5lz.2: first_chunk=True total=4"
+  "11:27:25 handle mvdqqs310j5lz.2: first_chunk=True total=4",
+  "11:27:40 request mvdqqs310j5lz.2: chunk of 4 keys done in 15s; paths {'http': 23, 'browser': 1}, browser waits 1 max 2s sum 2s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 1, 'blocked': 0, 'tries': 23, 'empty': 0}, audit 3/3 agree",
+  "11:27:41 request mvdqqs310j5lz.2: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:27:43 request received: rid mvdqr8q72ppmz.2 36 keys",
+  "11:27:43 handle mvdqr8q72ppmz.2: first_chunk=True total=36"
  ]
 }
