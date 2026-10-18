@@ -12,6 +12,8 @@ on:
       - "smart-flight-finder/backend/scripts/exp_mc_probe.py"
       - "smart-flight-finder/backend/scripts/exp_mc_replay.py"
       - "smart-flight-finder/backend/scripts/exp_mc_build.py"
+      - "smart-flight-finder/backend/scripts/exp_http_validate.py"
+      - "smart-flight-finder/backend/app/providers/google_http.py"
   workflow_dispatch:
 
 permissions:
@@ -31,4 +33,4 @@ jobs:
           python-version: "3.12"
       - run: pip install -e . requests "playwright>=1.50,<2"
       - run: playwright install --with-deps chromium
-      - run: python -m scripts.exp_mc_build ../public/fares.json
+      - run: python -m scripts.exp_http_validate ../public/fares.json 20
