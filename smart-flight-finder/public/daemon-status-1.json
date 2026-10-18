@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:12:00+00:00",
+ "at": "2026-10-18T12:13:31+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1171,
+ "fares_saved": 1177,
  "log": [
   "11:26:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:13 http front door: ['https://vegetables-defining-facial-granted.trycloudflare.com', 'https://17c1d95da2fbab.lhr.life']",
@@ -91,6 +91,10 @@
   "12:09:19 request mvds6nyh5n4is.1: chunk of 15 keys done in 97s; paths {'http': 59, 'browser': 38, 'browser-none': 231}, browser waits 269 max 236s sum 17354s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 72, 'blocked': 0, 'tries': 84, 'empty': 25}, audit 5/5 agree",
   "12:09:20 request mvds6nyh5n4is.1: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:10:35 request received: rid mvdsad9pusjjw.1 19 keys",
-  "12:10:35 handle mvdsad9pusjjw.1: first_chunk=True total=19"
+  "12:10:35 handle mvdsad9pusjjw.1: first_chunk=True total=19",
+  "12:12:19 request received: rid mvdscl8r2y6s1.1 17 keys",
+  "12:12:19 handle mvdscl8r2y6s1.1: first_chunk=True total=17",
+  "12:12:57 request mvdsad9pusjjw.1: chunk of 19 keys done in 142s; paths {'http': 65, 'browser': 38, 'browser-none': 250}, browser waits 288 max 236s sum 18916s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 65, 'miss': 83, 'blocked': 0, 'tries': 112, 'empty': 47}, audit 5/5 agree",
+  "12:12:59 request mvdsad9pusjjw.1: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
