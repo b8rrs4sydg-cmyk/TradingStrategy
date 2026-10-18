@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T08:45:02+00:00",
+ "at": "2026-10-18T08:46:34+00:00",
  "publishes": {
-  "ok": 14,
+  "ok": 15,
   "r429": 0,
   "fail": 0
  },
@@ -16,6 +16,8 @@
   "08:43:06 request received: rid mvdkviw606vw4 61 keys",
   "08:43:06 handle mvdkviw606vw4: first_chunk=True total=61",
   "08:43:07 request httptest1792312983: chunk of 20 keys done in 5s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 1, 'blocked': 0, 'tries': 24, 'empty': 2}, audit 2/2 agree",
-  "08:43:09 request httptest1792312983: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "08:43:09 request httptest1792312983: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "08:45:06 request mvdkviw606vw4: chunk of 61 keys done in 119s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 22, 'blocked': 0, 'tries': 72, 'empty': 13}, audit 3/3 agree",
+  "08:45:07 request mvdkviw606vw4: final sent (61/61); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}"
  ]
 }
