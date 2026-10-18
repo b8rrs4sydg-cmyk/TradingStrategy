@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T08:04:55+00:00",
+ "at": "2026-10-18T08:06:27+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -40,6 +40,8 @@
   "08:01:42 handle mvdjea8w2c5eq.3: first_chunk=True total=27",
   "08:03:22 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "08:04:53 request mvdjea8w2c5eq.3: chunk of 27 keys done in 191s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 53, 'blocked': 0, 'tries': 23, 'empty': 1}, audit 2/2 agree",
-  "08:04:54 request mvdjea8w2c5eq.3: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "08:04:54 request mvdjea8w2c5eq.3: final sent (27/27); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "08:04:56 request received: rid mvdjign1mzkc0.3 27 keys",
+  "08:04:56 handle mvdjign1mzkc0.3: first_chunk=True total=27"
  ]
 }
