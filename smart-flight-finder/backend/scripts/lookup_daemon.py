@@ -337,12 +337,14 @@ class Persister:
                     ["git", "-C", str(root), *a], check=True, capture_output=True
                 )
                 if not committed:
-                    git(
-                        "add",
-                        str(self.path),
-                        str(self.path.parent / f"daemon-status{self.suffix}.json"),
-                        str(self.path.parent / f"daemon{self.suffix}.json"),
-                    )
+                    # only files that exist: an instance that has saved no fare yet has no overlay file, and
+                    # `git add` of a missing path fails the whole command (so nothing was ever pushed)
+                    mine = [
+                        self.path,
+                        self.path.parent / f"daemon-status{self.suffix}.json",
+                        self.path.parent / f"daemon{self.suffix}.json",
+                    ]
+                    git("add", *[str(f) for f in mine if f.exists()])
                     if (
                         subprocess.run(
                             ["git", "-C", str(root), "diff", "--cached", "--quiet"], check=False
