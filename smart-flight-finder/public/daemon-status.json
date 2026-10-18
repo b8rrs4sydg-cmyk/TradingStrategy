@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T15:54:38+00:00",
+ "at": "2026-10-18T15:57:39+00:00",
  "publishes": {
   "ok": 63,
   "r429": 0,
@@ -80,6 +80,26 @@
   "15:52:29 request mvdzux3ougyfu.1: chunk of 11 keys done in 593s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "15:52:31 request mvdzux3ougyfu.1: final sent (11/11); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "15:53:48 request mvdzux3ougyfu.0: chunk of 22 keys done in 672s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
-  "15:53:49 request mvdzux3ougyfu.0: final sent (22/22); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
+  "15:53:49 request mvdzux3ougyfu.0: final sent (22/22); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "15:56:51 request received: rid mve0dc82usim0.0 19 keys",
+  "15:56:51 handle mve0dc82usim0.0: first_chunk=True total=19",
+  "15:56:51 request received: rid mve0dc82usim0.2 17 keys",
+  "15:56:51 handle mve0dc82usim0.2: first_chunk=True total=17",
+  "15:56:51 request received: rid mve0dc82usim0.3 13 keys",
+  "15:56:51 request received: rid mve0dc82usim0.1 14 keys",
+  "15:56:51 request received: rid mve0dc82usim0.4 15 keys",
+  "15:56:51 handle mve0dc82usim0.3: first_chunk=True total=13",
+  "15:56:51 handle mve0dc82usim0.1: first_chunk=True total=14",
+  "15:56:51 handle mve0dc82usim0.4: first_chunk=True total=15",
+  "15:56:51 request received: rid mve0dc82usim0.5 25 keys",
+  "15:56:51 request received: rid mve0dc82usim0.6 15 keys",
+  "15:56:51 request received: rid mve0dc82usim0.7 15 keys",
+  "15:56:51 request received: rid mve0dc82usim0.8 12 keys",
+  "15:56:51 handle mve0dc82usim0.5: first_chunk=True total=25",
+  "15:56:51 handle mve0dc82usim0.6: first_chunk=True total=15",
+  "15:56:51 handle mve0dc82usim0.7: first_chunk=True total=15",
+  "15:56:51 handle mve0dc82usim0.8: first_chunk=True total=12",
+  "15:56:51 request received: rid mve0dc82usim0.9 15 keys",
+  "15:56:51 handle mve0dc82usim0.9: first_chunk=True total=15"
  ]
 }
