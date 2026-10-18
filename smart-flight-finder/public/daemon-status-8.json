@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T15:00:55+00:00",
+ "at": "2026-10-18T15:05:27+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 360,
+ "fares_saved": 369,
  "log": [
-  "13:05:06 request received: rid mvdu8gogkouz6.8 14 keys",
-  "13:05:06 handle mvdu8gogkouz6.8: first_chunk=True total=14",
-  "13:06:42 request mvdu8gogkouz6.8: chunk of 14 keys done in 96s; paths {'http': 131, 'browser-none': 369, 'browser': 16}, browser waits 385 max 147s sum 25284s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 157, 'blocked': 0, 'tries': 258, 'empty': 127}, audit 1/1 ag",
-  "13:06:44 request mvdu8gogkouz6.8: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:12:47 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:12:50 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:13 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
@@ -156,6 +152,10 @@
   "14:59:38 request received: rid mvdybqcnh7f91.7 16 keys",
   "14:59:38 handle mvdybqcnh7f91.7: first_chunk=True total=16",
   "15:00:39 request mvdybqcnh7f91.7: chunk of 16 keys done in 61s; paths {'http': 275, 'browser-none': 720, 'browser': 16}, browser waits 736 max 169s sum 49242s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 275, 'miss': 295, 'blocked': 0, 'tries': 624, 'empty': 349}, audit 1/1 ag",
-  "15:00:42 request mvdybqcnh7f91.7: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "15:00:42 request mvdybqcnh7f91.7: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:04:10 request received: rid mvdyhlkogi3ru.8 13 keys",
+  "15:04:10 handle mvdyhlkogi3ru.8: first_chunk=True total=13",
+  "15:05:13 request mvdyhlkogi3ru.8: chunk of 13 keys done in 63s; paths {'http': 284, 'browser-none': 724, 'browser': 16}, browser waits 740 max 169s sum 49426s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 284, 'miss': 299, 'blocked': 0, 'tries': 638, 'empty': 354}, audit 1/1 ag",
+  "15:05:15 request mvdyhlkogi3ru.8: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
