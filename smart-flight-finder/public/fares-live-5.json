@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T11:09:39+00:00",
+ "generated_at": "2026-10-18T11:11:11+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -5734,6 +5734,22 @@
     ]
    ]
   },
+  "mc|TPE-FUK-2026-12-31|NRT-TPE-2027-03-02": {
+   "price": 18919,
+   "first": {
+    "dep": "2026-12-31T14:45:00+08:00",
+    "arr": "2026-12-31T18:00:00+09:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     18919
+    ]
+   ]
+  },
   "mc|TPE-FUK-2027-01-01|NGO-TPE-2027-02-28": {
    "price": 15251,
    "first": {
@@ -5763,6 +5779,22 @@
     [
      "2026-10-18",
      19830
+    ]
+   ]
+  },
+  "mc|TPE-KIX-2026-12-31|FUK-TPE-2027-03-02": {
+   "price": 15366,
+   "first": {
+    "dep": "2026-12-31T11:05:00+08:00",
+    "arr": "2026-12-31T18:30:00+09:00",
+    "stops": 1,
+    "airline": "Asiana Airlines"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     15366
     ]
    ]
   },
@@ -11688,6 +11720,7 @@
   "mc|KIX-TPE-2027-01-03|TPE-SIN-2027-02-26|SIN-TPE-2027-03-01|TPE-HAN-2027-06-09",
   "mc|KIX-TPE-2027-01-03|TPE-SIN-2027-02-26|SIN-TPE-2027-03-01|TPE-HKG-2027-04-29",
   "mc|KIX-TPE-2027-01-03|TPE-XMN-2027-02-26|XMN-TPE-2027-03-01|TPE-CEB-2027-04-29",
+  "mc|KIX-TPE-2027-01-04|TPE-FUK-2027-02-27",
   "mc|KIX-TPE-2027-03-01|TPE-BKK-2027-04-29|BKK-TPE-2027-05-02|TPE-MFM-2027-06-09",
   "mc|KIX-TPE-2027-03-01|TPE-HAN-2027-04-29|HAN-TPE-2027-05-02|TPE-HKG-2027-06-09",
   "mc|KIX-TPE-2027-03-01|TPE-HAN-2027-04-29|HAN-TPE-2027-05-02|TPE-MFM-2027-06-09",
@@ -12079,6 +12112,12 @@
   "mc|SIN-TPE-2027-03-01|TPE-OKA-2027-04-29|OKA-TPE-2027-05-02|TPE-MNL-2027-06-09",
   "mc|SIN-TPE-2027-03-01|TPE-OKA-2027-04-29|OKA-TPE-2027-05-02|TPE-SGN-2027-06-09",
   "mc|SIN-TPE-2027-03-01|TPE-SGN-2027-04-29|SGN-TPE-2027-05-02|TPE-KUL-2027-06-09",
+  "mc|TPE-FUK-2027-01-02|NGO-TPE-2027-03-02",
+  "mc|TPE-HND-2026-12-31|NRT-TPE-2027-02-28",
+  "mc|TPE-KIX-2026-12-31|HND-TPE-2027-03-01",
+  "mc|TPE-NGO-2027-01-02|KIX-TPE-2027-03-02",
+  "mc|TPE-NRT-2026-12-31|HND-TPE-2027-03-02",
+  "mc|TPE-NRT-2027-01-01|NGO-TPE-2027-02-16",
   "mc|XMN-TPE-2027-01-03|TPE-BKK-2027-02-26|BKK-TPE-2027-03-01|TPE-CEB-2027-06-09",
   "mc|XMN-TPE-2027-01-03|TPE-CEB-2027-02-26|CEB-TPE-2027-03-01|TPE-FUK-2027-04-29",
   "mc|XMN-TPE-2027-01-03|TPE-CEB-2027-02-26|CEB-TPE-2027-03-01|TPE-FUK-2027-06-09",
