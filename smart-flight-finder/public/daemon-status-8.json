@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:32:16+00:00",
+ "at": "2026-10-18T11:35:31+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 115,
+ "fares_saved": 122,
  "log": [
   "11:26:11 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:15 http front door: ['https://organic-asthma-bios-passive.trycloudflare.com', 'https://a455d0c2cfea05.lhr.life']",
@@ -17,6 +17,12 @@
   "11:31:00 request received: rid mvdqvf38lwhyn.8 9 keys",
   "11:31:00 handle mvdqvf38lwhyn.8: first_chunk=True total=9",
   "11:32:06 request mvdqvf38lwhyn.8: chunk of 9 keys done in 66s; paths {'http': 26, 'browser-none': 3}, browser waits 3 max 47s sum 140s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 26, 'miss': 3, 'blocked': 0, 'tries': 26, 'empty': 0}, audit 1/1 agree",
-  "11:32:07 request mvdqvf38lwhyn.8: final sent (9/9); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "11:32:07 request mvdqvf38lwhyn.8: final sent (9/9); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:32:18 git retry 0: b\"-1kexus': is at 1ecd7eb04a6dccbaa2a0a9f69d53210b5bebc515 but expected 21c41ccdc23705ae8c681359332affad8965f5de)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:32:23 git retry 1: b\"-1kexus': is at d819cc37489ea5163d62054427879ecba5b49d9f but expected 1ecd7eb04a6dccbaa2a0a9f69d53210b5bebc515)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:34:17 rtc a73h0xmd2j: answered",
+  "11:34:18 request received: rid mvdqznepk7epz.8 17 keys",
+  "11:34:18 handle mvdqznepk7epz.8: first_chunk=True total=17",
+  "11:34:19 rtc a73h0xmd2j: data channel open"
  ]
 }
