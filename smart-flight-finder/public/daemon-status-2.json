@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:06:49+00:00",
+ "at": "2026-10-18T11:08:21+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1061,
+ "fares_saved": 1069,
  "log": [
   "11:00:37 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:42 http front door: ['https://lined-screensaver-originally-twist.trycloudflare.com', 'https://8840e93f86c12f.lhr.life']",
@@ -24,6 +24,10 @@
   "11:03:55 handle mvdpwl7sqfww0.2: first_chunk=True total=27",
   "11:05:14 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "11:05:27 request mvdpwl7sqfww0.2: chunk of 27 keys done in 92s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 8, 'blocked': 0, 'tries': 74, 'empty': 19}, audit 7/7 agree",
-  "11:05:28 request mvdpwl7sqfww0.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:05:28 request mvdpwl7sqfww0.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:07:32 rtc obd7amhmya: answered",
+  "11:07:34 rtc obd7amhmya: data channel open",
+  "11:07:34 request received: rid mvdq18d0uxyoh.2 10 keys",
+  "11:07:34 handle mvdq18d0uxyoh.2: first_chunk=True total=10"
  ]
 }
