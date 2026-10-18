@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:44:52+00:00",
+ "at": "2026-10-18T13:46:23+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 239,
  "log": [
-  "11:55:04 request mvdrp1j4ku5iu.8: chunk of 7 keys done in 62s; paths {'http': 54, 'browser-none': 107, 'browser': 1}, browser waits 108 max 147s sum 7710s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 54, 'miss': 44, 'blocked': 0, 'tries': 62, 'empty': 8}, audit 1/1 agree",
-  "11:55:06 request mvdrp1j4ku5iu.8: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:56:33 request received: rid mvdrsbjgetlnm.8 10 keys",
   "11:56:33 handle mvdrsbjgetlnm.8: first_chunk=True total=10",
   "11:57:46 request mvdrsbjgetlnm.8: chunk of 10 keys done in 72s; paths {'http': 57, 'browser-none': 114, 'browser': 1}, browser waits 115 max 147s sum 8045s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 57, 'miss': 51, 'blocked': 0, 'tries': 65, 'empty': 8}, audit 1/1 agree",
@@ -156,6 +154,8 @@
   "13:44:33 rtc tw0aj31jac: answered",
   "13:44:35 rtc tw0aj31jac: data channel open",
   "13:44:35 request received: rid mvdvn5tvdtxf1.8 21 keys",
-  "13:44:35 handle mvdvn5tvdtxf1.8: first_chunk=True total=21"
+  "13:44:35 handle mvdvn5tvdtxf1.8: first_chunk=True total=21",
+  "13:46:12 request mvdvn5tvdtxf1.8: chunk of 21 keys done in 96s; paths {'http': 142, 'browser-none': 527, 'browser': 16}, browser waits 543 max 169s sum 37395s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 142, 'miss': 197, 'blocked': 0, 'tries': 305, 'empty': 163}, audit 1/1 ag",
+  "13:46:13 request mvdvn5tvdtxf1.8: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
