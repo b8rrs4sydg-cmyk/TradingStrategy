@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:03:47+00:00",
+ "at": "2026-10-18T13:05:18+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1359,
  "log": [
-  "11:26:06 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:26:12 git retry 0: b\"-1kexus': is at 157fae3f04ad0e206020ae93d610851b7f66be33 but expected 53b6681c237f3526571c0698a51d8b76429bf8f3)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:26:18 http front door: ['https://artwork-jason-wisconsin-fame.trycloudflare.com', 'https://ac7ffe8a357fbe.lhr.life']",
   "11:26:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "11:27:16 request received: rid httptest1792322836 20 keys",
@@ -156,6 +154,8 @@
   "13:01:39 request received: rid mvdu41h7b76yp.2 11 keys",
   "13:01:39 handle mvdu41h7b76yp.2: first_chunk=True total=11",
   "13:03:10 request mvdu41h7b76yp.2: chunk of 11 keys done in 90s; paths {'http': 133, 'browser-none': 287, 'browser': 55}, browser waits 342 max 137s sum 18015s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 148, 'blocked': 0, 'tries': 261, 'empty': 128}, audit 3/3 ag",
-  "13:03:10 request mvdu41h7b76yp.2: final sent (11/11); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "13:03:10 request mvdu41h7b76yp.2: final sent (11/11); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:05:06 request received: rid mvdu8gogkouz6.2 11 keys",
+  "13:05:06 handle mvdu8gogkouz6.2: first_chunk=True total=11"
  ]
 }
