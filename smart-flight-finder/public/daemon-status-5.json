@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T08:24:59+00:00",
+ "at": "2026-10-18T08:26:31+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 282,
+ "fares_saved": 297,
  "log": [
   "07:39:05 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:09 http front door: ['https://owned-carriers-tea-treating.trycloudflare.com', 'https://593bb252e8e264.lhr.life']",
@@ -70,6 +70,8 @@
   "08:22:11 request received: rid mvdk4m0vn9mu1.5 26 keys",
   "08:22:11 handle mvdk4m0vn9mu1.5: first_chunk=True total=26",
   "08:24:08 request mvdk4m0vn9mu1.5: chunk of 26 keys done in 117s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 78, 'miss': 109, 'blocked': 0, 'tries': 78, 'empty': 0}, audit 4/4 agree",
-  "08:24:10 request mvdk4m0vn9mu1.5: final sent (26/26); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "08:24:10 request mvdk4m0vn9mu1.5: final sent (26/26); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "08:25:26 request received: rid mvdk8sg1zh0l1.5 26 keys",
+  "08:25:26 handle mvdk8sg1zh0l1.5: first_chunk=True total=26"
  ]
 }
