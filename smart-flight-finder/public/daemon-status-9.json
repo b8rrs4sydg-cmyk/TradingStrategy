@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:15:35+00:00",
+ "at": "2026-10-18T11:17:06+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 76,
+ "fares_saved": 77,
  "log": [
   "11:00:30 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:34 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
@@ -67,6 +67,10 @@
   "11:15:14 request mvdqb344zwtrk.9: chunk of 17 keys done in 0s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 73, 'miss': 43, 'blocked': 0, 'tries': 100, 'empty': 27}, audit 2/2 agree",
   "11:15:15 request mvdqb344zwtrk.9: final sent (17/17); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
   "11:15:17 request received: rid mvdqb8zfaos5a.9 13 keys",
-  "11:15:17 handle mvdqb8zfaos5a.9: first_chunk=True total=13"
+  "11:15:17 handle mvdqb8zfaos5a.9: first_chunk=True total=13",
+  "11:15:53 request mvdqajk5xvkpm.9: chunk of 14 keys done in 68s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 76, 'miss': 46, 'blocked': 0, 'tries': 103, 'empty': 27}, audit 2/2 agree",
+  "11:15:53 request mvdqajk5xvkpm.9: final sent (14/14); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:16:25 request mvdqb8zfaos5a.9: chunk of 13 keys done in 68s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 76, 'miss': 46, 'blocked': 0, 'tries': 103, 'empty': 27}, audit 2/2 agree",
+  "11:16:26 request mvdqb8zfaos5a.9: final sent (13/13); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
  ]
 }
