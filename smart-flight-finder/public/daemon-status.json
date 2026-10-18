@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:20:22+00:00",
+ "at": "2026-10-18T07:21:54+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3612,
+ "fares_saved": 3623,
  "log": [
   "07:18:47 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:52 http front door: ['https://pose-pack-hopes-barbie.trycloudflare.com', 'https://c50c26f55800bb.lhr.life']",
@@ -17,6 +17,23 @@
   "07:20:09 rtc 0ka8zmb19r: answered",
   "07:20:10 rtc 0ka8zmb19r: data channel open",
   "07:20:10 request received: rid mvdhwvgdpm0ai.0 1 keys",
-  "07:20:10 handle mvdhwvgdpm0ai.0: first_chunk=True total=1"
+  "07:20:10 handle mvdhwvgdpm0ai.0: first_chunk=True total=1",
+  "07:20:25 request mvdhwvgdpm0ai.0: chunk of 1 keys done in 15s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
+  "07:20:27 request mvdhwvgdpm0ai.0: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:20:28 rtc nx7fhagwlr: answered",
+  "07:20:30 request received: rid mvdhx7tzwrdv5.0 27 keys",
+  "07:20:30 handle mvdhx7tzwrdv5.0: first_chunk=True total=27",
+  "07:20:32 request received: rid mvdhxczwvgihz.0 27 keys",
+  "07:20:32 handle mvdhxczwvgihz.0: first_chunk=True total=27",
+  "07:20:35 request received: rid mvdhxepvyloyl.0 27 keys",
+  "07:20:35 handle mvdhxepvyloyl.0: first_chunk=True total=27",
+  "07:20:42 request received: rid mvdhxkhy45w9s.0 27 keys",
+  "07:20:42 handle mvdhxkhy45w9s.0: first_chunk=True total=27",
+  "07:20:55 request mvdhxczwvgihz.0: chunk of 27 keys done in 22s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 81, 'miss': 4, 'blocked': 0, 'tries': 81, 'empty': 0}, audit 10/10 agree",
+  "07:20:56 request mvdhxepvyloyl.0: chunk of 27 keys done in 21s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 82, 'miss': 4, 'blocked': 0, 'tries': 82, 'empty': 0}, audit 10/10 agree",
+  "07:20:56 request mvdhx7tzwrdv5.0: chunk of 27 keys done in 26s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 83, 'miss': 4, 'blocked': 0, 'tries': 83, 'empty': 0}, audit 10/10 agree",
+  "07:20:56 request mvdhx7tzwrdv5.0: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "07:20:57 request mvdhxczwvgihz.0: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "07:20:57 request mvdhxepvyloyl.0: final sent (27/27); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
