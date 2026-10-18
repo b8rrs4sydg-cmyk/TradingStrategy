@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T21:20:59+00:00",
+ "at": "2026-10-18T21:22:30+00:00",
  "publishes": {
   "ok": 11,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 4263,
  "log": [
-  "20:33:28 request received: rid mvea90c5wqc3v.0 61 keys",
-  "20:33:28 handle mvea90c5wqc3v.0: first_chunk=True total=61",
   "20:33:28 request received: rid mvea90c5wqc3v.1 51 keys",
   "20:33:28 handle mvea90c5wqc3v.1: first_chunk=True total=51",
   "20:38:18 request mvea90c5wqc3v.1: chunk of 51 keys done in 290s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "21:20:06 request mvebpxieg5tqd.2: chunk of 22 keys done in 330s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
   "21:20:06 request mvebpxieg5tqd.2: final sent (22/22); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
   "21:20:25 request mvebpxieg5tqd.1: chunk of 10 keys done in 349s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
-  "21:20:25 request mvebpxieg5tqd.1: final sent (10/10); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}"
+  "21:20:25 request mvebpxieg5tqd.1: final sent (10/10); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "21:21:02 request mvebpxieg5tqd.0: chunk of 22 keys done in 386s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "21:21:03 request mvebpxieg5tqd.0: final sent (22/22); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}"
  ]
 }
