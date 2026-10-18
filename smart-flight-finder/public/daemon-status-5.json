@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:12:49+00:00",
+ "at": "2026-10-18T11:14:20+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 706,
+ "fares_saved": 717,
  "log": [
   "11:00:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:31 http front door: ['https://mia-jake-discovery-pasta.trycloudflare.com', 'https://981fbb61bf5387.lhr.life']",
@@ -35,6 +35,18 @@
   "11:11:51 rtc yel29ds82j: answered",
   "11:11:52 rtc yel29ds82j: data channel open",
   "11:11:52 request received: rid mvdq6pts6akym.5 19 keys",
-  "11:11:52 handle mvdq6pts6akym.5: first_chunk=True total=19"
+  "11:11:52 handle mvdq6pts6akym.5: first_chunk=True total=19",
+  "11:13:05 request mvdq6pts6akym.5: chunk of 19 keys done in 74s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 66, 'miss': 32, 'blocked': 0, 'tries': 94, 'empty': 28}, audit 1/1 agree",
+  "11:13:06 request mvdq6pts6akym.5: final sent (19/19); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "11:13:11 rtc 3nfb3jwjj3: answered",
+  "11:13:11 rtc 3nfb3jwjj3: data channel open",
+  "11:13:11 request received: rid mvdq8fchrh2ij.5 19 keys",
+  "11:13:11 handle mvdq8fchrh2ij.5: first_chunk=True total=19",
+  "11:13:11 request mvdq8fchrh2ij.5: chunk of 19 keys done in 0s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 66, 'miss': 32, 'blocked': 0, 'tries': 94, 'empty': 28}, audit 1/1 agree",
+  "11:13:13 request mvdq8fchrh2ij.5: final sent (19/19); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "11:13:34 request received: rid mvdq90xy2rp1d.5 16 keys",
+  "11:13:34 handle mvdq90xy2rp1d.5: first_chunk=True total=16",
+  "11:13:45 request mvdq60py73tla.5: chunk of 18 keys done in 151s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 66, 'miss': 32, 'blocked': 0, 'tries': 94, 'empty': 28}, audit 1/1 agree",
+  "11:13:46 request mvdq60py73tla.5: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
