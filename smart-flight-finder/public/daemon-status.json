@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T05:40:09+00:00",
+ "at": "2026-10-18T05:41:41+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3119,
+ "fares_saved": 3121,
  "log": [
   "05:26:25 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:26:30 http front door: ['https://pam-xml-universities-crafts.trycloudflare.com', 'https://7e63c42e8ecda4.lhr.life']",
@@ -32,6 +32,9 @@
   "05:30:51 request received: rid mvde09xltuelu 153 keys",
   "05:30:51 handle mvde09xltuelu: first_chunk=True total=153",
   "05:40:02 request mvde09xltuelu: chunk of 153 keys done in 551s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:40:03 request mvde09xltuelu: final sent (153/153); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "05:40:03 request mvde09xltuelu: final sent (153/153); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:41:13 rtc eq11khchp1: answered",
+  "05:41:24 request received: rid mvdediuizubgr 160 keys",
+  "05:41:24 handle mvdediuizubgr: first_chunk=True total=160"
  ]
 }
