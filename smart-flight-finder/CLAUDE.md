@@ -278,3 +278,35 @@ button asks every remaining multi-city permutation, spread over the crawlers (`l
 `fare-daemon.yml` runs six daemon instances (matrix `[0..5]`, one GitHub job each: own IP, browser, tunnels, `daemon[-i].json`,
 `fares-live[-i].json`). The page's `INSTANCES` constant must match the matrix. Every extra instance costs the visiting page two
 ntfy signalling messages for its WebRTC offer/answer (anonymous quota ≈250/day per IP), which is why it stops at six.
+
+## One-way screening of multi-city tickets (四腿票 / 反向票＋倒買法)
+
+Measured on real fares (`scripts/exp_mc_vs_ow.py`, 70 multi-city fares priced leg by leg): a multi-city fare is never below the
+sum of its one-way legs (lowest ratio 1.04 for two legs, 1.26 for four; median 1.31 / 2.68). Real database check: of 1,613 priced
+四腿票 and 1,388 wrap+reverse pairs, **none** beats ordinary round trips (best 1.36x and 1.02x) — Google prices a multi-city
+trip about like the sum of its one-ways, so these strategies rarely pay in Google data. One-way fares are fast (HTTP, ~100 %)
+and shared by thousands of combinations, so:
+
+* page (`SCREEN`, `oneWayFloor`, `worthAsking`, `planReversePair`, `planFourLegTriple`): a ticket is asked for only when
+  0.95 x the sum of its legs' one-way fares leaves room to beat the baseline; unknown legs are asked for first (as normal
+  stage-1 one-way keys); the 10 closest pruned calls are still asked (audit) and `checkScreening` switches screening off if
+  one comes back below its floor; "查找所有排列組合" (`SCREEN.all`) turns screening off; a user search resets it;
+* backend crawl (`crawl_plan.with_leg_keys` / `screen_four_leg`, used by `build_fare_snapshot.py` and `fill_fares.py`): the legs
+  join stage 1, 四腿票 keys whose floor reaches the room are dropped (audit sample kept); two-segment keys are not screened
+  there (a pair forms a plan);
+* browser tuning does not help (`exp_browser_speed.py`: blocking images/fonts or a shorter settle wait changed nothing —
+  multi-city pages are slow on Google's side); speed comes from asking less and from more crawlers.
+
+## Airport catalog (Taiwan, China and all of Asia)
+
+`backend/app/data/asia_airports.py` is the table (one line per airport: IATA code | 中文名 | ISO-2 | IANA time zone | group |
+gateway flag): 285 scheduled-service airports — Taiwan 18, Japan 44, Korea 12, HK/Macau 2, mainland China 53, South-East
+Asia 81, South Asia 38, Central Asia/Mongolia 8, West Asia/Middle East 29. `app/data/airports.py` merges it with the few
+long-haul places (Europe/Americas/Oceania) into `TW_ORIGINS` (出發機場 = all Taiwan airports), `DESTINATIONS`, `OUTSTATIONS`
+(gateway flag = 四腿票 外站 candidates), `BY_CODE`, `TIMEZONES` (`google_flights.tz_of` reads local times with it, so every
+airport needs one) and `COUNTRY_ZH` (picker search by country name). The demo page gets the same table from
+`python -m scripts.embed_airports` (rewrites the `AIRPORT-TABLE` block of `public/index.html`; `--check` and
+`tests/test_airport_catalog.py` fail when the page is out of date). The page's pickers collapse the Asia-wide lists by group,
+have a search box (name / city / code / country) and per-group 全選 / 清除. Airports the fare database does not cover are
+marked 無資料 and priced on demand by the crawlers. Trip.com needs metropolitan city codes for multi-airport cities: add them
+to `_TRIP_CITY` (`services/booking_links.py`) and `TRIP_CITY` (page) together. The Next.js `frontend/` reads `/airports`.

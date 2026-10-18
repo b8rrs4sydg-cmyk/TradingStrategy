@@ -24,7 +24,14 @@ from zoneinfo import ZoneInfo
 
 from app.providers.fare_db import FareDatabase, live_path
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS
-from app.services.crawl_plan import CrawlConfig, planner_queries, rank_multi_city, split_stages
+from app.services.crawl_plan import (
+    CrawlConfig,
+    planner_queries,
+    rank_multi_city,
+    screen_four_leg,
+    split_stages,
+    with_leg_keys,
+)
 from scripts.build_fare_snapshot import crawl
 
 WIDE = CrawlConfig(
@@ -133,6 +140,7 @@ def main() -> None:
     if args.cmd == "plan":
         t0 = time.time()
         stage1, mc = split_stages(planner_queries(cfg, today=today_tpe()))
+        stage1 = with_leg_keys(stage1, mc)  # one-way legs of the four-leg candidates: the floor that screens stage 2
         args.out.write_text(json.dumps({"stage1": stage1, "mc": mc}), encoding="utf-8")
         print(f"plan: {len(stage1)} one-way/round-trip + {len(mc)} multi-city candidates in {time.time() - t0:.0f}s")
         return
@@ -153,7 +161,8 @@ def main() -> None:
         fares, missing = crawl(keys, f"s1-{i}", concurrency=args.concurrency, timeout_ms=25000)
     else:
         known = {k: e["price"] for k, e in db.fares.items()}
-        ranked = rank_multi_city(plan["mc"], known, cfg, max_multi_city=args.max_multi_city)
+        mc_left, _ = screen_four_leg(plan["mc"], known, cfg, drop_unknown=True)
+        ranked = rank_multi_city(mc_left, known, cfg, max_multi_city=args.max_multi_city)
         keys = stale(ranked, db, args.fresh_hours)[i::n]
         print(f"stage2 shard {i}/{n}: {len(keys)} of {len(ranked)} ranked multi-city queries "
               f"({len(plan['mc'])} candidates)", flush=True)

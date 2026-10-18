@@ -29,7 +29,14 @@ from zoneinfo import ZoneInfo
 
 from app.providers.fare_db import FareDatabase, live_path
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS, scrape
-from app.services.crawl_plan import CrawlConfig, planner_queries, rank_multi_city, split_stages
+from app.services.crawl_plan import (
+    CrawlConfig,
+    planner_queries,
+    rank_multi_city,
+    screen_four_leg,
+    split_stages,
+    with_leg_keys,
+)
 
 
 def _progress(label: str):
@@ -82,6 +89,7 @@ def main() -> None:
     db = FareDatabase.load(args.db)
     db.overlay(FareDatabase.load(live_path(args.db)))  # fold in on-demand lookups
     stage1, mc = split_stages(planner_queries(cfg, today=today))
+    stage1 = with_leg_keys(stage1, mc)  # one-way legs of every four-leg candidate: the floor that screens stage 2
     print(f"plan: {len(stage1)} one-way/round-trip + {len(mc)} multi-city candidates", flush=True)
     if args.dry_run:
         print("\n".join(stage1 + mc))
@@ -93,8 +101,13 @@ def main() -> None:
         sys.exit(f"only {len(fares1)}/{len(stage1)} fares — Google may be blocking; keeping the old database")
 
     known = {k: e["price"] for k, e in db.fares.items()} | {k: e["price"] for k, e in fares1.items()}
-    picked = rank_multi_city(mc, known, cfg, max_multi_city=args.max_multi_city)
-    print(f"stage2: {len(picked)} of {len(mc)} multi-city queries worth fetching", flush=True)
+    mc_left, pruned = screen_four_leg(mc, known, cfg, drop_unknown=True)
+    picked = rank_multi_city(mc_left, known, cfg, max_multi_city=args.max_multi_city)
+    print(
+        f"stage2: {len(picked)} of {len(mc)} multi-city queries worth fetching "
+        f"({pruned} four-leg combinations cannot beat round trips by their one-way floor)",
+        flush=True,
+    )
     fares2, missing2 = crawl(picked, "stage2", concurrency=max(2, args.concurrency - 2), timeout_ms=40000)
 
     db.coverage = {**cfg.as_dict(), "horizon_days": GOOGLE_HORIZON_DAYS, "crawled_on": today.isoformat()}
