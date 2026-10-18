@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:05:44+00:00",
+ "at": "2026-10-18T07:07:16+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3578,
+ "fares_saved": 3582,
  "log": [
   "06:53:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:33 http front door: ['https://fossil-allied-unavailable-milan.trycloudflare.com', 'https://d1d507a6144aae.lhr.life']",
@@ -33,6 +33,10 @@
   "07:03:09 request mvdh9z9txgeay.0: chunk of 11 keys done in 47s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:03:10 request mvdh9z9txgeay.0: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "07:03:47 request received: rid mvdhbt6a3o15x.0 27 keys",
-  "07:03:47 handle mvdhbt6a3o15x.0: first_chunk=True total=27"
+  "07:03:47 handle mvdhbt6a3o15x.0: first_chunk=True total=27",
+  "07:05:52 request mvdhbt6a3o15x.0: chunk of 27 keys done in 125s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:05:53 request mvdhbt6a3o15x.0: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:05:57 request received: rid mvdhelgxdkags.0 27 keys",
+  "07:05:57 handle mvdhelgxdkags.0: first_chunk=True total=27"
  ]
 }
