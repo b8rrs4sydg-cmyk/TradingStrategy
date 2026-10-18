@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T07:42:14+00:00",
+ "generated_at": "2026-10-18T07:43:46+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -131,6 +131,22 @@
     [
      "2026-10-18",
      71127
+    ]
+   ]
+  },
+  "mc|BKK-TPE-2027-01-03|TPE-LAX-2027-02-04|LAX-TPE-2027-02-14|TPE-ICN-2027-02-25": {
+   "price": 109709,
+   "first": {
+    "dep": "2027-01-03T02:15:00+07:00",
+    "arr": "2027-01-03T06:50:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     109709
     ]
    ]
   },
@@ -3611,7 +3627,6 @@
   "mc|BKK-TPE-2027-01-03|TPE-ICN-2027-02-26|ICN-TPE-2027-03-01|TPE-HAN-2027-04-29",
   "mc|BKK-TPE-2027-01-03|TPE-ICN-2027-02-26|ICN-TPE-2027-03-01|TPE-SIN-2027-04-29",
   "mc|BKK-TPE-2027-01-03|TPE-JFK-2027-02-04|JFK-TPE-2027-02-14|TPE-HKG-2027-02-25",
-  "mc|BKK-TPE-2027-01-03|TPE-LAX-2027-02-04|LAX-TPE-2027-02-14|TPE-ICN-2027-02-25",
   "mc|BKK-TPE-2027-01-03|TPE-OKA-2027-02-26|OKA-TPE-2027-03-01|TPE-SIN-2027-04-29",
   "mc|BKK-TPE-2027-01-03|TPE-PUS-2027-02-26|PUS-TPE-2027-03-01|TPE-NRT-2027-04-29",
   "mc|BKK-TPE-2027-01-03|TPE-SFO-2027-02-04|SFO-TPE-2027-02-14|TPE-ICN-2027-02-25",
