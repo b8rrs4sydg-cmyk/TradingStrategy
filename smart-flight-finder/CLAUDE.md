@@ -253,15 +253,22 @@ CI runs all of the above on every push touching `smart-flight-finder/**`.
 - Open follow-ups: Redis-backed cross-request cache; real Skyscanner adapter;
   rate limiting on `/search`; structured JSON logging.
 
-## Plain-HTTP pricing (experiment, rejected)
+## Plain-HTTP pricing (HTTP first, browser fallback + audit)
 
-`app/providers/google_http.py` prices keys without a browser (≈0.3 s each; multi-city by rebuilding the page's own
-`GetShoppingResults` request, which needs no per-search token, only the cookies a plain GET hands out). Measured on a
-runner it is **not reliable enough to replace the browser**: only 7-13 of 20 keys of each kind return data (retrying
-helps), and some round trips come back 20-35% too high because Google answers with a partial itinerary list that
-looks complete. The daemon therefore still prices with the browser. Trip.com, Skyscanner, Kayak, Momondo, Expedia,
-Skiplagged and Wego all refuse plain HTTP from a datacenter IP (bot walls / 403 / 429 / 430). The experiments are the
-`scripts/exp_http_*.py`, `exp_mc_*.py` files and `.github/workflows/exp-http-fetch.yml`.
+`app/providers/google_http.py` prices a key without a browser (≈0.3 s) by posting the page's own `GetShoppingResults`
+request (every kind: trip type 2 one-way, 1 round trip, 3 multi-city; no per-search token needed, only the cookies a plain
+GET hands out). `Daemon.price()` asks it first (2 tries × 6 s, ≤6 at once) and uses the browser for whatever it cannot read;
+10 % of the HTTP prices are also priced by the browser (`HTTP_AUDIT`) and when over 20 % of the last 20-40 disagree by more
+than 3 %, HTTP is paused for 30 min. `DAEMON_FAST_FETCH=0` turns it off.
+
+What the experiments (`scripts/exp_http_*.py`, `exp_mc_*.py`, `exp-http-fetch.yml`) found:
+* a price "too high" was our parser: Google mixes non-itinerary entries into the itinerary lists and requiring a whole list to
+  be itineraries dropped the cheapest flights with it; rows are now recognised one by one;
+* midnight times come with a null hour (`[None, 35]`), 20:00 as `[20]`;
+* data is missing because Google intermittently hangs ~60 s and then answers `ErrorResponse`; a retry usually works. Measured
+  on a runner: one-way ≈ always, round trip 70-90 %, multi-city 10-60 % of keys get data (more concurrency did not help);
+* not detected: whether a cheapest row is a "separate tickets" combination (the browser path excludes those);
+* Trip.com, Skyscanner, Kayak, Momondo, Expedia, Skiplagged and Wego all refuse plain HTTP from a datacenter IP.
 
 The page has a "查找所有排列組合" button: the normal campaign asks only the likeliest multi-city routes (budgeted); the
 button asks every remaining multi-city permutation, spread over the crawlers (`live.campaign.all`).

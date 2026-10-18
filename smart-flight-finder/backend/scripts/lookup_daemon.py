@@ -28,6 +28,7 @@ import heapq
 import itertools
 import json
 import os
+import random
 import re
 import shutil
 import subprocess
@@ -46,6 +47,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 
 from app.providers.fare_db import FareDatabase
 from app.providers.google_flights import _fetch_one
+from app.providers.google_http import HttpFetcher
 from scripts.lookup_fares import MAX_KEYS, valid_keys
 
 NTFY = os.getenv("NTFY_URL", "https://ntfy.sh")
@@ -58,6 +60,7 @@ FLUSH_EVERY_S = 6
 HEARTBEAT_S = 20
 PERSIST_EVERY_S = 90
 CONCURRENCY = 8
+HTTP_AUDIT = 0.1  # share of plain-HTTP prices that are also priced by the browser, to catch a drifting reader
 _UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/130.0 Safari/537.36"
@@ -357,6 +360,15 @@ class Daemon:
         self.instance = instance
         self.persist = Persister(db_path, "" if instance == 0 else f"-{instance}")
         self.limiter = RateLimiter()
+        # prices over plain HTTP first; two tries of 6 s at most per key, then the browser takes over
+        self.http: HttpFetcher | None = (
+            HttpFetcher(timeout=6.0, attempts=2, concurrency=6)
+            if os.getenv("DAEMON_FAST_FETCH", "1") == "1"
+            else None
+        )
+        self.audit: deque[bool] = deque(
+            maxlen=40
+        )  # does a sampled HTTP price agree with the browser's?
         self.cache: dict[str, tuple[float, dict | None]] = {}
         self.requests: dict[str, dict] = {}  # rid → {total, done}
         self.seen: set[str] = set()
@@ -492,14 +504,7 @@ class Daemon:
             if hit and time.time() - hit[0] < CACHE_TTL_S:
                 entry = hit[1]
             else:
-                await sem.acquire((-seq, key.startswith("mc|")))
-                try:
-                    entry = await _fetch_one(ctx, key, 40000)
-                except Exception as e:  # noqa: BLE001
-                    log(f"fetch failed {key}: {e}")
-                    entry, failed = None, True
-                finally:
-                    sem.release()
+                entry, failed = await self.price(key, ctx, sem, seq)
                 if (
                     not failed
                 ):  # a crash is not "no itinerary": do not cache or report it as unavailable
@@ -519,7 +524,52 @@ class Daemon:
             state["last_activity"] = time.time()
         log(
             f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}"
+            + (
+                f"; plain HTTP {self.http.stats}, audit {self.audit.count(True)}/{len(self.audit)} agree"
+                if self.http
+                else ""
+            )
         )
+
+    async def browser_price(
+        self, key: str, ctx, sem: PriorityGate, seq: int
+    ) -> tuple[dict | None, bool]:
+        """(entry, crashed) from the headless browser."""
+
+        await sem.acquire((-seq, key.startswith("mc|")))
+        try:
+            return await _fetch_one(ctx, key, 40000), False
+        except Exception as e:  # noqa: BLE001
+            log(f"fetch failed {key}: {e}")
+            return None, True
+        finally:
+            sem.release()
+
+    async def price(self, key: str, ctx, sem: PriorityGate, seq: int) -> tuple[dict | None, bool]:
+        """Plain HTTP first (about 0.5 s a key, no browser tab); the browser prices whatever it could not read, and a
+        sample of the HTTP prices too: they are compared with the browser's and, when they disagree too often,
+        HTTP is switched off for a while. Returns (entry, crashed)."""
+
+        quick = None
+        if self.http is not None:
+            try:
+                quick = await self.http.fetch(key)
+            except Exception as e:  # noqa: BLE001
+                log(f"http fetch failed {key}: {e}")
+        if quick is not None and random.random() >= HTTP_AUDIT:
+            return quick, False
+        entry, crashed = await self.browser_price(key, ctx, sem, seq)
+        if quick is not None:
+            if entry is None:  # the browser could not confirm: keep the HTTP price
+                return quick, False
+            self.audit.append(abs(quick["price"] - entry["price"]) <= 0.03 * entry["price"])
+            if len(self.audit) >= 20 and self.audit.count(False) > 0.2 * len(self.audit):
+                log(
+                    f"plain-HTTP prices disagree with the browser ({self.audit.count(False)}/{len(self.audit)}): paused"
+                )
+                self.http.pause_until = time.time() + 1800
+                self.audit.clear()
+        return entry, crashed
 
     # --- peer-to-peer front door (WebRTC): no tunnel, no GitHub API -------------------------------
     def start_rtc(self, loop, stop: threading.Event) -> None:
