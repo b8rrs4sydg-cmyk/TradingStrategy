@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T07:48:08+00:00",
+ "at": "2026-10-18T07:49:40+00:00",
  "publishes": {
-  "ok": 56,
+  "ok": 63,
   "r429": 0,
   "fail": 0
  },
@@ -40,6 +40,8 @@
   "07:45:40 request mvdipa9ae83zn.0: final sent (27/27); ntfy publishes {'ok': 44, 'r429': 0, 'fail': 0}",
   "07:45:45 request received: rid mvditsbdelwze.0 27 keys",
   "07:45:45 handle mvditsbdelwze.0: first_chunk=True total=27",
-  "07:46:21 rtc 9ft4ak7omw: answered"
+  "07:46:21 rtc 9ft4ak7omw: answered",
+  "07:49:00 request mvditsbdelwze.0: chunk of 27 keys done in 195s; ntfy publishes {'ok': 59, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 86, 'miss': 118, 'blocked': 0, 'tries': 86, 'empty': 0}, audit 4/4 agree",
+  "07:49:01 request mvditsbdelwze.0: final sent (27/27); ntfy publishes {'ok': 59, 'r429': 0, 'fail': 0}"
  ]
 }
