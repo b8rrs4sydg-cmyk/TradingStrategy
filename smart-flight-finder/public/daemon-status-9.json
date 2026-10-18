@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:12:32+00:00",
+ "at": "2026-10-18T11:14:03+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 59,
+ "fares_saved": 68,
  "log": [
   "11:00:30 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:34 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-9.json' did not match any files\\n\"",
@@ -37,6 +37,18 @@
   "11:11:51 rtc uxdgf00f7u: answered",
   "11:11:52 rtc uxdgf00f7u: data channel open",
   "11:11:52 request received: rid mvdq6pts6akym.9 17 keys",
-  "11:11:52 handle mvdq6pts6akym.9: first_chunk=True total=17"
+  "11:11:52 handle mvdq6pts6akym.9: first_chunk=True total=17",
+  "11:12:51 request mvdq60py73tla.9: chunk of 17 keys done in 98s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 28, 'blocked': 0, 'tries': 69, 'empty': 10}, audit 2/2 agree",
+  "11:12:52 request mvdq60py73tla.9: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "11:13:04 request mvdq6pts6akym.9: chunk of 17 keys done in 72s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 28, 'blocked': 0, 'tries': 69, 'empty': 10}, audit 2/2 agree",
+  "11:13:05 request mvdq6pts6akym.9: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "11:13:11 rtc wwtnhk7h1x: answered",
+  "11:13:11 rtc wwtnhk7h1x: data channel open",
+  "11:13:11 request received: rid mvdq8fchrh2ij.9 17 keys",
+  "11:13:11 handle mvdq8fchrh2ij.9: first_chunk=True total=17",
+  "11:13:11 request mvdq8fchrh2ij.9: chunk of 17 keys done in 0s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 28, 'blocked': 0, 'tries': 69, 'empty': 10}, audit 2/2 agree",
+  "11:13:13 request mvdq8fchrh2ij.9: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "11:13:34 request received: rid mvdq90xy2rp1d.9 15 keys",
+  "11:13:34 handle mvdq90xy2rp1d.9: first_chunk=True total=15"
  ]
 }
