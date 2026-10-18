@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T20:53:37+00:00",
+ "at": "2026-10-18T20:55:08+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
@@ -49,6 +49,26 @@
   "20:49:20 request mveaonx7egabp.1: chunk of 75 keys done in 223s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "20:49:23 request mveaonx7egabp.1: final sent (75/75); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "20:52:24 request mveaonx7egabp.0: chunk of 85 keys done in 406s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "20:52:26 request mveaonx7egabp.0: final sent (85/85); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
+  "20:52:26 request mveaonx7egabp.0: final sent (85/85); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "20:55:08 request received: rid mveb0xuquty77.0 21 keys",
+  "20:55:08 handle mveb0xuquty77.0: first_chunk=True total=21",
+  "20:55:08 request received: rid mveb0xuquty77.1 13 keys",
+  "20:55:08 request received: rid mveb0xuquty77.2 18 keys",
+  "20:55:08 handle mveb0xuquty77.1: first_chunk=True total=13",
+  "20:55:08 handle mveb0xuquty77.2: first_chunk=True total=18",
+  "20:55:08 request received: rid mveb0xuquty77.3 15 keys",
+  "20:55:08 request received: rid mveb0xuquty77.4 12 keys",
+  "20:55:08 request received: rid mveb0xuquty77.5 17 keys",
+  "20:55:08 request received: rid mveb0xuquty77.8 17 keys",
+  "20:55:08 request received: rid mveb0xuquty77.7 11 keys",
+  "20:55:08 request received: rid mveb0xuquty77.6 12 keys",
+  "20:55:08 handle mveb0xuquty77.3: first_chunk=True total=15",
+  "20:55:08 handle mveb0xuquty77.4: first_chunk=True total=12",
+  "20:55:08 handle mveb0xuquty77.5: first_chunk=True total=17",
+  "20:55:08 handle mveb0xuquty77.8: first_chunk=True total=17",
+  "20:55:08 handle mveb0xuquty77.7: first_chunk=True total=11",
+  "20:55:08 handle mveb0xuquty77.6: first_chunk=True total=12",
+  "20:55:08 request received: rid mveb0xuquty77.9 24 keys",
+  "20:55:08 handle mveb0xuquty77.9: first_chunk=True total=24"
  ]
 }
