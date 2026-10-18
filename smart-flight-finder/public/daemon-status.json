@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T15:39:25+00:00",
+ "at": "2026-10-18T15:40:56+00:00",
  "publishes": {
-  "ok": 50,
+  "ok": 53,
   "r429": 0,
   "fail": 0
  },
@@ -18,6 +18,8 @@
   "15:32:53 handle mvdzihyynmua5: first_chunk=False total=160",
   "15:34:49 request mvdzihyynmua5: chunk of 37 keys done in 116s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
   "15:39:22 request httptest1792337572: chunk of 20 keys done in 390s; ntfy publishes {'ok': 50, 'r429': 0, 'fail': 0}",
-  "15:39:24 request httptest1792337572: final sent (20/20); ntfy publishes {'ok': 50, 'r429': 0, 'fail': 0}"
+  "15:39:24 request httptest1792337572: final sent (20/20); ntfy publishes {'ok': 50, 'r429': 0, 'fail': 0}",
+  "15:39:47 request mvdzihyynmua5: chunk of 123 keys done in 414s; ntfy publishes {'ok': 52, 'r429': 0, 'fail': 0}",
+  "15:39:47 request mvdzihyynmua5: final sent (160/160); ntfy publishes {'ok': 53, 'r429': 0, 'fail': 0}"
  ]
 }
