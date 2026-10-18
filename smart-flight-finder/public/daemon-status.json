@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:29:13+00:00",
+ "at": "2026-10-18T11:30:45+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4297,
+ "fares_saved": 4302,
  "log": [
   "11:26:05 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:12 http front door: ['https://samuel-emerald-roommate-tobacco.trycloudflare.com', 'https://32a93706ba4f74.lhr.life']",
@@ -21,6 +21,10 @@
   "11:27:41 request mvdqqs310j5lz.0: chunk of 3 keys done in 15s; paths {'http': 22, 'browser': 1}, browser waits 1 max 2s sum 2s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 4/4 agree",
   "11:27:42 request mvdqqs310j5lz.0: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:27:43 request received: rid mvdqr8q72ppmz.0 36 keys",
-  "11:27:43 handle mvdqr8q72ppmz.0: first_chunk=True total=36"
+  "11:27:43 handle mvdqr8q72ppmz.0: first_chunk=True total=36",
+  "11:29:27 request received: rid mvdqtfrxe9o9k.0 39 keys",
+  "11:29:27 handle mvdqtfrxe9o9k.0: first_chunk=True total=39",
+  "11:30:01 request mvdqr8q72ppmz.0: chunk of 36 keys done in 137s; paths {'http': 37, 'browser': 3, 'browser-none': 21}, browser waits 24 max 111s sum 1518s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 22, 'blocked': 0, 'tries': 59, 'empty': 22}, audit 4/4 agree",
+  "11:30:02 request mvdqr8q72ppmz.0: final sent (36/36); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
