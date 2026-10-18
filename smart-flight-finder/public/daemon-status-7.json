@@ -1,16 +1,12 @@
 {
- "at": "2026-10-18T13:54:05+00:00",
+ "at": "2026-10-18T13:55:37+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 206,
+ "fares_saved": 222,
  "log": [
-  "12:07:43 handle mvds6nyh5n4is.7: first_chunk=True total=15",
-  "12:09:24 request mvds6nyh5n4is.7: chunk of 15 keys done in 102s; paths {'http': 43, 'browser-none': 231, 'browser': 13}, browser waits 244 max 190s sum 17806s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 43, 'miss': 62, 'blocked': 0, 'tries': 68, 'empty': 25}, audit 1/1 agree",
-  "12:09:25 request mvds6nyh5n4is.7: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:10:35 request received: rid mvdsad9pusjjw.7 17 keys",
   "12:10:35 handle mvdsad9pusjjw.7: first_chunk=True total=17",
   "12:12:19 request received: rid mvdscl8r2y6s1.7 13 keys",
   "12:12:19 handle mvdscl8r2y6s1.7: first_chunk=True total=13",
@@ -156,6 +152,10 @@
   "13:50:57 request received: rid mvdvvfsqv12at.7 17 keys",
   "13:50:57 handle mvdvvfsqv12at.7: first_chunk=True total=17",
   "13:53:14 request mvdvvfsqv12at.7: chunk of 17 keys done in 137s; paths {'http': 104, 'browser-none': 654, 'browser': 40}, browser waits 694 max 190s sum 48700s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 104, 'miss': 196, 'blocked': 0, 'tries': 244, 'empty': 140}, audit 1/1 a",
-  "13:53:15 request mvdvvfsqv12at.7: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "13:53:15 request mvdvvfsqv12at.7: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:54:12 request received: rid mvdvzm7py87si.7 18 keys",
+  "13:54:12 handle mvdvzm7py87si.7: first_chunk=True total=18",
+  "13:55:03 request mvdvzm7py87si.7: chunk of 18 keys done in 51s; paths {'http': 120, 'browser-none': 656, 'browser': 40}, browser waits 696 max 190s sum 48797s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 197, 'blocked': 0, 'tries': 265, 'empty': 145}, audit 1/1 ag",
+  "13:55:04 request mvdvzm7py87si.7: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
