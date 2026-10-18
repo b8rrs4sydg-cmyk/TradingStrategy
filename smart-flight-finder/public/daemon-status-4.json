@@ -1,14 +1,12 @@
 {
- "at": "2026-10-18T14:17:25+00:00",
+ "at": "2026-10-18T14:18:56+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 595,
+ "fares_saved": 597,
  "log": [
-  "12:35:21 request mvdt51s25md0i.4: chunk of 19 keys done in 54s; paths {'http': 112, 'browser': 35, 'browser-none': 270}, browser waits 305 max 185s sum 19457s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 112, 'miss': 110, 'blocked': 0, 'tries': 182, 'empty': 70}, audit 8/8 agr",
-  "12:35:22 request mvdt51s25md0i.4: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "12:36:06 request received: rid mvdt76lpchuwy.4 18 keys",
   "12:36:06 handle mvdt76lpchuwy.4: first_chunk=True total=18",
   "12:37:47 request mvdt76lpchuwy.4: chunk of 18 keys done in 100s; paths {'http': 114, 'browser': 35, 'browser-none': 286}, browser waits 321 max 185s sum 20580s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 114, 'miss': 126, 'blocked': 0, 'tries': 215, 'empty': 101}, audit 8/8 a",
@@ -156,6 +154,8 @@
   "14:15:28 request mvdwomsbqll4d.4: chunk of 16 keys done in 109s; paths {'http': 191, 'browser': 38, 'browser-none': 666}, browser waits 704 max 185s sum 46083s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 191, 'miss': 267, 'blocked': 0, 'tries': 425, 'empty': 234}, audit 8/8 a",
   "14:15:30 request mvdwomsbqll4d.4: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:17:12 request received: rid mvdwt6rsrjmo5.4 13 keys",
-  "14:17:12 handle mvdwt6rsrjmo5.4: first_chunk=True total=13"
+  "14:17:12 handle mvdwt6rsrjmo5.4: first_chunk=True total=13",
+  "14:18:36 request mvdwt6rsrjmo5.4: chunk of 13 keys done in 84s; paths {'http': 191, 'browser': 42, 'browser-none': 675}, browser waits 717 max 185s sum 46648s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 191, 'miss': 269, 'blocked': 0, 'tries': 427, 'empty': 236}, audit 8/8 ag",
+  "14:18:37 request mvdwt6rsrjmo5.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
