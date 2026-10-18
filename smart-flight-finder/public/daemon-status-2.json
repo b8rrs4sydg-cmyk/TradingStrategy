@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T05:47:52+00:00",
+ "at": "2026-10-18T05:53:54+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
@@ -28,6 +28,16 @@
   "05:47:18 request httptest1792302408: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "05:47:36 request mvdekj143gko1.2: chunk of 53 keys done in 60s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "05:47:37 request mvdekj143gko1.2: final sent (53/53); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:47:48 rtc icq3o5qs35: answered"
+  "05:47:48 rtc icq3o5qs35: answered",
+  "05:48:44 rtc h42ucjofay: answered",
+  "05:48:45 rtc h42ucjofay: data channel open",
+  "05:51:40 rtc vwj97w4zkj: answered",
+  "05:51:40 rtc vwj97w4zkj: data channel open",
+  "05:53:46 rtc igm3ogc0my: answered",
+  "05:53:47 rtc igm3ogc0my: data channel open",
+  "05:53:47 request received: rid mvdeto19ml7mj.2 53 keys",
+  "05:53:47 handle mvdeto19ml7mj.2: first_chunk=True total=53",
+  "05:53:47 request received: rid probemvdetsjt.2 3 keys",
+  "05:53:47 handle probemvdetsjt.2: first_chunk=True total=3"
  ]
 }
