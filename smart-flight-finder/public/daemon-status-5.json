@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:19:32+00:00",
+ "at": "2026-10-18T10:21:04+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 479,
+ "fares_saved": 480,
  "log": [
   "08:41:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:42:04 http front door: ['https://breathing-card-reseller-courses.trycloudflare.com', 'https://7f29aa3e6f9db3.lhr.life']",
@@ -122,6 +122,12 @@
   "10:17:01 request received: rid mvdo8b06ubmct.5 26 keys",
   "10:17:01 handle mvdo8b06ubmct.5: first_chunk=True total=26",
   "10:19:20 request received: rid mvdobaio9iiwt.5 26 keys",
-  "10:19:20 handle mvdobaio9iiwt.5: first_chunk=True total=26"
+  "10:19:20 handle mvdobaio9iiwt.5: first_chunk=True total=26",
+  "10:19:37 request mvdo8b06ubmct.5: chunk of 26 keys done in 157s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 171, 'miss': 187, 'blocked': 0, 'tries': 173, 'empty': 2}, audit 2/2 agree",
+  "10:19:38 request mvdo8b06ubmct.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "10:20:07 request mvdobaio9iiwt.5: chunk of 26 keys done in 47s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 171, 'miss': 187, 'blocked': 0, 'tries': 173, 'empty': 2}, audit 2/2 agree",
+  "10:20:09 request mvdobaio9iiwt.5: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "10:21:01 request received: rid mvdodgq94k98d.5 26 keys",
+  "10:21:01 handle mvdodgq94k98d.5: first_chunk=True total=26"
  ]
 }

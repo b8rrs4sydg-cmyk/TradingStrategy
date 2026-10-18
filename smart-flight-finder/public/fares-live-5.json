@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-18T10:19:32+00:00",
+ "generated_at": "2026-10-18T10:21:04+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -6134,6 +6134,22 @@
     ]
    ]
   },
+  "ow|MNL|RMQ|2026-12-27": {
+   "price": 6182,
+   "first": {
+    "dep": "2026-12-27T20:40:00+08:00",
+    "arr": "2026-12-28T09:25:00+08:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "at": "2026-10-18",
+   "hist": [
+    [
+     "2026-10-18",
+     6182
+    ]
+   ]
+  },
   "ow|MNL|TPE|2026-12-27": {
    "price": 4912,
    "first": {
@@ -8248,6 +8264,7 @@
   "mc|KUL-TPE-2027-01-03|TPE-SIN-2027-04-29|SIN-TPE-2027-05-02|TPE-BKK-2027-06-09",
   "mc|KUL-TPE-2027-01-03|TPE-XMN-2027-02-26|XMN-TPE-2027-03-01|TPE-ICN-2027-04-29",
   "mc|KUL-TPE-2027-01-03|TPE-XMN-2027-02-26|XMN-TPE-2027-03-01|TPE-SIN-2027-04-29",
+  "mc|KUL-TPE-2027-03-01|TPE-BKK-2027-04-29|BKK-TPE-2027-05-02|TPE-KIX-2027-06-09",
   "mc|KUL-TPE-2027-03-01|TPE-CEB-2027-04-29|CEB-TPE-2027-05-02|TPE-HKG-2027-06-09",
   "mc|KUL-TPE-2027-03-01|TPE-HKG-2027-04-29|HKG-TPE-2027-05-02|TPE-FUK-2027-06-09",
   "mc|KUL-TPE-2027-03-01|TPE-HND-2027-04-29|HND-TPE-2027-05-02|TPE-BKK-2027-06-09",
