@@ -1,15 +1,12 @@
 {
- "at": "2026-10-18T13:45:32+00:00",
+ "at": "2026-10-18T13:47:03+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 907,
+ "fares_saved": 918,
  "log": [
-  "11:51:16 handle mvdrlhseif870.4: first_chunk=True total=20",
-  "11:52:42 request mvdrlhseif870.4: chunk of 20 keys done in 85s; paths {'http': 64, 'browser': 21, 'browser-none': 145}, browser waits 166 max 289s sum 12809s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 47, 'blocked': 4, 'tries': 97, 'empty': 33}, audit 2/2 agree",
-  "11:52:43 request mvdrlhseif870.4: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "11:54:02 request received: rid mvdrp1j4ku5iu.5 17 keys",
   "11:54:02 handle mvdrp1j4ku5iu.5: first_chunk=True total=17",
   "11:55:47 request mvdrp1j4ku5iu.5: chunk of 17 keys done in 106s; paths {'http': 69, 'browser': 21, 'browser-none': 157}, browser waits 178 max 289s sum 13454s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 69, 'miss': 56, 'blocked': 7, 'tries': 102, 'empty': 33}, audit 2/2 agree",
@@ -156,6 +153,9 @@
   "13:44:35 rtc xwgwopxccm: data channel open",
   "13:44:35 request received: rid mvdvn5tvdtxf1.5 20 keys",
   "13:44:35 handle mvdvn5tvdtxf1.5: first_chunk=True total=20",
-  "13:45:30 request mvdvn5tvdtxf1.5: chunk of 20 keys done in 55s; paths {'http': 135, 'browser': 46, 'browser-none': 574}, browser waits 620 max 289s sum 41976s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 135, 'miss': 214, 'blocked': 20, 'tries': 262, 'empty': 127}, audit 4/4 a"
+  "13:45:30 request mvdvn5tvdtxf1.5: chunk of 20 keys done in 55s; paths {'http': 135, 'browser': 46, 'browser-none': 574}, browser waits 620 max 289s sum 41976s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 135, 'miss': 214, 'blocked': 20, 'tries': 262, 'empty': 127}, audit 4/4 a",
+  "13:45:32 request mvdvn5tvdtxf1.5: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:46:26 request received: rid mvdvpm7xd6s8y.5 16 keys",
+  "13:46:26 handle mvdvpm7xd6s8y.5: first_chunk=True total=16"
  ]
 }
