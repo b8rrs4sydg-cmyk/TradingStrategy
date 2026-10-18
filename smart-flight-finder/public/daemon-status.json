@@ -1,18 +1,12 @@
 {
- "at": "2026-10-18T21:43:42+00:00",
+ "at": "2026-10-18T21:45:13+00:00",
  "publishes": {
   "ok": 14,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4529,
+ "fares_saved": 4568,
  "log": [
-  "21:06:13 request mvebde02mi6a7.9: chunk of 12 keys done in 84s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:06:15 request mvebde02mi6a7.9: final sent (12/12); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:07:01 request mvebde02mi6a7.7: chunk of 17 keys done in 132s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:07:02 request mvebde02mi6a7.7: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:07:39 request mvebde02mi6a7.8: chunk of 16 keys done in 170s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "21:07:40 request mvebde02mi6a7.8: final sent (16/16); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "21:08:40 request mvebde02mi6a7.6: chunk of 22 keys done in 231s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "21:08:42 request mvebde02mi6a7.6: final sent (22/22); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "21:09:06 request mvebde02mi6a7.4: chunk of 18 keys done in 257s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
@@ -156,6 +150,12 @@
   "21:42:18 handle mvecpjicy58oz.7: first_chunk=True total=17",
   "21:42:18 handle mvecpjicy58oz.8: first_chunk=True total=15",
   "21:42:19 rtc niikb7mq1k: answered",
-  "21:42:20 rtc niikb7mq1k: data channel open"
+  "21:42:20 rtc niikb7mq1k: data channel open",
+  "21:43:50 request mvecpjicy58oz.8: chunk of 15 keys done in 92s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "21:43:50 request mvecpjicy58oz.8: final sent (15/15); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "21:44:17 request mvecpjicy58oz.7: chunk of 17 keys done in 120s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "21:44:19 request mvecpjicy58oz.7: final sent (17/17); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "21:45:02 request mvecpjicy58oz.6: chunk of 24 keys done in 164s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "21:45:03 request mvecpjicy58oz.6: final sent (24/24); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}"
  ]
 }
