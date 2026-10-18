@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T14:27:14+00:00",
+ "at": "2026-10-18T14:28:46+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 4580,
  "log": [
-  "12:51:54 request mvdtq88z7zvuk.0: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "12:53:23 request received: rid mvdttemfkl6n6.0 18 keys",
   "12:53:23 handle mvdttemfkl6n6.0: first_chunk=True total=18",
   "12:55:05 request mvdttemfkl6n6.0: chunk of 18 keys done in 102s; paths {'http': 158, 'browser': 65, 'browser-none': 344}, browser waits 409 max 211s sum 25416s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 158, 'miss': 159, 'blocked': 0, 'tries': 287, 'empty': 129}, audit 6/6 a",
   "12:55:07 request mvdttemfkl6n6.0: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "14:24:10 request mvdx0ua9zmg5h.0: chunk of 18 keys done in 61s; paths {'http': 244, 'browser': 76, 'browser-none': 676}, browser waits 752 max 211s sum 48800s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 244, 'miss': 300, 'blocked': 0, 'tries': 515, 'empty': 271}, audit 7/7 ag",
   "14:24:11 request mvdx0ua9zmg5h.0: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:26:46 request received: rid mvdx5hwcuvefe.0 16 keys",
-  "14:26:46 handle mvdx5hwcuvefe.0: first_chunk=True total=16"
+  "14:26:46 handle mvdx5hwcuvefe.0: first_chunk=True total=16",
+  "14:27:41 request mvdx5hwcuvefe.0: chunk of 16 keys done in 55s; paths {'http': 257, 'browser': 76, 'browser-none': 679}, browser waits 755 max 211s sum 48942s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 257, 'miss': 302, 'blocked': 0, 'tries': 531, 'empty': 274}, audit 7/7 ag",
+  "14:27:42 request mvdx5hwcuvefe.0: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
