@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T17:01:41+00:00",
+ "at": "2026-10-18T17:03:12+00:00",
  "publishes": {
   "ok": 63,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 3877,
  "log": [
-  "16:06:18 request mve0dc82usim0.4: chunk of 15 keys done in 567s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
-  "16:06:19 request mve0dc82usim0.4: final sent (15/15); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "16:07:04 request mve0dc82usim0.1: chunk of 14 keys done in 613s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "16:07:05 request mve0dc82usim0.1: final sent (14/14); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "16:08:22 request mve0dc82usim0.3: chunk of 13 keys done in 692s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "17:00:01 request received: rid mve2mkn4nfd1t.8 11 keys",
   "17:00:01 handle mve2mkn4nfd1t.8: first_chunk=True total=11",
   "17:00:01 request received: rid mve2mkn4nfd1t.9 18 keys",
-  "17:00:01 handle mve2mkn4nfd1t.9: first_chunk=True total=18"
+  "17:00:01 handle mve2mkn4nfd1t.9: first_chunk=True total=18",
+  "17:02:45 request mve2mkn4nfd1t.9: chunk of 18 keys done in 164s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "17:02:46 request mve2mkn4nfd1t.9: final sent (18/18); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
  ]
 }
