@@ -1,13 +1,12 @@
 {
- "at": "2026-10-18T10:25:59+00:00",
+ "at": "2026-10-18T10:27:31+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 911,
+ "fares_saved": 934,
  "log": [
-  "08:42:05 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:42:10 git retry 0: b\"-1kexus': is at fc3029f2e5b48b83754b1276e9b58f312336b94e but expected 7890d1166e9a989f113e1510939322fd61f0795d)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "08:42:13 http front door: ['https://communities-camp-advertisement-howto.trycloudflare.com', 'https://615335aeebb267.lhr.life']",
   "08:42:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
@@ -153,6 +152,10 @@
   "10:25:13 request mvdohst9h6yky.1: chunk of 27 keys done in 49s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 319, 'miss': 232, 'blocked': 0, 'tries': 342, 'empty': 23}, audit 2/2 agree",
   "10:25:13 request mvdohst9h6yky.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "10:25:31 request received: rid mvdoj8tiltid4.1 27 keys",
-  "10:25:31 handle mvdoj8tiltid4.1: first_chunk=True total=27"
+  "10:25:31 handle mvdoj8tiltid4.1: first_chunk=True total=27",
+  "10:26:19 request mvdoj8tiltid4.1: chunk of 27 keys done in 48s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 345, 'miss': 233, 'blocked': 0, 'tries': 373, 'empty': 28}, audit 2/2 agree",
+  "10:26:20 request mvdoj8tiltid4.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:26:49 request received: rid mvdokwtc5pmdk.1 27 keys",
+  "10:26:49 handle mvdokwtc5pmdk.1: first_chunk=True total=27"
  ]
 }
