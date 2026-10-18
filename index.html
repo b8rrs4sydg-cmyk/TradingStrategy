@@ -735,6 +735,7 @@
     </div>
 
     <div id="live-lookup" class="live-lookup" hidden aria-live="polite"></div>
+    <div id="lookup-all" class="hint" hidden style="margin:6px 0"></div>
     <div id="notices"></div>
     <div id="compare" class="compare" hidden></div>
     <div id="heatmap" class="heatmap" hidden></div>
@@ -2195,7 +2196,7 @@ function campaignText() {
   const c = live.campaign;
   if (!c || !c.batch) return '';
   const left = Math.max(0, (c.left || 0) - (live.keys?.length || 0));
-  const stage = c.stage === 1 ? '階段 1：單程／來回票價' : '階段 2：多城市（依預期可省幅度，只查最有希望的）';
+  const stage = c.stage === 1 ? '階段 1：單程／來回票價' : c.all ? '階段 2：多城市（全部排列組合）' : '階段 2：多城市（依預期可省幅度，只查最有希望的）';
   return `<div class="hint" style="margin-top:4px">第 ${c.batch} 批 · ${stage} · 本次搜尋已送出 ${c.asked} 筆、找到 ${c.found + (live.doc?.status === 'done' ? 0 : (live.doc?.found || 0))} 筆實價${left ? `，還有約 ${left} 筆待查（查完會自動繼續）` : ''}</div>`;
 }
 
@@ -2249,6 +2250,35 @@ function renderLookup() {
   const retry = document.getElementById('btn-lookup-retry');
   if (retry) retry.onclick = () => { const k = live.keys; resetLookup(); startLookup(k); };
 }
+
+/* The suggested search only asks the most promising multi-city routes. This button asks every permutation left. */
+function openMulti() {
+  return [...fareStats.missingKeys].filter(k => k.startsWith('mc|') && !live.asked.has(k) && !live.notFound.has(k));
+}
+function renderAllButton() {
+  const el = document.getElementById('lookup-all');
+  if (!el) return;
+  const n = openMulti().length;
+  const busy = live.rid && live.doc?.status !== 'done' && live.doc?.status !== 'error';
+  const ready = live.ready || live.ntfyOk;
+  if (!n || !ready || !live.campaign?.batch) { el.hidden = true; return; }
+  const peers = (live.peerList || []).length;
+  // each crawler prices roughly one key every 2.5 s (8 browser tabs, 10-40 s a page); crawlers work in parallel
+  const etaText = `預估約 ${fmtSec(n * 2.5 / Math.max(peers, 1))}`;
+  el.hidden = false;
+  el.innerHTML = live.campaign.all
+    ? `正在查找<b>所有排列組合</b>：還有 ${n} 筆多城市票價待查（${peers || '?'} 個爬蟲並行，${etaText}；可隨時重新搜尋來停止）`
+    : `目前只查「預期最能省」的多城市路線，還有 <b>${n}</b> 筆排列組合沒查。 <button type="button" class="btn-ghost" id="btn-lookup-all"${busy ? ' disabled' : ''}>查找所有排列組合（${n} 筆，${etaText}）</button>`;
+  const b = document.getElementById('btn-lookup-all');
+  if (b) b.onclick = () => {
+    if (n > 2000 && !confirm(`共 ${n} 筆，${etaText}（${peers || '?'} 個爬蟲並行），期間爬蟲會被佔用。確定要全部查？`)) return;
+    live.campaign.all = true;
+    live.campaign.mcLeft = Infinity;
+    maybeLookup();
+    renderAllButton();
+  };
+}
+setInterval(renderAllButton, 2000);
 
 function resetLookup() {
   if (live.unsub) live.unsub();
@@ -2335,6 +2365,11 @@ function nextBatch() {
   const open = [...fareStats.missingKeys].filter(k => !live.asked.has(k) && !live.notFound.has(k));
   const stage1 = open.filter(k => !k.startsWith('mc|'));
   if (stage1.length) return { keys: stage1.slice(0, LOOKUP_MAX), stage: 1, left: stage1.length };
+  if (live.campaign.all) {   // "search every permutation": no budget, no date-variant quota — all of them, likeliest first
+    const ix = priceIndex();
+    const all = open.filter(k => k.startsWith('mc|')).map(k => mcInfo(k, ix)).sort((a, b) => b.score - a.score).map(i => i.key);
+    return { keys: all.slice(0, LOOKUP_MAX), stage: 2, left: all.length };
+  }
   const mc = planMulti(open).slice(0, Math.max(0, live.campaign.mcLeft));
   return { keys: mc.slice(0, LOOKUP_MAX), stage: 2, left: mc.length };
 }
@@ -2356,7 +2391,7 @@ function maybeLookup(fromUser = false) {
   live.campaign.batch += 1;
   live.campaign.stage = batch.stage;
   live.campaign.left = batch.left;
-  if (batch.stage === 2) live.campaign.mcLeft -= batch.keys.length;
+  if (batch.stage === 2 && !live.campaign.all) live.campaign.mcLeft -= batch.keys.length;
   live.campaign.asked += batch.keys.length;
   startLookup(batch.keys);
 }
