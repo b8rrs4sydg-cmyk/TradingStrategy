@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T06:26:48+00:00",
+ "at": "2026-10-18T06:28:19+00:00",
  "publishes": {
-  "ok": 189,
+  "ok": 206,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3339,
+ "fares_saved": 3343,
  "log": [
   "05:45:35 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:45:41 http front door: ['https://general-vbulletin-uni-rights.trycloudflare.com', 'https://557e83ce6d948d.lhr.life']",
@@ -85,6 +85,9 @@
   "06:21:06 handle mvdfsuzbv5n82: first_chunk=False total=152",
   "06:21:50 request mvdfsuzbv5n82: chunk of 8 keys done in 45s; ntfy publishes {'ok': 134, 'r429': 0, 'fail': 0}",
   "06:23:20 request mvdfsuzbv5n82: chunk of 36 keys done in 134s; ntfy publishes {'ok': 152, 'r429': 0, 'fail': 0}",
-  "06:25:01 request mvdfsuzbv5n82: chunk of 36 keys done in 236s; ntfy publishes {'ok': 170, 'r429': 0, 'fail': 0}"
+  "06:25:01 request mvdfsuzbv5n82: chunk of 36 keys done in 236s; ntfy publishes {'ok': 170, 'r429': 0, 'fail': 0}",
+  "06:26:50 request mvdfsuzbv5n82: chunk of 36 keys done in 345s; ntfy publishes {'ok': 190, 'r429': 0, 'fail': 0}",
+  "06:28:12 request mvdfsuzbv5n82: chunk of 36 keys done in 427s; ntfy publishes {'ok': 204, 'r429': 0, 'fail': 0}",
+  "06:28:12 request mvdfsuzbv5n82: final sent (152/152); ntfy publishes {'ok': 205, 'r429': 0, 'fail': 0}"
  ]
 }
