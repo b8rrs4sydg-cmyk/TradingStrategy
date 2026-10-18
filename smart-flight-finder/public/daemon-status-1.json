@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T12:33:07+00:00",
+ "at": "2026-10-18T12:34:38+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1194,
+ "fares_saved": 1221,
  "log": [
   "11:26:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:13 http front door: ['https://vegetables-defining-facial-granted.trycloudflare.com', 'https://17c1d95da2fbab.lhr.life']",
@@ -109,6 +109,12 @@
   "12:31:41 request received: rid mvdt1gqtew69c.1 18 keys",
   "12:31:41 handle mvdt1gqtew69c.1: first_chunk=True total=18",
   "12:32:34 request mvdt1gqtew69c.1: chunk of 18 keys done in 53s; paths {'http': 82, 'browser': 38, 'browser-none': 279}, browser waits 317 max 236s sum 20831s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 82, 'miss': 84, 'blocked': 0, 'tries': 132, 'empty': 50}, audit 5/5 agree",
-  "12:32:35 request mvdt1gqtew69c.1: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "12:32:35 request mvdt1gqtew69c.1: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:33:19 request received: rid mvdt3lqe1gaxb.1 16 keys",
+  "12:33:19 handle mvdt3lqe1gaxb.1: first_chunk=True total=16",
+  "12:34:10 request mvdt3lqe1gaxb.1: chunk of 16 keys done in 50s; paths {'http': 95, 'browser': 38, 'browser-none': 282}, browser waits 320 max 236s sum 20973s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 95, 'miss': 87, 'blocked': 0, 'tries': 151, 'empty': 56}, audit 5/5 agree",
+  "12:34:10 request mvdt3lqe1gaxb.1: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "12:34:27 request received: rid mvdt51s25md0i.1 17 keys",
+  "12:34:27 handle mvdt51s25md0i.1: first_chunk=True total=17"
  ]
 }
