@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:50:58+00:00",
+ "at": "2026-10-18T11:52:30+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 812,
+ "fares_saved": 826,
  "log": [
   "11:26:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:33 http front door: ['https://beef-makes-hire-grow.trycloudflare.com', 'https://39b8e78c080491.lhr.life']",
@@ -63,6 +63,8 @@
   "11:48:37 request received: rid mvdri4aarid9h.4 19 keys",
   "11:48:37 handle mvdri4aarid9h.4: first_chunk=True total=19",
   "11:50:27 request mvdri4aarid9h.4: chunk of 19 keys done in 109s; paths {'http': 55, 'browser': 16, 'browser-none': 139}, browser waits 155 max 289s sum 12500s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 38, 'blocked': 2, 'tries': 86, 'empty': 31}, audit 2/2 agree",
-  "11:50:29 request mvdri4aarid9h.4: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:50:29 request mvdri4aarid9h.4: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:51:16 request received: rid mvdrlhseif870.4 20 keys",
+  "11:51:16 handle mvdrlhseif870.4: first_chunk=True total=20"
  ]
 }
