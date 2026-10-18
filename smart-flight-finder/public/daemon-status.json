@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T18:46:52+00:00",
+ "at": "2026-10-18T18:48:23+00:00",
  "publishes": {
   "ok": 63,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 3877,
  "log": [
-  "17:47:38 request received: rid mve4bthciupkp.1 14 keys",
-  "17:47:38 handle mve4bthciupkp.1: first_chunk=True total=14",
-  "17:47:38 request received: rid mve4bthciupkp.6 15 keys",
-  "17:47:38 request received: rid mve4bthciupkp.5 22 keys",
   "17:47:38 request received: rid mve4bthciupkp.4 20 keys",
   "17:47:38 handle mve4bthciupkp.6: first_chunk=True total=15",
   "17:47:38 handle mve4bthciupkp.5: first_chunk=True total=22",
@@ -156,6 +152,10 @@
   "18:44:56 request mve60cikx436q.3: chunk of 8 keys done in 613s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "18:44:57 request mve60cikx436q.3: final sent (8/8); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "18:46:19 request mve60cikx436q.1: chunk of 19 keys done in 696s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
-  "18:46:20 request mve60cikx436q.1: final sent (19/19); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
+  "18:46:20 request mve60cikx436q.1: final sent (19/19); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "18:47:38 request mve60cikx436q.2: chunk of 14 keys done in 776s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "18:47:40 request mve60cikx436q.2: final sent (14/14); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "18:48:20 request mve60cikx436q.0: chunk of 18 keys done in 818s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "18:48:21 request mve60cikx436q.0: final sent (18/18); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
  ]
 }
