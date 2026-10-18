@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T10:25:40+00:00",
+ "at": "2026-10-18T10:27:11+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 230,
+ "fares_saved": 248,
  "log": [
   "08:42:00 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "08:42:04 git retry 0: b\"-1kexus': is at 798daaa50302da8f5e8935e9850d769175fdd266 but expected f95e2bb5d858bc7c6be6c6d8b8bfb2e860291c6a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -145,6 +145,14 @@
   "10:24:24 request received: rid mvdohst9h6yky.4 26 keys",
   "10:24:24 handle mvdohst9h6yky.4: first_chunk=True total=26",
   "10:25:31 request received: rid mvdoj8tiltid4.4 26 keys",
-  "10:25:31 handle mvdoj8tiltid4.4: first_chunk=True total=26"
+  "10:25:31 handle mvdoj8tiltid4.4: first_chunk=True total=26",
+  "10:26:09 request mvdohst9h6yky.4: chunk of 26 keys done in 105s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 83, 'miss': 208, 'blocked': 0, 'tries': 125, 'empty': 42}, audit 5/5 agree",
+  "10:26:12 request mvdohst9h6yky.4: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:26:45 request mvdoj8tiltid4.4: chunk of 26 keys done in 74s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 83, 'miss': 208, 'blocked': 0, 'tries': 125, 'empty': 42}, audit 5/5 agree",
+  "10:26:48 request mvdoj8tiltid4.4: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "10:26:49 request received: rid mvdokwtc5pmdk.4 26 keys",
+  "10:26:49 handle mvdokwtc5pmdk.4: first_chunk=True total=26",
+  "10:26:57 request mvdofttvm1mr8.4: chunk of 26 keys done in 246s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 89, 'miss': 208, 'blocked': 0, 'tries': 131, 'empty': 42}, audit 5/5 agree",
+  "10:26:58 request mvdofttvm1mr8.4: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
