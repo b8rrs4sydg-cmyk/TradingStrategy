@@ -1,13 +1,12 @@
 {
- "at": "2026-10-18T21:16:24+00:00",
+ "at": "2026-10-18T21:17:56+00:00",
  "publishes": {
   "ok": 11,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4211,
+ "fares_saved": 4224,
  "log": [
-  "20:32:15 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:32:20 http front door: ['https://bennett-completing-unix-gel.trycloudflare.com', 'https://9ee1b8a86c1ec5.lhr.life']",
   "20:32:20 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "20:33:24 request received: rid httptest1792355604 20 keys",
@@ -151,6 +150,12 @@
   "21:14:36 rtc 3c9bumkzb0: answered",
   "21:14:37 rtc 3c9bumkzb0: data channel open",
   "21:15:28 request mvebpxieg5tqd.8: chunk of 13 keys done in 52s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
-  "21:15:31 request mvebpxieg5tqd.8: final sent (13/13); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}"
+  "21:15:31 request mvebpxieg5tqd.8: final sent (13/13); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "21:16:33 request mvebpxieg5tqd.6: chunk of 25 keys done in 118s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "21:16:35 request mvebpxieg5tqd.6: final sent (25/25); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "21:17:04 request mvebpxieg5tqd.7: chunk of 18 keys done in 149s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "21:17:06 request mvebpxieg5tqd.7: final sent (18/18); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "21:17:45 request mvebpxieg5tqd.5: chunk of 13 keys done in 189s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "21:17:47 request mvebpxieg5tqd.5: final sent (13/13); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}"
  ]
 }
