@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T08:21:46+00:00",
+ "at": "2026-10-18T08:23:17+00:00",
  "publishes": {
   "ok": 123,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 3770,
+ "fares_saved": 3771,
  "log": [
   "07:38:56 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:39:00 http front door: ['https://spin-qty-sensitivity-medicare.trycloudflare.com', 'https://6776783f0b9063.lhr.life']",
@@ -81,6 +81,10 @@
   "08:18:38 request mvdjz1wxveqvd.0: chunk of 5 keys done in 47s; ntfy publishes {'ok': 123, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 109, 'miss': 149, 'blocked': 0, 'tries': 109, 'empty': 0}, audit 4/4 agree",
   "08:18:39 request mvdjz1wxveqvd.0: final sent (5/5); ntfy publishes {'ok': 123, 'r429': 0, 'fail': 0}",
   "08:18:44 request received: rid mvdk074fsvfj3.0 32 keys",
-  "08:18:44 handle mvdk074fsvfj3.0: first_chunk=True total=32"
+  "08:18:44 handle mvdk074fsvfj3.0: first_chunk=True total=32",
+  "08:21:58 request mvdk074fsvfj3.0: chunk of 32 keys done in 194s; ntfy publishes {'ok': 123, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 109, 'miss': 149, 'blocked': 0, 'tries': 109, 'empty': 0}, audit 4/4 agree",
+  "08:22:00 request mvdk074fsvfj3.0: final sent (32/32); ntfy publishes {'ok': 123, 'r429': 0, 'fail': 0}",
+  "08:22:11 request received: rid mvdk4m0vn9mu1.0 27 keys",
+  "08:22:11 handle mvdk4m0vn9mu1.0: first_chunk=True total=27"
  ]
 }
