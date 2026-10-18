@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:20:45+00:00",
+ "at": "2026-10-18T13:22:20+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 534,
  "log": [
-  "11:32:32 request mvdqtfrxe9o9k.3: chunk of 30 keys done in 185s; paths {'http': 31, 'browser': 27, 'browser-none': 36}, browser waits 63 max 185s sum 3815s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 21, 'blocked': 0, 'tries': 41, 'empty': 10}, audit 7/7 agree",
-  "11:32:33 request mvdqtfrxe9o9k.3: final sent (30/30); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:34:17 request received: rid mvdqznepk7epz.4 18 keys",
   "11:34:17 handle mvdqznepk7epz.4: first_chunk=True total=18",
   "11:35:52 request mvdqznepk7epz.4: chunk of 18 keys done in 95s; paths {'http': 32, 'browser': 29, 'browser-none': 51}, browser waits 80 max 185s sum 4869s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 22, 'blocked': 0, 'tries': 44, 'empty': 12}, audit 7/7 agree",
   "11:35:53 request mvdqznepk7epz.4: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +153,9 @@
   "13:13:40 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:13:44 subscribe error HTTP Error 502: Bad Gateway; reconnecting",
   "13:20:19 request received: rid mvdus132ib8io.4 11 keys",
-  "13:20:19 handle mvdus132ib8io.4: first_chunk=True total=11"
+  "13:20:19 handle mvdus132ib8io.4: first_chunk=True total=11",
+  "13:20:46 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "13:21:59 request mvdus132ib8io.4: chunk of 11 keys done in 101s; paths {'http': 121, 'browser': 35, 'browser-none': 453}, browser waits 488 max 185s sum 32040s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 121, 'miss': 183, 'blocked': 0, 'tries': 238, 'empty': 117}, audit 8/8 a",
+  "13:22:00 request mvdus132ib8io.4: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
