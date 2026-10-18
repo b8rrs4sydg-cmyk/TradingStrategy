@@ -1,7 +1,7 @@
 {
- "at": "2026-10-18T07:45:09+00:00",
+ "at": "2026-10-18T07:46:41+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
@@ -23,6 +23,9 @@
   "07:42:15 request received: rid mvdipa9ae83zn.1 27 keys",
   "07:42:15 handle mvdipa9ae83zn.1: first_chunk=True total=27",
   "07:44:45 request mvdipa9ae83zn.1: chunk of 27 keys done in 150s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 20, 'blocked': 0, 'tries': 28, 'empty': 0}, audit 0/0 agree",
-  "07:44:47 request mvdipa9ae83zn.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "07:44:47 request mvdipa9ae83zn.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:45:45 request received: rid mvditsbdelwze.1 27 keys",
+  "07:45:45 handle mvditsbdelwze.1: first_chunk=True total=27",
+  "07:46:21 rtc 523mvvxk10: answered"
  ]
 }
