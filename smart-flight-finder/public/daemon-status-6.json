@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:05:52+00:00",
+ "at": "2026-10-18T13:07:23+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 276,
  "log": [
-  "11:26:44 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:27:25 request received: rid httptest1792322844 20 keys",
   "11:27:25 handle httptest1792322844: first_chunk=True total=20",
   "11:27:27 request httptest1792322844: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
   "11:27:28 request httptest1792322844: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "13:04:51 request mvdu41h7b76yp.6: chunk of 28 keys done in 192s; paths {'http': 178, 'browser-none': 336, 'browser': 13}, browser waits 349 max 192s sum 21623s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 178, 'miss': 214, 'blocked': 0, 'tries': 339, 'empty': 161}, audit 3/3 a",
   "13:04:52 request mvdu41h7b76yp.6: final sent (28/28); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:05:06 request received: rid mvdu8gogkouz6.6 6 keys",
-  "13:05:06 handle mvdu8gogkouz6.6: first_chunk=True total=6"
+  "13:05:06 handle mvdu8gogkouz6.6: first_chunk=True total=6",
+  "13:05:55 request mvdu8gogkouz6.6: chunk of 6 keys done in 49s; paths {'http': 178, 'browser-none': 342, 'browser': 13}, browser waits 355 max 192s sum 21909s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 178, 'miss': 214, 'blocked': 0, 'tries': 339, 'empty': 161}, audit 3/3 agr",
+  "13:05:56 request mvdu8gogkouz6.6: final sent (6/6); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
