@@ -1,20 +1,27 @@
 {
- "at": "2026-10-18T11:24:50+00:00",
+ "at": "2026-10-18T11:27:51+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 398,
+ "fares_saved": 402,
  "log": [
-  "11:23:15 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "11:23:20 http front door: ['https://height-impact-charge-computational.trycloudflare.com', 'https://f5e78172bebc86.lhr.life']",
-  "11:23:20 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "11:24:23 rtc u7apjju37k: answered",
-  "11:24:24 request received: rid httptest1792322664 20 keys",
-  "11:24:24 handle httptest1792322664: first_chunk=True total=20",
-  "11:24:25 rtc u7apjju37k: data channel open",
-  "11:24:26 request httptest1792322664: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "11:24:26 request httptest1792322664: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:26:10 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:26:15 git retry 0: b\"-1kexus': is at 003c03e9ffadef9e5624bf90ded5fd1d4da9e03e but expected 498ad7e11feca9df8a58a15169d89de03b400c1e)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:26:21 http front door: ['https://adventure-dylan-warned-juvenile.trycloudflare.com', 'https://22e81ed30193c9.lhr.life']",
+  "11:26:21 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:27:20 request received: rid httptest1792322839 20 keys",
+  "11:27:20 handle httptest1792322839: first_chunk=True total=20",
+  "11:27:21 request httptest1792322839: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "11:27:23 rtc gi5r3fyvbg: answered",
+  "11:27:23 request httptest1792322839: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:27:25 rtc gi5r3fyvbg: data channel open",
+  "11:27:25 request received: rid mvdqqs310j5lz.3 2 keys",
+  "11:27:25 handle mvdqqs310j5lz.3: first_chunk=True total=2",
+  "11:27:41 request mvdqqs310j5lz.3: chunk of 2 keys done in 15s; paths {'http': 21, 'browser': 1}, browser waits 1 max 2s sum 2s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 1, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 5/5 agree",
+  "11:27:42 request mvdqqs310j5lz.3: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:27:43 request received: rid mvdqr8q72ppmz.3 25 keys",
+  "11:27:43 handle mvdqr8q72ppmz.3: first_chunk=True total=25"
  ]
 }
