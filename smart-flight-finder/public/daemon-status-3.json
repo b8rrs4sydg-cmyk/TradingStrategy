@@ -1,34 +1,18 @@
 {
- "at": "2026-10-18T10:58:34+00:00",
+ "at": "2026-10-18T11:02:10+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 534,
  "log": [
-  "10:53:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:54:02 http front door: ['https://castle-single-smoke-concepts.trycloudflare.com', 'https://c9729c8204ca30.lhr.life']",
-  "10:54:02 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:54:58 rtc yx9d6npf: answered",
-  "10:54:59 rtc yx9d6npf: data channel open",
-  "10:55:00 request received: rid mvdpl2y29ko1z.3 21 keys",
-  "10:55:00 handle mvdpl2y29ko1z.3: first_chunk=True total=21",
-  "10:55:06 request received: rid httptest1792320906 20 keys",
-  "10:55:06 handle httptest1792320906: first_chunk=True total=20",
-  "10:55:13 rtc a5y2w8w5iv: answered",
-  "10:55:14 rtc a5y2w8w5iv: data channel open",
-  "10:55:15 request received: rid mvdplefxxoaln.1 10 keys",
-  "10:55:15 handle mvdplefxxoaln.1: first_chunk=True total=10",
-  "10:55:27 request mvdplefxxoaln.1: chunk of 10 keys done in 12s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 14, 'blocked': 0, 'tries': 39, 'empty': 12}, audit 1/1 agree",
-  "10:55:29 request httptest1792320906: chunk of 20 keys done in 23s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 14, 'blocked': 0, 'tries': 39, 'empty': 12}, audit 3/3 agree",
-  "10:55:29 request httptest1792320906: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "10:55:30 request mvdplefxxoaln.1: final sent (10/10); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "10:56:05 request received: rid mvdpmjn1vcbbl.1 40 keys",
-  "10:56:05 handle mvdpmjn1vcbbl.1: first_chunk=True total=40",
-  "10:56:36 request mvdpl2y29ko1z.3: chunk of 21 keys done in 96s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 14, 'blocked': 0, 'tries': 39, 'empty': 12}, audit 3/3 agree",
-  "10:56:38 request mvdpl2y29ko1z.3: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "10:57:32 request received: rid mvdpoebct1wgi.2 30 keys",
-  "10:57:32 handle mvdpoebct1wgi.2: first_chunk=True total=30"
+  "11:00:34 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "11:00:40 http front door: ['https://pierre-created-barely-circulation.trycloudflare.com', 'https://cd4409eff22c9f.lhr.life']",
+  "11:00:40 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "11:01:43 request received: rid httptest1792321303 20 keys",
+  "11:01:43 handle httptest1792321303: first_chunk=True total=20",
+  "11:01:49 request httptest1792321303: chunk of 20 keys done in 6s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
+  "11:01:50 request httptest1792321303: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
