@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:34:12+00:00",
+ "at": "2026-10-18T07:35:44+00:00",
  "publishes": {
-  "ok": 4,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 227,
+ "fares_saved": 236,
  "log": [
   "07:18:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "07:18:56 http front door: ['https://ottawa-preparing-tony-separation.trycloudflare.com', 'https://5c3cd1d9eb564c.lhr.life']",
@@ -54,6 +54,17 @@
   "07:33:14 request mvdidog5osv1u.3: chunk of 1 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 162, 'blocked': 11, 'tries': 122, 'empty': 2}, audit 8/8 agree",
   "07:33:16 request mvdidog5osv1u.3: final sent (1/1); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "07:33:20 request received: rid mvdidt5v9id4v.3 27 keys",
-  "07:33:20 handle mvdidt5v9id4v.3: first_chunk=True total=27"
+  "07:33:20 handle mvdidt5v9id4v.3: first_chunk=True total=27",
+  "07:34:23 request mvdidt5v9id4v.3: chunk of 27 keys done in 63s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 163, 'blocked': 11, 'tries': 122, 'empty': 2}, audit 9/9 agree",
+  "07:34:25 request mvdidt5v9id4v.3: final sent (27/27); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "07:34:27 request received: rid mvdif9bjdojeh.3 27 keys",
+  "07:34:27 handle mvdif9bjdojeh.3: first_chunk=True total=27",
+  "07:34:37 rtc xszfte8k3h: answered",
+  "07:34:53 request mvdi7uqsdlz09.0: chunk of 80 keys done in 369s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 170, 'blocked': 11, 'tries': 122, 'empty': 2}, audit 9/9 agree",
+  "07:34:55 request mvdi7uqsdlz09.0: final sent (80/80); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "07:35:01 request mvdhxkhy45w9s.3: chunk of 27 keys done in 859s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 175, 'blocked': 11, 'tries': 122, 'empty': 2}, audit 9/9 agree",
+  "07:35:03 request mvdhxkhy45w9s.3: final sent (27/27); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "07:35:04 request received: rid mvdig1vjqyz3k.3 27 keys",
+  "07:35:04 handle mvdig1vjqyz3k.3: first_chunk=True total=27"
  ]
 }
