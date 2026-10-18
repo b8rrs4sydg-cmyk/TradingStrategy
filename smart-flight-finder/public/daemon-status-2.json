@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:01:12+00:00",
+ "at": "2026-10-18T07:04:15+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 413,
+ "fares_saved": 424,
  "log": [
   "06:53:31 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:37 http front door: ['https://significant-pharmacology-mozilla-forge.trycloudflare.com', 'https://85e1f912d235f9.lhr.life']",
@@ -23,6 +23,16 @@
   "06:59:23 request received: rid mvdh65fgwizsm.2 27 keys",
   "06:59:23 handle mvdh65fgwizsm.2: first_chunk=True total=27",
   "06:59:39 request received: rid mvdh6hr3iqbqd.2 27 keys",
-  "06:59:39 handle mvdh6hr3iqbqd.2: first_chunk=True total=27"
+  "06:59:39 handle mvdh6hr3iqbqd.2: first_chunk=True total=27",
+  "07:01:47 request mvdh65fgwizsm.2: chunk of 27 keys done in 144s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:01:47 request mvdh65fgwizsm.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:17 request mvdh6hr3iqbqd.2: chunk of 27 keys done in 158s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:18 request mvdh6hr3iqbqd.2: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:21 request received: rid mvdh9z9txgeay.2 11 keys",
+  "07:02:21 handle mvdh9z9txgeay.2: first_chunk=True total=11",
+  "07:03:43 request mvdh9z9txgeay.2: chunk of 11 keys done in 81s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:03:44 request mvdh9z9txgeay.2: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:03:47 request received: rid mvdhbt6a3o15x.2 27 keys",
+  "07:03:47 handle mvdhbt6a3o15x.2: first_chunk=True total=27"
  ]
 }

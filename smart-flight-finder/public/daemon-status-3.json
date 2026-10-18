@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T07:00:13+00:00",
+ "at": "2026-10-18T07:04:48+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 64,
+ "fares_saved": 92,
  "log": [
   "06:53:26 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:53:30 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-3.json' did not match any files\\n\"",
@@ -29,6 +29,16 @@
   "06:59:23 request received: rid mvdh65fgwizsm.3 27 keys",
   "06:59:23 handle mvdh65fgwizsm.3: first_chunk=True total=27",
   "06:59:39 request received: rid mvdh6hr3iqbqd.3 27 keys",
-  "06:59:39 handle mvdh6hr3iqbqd.3: first_chunk=True total=27"
+  "06:59:39 handle mvdh6hr3iqbqd.3: first_chunk=True total=27",
+  "07:02:09 request mvdh6hr3iqbqd.3: chunk of 27 keys done in 150s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:09 request mvdh6hr3iqbqd.3: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:20 request mvdh65fgwizsm.3: chunk of 27 keys done in 177s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:20 request mvdh65fgwizsm.3: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:02:21 request received: rid mvdh9z9txgeay.3 10 keys",
+  "07:02:21 handle mvdh9z9txgeay.3: first_chunk=True total=10",
+  "07:03:09 request mvdh9z9txgeay.3: chunk of 10 keys done in 48s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:03:11 request mvdh9z9txgeay.3: final sent (10/10); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "07:03:47 request received: rid mvdhbt6a3o15x.3 27 keys",
+  "07:03:47 handle mvdhbt6a3o15x.3: first_chunk=True total=27"
  ]
 }
