@@ -1,11 +1,11 @@
 {
- "at": "2026-10-18T11:13:58+00:00",
+ "at": "2026-10-18T11:15:29+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 60,
+ "fares_saved": 73,
  "log": [
   "11:00:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:00:28 git retry 0: b\"fatal: pathspec '/home/runner/work/TradingStrategy/TradingStrategy/smart-flight-finder/public/fares-live-6.json' did not match any files\\n\"",
@@ -49,6 +49,24 @@
   "11:13:39 request mvdq6pts6akym.6: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "11:13:39 request mvdq8fchrh2ij.6: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "11:13:41 request mvdq60py73tla.6: chunk of 18 keys done in 148s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 61, 'miss': 40, 'blocked': 0, 'tries': 79, 'empty': 18}, audit 2/2 agree",
-  "11:13:43 request mvdq60py73tla.6: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "11:13:43 request mvdq60py73tla.6: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "11:14:35 rtc x8y912tt90: answered",
+  "11:14:36 rtc x8y912tt90: data channel open",
+  "11:14:36 request received: rid mvdqa8mzdjzfo.6 17 keys",
+  "11:14:36 handle mvdqa8mzdjzfo.6: first_chunk=True total=17",
+  "11:14:36 request mvdqa8mzdjzfo.6: chunk of 17 keys done in 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 61, 'miss': 41, 'blocked': 0, 'tries': 79, 'empty': 18}, audit 2/2 agree",
+  "11:14:37 request mvdq90xy2rp1d.6: chunk of 15 keys done in 63s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 61, 'miss': 41, 'blocked': 0, 'tries': 79, 'empty': 18}, audit 2/2 agree",
+  "11:14:38 request mvdq90xy2rp1d.6: final sent (15/15); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "11:14:38 request mvdqa8mzdjzfo.6: final sent (17/17); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "11:14:44 request received: rid mvdqajk5xvkpm.6 20 keys",
+  "11:14:44 handle mvdqajk5xvkpm.6: first_chunk=True total=20",
+  "11:15:12 rtc va742tutk6: answered",
+  "11:15:14 rtc va742tutk6: data channel open",
+  "11:15:14 request received: rid mvdqb344zwtrk.6 20 keys",
+  "11:15:14 handle mvdqb344zwtrk.6: first_chunk=True total=20",
+  "11:15:14 request mvdqb344zwtrk.6: chunk of 20 keys done in 0s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 73, 'miss': 49, 'blocked': 0, 'tries': 100, 'empty': 27}, audit 2/2 agree",
+  "11:15:15 request mvdqb344zwtrk.6: final sent (20/20); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:15:17 request received: rid mvdqb8zfaos5a.6 16 keys",
+  "11:15:17 handle mvdqb8zfaos5a.6: first_chunk=True total=16"
  ]
 }
