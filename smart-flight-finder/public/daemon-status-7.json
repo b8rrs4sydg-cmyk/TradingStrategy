@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T13:06:51+00:00",
+ "at": "2026-10-18T13:08:34+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -7,7 +7,6 @@
  },
  "fares_saved": 205,
  "log": [
-  "11:26:10 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "11:26:15 git retry 0: b\"-1kexus': is at 003c03e9ffadef9e5624bf90ded5fd1d4da9e03e but expected 498ad7e11feca9df8a58a15169d89de03b400c1e)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:26:20 git retry 1: b\"-1kexus': is at 45455822265a778181956519c14ec57a636a0121 but expected 72b78d5a1f992c2b7655206597cf3fdb5367da7a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:26:26 http front door: ['https://impossible-toxic-laser-piano.trycloudflare.com', 'https://b944fec1bba7cf.lhr.life']",
@@ -153,6 +152,10 @@
   "13:03:50 request mvdu41h7b76yp.7: chunk of 24 keys done in 131s; paths {'http': 100, 'browser-none': 434, 'browser': 39}, browser waits 473 max 190s sum 31951s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 100, 'miss': 144, 'blocked': 0, 'tries': 211, 'empty': 111}, audit 1/1 a",
   "13:03:52 request mvdu41h7b76yp.7: final sent (24/24); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:05:06 request received: rid mvdu8gogkouz6.7 18 keys",
-  "13:05:06 handle mvdu8gogkouz6.7: first_chunk=True total=18"
+  "13:05:06 handle mvdu8gogkouz6.7: first_chunk=True total=18",
+  "13:06:52 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "13:06:57 git retry 1: b\"-1kexus': is at febd77b6e46d273ca11866e89b6e39b2d15afa92 but expected 741e942a6d582e7f07607e82a49b0a7e55ad78b1)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "13:07:15 request mvdu8gogkouz6.7: chunk of 18 keys done in 130s; paths {'http': 100, 'browser-none': 452, 'browser': 39}, browser waits 491 max 190s sum 33238s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 100, 'miss': 144, 'blocked': 0, 'tries': 211, 'empty': 111}, audit 1/1 a",
+  "13:07:16 request mvdu8gogkouz6.7: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
