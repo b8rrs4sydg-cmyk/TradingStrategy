@@ -33,12 +33,12 @@ env:
 
 jobs:
   daemon:
-    # Three daemons side by side: each has its own IP, browser and tunnels, and the page splits every lookup
-    # between them (about three times the crawl speed). Instance 0 also owns the ntfy relay and the legacy files.
+    # Six daemons side by side: each has its own IP, browser and tunnels, and the page splits every lookup
+    # between them (about six times the crawl speed). Instance 0 also owns the ntfy relay and the legacy files.
     strategy:
       fail-fast: false
       matrix:
-        instance: [0, 1, 2]
+        instance: [0, 1, 2, 3, 4, 5]
     name: daemon ${{ matrix.instance }}
     runs-on: ubuntu-latest
     timeout-minutes: 345

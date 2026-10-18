@@ -265,3 +265,9 @@ Skiplagged and Wego all refuse plain HTTP from a datacenter IP (bot walls / 403 
 
 The page has a "查找所有排列組合" button: the normal campaign asks only the likeliest multi-city routes (budgeted); the
 button asks every remaining multi-city permutation, spread over the crawlers (`live.campaign.all`).
+
+## Crawler count
+
+`fare-daemon.yml` runs six daemon instances (matrix `[0..5]`, one GitHub job each: own IP, browser, tunnels, `daemon[-i].json`,
+`fares-live[-i].json`). The page's `INSTANCES` constant must match the matrix. Every extra instance costs the visiting page two
+ntfy signalling messages for its WebRTC offer/answer (anonymous quota ≈250/day per IP), which is why it stops at six.

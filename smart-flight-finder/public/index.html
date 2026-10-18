@@ -2634,7 +2634,7 @@ function noteDiag(e) {
 
 /* Where is the crawler? Its Cloudflare tunnel URL (direct HTTPS + SSE, no message quota) if it answers,
  * else null → fall back to the ntfy relay. */
-const INSTANCES = 3;   // parallel crawler daemons (fare-daemon.yml matrix): lookups are split between them
+const INSTANCES = 6;   // parallel crawler daemons (fare-daemon.yml matrix): lookups are split between them
 const DAEMON_BRANCHES = ['claude/zealous-darwin-1kexus', 'claude/tender-cray-46zevd'];   // the daemon commits to the branch that started it
 const daemonFile = i => (i === 0 ? 'daemon.json' : `daemon-${i}.json`);
 const rawUrl = (branch, file) => `https://raw.githubusercontent.com/b8rrs4sydg-cmyk/TradingStrategy/${branch}/smart-flight-finder/public/${file}`;
