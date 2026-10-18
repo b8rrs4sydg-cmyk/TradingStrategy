@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T16:52:32+00:00",
+ "at": "2026-10-18T16:54:03+00:00",
  "publishes": {
   "ok": 63,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 3877,
  "log": [
-  "15:56:51 request received: rid mve0dc82usim0.0 19 keys",
-  "15:56:51 handle mve0dc82usim0.0: first_chunk=True total=19",
   "15:56:51 request received: rid mve0dc82usim0.2 17 keys",
   "15:56:51 handle mve0dc82usim0.2: first_chunk=True total=17",
   "15:56:51 request received: rid mve0dc82usim0.3 13 keys",
@@ -156,6 +154,8 @@
   "16:49:55 request mve21p5ni20ui.8: chunk of 16 keys done in 368s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "16:49:56 request mve21p5ni20ui.8: final sent (16/16); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
   "16:50:39 request mve21p5ni20ui.4: chunk of 12 keys done in 412s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
-  "16:50:39 request mve21p5ni20ui.4: final sent (12/12); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
+  "16:50:39 request mve21p5ni20ui.4: final sent (12/12); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:52:37 request mve21p5ni20ui.5: chunk of 20 keys done in 530s; ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "16:52:40 request mve21p5ni20ui.5: final sent (20/20); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
  ]
 }
