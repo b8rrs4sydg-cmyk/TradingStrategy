@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:35:59+00:00",
+ "at": "2026-10-19T15:37:31+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1610,
  "log": [
-  "13:58:43 request mvfbj7vir76k0.7: chunk of 9 keys done in 96s; paths {'http': 24, 'browser-none': 35, 'browser': 1}, browser waits 36 max 96s sum 1765s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 27, 'blocked': 0, 'tries': 41, 'empty': 17}, audit 1/1 agree",
-  "13:58:44 request mvfbj7vir76k0.7: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:59:31 request received: rid mvfbmasunab5h.7 15 keys",
   "13:59:31 handle mvfbmasunab5h.7: first_chunk=True total=15",
   "14:01:08 request mvfbmasunab5h.7: chunk of 15 keys done in 97s; paths {'http': 28, 'browser-none': 46, 'browser': 1}, browser waits 47 max 97s sum 2426s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 29, 'blocked': 0, 'tries': 47, 'empty': 19}, audit 1/1 agree",
@@ -156,6 +154,8 @@
   "15:30:38 request mvfetj3m2xck7.7: chunk of 12 keys done in 91s; paths {'http': 159, 'browser-none': 384, 'browser': 51}, browser waits 435 max 190s sum 26179s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 159, 'miss': 132, 'blocked': 0, 'tries': 212, 'empty': 53}, audit 5/5 agr",
   "15:30:40 request mvfetj3m2xck7.7: final sent (12/12); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "15:34:35 request received: rid mvff0kc5l1nbu.7 17 keys",
-  "15:34:35 handle mvff0kc5l1nbu.7: first_chunk=True total=17"
+  "15:34:35 handle mvff0kc5l1nbu.7: first_chunk=True total=17",
+  "15:36:51 request mvff0kc5l1nbu.7: chunk of 17 keys done in 136s; paths {'http': 160, 'browser-none': 400, 'browser': 51}, browser waits 451 max 190s sum 27176s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 160, 'miss': 148, 'blocked': 0, 'tries': 213, 'empty': 53}, audit 5/5 ag",
+  "15:36:52 request mvff0kc5l1nbu.7: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
