@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:19:30+00:00",
+ "at": "2026-10-19T14:21:01+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1527,
+ "fares_saved": 1541,
  "log": [
   "12:48:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:53 http front door: ['https://lloyd-filing-collection-busy.trycloudflare.com', 'https://3d4f98d6c6c086.lhr.life']",
@@ -85,6 +85,8 @@
   "14:18:22 request received: rid mvfcajrwau2tv.8 26 keys",
   "14:18:22 handle mvfcajrwau2tv.8: first_chunk=True total=26",
   "14:19:19 request mvfcajrwau2tv.8: chunk of 26 keys done in 57s; paths {'http': 111, 'browser-none': 118, 'browser': 19}, browser waits 137 max 144s sum 7089s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 111, 'miss': 50, 'blocked': 0, 'tries': 149, 'empty': 38}, audit 3/3 agree",
-  "14:19:21 request mvfcajrwau2tv.8: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:19:21 request mvfcajrwau2tv.8: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:20:03 request received: rid mvfccojpu9g7e.7 19 keys",
+  "14:20:03 handle mvfccojpu9g7e.7: first_chunk=True total=19"
  ]
 }
