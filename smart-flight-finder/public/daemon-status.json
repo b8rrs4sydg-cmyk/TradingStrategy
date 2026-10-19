@@ -1,7 +1,7 @@
 {
- "at": "2026-10-19T01:03:07+00:00",
+ "at": "2026-10-19T01:06:09+00:00",
  "publishes": {
-  "ok": 63,
+  "ok": 72,
   "r429": 0,
   "fail": 0
  },
@@ -22,6 +22,26 @@
   "00:49:29 request httptest1792370937: final sent (20/20); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
   "00:55:31 request mvejcryd67egz: chunk of 68 keys done in 431s; ntfy publishes {'ok': 32, 'r429': 0, 'fail': 0}",
   "01:02:20 request mvejcryd67egz: chunk of 92 keys done in 840s; ntfy publishes {'ok': 62, 'r429': 0, 'fail': 0}",
-  "01:02:21 request mvejcryd67egz: final sent (160/160); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}"
+  "01:02:21 request mvejcryd67egz: final sent (160/160); ntfy publishes {'ok': 63, 'r429': 0, 'fail': 0}",
+  "01:05:17 rtc leb0vg49k0: answered",
+  "01:05:17 rtc imo7emtv9y: answered",
+  "01:05:17 rtc ygtex7jkv7: answered",
+  "01:05:17 rtc t0g26t9w2j: answered",
+  "01:05:17 rtc wnimqk0ssl: answered",
+  "01:05:17 rtc c00jynsjvf: answered",
+  "01:05:17 rtc s09id2i772: answered",
+  "01:05:17 rtc 536nqavcsy: answered",
+  "01:05:17 rtc 716f2fs8dv: answered",
+  "01:05:18 request received: rid mvejylb74uzpq.0 160 keys",
+  "01:05:18 handle mvejylb74uzpq.0: first_chunk=True total=160",
+  "01:05:18 rtc leb0vg49k0: data channel open",
+  "01:05:18 rtc ygtex7jkv7: data channel open",
+  "01:05:18 rtc imo7emtv9y: data channel open",
+  "01:05:19 rtc c00jynsjvf: data channel open",
+  "01:05:19 rtc t0g26t9w2j: data channel open",
+  "01:05:19 rtc 536nqavcsy: data channel open",
+  "01:05:19 rtc wnimqk0ssl: data channel open",
+  "01:05:19 rtc s09id2i772: data channel open",
+  "01:05:19 rtc 716f2fs8dv: data channel open"
  ]
 }
