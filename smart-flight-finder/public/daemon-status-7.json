@@ -1,14 +1,12 @@
 {
- "at": "2026-10-19T15:08:33+00:00",
+ "at": "2026-10-19T15:10:05+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1575,
+ "fares_saved": 1579,
  "log": [
-  "12:48:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "12:48:57 git retry 0: b\"-46zevd': is at 12f6d4ded97d1d20108a6d972b1408abd75bbca1 but expected dc6ee06a323ccb338aa3854be5f51a0a197d8271)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "12:49:03 http front door: ['https://rob-consider-whose-trunk.trycloudflare.com', 'https://1cc29d22402f68.lhr.life']",
   "12:49:03 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:50:02 request received: rid httptest1792414201 20 keys",
@@ -154,6 +152,10 @@
   "15:07:14 request mvfdyb6wk7gb5.7: chunk of 21 keys done in 144s; paths {'http': 126, 'browser-none': 294, 'browser': 47}, browser waits 341 max 190s sum 20507s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 126, 'miss': 101, 'blocked': 0, 'tries': 171, 'empty': 45}, audit 5/5 ag",
   "15:07:15 request mvfdyb6wk7gb5.7: final sent (21/21); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "15:07:22 request received: rid mvfe1jnoqnpfg.7 17 keys",
-  "15:07:22 handle mvfe1jnoqnpfg.7: first_chunk=True total=17"
+  "15:07:22 handle mvfe1jnoqnpfg.7: first_chunk=True total=17",
+  "15:09:10 request mvfe1jnoqnpfg.7: chunk of 17 keys done in 109s; paths {'http': 129, 'browser-none': 308, 'browser': 47}, browser waits 355 max 190s sum 21392s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 129, 'miss': 115, 'blocked': 0, 'tries': 181, 'empty': 52}, audit 5/5 ag",
+  "15:09:11 request mvfe1jnoqnpfg.7: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:09:51 request received: rid mvfe4r543u0kp.7 15 keys",
+  "15:09:51 handle mvfe4r543u0kp.7: first_chunk=True total=15"
  ]
 }
