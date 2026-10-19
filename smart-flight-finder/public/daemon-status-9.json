@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T14:58:35+00:00",
+ "at": "2026-10-19T15:00:07+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1578,
+ "fares_saved": 1582,
  "log": [
-  "12:48:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "12:49:02 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "12:49:08 git retry 1: b\"-46zevd': is at f4efebf442514ff8126f9d4315138087fc9c2199 but expected e6505154cbc08935f5220e2c841cf982307733f1)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "12:49:15 git retry 2: b\"-46zevd': is at 7f92be00784fbfbd5786f2a6a639fb3980a08dad but expected b15c821ec780bfe218679f8a08767adf00bfb194)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "12:49:24 http front door: ['https://what-telephone-nail-hearing.trycloudflare.com', 'https://143230d0ecc21f.lhr.life']",
   "12:49:24 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:50:07 request received: rid httptest1792414206 20 keys",
@@ -156,6 +152,10 @@
   "14:55:08 request mvfdjtcipf1ip.9: chunk of 13 keys done in 94s; paths {'http': 124, 'browser-none': 300, 'browser': 30}, browser waits 330 max 145s sum 20071s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 124, 'miss': 115, 'blocked': 0, 'tries': 191, 'empty': 67}, audit 2/2 agr",
   "14:55:11 request mvfdjtcipf1ip.9: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:56:45 request received: rid mvfdnwih0i6pv.9 22 keys",
-  "14:56:45 handle mvfdnwih0i6pv.9: first_chunk=True total=22"
+  "14:56:45 handle mvfdnwih0i6pv.9: first_chunk=True total=22",
+  "14:59:03 request mvfdnwih0i6pv.9: chunk of 22 keys done in 138s; paths {'http': 124, 'browser-none': 317, 'browser': 35}, browser waits 352 max 145s sum 21549s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 124, 'miss': 115, 'blocked': 0, 'tries': 191, 'empty': 67}, audit 2/2 ag",
+  "14:59:03 request mvfdnwih0i6pv.9: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:59:44 request received: rid mvfdrqk35rshh.9 17 keys",
+  "14:59:44 handle mvfdrqk35rshh.9: first_chunk=True total=17"
  ]
 }
