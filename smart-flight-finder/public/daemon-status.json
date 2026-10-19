@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T06:13:24+00:00",
+ "at": "2026-10-19T06:14:55+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6144,
+ "fares_saved": 6171,
  "log": [
   "05:36:55 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:36:59 http front door: ['https://auction-stages-signature-beautiful.trycloudflare.com', 'https://d76cfe3cc870ad.lhr.life']",
@@ -142,6 +142,12 @@
   "06:11:50 handle mveuwuttlcced.6: first_chunk=True total=17",
   "06:11:50 handle mveuwuttlcced.9: first_chunk=True total=13",
   "06:13:19 request mveuwuttlcced.9: chunk of 13 keys done in 89s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:13:21 request mveuwuttlcced.9: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "06:13:21 request mveuwuttlcced.9: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:13:36 request mveuwuttlcced.6: chunk of 17 keys done in 106s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:13:39 request mveuwuttlcced.6: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:14:16 request mveuwuttlcced.4: chunk of 13 keys done in 146s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:14:17 request mveuwuttlcced.4: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:14:43 request mveuwuttlcced.8: chunk of 13 keys done in 173s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:14:45 request mveuwuttlcced.8: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
