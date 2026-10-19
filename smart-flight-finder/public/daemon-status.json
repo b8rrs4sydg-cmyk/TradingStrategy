@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:05:48+00:00",
+ "at": "2026-10-19T15:07:20+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1628,
  "log": [
-  "12:49:15 http front door: ['https://association-communication-shoot-are.trycloudflare.com', 'https://9d3b88dcebff6d.lhr.life']",
-  "12:49:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:50:06 request received: rid httptest1792414206 20 keys",
   "12:50:06 handle httptest1792414206: first_chunk=True total=20",
   "12:50:08 request httptest1792414206: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
@@ -156,6 +154,8 @@
   "15:04:01 request mvfdv62skgmel.0: chunk of 15 keys done in 97s; paths {'http': 131, 'browser-none': 371, 'browser': 65}, browser waits 436 max 175s sum 25984s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 151, 'blocked': 0, 'tries': 230, 'empty': 99}, audit 4/4 agr",
   "15:04:03 request mvfdv62skgmel.0: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:04:51 request received: rid mvfdyb6wk7gb5.0 15 keys",
-  "15:04:51 handle mvfdyb6wk7gb5.0: first_chunk=True total=15"
+  "15:04:51 handle mvfdyb6wk7gb5.0: first_chunk=True total=15",
+  "15:06:29 request mvfdyb6wk7gb5.0: chunk of 15 keys done in 99s; paths {'http': 131, 'browser-none': 386, 'browser': 65}, browser waits 451 max 175s sum 27031s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 151, 'blocked': 0, 'tries': 230, 'empty': 99}, audit 4/4 agr",
+  "15:06:30 request mvfdyb6wk7gb5.0: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
