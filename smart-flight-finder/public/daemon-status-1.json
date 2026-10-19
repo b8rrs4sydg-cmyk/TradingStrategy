@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T13:56:51+00:00",
+ "at": "2026-10-19T13:58:22+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1472,
+ "fares_saved": 1475,
  "log": [
   "12:49:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:06 http front door: ['https://guitar-plan-type-architect.trycloudflare.com', 'https://bf0d3d98059ebb.lhr.life']",
@@ -41,6 +41,10 @@
   "13:54:20 request received: rid mvfbfn06sdm3h.1 4 keys",
   "13:54:20 handle mvfbfn06sdm3h.1: first_chunk=True total=4",
   "13:55:20 request mvfbfn06sdm3h.1: chunk of 4 keys done in 60s; paths {'http': 30, 'browser-none': 27}, browser waits 27 max 76s sum 1288s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 30, 'miss': 25, 'blocked': 0, 'tries': 39, 'empty': 9}, audit 5/5 agree",
-  "13:55:22 request mvfbfn06sdm3h.1: final sent (4/4); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "13:55:22 request mvfbfn06sdm3h.1: final sent (4/4); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:57:07 request received: rid mvfbj7vir76k0.1 9 keys",
+  "13:57:07 handle mvfbj7vir76k0.1: first_chunk=True total=9",
+  "13:57:57 request mvfbj7vir76k0.1: chunk of 9 keys done in 50s; paths {'http': 31, 'browser-none': 33, 'browser': 2}, browser waits 35 max 76s sum 1564s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 26, 'blocked': 0, 'tries': 42, 'empty': 11}, audit 5/5 agree",
+  "13:57:59 request mvfbj7vir76k0.1: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
