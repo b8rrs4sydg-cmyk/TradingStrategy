@@ -1,14 +1,12 @@
 {
- "at": "2026-10-19T07:17:02+00:00",
+ "at": "2026-10-19T07:18:35+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6544,
+ "fares_saved": 6548,
  "log": [
-  "06:26:46 request mvevc7pqnew2d.4: chunk of 11 keys done in 180s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:26:48 request mvevc7pqnew2d.4: final sent (11/11); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:27:46 request mvevc7pqnew2d.3: chunk of 20 keys done in 239s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:27:48 request mvevc7pqnew2d.3: final sent (20/20); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:28:12 request mvevc7pqnew2d.2: chunk of 17 keys done in 265s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "07:17:00 handle mvex8netdceqp.8: first_chunk=True total=15",
   "07:17:00 handle mvex8netdceqp.9: first_chunk=True total=12",
   "07:17:00 request received: rid mvex8netdceqp.6 15 keys",
-  "07:17:00 handle mvex8netdceqp.6: first_chunk=True total=15"
+  "07:17:00 handle mvex8netdceqp.6: first_chunk=True total=15",
+  "07:18:26 request mvex8netdceqp.6: chunk of 15 keys done in 87s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "07:18:29 request mvex8netdceqp.6: final sent (15/15); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
