@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:27:27+00:00",
+ "at": "2026-10-19T15:30:29+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1621,
  "log": [
-  "14:00:36 request mvfbmasunab5h.5: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "14:01:14 request received: rid mvfboi84gzaff.5 15 keys",
   "14:01:14 handle mvfboi84gzaff.5: first_chunk=True total=15",
   "14:02:58 request received: rid mvfbqqk3ac270.5 28 keys",
   "14:02:58 handle mvfbqqk3ac270.5: first_chunk=True total=28",
@@ -156,6 +154,8 @@
   "15:24:19 handle mvfend374ygx5.5: first_chunk=True total=17",
   "15:25:50 git retry 0: b\"-46zevd': is at 4dc15c26e3e91f9ec5211a66c1afca693eeaab79 but expected 68fe6060e28f88c6b1123f31ccf97f2751ec4156)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "15:26:41 request mvfend374ygx5.5: chunk of 17 keys done in 141s; paths {'http': 189, 'browser-none': 426, 'browser': 22}, browser waits 448 max 191s sum 28564s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 189, 'miss': 165, 'blocked': 0, 'tries': 299, 'empty': 110}, audit 3/3 a",
-  "15:26:41 request mvfend374ygx5.5: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "15:26:41 request mvfend374ygx5.5: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:29:07 request received: rid mvfetj3m2xck7.5 25 keys",
+  "15:29:07 handle mvfetj3m2xck7.5: first_chunk=True total=25"
  ]
 }
