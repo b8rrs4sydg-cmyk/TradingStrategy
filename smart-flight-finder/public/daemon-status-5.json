@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:25:48+00:00",
+ "at": "2026-10-19T15:27:27+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 1621,
  "log": [
-  "13:59:31 request received: rid mvfbmasunab5h.5 12 keys",
-  "13:59:31 handle mvfbmasunab5h.5: first_chunk=True total=12",
-  "14:00:36 request mvfbmasunab5h.5: chunk of 12 keys done in 65s; paths {'http': 44, 'browser-none': 38}, browser waits 38 max 83s sum 1842s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 44, 'miss': 38, 'blocked': 0, 'tries': 86, 'empty': 42}, audit 2/2 agree",
   "14:00:36 request mvfbmasunab5h.5: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:01:14 request received: rid mvfboi84gzaff.5 15 keys",
   "14:01:14 handle mvfboi84gzaff.5: first_chunk=True total=15",
@@ -156,6 +153,9 @@
   "15:21:09 request mvfegv41xn696.5: chunk of 15 keys done in 113s; paths {'http': 189, 'browser-none': 409, 'browser': 22}, browser waits 431 max 191s sum 27256s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 189, 'miss': 165, 'blocked': 0, 'tries': 299, 'empty': 110}, audit 3/3 a",
   "15:21:11 request mvfegv41xn696.5: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:24:19 request received: rid mvfend374ygx5.5 17 keys",
-  "15:24:19 handle mvfend374ygx5.5: first_chunk=True total=17"
+  "15:24:19 handle mvfend374ygx5.5: first_chunk=True total=17",
+  "15:25:50 git retry 0: b\"-46zevd': is at 4dc15c26e3e91f9ec5211a66c1afca693eeaab79 but expected 68fe6060e28f88c6b1123f31ccf97f2751ec4156)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "15:26:41 request mvfend374ygx5.5: chunk of 17 keys done in 141s; paths {'http': 189, 'browser-none': 426, 'browser': 22}, browser waits 448 max 191s sum 28564s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 189, 'miss': 165, 'blocked': 0, 'tries': 299, 'empty': 110}, audit 3/3 a",
+  "15:26:41 request mvfend374ygx5.5: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
