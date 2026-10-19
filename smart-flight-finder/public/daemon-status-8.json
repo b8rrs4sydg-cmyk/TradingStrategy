@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:17:58+00:00",
+ "at": "2026-10-19T14:19:30+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1509,
+ "fares_saved": 1527,
  "log": [
   "12:48:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:53 http front door: ['https://lloyd-filing-collection-busy.trycloudflare.com', 'https://3d4f98d6c6c086.lhr.life']",
@@ -79,6 +79,12 @@
   "14:16:36 request mvfc68fwik465.8: chunk of 16 keys done in 95s; paths {'http': 93, 'browser-none': 100, 'browser': 9}, browser waits 109 max 144s sum 6086s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 93, 'miss': 48, 'blocked': 0, 'tries': 127, 'empty': 34}, audit 3/3 agree",
   "14:16:38 request mvfc68fwik465.8: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:16:43 request received: rid mvfc8ey9dmfrh.8 20 keys",
-  "14:16:43 handle mvfc8ey9dmfrh.8: first_chunk=True total=20"
+  "14:16:43 handle mvfc8ey9dmfrh.8: first_chunk=True total=20",
+  "14:18:12 request mvfc8ey9dmfrh.8: chunk of 20 keys done in 90s; paths {'http': 99, 'browser-none': 110, 'browser': 13}, browser waits 123 max 144s sum 6664s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 99, 'miss': 50, 'blocked': 0, 'tries': 137, 'empty': 38}, audit 3/3 agree",
+  "14:18:14 request mvfc8ey9dmfrh.8: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:18:22 request received: rid mvfcajrwau2tv.8 26 keys",
+  "14:18:22 handle mvfcajrwau2tv.8: first_chunk=True total=26",
+  "14:19:19 request mvfcajrwau2tv.8: chunk of 26 keys done in 57s; paths {'http': 111, 'browser-none': 118, 'browser': 19}, browser waits 137 max 144s sum 7089s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 111, 'miss': 50, 'blocked': 0, 'tries': 149, 'empty': 38}, audit 3/3 agree",
+  "14:19:21 request mvfcajrwau2tv.8: final sent (26/26); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
