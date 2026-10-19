@@ -1,22 +1,12 @@
 {
- "at": "2026-10-19T04:39:01+00:00",
+ "at": "2026-10-19T04:40:32+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 5218,
+ "fares_saved": 5248,
  "log": [
-  "03:58:22 request received: rid mveq581veeqyp.0 23 keys",
-  "03:58:22 handle mveq581veeqyp.0: first_chunk=True total=23",
-  "03:58:22 request received: rid mveq581veeqyp.2 14 keys",
-  "03:58:22 request received: rid mveq581veeqyp.1 12 keys",
-  "03:58:22 request received: rid mveq581veeqyp.4 18 keys",
-  "03:58:22 request received: rid mveq581veeqyp.3 12 keys",
-  "03:58:22 request received: rid mveq581veeqyp.5 17 keys",
-  "03:58:22 handle mveq581veeqyp.2: first_chunk=True total=14",
-  "03:58:22 handle mveq581veeqyp.1: first_chunk=True total=12",
-  "03:58:22 handle mveq581veeqyp.4: first_chunk=True total=18",
   "03:58:22 handle mveq581veeqyp.3: first_chunk=True total=12",
   "03:58:22 handle mveq581veeqyp.5: first_chunk=True total=17",
   "03:58:22 request received: rid mveq581veeqyp.8 17 keys",
@@ -156,6 +146,16 @@
   "04:37:48 request mverhdf9g1y4x.7: chunk of 13 keys done in 120s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "04:37:49 request mverhdf9g1y4x.7: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "04:38:30 request mverhdf9g1y4x.8: chunk of 15 keys done in 161s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "04:38:30 request mverhdf9g1y4x.8: final sent (15/15); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "04:38:30 request mverhdf9g1y4x.8: final sent (15/15); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:39:06 request mverhdf9g1y4x.5: chunk of 21 keys done in 197s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:39:07 request mverhdf9g1y4x.5: final sent (21/21); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:39:16 request mverhdf9g1y4x.4: chunk of 17 keys done in 208s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:39:18 request mverhdf9g1y4x.4: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:39:33 request mverhdf9g1y4x.2: chunk of 14 keys done in 224s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:39:33 request mverhdf9g1y4x.2: final sent (14/14); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:40:03 request mverhdf9g1y4x.1: chunk of 17 keys done in 254s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:40:04 request mverhdf9g1y4x.0: chunk of 14 keys done in 255s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:40:04 request mverhdf9g1y4x.1: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:40:06 request mverhdf9g1y4x.0: final sent (14/14); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
