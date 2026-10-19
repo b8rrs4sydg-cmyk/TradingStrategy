@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T13:52:33+00:00",
+ "at": "2026-10-19T13:54:05+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1450,
+ "fares_saved": 1455,
  "log": [
   "12:48:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:02 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -34,6 +34,12 @@
   "13:51:32 request mvfbambektgty.9: chunk of 2 keys done in 59s; paths {'http': 22, 'browser-none': 5}, browser waits 5 max 50s sum 235s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 5, 'blocked': 0, 'tries': 24, 'empty': 2}, audit 1/1 agree",
   "13:51:32 request mvfbambektgty.9: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:51:40 request received: rid mvfbc78a2eb12.9 18 keys",
-  "13:51:40 handle mvfbc78a2eb12.9: first_chunk=True total=18"
+  "13:51:40 handle mvfbc78a2eb12.9: first_chunk=True total=18",
+  "13:52:43 request received: rid mvfbdjrre1son.9 9 keys",
+  "13:52:43 handle mvfbdjrre1son.9: first_chunk=True total=9",
+  "13:53:15 request mvfbc78a2eb12.9: chunk of 18 keys done in 95s; paths {'http': 36, 'browser-none': 14}, browser waits 14 max 83s sum 765s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 18, 'blocked': 0, 'tries': 52, 'empty': 16}, audit 1/1 agree",
+  "13:53:17 request mvfbc78a2eb12.9: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:53:45 request mvfbdjrre1son.9: chunk of 9 keys done in 62s; paths {'http': 36, 'browser-none': 18}, browser waits 18 max 83s sum 956s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 18, 'blocked': 0, 'tries': 52, 'empty': 16}, audit 1/1 agree",
+  "13:53:46 request mvfbdjrre1son.9: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
