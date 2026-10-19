@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T02:13:06+00:00",
+ "at": "2026-10-19T02:14:37+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 4732,
  "log": [
-  "01:05:18 rtc ygtex7jkv7: data channel open",
-  "01:05:18 rtc imo7emtv9y: data channel open",
   "01:05:19 rtc c00jynsjvf: data channel open",
   "01:05:19 rtc t0g26t9w2j: data channel open",
   "01:05:19 rtc 536nqavcsy: data channel open",
@@ -156,6 +154,8 @@
   "02:11:25 request received: rid mvemboc2xxc0a.6 20 keys",
   "02:11:25 handle mvemboc2xxc0a.6: first_chunk=True total=20",
   "02:11:25 request received: rid mvemboc2xxc0a.9 20 keys",
-  "02:11:25 handle mvemboc2xxc0a.9: first_chunk=True total=20"
+  "02:11:25 handle mvemboc2xxc0a.9: first_chunk=True total=20",
+  "02:14:11 request mvemboc2xxc0a.9: chunk of 20 keys done in 166s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "02:14:12 request mvemboc2xxc0a.9: final sent (20/20); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
