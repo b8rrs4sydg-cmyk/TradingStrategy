@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T02:03:58+00:00",
+ "at": "2026-10-19T02:05:30+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 4732,
  "log": [
-  "00:47:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:47:53 http front door: ['https://justin-collectors-economic-wiring.trycloudflare.com', 'https://49b8fcdb265a42.lhr.life']",
   "00:47:53 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 18600s",
   "00:48:19 rtc 5wbeh08hwa: answered",
   "00:48:20 request received: rid mvejcryd67egz 92 keys",
@@ -154,6 +152,10 @@
   "02:01:02 request mvelqdu114sb9.8: chunk of 17 keys done in 370s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "02:01:03 request mvelqdu114sb9.8: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "02:02:24 request mvelqdu114sb9.5: chunk of 18 keys done in 452s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "02:02:26 request mvelqdu114sb9.5: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "02:02:26 request mvelqdu114sb9.5: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "02:04:20 request mvelqdu114sb9.4: chunk of 17 keys done in 568s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "02:04:20 request mvelqdu114sb9.4: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "02:05:05 request mvelqdu114sb9.3: chunk of 13 keys done in 614s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "02:05:07 request mvelqdu114sb9.3: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
