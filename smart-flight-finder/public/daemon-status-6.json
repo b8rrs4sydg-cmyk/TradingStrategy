@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T15:10:31+00:00",
+ "at": "2026-10-19T15:12:03+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1701,
+ "fares_saved": 1703,
  "log": [
-  "12:49:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "12:50:14 request received: rid httptest1792414214 20 keys",
-  "12:50:14 handle httptest1792414214: first_chunk=True total=20",
-  "12:50:16 request httptest1792414214: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
   "12:50:17 request httptest1792414214: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "12:59:46 rtc 9f4wwt9e2k: answered",
   "12:59:47 rtc 9f4wwt9e2k: data channel open",
@@ -156,6 +152,10 @@
   "15:09:46 request mvfe1jnoqnpfg.6: chunk of 22 keys done in 145s; paths {'http': 145, 'browser-none': 309, 'browser': 75}, browser waits 384 max 145s sum 19862s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 145, 'miss': 129, 'blocked': 0, 'tries': 221, 'empty': 76}, audit 6/6 ag",
   "15:09:47 request mvfe1jnoqnpfg.6: final sent (22/22); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "15:09:51 request received: rid mvfe4r543u0kp.6 16 keys",
-  "15:09:51 handle mvfe4r543u0kp.6: first_chunk=True total=16"
+  "15:09:51 handle mvfe4r543u0kp.6: first_chunk=True total=16",
+  "15:11:28 request mvfe4r543u0kp.6: chunk of 16 keys done in 97s; paths {'http': 148, 'browser-none': 322, 'browser': 75}, browser waits 397 max 145s sum 20727s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 148, 'miss': 129, 'blocked': 0, 'tries': 224, 'empty': 76}, audit 6/6 agr",
+  "15:11:30 request mvfe4r543u0kp.6: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "15:11:32 request received: rid mvfe6wzng4lrd.6 12 keys",
+  "15:11:32 handle mvfe6wzng4lrd.6: first_chunk=True total=12"
  ]
 }
