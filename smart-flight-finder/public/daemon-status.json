@@ -1,18 +1,12 @@
 {
- "at": "2026-10-19T05:26:03+00:00",
+ "at": "2026-10-19T05:27:35+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 5801,
+ "fares_saved": 5822,
  "log": [
-  "04:49:17 request mvertqmjyl4sn.2: chunk of 18 keys done in 231s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "04:49:18 request mvertqmjyl4sn.2: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "04:55:24 request received: rid mves6kgxoe2nu.2 22 keys",
-  "04:55:24 handle mves6kgxoe2nu.2: first_chunk=True total=22",
-  "04:55:24 request received: rid mves6kgxoe2nu.0 14 keys",
-  "04:55:24 handle mves6kgxoe2nu.0: first_chunk=True total=14",
   "04:55:24 request received: rid mves6kgxoe2nu.3 17 keys",
   "04:55:24 request received: rid mves6kgxoe2nu.1 8 keys",
   "04:55:24 handle mves6kgxoe2nu.3: first_chunk=True total=17",
@@ -156,6 +150,12 @@
   "05:25:33 request mvet5hic8fy4a.7: chunk of 20 keys done in 179s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "05:25:34 request mvet5hic8fy4a.7: final sent (20/20); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "05:26:02 request mvet5hic8fy4a.8: chunk of 11 keys done in 209s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "05:26:03 request mvet5hic8fy4a.8: final sent (11/11); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "05:26:03 request mvet5hic8fy4a.8: final sent (11/11); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "05:26:26 request mvet5hic8fy4a.3: chunk of 22 keys done in 232s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "05:26:27 request mvet5hic8fy4a.3: final sent (22/22); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "05:27:06 request mvet5hic8fy4a.5: chunk of 12 keys done in 272s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "05:27:07 request mvet5hic8fy4a.5: final sent (12/12); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "05:27:22 request mvet5hic8fy4a.4: chunk of 12 keys done in 288s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "05:27:23 request mvet5hic8fy4a.4: final sent (12/12); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
