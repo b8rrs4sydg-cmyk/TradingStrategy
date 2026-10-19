@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T01:36:36+00:00",
+ "at": "2026-10-19T01:39:37+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
@@ -84,6 +84,26 @@
   "01:34:41 request mvekjsqaftt2n.1: chunk of 16 keys done in 776s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "01:34:43 request mvekjsqaftt2n.1: final sent (16/16); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "01:35:23 request mvekjsqaftt2n.0: chunk of 18 keys done in 818s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "01:35:23 request mvekjsqaftt2n.0: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "01:35:23 request mvekjsqaftt2n.0: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "01:38:18 request received: rid mvel52wxpvphk.0 16 keys",
+  "01:38:18 handle mvel52wxpvphk.0: first_chunk=True total=16",
+  "01:38:18 request received: rid mvel52wxpvphk.1 14 keys",
+  "01:38:18 handle mvel52wxpvphk.1: first_chunk=True total=14",
+  "01:38:18 request received: rid mvel52wxpvphk.2 21 keys",
+  "01:38:18 handle mvel52wxpvphk.2: first_chunk=True total=21",
+  "01:38:18 request received: rid mvel52wxpvphk.3 16 keys",
+  "01:38:18 request received: rid mvel52wxpvphk.4 20 keys",
+  "01:38:18 handle mvel52wxpvphk.3: first_chunk=True total=16",
+  "01:38:18 handle mvel52wxpvphk.4: first_chunk=True total=20",
+  "01:38:18 request received: rid mvel52wxpvphk.8 18 keys",
+  "01:38:18 request received: rid mvel52wxpvphk.5 14 keys",
+  "01:38:18 request received: rid mvel52wxpvphk.7 11 keys",
+  "01:38:18 handle mvel52wxpvphk.8: first_chunk=True total=18",
+  "01:38:18 handle mvel52wxpvphk.5: first_chunk=True total=14",
+  "01:38:18 handle mvel52wxpvphk.7: first_chunk=True total=11",
+  "01:38:18 request received: rid mvel52wxpvphk.9 17 keys",
+  "01:38:18 request received: rid mvel52wxpvphk.6 13 keys",
+  "01:38:18 handle mvel52wxpvphk.9: first_chunk=True total=17",
+  "01:38:18 handle mvel52wxpvphk.6: first_chunk=True total=13"
  ]
 }
