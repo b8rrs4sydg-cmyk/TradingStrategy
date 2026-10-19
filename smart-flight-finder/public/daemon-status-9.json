@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T15:14:01+00:00",
+ "at": "2026-10-19T15:15:33+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1621,
+ "fares_saved": 1641,
  "log": [
-  "13:52:43 handle mvfbdjrre1son.9: first_chunk=True total=9",
-  "13:53:15 request mvfbc78a2eb12.9: chunk of 18 keys done in 95s; paths {'http': 36, 'browser-none': 14}, browser waits 14 max 83s sum 765s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 18, 'blocked': 0, 'tries': 52, 'empty': 16}, audit 1/1 agree",
-  "13:53:17 request mvfbc78a2eb12.9: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "13:53:45 request mvfbdjrre1son.9: chunk of 9 keys done in 62s; paths {'http': 36, 'browser-none': 18}, browser waits 18 max 83s sum 956s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 18, 'blocked': 0, 'tries': 52, 'empty': 16}, audit 1/1 agree",
   "13:53:46 request mvfbdjrre1son.9: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:54:20 request received: rid mvfbfn06sdm3h.9 6 keys",
   "13:54:20 handle mvfbfn06sdm3h.9: first_chunk=True total=6",
@@ -156,6 +152,10 @@
   "15:11:36 request mvfe6wzng4lrd.9: final sent (10/10); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:12:25 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "15:13:13 request received: rid mvfe92qqltt4y.9 12 keys",
-  "15:13:13 handle mvfe92qqltt4y.9: first_chunk=True total=12"
+  "15:13:13 handle mvfe92qqltt4y.9: first_chunk=True total=12",
+  "15:14:01 request mvfe92qqltt4y.9: chunk of 12 keys done in 49s; paths {'http': 143, 'browser-none': 373, 'browser': 59}, browser waits 432 max 145s sum 25181s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 143, 'miss': 136, 'blocked': 0, 'tries': 222, 'empty': 79}, audit 3/3 agr",
+  "15:14:03 request mvfe92qqltt4y.9: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:14:55 request received: rid mvfeb9qdfqrkz.9 21 keys",
+  "15:14:55 handle mvfeb9qdfqrkz.9: first_chunk=True total=21"
  ]
 }
