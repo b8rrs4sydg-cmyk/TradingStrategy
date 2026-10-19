@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:10:05+00:00",
+ "at": "2026-10-19T15:11:37+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 1579,
  "log": [
-  "12:49:03 http front door: ['https://rob-consider-whose-trunk.trycloudflare.com', 'https://1cc29d22402f68.lhr.life']",
-  "12:49:03 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "12:50:02 request received: rid httptest1792414201 20 keys",
-  "12:50:02 handle httptest1792414201: first_chunk=True total=20",
   "12:50:03 request httptest1792414201: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
   "12:50:05 request httptest1792414201: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "12:59:46 rtc kvey0gd6sb: answered",
@@ -156,6 +152,10 @@
   "15:09:10 request mvfe1jnoqnpfg.7: chunk of 17 keys done in 109s; paths {'http': 129, 'browser-none': 308, 'browser': 47}, browser waits 355 max 190s sum 21392s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 129, 'miss': 115, 'blocked': 0, 'tries': 181, 'empty': 52}, audit 5/5 ag",
   "15:09:11 request mvfe1jnoqnpfg.7: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "15:09:51 request received: rid mvfe4r543u0kp.7 15 keys",
-  "15:09:51 handle mvfe4r543u0kp.7: first_chunk=True total=15"
+  "15:09:51 handle mvfe4r543u0kp.7: first_chunk=True total=15",
+  "15:11:27 request mvfe4r543u0kp.7: chunk of 15 keys done in 95s; paths {'http': 133, 'browser-none': 319, 'browser': 47}, browser waits 366 max 190s sum 22045s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 115, 'blocked': 0, 'tries': 185, 'empty': 52}, audit 5/5 agr",
+  "15:11:28 request mvfe4r543u0kp.7: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:11:32 request received: rid mvfe6wzng4lrd.7 19 keys",
+  "15:11:32 handle mvfe6wzng4lrd.7: first_chunk=True total=19"
  ]
 }
