@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:30:52+00:00",
+ "at": "2026-10-19T14:38:25+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1601,
+ "fares_saved": 1613,
  "log": [
   "12:49:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:06 http front door: ['https://guitar-plan-type-architect.trycloudflare.com', 'https://bf0d3d98059ebb.lhr.life']",
@@ -117,6 +117,10 @@
   "14:27:25 request received: rid mvfcm4j2j0ubc.1 17 keys",
   "14:27:25 handle mvfcm4j2j0ubc.1: first_chunk=True total=17",
   "14:29:44 request mvfcm4j2j0ubc.1: chunk of 17 keys done in 140s; paths {'http': 130, 'browser-none': 152, 'browser': 29}, browser waits 181 max 142s sum 8985s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 130, 'miss': 73, 'blocked': 0, 'tries': 165, 'empty': 35}, audit 7/7 agre",
-  "14:29:45 request mvfcm4j2j0ubc.1: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "14:29:45 request mvfcm4j2j0ubc.1: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "14:38:09 rtc v1f81t0gc5: answered",
+  "14:38:10 request received: rid mvfczy8imz3gp.1 18 keys",
+  "14:38:10 handle mvfczy8imz3gp.1: first_chunk=True total=18",
+  "14:38:10 rtc v1f81t0gc5: data channel open"
  ]
 }
