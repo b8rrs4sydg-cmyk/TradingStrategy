@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T06:54:21+00:00",
+ "at": "2026-10-19T06:55:52+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6478,
+ "fares_saved": 6490,
  "log": [
-  "06:11:50 request received: rid mveuwuttlcced.3 18 keys",
-  "06:11:50 handle mveuwuttlcced.3: first_chunk=True total=18",
-  "06:11:50 request received: rid mveuwuttlcced.1 18 keys",
-  "06:11:50 handle mveuwuttlcced.1: first_chunk=True total=18",
   "06:11:50 request received: rid mveuwuttlcced.2 23 keys",
   "06:11:50 handle mveuwuttlcced.2: first_chunk=True total=23",
   "06:11:50 request received: rid mveuwuttlcced.5 12 keys",
@@ -156,6 +152,10 @@
   "06:53:10 request mvew7fp2pu7xi.5: chunk of 17 keys done in 306s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:53:10 request mvew7fp2pu7xi.5: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:54:08 request mvew7fp2pu7xi.3: chunk of 18 keys done in 365s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:54:10 request mvew7fp2pu7xi.3: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "06:54:10 request mvew7fp2pu7xi.3: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:54:37 request mvew7fp2pu7xi.4: chunk of 14 keys done in 394s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:54:38 request mvew7fp2pu7xi.4: final sent (14/14); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:55:10 request mvew7fp2pu7xi.2: chunk of 11 keys done in 427s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:55:12 request mvew7fp2pu7xi.2: final sent (11/11); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
