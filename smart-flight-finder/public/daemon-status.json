@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T00:49:24+00:00",
+ "at": "2026-10-19T00:50:56+00:00",
  "publishes": {
-  "ok": 5,
+  "ok": 12,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4729,
+ "fares_saved": 4732,
  "log": [
   "00:47:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "00:47:53 http front door: ['https://justin-collectors-economic-wiring.trycloudflare.com', 'https://49b8fcdb265a42.lhr.life']",
@@ -17,6 +17,8 @@
   "00:48:20 handle mvejcryd67egz: first_chunk=False total=160",
   "00:48:21 rtc 5wbeh08hwa: data channel open",
   "00:48:57 request received: rid httptest1792370937 20 keys",
-  "00:48:57 handle httptest1792370937: first_chunk=True total=20"
+  "00:48:57 handle httptest1792370937: first_chunk=True total=20",
+  "00:49:29 request httptest1792370937: chunk of 20 keys done in 32s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "00:49:29 request httptest1792370937: final sent (20/20); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
  ]
 }
