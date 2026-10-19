@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T15:14:56+00:00",
+ "at": "2026-10-19T15:16:29+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1715,
+ "fares_saved": 1740,
  "log": [
-  "13:55:23 request mvfbfn06sdm3h.2: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "13:57:07 request received: rid mvfbj7vir76k0.2 14 keys",
-  "13:57:07 handle mvfbj7vir76k0.2: first_chunk=True total=14",
-  "13:58:45 request mvfbj7vir76k0.2: chunk of 14 keys done in 98s; paths {'http': 37, 'browser-none': 33}, browser waits 33 max 92s sum 1875s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 33, 'blocked': 0, 'tries': 77, 'empty': 40}, audit 3/3 agree",
   "13:58:46 request mvfbj7vir76k0.2: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:59:31 request received: rid mvfbmasunab5h.2 13 keys",
   "13:59:31 handle mvfbmasunab5h.2: first_chunk=True total=13",
@@ -156,6 +152,10 @@
   "15:14:50 request mvfe92qqltt4y.2: chunk of 18 keys done in 97s; paths {'http': 148, 'browser-none': 378, 'browser': 72}, browser waits 450 max 187s sum 25446s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 148, 'miss': 140, 'blocked': 0, 'tries': 233, 'empty': 85}, audit 5/5 agr",
   "15:14:51 request mvfe92qqltt4y.2: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:14:55 request received: rid mvfeb9qdfqrkz.2 18 keys",
-  "15:14:55 handle mvfeb9qdfqrkz.2: first_chunk=True total=18"
+  "15:14:55 handle mvfeb9qdfqrkz.2: first_chunk=True total=18",
+  "15:15:40 request mvfeb9qdfqrkz.2: chunk of 18 keys done in 45s; paths {'http': 165, 'browser-none': 379, 'browser': 72}, browser waits 451 max 187s sum 25492s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 165, 'miss': 140, 'blocked': 0, 'tries': 251, 'empty': 86}, audit 5/5 agr",
+  "15:15:42 request mvfeb9qdfqrkz.2: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:15:51 request received: rid mvfecgjs9rv45.2 11 keys",
+  "15:15:51 handle mvfecgjs9rv45.2: first_chunk=True total=11"
  ]
 }
