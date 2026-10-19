@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T05:47:37+00:00",
+ "at": "2026-10-19T05:49:09+00:00",
  "publishes": {
-  "ok": 53,
+  "ok": 62,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 5870,
+ "fares_saved": 5886,
  "log": [
   "05:36:55 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:36:59 http front door: ['https://auction-stages-signature-beautiful.trycloudflare.com', 'https://d76cfe3cc870ad.lhr.life']",
@@ -18,6 +18,8 @@
   "05:39:30 handle mvetr8zhai90u: first_chunk=True total=157",
   "05:39:30 request received: rid mvetr8zhai90u 73 keys",
   "05:39:30 handle mvetr8zhai90u: first_chunk=False total=157",
-  "05:45:04 request mvetr8zhai90u: chunk of 73 keys done in 334s; ntfy publishes {'ok': 33, 'r429': 0, 'fail': 0}"
+  "05:45:04 request mvetr8zhai90u: chunk of 73 keys done in 334s; ntfy publishes {'ok': 33, 'r429': 0, 'fail': 0}",
+  "05:48:52 request mvetr8zhai90u: chunk of 84 keys done in 562s; ntfy publishes {'ok': 61, 'r429': 0, 'fail': 0}",
+  "05:48:54 request mvetr8zhai90u: final sent (157/157); ntfy publishes {'ok': 62, 'r429': 0, 'fail': 0}"
  ]
 }
