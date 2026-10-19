@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T15:16:10+00:00",
+ "at": "2026-10-19T15:17:41+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1741,
+ "fares_saved": 1742,
  "log": [
-  "13:01:57 request mvf9iy7lni9vv.3: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:50:31 rtc kkc2jm6d0o: answered",
-  "13:50:32 rtc kkc2jm6d0o: data channel open",
-  "13:50:33 request received: rid mvfbambektgty.3 3 keys",
   "13:50:33 handle mvfbambektgty.3: first_chunk=True total=3",
   "13:51:33 request mvfbambektgty.3: chunk of 3 keys done in 60s; paths {'http': 20, 'browser-none': 7}, browser waits 7 max 49s sum 330s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 7, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
   "13:51:35 request mvfbambektgty.3: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "15:15:51 request received: rid mvfecgjs9rv45.3 3 keys",
   "15:15:51 handle mvfecgjs9rv45.3: first_chunk=True total=3",
   "15:15:53 request mvfecgjs9rv45.3: chunk of 3 keys done in 2s; paths {'http': 161, 'browser-none': 359, 'browser': 63}, browser waits 422 max 147s sum 24429s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 161, 'miss': 123, 'blocked': 0, 'tries': 214, 'empty': 53}, audit 4/4 agree",
-  "15:15:55 request mvfecgjs9rv45.3: final sent (3/3); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "15:15:55 request mvfecgjs9rv45.3: final sent (3/3); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:16:46 request received: rid mvfedndo17c1a.3 1 keys",
+  "15:16:46 handle mvfedndo17c1a.3: first_chunk=True total=1",
+  "15:16:46 request mvfedndo17c1a.3: chunk of 1 keys done in 0s; paths {'http': 162, 'browser-none': 359, 'browser': 63}, browser waits 422 max 147s sum 24429s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 162, 'miss': 123, 'blocked': 0, 'tries': 215, 'empty': 53}, audit 4/4 agree",
+  "15:16:47 request mvfedndo17c1a.3: final sent (1/1); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
