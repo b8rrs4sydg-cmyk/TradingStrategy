@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:53:40+00:00",
+ "at": "2026-10-19T14:55:13+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1662,
+ "fares_saved": 1673,
  "log": [
   "12:49:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:13 http front door: ['https://blast-calendars-trail-phones.trycloudflare.com', 'https://97d2e9e6a805ae.lhr.life']",
@@ -134,6 +134,8 @@
   "14:52:44 request mvfdgk2km1ajx.6: chunk of 13 keys done in 100s; paths {'http': 139, 'browser-none': 238, 'browser': 45}, browser waits 283 max 143s sum 14805s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 139, 'miss': 114, 'blocked': 0, 'tries': 206, 'empty': 67}, audit 6/6 ag",
   "14:52:45 request mvfdgk2km1ajx.6: final sent (13/13); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "14:53:34 request received: rid mvfdjtcipf1ip.6 16 keys",
-  "14:53:34 handle mvfdjtcipf1ip.6: first_chunk=True total=16"
+  "14:53:34 handle mvfdjtcipf1ip.6: first_chunk=True total=16",
+  "14:54:36 request mvfdjtcipf1ip.6: chunk of 16 keys done in 62s; paths {'http': 139, 'browser-none': 243, 'browser': 56}, browser waits 299 max 143s sum 15160s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 139, 'miss': 114, 'blocked': 0, 'tries': 206, 'empty': 67}, audit 6/6 agr",
+  "14:54:38 request mvfdjtcipf1ip.6: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
