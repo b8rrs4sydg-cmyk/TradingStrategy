@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:19:33+00:00",
+ "at": "2026-10-19T14:21:05+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1559,
+ "fares_saved": 1570,
  "log": [
   "12:48:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:55 http front door: ['https://statement-feedback-exploration-martial.trycloudflare.com', 'https://002f3ae3404907.lhr.life']",
@@ -91,6 +91,12 @@
   "14:18:20 request mvfc8ey9dmfrh.4: chunk of 22 keys done in 97s; paths {'http': 102, 'browser-none': 135}, browser waits 135 max 143s sum 8579s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 102, 'miss': 47, 'blocked': 0, 'tries': 138, 'empty': 36}, audit 2/2 agree",
   "14:18:21 request mvfc8ey9dmfrh.4: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:18:22 request received: rid mvfcajrwau2tv.4 15 keys",
-  "14:18:22 handle mvfcajrwau2tv.4: first_chunk=True total=15"
+  "14:18:22 handle mvfcajrwau2tv.4: first_chunk=True total=15",
+  "14:19:58 request mvfcajrwau2tv.4: chunk of 15 keys done in 96s; paths {'http': 105, 'browser-none': 147}, browser waits 147 max 143s sum 9339s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 105, 'miss': 47, 'blocked': 0, 'tries': 141, 'empty': 36}, audit 2/2 agree",
+  "14:20:00 request mvfcajrwau2tv.4: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:20:03 request received: rid mvfccojpu9g7e.4 13 keys",
+  "14:20:03 handle mvfccojpu9g7e.4: first_chunk=True total=13",
+  "14:20:50 request mvfccojpu9g7e.4: chunk of 13 keys done in 47s; paths {'http': 116, 'browser-none': 149}, browser waits 149 max 143s sum 9432s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 116, 'miss': 49, 'blocked': 0, 'tries': 156, 'empty': 40}, audit 2/2 agree",
+  "14:20:51 request mvfccojpu9g7e.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
