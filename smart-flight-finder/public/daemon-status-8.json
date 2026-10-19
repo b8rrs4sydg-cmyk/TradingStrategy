@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T13:02:25+00:00",
+ "at": "2026-10-19T13:51:57+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1417,
+ "fares_saved": 1425,
  "log": [
   "12:48:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:53 http front door: ['https://lloyd-filing-collection-busy.trycloudflare.com', 'https://3d4f98d6c6c086.lhr.life']",
@@ -19,6 +19,10 @@
   "13:00:55 request received: rid mvf9iy7lni9vv.8 1 keys",
   "13:00:55 handle mvf9iy7lni9vv.8: first_chunk=True total=1",
   "13:01:56 request mvf9iy7lni9vv.8: chunk of 1 keys done in 61s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 48s sum 48s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
-  "13:01:56 request mvf9iy7lni9vv.8: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:01:56 request mvf9iy7lni9vv.8: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:50:31 rtc 75h09x3rpw: answered",
+  "13:50:32 rtc 75h09x3rpw: data channel open",
+  "13:51:40 request received: rid mvfbc78a2eb12.8 15 keys",
+  "13:51:40 handle mvfbc78a2eb12.8: first_chunk=True total=15"
  ]
 }
