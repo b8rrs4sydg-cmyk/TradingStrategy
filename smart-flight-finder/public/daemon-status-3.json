@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:52:28+00:00",
+ "at": "2026-10-19T20:43:41+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1746,
  "log": [
-  "15:50:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:50:58 http front door: ['https://spread-greensboro-spokesman-horizon.trycloudflare.com', 'https://cc8219cbc2a70d.lhr.life']",
-  "15:50:58 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:51:58 request received: rid httptest1792425117 20 keys",
-  "15:51:58 handle httptest1792425117: first_chunk=True total=20",
-  "15:52:00 request httptest1792425117: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
-  "15:52:00 request httptest1792425117: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:42:06 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:42:11 http front door: ['https://anywhere-blonde-arthritis-horse.trycloudflare.com', 'https://5124fbcb39e066.lhr.life']",
+  "20:42:11 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:43:15 request received: rid httptest1792442595 20 keys",
+  "20:43:15 handle httptest1792442595: first_chunk=True total=20",
+  "20:43:17 request httptest1792442595: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "20:43:18 request httptest1792442595: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
