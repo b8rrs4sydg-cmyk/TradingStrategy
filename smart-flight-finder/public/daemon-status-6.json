@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:09:29+00:00",
+ "at": "2026-10-19T14:11:00+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1557,
+ "fares_saved": 1565,
  "log": [
   "12:49:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:13 http front door: ['https://blast-calendars-trail-phones.trycloudflare.com', 'https://97d2e9e6a805ae.lhr.life']",
@@ -68,6 +68,10 @@
   "14:07:53 request received: rid mvfbx2dtxbuj9.6 16 keys",
   "14:07:53 handle mvfbx2dtxbuj9.6: first_chunk=True total=16",
   "14:09:06 request mvfbx2dtxbuj9.6: chunk of 16 keys done in 73s; paths {'http': 78, 'browser-none': 104, 'browser': 1}, browser waits 105 max 97s sum 6047s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 78, 'miss': 56, 'blocked': 0, 'tries': 127, 'empty': 49}, audit 4/4 agree",
-  "14:09:07 request mvfbx2dtxbuj9.6: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:09:07 request mvfbx2dtxbuj9.6: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:09:34 request received: rid mvfbz7yyrjwdr.6 17 keys",
+  "14:09:34 handle mvfbz7yyrjwdr.6: first_chunk=True total=17",
+  "14:10:26 request received: rid mvfc0bz8s0brp.6 12 keys",
+  "14:10:26 handle mvfc0bz8s0brp.6: first_chunk=True total=12"
  ]
 }
