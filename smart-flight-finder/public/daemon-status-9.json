@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:14:00+00:00",
+ "at": "2026-10-19T14:15:32+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1510,
+ "fares_saved": 1514,
  "log": [
   "12:48:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:02 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -82,6 +82,10 @@
   "14:11:26 request mvfc0bz8s0brp.9: chunk of 10 keys done in 61s; paths {'http': 80, 'browser-none': 87, 'browser': 10}, browser waits 97 max 97s sum 4849s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 47, 'blocked': 0, 'tries': 121, 'empty': 41}, audit 1/1 agree",
   "14:11:27 request mvfc0bz8s0brp.9: final sent (10/10); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:12:43 request received: rid mvfc3a2gbdcy4.9 13 keys",
-  "14:12:43 handle mvfc3a2gbdcy4.9: first_chunk=True total=13"
+  "14:12:43 handle mvfc3a2gbdcy4.9: first_chunk=True total=13",
+  "14:14:31 request mvfc3a2gbdcy4.9: chunk of 13 keys done in 108s; paths {'http': 81, 'browser-none': 99, 'browser': 10}, browser waits 109 max 97s sum 5541s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 81, 'miss': 59, 'blocked': 0, 'tries': 125, 'empty': 44}, audit 1/1 agree",
+  "14:14:31 request mvfc3a2gbdcy4.9: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:15:01 request received: rid mvfc68fwik465.9 16 keys",
+  "14:15:01 handle mvfc68fwik465.9: first_chunk=True total=16"
  ]
 }
