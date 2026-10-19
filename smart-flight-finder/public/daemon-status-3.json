@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T13:02:30+00:00",
+ "at": "2026-10-19T13:52:02+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1537,
+ "fares_saved": 1544,
  "log": [
   "12:48:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:57 http front door: ['https://rod-completed-drawn-bodies.trycloudflare.com', 'https://e9941d25d8f7a9.lhr.life']",
@@ -23,6 +23,14 @@
   "13:00:55 request received: rid mvf9iy7lni9vv.3 1 keys",
   "13:00:55 handle mvf9iy7lni9vv.3: first_chunk=True total=1",
   "13:01:55 request mvf9iy7lni9vv.3: chunk of 1 keys done in 60s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 49s sum 190s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
-  "13:01:57 request mvf9iy7lni9vv.3: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:01:57 request mvf9iy7lni9vv.3: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:50:31 rtc kkc2jm6d0o: answered",
+  "13:50:32 rtc kkc2jm6d0o: data channel open",
+  "13:50:33 request received: rid mvfbambektgty.3 3 keys",
+  "13:50:33 handle mvfbambektgty.3: first_chunk=True total=3",
+  "13:51:33 request mvfbambektgty.3: chunk of 3 keys done in 60s; paths {'http': 20, 'browser-none': 7}, browser waits 7 max 49s sum 330s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 7, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
+  "13:51:35 request mvfbambektgty.3: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:51:40 request received: rid mvfbc78a2eb12.3 18 keys",
+  "13:51:40 handle mvfbc78a2eb12.3: first_chunk=True total=18"
  ]
 }
