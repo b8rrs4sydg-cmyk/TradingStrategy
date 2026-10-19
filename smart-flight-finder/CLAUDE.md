@@ -356,4 +356,7 @@ the `.plan` DOM order still equals the plan array the card handlers index into).
   written to the file of the instance `dispatch.owner` assigns it); run it with `--public <dir> --other <dir of the other branch's files>`.
 * Top 100 (`buildTop100` / `renderTop100`): see the comment above them for the score. Only trips out of Taiwan are listed (one-way legs that
   start abroad are 四腿票 building blocks), fares under 1,000 or below 30 % of their route's median are treated as misreads.
+* 資料庫全部資料 card (`dbRows` / `dbFiltered` / `renderDbCard`, `DBLOAD`): every fare the page holds in a searchable, sortable, paged table (100
+  per page) with a "重新載入全部資料" button (re-reads all fare files from GitHub, falling back to the copy beside the page) and CSV / JSON
+  downloads of the current filter.
 
