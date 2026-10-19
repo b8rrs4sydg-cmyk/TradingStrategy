@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T14:10:22+00:00",
+ "at": "2026-10-19T14:11:54+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -71,6 +71,12 @@
   "14:08:54 request mvfbx2dtxbuj9.4: chunk of 12 keys done in 60s; paths {'http': 86, 'browser-none': 77}, browser waits 77 max 141s sum 4599s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 86, 'miss': 37, 'blocked': 0, 'tries': 116, 'empty': 30}, audit 2/2 agree",
   "14:08:55 request mvfbx2dtxbuj9.4: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:09:34 request received: rid mvfbz7yyrjwdr.4 12 keys",
-  "14:09:34 handle mvfbz7yyrjwdr.4: first_chunk=True total=12"
+  "14:09:34 handle mvfbz7yyrjwdr.4: first_chunk=True total=12",
+  "14:10:26 request received: rid mvfc0bz8s0brp.4 13 keys",
+  "14:10:26 handle mvfc0bz8s0brp.4: first_chunk=True total=13",
+  "14:10:46 request mvfbz7yyrjwdr.4: chunk of 12 keys done in 72s; paths {'http': 91, 'browser-none': 84}, browser waits 84 max 141s sum 4929s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 91, 'miss': 44, 'blocked': 0, 'tries': 121, 'empty': 30}, audit 2/2 agree",
+  "14:10:47 request mvfbz7yyrjwdr.4: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:11:24 request mvfc0bz8s0brp.4: chunk of 13 keys done in 58s; paths {'http': 91, 'browser-none': 90}, browser waits 90 max 141s sum 5262s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 91, 'miss': 44, 'blocked': 0, 'tries': 121, 'empty': 30}, audit 2/2 agree",
+  "14:11:26 request mvfc0bz8s0brp.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
