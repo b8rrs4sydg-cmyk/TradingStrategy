@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:01:22+00:00",
+ "at": "2026-10-19T15:02:55+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 1566,
  "log": [
-  "12:48:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "12:49:02 git retry 0: b\"-46zevd': is at 075e6c8f9244010504874074ccf7ac604d9c46bb but expected 12f6d4ded97d1d20108a6d972b1408abd75bbca1)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "12:49:08 http front door: ['https://natural-set-thoughts-calculators.trycloudflare.com', 'https://a79dd2f697693e.lhr.life']",
   "12:49:08 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:50:06 request received: rid httptest1792414206 20 keys",
   "12:50:06 handle httptest1792414206: first_chunk=True total=20",
@@ -155,6 +152,10 @@
   "14:58:20 request mvfdnwih0i6pv.5: chunk of 13 keys done in 95s; paths {'http': 134, 'browser-none': 325, 'browser': 22}, browser waits 347 max 191s sum 22132s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 134, 'miss': 128, 'blocked': 0, 'tries': 220, 'empty': 86}, audit 3/3 agr",
   "14:58:20 request mvfdnwih0i6pv.5: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:59:44 request received: rid mvfdrqk35rshh.5 16 keys",
-  "14:59:44 handle mvfdrqk35rshh.5: first_chunk=True total=16"
+  "14:59:44 handle mvfdrqk35rshh.5: first_chunk=True total=16",
+  "15:01:39 request mvfdrqk35rshh.5: chunk of 16 keys done in 115s; paths {'http': 134, 'browser-none': 341, 'browser': 22}, browser waits 363 max 191s sum 23149s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 134, 'miss': 144, 'blocked': 0, 'tries': 223, 'empty': 89}, audit 3/3 ag",
+  "15:01:40 request mvfdrqk35rshh.5: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:02:24 request received: rid mvfdv62skgmel.5 10 keys",
+  "15:02:24 handle mvfdv62skgmel.5: first_chunk=True total=10"
  ]
 }
