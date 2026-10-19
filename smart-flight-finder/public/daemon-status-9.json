@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:21:39+00:00",
+ "at": "2026-10-19T14:23:24+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1543,
+ "fares_saved": 1555,
  "log": [
   "12:48:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:02 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -102,6 +102,12 @@
   "14:20:57 request mvfccojpu9g7e.8: chunk of 17 keys done in 53s; paths {'http': 103, 'browser-none': 130, 'browser': 18}, browser waits 148 max 97s sum 7287s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 103, 'miss': 62, 'blocked': 0, 'tries': 154, 'empty': 51}, audit 1/1 agree",
   "14:20:58 request mvfccojpu9g7e.8: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:21:08 request received: rid mvfce38diwgc8.8 4 keys",
-  "14:21:08 handle mvfce38diwgc8.8: first_chunk=True total=4"
+  "14:21:08 handle mvfce38diwgc8.8: first_chunk=True total=4",
+  "14:21:41 git retry 0: b\"-46zevd': is at cf4f6717902ac32de265177635f613277f22d66e but expected abfe4be7c142594193a60e941c321e0fa4026f8a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "14:21:45 git retry 1: b\"-46zevd': is at d8d331d6743ba64c882e3b91b7d90979179ae1c3 but expected cf4f6717902ac32de265177635f613277f22d66e)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "14:21:55 request mvfce38diwgc8.8: chunk of 4 keys done in 47s; paths {'http': 104, 'browser-none': 131, 'browser': 20}, browser waits 151 max 97s sum 7340s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 104, 'miss': 62, 'blocked': 0, 'tries': 155, 'empty': 51}, audit 1/1 agree",
+  "14:21:57 request mvfce38diwgc8.8: final sent (4/4); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:22:57 request received: rid mvfcgeblrmmkk.6 16 keys",
+  "14:22:57 handle mvfcgeblrmmkk.6: first_chunk=True total=16"
  ]
 }
