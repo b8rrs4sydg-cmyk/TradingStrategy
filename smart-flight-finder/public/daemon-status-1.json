@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T12:50:36+00:00",
+ "at": "2026-10-19T13:01:08+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1462,
+ "fares_saved": 1463,
  "log": [
   "12:49:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:06 http front door: ['https://guitar-plan-type-architect.trycloudflare.com', 'https://bf0d3d98059ebb.lhr.life']",
@@ -13,6 +13,14 @@
   "12:50:09 request received: rid httptest1792414208 20 keys",
   "12:50:09 handle httptest1792414208: first_chunk=True total=20",
   "12:50:10 request httptest1792414208: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "12:50:10 request httptest1792414208: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "12:50:10 request httptest1792414208: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "12:59:46 rtc 89lw2wawfx: answered",
+  "12:59:48 rtc 89lw2wawfx: data channel open",
+  "12:59:49 request received: rid mvf9hef07qn9d.1 4 keys",
+  "12:59:49 handle mvf9hef07qn9d.1: first_chunk=True total=4",
+  "13:00:51 request mvf9hef07qn9d.1: chunk of 4 keys done in 62s; paths {'http': 21, 'browser-none': 3}, browser waits 3 max 50s sum 144s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 3, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 5/5 agree",
+  "13:00:52 request mvf9hef07qn9d.1: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:00:55 request received: rid mvf9iy7lni9vv.1 1 keys",
+  "13:00:55 handle mvf9iy7lni9vv.1: first_chunk=True total=1"
  ]
 }
