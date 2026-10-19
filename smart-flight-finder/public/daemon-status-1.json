@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:40:09+00:00",
+ "at": "2026-10-19T14:41:41+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1613,
+ "fares_saved": 1619,
  "log": [
   "12:49:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:06 http front door: ['https://guitar-plan-type-architect.trycloudflare.com', 'https://bf0d3d98059ebb.lhr.life']",
@@ -125,6 +125,10 @@
   "14:38:26 git retry 0: b\"-46zevd': is at 513440edf0dd9859b8f4de59f9413711db67b25d but expected bc0267d88ec2b3a55232f6d65e24158222ca5223)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "14:38:32 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "14:39:12 request mvfczy8imz3gp.1: chunk of 18 keys done in 63s; paths {'http': 142, 'browser-none': 158, 'browser': 29}, browser waits 187 max 142s sum 9274s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 142, 'miss': 79, 'blocked': 0, 'tries': 182, 'empty': 40}, audit 7/7 agree",
-  "14:39:14 request mvfczy8imz3gp.1: final sent (18/18); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "14:39:14 request mvfczy8imz3gp.1: final sent (18/18); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "14:40:35 request received: rid mvfd34ggx3olo.1 12 keys",
+  "14:40:35 handle mvfd34ggx3olo.1: first_chunk=True total=12",
+  "14:41:39 request mvfd34ggx3olo.1: chunk of 12 keys done in 64s; paths {'http': 148, 'browser-none': 164, 'browser': 29}, browser waits 193 max 142s sum 9566s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 148, 'miss': 85, 'blocked': 0, 'tries': 194, 'empty': 46}, audit 7/7 agree",
+  "14:41:39 request mvfd34ggx3olo.1: final sent (12/12); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
