@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:07:18+00:00",
+ "at": "2026-10-19T15:08:50+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1694,
  "log": [
-  "13:01:55 request mvf9iy7lni9vv.2: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:50:30 rtc w75kmentxs: answered",
   "13:50:32 rtc w75kmentxs: data channel open",
   "13:50:33 request received: rid mvfbambektgty.2 1 keys",
   "13:50:33 handle mvfbambektgty.2: first_chunk=True total=1",
@@ -156,6 +154,8 @@
   "15:04:51 request received: rid mvfdyb6wk7gb5.2 13 keys",
   "15:04:51 handle mvfdyb6wk7gb5.2: first_chunk=True total=13",
   "15:06:26 request mvfdyb6wk7gb5.2: chunk of 13 keys done in 96s; paths {'http': 127, 'browser-none': 333, 'browser': 72}, browser waits 405 max 187s sum 22114s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 127, 'miss': 139, 'blocked': 0, 'tries': 209, 'empty': 82}, audit 5/5 agr",
-  "15:06:27 request mvfdyb6wk7gb5.2: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "15:06:27 request mvfdyb6wk7gb5.2: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:07:22 request received: rid mvfe1jnoqnpfg.2 21 keys",
+  "15:07:22 handle mvfe1jnoqnpfg.2: first_chunk=True total=21"
  ]
 }
