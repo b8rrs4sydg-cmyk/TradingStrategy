@@ -1,20 +1,12 @@
 {
- "at": "2026-10-19T04:16:14+00:00",
+ "at": "2026-10-19T04:17:45+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 5043,
+ "fares_saved": 5063,
  "log": [
-  "03:34:19 handle mvepaapvj0b2x.2: first_chunk=True total=14",
-  "03:34:19 handle mvepaapvj0b2x.0: first_chunk=True total=19",
-  "03:34:19 request received: rid mvepaapvj0b2x.1 16 keys",
-  "03:34:19 handle mvepaapvj0b2x.1: first_chunk=True total=16",
-  "03:34:19 request received: rid mvepaapvj0b2x.4 23 keys",
-  "03:34:19 handle mvepaapvj0b2x.4: first_chunk=True total=23",
-  "03:34:19 request received: rid mvepaapvj0b2x.5 13 keys",
-  "03:34:19 handle mvepaapvj0b2x.5: first_chunk=True total=13",
   "03:34:19 request received: rid mvepaapvj0b2x.8 10 keys",
   "03:34:19 handle mvepaapvj0b2x.8: first_chunk=True total=10",
   "03:34:19 request received: rid mvepaapvj0b2x.7 19 keys",
@@ -156,6 +148,14 @@
   "04:15:10 request mveqla103ljxs.8: chunk of 16 keys done in 259s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "04:15:13 request mveqla103ljxs.8: final sent (16/16); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "04:15:36 request mveqla103ljxs.3: chunk of 17 keys done in 285s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "04:15:36 request mveqla103ljxs.3: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "04:15:36 request mveqla103ljxs.3: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:16:21 request mveqla103ljxs.4: chunk of 20 keys done in 330s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:16:21 request mveqla103ljxs.4: final sent (20/20); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:17:07 request mveqla103ljxs.1: chunk of 19 keys done in 376s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:17:08 request mveqla103ljxs.1: final sent (19/19); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:17:18 request mveqla103ljxs.0: chunk of 10 keys done in 387s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:17:19 request mveqla103ljxs.2: chunk of 10 keys done in 388s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:17:20 request mveqla103ljxs.2: final sent (10/10); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:17:20 request mveqla103ljxs.0: final sent (10/10); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
