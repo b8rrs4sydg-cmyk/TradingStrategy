@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T02:20:43+00:00",
+ "at": "2026-10-19T02:22:14+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 4732,
  "log": [
-  "01:21:45 request received: rid mvekjsqaftt2n.0 18 keys",
-  "01:21:45 handle mvekjsqaftt2n.0: first_chunk=True total=18",
   "01:21:45 request received: rid mvekjsqaftt2n.1 16 keys",
   "01:21:45 handle mvekjsqaftt2n.1: first_chunk=True total=16",
   "01:21:45 request received: rid mvekjsqaftt2n.2 12 keys",
@@ -156,6 +154,8 @@
   "02:17:36 request mvemboc2xxc0a.8: chunk of 10 keys done in 371s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "02:17:37 request mvemboc2xxc0a.8: final sent (10/10); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "02:19:34 request mvemboc2xxc0a.5: chunk of 19 keys done in 489s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "02:19:34 request mvemboc2xxc0a.5: final sent (19/19); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "02:19:34 request mvemboc2xxc0a.5: final sent (19/19); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "02:20:57 request mvemboc2xxc0a.4: chunk of 19 keys done in 572s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "02:20:59 request mvemboc2xxc0a.4: final sent (19/19); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
