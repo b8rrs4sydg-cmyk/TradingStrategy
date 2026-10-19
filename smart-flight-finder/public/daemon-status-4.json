@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:07:18+00:00",
+ "at": "2026-10-19T14:08:50+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1536,
+ "fares_saved": 1540,
  "log": [
   "12:48:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:55 http front door: ['https://statement-feedback-exploration-martial.trycloudflare.com', 'https://002f3ae3404907.lhr.life']",
@@ -65,6 +65,8 @@
   "14:06:15 request received: rid mvfbuylame3id.4 13 keys",
   "14:06:15 handle mvfbuylame3id.4: first_chunk=True total=13",
   "14:07:05 request mvfbuylame3id.4: chunk of 13 keys done in 50s; paths {'http': 82, 'browser-none': 71}, browser waits 71 max 141s sum 4315s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 82, 'miss': 31, 'blocked': 0, 'tries': 107, 'empty': 25}, audit 2/2 agree",
-  "14:07:06 request mvfbuylame3id.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:07:06 request mvfbuylame3id.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:07:53 request received: rid mvfbx2dtxbuj9.4 12 keys",
+  "14:07:53 handle mvfbx2dtxbuj9.4: first_chunk=True total=12"
  ]
 }
