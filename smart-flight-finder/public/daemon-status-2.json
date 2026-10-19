@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:01:10+00:00",
+ "at": "2026-10-19T15:02:43+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 1694,
  "log": [
-  "12:50:06 request httptest1792414202: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "12:59:46 rtc 3mp6dfp08g: answered",
-  "12:59:47 rtc 3mp6dfp08g: data channel open",
-  "12:59:49 request received: rid mvf9hef07qn9d.2 1 keys",
   "12:59:49 handle mvf9hef07qn9d.2: first_chunk=True total=1",
   "13:00:50 request mvf9hef07qn9d.2: chunk of 1 keys done in 61s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 49s sum 49s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 3/3 agree",
   "13:00:51 request mvf9hef07qn9d.2: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "14:58:22 request mvfdnwih0i6pv.2: chunk of 12 keys done in 97s; paths {'http': 126, 'browser-none': 285, 'browser': 72}, browser waits 357 max 187s sum 18765s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 126, 'miss': 120, 'blocked': 0, 'tries': 207, 'empty': 81}, audit 5/5 agr",
   "14:58:23 request mvfdnwih0i6pv.2: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:59:44 request received: rid mvfdrqk35rshh.2 20 keys",
-  "14:59:44 handle mvfdrqk35rshh.2: first_chunk=True total=20"
+  "14:59:44 handle mvfdrqk35rshh.2: first_chunk=True total=20",
+  "15:02:21 request mvfdrqk35rshh.2: chunk of 20 keys done in 157s; paths {'http': 127, 'browser-none': 304, 'browser': 72}, browser waits 376 max 187s sum 20102s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 127, 'miss': 139, 'blocked': 0, 'tries': 209, 'empty': 82}, audit 5/5 ag",
+  "15:02:22 request mvfdrqk35rshh.2: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:02:24 request received: rid mvfdv62skgmel.2 16 keys",
+  "15:02:24 handle mvfdv62skgmel.2: first_chunk=True total=16"
  ]
 }
