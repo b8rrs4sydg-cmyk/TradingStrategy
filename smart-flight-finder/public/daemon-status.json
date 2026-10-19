@@ -1,14 +1,12 @@
 {
- "at": "2026-10-19T06:40:42+00:00",
+ "at": "2026-10-19T06:42:14+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6444,
+ "fares_saved": 6446,
  "log": [
-  "06:04:24 handle mveunaeeavcj7.3: first_chunk=True total=14",
-  "06:04:24 handle mveunaeeavcj7.2: first_chunk=True total=14",
   "06:04:24 request received: rid mveunaeeavcj7.5 19 keys",
   "06:04:24 handle mveunaeeavcj7.5: first_chunk=True total=19",
   "06:04:24 request received: rid mveunaeeavcj7.7 17 keys",
@@ -156,6 +154,8 @@
   "06:40:10 request mvevrjy0w9qsp.3: chunk of 16 keys done in 267s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:40:11 request mvevrjy0w9qsp.3: final sent (16/16); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:40:39 request mvevrjy0w9qsp.0: chunk of 20 keys done in 297s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:40:40 request mvevrjy0w9qsp.0: final sent (20/20); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "06:40:40 request mvevrjy0w9qsp.0: final sent (20/20); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:41:27 request mvevrjy0w9qsp.1: chunk of 21 keys done in 345s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:41:28 request mvevrjy0w9qsp.1: final sent (21/21); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
