@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T14:55:02+00:00",
+ "at": "2026-10-19T14:56:34+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,7 +7,6 @@
  },
  "fares_saved": 1693,
  "log": [
-  "12:48:53 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:57 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "12:49:02 http front door: ['https://pig-ranked-organisation-istanbul.trycloudflare.com', 'https://2e20cb11f834b0.lhr.life']",
   "12:49:02 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
@@ -155,6 +154,8 @@
   "14:53:29 request mvfdgk2km1ajx.2: chunk of 23 keys done in 146s; paths {'http': 126, 'browser-none': 260, 'browser': 72}, browser waits 332 max 187s sum 17154s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 126, 'miss': 120, 'blocked': 0, 'tries': 207, 'empty': 81}, audit 5/5 ag",
   "14:53:30 request mvfdgk2km1ajx.2: final sent (23/23); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:53:34 request received: rid mvfdjtcipf1ip.2 13 keys",
-  "14:53:34 handle mvfdjtcipf1ip.2: first_chunk=True total=13"
+  "14:53:34 handle mvfdjtcipf1ip.2: first_chunk=True total=13",
+  "14:55:12 request mvfdjtcipf1ip.2: chunk of 13 keys done in 98s; paths {'http': 126, 'browser-none': 273, 'browser': 72}, browser waits 345 max 187s sum 18010s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 126, 'miss': 120, 'blocked': 0, 'tries': 207, 'empty': 81}, audit 5/5 agr",
+  "14:55:14 request mvfdjtcipf1ip.2: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
