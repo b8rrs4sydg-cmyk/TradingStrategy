@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T13:01:10+00:00",
+ "at": "2026-10-19T13:02:45+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -22,6 +22,9 @@
   "13:00:48 request mvf9hef07qn9d.5: chunk of 3 keys done in 60s; paths {'http': 22, 'browser-none': 1}, browser waits 1 max 47s sum 47s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 2/2 agree",
   "13:00:49 request mvf9hef07qn9d.5: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:00:55 request received: rid mvf9iy7lni9vv.5 3 keys",
-  "13:00:55 handle mvf9iy7lni9vv.5: first_chunk=True total=3"
+  "13:00:55 handle mvf9iy7lni9vv.5: first_chunk=True total=3",
+  "13:01:11 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "13:01:52 request mvf9iy7lni9vv.5: chunk of 3 keys done in 57s; paths {'http': 22, 'browser-none': 4}, browser waits 4 max 50s sum 192s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 4, 'blocked': 0, 'tries': 25, 'empty': 3}, audit 2/2 agree",
+  "13:01:54 request mvf9iy7lni9vv.5: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
