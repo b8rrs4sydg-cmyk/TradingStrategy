@@ -1,20 +1,12 @@
 {
- "at": "2026-10-19T06:25:33+00:00",
+ "at": "2026-10-19T06:27:05+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6274,
+ "fares_saved": 6303,
  "log": [
-  "05:53:57 rtc xg5jzp3bab: data channel open",
-  "05:53:57 rtc sido19lq1k: data channel open",
-  "05:53:57 rtc g5ksx7tg6l: data channel open",
-  "05:53:57 rtc egxffgk0ms: data channel open",
-  "05:53:57 rtc bw6iu0xt9s: data channel open",
-  "05:53:57 rtc cveqz4kcxc: data channel open",
-  "05:53:57 request received: rid mveu9r2nbk9em.0 14 keys",
-  "05:53:57 handle mveu9r2nbk9em.0: first_chunk=True total=14",
   "05:53:57 request received: rid mveu9r2nbk9em.1 20 keys",
   "05:53:57 handle mveu9r2nbk9em.1: first_chunk=True total=20",
   "05:53:57 request received: rid mveu9r2nbk9em.3 9 keys",
@@ -156,6 +148,14 @@
   "06:25:15 request mvevc7pqnew2d.8: chunk of 26 keys done in 89s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:25:17 request mvevc7pqnew2d.8: final sent (26/26); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:25:29 request mvevc7pqnew2d.6: chunk of 9 keys done in 102s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:25:30 request mvevc7pqnew2d.6: final sent (9/9); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "06:25:30 request mvevc7pqnew2d.6: final sent (9/9); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:25:37 request mvevc7pqnew2d.9: chunk of 13 keys done in 111s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:25:39 request mvevc7pqnew2d.9: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:25:57 request mvevc7pqnew2d.7: chunk of 18 keys done in 130s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:25:58 request mvevc7pqnew2d.7: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:26:21 request mvevc7pqnew2d.5: chunk of 14 keys done in 154s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:26:22 request mvevc7pqnew2d.5: final sent (14/14); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:26:46 request mvevc7pqnew2d.4: chunk of 11 keys done in 180s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:26:48 request mvevc7pqnew2d.4: final sent (11/11); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
