@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T07:04:55+00:00",
+ "at": "2026-10-19T07:06:27+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6497,
+ "fares_saved": 6516,
  "log": [
-  "06:15:50 request mveuwuttlcced.5: chunk of 12 keys done in 240s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:15:52 request mveuwuttlcced.5: final sent (12/12); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:17:02 request mveuwuttlcced.2: chunk of 23 keys done in 312s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:17:02 request mveuwuttlcced.2: final sent (23/23); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:17:16 request mveuwuttlcced.1: chunk of 18 keys done in 326s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:17:18 request mveuwuttlcced.1: final sent (18/18); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:18:01 request mveuwuttlcced.3: chunk of 18 keys done in 371s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "07:04:33 request received: rid mvewsn26ziwgl.8 16 keys",
   "07:04:33 handle mvewsn26ziwgl.9: first_chunk=True total=14",
   "07:04:33 handle mvewsn26ziwgl.7: first_chunk=True total=16",
-  "07:04:33 handle mvewsn26ziwgl.8: first_chunk=True total=16"
+  "07:04:33 handle mvewsn26ziwgl.8: first_chunk=True total=16",
+  "07:05:30 request mvewsn26ziwgl.8: chunk of 16 keys done in 57s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "07:05:31 request mvewsn26ziwgl.8: final sent (16/16); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "07:06:06 request mvewsn26ziwgl.7: chunk of 16 keys done in 93s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "07:06:08 request mvewsn26ziwgl.7: final sent (16/16); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
