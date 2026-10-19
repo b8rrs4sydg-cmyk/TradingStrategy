@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:04:40+00:00",
+ "at": "2026-10-19T15:06:13+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1635,
  "log": [
-  "12:49:06 http front door: ['https://guitar-plan-type-architect.trycloudflare.com', 'https://bf0d3d98059ebb.lhr.life']",
-  "12:49:06 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:50:09 request received: rid httptest1792414208 20 keys",
   "12:50:09 handle httptest1792414208: first_chunk=True total=20",
   "12:50:10 request httptest1792414208: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
@@ -156,6 +154,8 @@
   "15:02:24 request received: rid mvfdv62skgmel.1 16 keys",
   "15:02:24 handle mvfdv62skgmel.1: first_chunk=True total=16",
   "15:04:02 request mvfdv62skgmel.1: chunk of 16 keys done in 98s; paths {'http': 151, 'browser-none': 249, 'browser': 42}, browser waits 291 max 144s sum 15523s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 151, 'miss': 108, 'blocked': 0, 'tries': 198, 'empty': 47}, audit 7/7 agr",
-  "15:04:03 request mvfdv62skgmel.1: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "15:04:03 request mvfdv62skgmel.1: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "15:04:51 request received: rid mvfdyb6wk7gb5.1 15 keys",
+  "15:04:51 handle mvfdyb6wk7gb5.1: first_chunk=True total=15"
  ]
 }
