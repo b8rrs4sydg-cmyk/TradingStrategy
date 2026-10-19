@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:19:41+00:00",
+ "at": "2026-10-19T14:28:43+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1656,
+ "fares_saved": 1664,
  "log": [
   "12:48:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:57 http front door: ['https://rod-completed-drawn-bodies.trycloudflare.com', 'https://e9941d25d8f7a9.lhr.life']",
@@ -94,6 +94,12 @@
   "14:18:22 request received: rid mvfcajrwau2tv.3 22 keys",
   "14:18:22 handle mvfcajrwau2tv.3: first_chunk=True total=22",
   "14:19:25 request mvfcajrwau2tv.3: chunk of 22 keys done in 62s; paths {'http': 122, 'browser-none': 153, 'browser': 17}, browser waits 170 max 141s sum 9521s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 122, 'miss': 67, 'blocked': 0, 'tries': 167, 'empty': 45}, audit 2/2 agree",
-  "14:19:26 request mvfcajrwau2tv.3: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:19:26 request mvfcajrwau2tv.3: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:27:25 rtc 7niiovj91q: answered",
+  "14:27:26 request received: rid mvfcm4j2j0ubc.3 14 keys",
+  "14:27:26 handle mvfcm4j2j0ubc.3: first_chunk=True total=14",
+  "14:27:26 rtc 7niiovj91q: data channel open",
+  "14:28:29 request mvfcm4j2j0ubc.3: chunk of 14 keys done in 64s; paths {'http': 130, 'browser-none': 159, 'browser': 17}, browser waits 176 max 141s sum 9813s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 130, 'miss': 73, 'blocked': 0, 'tries': 175, 'empty': 45}, audit 2/2 agree",
+  "14:28:30 request mvfcm4j2j0ubc.3: final sent (14/14); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
