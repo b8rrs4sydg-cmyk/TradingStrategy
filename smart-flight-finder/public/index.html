@@ -455,6 +455,21 @@
   .group.folded .group-head { margin-bottom: 0 }
   @media (prefers-reduced-motion: reduce) { .group-head .chev { transition: none } }
 
+  /* --- Top 100 --- */
+  .t100-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px }
+  .t100-controls { margin: 12px 0 }
+  .t100 { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px; align-items: center; padding: 11px 14px; margin-bottom: 8px; background: var(--card); border: 1px solid var(--border); border-radius: 10px }
+  .t100 .t-title { font-size: 14.5px } .t100 .t-kind { font-size: 11px; color: var(--brand-ink); background: var(--brand-wash); padding: 2px 7px; border-radius: 999px; margin: 0 4px }
+  .t100 .t-dates { font-size: 12.5px; color: var(--fg-muted); margin-top: 2px }
+  .t100 .t-why { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px }
+  .t100 .why { font-size: 11.5px; padding: 3px 8px; border-radius: 999px; background: var(--card-sunken); color: var(--fg-muted) }
+  .t100 .why.good { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good) }
+  .t100 .why.hol { background: var(--accent-wash); color: var(--accent) }
+  .t100 .t-side { text-align: right } .t100 .price { font-family: var(--font-display); font-size: 19px; font-weight: 500 }
+  .t100 .t-links { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; margin-top: 4px; font-size: 11.5px }
+  .t100 .faint { color: var(--fg-faint) }
+  @media (max-width: 640px) { .t100 { grid-template-columns: 1fr } .t100 .t-side { text-align: left } .t100 .t-links { justify-content: flex-start } }
+
   /* --- Heatmap --- */
   .heatmap {
     background: var(--card);
@@ -778,6 +793,26 @@
         <small id="elapsed" aria-live="polite"></small>
       </div>
     </form>
+  </section>
+
+  <section class="card" id="top100" aria-labelledby="t100-title">
+    <div class="t100-bar">
+      <button type="button" id="t100-toggle" class="btn-ghost" aria-expanded="false" aria-controls="t100-body"><span id="t100-title">資料庫精選 Top 100</span> <span id="t100-count" class="pill pill-sel"></span></button>
+      <span class="hint">不用搜尋：從資料庫全部實價挑出比同航線便宜、近期降價、落在連假的票</span>
+    </div>
+    <div id="t100-body" hidden>
+      <div class="controls t100-controls">
+        <select id="t100-kind" class="btn-ghost" aria-label="票種">
+          <option value="all">全部票種</option><option value="rt">來回</option><option value="ow">單程</option><option value="mc">多城市（開口）</option>
+        </select>
+        <select id="t100-group" class="btn-ghost" aria-label="分類方式">
+          <option value="none">不分類（依推薦分數）</option><option value="holiday">按假期分類</option><option value="place">按目的地分類</option>
+          <option value="country">按國家／地區分類</option><option value="kind">按票種分類</option>
+        </select>
+      </div>
+      <div id="t100-list"></div>
+      <div class="hint">只列台灣出發的行程；明顯低於同航線行情的價格視為讀取錯誤而排除。推薦分數＝0.5×比同航線中位價便宜幅度＋0.2×較上次降價幅度＋0.3×絕對價格低＋連假／直飛加成；同航線少於 4 筆時不算「比中位價」。多段票只有第 1 段有實際航班時刻。</div>
+    </div>
   </section>
 
   <section id="results" hidden aria-live="polite">
@@ -2215,6 +2250,181 @@ function resetPlanFilters() {
   renderResults();
 }
 
+/* =========================================================================
+ * 資料庫精選 Top 100 — the best tickets in the whole fare database, no search needed
+ *
+ * Every real fare (round trip, one way, and two-segment multi-city = a complete open-jaw trip; a four-leg ticket is
+ * only one ticket of a bigger plan and is left out) gets a score:
+ *   saving   how far it is below the median of its own route (same kind, origin, destination; needs ≥ 4 fares)
+ *   drop     how much it fell since the previous crawl
+ *   cheap    where its absolute price ranks among all fares of its kind (cheaper → higher)
+ *   bonus    falls in one of the 2027 連假 windows, flies direct
+ * score = 0.5·saving + 0.2·drop + 0.3·cheap + 0.10·連假 + 0.05·直飛   (saving, drop clamped to 0‥0.5)
+ * ========================================================================= */
+const TOP_N = 100;
+const T100 = { group: 'none', kind: 'all', open: false, collapsed: new Set(), rows: [], sig: '' };
+const T100_OPEN_KEY = 'sff-top100-open';
+const T100_KIND = { rt: '來回', ow: '單程', mc: '多城市（開口）' };
+
+function keySegments(key) {
+  const [kind, ...rest] = key.split('|');
+  if (kind === 'ow') return [[rest[0], rest[1], rest[2]]];
+  if (kind === 'rt') return [[rest[0], rest[1], rest[2]], [rest[1], rest[0], rest[3]]];
+  return mcSegs(key);
+}
+
+// the 連假 whose window (± 2 days) contains the whole trip, or null
+function holidayOfTrip(first, last) {
+  for (const h of LEAVE_STRATEGIES_2027) {
+    const lo = new Date(`${h.start}T00:00:00Z`) - 2 * 864e5, hi = new Date(`${h.end}T00:00:00Z`).getTime() + 2 * 864e5;
+    const a = Date.parse(`${first}T00:00:00Z`), b = Date.parse(`${last}T00:00:00Z`);
+    if (a >= lo && b <= hi && b >= Date.parse(`${h.start}T00:00:00Z`) && a <= Date.parse(`${h.end}T00:00:00Z`)) return h;
+  }
+  return null;
+}
+
+function buildTop100() {
+  const now = Date.now();
+  const rows = [];
+  for (const [key, e] of Object.entries(FARES.fares || {})) {
+    if (!e || e.separate || !(e.price > 0)) continue;
+    const kind = key.slice(0, key.indexOf('|'));
+    let segs;
+    try { segs = keySegments(key); } catch { continue; }
+    if (kind === 'mc' && segs.length !== 2) continue;                       // a four-leg ticket is not a trip by itself
+    // only trips a Taiwan resident can take: out of Taiwan (and, for an open jaw, back into Taiwan); one-way legs
+    // that start abroad are crawled as building blocks of 四腿票/倒買 and are not trips of their own
+    if (!TW_AIRPORTS_LIST.includes(segs[0][0])) continue;
+    if (kind === 'mc' && !TW_AIRPORTS_LIST.includes(segs[1][1])) continue;
+    if (e.price < 1000) continue;                                            // no real fare is that cheap: a misread price
+    if (!segs.length || Date.parse(`${segs[0][2]}T23:59:00Z`) < now) continue;
+    const route = kind === 'mc' ? segs.map(s => `${s[0]}-${s[1]}`).join('|') : `${segs[0][0]}-${segs[0][1]}`;
+    rows.push({ key, kind, segs, e, price: e.price, route: `${kind}:${route}` });
+  }
+  const median = a => { const s = [...a].sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+  const byRoute = new Map(), byKind = new Map();
+  for (const r of rows) {
+    (byRoute.get(r.route) || byRoute.set(r.route, []).get(r.route)).push(r.price);
+    (byKind.get(r.kind) || byKind.set(r.kind, []).get(r.kind)).push(r.price);
+  }
+  for (const a of byKind.values()) a.sort((x, y) => x - y);
+  const clamp = v => Math.max(0, Math.min(0.5, v));
+  for (let i = rows.length; i-- > 0;) {                                      // an outlier far below its route is a misread, not a deal
+    const peers = byRoute.get(rows[i].route);
+    if (peers.length >= 4 && rows[i].price < 0.3 * median(peers)) rows.splice(i, 1);
+  }
+  for (const r of rows) {
+    const peers = byRoute.get(r.route);
+    r.median = peers.length >= 4 ? median(peers) : null;
+    r.saving = r.median ? clamp(1 - r.price / r.median) : 0;
+    r.drop = r.e.prev && r.e.prev > r.price ? clamp((r.e.prev - r.price) / r.e.prev) : 0;
+    const sorted = byKind.get(r.kind);
+    let lo = 0, hi = sorted.length;                                           // rank of this price within its kind
+    while (lo < hi) { const m = (lo + hi) >> 1; if (sorted[m] < r.price) lo = m + 1; else hi = m; }
+    r.cheap = 1 - lo / sorted.length;
+    r.holiday = holidayOfTrip(r.segs[0][2], r.segs[r.segs.length - 1][2]);
+    r.direct = r.e.first && r.e.first.stops === 0;
+    r.score = 0.5 * r.saving + 0.2 * r.drop + 0.3 * r.cheap + (r.holiday ? 0.10 : 0) + (r.direct ? 0.05 : 0);
+  }
+  rows.sort((a, b) => b.score - a.score || a.price - b.price);
+  return rows;
+}
+
+function t100Reasons(r) {
+  const out = [];
+  if (r.median && r.saving >= 0.05) out.push([`比同航線中位價低 ${Math.round(r.saving * 100)}%`, 'good']);
+  if (r.drop > 0) out.push([`較上次降 ${(r.e.prev - r.price).toLocaleString()}`, 'good']);
+  if (r.holiday) out.push([r.holiday.label.split('請')[0], 'hol']);
+  if (r.direct) out.push(['直飛', '']);
+  if (r.cheap >= 0.8) out.push([`全資料庫前 ${Math.max(1, Math.round((1 - r.cheap) * 100))}% 便宜`, '']);
+  return out;
+}
+
+function t100Card(r, n) {
+  const [o, d] = r.segs[0];
+  const f = r.e.first;
+  const name = c => AIRPORT_BY_CODE.get(c)?.name || c;
+  const dates = r.kind === 'rt' ? `${mdDay(r.segs[0][2])} → ${mdDay(r.segs[1][2])}`
+    : r.kind === 'ow' ? mdDay(r.segs[0][2]) : r.segs.map(s => `${s[0]}→${s[1]} ${mdDay(s[2])}`).join('　');
+  const title = r.kind === 'mc' ? r.segs.map(s => `${s[0]}→${s[1]}`).join(' ＋ ') : `${o} ${r.kind === 'rt' ? '⇄' : '→'} ${d}`;
+  const sub = r.kind === 'mc' ? '' : `${name(o)} ${r.kind === 'rt' ? '⇄' : '→'} ${name(d)}`;
+  const first = f ? `${f.dep.slice(11, 16)}→${f.arr.slice(11, 16)}${f.airline ? ` · ${escapeHtml(f.airline)}` : ''}` : '';
+  const offer = offerFromEntry(r.key, r.segs, r.e, 1);
+  if (r.kind === 'mc') offer.searched_segments = r.segs;
+  const links = bookingLinks(offer, 1).map(b => `<a href="${escapeHtml(b.url)}" target="_blank" rel="noopener noreferrer">${b.label} ↗</a>`).join('');
+  const reasons = t100Reasons(r).map(([t, c]) => `<span class="why ${c}">${escapeHtml(t)}</span>`).join('');
+  return `<article class="t100">
+    <span class="rank mono">#${n}</span>
+    <div class="t-main">
+      <div class="t-title"><b>${escapeHtml(title)}</b> <span class="t-kind">${T100_KIND[r.kind]}</span> <span class="faint">${escapeHtml(sub)}</span></div>
+      <div class="t-dates">${dates}${first ? ` <span class="faint">· 去程 ${first}</span>` : ''}</div>
+      <div class="t-why">${reasons}</div>
+    </div>
+    <div class="t-side"><div class="price mono">TWD ${r.price.toLocaleString()}</div><div class="t-links">${links}</div></div>
+  </article>`;
+}
+
+function renderTop100() {
+  const box = document.getElementById('top100');
+  if (!box) return;
+  const body = document.getElementById('t100-body'), count = document.getElementById('t100-count');
+  const sig = `${Object.keys(FARES.fares || {}).length}|${FARES.generated_at || ''}`;
+  if (sig !== T100.sig) { T100.sig = sig; T100.rows = buildTop100(); }
+  const pool = T100.kind === 'all' ? T100.rows : T100.rows.filter(r => r.kind === T100.kind);
+  const top = pool.slice(0, TOP_N);
+  count.textContent = `${top.length} / ${T100.rows.length} 筆`;
+  document.getElementById('t100-toggle').setAttribute('aria-expanded', String(T100.open));
+  body.hidden = !T100.open;
+  if (!T100.open) return;
+  if (!top.length) { document.getElementById('t100-list').innerHTML = '<div class="empty">資料庫目前沒有可推薦的票價。</div>'; return; }
+  let html;
+  if (T100.group === 'none') {
+    html = top.map((r, i) => t100Card(r, i + 1)).join('');
+  } else {
+    const keyOf = r => {
+      if (T100.group === 'holiday') return r.holiday ? r.holiday.label : '非連假（一般日期）';
+      if (T100.group === 'kind') return T100_KIND[r.kind];
+      const dest = r.segs[0][1];
+      return T100.group === 'country' ? (COUNTRY_ZH[countryOf(dest)] || countryOf(dest)) : `${AIRPORT_BY_CODE.get(dest)?.name || dest}（${dest}）`;
+    };
+    const groups = new Map();
+    top.forEach((r, i) => { const k = keyOf(r); (groups.get(k) || groups.set(k, []).get(k)).push([r, i + 1]); });
+    const order = [...groups].sort((a, b) => Math.min(...a[1].map(x => x[1])) - Math.min(...b[1].map(x => x[1])));   // best-ranked group first
+    html = order.map(([name, items]) => {
+      const id = `${T100.group}:${name}`, folded = T100.collapsed.has(id);
+      const min = Math.min(...items.map(([r]) => r.price));
+      return `<section class="group ${folded ? 'folded' : ''}" data-group="${escapeHtml(id)}">
+        <button type="button" class="group-head" aria-expanded="${!folded}"><span class="chev" aria-hidden="true">▾</span>
+          <b class="gname">${escapeHtml(name)}</b><span class="gmeta">${items.length} 筆 · 最低 <b class="mono">TWD ${min.toLocaleString()}</b></span></button>
+        <div class="group-body"${folded ? ' hidden' : ''}>${items.map(([r, n]) => t100Card(r, n)).join('')}</div></section>`;
+    }).join('');
+  }
+  document.getElementById('t100-list').innerHTML = html;
+}
+
+function wireTop100() {
+  const box = document.getElementById('top100');
+  if (!box) return;
+  try { T100.open = localStorage.getItem(T100_OPEN_KEY) === '1'; } catch {}
+  document.getElementById('t100-toggle').addEventListener('click', () => {
+    T100.open = !T100.open;
+    try { localStorage.setItem(T100_OPEN_KEY, T100.open ? '1' : '0'); } catch {}
+    renderTop100();
+  });
+  document.getElementById('t100-group').addEventListener('change', e => { T100.group = e.target.value; T100.collapsed.clear(); renderTop100(); });
+  document.getElementById('t100-kind').addEventListener('change', e => { T100.kind = e.target.value; renderTop100(); });
+  document.getElementById('t100-list').addEventListener('click', e => {
+    const h = e.target.closest('.group-head');
+    if (!h) return;
+    const sec = h.closest('.group'), id = sec.dataset.group, folded = !T100.collapsed.has(id);
+    if (folded) T100.collapsed.add(id); else T100.collapsed.delete(id);
+    sec.classList.toggle('folded', folded);
+    sec.querySelector('.group-body').hidden = folded;
+    h.setAttribute('aria-expanded', String(!folded));
+  });
+  renderTop100();
+}
+
 function renderResults() {
   const el = document.getElementById('results');
   if (!state.result) { el.hidden = true; return; }
@@ -3500,6 +3710,7 @@ function scheduleRefresh() {
       state.result = runSearch(document.getElementById('search-form'));
       renderResults();
       applyCoverage();
+      renderTop100();
     } catch (e) { console.warn('refresh failed', e); }
   }, 700);
 }
@@ -3553,26 +3764,32 @@ function loadLiveCache() {
   } catch {}
 }
 
-/* Hosted on GitHub Pages the page sits next to fares.json / fares-live.json
- * (staged by pages.yml): take whichever entries are newer than the embedded copy. */
+/* The fare files are read straight from the repository (raw.githubusercontent.com, cached for ~5 minutes) so the page
+ * sees what the crawlers saved without a Pages deploy; the copy beside the page (staged by pages.yml) is the fallback.
+ * Whichever entry is newer than what the page already has wins. */
+const DATA_BRANCH = 'claude/tender-cray-46zevd';   // the branch the crawlers commit to (the cron only fires on the default branch)
 async function loadSiblingFares() {
   let changed = false;
-  for (const name of ['fares.json', 'fares-live.json', ...Array.from({ length: INSTANCES - 1 }, (_, i) => `fares-live-${i + 1}.json`)]) {
-    try {
-      const r = await fetch(name, { cache: 'no-cache' });
-      if (!r.ok) continue;
-      const d = await r.json();
-      for (const [k, v] of Object.entries(d.fares || {})) {
-        const mine = FARES.fares[k];
-        if (!mine || (v.at || '') > (mine.at || '')) { FARES.fares[k] = v; changed = true; }
-      }
-      (d.unavailable || []).forEach(k => live.notFound.add(k));
-      if (name === 'fares.json' && d.generated_at && (!FARES.generated_at || d.generated_at > FARES.generated_at)) {
-        FARES.generated_at = d.generated_at; FARES.coverage = d.coverage || FARES.coverage; changed = true;
-      }
-    } catch {}
-  }
-  if (changed) { applyCoverage(); scheduleRefresh(); }
+  const names = ['fares.json', 'fares-live.json', ...Array.from({ length: INSTANCES - 1 }, (_, i) => `fares-live-${i + 1}.json`)];
+  await Promise.all(names.map(async name => {
+    let d = null;
+    for (const url of [rawUrl(DATA_BRANCH, name), name]) {
+      try {
+        const r = await timed(url, {}, 20000);
+        if (r.ok) { d = await r.json(); break; }
+      } catch {}
+    }
+    if (!d) return;
+    for (const [k, v] of Object.entries(d.fares || {})) {
+      const mine = FARES.fares[k];
+      if (!mine || (v.at || '') > (mine.at || '')) { FARES.fares[k] = v; changed = true; }
+    }
+    (d.unavailable || []).forEach(k => live.notFound.add(k));
+    if (name === 'fares.json' && d.generated_at && (!FARES.generated_at || d.generated_at > FARES.generated_at)) {
+      FARES.generated_at = d.generated_at; FARES.coverage = d.coverage || FARES.coverage; changed = true;
+    }
+  }));
+  if (changed) { applyCoverage(); scheduleRefresh(); renderTop100?.(); }
 }
 
 function noteDiag(e) {
@@ -3915,6 +4132,8 @@ function init() {
   loadFareSnapshot();
   loadLiveCache();
   loadSiblingFares();
+  setInterval(loadSiblingFares, 5 * 60 * 1000);   // pick up what the crawlers saved meanwhile
+  wireTop100();
   renderDbStatus();
   subscribeLiveFares();
   wirePickers();

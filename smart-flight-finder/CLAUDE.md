@@ -342,3 +342,18 @@ Grouping: `state.group` (none / holiday / place / country, the `#r-group` select
 (holidays by first departure, places by cheapest plan; a 外站四腿票 has no single destination and gets its own group) and
 `renderPlanList` wraps each in a collapsible `.group` (folded keys in `state.collapsed`; a folded body is hidden, not unrendered, so
 the `.plan` DOM order still equals the plan array the card handlers index into).
+
+## Where the fare data lives, and the Top 100 card
+
+* **One home for the crawlers: the default branch `claude/tender-cray-46zevd`.** The cron in `fare-daemon.yml` only fires on the default
+  branch, and a daemon commits to the branch it started on, so the workflow's push trigger is that branch only (a second branch starting
+  daemons made two copies of the data). Develop on `claude/zealous-darwin-1kexus`, then `git pull origin claude/tender-cray-46zevd`
+  and push the result to both branches (the pull is a fast-forward-ish merge: never edit the fare files by hand).
+* The page reads `fares.json` and every `fares-live[-i].json` straight from `raw.githubusercontent.com` (`DATA_BRANCH`, ~5 min CDN cache;
+  the copy beside the page is the fallback) and re-reads them every 5 minutes. Pages deploys (`pages.yml`) ignore the data files and
+  bot pushes with `GITHUB_TOKEN` do not trigger workflows, so without this the live site showed whatever was deployed last.
+* `scripts/merge_fare_files.py` folds two branches' fare files into one (newest entry per key wins, price histories joined, every key
+  written to the file of the instance `dispatch.owner` assigns it); run it with `--public <dir> --other <dir of the other branch's files>`.
+* Top 100 (`buildTop100` / `renderTop100`): see the comment above them for the score. Only trips out of Taiwan are listed (one-way legs that
+  start abroad are 四腿票 building blocks), fares under 1,000 or below 30 % of their route's median are treated as misreads.
+
