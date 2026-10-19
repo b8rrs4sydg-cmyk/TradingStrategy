@@ -1,18 +1,12 @@
 {
- "at": "2026-10-19T15:16:12+00:00",
+ "at": "2026-10-19T15:17:44+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1608,
+ "fares_saved": 1609,
  "log": [
-  "13:50:31 rtc nz0u52skp2: answered",
-  "13:50:32 rtc nz0u52skp2: data channel open",
-  "13:50:33 request received: rid mvfbambektgty.7 2 keys",
-  "13:50:33 handle mvfbambektgty.7: first_chunk=True total=2",
-  "13:51:35 request mvfbambektgty.7: chunk of 2 keys done in 62s; paths {'http': 20, 'browser-none': 7}, browser waits 7 max 50s sum 333s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 7, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
-  "13:51:35 request mvfbambektgty.7: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:51:40 request received: rid mvfbc78a2eb12.7 11 keys",
   "13:51:40 handle mvfbc78a2eb12.7: first_chunk=True total=11",
   "13:52:43 request received: rid mvfbdjrre1son.7 5 keys",
@@ -156,6 +150,12 @@
   "15:14:58 request mvfeb9qdfqrkz.7: chunk of 13 keys done in 3s; paths {'http': 157, 'browser-none': 338, 'browser': 49}, browser waits 387 max 190s sum 23199s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 157, 'miss': 115, 'blocked': 0, 'tries': 210, 'empty': 53}, audit 5/5 agre",
   "15:14:59 request mvfeb9qdfqrkz.7: final sent (13/13); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "15:15:51 request received: rid mvfecgjs9rv45.7 4 keys",
-  "15:15:51 handle mvfecgjs9rv45.7: first_chunk=True total=4"
+  "15:15:51 handle mvfecgjs9rv45.7: first_chunk=True total=4",
+  "15:16:36 request mvfecgjs9rv45.7: chunk of 4 keys done in 46s; paths {'http': 158, 'browser-none': 339, 'browser': 51}, browser waits 390 max 190s sum 23249s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 158, 'miss': 115, 'blocked': 0, 'tries': 211, 'empty': 53}, audit 5/5 agre",
+  "15:16:38 request mvfecgjs9rv45.7: final sent (4/4); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:16:46 request received: rid mvfedndo17c1a.7 1 keys",
+  "15:16:46 handle mvfedndo17c1a.7: first_chunk=True total=1",
+  "15:16:46 request mvfedndo17c1a.7: chunk of 1 keys done in 0s; paths {'http': 159, 'browser-none': 339, 'browser': 51}, browser waits 390 max 190s sum 23249s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 159, 'miss': 115, 'blocked': 0, 'tries': 212, 'empty': 53}, audit 5/5 agree",
+  "15:16:48 request mvfedndo17c1a.7: final sent (1/1); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
