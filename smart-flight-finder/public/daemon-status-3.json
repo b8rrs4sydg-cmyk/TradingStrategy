@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:42:28+00:00",
+ "at": "2026-10-19T14:45:30+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1676,
+ "fares_saved": 1677,
  "log": [
   "12:48:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:57 http front door: ['https://rod-completed-drawn-bodies.trycloudflare.com', 'https://e9941d25d8f7a9.lhr.life']",
@@ -116,6 +116,8 @@
   "14:40:36 request received: rid mvfd34ggx3olo.3 22 keys",
   "14:40:36 handle mvfd34ggx3olo.3: first_chunk=True total=22",
   "14:42:20 request mvfd34ggx3olo.3: chunk of 22 keys done in 104s; paths {'http': 131, 'browser-none': 217, 'browser': 28}, browser waits 245 max 141s sum 13735s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 131, 'miss': 89, 'blocked': 0, 'tries': 179, 'empty': 48}, audit 2/2 agr",
-  "14:42:22 request mvfd34ggx3olo.3: final sent (22/22); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "14:42:22 request mvfd34ggx3olo.3: final sent (22/22); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "14:45:22 request received: rid mvfd999yrcjdg.3 12 keys",
+  "14:45:22 handle mvfd999yrcjdg.3: first_chunk=True total=12"
  ]
 }
