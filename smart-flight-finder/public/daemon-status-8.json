@@ -1,14 +1,12 @@
 {
- "at": "2026-10-19T15:09:57+00:00",
+ "at": "2026-10-19T15:11:29+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1582,
+ "fares_saved": 1596,
  "log": [
-  "12:48:53 http front door: ['https://lloyd-filing-collection-busy.trycloudflare.com', 'https://3d4f98d6c6c086.lhr.life']",
-  "12:48:53 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:49:58 request received: rid httptest1792414197 20 keys",
   "12:49:58 handle httptest1792414197: first_chunk=True total=20",
   "12:49:59 request httptest1792414197: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
@@ -156,6 +154,8 @@
   "15:09:11 request mvfe1jnoqnpfg.8: chunk of 13 keys done in 109s; paths {'http': 133, 'browser-none': 309, 'browser': 52}, browser waits 361 max 144s sum 19970s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 103, 'blocked': 0, 'tries': 183, 'empty': 50}, audit 3/3 ag",
   "15:09:12 request mvfe1jnoqnpfg.8: final sent (13/13); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "15:09:51 request received: rid mvfe4r543u0kp.8 18 keys",
-  "15:09:51 handle mvfe4r543u0kp.8: first_chunk=True total=18"
+  "15:09:51 handle mvfe4r543u0kp.8: first_chunk=True total=18",
+  "15:10:39 request mvfe4r543u0kp.8: chunk of 18 keys done in 48s; paths {'http': 140, 'browser-none': 313, 'browser': 59}, browser waits 372 max 144s sum 20200s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 140, 'miss': 103, 'blocked': 0, 'tries': 190, 'empty': 50}, audit 4/4 agr",
+  "15:10:41 request mvfe4r543u0kp.8: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
