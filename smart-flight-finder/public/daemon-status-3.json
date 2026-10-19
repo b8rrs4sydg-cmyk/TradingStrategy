@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:29:51+00:00",
+ "at": "2026-10-19T15:31:22+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1743,
  "log": [
-  "13:54:06 request mvfbdjrre1son.3: final sent (8/8); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "13:54:20 request received: rid mvfbfn06sdm3h.3 10 keys",
   "13:54:20 handle mvfbfn06sdm3h.3: first_chunk=True total=10",
   "13:55:07 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "13:55:36 request mvfbfn06sdm3h.3: chunk of 10 keys done in 76s; paths {'http': 30, 'browser-none': 33}, browser waits 33 max 82s sum 1783s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 30, 'miss': 28, 'blocked': 0, 'tries': 40, 'empty': 10}, audit 1/1 agree",
@@ -156,6 +154,8 @@
   "15:26:28 request mvfend374ygx5.3: chunk of 18 keys done in 129s; paths {'http': 162, 'browser-none': 389, 'browser': 64}, browser waits 453 max 147s sum 26445s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 162, 'miss': 136, 'blocked': 0, 'tries': 215, 'empty': 53}, audit 4/4 ag",
   "15:26:30 request mvfend374ygx5.3: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "15:29:07 request received: rid mvfetj3m2xck7.3 17 keys",
-  "15:29:07 handle mvfetj3m2xck7.3: first_chunk=True total=17"
+  "15:29:07 handle mvfetj3m2xck7.3: first_chunk=True total=17",
+  "15:31:16 request mvfetj3m2xck7.3: chunk of 17 keys done in 129s; paths {'http': 162, 'browser-none': 406, 'browser': 64}, browser waits 470 max 147s sum 27638s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 162, 'miss': 136, 'blocked': 0, 'tries': 215, 'empty': 53}, audit 4/4 ag",
+  "15:31:18 request mvfetj3m2xck7.3: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
