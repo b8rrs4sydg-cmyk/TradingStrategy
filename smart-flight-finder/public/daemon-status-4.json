@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T13:02:29+00:00",
+ "at": "2026-10-19T13:52:00+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1474,
+ "fares_saved": 1480,
  "log": [
   "12:48:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:55 http front door: ['https://statement-feedback-exploration-martial.trycloudflare.com', 'https://002f3ae3404907.lhr.life']",
@@ -23,6 +23,14 @@
   "13:00:55 request received: rid mvf9iy7lni9vv.4 2 keys",
   "13:00:55 handle mvf9iy7lni9vv.4: first_chunk=True total=2",
   "13:01:57 request mvf9iy7lni9vv.4: chunk of 2 keys done in 61s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 49s sum 192s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
-  "13:01:57 request mvf9iy7lni9vv.4: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:01:57 request mvf9iy7lni9vv.4: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:50:31 rtc wu7v41u4tg: answered",
+  "13:50:32 rtc wu7v41u4tg: data channel open",
+  "13:50:33 request received: rid mvfbambektgty.4 2 keys",
+  "13:50:33 handle mvfbambektgty.4: first_chunk=True total=2",
+  "13:51:36 request mvfbambektgty.4: chunk of 2 keys done in 63s; paths {'http': 20, 'browser-none': 6}, browser waits 6 max 50s sum 288s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 6, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
+  "13:51:37 request mvfbambektgty.4: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:51:40 request received: rid mvfbc78a2eb12.4 15 keys",
+  "13:51:40 handle mvfbc78a2eb12.4: first_chunk=True total=15"
  ]
 }
