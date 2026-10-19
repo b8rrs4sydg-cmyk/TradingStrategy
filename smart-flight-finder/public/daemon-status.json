@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T03:59:31+00:00",
+ "at": "2026-10-19T04:01:02+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 4909,
+ "fares_saved": 4922,
  "log": [
-  "03:10:41 request mveo3makadwso.4: chunk of 13 keys done in 572s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "03:10:41 request mveo3makadwso.4: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "03:12:01 request mveo3makadwso.2: chunk of 15 keys done in 653s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "03:12:01 request mveo3makadwso.2: final sent (15/15); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "03:13:23 request mveo3makadwso.3: chunk of 17 keys done in 735s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "03:13:25 request mveo3makadwso.3: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "03:14:43 request mveo3makadwso.1: chunk of 15 keys done in 815s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "03:58:22 request received: rid mveq581veeqyp.6 17 keys",
   "03:58:22 request received: rid mveq581veeqyp.9 13 keys",
   "03:58:22 handle mveq581veeqyp.6: first_chunk=True total=17",
-  "03:58:22 handle mveq581veeqyp.9: first_chunk=True total=13"
+  "03:58:22 handle mveq581veeqyp.9: first_chunk=True total=13",
+  "03:59:50 request mveq581veeqyp.9: chunk of 13 keys done in 88s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "03:59:53 request mveq581veeqyp.9: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:00:50 request mveq581veeqyp.6: chunk of 17 keys done in 148s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:00:52 request mveq581veeqyp.6: final sent (17/17); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
