@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:04:20+00:00",
+ "at": "2026-10-19T14:05:52+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1576,
+ "fares_saved": 1591,
  "log": [
   "12:48:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:57 http front door: ['https://rod-completed-drawn-bodies.trycloudflare.com', 'https://e9941d25d8f7a9.lhr.life']",
@@ -56,6 +56,12 @@
   "14:02:07 request mvfboi84gzaff.3: chunk of 16 keys done in 53s; paths {'http': 34, 'browser-none': 70, 'browser': 9}, browser waits 79 max 141s sum 4297s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 34, 'miss': 30, 'blocked': 0, 'tries': 48, 'empty': 14}, audit 1/1 agree",
   "14:02:09 request mvfboi84gzaff.3: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:02:58 request received: rid mvfbqqk3ac270.3 25 keys",
-  "14:02:58 handle mvfbqqk3ac270.3: first_chunk=True total=25"
+  "14:02:58 handle mvfbqqk3ac270.3: first_chunk=True total=25",
+  "14:04:29 request mvfbqqk3ac270.3: chunk of 25 keys done in 91s; paths {'http': 50, 'browser-none': 79, 'browser': 9}, browser waits 88 max 141s sum 4712s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 39, 'blocked': 0, 'tries': 80, 'empty': 30}, audit 1/1 agree",
+  "14:04:30 request mvfbqqk3ac270.3: final sent (25/25); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:04:39 request received: rid mvfbsvk27htjn.2 19 keys",
+  "14:04:39 handle mvfbsvk27htjn.2: first_chunk=True total=19",
+  "14:05:41 request mvfbsvk27htjn.2: chunk of 19 keys done in 62s; paths {'http': 65, 'browser-none': 83, 'browser': 9}, browser waits 92 max 141s sum 4903s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 65, 'miss': 43, 'blocked': 0, 'tries': 101, 'empty': 36}, audit 1/1 agree",
+  "14:05:43 request mvfbsvk27htjn.2: final sent (19/19); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
