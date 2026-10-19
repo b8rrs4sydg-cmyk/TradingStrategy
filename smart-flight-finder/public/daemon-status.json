@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T12:16:30+00:00",
+ "at": "2026-10-19T12:18:02+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6826,
+ "fares_saved": 6827,
  "log": [
   "10:38:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:38:53 http front door: ['https://fonts-mixer-drilling-equation.trycloudflare.com', 'https://c80f848818e2ca.lhr.life']",
@@ -71,6 +71,28 @@
   "12:16:19 request mvf7tjh7hi4mj.2: chunk of 17 keys done in 183s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "12:16:20 request mvf7tjh7hi4mj.1: chunk of 13 keys done in 184s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "12:16:20 request mvf7tjh7hi4mj.1: final sent (13/13); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
-  "12:16:20 request mvf7tjh7hi4mj.2: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
+  "12:16:20 request mvf7tjh7hi4mj.2: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:16:51 request mvf7tjh7hi4mj.3: chunk of 23 keys done in 216s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:16:53 request mvf7tjh7hi4mj.3: final sent (23/23); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:16:55 request received: rid mvf7ycxy1wauj.3 5 keys",
+  "12:16:55 handle mvf7ycxy1wauj.3: first_chunk=True total=5",
+  "12:16:55 request received: rid mvf7ycxy1wauj.1 6 keys",
+  "12:16:55 handle mvf7ycxy1wauj.1: first_chunk=True total=6",
+  "12:16:55 request received: rid mvf7ycxy1wauj.5 3 keys",
+  "12:16:55 request received: rid mvf7ycxy1wauj.6 8 keys",
+  "12:16:55 handle mvf7ycxy1wauj.5: first_chunk=True total=3",
+  "12:16:55 handle mvf7ycxy1wauj.6: first_chunk=True total=8",
+  "12:16:55 request received: rid mvf7ycxy1wauj.8 3 keys",
+  "12:16:55 handle mvf7ycxy1wauj.8: first_chunk=True total=3",
+  "12:16:55 request received: rid mvf7ycxy1wauj.7 6 keys",
+  "12:16:55 request received: rid mvf7ycxy1wauj.4 4 keys",
+  "12:16:55 request received: rid mvf7ycxy1wauj.0 2 keys",
+  "12:16:55 handle mvf7ycxy1wauj.7: first_chunk=True total=6",
+  "12:16:55 handle mvf7ycxy1wauj.4: first_chunk=True total=4",
+  "12:16:55 handle mvf7ycxy1wauj.0: first_chunk=True total=2",
+  "12:16:55 request received: rid mvf7ycxy1wauj.9 3 keys",
+  "12:16:55 handle mvf7ycxy1wauj.9: first_chunk=True total=3",
+  "12:17:38 request mvf7ycxy1wauj.3: chunk of 5 keys done in 43s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:17:39 request mvf7ycxy1wauj.3: final sent (5/5); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
  ]
 }
