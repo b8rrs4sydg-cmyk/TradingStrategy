@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:54:10+00:00",
+ "at": "2026-10-19T20:43:45+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1610,
  "log": [
-  "15:52:35 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:52:40 http front door: ['https://lucky-stamps-continually-valve.trycloudflare.com', 'https://23c606d5035a04.lhr.life']",
-  "15:52:40 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:53:41 request received: rid httptest1792425221 20 keys",
-  "15:53:41 handle httptest1792425221: first_chunk=True total=20",
-  "15:53:43 request httptest1792425221: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:53:44 request httptest1792425221: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:42:10 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:42:15 http front door: ['https://flower-interior-francis-abstract.trycloudflare.com', 'https://1a21d828ce6609.lhr.life']",
+  "20:42:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:43:19 request received: rid httptest1792442598 20 keys",
+  "20:43:19 handle httptest1792442598: first_chunk=True total=20",
+  "20:43:20 request httptest1792442598: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "20:43:22 request httptest1792442598: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
