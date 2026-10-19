@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T15:13:01+00:00",
+ "at": "2026-10-19T15:14:34+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1610,
+ "fares_saved": 1622,
  "log": [
-  "12:59:46 rtc f3d2unl6rc: answered",
-  "12:59:47 rtc f3d2unl6rc: data channel open",
-  "13:00:55 request received: rid mvf9iy7lni9vv.8 1 keys",
-  "13:00:55 handle mvf9iy7lni9vv.8: first_chunk=True total=1",
   "13:01:56 request mvf9iy7lni9vv.8: chunk of 1 keys done in 61s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 48s sum 48s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
   "13:01:56 request mvf9iy7lni9vv.8: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:50:31 rtc 75h09x3rpw: answered",
@@ -156,6 +152,10 @@
   "15:11:32 request received: rid mvfe6wzng4lrd.8 18 keys",
   "15:11:32 handle mvfe6wzng4lrd.8: first_chunk=True total=18",
   "15:12:21 request mvfe6wzng4lrd.8: chunk of 18 keys done in 49s; paths {'http': 145, 'browser-none': 317, 'browser': 68}, browser waits 385 max 144s sum 20438s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 145, 'miss': 103, 'blocked': 0, 'tries': 195, 'empty': 50}, audit 4/4 agr",
-  "15:12:22 request mvfe6wzng4lrd.8: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "15:12:22 request mvfe6wzng4lrd.8: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:13:13 request received: rid mvfe92qqltt4y.8 15 keys",
+  "15:13:13 handle mvfe92qqltt4y.8: first_chunk=True total=15",
+  "15:14:02 request mvfe92qqltt4y.8: chunk of 15 keys done in 49s; paths {'http': 153, 'browser-none': 320, 'browser': 72}, browser waits 392 max 144s sum 20595s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 153, 'miss': 103, 'blocked': 0, 'tries': 204, 'empty': 51}, audit 5/5 agr",
+  "15:14:03 request mvfe92qqltt4y.8: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
