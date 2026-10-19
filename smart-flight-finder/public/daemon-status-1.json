@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:04:31+00:00",
+ "at": "2026-10-19T14:07:33+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1502,
+ "fares_saved": 1514,
  "log": [
   "12:49:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:06 http front door: ['https://guitar-plan-type-architect.trycloudflare.com', 'https://bf0d3d98059ebb.lhr.life']",
@@ -57,6 +57,12 @@
   "14:03:36 request mvfboi84gzaff.1: chunk of 20 keys done in 142s; paths {'http': 52, 'browser-none': 60, 'browser': 8}, browser waits 68 max 142s sum 3648s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 52, 'miss': 29, 'blocked': 0, 'tries': 70, 'empty': 18}, audit 6/6 agree",
   "14:03:37 request mvfboi84gzaff.1: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:03:48 request mvfbqqk3ac270.1: chunk of 13 keys done in 50s; paths {'http': 52, 'browser-none': 62, 'browser': 8}, browser waits 70 max 142s sum 3744s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 52, 'miss': 29, 'blocked': 0, 'tries': 70, 'empty': 18}, audit 6/6 agree",
-  "14:03:50 request mvfbqqk3ac270.1: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:03:50 request mvfbqqk3ac270.1: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:04:40 rtc n09i9bk6kk: answered",
+  "14:04:41 rtc n09i9bk6kk: data channel open",
+  "14:06:15 request received: rid mvfbuylame3id.1 15 keys",
+  "14:06:15 handle mvfbuylame3id.1: first_chunk=True total=15",
+  "14:07:18 request mvfbuylame3id.1: chunk of 15 keys done in 63s; paths {'http': 64, 'browser-none': 65, 'browser': 8}, browser waits 73 max 142s sum 3889s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 32, 'blocked': 0, 'tries': 84, 'empty': 20}, audit 6/6 agree",
+  "14:07:19 request mvfbuylame3id.1: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
