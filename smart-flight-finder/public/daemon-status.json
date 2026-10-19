@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T06:01:16+00:00",
+ "at": "2026-10-19T06:05:47+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 5976,
+ "fares_saved": 6060,
  "log": [
   "05:36:55 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:36:59 http front door: ['https://auction-stages-signature-beautiful.trycloudflare.com', 'https://d76cfe3cc870ad.lhr.life']",
@@ -80,6 +80,34 @@
   "06:00:28 request mveu9r2nbk9em.1: chunk of 20 keys done in 391s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:00:29 request mveu9r2nbk9em.1: final sent (20/20); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "06:00:34 request mveu9r2nbk9em.0: chunk of 14 keys done in 397s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "06:00:35 request mveu9r2nbk9em.0: final sent (14/14); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
+  "06:00:35 request mveu9r2nbk9em.0: final sent (14/14); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:04:24 request received: rid mveunaeeavcj7.0 16 keys",
+  "06:04:24 handle mveunaeeavcj7.0: first_chunk=True total=16",
+  "06:04:24 request received: rid mveunaeeavcj7.1 18 keys",
+  "06:04:24 request received: rid mveunaeeavcj7.4 18 keys",
+  "06:04:24 request received: rid mveunaeeavcj7.3 14 keys",
+  "06:04:24 request received: rid mveunaeeavcj7.2 14 keys",
+  "06:04:24 handle mveunaeeavcj7.1: first_chunk=True total=18",
+  "06:04:24 handle mveunaeeavcj7.4: first_chunk=True total=18",
+  "06:04:24 handle mveunaeeavcj7.3: first_chunk=True total=14",
+  "06:04:24 handle mveunaeeavcj7.2: first_chunk=True total=14",
+  "06:04:24 request received: rid mveunaeeavcj7.5 19 keys",
+  "06:04:24 handle mveunaeeavcj7.5: first_chunk=True total=19",
+  "06:04:24 request received: rid mveunaeeavcj7.7 17 keys",
+  "06:04:24 request received: rid mveunaeeavcj7.9 13 keys",
+  "06:04:24 request received: rid mveunaeeavcj7.8 16 keys",
+  "06:04:24 request received: rid mveunaeeavcj7.6 15 keys",
+  "06:04:24 handle mveunaeeavcj7.7: first_chunk=True total=17",
+  "06:04:24 handle mveunaeeavcj7.9: first_chunk=True total=13",
+  "06:04:24 handle mveunaeeavcj7.8: first_chunk=True total=16",
+  "06:04:24 handle mveunaeeavcj7.6: first_chunk=True total=15",
+  "06:05:13 request mveunaeeavcj7.9: chunk of 13 keys done in 50s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:05:14 request mveunaeeavcj7.9: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:05:21 request mveunaeeavcj7.6: chunk of 15 keys done in 57s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:05:21 request mveunaeeavcj7.6: final sent (15/15); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:05:35 request mveunaeeavcj7.8: chunk of 16 keys done in 72s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:05:37 request mveunaeeavcj7.8: final sent (16/16); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:05:43 request mveunaeeavcj7.5: chunk of 19 keys done in 80s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:05:44 request mveunaeeavcj7.5: final sent (19/19); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
