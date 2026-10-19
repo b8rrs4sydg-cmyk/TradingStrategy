@@ -1,14 +1,12 @@
 {
- "at": "2026-10-19T15:10:01+00:00",
+ "at": "2026-10-19T15:11:33+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1694,
+ "fares_saved": 1700,
  "log": [
-  "12:48:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "12:48:57 http front door: ['https://rod-completed-drawn-bodies.trycloudflare.com', 'https://e9941d25d8f7a9.lhr.life']",
   "12:48:57 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:50:01 request received: rid httptest1792414200 20 keys",
   "12:50:01 handle httptest1792414200: first_chunk=True total=20",
@@ -154,6 +152,10 @@
   "15:09:13 request mvfe1jnoqnpfg.3: chunk of 14 keys done in 112s; paths {'http': 134, 'browser-none': 343, 'browser': 40}, browser waits 383 max 147s sum 23124s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 134, 'miss': 123, 'blocked': 0, 'tries': 185, 'empty': 51}, audit 2/2 ag",
   "15:09:15 request mvfe1jnoqnpfg.3: final sent (14/14); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "15:09:51 request received: rid mvfe4r543u0kp.3 23 keys",
-  "15:09:51 handle mvfe4r543u0kp.3: first_chunk=True total=23"
+  "15:09:51 handle mvfe4r543u0kp.3: first_chunk=True total=23",
+  "15:11:28 request mvfe4r543u0kp.3: chunk of 23 keys done in 96s; paths {'http': 137, 'browser-none': 357, 'browser': 46}, browser waits 403 max 147s sum 24250s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 137, 'miss': 123, 'blocked': 0, 'tries': 188, 'empty': 51}, audit 2/2 agr",
+  "15:11:29 request mvfe4r543u0kp.3: final sent (23/23); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "15:11:32 request received: rid mvfe6wzng4lrd.3 12 keys",
+  "15:11:32 handle mvfe6wzng4lrd.3: first_chunk=True total=12"
  ]
 }
