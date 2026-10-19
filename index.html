@@ -470,6 +470,18 @@
   .t100 .faint { color: var(--fg-faint) }
   @media (max-width: 640px) { .t100 { grid-template-columns: 1fr } .t100 .t-side { text-align: left } .t100 .t-links { justify-content: flex-start } }
 
+  /* --- Database card --- */
+  .db-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 }
+  .db-filters .num { min-width: 0; flex: 1 1 130px } .db-filters #db-q { flex: 3 1 260px }
+  .db-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px } .db-actions .hint { margin-right: auto }
+  .db-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px }
+  .db-table { width: 100%; border-collapse: collapse; font-size: 12.5px }
+  .db-table th { position: sticky; top: 0; background: var(--card-sunken); text-align: left; font-weight: 600; padding: 8px 10px; white-space: nowrap; color: var(--fg-muted) }
+  .db-table td { padding: 7px 10px; border-top: 1px solid var(--border); white-space: nowrap }
+  .db-table .r { text-align: right; font-family: var(--font-mono) }
+  .db-table .down { color: var(--good) } .db-table .up { color: var(--crit) }
+  .db-pager { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px }
+
   /* --- Heatmap --- */
   .heatmap {
     background: var(--card);
@@ -812,6 +824,35 @@
       </div>
       <div id="t100-list"></div>
       <div class="hint">只列台灣出發的行程；明顯低於同航線行情的價格視為讀取錯誤而排除。推薦分數＝0.5×比同航線中位價便宜幅度＋0.2×較上次降價幅度＋0.3×絕對價格低＋連假／直飛加成；同航線少於 4 筆時不算「比中位價」。多段票只有第 1 段有實際航班時刻。</div>
+    </div>
+  </section>
+
+  <section class="card" id="dbcard" aria-labelledby="db-title">
+    <div class="t100-bar">
+      <button type="button" id="db-toggle" class="btn-ghost" aria-expanded="false" aria-controls="db-body"><span id="db-title">資料庫全部資料</span> <span id="db-count" class="pill pill-sel"></span></button>
+      <button type="button" id="db-reload" class="btn-ghost">重新載入全部資料</button>
+      <span id="db-status" class="hint"></span>
+    </div>
+    <div id="db-body" hidden>
+      <div class="db-filters">
+        <input type="search" id="db-q" class="num" placeholder="搜尋機場代碼／名稱／日期，例如 KIX、大阪、2027-02" aria-label="搜尋">
+        <select id="db-kind" class="btn-ghost" aria-label="票種"><option value="all">全部票種</option><option value="rt">來回</option><option value="ow">單程</option><option value="mc">多城市</option></select>
+        <input type="number" id="db-min" class="num" placeholder="最低價" min="0" step="500" aria-label="最低價">
+        <input type="number" id="db-max" class="num" placeholder="最高價" min="0" step="500" aria-label="最高價">
+        <label class="f-chip"><input type="checkbox" id="db-drop">只看降價</label>
+        <select id="db-sort" class="btn-ghost" aria-label="排序">
+          <option value="price">價格（低→高）</option><option value="price_desc">價格（高→低）</option><option value="date">出發日（早→晚）</option>
+          <option value="fetched">抓取時間（新→舊）</option><option value="change">降幅（大→小）</option>
+        </select>
+      </div>
+      <div class="db-actions">
+        <span id="db-shown" class="hint"></span>
+        <button type="button" id="db-csv" class="btn-ghost">下載 CSV（目前篩選）</button>
+        <button type="button" id="db-json" class="btn-ghost">下載 JSON（目前篩選）</button>
+      </div>
+      <div class="db-wrap"><table class="db-table" id="db-table"><thead><tr>
+        <th>票種</th><th>路線</th><th>日期</th><th>去程航班</th><th class="r">價格 (TWD)</th><th class="r">較上次</th><th>抓取</th></tr></thead><tbody id="db-rows"></tbody></table></div>
+      <div class="db-pager"><button type="button" id="db-prev" class="btn-ghost">上一頁</button><span id="db-page" class="hint"></span><button type="button" id="db-next" class="btn-ghost">下一頁</button></div>
     </div>
   </section>
 
@@ -2425,6 +2466,113 @@ function wireTop100() {
   renderTop100();
 }
 
+/* =========================================================================
+ * 資料庫全部資料 — every fare the page holds (embedded snapshot + all fare files read from the repository),
+ * searchable, sortable, paged, and downloadable as CSV / JSON (the current filter).
+ * ========================================================================= */
+const DB = { open: false, q: '', kind: 'all', min: null, max: null, drop: false, sort: 'price', page: 0, size: 100, rows: [], sig: '' };
+const DB_OPEN_KEY = 'sff-db-open';
+const DB_KIND = { rt: '來回', ow: '單程', mc: '多城市' };
+
+function dbRows() {
+  const sig = `${Object.keys(FARES.fares || {}).length}|${FARES.generated_at || ''}|${DBLOAD.at || ''}`;
+  if (sig === DB.sig) return DB.rows;
+  DB.sig = sig;
+  DB.rows = Object.entries(FARES.fares || {}).map(([key, e]) => {
+    const kind = key.slice(0, key.indexOf('|'));
+    let segs = [];
+    try { segs = keySegments(key); } catch {}
+    const route = kind === 'rt' ? `${segs[0][0]} ⇄ ${segs[0][1]}` : segs.map(x => `${x[0]}→${x[1]}`).join(' ＋ ');
+    const names = [...new Set(segs.flatMap(x => [x[0], x[1]]))].map(c => AIRPORT_BY_CODE.get(c)?.name || '').join(' ');
+    const dates = segs.map(x => x[2]);
+    return { key, kind, e, route, dates, price: e.price, change: e.prev != null ? e.price - e.prev : 0,
+      text: `${key} ${names}`.toLowerCase(), first: dates[0] || '', at: e.at || '',
+      dep: e.first ? `${e.first.dep.slice(11, 16)}→${e.first.arr.slice(11, 16)} ${e.first.airline || ''}${e.first.stops ? `（${e.first.stops} 轉）` : e.first.stops === 0 ? '（直飛）' : ''}` : '' };
+  });
+  return DB.rows;
+}
+
+function dbFiltered() {
+  const q = DB.q.trim().toLowerCase();
+  const rows = dbRows().filter(r =>
+    (DB.kind === 'all' || r.kind === DB.kind) && (DB.min == null || r.price >= DB.min) && (DB.max == null || r.price <= DB.max) &&
+    (!DB.drop || r.change < 0) && (!q || q.split(/\s+/).every(w => r.text.includes(w))));
+  const by = {
+    price: (a, b) => a.price - b.price, price_desc: (a, b) => b.price - a.price, date: (a, b) => a.first.localeCompare(b.first) || a.price - b.price,
+    fetched: (a, b) => b.at.localeCompare(a.at) || a.price - b.price, change: (a, b) => a.change - b.change,
+  }[DB.sort];
+  return rows.sort(by);
+}
+
+function renderDbCard() {
+  const card = document.getElementById('dbcard');
+  if (!card) return;
+  const total = (FARES && FARES.fares) ? Object.keys(FARES.fares).length : 0;
+  document.getElementById('db-count').textContent = `${total.toLocaleString()} 筆`;
+  const ok = DBLOAD.files.filter(f => f.source !== '讀取失敗');
+  const gh = ok.filter(f => f.source === 'GitHub').length;
+  document.getElementById('db-status').textContent = DBLOAD.busy ? '載入中…'
+    : DBLOAD.at ? `已讀取 ${ok.length}/${DBLOAD.files.length} 個資料檔（${gh} 個來自 GitHub，${ok.length - gh} 個為網站副本）· ${DBLOAD.at.toLocaleTimeString('zh-TW')}` : '';
+  document.getElementById('db-reload').disabled = DBLOAD.busy;
+  document.getElementById('db-toggle').setAttribute('aria-expanded', String(DB.open));
+  document.getElementById('db-body').hidden = !DB.open;
+  if (!DB.open) return;
+  const rows = dbFiltered();
+  const pages = Math.max(1, Math.ceil(rows.length / DB.size));
+  DB.page = Math.min(DB.page, pages - 1);
+  const slice = rows.slice(DB.page * DB.size, (DB.page + 1) * DB.size);
+  document.getElementById('db-shown').textContent = `符合 ${rows.length.toLocaleString()} / ${total.toLocaleString()} 筆`;
+  document.getElementById('db-page').textContent = `第 ${DB.page + 1} / ${pages} 頁`;
+  document.getElementById('db-prev').disabled = DB.page === 0;
+  document.getElementById('db-next').disabled = DB.page >= pages - 1;
+  document.getElementById('db-rows').innerHTML = slice.map(r => {
+    const ch = r.e.prev != null && r.change ? `<span class="${r.change < 0 ? 'down' : 'up'}">${r.change < 0 ? '↓' : '↑'} ${Math.abs(r.change).toLocaleString()}</span>` : '';
+    const dates = r.kind === 'ow' ? mdDay(r.dates[0]) : r.dates.map(mdDay).join(' → ');
+    return `<tr><td>${DB_KIND[r.kind] || r.kind}${r.e.separate ? ' <span class="faint">(分開購買)</span>' : ''}</td><td>${escapeHtml(r.route)}</td><td>${dates}</td><td>${escapeHtml(r.dep)}</td><td class="r">${r.price.toLocaleString()}</td><td class="r">${ch}</td><td>${escapeHtml(r.at)}</td></tr>`;
+  }).join('');
+}
+
+function dbDownload(kind) {
+  const rows = dbFiltered();
+  let text, type, name;
+  if (kind === 'json') {
+    text = JSON.stringify(rows.map(r => ({ key: r.key, ...r.e })), null, 1); type = 'application/json'; name = 'fares-filtered.json';
+  } else {
+    const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    text = '﻿' + ['key,票種,路線,日期,去程航班,價格,上次價格,抓取日']
+      .concat(rows.map(r => [r.key, DB_KIND[r.kind], r.route, r.dates.join(' / '), r.dep, r.price, r.e.prev ?? '', r.at].map(q).join(','))).join('\n');
+    type = 'text/csv;charset=utf-8'; name = 'fares-filtered.csv';
+  }
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([text], { type })), download: name });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+
+function wireDbCard() {
+  if (!document.getElementById('dbcard')) return;
+  try { DB.open = localStorage.getItem(DB_OPEN_KEY) === '1'; } catch {}
+  const redo = () => { DB.page = 0; renderDbCard(); };
+  document.getElementById('db-toggle').addEventListener('click', () => {
+    DB.open = !DB.open;
+    try { localStorage.setItem(DB_OPEN_KEY, DB.open ? '1' : '0'); } catch {}
+    renderDbCard();
+  });
+  document.getElementById('db-reload').addEventListener('click', () => loadSiblingFares());
+  let timer = null;
+  const later = fn => e => { fn(e); clearTimeout(timer); timer = setTimeout(redo, 150); };
+  document.getElementById('db-q').addEventListener('input', later(e => { DB.q = e.target.value; }));
+  document.getElementById('db-min').addEventListener('input', later(e => { DB.min = e.target.value === '' ? null : Number(e.target.value); }));
+  document.getElementById('db-max').addEventListener('input', later(e => { DB.max = e.target.value === '' ? null : Number(e.target.value); }));
+  document.getElementById('db-kind').addEventListener('change', e => { DB.kind = e.target.value; redo(); });
+  document.getElementById('db-drop').addEventListener('change', e => { DB.drop = e.target.checked; redo(); });
+  document.getElementById('db-sort').addEventListener('change', e => { DB.sort = e.target.value; redo(); });
+  document.getElementById('db-prev').addEventListener('click', () => { DB.page = Math.max(0, DB.page - 1); renderDbCard(); });
+  document.getElementById('db-next').addEventListener('click', () => { DB.page += 1; renderDbCard(); });
+  document.getElementById('db-csv').addEventListener('click', () => dbDownload('csv'));
+  document.getElementById('db-json').addEventListener('click', () => dbDownload('json'));
+  renderDbCard();
+}
+
 function renderResults() {
   const el = document.getElementById('results');
   if (!state.result) { el.hidden = true; return; }
@@ -3711,6 +3859,7 @@ function scheduleRefresh() {
       renderResults();
       applyCoverage();
       renderTop100();
+      renderDbCard();
     } catch (e) { console.warn('refresh failed', e); }
   }, 700);
 }
@@ -3768,17 +3917,21 @@ function loadLiveCache() {
  * sees what the crawlers saved without a Pages deploy; the copy beside the page (staged by pages.yml) is the fallback.
  * Whichever entry is newer than what the page already has wins. */
 const DATA_BRANCH = 'claude/tender-cray-46zevd';   // the branch the crawlers commit to (the cron only fires on the default branch)
+const DBLOAD = { at: null, files: [], busy: false };   // what the last load of the fare files did (shown in the database card)
 async function loadSiblingFares() {
   let changed = false;
+  DBLOAD.busy = true; DBLOAD.files = [];
+  renderDbCard?.();
   const names = ['fares.json', 'fares-live.json', ...Array.from({ length: INSTANCES - 1 }, (_, i) => `fares-live-${i + 1}.json`)];
   await Promise.all(names.map(async name => {
-    let d = null;
-    for (const url of [rawUrl(DATA_BRANCH, name), name]) {
+    let d = null, source = '';
+    for (const [url, label] of [[rawUrl(DATA_BRANCH, name), 'GitHub'], [name, '網站副本']]) {
       try {
         const r = await timed(url, {}, 20000);
-        if (r.ok) { d = await r.json(); break; }
+        if (r.ok) { d = await r.json(); source = label; break; }
       } catch {}
     }
+    DBLOAD.files.push({ name, source: source || '讀取失敗', n: d ? Object.keys(d.fares || {}).length : 0, at: d?.generated_at || '' });
     if (!d) return;
     for (const [k, v] of Object.entries(d.fares || {})) {
       const mine = FARES.fares[k];
@@ -3789,7 +3942,9 @@ async function loadSiblingFares() {
       FARES.generated_at = d.generated_at; FARES.coverage = d.coverage || FARES.coverage; changed = true;
     }
   }));
+  DBLOAD.busy = false; DBLOAD.at = new Date();
   if (changed) { applyCoverage(); scheduleRefresh(); renderTop100?.(); }
+  renderDbCard?.();
 }
 
 function noteDiag(e) {
@@ -4134,6 +4289,7 @@ function init() {
   loadSiblingFares();
   setInterval(loadSiblingFares, 5 * 60 * 1000);   // pick up what the crawlers saved meanwhile
   wireTop100();
+  wireDbCard();
   renderDbStatus();
   subscribeLiveFares();
   wirePickers();
