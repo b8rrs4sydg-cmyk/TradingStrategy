@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T13:02:59+00:00",
+ "at": "2026-10-19T13:51:01+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1440,
+ "fares_saved": 1441,
  "log": [
   "12:48:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:02 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -26,6 +26,10 @@
   "13:00:55 request received: rid mvf9iy7lni9vv.9 3 keys",
   "13:00:55 handle mvf9iy7lni9vv.9: first_chunk=True total=3",
   "13:01:52 request mvf9iy7lni9vv.9: chunk of 3 keys done in 57s; paths {'http': 21, 'browser-none': 4}, browser waits 4 max 50s sum 189s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 4, 'blocked': 0, 'tries': 23, 'empty': 2}, audit 1/1 agree",
-  "13:01:54 request mvf9iy7lni9vv.9: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:01:54 request mvf9iy7lni9vv.9: final sent (3/3); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:50:31 rtc qeepk4347v: answered",
+  "13:50:32 rtc qeepk4347v: data channel open",
+  "13:50:33 request received: rid mvfbambektgty.9 2 keys",
+  "13:50:33 handle mvfbambektgty.9: first_chunk=True total=2"
  ]
 }
