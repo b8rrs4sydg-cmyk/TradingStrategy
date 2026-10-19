@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T00:34:00+00:00",
+ "at": "2026-10-19T00:35:32+00:00",
  "publishes": {
   "ok": 23,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 4729,
  "log": [
-  "23:42:04 request received: rid mvegzkoxou6jk.7 22 keys",
-  "23:42:04 request received: rid mvegzkoxou6jk.6 13 keys",
   "23:42:04 request received: rid mvegzkoxou6jk.8 20 keys",
   "23:42:04 handle mvegzkoxou6jk.7: first_chunk=True total=22",
   "23:42:04 handle mvegzkoxou6jk.6: first_chunk=True total=13",
@@ -156,6 +154,8 @@
   "00:31:43 request received: rid mveirfouphhhu.5 20 keys",
   "00:31:43 handle mveirfouphhhu.6: first_chunk=True total=16",
   "00:31:43 handle mveirfouphhhu.7: first_chunk=True total=15",
-  "00:31:43 handle mveirfouphhhu.5: first_chunk=True total=20"
+  "00:31:43 handle mveirfouphhhu.5: first_chunk=True total=20",
+  "00:34:28 request mveirfouphhhu.5: chunk of 20 keys done in 165s; ntfy publishes {'ok': 23, 'r429': 0, 'fail': 0}",
+  "00:34:29 request mveirfouphhhu.5: final sent (20/20); ntfy publishes {'ok': 23, 'r429': 0, 'fail': 0}"
  ]
 }
