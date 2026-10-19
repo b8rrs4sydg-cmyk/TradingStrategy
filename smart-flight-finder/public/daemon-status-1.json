@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:20:06+00:00",
+ "at": "2026-10-19T14:21:38+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1562,
+ "fares_saved": 1580,
  "log": [
   "12:49:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:06 http front door: ['https://guitar-plan-type-architect.trycloudflare.com', 'https://bf0d3d98059ebb.lhr.life']",
@@ -95,6 +95,10 @@
   "14:19:09 request mvfcajrwau2tv.1: chunk of 15 keys done in 46s; paths {'http': 91, 'browser-none': 111, 'browser': 29}, browser waits 140 max 142s sum 6338s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 91, 'miss': 49, 'blocked': 0, 'tries': 115, 'empty': 24}, audit 6/6 agree",
   "14:19:09 request mvfcajrwau2tv.1: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "14:20:03 request received: rid mvfccojpu9g7e.1 16 keys",
-  "14:20:03 handle mvfccojpu9g7e.1: first_chunk=True total=16"
+  "14:20:03 handle mvfccojpu9g7e.1: first_chunk=True total=16",
+  "14:20:45 request mvfccojpu9g7e.1: chunk of 16 keys done in 41s; paths {'http': 106, 'browser-none': 112, 'browser': 29}, browser waits 141 max 142s sum 6379s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 106, 'miss': 50, 'blocked': 0, 'tries': 132, 'empty': 26}, audit 7/7 agree",
+  "14:20:46 request mvfccojpu9g7e.1: final sent (16/16); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "14:21:08 request received: rid mvfce38diwgc8.1 4 keys",
+  "14:21:08 handle mvfce38diwgc8.1: first_chunk=True total=4"
  ]
 }
