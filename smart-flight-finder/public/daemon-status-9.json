@@ -1,13 +1,12 @@
 {
- "at": "2026-10-19T15:00:07+00:00",
+ "at": "2026-10-19T15:01:39+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1582,
+ "fares_saved": 1584,
  "log": [
-  "12:49:24 http front door: ['https://what-telephone-nail-hearing.trycloudflare.com', 'https://143230d0ecc21f.lhr.life']",
   "12:49:24 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:50:07 request received: rid httptest1792414206 20 keys",
   "12:50:07 handle httptest1792414206: first_chunk=True total=20",
@@ -156,6 +155,7 @@
   "14:59:03 request mvfdnwih0i6pv.9: chunk of 22 keys done in 138s; paths {'http': 124, 'browser-none': 317, 'browser': 35}, browser waits 352 max 145s sum 21549s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 124, 'miss': 115, 'blocked': 0, 'tries': 191, 'empty': 67}, audit 2/2 ag",
   "14:59:03 request mvfdnwih0i6pv.9: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:59:44 request received: rid mvfdrqk35rshh.9 17 keys",
-  "14:59:44 handle mvfdrqk35rshh.9: first_chunk=True total=17"
+  "14:59:44 handle mvfdrqk35rshh.9: first_chunk=True total=17",
+  "15:01:37 request mvfdrqk35rshh.9: chunk of 17 keys done in 113s; paths {'http': 124, 'browser-none': 328, 'browser': 41}, browser waits 369 max 145s sum 22130s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 124, 'miss': 132, 'blocked': 0, 'tries': 193, 'empty': 69}, audit 2/2 ag"
  ]
 }
