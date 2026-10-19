@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:19:55+00:00",
+ "at": "2026-10-19T14:21:26+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1570,
+ "fares_saved": 1585,
  "log": [
   "12:48:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:02 git retry 0: b\"-46zevd': is at 075e6c8f9244010504874074ccf7ac604d9c46bb but expected 12f6d4ded97d1d20108a6d972b1408abd75bbca1)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -92,6 +92,12 @@
   "14:18:22 request received: rid mvfcajrwau2tv.0 15 keys",
   "14:18:22 handle mvfcajrwau2tv.0: first_chunk=True total=15",
   "14:19:12 request mvfcajrwau2tv.0: chunk of 15 keys done in 50s; paths {'http': 110, 'browser-none': 143, 'browser': 28}, browser waits 171 max 141s sum 8717s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 110, 'miss': 78, 'blocked': 0, 'tries': 186, 'empty': 76}, audit 3/3 agree",
-  "14:19:12 request mvfcajrwau2tv.0: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:19:12 request mvfcajrwau2tv.0: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:20:03 request received: rid mvfccojpu9g7e.0 22 keys",
+  "14:20:03 handle mvfccojpu9g7e.0: first_chunk=True total=22",
+  "14:21:07 request mvfccojpu9g7e.0: chunk of 22 keys done in 63s; paths {'http': 118, 'browser-none': 150, 'browser': 35}, browser waits 185 max 141s sum 9118s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 118, 'miss': 80, 'blocked': 0, 'tries': 200, 'empty': 82}, audit 4/4 agree",
+  "14:21:07 request received: rid mvfce38diwgc8.0 1 keys",
+  "14:21:07 handle mvfce38diwgc8.0: first_chunk=True total=1",
+  "14:21:08 request mvfccojpu9g7e.0: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
