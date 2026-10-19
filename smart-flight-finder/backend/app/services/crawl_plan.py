@@ -16,6 +16,14 @@
    shown); promising ones get up to ``PER_GROUP`` date variants, all within
    ``max_multi_city``. Open-jaw 倒買法 tickets are ranked by the price of
    their mirrored round trip on the same dates.
+4. One-way screening of 四腿票: a multi-city fare is never below the sum of its
+   one-way legs (lowest ratio 1.04 for two legs, 1.26 for four over 70 real
+   fares, ``scripts/exp_mc_vs_ow.py``), and the legs are cheap, fast and
+   shared by thousands of combinations. So the legs' one-way fares go into
+   stage 1 (:func:`with_leg_keys`) and a four-leg combination whose floor
+   already exceeds its budget is not fetched as a multi-city query at all
+   (:func:`screen_four_leg`); the few closest calls are still fetched to
+   keep checking the bound.
 """
 
 from __future__ import annotations
@@ -32,8 +40,10 @@ from app.providers.recording import RecordingProvider
 from app.schemas.itinerary import CandidateWindowIn, ItineraryRequestIn
 from app.services.search import SearchService
 
-PROMISING = 0.8   # four-leg budget ≥ 80% of the trip-A round trip
-PER_GROUP = 3     # date variants per promising multi-city combination
+PROMISING = 0.8  # four-leg budget ≥ 80% of the trip-A round trip
+PER_GROUP = 3  # date variants per promising multi-city combination
+SCREEN_FACTOR = 0.95  # floor = this share of the sum of the legs' one-way fares
+SCREEN_AUDIT = 10  # closest pruned combinations that are fetched anyway
 
 
 @dataclass
@@ -103,8 +113,10 @@ def _near(day: date, flex: int):
     return ok
 
 
-def four_leg_budget(key: str, prices: Mapping[str, int], cfg: CrawlConfig) -> tuple[float | None, tuple]:
-    """(room for saving / trip-Q round trip, group) for a 四腿票 key.
+def four_leg_room(
+    key: str, prices: Mapping[str, int], cfg: CrawlConfig
+) -> tuple[float | None, int | None, tuple]:
+    """(money the four-leg ticket may cost and still save, trip-Q round trip, group) for a 四腿票 key.
 
     The four-leg ticket replaces three round trips (X on P, D on Q, Y on R);
     the 單買初段 and 最後一段 are bought separately, so what it may cost at most
@@ -116,12 +128,91 @@ def four_leg_budget(key: str, prices: Mapping[str, int], cfg: CrawlConfig) -> tu
     group = ("4leg", x, d, y, c1.month, c2.month, r_dep.month)
     ow_first = _min_price(prices, f"ow|TPE|{x}|", lambda k: parse_key(k)[1][0][2] < c1)
     ow_last = _min_price(prices, f"ow|{y}|TPE|", lambda k: parse_key(k)[1][0][2] > r_dep)
-    rt_x = _min_price(prices, f"rt|TPE|{x}|", lambda k: abs((parse_key(k)[1][1][2] - c1).days) <= cfg.flex + 1)
+    rt_x = _min_price(
+        prices, f"rt|TPE|{x}|", lambda k: abs((parse_key(k)[1][1][2] - c1).days) <= cfg.flex + 1
+    )
     rt_d = _min_price(prices, f"rt|TPE|{d}|", _near(c2, cfg.flex))
     rt_y = _min_price(prices, f"rt|TPE|{y}|", _near(r_dep, cfg.flex))
     if None in (ow_first, ow_last, rt_x, rt_d, rt_y):
-        return None, group
-    return (rt_x + rt_d + rt_y - ow_first - ow_last) / max(rt_d, 1), group
+        return None, None, group
+    return rt_x + rt_d + rt_y - ow_first - ow_last, rt_d, group
+
+
+def four_leg_budget(
+    key: str, prices: Mapping[str, int], cfg: CrawlConfig
+) -> tuple[float | None, tuple]:
+    """(room for saving / trip-Q round trip, group) for a 四腿票 key."""
+
+    room, rt_d, group = four_leg_room(key, prices, cfg)
+    return (None if room is None else room / max(rt_d or 1, 1)), group
+
+
+# --- one-way screening ----------------------------------------------------------
+def leg_keys(key: str) -> list[str]:
+    """The one-way query of every segment of a multi-city key."""
+
+    return [fare_key([seg], round_trip=False) for seg in parse_key(key)[1]]
+
+
+def with_leg_keys(stage1: Sequence[str], mc_keys: Sequence[str]) -> list[str]:
+    """``stage1`` plus the one-way legs of every four-leg candidate (each leg once)."""
+
+    have = set(stage1)
+    out = list(stage1)
+    for key in mc_keys:
+        if len(parse_key(key)[1]) != 4:
+            continue
+        for leg in leg_keys(key):
+            if leg not in have:
+                have.add(leg)
+                out.append(leg)
+    return out
+
+
+def one_way_floor(key: str, prices: Mapping[str, int]) -> float | None:
+    legs = [prices.get(k) for k in leg_keys(key)]
+    return None if None in legs else SCREEN_FACTOR * sum(legs)
+
+
+def screen_four_leg(
+    mc_keys: Sequence[str],
+    prices: Mapping[str, int],
+    cfg: CrawlConfig,
+    *,
+    drop_unknown: bool = False,
+    audit: int = SCREEN_AUDIT,
+) -> tuple[list[str], list[str], int]:
+    """(keys worth fetching, audit keys, how many were left out).
+
+    A four-leg key is pruned when its one-way floor already reaches the money
+    it may cost to save (:func:`four_leg_room`). A key whose legs are unknown is
+    kept, or dropped with ``drop_unknown`` (only for a caller that KNOWS Google has no
+    flight on one of the legs: a leg that merely failed to load is just as absent from
+    ``prices``, so the crawl scripts keep such keys). The ``audit`` closest calls among
+    the pruned keys come back separately: the caller must fetch them AFTER
+    ``rank_multi_city``, which would drop them (their budgets are the lowest) and leave the
+    bound untested. Two-segment keys are not screened (a pair of them forms a plan).
+    """
+
+    kept: list[str] = []
+    pruned: list[tuple[float, str]] = []
+    for key in mc_keys:
+        if len(parse_key(key)[1]) != 4:
+            kept.append(key)
+            continue
+        room, _, _ = four_leg_room(key, prices, cfg)
+        floor = one_way_floor(key, prices)
+        if floor is None:
+            if not drop_unknown:
+                kept.append(key)
+            continue
+        if room is None or floor < room:
+            kept.append(key)
+        else:
+            pruned.append((floor / max(room, 1), key))
+    pruned.sort()
+    sample = [key for _, key in pruned[:audit]]
+    return kept, sample, len(pruned) - len(sample)
 
 
 def open_jaw_score(key: str, prices: Mapping[str, int]) -> tuple[float | None, tuple]:

@@ -50,6 +50,9 @@ _TRIP_CITY = {
     "TSA": "tpe", "NRT": "tyo", "HND": "tyo", "KIX": "osa", "ITM": "osa",
     "CTS": "spk", "ICN": "sel", "GMP": "sel", "LHR": "lon", "LGW": "lon",
     "CDG": "par", "ORY": "par", "JFK": "nyc", "EWR": "nyc", "DMK": "bkk",
+    # Asian airports added with the Asia-wide catalog: cities with more than one airport (IATA metropolitan codes)
+    "UKB": "osa", "PEK": "bjs", "PKX": "bjs", "PVG": "sha", "SHA": "sha", "TFU": "ctu", "CGK": "jkt", "HLP": "jkt",
+    "SAW": "ist",
 }
 _TRIP_BASE = "https://tw.trip.com/flights/showfarefirst"
 

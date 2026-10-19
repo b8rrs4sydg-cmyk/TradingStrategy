@@ -30,6 +30,7 @@ from datetime import UTC, date, datetime, time, timedelta
 from pathlib import Path
 from typing import Any
 
+from app.providers.atomic_io import atomic_write_text, file_lock
 from app.providers.base import Segment
 from app.providers.google_flights import ISSUER, fare_key, parse_key, tz_of
 from app.services.strategies.base import FlightLeg, TicketOffer
@@ -76,7 +77,11 @@ class FareDatabase:
         """
 
         db = cls.load(path)
-        live = cls.load(live_path(path))
+        live_file = live_path(path)
+        live = cls.load(live_file)
+        # parallel lookup daemons (instances 1, 2, …) write fares-live-<n>.json next to the first overlay
+        for extra in sorted(live_file.parent.glob(f"{live_file.stem}-*{live_file.suffix}")):
+            live.overlay(cls.load(extra))
         db.overlay(live)
         db.unavailable = [k for k in live.missing if k not in db.fares]
         return db
@@ -104,9 +109,20 @@ class FareDatabase:
         }
 
     def save(self, path: str | Path) -> None:
-        p = Path(path)
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(self.to_json(), ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        atomic_write_text(path, json.dumps(self.to_json(), ensure_ascii=False, indent=1) + "\n")
+
+    @classmethod
+    def merge_into_file(
+        cls, path: str | Path, fetched: dict[str, dict], *, today: date, missing: Iterable[str] = ()
+    ) -> FareDatabase:
+        """Read-modify-write of ``path`` that no other process can interleave with: lock, re-read what is on disk NOW
+        (another writer may have added to it since this process last looked), merge, atomic save. Returns the result."""
+
+        with file_lock(path):
+            db = cls.load(path)
+            db.merge(fetched, today=today, missing=[*db.missing, *missing])
+            db.save(path)
+        return db
 
     # ------------------------------------------------------------------
     def merge(self, fetched: dict[str, dict], *, today: date, missing: Iterable[str] = ()) -> None:
@@ -270,9 +286,7 @@ class FareDatabaseProvider:
             self.db.merge(fetched, today=today, missing=[*self.db.missing, *missing])
             if self.path:  # only the new lookups go to the overlay file
                 try:
-                    live = FareDatabase.load(self.path)
-                    live.merge(fetched, today=today, missing=[*live.missing, *missing])
-                    live.save(self.path)
+                    FareDatabase.merge_into_file(self.path, fetched, today=today, missing=missing)
                 except (OSError, ValueError) as e:
                     logger.warning("fare_db_save_failed", extra={"err": str(e)})
         self.live_fetched += len(fetched)

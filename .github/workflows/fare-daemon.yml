@@ -15,10 +15,12 @@ on:
         description: "how long to stay up"
         default: "340"
   push:
-    branches: [claude/zealous-darwin-1kexus]
+    branches: [claude/tender-cray-46zevd]
     paths:
       - ".github/workflows/fare-daemon.yml"
       - "smart-flight-finder/backend/scripts/lookup_daemon.py"
+      - "smart-flight-finder/backend/app/providers/google_http.py"
+      - "smart-flight-finder/backend/app/providers/google_flights.py"
 
 permissions:
   contents: write
@@ -33,6 +35,13 @@ env:
 
 jobs:
   daemon:
+    # Ten daemons side by side: each has its own IP, browser and tunnels, and the page splits every lookup
+    # between them (about ten times the crawl speed). Instance 0 also owns the ntfy relay and the legacy files.
+    strategy:
+      fail-fast: false
+      matrix:
+        instance: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    name: daemon ${{ matrix.instance }}
     runs-on: ubuntu-latest
     timeout-minutes: 345
     defaults:
@@ -63,8 +72,10 @@ jobs:
       - name: Run daemon (+ self test 40 s after start)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DAEMON_INSTANCE: ${{ matrix.instance }}
         run: |
-          (sleep 70; python -m scripts.lookup_daemon selftest-http --daemon-json ../public/daemon.json --count 20 || echo "::warning::http selftest failed") &
+          SFX=""; [ "$DAEMON_INSTANCE" != "0" ] && SFX="-$DAEMON_INSTANCE"
+          (sleep 70; python -m scripts.lookup_daemon selftest-http --daemon-json "../public/daemon${SFX}.json" --count 20 || echo "::warning::http selftest failed") &
           python -m scripts.lookup_daemon run --req "$REQ_TOPIC" --res "$RES_TOPIC" \
-            --db ../public/fares-live.json \
-            --duration $(( ${{ inputs.duration_minutes || '310' }} * 60 ))
+            --db "../public/fares-live${SFX}.json" --instance "$DAEMON_INSTANCE" \
+            --duration $(( ${{ inputs.duration_minutes || '340' }} * 60 ))

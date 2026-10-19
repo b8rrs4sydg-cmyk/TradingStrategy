@@ -1,0 +1,373 @@
+"""Google Flights prices over plain HTTP — no browser, about 0.3-0.7 s per key instead of 10-40 s.
+
+Two doors lead to the same itinerary data the page renders:
+
+* one-way / round trip: the server-rendered results page (``AF_initDataCallback`` blocks);
+* multi-city: the page itself loads its results through ``GetShoppingResults`` (the HTML carries no
+  prices), so the same request is rebuilt from the key and posted with the cookies a plain GET hands out.
+
+Both answers are searched for itinerary rows (``[flight details, [[None, price], token]]``). Google sometimes
+answers without the flight data (or never answers), so :meth:`HttpFetcher.fetch` retries a few times and
+returns ``None`` when it could not read a price — that means *unknown*, not *no itinerary*: the caller falls
+back to the browser, which decides. Rows Google marks as separate tickets cannot be told apart here.
+
+NOT USED BY THE DAEMON. Measured against the browser-made fare database on a GitHub runner, 7-13 of 20 keys of
+each kind came back with data and a share of the round trips were priced 20-35% too high (Google sometimes answers
+with a partial list, which cannot be told from a complete one), so a plain-HTTP price is not trustworthy as the
+source of truth. Kept as a documented experiment; see scripts/exp_http_*.py and exp_mc_*.py.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import re
+import time
+from collections import deque
+from collections.abc import Iterator, Sequence
+from datetime import datetime
+from urllib.parse import quote
+
+import httpx
+
+from app.providers.base import Segment
+from app.providers.google_flights import parse_key, tz_of, url_for
+
+ENDPOINT = (
+    "https://www.google.com/_/FlightsFrontendUi/data/"
+    "travel.frontend.flights.FlightsFrontendService/GetShoppingResults"
+)
+_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/124.0.0.0 Safari/537.36"
+)
+# pre-accepted consent, so no consent wall is served
+_SOCS = "CAESHAgBEhJnd3NfMjAyMzA4MTAtMF9SQzIaAmVuIAEaBgiAo_CmBg"
+_AF = re.compile(r"AF_initDataCallback\(\{key: 'ds:\d+', hash: '[^']*', data:")
+_SESSION_TTL_S = 1800
+_PAUSE_S = 300
+_WINDOW = 12  # outcomes per kind that are looked at
+_MIN_RATE = 0.25  # below this share of keys read, the kind is paused
+_KIND_PAUSE_S = 600
+_BLOCK_LIMIT = 6  # this many 403/429/captcha answers in a row → stop asking for a while
+
+
+# --- parsing ---------------------------------------------------------------------
+def html_payloads(html: str) -> Iterator[object]:
+    dec = json.JSONDecoder()
+    for m in _AF.finditer(html):
+        i = m.end()
+        while i < len(html) and html[i] in " \n":
+            i += 1
+        try:
+            yield dec.raw_decode(html, i)[0]
+        except ValueError:
+            continue
+
+
+def rpc_payloads(text: str) -> Iterator[object]:
+    """Inner JSON of every ``wrb.fr`` row of a batchexecute-style answer."""
+
+    for line in text.split("\n"):
+        if not line.startswith("[["):
+            continue
+        try:
+            outer = json.loads(line)
+        except ValueError:
+            continue
+        for row in outer:
+            if (
+                isinstance(row, list)
+                and len(row) > 2
+                and row[0] == "wrb.fr"
+                and isinstance(row[2], str)
+            ):
+                try:
+                    yield json.loads(row[2])
+                except ValueError:
+                    continue
+
+
+def _is_itinerary(x: object) -> bool:
+    """An itinerary row: ``[[code, [airlines], [legs...], ...], [[None, price], token], ...]``."""
+
+    try:
+        price = x[1][0][1]  # type: ignore[index]
+        legs = x[0][2]  # type: ignore[index]
+        return (
+            isinstance(price, int)
+            and not isinstance(price, bool)
+            and 500 <= price <= 3_000_000
+            and isinstance(legs, list)
+            and bool(legs)
+            and isinstance(legs[0], list)
+        )
+    except (IndexError, TypeError, KeyError):
+        return False
+
+
+def itineraries(node: object, depth: int = 0) -> Iterator[list]:
+    """Every itinerary row anywhere in ``node``.
+
+    Rows are recognised one by one: Google puts other kinds of entries into the same lists, and demanding that a
+    whole list consist of rows threw away the cheapest flights along with it (price graphs and number pairs do not
+    have the row shape, so they never qualify).
+    """
+
+    if depth > 16 or not isinstance(node, list):
+        return
+    if _is_itinerary(node):
+        yield node
+        return
+    for child in node:
+        yield from itineraries(child, depth + 1)
+
+
+def _clock(t: Sequence[int | None]) -> tuple[int, int]:
+    """[hour, minute] where a zero is sent as null or left out (00:35 arrives as [None, 35], 20:00 as [20])."""
+
+    hour = t[0] if t and t[0] is not None else 0
+    minute = t[1] if len(t) > 1 and t[1] is not None else 0
+    return hour, minute
+
+
+def first_slice(item: list, segments: Sequence[Segment]) -> dict | None:
+    """Departure/arrival/stops/airline of the first slice of an itinerary row, or ``None`` if unreadable."""
+
+    try:
+        legs = item[0][2]
+        l0, ln = legs[0], legs[-1]
+        o, d, _ = segments[0]
+        dy, dm, dd = l0[20]
+        ay, am, ad = ln[21]
+        dh, dmin = _clock(l0[8])
+        ah, amin = _clock(ln[10])
+        dep = datetime(dy, dm, dd, dh, dmin, tzinfo=tz_of(o))
+        arr = datetime(ay, am, ad, ah, amin, tzinfo=tz_of(d))
+        names = item[0][1] if isinstance(item[0][1], list) else []
+        return {
+            "dep": dep.isoformat(),
+            "arr": arr.isoformat(),
+            "stops": len(legs) - 1,
+            "airline": ", ".join(str(n) for n in names) or "",
+        }
+    except (IndexError, TypeError, ValueError, KeyError):
+        return None
+
+
+def entry_from(payloads: Iterator[object], segments: Sequence[Segment]) -> dict | None:
+    best: list | None = None
+    for p in payloads:
+        for row in itineraries(p):
+            if best is None or row[1][0][1] < best[1][0][1]:
+                best = row
+    if best is None:
+        return None
+    entry: dict = {"price": best[1][0][1]}
+    first = first_slice(best, segments)
+    if first:
+        entry["first"] = first
+    return entry
+
+
+# --- request ---------------------------------------------------------------------
+def _leg(origin: str, dest: str, day: str) -> list:
+    return [
+        [[[origin, 0]]],
+        [[[dest, 0]]],
+        None,
+        0,
+        None,
+        None,
+        day,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        3,
+    ]
+
+
+_TRIP = {
+    "ow": 2,
+    "rt": 1,
+    "mc": 3,
+}  # the page's own trip-type code for one-way / round trip / multi-city
+
+
+def search_body(kind: str, segments: Sequence[Segment]) -> str:
+    legs = [_leg(o, d, day.isoformat()) for o, d, day in segments]
+    inner = [
+        [None, None, None, None],
+        [
+            None,
+            None,
+            _TRIP[kind],
+            None,
+            [],
+            1,
+            [1, 0, 0, 0],
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            legs,
+            None,
+            None,
+            None,
+            1,
+        ],
+        0,
+        0,
+        0,
+        1,
+    ]
+    flat = json.dumps(inner, separators=(",", ":"))
+    return "f.req=" + quote(json.dumps([None, flat], separators=(",", ":")), safe="") + "&"
+
+
+def multi_city_body(segments: Sequence[Segment]) -> str:
+    return search_body("mc", segments)
+
+
+class HttpFetcher:
+    """Async client; one instance is shared by every concurrent lookup."""
+
+    def __init__(
+        self,
+        *,
+        timeout: float = 8.0,
+        attempts: int = 5,
+        concurrency: int = 16,
+        hedge: int = 1,
+        streamed: bool = True,
+    ):
+        self.timeout = timeout
+        self.attempts = attempts
+        self.hedge = max(
+            1, hedge
+        )  # identical requests in flight per attempt: the first readable answer wins
+        self.streamed = streamed
+        self.sem = asyncio.Semaphore(concurrency)
+        self.client = httpx.AsyncClient(
+            headers={"User-Agent": _UA, "Accept-Language": "en-US,en;q=0.9"},
+            cookies={"SOCS": _SOCS},
+            timeout=timeout,
+            follow_redirects=True,
+        )
+        self.sid = ""
+        self.bl = ""
+        self.session_at = 0.0
+        self.session_lock = asyncio.Lock()
+        self.reqid = 100000
+        self.blocked = 0
+        self.pause_until = 0.0
+        self.stats = {"hit": 0, "miss": 0, "blocked": 0, "tries": 0, "empty": 0}
+        # per kind (ow / rt / mc): recent outcomes; a kind that mostly fails is not tried for a while (the browser
+        # would only be asked after the wasted tries)
+        self.recent: dict[str, deque[bool]] = {}
+        self.kind_pause: dict[str, float] = {}
+
+    async def aclose(self) -> None:
+        await self.client.aclose()
+
+    async def _prepare(self) -> None:
+        async with self.session_lock:
+            if self.sid and time.time() - self.session_at < _SESSION_TTL_S:
+                return
+            r = await self.client.get(url_for("ow|TPE|NRT|2027-04-01"))
+            sid = re.search(r'"FdrFJe":"(-?\d+)"', r.text)
+            bl = re.search(r'"cfb2h":"([^"]+)"', r.text)
+            if sid and bl:
+                self.sid, self.bl, self.session_at = sid.group(1), bl.group(1), time.time()
+
+    async def _answer(self, key: str, segments: Sequence[Segment]) -> str:
+        await self._prepare()
+        self.reqid += 100000
+        params = {
+            "f.sid": self.sid,
+            "bl": self.bl,
+            "hl": "en",
+            "gl": "TW",
+            "soc-app": "162",
+            "soc-platform": "1",
+            "soc-device": "1",
+            "_reqid": str(self.reqid),
+            **({"rt": "c"} if self.streamed else {}),
+        }
+        r = await self.client.post(
+            ENDPOINT,
+            params=params,
+            content=search_body(key.split("|", 1)[0], segments),
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                "X-Same-Domain": "1",
+            },
+        )
+        if r.status_code in (403, 429) or "unusual traffic" in r.text[:4000]:
+            raise PermissionError(str(r.status_code))
+        return r.text
+
+    async def _try(self, key: str, segments: Sequence[Segment]) -> dict | None:
+        """One request: the entry, or ``None`` (hung / error / no itineraries). Raises PermissionError when blocked."""
+
+        try:
+            text = await self._answer(key, segments)
+        except httpx.HTTPError:
+            self.sid = ""  # maybe a stale session: take a fresh one next time
+            return None
+        self.stats["tries"] += 1
+        entry = entry_from(rpc_payloads(text), segments)
+        if not entry:
+            self.stats["empty"] += 1
+        return entry
+
+    async def fetch(self, key: str) -> dict | None:
+        """Entry for ``key`` or ``None`` (unreadable → ask the browser)."""
+
+        if time.time() < self.pause_until:
+            return None
+        kind = key.split("|", 1)[0]
+        if time.time() < self.kind_pause.get(kind, 0.0):
+            return None
+        _, segments = parse_key(key)
+        async with self.sem:
+            for _ in range(self.attempts):
+                tasks = [asyncio.create_task(self._try(key, segments)) for _ in range(self.hedge)]
+                entry = None
+                try:
+                    for done in asyncio.as_completed(tasks):
+                        entry = await done
+                        if entry:
+                            break
+                except PermissionError:
+                    self.blocked += 1
+                    self.stats["blocked"] += 1
+                    if self.blocked >= _BLOCK_LIMIT:
+                        self.pause_until = time.time() + _PAUSE_S
+                        self.blocked = 0
+                    return None
+                finally:
+                    for t in tasks:
+                        t.cancel()
+                    await asyncio.gather(*tasks, return_exceptions=True)
+                if entry:
+                    self.blocked = 0
+                    self.stats["hit"] += 1
+                    self._record(kind, True)
+                    return entry
+            self.stats["miss"] += 1
+            self._record(kind, False)
+            return None
+
+    def _record(self, kind: str, ok: bool) -> None:
+        recent = self.recent.setdefault(kind, deque(maxlen=_WINDOW))
+        recent.append(ok)
+        if len(recent) >= _WINDOW and recent.count(True) < _MIN_RATE * len(recent):
+            self.kind_pause[kind] = time.time() + _KIND_PAUSE_S
+            recent.clear()

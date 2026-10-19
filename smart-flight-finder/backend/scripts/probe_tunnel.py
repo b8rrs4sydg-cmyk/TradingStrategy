@@ -18,29 +18,25 @@ async (allKeys) => {
   const t0 = performance.now();
   const out = { steps: [] };
   const mark = s => out.steps.push(`${((performance.now() - t0) / 1000).toFixed(1)}s ${s}`);
-  const url = await discoverDaemon(true);
-  mark(`discovered ${url} alternatives=${JSON.stringify(live.daemonAlt || [])} notes=${JSON.stringify(live.daemonNotes)}`);
-  if (!url) return out;
-  try {   // peer to peer first: no tunnel at all
-    const c = await rtcEnsure();
-    live.transport = 'rtc';
-    const rid = 'probertc' + Date.now().toString(36), keys = allKeys.slice(6, 9);
-    live.rid = rid; live.keys = keys; live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
-    await ntfyLookup(keys, rid);
-    mark(`peer to peer (${c.sid}): lookup resolved found=${live.doc.found}`);
-    out.rtc = true;
-  } catch (e) { mark('peer to peer failed: ' + e.message); out.rtc = false; }
-  const tunnels = [url, ...(live.daemonAlt || [])];
-  out.tunnels = tunnels.length;
-  out.resolved = 0;
-  for (const [i, u] of tunnels.entries()) {   // every announced tunnel must carry a lookup on its own
-    const keys = allKeys.slice(i * 3, i * 3 + 3);
-    live.transport = 'http'; live.daemonUrl = u;
-    const rid = 'probe' + i + Date.now().toString(36);
-    live.rid = rid; live.keys = keys; live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
-    try { await ntfyLookup(keys, rid); mark(`${u}: lookup resolved found=${live.doc.found}`); out.resolved++; }
-    catch (e) { mark(`${u}: lookup failed: ${e.message}`); }
+  // 1. each instance on its own: tunnels announced and healthy?
+  out.tunnels = {};
+  for (let i = 0; i < INSTANCES; i++) {
+    const url = await instanceTunnel(i, true);
+    out.tunnels[i] = { url, alt: live.tunnels[i].alt, notes: live.tunnels[i].notes };
+    mark(`instance ${i}: tunnel ${url} alt=${JSON.stringify(live.tunnels[i].alt)}`);
   }
+  // 2. all instances at once, the way a search uses them
+  if (live.peersBusy) await live.peersBusy;   // the page connects on its own at load: never swap its tables under it
+  const peers = await connectPeers();
+  out.peers = peers.map(p => `${p.i}:${p.kind}`);
+  mark(`peers: ${out.peers.join(' ')}`);
+  mark(`debug map=${JSON.stringify([...live.peerMap.entries()])} rtcs=${JSON.stringify(Object.entries(live.rtcs || {}).map(([k, c]) => [k, c.dc.readyState, c.pc.connectionState]))} rtcFail=${JSON.stringify(live.rtcFail)}`);
+  live.peerList = peers; live.transport = 'peers';
+  const keys = allKeys.slice(0, 9);
+  const rid = 'probe' + Date.now().toString(36);
+  live.rid = rid; live.keys = keys; live.doc = { status: 'queued', total: keys.length, done: 0, found: 0 };
+  try { await ntfyLookup(keys, rid); mark(`parallel lookup resolved found=${live.doc.found} done=${live.doc.done}/${live.doc.total}`); out.resolved = true; }
+  catch (e) { mark(`parallel lookup failed: ${e.message} failed=${JSON.stringify(e.failedPeers)}`); out.resolved = false; }
   return out;
 }
 """
@@ -60,7 +56,7 @@ async def main(url: str) -> int:
             "Object.keys(FARES.fares).filter(k => k.startsWith('ow|')).slice(0, 9)"
         )
         print("keys:", keys, flush=True)
-        has_poll = await page.evaluate("ntfyLookup.toString().includes('/poll/')")
+        has_poll = await page.evaluate("peersLookup.toString().includes('/poll/')")
         print("page uses long polling:", has_poll, flush=True)
         t0 = time.time()
         res = await asyncio.wait_for(page.evaluate(JS, keys), timeout=150)
@@ -68,9 +64,8 @@ async def main(url: str) -> int:
             print(" ", s)
         print("page errors:", errors[:5])
         await browser.close()
-        print("peer to peer (no tunnel):", res.get("rtc"))
-        ok = res.get("resolved", 0) >= 1 and has_poll and res.get("rtc") is True
-        print("tunnels announced:", res.get("tunnels"), "carrying a lookup:", res.get("resolved"))
+        print("peers (instance:kind):", res.get("peers"))
+        ok = res.get("resolved") is True and len(res.get("peers", [])) >= 1 and has_poll
         print("PROBE", "OK" if ok else "FAILED", f"in {time.time() - t0:.0f}s")
         return 0 if ok else 1
 

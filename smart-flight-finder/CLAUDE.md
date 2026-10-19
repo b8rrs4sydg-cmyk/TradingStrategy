@@ -145,6 +145,15 @@ page ◀──SSE─────────────────  ntfy.sh/<T
   selftest 40 s after start). Requests are validated (`lookup_fares.valid_keys`,
   ≤ 160 keys, ≤ 500 keys / 10 min), results go to `public/fares-live.json`
   (overlay; committed every ~90 s) and the next crawl folds them in.
+- THREE daemons run side by side (`fare-daemon.yml` matrix, `Daemon(instance=i)`):
+  own IP, browser, tunnels and files (`daemon-<i>.json`, `daemon-status-<i>.json`,
+  `fares-live-<i>.json`; instance 0 keeps the legacy names and alone listens to
+  ntfy). The page connects to every instance that answers (`connectPeers`) and
+  `peersLookup` splits the keys between them round-robin, so a search is ~3x
+  faster; a failing share is retried by the others. `load_with_live` folds in
+  every `fares-live-*.json`. Scheduled restarts only exist on the default
+  branch; lookups need at least one instance online (the page says so when
+  `daemon-status.json` is older than 15 min).
 - Preferred front door is peer to peer (WebRTC, `rtcEnsure` in the page,
   `Daemon.start_rtc/rtc_answer` with aiortc): the page offers through the ntfy
   topic `<T_REQ>-sig`, the daemon answers on `<T_RES>-sig` (two small
@@ -243,3 +252,93 @@ CI runs all of the above on every push touching `smart-flight-finder/**`.
 - Hidden-city planner intentionally not implemented (ethical + legal risk).
 - Open follow-ups: Redis-backed cross-request cache; real Skyscanner adapter;
   rate limiting on `/search`; structured JSON logging.
+
+## Plain-HTTP pricing (HTTP first, browser fallback + audit)
+
+`app/providers/google_http.py` prices a key without a browser (≈0.3 s) by posting the page's own `GetShoppingResults`
+request (every kind: trip type 2 one-way, 1 round trip, 3 multi-city; no per-search token needed, only the cookies a plain
+GET hands out). `Daemon.price()` asks it first (2 tries × 6 s, ≤6 at once) and uses the browser for whatever it cannot read;
+10 % of the HTTP prices are also priced by the browser (`HTTP_AUDIT`) and when over 20 % of the last 20-40 disagree by more
+than 3 %, HTTP is paused for 30 min. `DAEMON_FAST_FETCH=0` turns it off.
+
+What the experiments (`scripts/exp_http_*.py`, `exp_mc_*.py`, `exp-http-fetch.yml`) found:
+* a price "too high" was our parser: Google mixes non-itinerary entries into the itinerary lists and requiring a whole list to
+  be itineraries dropped the cheapest flights with it; rows are now recognised one by one;
+* midnight times come with a null hour (`[None, 35]`), 20:00 as `[20]`;
+* data is missing because Google intermittently hangs ~60 s and then answers `ErrorResponse`; a retry usually works. Measured
+  on a runner: one-way ≈ always, round trip 70-90 %, multi-city 10-60 % of keys get data (more concurrency did not help);
+* not detected: whether a cheapest row is a "separate tickets" combination (the browser path excludes those);
+* Trip.com, Skyscanner, Kayak, Momondo, Expedia, Skiplagged and Wego all refuse plain HTTP from a datacenter IP.
+
+The page has a "查找所有排列組合" button: the normal campaign asks only the likeliest multi-city routes (budgeted); the
+button asks every remaining multi-city permutation, spread over the crawlers (`live.campaign.all`).
+
+## Crawler count, dispatch and database safety
+
+`fare-daemon.yml` runs ten daemon instances (matrix `[0..9]`, one GitHub job each: own IP, browser, tunnels, `daemon[-i].json`,
+`fares-live[-i].json`). The page's `INSTANCES` constant must match the matrix (`test_concurrent_db.py` checks it). Ten (was six) is a
+trade-off, not a limit of the code. The real ceilings: GitHub's concurrent-job cap (≈20 on a free account, shared with the other
+workflows), two ntfy signalling messages per instance per page load (anonymous quota ≈250/day per IP) plus one WebRTC connection
+each, one git commit stream per instance, and Google's per-IP throttling (more instances on GitHub's shared IP ranges means more
+403/429, not more prices). 100+ crawlers would need paid/self-hosted runners and a signalling path that does not scale per page.
+
+**Dispatch** (`app/services/dispatch.py`, JS port `ownerOf` in the page, same test vectors): rendezvous hashing assigns every fare
+key to exactly one live instance, identically on every page and run, so no two crawlers fetch the same key; a lost crawler's keys
+move to the others and nothing else moves. The page dedupes keys before sharding. Inside a daemon `Daemon.priced` is single-flight
+(`inflight` table + TTL cache): a key asked twice at once is fetched once.
+
+**Database** (`app/providers/atomic_io.py`): every file is written atomically (temp + fsync + `os.replace`), so readers and `git add`
+never see a torn file. Read-modify-write goes through `FareDatabase.merge_into_file` (`flock` on `<file>.lock`, re-read, merge, save),
+so concurrent processes lose no update; `Persister.flush` serialises threads with `flush_lock`. Each instance still owns its own
+files (single writer by construction); git pushes use `pull --rebase --autostash` with jittered retries. Workflows that write
+`fares.json` keep their `concurrency:` groups.
+
+The 10 % HTTP-vs-browser audit runs in the BACKGROUND (`Daemon.audit_key`): the page gets the HTTP price at once instead of waiting for a
+browser tab. Each request's log line breaks the time down (`paths {...}`, `browser waits N max Xs sum Ys`) — read it before tuning.
+
+## One-way screening of multi-city tickets (四腿票 / 反向票＋倒買法)
+
+Measured on real fares (`scripts/exp_mc_vs_ow.py`, 70 multi-city fares priced leg by leg): a multi-city fare is never below the
+sum of its one-way legs (lowest ratio 1.04 for two legs, 1.26 for four; median 1.31 / 2.68). Real database check: of 1,613 priced
+四腿票 and 1,388 wrap+reverse pairs, **none** beats ordinary round trips (best 1.36x and 1.02x) — Google prices a multi-city
+trip about like the sum of its one-ways, so these strategies rarely pay in Google data. One-way fares are fast (HTTP, ~100 %)
+and shared by thousands of combinations, so:
+
+* page (`SCREEN`, `oneWayFloor`, `worthAsking`, `planReversePair`, `planFourLegTriple`): a ticket is asked for only when
+  0.95 x the sum of its legs' one-way fares leaves room to beat the baseline; unknown legs are asked for first (as normal
+  stage-1 one-way keys); the 10 closest pruned calls are still asked (audit) and `checkScreening` switches screening off if
+  one comes back below its floor; "查找所有排列組合" (`SCREEN.all`) turns screening off; a user search resets it;
+* backend crawl (`crawl_plan.with_leg_keys` / `screen_four_leg`, used by `build_fare_snapshot.py` and `fill_fares.py`): the legs
+  join stage 1, 四腿票 keys whose floor reaches the room are dropped; a key with an unknown leg is KEPT (a failed load looks
+  like "no flight", so the scripts never pass `drop_unknown`); the audit sample is returned separately and appended AFTER
+  `rank_multi_city` (ranking would drop it); two-segment keys are not screened there (a pair forms a plan);
+* browser tuning does not help (`exp_browser_speed.py`: blocking images/fonts or a shorter settle wait changed nothing —
+  multi-city pages are slow on Google's side); speed comes from asking less and from more crawlers.
+
+## Airport catalog (Taiwan, China and all of Asia)
+
+`backend/app/data/asia_airports.py` is the table (one line per airport: IATA code | 中文名 | ISO-2 | IANA time zone | group |
+gateway flag): 285 scheduled-service airports — Taiwan 18, Japan 44, Korea 12, HK/Macau 2, mainland China 53, South-East
+Asia 81, South Asia 38, Central Asia/Mongolia 8, West Asia/Middle East 29. `app/data/airports.py` merges it with the few
+long-haul places (Europe/Americas/Oceania) into `TW_ORIGINS` (出發機場 = all Taiwan airports), `DESTINATIONS`, `OUTSTATIONS`
+(gateway flag = 四腿票 外站 candidates), `BY_CODE`, `TIMEZONES` (`google_flights.tz_of` reads local times with it, so every
+airport needs one) and `COUNTRY_ZH` (picker search by country name). The demo page gets the same table from
+`python -m scripts.embed_airports` (rewrites the `AIRPORT-TABLE` block of `public/index.html`; `--check` and
+`tests/test_airport_catalog.py` fail when the page is out of date). The page's pickers collapse the Asia-wide lists by group,
+have a search box (name / city / code / country) and per-group 全選 / 清除. Airports the fare database does not cover are
+marked 無資料 and priced on demand by the crawlers. Trip.com needs metropolitan city codes for multi-airport cities: add them
+to `_TRIP_CITY` (`services/booking_links.py`) and `TRIP_CITY` (page) together. The Next.js `frontend/` reads `/airports`.
+
+## Plan filters (page)
+
+`PF` / `pfPass` / `planFacts` in `public/index.html` filter `state.result.plans` client-side: time-slot label, origin, destination
+(any airport a plan passes through), price range, outbound departure time (local), outbound stops, airline, travel days, outbound /
+return date, "hide 不划算", favourites. Each facet's counts are computed with the OTHER filters applied. Only the FIRST flight of a
+ticket has real times (Google's result carries one slice), so the outbound time / stops / airline are real while the return flight's
+time is usually unknown: a plan with an unknown time is never hidden by a time or stops filter, and the return-time group is
+disabled when no plan has one (use the return-date range). The strategy `<select>` stays separate but shares "全部重設".
+
+Grouping: `state.group` (none / holiday / place / country, the `#r-group` select) → `groupPlans` reorders the visible plans into groups
+(holidays by first departure, places by cheapest plan; a 外站四腿票 has no single destination and gets its own group) and
+`renderPlanList` wraps each in a collapsible `.group` (folded keys in `state.collapsed`; a folded body is hidden, not unrendered, so
+the `.plan` DOM order still equals the plan array the card handlers index into).

@@ -28,6 +28,7 @@ import heapq
 import itertools
 import json
 import os
+import random
 import re
 import shutil
 import subprocess
@@ -36,7 +37,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
-from collections import deque
+from collections import Counter, deque
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -44,12 +45,14 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 
+from app.providers.atomic_io import atomic_write_text
 from app.providers.fare_db import FareDatabase
 from app.providers.google_flights import _fetch_one
+from app.providers.google_http import HttpFetcher
 from scripts.lookup_fares import MAX_KEYS, valid_keys
 
 NTFY = os.getenv("NTFY_URL", "https://ntfy.sh")
-STUN = "stun:stun.l.google.com:19302"   # public STUN: no account, only tells each side its public address
+STUN = "stun:stun.l.google.com:19302"  # public STUN: no account, only tells each side its public address
 MSG_BYTES = 3400  # ntfy turns messages over 4096 bytes into attachments
 RATE_KEYS = 2500  # accepted keys per window
 RATE_WINDOW_S = 600
@@ -58,6 +61,7 @@ FLUSH_EVERY_S = 6
 HEARTBEAT_S = 20
 PERSIST_EVERY_S = 90
 CONCURRENCY = 8
+HTTP_AUDIT = 0.1  # share of plain-HTTP prices that are also priced by the browser, to catch a drifting reader
 _UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/130.0 Safari/537.36"
@@ -252,13 +256,21 @@ def subscribe(topic: str, since: str, stop: threading.Event, handler) -> None:
 class Persister:
     """Merges fetched fares into the live overlay file and pushes it to git."""
 
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Path, suffix: str = "") -> None:
         self.path = path.resolve()  # git -C <root> needs a path inside the repo
+        self.suffix = (
+            suffix  # "" for instance 0, "-1", "-2", … for the others: each instance owns its files
+        )
         self.db = FareDatabase.load(self.path)
         self.pending: dict[str, dict] = {}
         self.missing: list[str] = []
-        self.lock = threading.Lock()
+        self.lock = threading.Lock()  # guards pending / missing / dirty
+        self.flush_lock = threading.Lock()  # one flush at a time: the periodic and the final one run in threads
         self.dirty = False  # request activity since the last push → publish daemon-status.json
+
+    def mark_dirty(self) -> None:
+        with self.lock:
+            self.dirty = True
 
     def add(self, fares: dict, nf: list) -> None:
         with self.lock:
@@ -266,26 +278,28 @@ class Persister:
             self.missing += nf
 
     def flush(self, push: bool) -> int:
-        with self.lock:
-            fares, missing = self.pending, self.missing
-            self.pending, self.missing = {}, []
-        if not fares and not missing and not self.dirty:
-            return 0
-        self.dirty = False
-        if fares or missing:
-            self.db.merge(
-                fares, today=datetime.now(UTC).date(), missing=[*self.db.missing, *missing]
-            )
-            self.db.save(self.path)
-        self.write_status({"fares_saved": len(self.db.fares)})
-        if push and os.getenv("GITHUB_TOKEN"):
-            self._git_push(len(fares))
-        return len(fares)
+        with self.flush_lock:
+            with self.lock:
+                fares, missing = self.pending, self.missing
+                self.pending, self.missing = {}, []
+                dirty, self.dirty = self.dirty, False
+            if not fares and not missing and not dirty:
+                return 0
+            if fares or missing:
+                # read-modify-write under a file lock: whatever is on disk now is merged, nothing is overwritten
+                self.db = FareDatabase.merge_into_file(
+                    self.path, fares, today=datetime.now(UTC).date(), missing=missing
+                )
+            self.write_status({"fares_saved": len(self.db.fares)})
+            if push and os.getenv("GITHUB_TOKEN"):
+                self._git_push(len(fares))
+            return len(fares)
 
     def announce(self, urls: list[str]) -> None:
         """Tell pages where to reach this daemon (daemon.json: independent tunnels, the page tries each)."""
 
-        (self.path.parent / "daemon.json").write_text(
+        atomic_write_text(
+            self.path.parent / f"daemon{self.suffix}.json",
             json.dumps(
                 {
                     "url": urls[0] if urls else None,
@@ -294,7 +308,6 @@ class Persister:
                 }
             )
             + "\n",
-            encoding="utf-8",
         )
         if os.getenv("GITHUB_TOKEN"):
             self._git_push(0)
@@ -307,8 +320,9 @@ class Persister:
             "log": list(RING),
         }
         try:
-            (self.path.parent / "daemon-status.json").write_text(
-                json.dumps(status, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
+            atomic_write_text(
+                self.path.parent / f"daemon-status{self.suffix}.json",
+                json.dumps(status, ensure_ascii=False, indent=1) + "\n",
             )
         except OSError:
             pass
@@ -316,46 +330,71 @@ class Persister:
     def _git_push(self, n: int) -> None:
         root = Path(__file__).resolve().parents[3]
         branch = os.getenv("GITHUB_REF_NAME", "")
-        for attempt in range(4):
+        committed = False
+        for attempt in range(8):
             try:
                 git = lambda *a: subprocess.run(
                     ["git", "-C", str(root), *a], check=True, capture_output=True
                 )
-                git(
-                    "add",
-                    str(self.path),
-                    str(self.path.parent / "daemon-status.json"),
-                    str(self.path.parent / "daemon.json"),
-                )
-                if (
-                    subprocess.run(
-                        ["git", "-C", str(root), "diff", "--cached", "--quiet"], check=False
-                    ).returncode
-                    == 0
-                ):
-                    return
-                git("commit", "-q", "-m", f"data: live fare lookups (+{n})")
-                git("pull", "-q", "--rebase", "origin", branch)
+                if not committed:
+                    # only files that exist: an instance that has saved no fare yet has no overlay file, and
+                    # `git add` of a missing path fails the whole command (so nothing was ever pushed)
+                    mine = [
+                        self.path,
+                        self.path.parent / f"daemon-status{self.suffix}.json",
+                        self.path.parent / f"daemon{self.suffix}.json",
+                    ]
+                    git("add", *[str(f) for f in mine if f.exists()])
+                    if (
+                        subprocess.run(
+                            ["git", "-C", str(root), "diff", "--cached", "--quiet"], check=False
+                        ).returncode
+                        == 0
+                    ):
+                        return
+                    git("commit", "-q", "-m", f"data: live fare lookups (+{n})")
+                    committed = True  # a lost push race (several instances push) must retry the push, not the commit
+                # --autostash: the status/overlay files are rewritten while a push is being retried
+                git("pull", "-q", "--rebase", "--autostash", "origin", branch)
                 git("push", "-q", "origin", f"HEAD:{branch}")
                 return
             except subprocess.CalledProcessError as e:
                 log(f"git retry {attempt}: {e.stderr[-200:] if e.stderr else e}")
-                time.sleep(3)
+                time.sleep(2 + attempt * 2 + random.random() * 3)  # jitter: the instances push at the same moments
 
 
 class Daemon:
-    def __init__(self, req: str, res: str, db_path: Path) -> None:
+    def __init__(self, req: str, res: str, db_path: Path, instance: int = 0) -> None:
         self.req, self.res = req, res
-        self.persist = Persister(db_path)
+        # several daemons run side by side (one GitHub job each, each with its own IP, browser and tunnels):
+        # the page splits a lookup between them. Instance 0 also owns the ntfy relay and the legacy file names.
+        self.instance = instance
+        self.persist = Persister(db_path, "" if instance == 0 else f"-{instance}")
         self.limiter = RateLimiter()
+        # prices over plain HTTP first; two tries of 6 s at most per key, then the browser takes over
+        self.http: HttpFetcher | None = (
+            HttpFetcher(timeout=6.0, attempts=2, concurrency=6)
+            if os.getenv("DAEMON_FAST_FETCH", "1") == "1"
+            else None
+        )
+        self.audit: deque[bool] = deque(
+            maxlen=40
+        )  # does a sampled HTTP price agree with the browser's?
         self.cache: dict[str, tuple[float, dict | None]] = {}
+        # key → the lookup that is running for it now: a second ask (another page, a retry, a re-routed share) waits for
+        # that one instead of fetching the same fare again
+        self.inflight: dict[str, asyncio.Future] = {}
+        # where the time goes (logged per request): keys by path, and seconds spent waiting for the browser
+        self.path: Counter[str] = Counter()
+        self.browser_s: list[float] = []
+        self.audits: set[asyncio.Task] = set()
         self.requests: dict[str, dict] = {}  # rid → {total, done}
         self.seen: set[str] = set()
         self.queue: asyncio.Queue = asyncio.Queue()
         self.buffers: dict[str, dict] = {}  # rid -> {msgs, t}: what SSE subscribers read
         self.tunnel_url: str | None = None
         self.tunnel_urls: list[str] = []
-        self.rtc: dict[str, dict] = {}   # peer-to-peer sessions by id: {pc, ch, t}
+        self.rtc: dict[str, dict] = {}  # peer-to-peer sessions by id: {pc, ch, t}
         self.seq = 0
 
     async def run(self, duration: float) -> None:
@@ -370,11 +409,14 @@ class Daemon:
             self.seen.add(ev.get("id"))
             loop.call_soon_threadsafe(self.queue.put_nowait, ("ntfy", ev.get("message", "")))
 
-        threading.Thread(
-            target=subscribe,
-            args=(self.req, str(int(time.time()) - 5), stop, on_message),
-            daemon=True,
-        ).start()
+        if (
+            self.instance == 0
+        ):  # the ntfy relay is a single shared mailbox: only one instance listens
+            threading.Thread(
+                target=subscribe,
+                args=(self.req, str(int(time.time()) - 5), stop, on_message),
+                daemon=True,
+            ).start()
         async with async_playwright() as pw:
             browser = await pw.chromium.launch(
                 args=["--disable-blink-features=AutomationControlled"]
@@ -407,7 +449,7 @@ class Daemon:
                 log(
                     f"request received: {'rid ' + req['rid'] + ' ' + str(len(req['keys'])) + ' keys' if req else 'REJECTED ' + message[:80]}"
                 )
-                self.persist.dirty = True
+                self.persist.mark_dirty()
                 if req:
                     t = asyncio.create_task(self.handle(req, ctx, sem))
                     tasks.add(t)
@@ -475,23 +517,7 @@ class Daemon:
             )
 
         async def one(key: str) -> None:
-            hit = self.cache.get(key)
-            failed = False
-            if hit and time.time() - hit[0] < CACHE_TTL_S:
-                entry = hit[1]
-            else:
-                await sem.acquire((-seq, key.startswith("mc|")))
-                try:
-                    entry = await _fetch_one(ctx, key, 40000)
-                except Exception as e:  # noqa: BLE001
-                    log(f"fetch failed {key}: {e}")
-                    entry, failed = None, True
-                finally:
-                    sem.release()
-                if (
-                    not failed
-                ):  # a crash is not "no itinerary": do not cache or report it as unavailable
-                    self.cache[key] = (time.time(), entry)
+            entry, failed = await self.priced(key, ctx, sem, seq)
             state["done"] += 1
             state["last_activity"] = time.time()
             if entry:
@@ -506,8 +532,88 @@ class Daemon:
             state["active"] -= 1
             state["last_activity"] = time.time()
         log(
-            f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; ntfy publishes {PUB}"
+            f"request {rid}: chunk of {len(keys)} keys done in {time.time() - t0:.0f}s; paths {dict(self.path)}, "
+            f"browser waits {len(self.browser_s)} max {max(self.browser_s, default=0):.0f}s "
+            f"sum {sum(self.browser_s):.0f}s; ntfy publishes {PUB}"
+            + (
+                f"; plain HTTP {self.http.stats}, audit {self.audit.count(True)}/{len(self.audit)} agree"
+                if self.http
+                else ""
+            )
         )
+
+    async def priced(self, key: str, ctx, sem: PriorityGate, seq: int) -> tuple[dict | None, bool]:
+        """(entry, crashed) for ``key``: from the cache, from the lookup already running for it, or a new one."""
+
+        hit = self.cache.get(key)
+        if hit and time.time() - hit[0] < CACHE_TTL_S:
+            return hit[1], False
+        running = self.inflight.get(key)
+        if running is not None:
+            return await asyncio.shield(running)
+        fut: asyncio.Future = asyncio.get_running_loop().create_future()
+        self.inflight[key] = fut
+        result: tuple[dict | None, bool] = (None, True)
+        try:
+            result = await self.price(key, ctx, sem, seq)
+            if not result[1]:  # a crash is not "no itinerary": do not cache or report it as unavailable
+                self.cache[key] = (time.time(), result[0])
+            return result
+        finally:
+            del self.inflight[key]
+            if not fut.done():
+                fut.set_result(result)
+
+    async def browser_price(
+        self, key: str, ctx, sem: PriorityGate, seq: int
+    ) -> tuple[dict | None, bool]:
+        """(entry, crashed) from the headless browser."""
+
+        await sem.acquire((-seq, key.startswith("mc|")))
+        try:
+            return await _fetch_one(ctx, key, 40000), False
+        except Exception as e:  # noqa: BLE001
+            log(f"fetch failed {key}: {e}")
+            return None, True
+        finally:
+            sem.release()
+
+    async def price(self, key: str, ctx, sem: PriorityGate, seq: int) -> tuple[dict | None, bool]:
+        """Plain HTTP first (about 0.5 s a key, no browser tab); the browser prices whatever it could not read, and a
+        sample of the HTTP prices too: they are compared with the browser's and, when they disagree too often,
+        HTTP is switched off for a while. Returns (entry, crashed)."""
+
+        quick = None
+        if self.http is not None:
+            try:
+                quick = await self.http.fetch(key)
+            except Exception as e:  # noqa: BLE001
+                log(f"http fetch failed {key}: {e}")
+        if quick is not None:
+            self.path["http"] += 1
+            if random.random() < HTTP_AUDIT:
+                # the check against the browser runs in the background: the page already has its price
+                task = asyncio.create_task(self.audit_key(key, quick, ctx, sem, seq))
+                self.audits.add(task)
+                task.add_done_callback(self.audits.discard)
+            return quick, False
+        t0 = time.time()
+        entry, crashed = await self.browser_price(key, ctx, sem, seq)
+        self.browser_s.append(time.time() - t0)
+        self.path["browser-crashed" if crashed else "browser" if entry else "browser-none"] += 1
+        return entry, crashed
+
+    async def audit_key(self, key: str, quick: dict, ctx, sem: PriorityGate, seq: int) -> None:
+        """Compare a plain-HTTP price with the browser's; when they disagree too often, switch HTTP off for a while."""
+
+        entry, _ = await self.browser_price(key, ctx, sem, seq)
+        if entry is None:  # the browser could not confirm: nothing to compare
+            return
+        self.audit.append(abs(quick["price"] - entry["price"]) <= 0.03 * entry["price"])
+        if self.http is not None and len(self.audit) >= 20 and self.audit.count(False) > 0.2 * len(self.audit):
+            log(f"plain-HTTP prices disagree with the browser ({self.audit.count(False)}/{len(self.audit)}): paused")
+            self.http.pause_until = time.time() + 1800
+            self.audit.clear()
 
     # --- peer-to-peer front door (WebRTC): no tunnel, no GitHub API -------------------------------
     def start_rtc(self, loop, stop: threading.Event) -> None:
@@ -521,27 +627,41 @@ class Daemon:
             return
 
         def on_offer(ev: dict) -> None:
-            loop.call_soon_threadsafe(lambda: asyncio.ensure_future(self.rtc_answer(ev.get("message", ""))))
+            loop.call_soon_threadsafe(
+                lambda: asyncio.ensure_future(self.rtc_answer(ev.get("message", "")))
+            )
 
         threading.Thread(
-            target=subscribe, args=(self.req + "-sig", str(int(time.time()) - 2), stop, on_offer), daemon=True
+            target=subscribe,
+            args=(self.req + "-sig", str(int(time.time()) - 2), stop, on_offer),
+            daemon=True,
         ).start()
         log(f"peer-to-peer front door: signalling on {self.req}-sig")
 
     async def rtc_answer(self, message: str) -> None:
-        from aiortc import RTCConfiguration, RTCIceServer, RTCPeerConnection, RTCSessionDescription
-
         try:
             m = json.loads(message)
         except ValueError:
             return
         if not isinstance(m, dict) or m.get("type") != "offer":
             return
-        sid, sdp = str(m.get("sid", "")), m.get("sdp")
-        if not re.fullmatch(r"[A-Za-z0-9_-]{4,24}", sid) or not isinstance(sdp, str) or len(sdp) > 20000:
+        try:
+            target = int(m.get("inst", 0))  # pages that predate instances address instance 0
+        except (TypeError, ValueError):
             return
+        if target != self.instance:
+            return
+        sid, sdp = str(m.get("sid", "")), m.get("sdp")
+        if (
+            not re.fullmatch(r"[A-Za-z0-9_-]{4,24}", sid)
+            or not isinstance(sdp, str)
+            or len(sdp) > 20000
+        ):
+            return
+        from aiortc import RTCConfiguration, RTCIceServer, RTCPeerConnection, RTCSessionDescription
+
         now = time.time()
-        for old, sess in list(self.rtc.items()):   # forget sessions that never connected or ended
+        for old, sess in list(self.rtc.items()):  # forget sessions that never connected or ended
             if now - sess["t"] > 6 * 3600 or sess["pc"].connectionState in ("failed", "closed"):
                 await sess["pc"].close()
                 self.rtc.pop(old, None)
@@ -565,7 +685,16 @@ class Daemon:
             await pc.setRemoteDescription(RTCSessionDescription(sdp=sdp, type="offer"))
             await pc.setLocalDescription(await pc.createAnswer())
             await asyncio.to_thread(
-                publish, self.res + "-sig", json.dumps({"type": "answer", "sid": sid, "sdp": pc.localDescription.sdp})
+                publish,
+                self.res + "-sig",
+                json.dumps(
+                    {
+                        "type": "answer",
+                        "sid": sid,
+                        "inst": self.instance,
+                        "sdp": pc.localDescription.sdp,
+                    }
+                ),
             )
             log(f"rtc {sid}: answered")
         except Exception as e:  # noqa: BLE001
@@ -634,6 +763,7 @@ def make_app(daemon: Daemon):
     async def health() -> dict:
         return {
             "ok": True,
+            "instance": daemon.instance,
             "at": datetime.now(UTC).isoformat(timespec="seconds"),
             "requests": len(daemon.requests),
         }
@@ -866,6 +996,7 @@ def main() -> None:
     r.add_argument("--req", required=True)
     r.add_argument("--res", required=True)
     r.add_argument("--db", type=Path, required=True)
+    r.add_argument("--instance", type=int, default=int(os.getenv("DAEMON_INSTANCE", "0")))
     r.add_argument("--duration", type=float, default=5.2 * 3600)
     s = sub.add_parser("selftest")
     s.add_argument("--req", required=True)
@@ -890,7 +1021,7 @@ def main() -> None:
         ]
         sys.exit(selftest_http(args.daemon_json, keys, args.timeout))
     if args.cmd == "run":
-        asyncio.run(Daemon(args.req, args.res, args.db).run(args.duration))
+        asyncio.run(Daemon(args.req, args.res, args.db, args.instance).run(args.duration))
     else:
         keys = args.keys.split(",")
         if args.count:

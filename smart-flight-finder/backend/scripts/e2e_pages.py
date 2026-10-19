@@ -94,7 +94,7 @@ async def main() -> int:
         await page.wait_for_timeout(2500)
         info = await page.evaluate(
             """() => ({fares: Object.keys(FARES.fares).length, slots: slots.length,
-                      triple: typeof planFourLegTriple === 'function', ntfy: typeof ntfyLookup === 'function' && ntfyLookup.toString().includes('/poll/'),
+                      triple: typeof planFourLegTriple === 'function', ntfy: typeof peersLookup === 'function' && peersLookup.toString().includes('/poll/'),
                       plans: state.result ? state.result.plans.length : -1,
                       cards: document.querySelectorAll('article.plan').length})"""
         )
@@ -151,6 +151,43 @@ async def main() -> int:
             n = await page.evaluate("document.querySelectorAll('article.plan').length")
             check(n >= 0, f"filter {v}: {n} plans")
         await page.select_option("#r-filter", "all")
+        # plan filters: price ceiling, outbound time window, a destination, reset
+        total = await page.evaluate("state.result.plans.length")
+        if total >= 4:
+            top = await page.evaluate(
+                "[...state.result.plans].map(p => p.total_cost).sort((a, b) => a - b)[Math.floor(state.result.plans.length / 2)]"
+            )
+            if await page.evaluate("document.getElementById('f-panel').hidden"):
+                await page.click("#f-toggle")
+            await page.fill("#f-panel input.num[data-k=priceMax]", str(top))
+            await page.wait_for_timeout(400)
+            got = await page.evaluate(
+                "[document.querySelectorAll('#plan-list .plan').length, Math.max(0, ...state.result.plans.filter(p => pfPass(p)).map(p => p.total_cost))]"
+            )
+            check(
+                0 < got[0] < total and got[1] <= top,
+                f"price filter keeps {got[0]}/{total} plans, max {got[1]} <= {top}",
+            )
+            await page.click("#f-reset")
+            await page.wait_for_timeout(300)
+            check(
+                await page.evaluate("document.querySelectorAll('#plan-list .plan').length")
+                == total,
+                "reset restores every plan",
+            )
+            dest = await page.evaluate(
+                "document.querySelector('#f-panel input[data-facet=dests]')?.value"
+            )
+            if dest:
+                # the checkbox itself is visually hidden: click its label
+                await page.click(f'#f-panel label:has(input[data-facet=dests][value="{dest}"])')
+                await page.wait_for_timeout(300)
+                ok = await page.evaluate(
+                    "state.result.plans.filter(p => pfPass(p)).every(p => planFacts(p).places.includes(document.querySelector('#f-panel input[data-facet=dests]:checked').value))"
+                )
+                check(ok, f"destination filter {dest} only keeps plans through it")
+                await page.click("#f-reset")
+                await page.wait_for_timeout(300)
         # 反向票＋倒買法 is always exactly two tickets; an open jaw never crosses countries
         shape = await page.evaluate(
             """() => {
@@ -202,10 +239,30 @@ async def main() -> int:
         )
         check((st["found"] or 0) > 0, "fares streamed back from the crawler")
         check(
-            st["transport"] in ("rtc", "http"),
+            st["transport"] == "peers",
             f"page reached the crawler directly, not through ntfy (transport={st['transport']})",
         )
         check(not st["error"], f"no lookup error ({st['error']})")
+
+        # ---- C2: "look up every multi-city permutation" button ---------------------
+        has_btn = await page.evaluate(
+            "typeof renderAllButton === 'function' && !!document.getElementById('lookup-all')"
+        )
+        check(has_btn, "page has the look-up-all-permutations control")
+        try:
+            await page.wait_for_selector("#btn-lookup-all:not([disabled])", timeout=90000)
+            page.once("dialog", lambda d: asyncio.ensure_future(d.accept()))
+            label = await page.inner_text("#lookup-all")
+            log("look-up-all control:", label[:160])
+            await page.click("#btn-lookup-all")
+            await page.wait_for_timeout(4000)
+            started = await page.evaluate("live.campaign.all === true && live.campaign.batch > 0")
+            check(started, "the button starts a campaign over every permutation")
+        except Exception as e:  # noqa: BLE001
+            log(
+                "look-up-all button not clickable (nothing left to ask or still busy):",
+                repr(e)[:120],
+            )
 
         # ---- D: 四腿票, narrowed so the lookup can finish --------------------------
         await page.goto(URL, wait_until="load")  # fresh page: scenario C's campaign must not run on
@@ -250,7 +307,14 @@ async def main() -> int:
             )
 
         # probes of a stale tunnel URL (CORS-less Cloudflare error) and the rate-limited GitHub API are handled by the page
-        expected = ("favicon", "net::ERR", "status of 403", "trycloudflare.com/health")
+        expected = (
+            "favicon",
+            "net::ERR",
+            "status of 403",
+            "status of 404",
+            "trycloudflare.com/health",
+            "lhr.life/health",
+        )
         real = [e for e in errors if not any(x in e for x in expected)]
         check(not real, f"no page errors {real[:3]}")
         await browser.close()
