@@ -1,5 +1,5 @@
 {
- "at": "2026-10-19T15:13:25+00:00",
+ "at": "2026-10-19T15:14:56+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 1715,
  "log": [
-  "13:54:00 request mvfbdjrre1son.2: final sent (10/10); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "13:54:20 request received: rid mvfbfn06sdm3h.2 3 keys",
-  "13:54:20 handle mvfbfn06sdm3h.2: first_chunk=True total=3",
-  "13:55:22 request mvfbfn06sdm3h.2: chunk of 3 keys done in 62s; paths {'http': 35, 'browser-none': 21}, browser waits 21 max 87s sum 1155s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 35, 'miss': 21, 'blocked': 0, 'tries': 57, 'empty': 22}, audit 3/3 agree",
   "13:55:23 request mvfbfn06sdm3h.2: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:57:07 request received: rid mvfbj7vir76k0.2 14 keys",
   "13:57:07 handle mvfbj7vir76k0.2: first_chunk=True total=14",
@@ -156,6 +152,10 @@
   "15:12:19 request mvfe6wzng4lrd.2: chunk of 13 keys done in 47s; paths {'http': 142, 'browser-none': 366, 'browser': 72}, browser waits 438 max 187s sum 24685s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 142, 'miss': 140, 'blocked': 0, 'tries': 227, 'empty': 85}, audit 5/5 agr",
   "15:12:22 request mvfe6wzng4lrd.2: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:13:13 request received: rid mvfe92qqltt4y.2 18 keys",
-  "15:13:13 handle mvfe92qqltt4y.2: first_chunk=True total=18"
+  "15:13:13 handle mvfe92qqltt4y.2: first_chunk=True total=18",
+  "15:14:50 request mvfe92qqltt4y.2: chunk of 18 keys done in 97s; paths {'http': 148, 'browser-none': 378, 'browser': 72}, browser waits 450 max 187s sum 25446s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 148, 'miss': 140, 'blocked': 0, 'tries': 233, 'empty': 85}, audit 5/5 agr",
+  "15:14:51 request mvfe92qqltt4y.2: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:14:55 request received: rid mvfeb9qdfqrkz.2 18 keys",
+  "15:14:55 handle mvfeb9qdfqrkz.2: first_chunk=True total=18"
  ]
 }
