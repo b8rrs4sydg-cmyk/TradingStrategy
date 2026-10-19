@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:46:58+00:00",
+ "at": "2026-10-19T14:48:30+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1567,
+ "fares_saved": 1569,
  "log": [
   "12:48:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:48:53 http front door: ['https://lloyd-filing-collection-busy.trycloudflare.com', 'https://3d4f98d6c6c086.lhr.life']",
@@ -123,6 +123,8 @@
   "14:45:22 request received: rid mvfd999yrcjdg.7 14 keys",
   "14:45:22 handle mvfd999yrcjdg.7: first_chunk=True total=14",
   "14:46:39 request mvfd999yrcjdg.7: chunk of 14 keys done in 78s; paths {'http': 130, 'browser-none': 202, 'browser': 40}, browser waits 242 max 144s sum 12643s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 130, 'miss': 79, 'blocked': 0, 'tries': 177, 'empty': 47}, audit 3/3 agre",
-  "14:46:40 request mvfd999yrcjdg.7: final sent (14/14); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "14:46:40 request mvfd999yrcjdg.7: final sent (14/14); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "14:47:50 request received: rid mvfdcepv6vx8p.7 16 keys",
+  "14:47:50 handle mvfdcepv6vx8p.7: first_chunk=True total=16"
  ]
 }
