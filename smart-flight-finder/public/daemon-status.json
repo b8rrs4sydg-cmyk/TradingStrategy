@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T12:13:26+00:00",
+ "at": "2026-10-19T12:14:59+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6805,
+ "fares_saved": 6819,
  "log": [
   "10:38:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:38:53 http front door: ['https://fonts-mixer-drilling-equation.trycloudflare.com', 'https://c80f848818e2ca.lhr.life']",
@@ -53,6 +53,16 @@
   "12:13:16 request received: rid mvf7tjh7hi4mj.8 16 keys",
   "12:13:16 handle mvf7tjh7hi4mj.8: first_chunk=True total=16",
   "12:13:16 request received: rid mvf7tjh7hi4mj.9 17 keys",
-  "12:13:16 handle mvf7tjh7hi4mj.9: first_chunk=True total=17"
+  "12:13:16 handle mvf7tjh7hi4mj.9: first_chunk=True total=17",
+  "12:14:13 request mvf7tjh7hi4mj.9: chunk of 17 keys done in 57s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:15 request mvf7tjh7hi4mj.9: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:27 request mvf7tjh7hi4mj.8: chunk of 16 keys done in 71s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:29 request mvf7tjh7hi4mj.8: final sent (16/16); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:41 request mvf7tjh7hi4mj.6: chunk of 17 keys done in 85s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:43 request mvf7tjh7hi4mj.6: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:47 request mvf7tjh7hi4mj.4: chunk of 13 keys done in 91s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:47 request mvf7tjh7hi4mj.4: final sent (13/13); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:50 request mvf7tjh7hi4mj.7: chunk of 11 keys done in 95s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:14:52 request mvf7tjh7hi4mj.7: final sent (11/11); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
  ]
 }
