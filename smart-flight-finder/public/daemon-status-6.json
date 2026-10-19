@@ -1,14 +1,12 @@
 {
- "at": "2026-10-19T15:09:00+00:00",
+ "at": "2026-10-19T15:10:31+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1698,
+ "fares_saved": 1701,
  "log": [
-  "12:49:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "12:49:13 http front door: ['https://blast-calendars-trail-phones.trycloudflare.com', 'https://97d2e9e6a805ae.lhr.life']",
   "12:49:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:50:14 request received: rid httptest1792414214 20 keys",
   "12:50:14 handle httptest1792414214: first_chunk=True total=20",
@@ -154,6 +152,10 @@
   "15:06:28 request mvfdyb6wk7gb5.6: chunk of 16 keys done in 98s; paths {'http': 145, 'browser-none': 287, 'browser': 75}, browser waits 362 max 143s sum 17856s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 145, 'miss': 129, 'blocked': 0, 'tries': 221, 'empty': 76}, audit 6/6 agr",
   "15:06:31 request mvfdyb6wk7gb5.6: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "15:07:22 request received: rid mvfe1jnoqnpfg.6 22 keys",
-  "15:07:22 handle mvfe1jnoqnpfg.6: first_chunk=True total=22"
+  "15:07:22 handle mvfe1jnoqnpfg.6: first_chunk=True total=22",
+  "15:09:46 request mvfe1jnoqnpfg.6: chunk of 22 keys done in 145s; paths {'http': 145, 'browser-none': 309, 'browser': 75}, browser waits 384 max 145s sum 19862s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 145, 'miss': 129, 'blocked': 0, 'tries': 221, 'empty': 76}, audit 6/6 ag",
+  "15:09:47 request mvfe1jnoqnpfg.6: final sent (22/22); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "15:09:51 request received: rid mvfe4r543u0kp.6 16 keys",
+  "15:09:51 handle mvfe4r543u0kp.6: first_chunk=True total=16"
  ]
 }
