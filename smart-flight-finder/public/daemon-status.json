@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T06:24:01+00:00",
+ "at": "2026-10-19T06:25:33+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 6231,
+ "fares_saved": 6274,
  "log": [
-  "05:53:56 rtc r890w5oib9: data channel open",
-  "05:53:57 rtc 6icj307nx3: data channel open",
-  "05:53:57 rtc zmasrza9hk: data channel open",
-  "05:53:57 rtc r6sab8tcex: data channel open",
   "05:53:57 rtc xg5jzp3bab: data channel open",
   "05:53:57 rtc sido19lq1k: data channel open",
   "05:53:57 rtc g5ksx7tg6l: data channel open",
@@ -156,6 +152,10 @@
   "06:23:47 request received: rid mvevc7pqnew2d.6 9 keys",
   "06:23:47 request received: rid mvevc7pqnew2d.8 26 keys",
   "06:23:47 handle mvevc7pqnew2d.6: first_chunk=True total=9",
-  "06:23:47 handle mvevc7pqnew2d.8: first_chunk=True total=26"
+  "06:23:47 handle mvevc7pqnew2d.8: first_chunk=True total=26",
+  "06:25:15 request mvevc7pqnew2d.8: chunk of 26 keys done in 89s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:25:17 request mvevc7pqnew2d.8: final sent (26/26); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:25:29 request mvevc7pqnew2d.6: chunk of 9 keys done in 102s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "06:25:30 request mvevc7pqnew2d.6: final sent (9/9); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
