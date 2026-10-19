@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T15:08:50+00:00",
+ "at": "2026-10-19T15:10:21+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1694,
+ "fares_saved": 1697,
  "log": [
-  "13:50:32 rtc w75kmentxs: data channel open",
-  "13:50:33 request received: rid mvfbambektgty.2 1 keys",
-  "13:50:33 handle mvfbambektgty.2: first_chunk=True total=1",
-  "13:51:31 request mvfbambektgty.2: chunk of 1 keys done in 59s; paths {'http': 20, 'browser-none': 3}, browser waits 3 max 49s sum 140s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 3, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 3/3 agree",
   "13:51:33 request mvfbambektgty.2: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:51:40 request received: rid mvfbc78a2eb12.2 20 keys",
   "13:51:40 handle mvfbc78a2eb12.2: first_chunk=True total=20",
@@ -156,6 +152,10 @@
   "15:06:26 request mvfdyb6wk7gb5.2: chunk of 13 keys done in 96s; paths {'http': 127, 'browser-none': 333, 'browser': 72}, browser waits 405 max 187s sum 22114s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 127, 'miss': 139, 'blocked': 0, 'tries': 209, 'empty': 82}, audit 5/5 agr",
   "15:06:27 request mvfdyb6wk7gb5.2: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:07:22 request received: rid mvfe1jnoqnpfg.2 21 keys",
-  "15:07:22 handle mvfe1jnoqnpfg.2: first_chunk=True total=21"
+  "15:07:22 handle mvfe1jnoqnpfg.2: first_chunk=True total=21",
+  "15:09:47 request mvfe1jnoqnpfg.2: chunk of 21 keys done in 146s; paths {'http': 127, 'browser-none': 354, 'browser': 72}, browser waits 426 max 187s sum 23968s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 127, 'miss': 139, 'blocked': 0, 'tries': 209, 'empty': 82}, audit 5/5 ag",
+  "15:09:49 request mvfe1jnoqnpfg.2: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:09:51 request received: rid mvfe4r543u0kp.2 14 keys",
+  "15:09:51 handle mvfe4r543u0kp.2: first_chunk=True total=14"
  ]
 }
