@@ -1,11 +1,11 @@
 {
- "at": "2026-10-19T14:07:52+00:00",
+ "at": "2026-10-19T14:09:24+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1494,
+ "fares_saved": 1499,
  "log": [
   "12:48:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:02 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -68,6 +68,10 @@
   "14:06:15 request received: rid mvfbuylame3id.9 9 keys",
   "14:06:15 handle mvfbuylame3id.9: first_chunk=True total=9",
   "14:07:03 request mvfbuylame3id.9: chunk of 9 keys done in 48s; paths {'http': 73, 'browser-none': 71, 'browser': 2}, browser waits 73 max 97s sum 3964s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 73, 'miss': 42, 'blocked': 0, 'tries': 111, 'empty': 38}, audit 1/1 agree",
-  "14:07:04 request mvfbuylame3id.9: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:07:04 request mvfbuylame3id.9: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:07:53 request received: rid mvfbx2dtxbuj9.9 9 keys",
+  "14:07:53 handle mvfbx2dtxbuj9.9: first_chunk=True total=9",
+  "14:08:42 request mvfbx2dtxbuj9.9: chunk of 9 keys done in 49s; paths {'http': 76, 'browser-none': 75, 'browser': 4}, browser waits 79 max 97s sum 4159s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 76, 'miss': 42, 'blocked': 0, 'tries': 114, 'empty': 38}, audit 1/1 agree",
+  "14:08:43 request mvfbx2dtxbuj9.9: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
