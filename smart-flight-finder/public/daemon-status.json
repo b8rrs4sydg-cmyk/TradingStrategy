@@ -1,14 +1,12 @@
 {
- "at": "2026-10-19T04:23:47+00:00",
+ "at": "2026-10-19T04:25:18+00:00",
  "publishes": {
   "ok": 72,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 5071,
+ "fares_saved": 5081,
  "log": [
-  "03:40:38 request mvepaapvj0b2x.5: chunk of 13 keys done in 378s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
-  "03:40:39 request mvepaapvj0b2x.5: final sent (13/13); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "03:42:05 request mvepaapvj0b2x.4: chunk of 23 keys done in 465s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "03:42:06 request mvepaapvj0b2x.4: final sent (23/23); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
   "03:42:39 request mvepaapvj0b2x.1: chunk of 16 keys done in 499s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
@@ -156,6 +154,8 @@
   "04:23:24 request received: rid mver1eyqx60r0.6 12 keys",
   "04:23:24 handle mver1eyqx60r0.6: first_chunk=True total=12",
   "04:23:24 request received: rid mver1eyqx60r0.9 12 keys",
-  "04:23:24 handle mver1eyqx60r0.9: first_chunk=True total=12"
+  "04:23:24 handle mver1eyqx60r0.9: first_chunk=True total=12",
+  "04:24:47 request mver1eyqx60r0.9: chunk of 12 keys done in 83s; ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}",
+  "04:24:49 request mver1eyqx60r0.9: final sent (12/12); ntfy publishes {'ok': 72, 'r429': 0, 'fail': 0}"
  ]
 }
