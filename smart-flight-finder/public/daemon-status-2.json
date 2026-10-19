@@ -1,16 +1,12 @@
 {
- "at": "2026-10-19T15:10:21+00:00",
+ "at": "2026-10-19T15:11:53+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1697,
+ "fares_saved": 1709,
  "log": [
-  "13:51:33 request mvfbambektgty.2: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "13:51:40 request received: rid mvfbc78a2eb12.2 20 keys",
-  "13:51:40 handle mvfbc78a2eb12.2: first_chunk=True total=20",
-  "13:52:43 request received: rid mvfbdjrre1son.2 10 keys",
   "13:52:43 handle mvfbdjrre1son.2: first_chunk=True total=10",
   "13:53:17 request mvfbc78a2eb12.2: chunk of 20 keys done in 97s; paths {'http': 35, 'browser-none': 13}, browser waits 13 max 87s sum 765s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 35, 'miss': 18, 'blocked': 0, 'tries': 57, 'empty': 22}, audit 3/3 agree",
   "13:53:19 request mvfbc78a2eb12.2: final sent (20/20); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "15:09:47 request mvfe1jnoqnpfg.2: chunk of 21 keys done in 146s; paths {'http': 127, 'browser-none': 354, 'browser': 72}, browser waits 426 max 187s sum 23968s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 127, 'miss': 139, 'blocked': 0, 'tries': 209, 'empty': 82}, audit 5/5 ag",
   "15:09:49 request mvfe1jnoqnpfg.2: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "15:09:51 request received: rid mvfe4r543u0kp.2 14 keys",
-  "15:09:51 handle mvfe4r543u0kp.2: first_chunk=True total=14"
+  "15:09:51 handle mvfe4r543u0kp.2: first_chunk=True total=14",
+  "15:11:27 request mvfe4r543u0kp.2: chunk of 14 keys done in 96s; paths {'http': 130, 'browser-none': 365, 'browser': 72}, browser waits 437 max 187s sum 24639s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 130, 'miss': 139, 'blocked': 0, 'tries': 212, 'empty': 82}, audit 5/5 agr",
+  "15:11:29 request mvfe4r543u0kp.2: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "15:11:32 request received: rid mvfe6wzng4lrd.2 13 keys",
+  "15:11:32 handle mvfe6wzng4lrd.2: first_chunk=True total=13"
  ]
 }
