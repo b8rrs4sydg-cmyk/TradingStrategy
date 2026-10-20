@@ -1,11 +1,11 @@
 {
- "at": "2026-10-20T10:38:19+00:00",
+ "at": "2026-10-20T13:14:20+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1694,
+ "fares_saved": 1701,
  "log": [
   "10:36:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:36:49 http front door: ['https://ver-teens-magnet-excited.trycloudflare.com', 'https://3dc720f0db0165.lhr.life']",
@@ -13,6 +13,12 @@
   "10:37:52 request received: rid httptest1792492672 20 keys",
   "10:37:52 handle httptest1792492672: first_chunk=True total=20",
   "10:37:54 request httptest1792492672: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:37:55 request httptest1792492672: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:37:55 request httptest1792492672: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "13:13:10 rtc z033qxtokz: answered",
+  "13:13:12 rtc z033qxtokz: data channel open",
+  "13:13:13 request received: rid mvgpeg6wc8mw3.0 12 keys",
+  "13:13:13 handle mvgpeg6wc8mw3.0: first_chunk=True total=12",
+  "13:14:13 rtc puqta39zzv: answered",
+  "13:14:20 request mvgpeg6wc8mw3.0: chunk of 12 keys done in 67s; paths {'http': 22, 'browser': 6, 'browser-none': 4}, browser waits 10 max 42s sum 230s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 10, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 2/2 agree"
  ]
 }
