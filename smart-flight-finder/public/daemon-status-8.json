@@ -1,27 +1,18 @@
 {
- "at": "2026-10-20T13:14:36+00:00",
+ "at": "2026-10-20T15:40:32+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1650,
  "log": [
-  "10:36:49 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:36:54 http front door: ['https://cult-float-mails-postposted.trycloudflare.com', 'https://d0fc94c66dcf1a.lhr.life']",
-  "10:36:54 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:37:58 request received: rid httptest1792492677 20 keys",
-  "10:37:58 handle httptest1792492677: first_chunk=True total=20",
-  "10:37:59 request httptest1792492677: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "10:38:00 request httptest1792492677: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "10:38:24 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "10:38:28 git retry 1: b\"-46zevd': is at 800341b22e89fbdd620e8fb07881fe718066088c but expected e8b49abd43625b2f6d2ac946eeb6d47344b166ee)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "13:13:10 rtc i37fz8apty: answered",
-  "13:13:12 rtc i37fz8apty: data channel open",
-  "13:13:13 request received: rid mvgpeg6wc8mw3.2 9 keys",
-  "13:13:13 handle mvgpeg6wc8mw3.2: first_chunk=True total=9",
-  "13:14:09 request mvgpeg6wc8mw3.2: chunk of 9 keys done in 56s; paths {'http': 21, 'browser': 4, 'browser-none': 4}, browser waits 8 max 42s sum 195s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 8, 'blocked': 0, 'tries': 22, 'empty': 1}, audit 3/3 agree",
-  "13:14:11 request mvgpeg6wc8mw3.2: final sent (9/9); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:14:13 rtc xb7djwv37j: answered"
+  "15:38:53 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:39:01 http front door: ['https://resume-clock-chicken-travels.trycloudflare.com', 'https://1a1f200b1f9691.lhr.life']",
+  "15:39:01 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:40:03 request received: rid httptest1792510802 20 keys",
+  "15:40:03 handle httptest1792510802: first_chunk=True total=20",
+  "15:40:04 request httptest1792510802: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:40:06 request httptest1792510802: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
