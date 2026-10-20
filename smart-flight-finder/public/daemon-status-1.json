@@ -1,25 +1,20 @@
 {
- "at": "2026-10-20T18:52:52+00:00",
+ "at": "2026-10-20T20:39:59+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1701,
  "log": [
-  "15:39:04 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:39:12 git retry 0: b\"-46zevd': is at c4e70f5faef402463bd8424c1fbd8ca027547b01 but expected b0f940f649297efaf351e4e9d67b1fa6dc2a2749)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "15:39:17 http front door: ['https://calvin-billion-monthly-apartments.trycloudflare.com', 'https://39ced9fb6a136d.lhr.life']",
-  "15:39:17 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:40:12 request received: rid httptest1792510811 20 keys",
-  "15:40:12 handle httptest1792510811: first_chunk=True total=20",
-  "15:40:14 request httptest1792510811: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:40:15 request httptest1792510811: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "18:50:40 rtc 6q9haozaf8: answered",
-  "18:50:41 rtc 6q9haozaf8: data channel open",
-  "18:50:42 request received: rid mvh1gj7gymb0v.1 6 keys",
-  "18:50:42 handle mvh1gj7gymb0v.1: first_chunk=True total=6",
-  "18:51:37 request mvh1gj7gymb0v.1: chunk of 6 keys done in 55s; paths {'http': 20, 'browser-none': 6}, browser waits 6 max 42s sum 250s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 6, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
-  "18:51:39 request mvh1gj7gymb0v.1: final sent (6/6); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "20:38:12 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:38:16 git retry 0: b\"-46zevd': is at fef1b4b1644cc1bd7a9c0acbc9fab577862c4ba6 but expected f6ffb26391082d1c1e052beab7964c4690d4734f)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "20:38:21 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "20:38:29 http front door: ['https://transaction-arrow-quit-learn.trycloudflare.com', 'https://658b6f8375bd26.lhr.life']",
+  "20:38:29 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:39:21 request received: rid httptest1792528761 20 keys",
+  "20:39:21 handle httptest1792528761: first_chunk=True total=20",
+  "20:39:23 request httptest1792528761: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "20:39:23 request httptest1792528761: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
