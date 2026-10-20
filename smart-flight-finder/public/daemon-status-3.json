@@ -1,5 +1,5 @@
 {
- "at": "2026-10-20T05:38:44+00:00",
+ "at": "2026-10-20T10:38:26+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1749,
  "log": [
-  "05:37:09 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:37:14 http front door: ['https://seattle-yeast-knives-empirical.trycloudflare.com', 'https://c045ff63b76740.lhr.life']",
-  "05:37:14 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:38:19 request received: rid httptest1792474698 20 keys",
-  "05:38:19 handle httptest1792474698: first_chunk=True total=20",
-  "05:38:20 request httptest1792474698: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:38:21 request httptest1792474698: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:36:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "10:36:56 http front door: ['https://reverse-promo-concern-remaining.trycloudflare.com', 'https://3e4dd41097ee33.lhr.life']",
+  "10:36:56 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "10:37:59 request received: rid httptest1792492679 20 keys",
+  "10:37:59 handle httptest1792492679: first_chunk=True total=20",
+  "10:38:00 request httptest1792492679: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "10:38:02 request httptest1792492679: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
