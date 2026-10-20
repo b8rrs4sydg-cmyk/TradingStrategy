@@ -1,11 +1,11 @@
 {
- "at": "2026-10-20T13:13:14+00:00",
+ "at": "2026-10-20T13:14:45+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1744,
+ "fares_saved": 1747,
  "log": [
   "10:36:46 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:36:54 git retry 0: b\"-46zevd': is at c2ce33d4282bcecb8ed1df887c6788adaa9533d7 but expected d394843cdd2e4ef1c084264dea07449774448c09)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -20,6 +20,9 @@
   "13:13:10 rtc d97ej6dyk4: answered",
   "13:13:12 rtc d97ej6dyk4: data channel open",
   "13:13:13 request received: rid mvgpeg6wc8mw3.1 4 keys",
-  "13:13:13 handle mvgpeg6wc8mw3.1: first_chunk=True total=4"
+  "13:13:13 handle mvgpeg6wc8mw3.1: first_chunk=True total=4",
+  "13:14:08 request mvgpeg6wc8mw3.1: chunk of 4 keys done in 54s; paths {'http': 21, 'browser': 2, 'browser-none': 1}, browser waits 3 max 41s sum 52s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 3, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 1/1 agree",
+  "13:14:09 request mvgpeg6wc8mw3.1: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:14:13 rtc w9ypp0dumz: answered"
  ]
 }
