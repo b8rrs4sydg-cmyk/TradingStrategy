@@ -1,5 +1,5 @@
 {
- "at": "2026-10-20T05:38:53+00:00",
+ "at": "2026-10-20T10:38:22+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1724,
  "log": [
-  "05:37:18 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:37:23 http front door: ['https://possible-manuals-probe-protecting.trycloudflare.com', 'https://44f5bd3623c21a.lhr.life']",
-  "05:37:23 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:38:26 request received: rid httptest1792474706 20 keys",
-  "05:38:26 handle httptest1792474706: first_chunk=True total=20",
-  "05:38:28 request httptest1792474706: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:38:29 request httptest1792474706: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:36:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "10:36:52 http front door: ['https://stomach-textiles-oxford-moore.trycloudflare.com', 'https://a78547659f5d33.lhr.life']",
+  "10:36:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "10:37:57 request received: rid httptest1792492677 20 keys",
+  "10:37:57 handle httptest1792492677: first_chunk=True total=20",
+  "10:37:58 request httptest1792492677: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "10:38:01 request httptest1792492677: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
