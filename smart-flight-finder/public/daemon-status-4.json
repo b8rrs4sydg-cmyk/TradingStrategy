@@ -1,5 +1,5 @@
 {
- "at": "2026-10-20T10:38:22+00:00",
+ "at": "2026-10-20T15:40:41+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,13 @@
  },
  "fares_saved": 1724,
  "log": [
-  "10:36:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:36:52 http front door: ['https://stomach-textiles-oxford-moore.trycloudflare.com', 'https://a78547659f5d33.lhr.life']",
-  "10:36:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:37:57 request received: rid httptest1792492677 20 keys",
-  "10:37:57 handle httptest1792492677: first_chunk=True total=20",
-  "10:37:58 request httptest1792492677: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:38:01 request httptest1792492677: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "15:39:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:39:07 git retry 0: b\"-46zevd': is at b0f940f649297efaf351e4e9d67b1fa6dc2a2749 but expected 0a55175047e512c8d9efc74de1b40cdd4c02f882)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "15:39:11 http front door: ['https://valuable-aircraft-prevent-myrtle.trycloudflare.com', 'https://35d9116f0a4e83.lhr.life']",
+  "15:39:11 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:40:10 request received: rid httptest1792510809 20 keys",
+  "15:40:10 handle httptest1792510809: first_chunk=True total=20",
+  "15:40:12 request httptest1792510809: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:40:14 request httptest1792510809: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
