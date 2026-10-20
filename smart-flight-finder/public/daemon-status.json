@@ -1,25 +1,18 @@
 {
- "at": "2026-10-20T18:52:39+00:00",
+ "at": "2026-10-20T20:39:49+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1678,
  "log": [
-  "15:38:53 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:38:59 git retry 0: b\"-46zevd': is at 74079d2889fa34c195c8827a655055954ec42d8e but expected 3734b68132bc6782c69beb723d13a2c346734a60)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "15:39:05 http front door: ['https://money-carb-walk-prepared.trycloudflare.com', 'https://34d9128e544339.lhr.life']",
-  "15:39:05 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:40:02 request received: rid httptest1792510802 20 keys",
-  "15:40:02 handle httptest1792510802: first_chunk=True total=20",
-  "15:40:04 request httptest1792510802: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:40:05 request httptest1792510802: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "18:50:40 rtc 1c6yrun0l6: answered",
-  "18:50:41 rtc 1c6yrun0l6: data channel open",
-  "18:50:42 request received: rid mvh1gj7gymb0v.0 5 keys",
-  "18:50:42 handle mvh1gj7gymb0v.0: first_chunk=True total=5",
-  "18:51:37 request mvh1gj7gymb0v.0: chunk of 5 keys done in 55s; paths {'http': 20, 'browser-none': 5}, browser waits 5 max 42s sum 208s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 5, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
-  "18:51:39 request mvh1gj7gymb0v.0: final sent (5/5); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "20:38:14 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:38:19 http front door: ['https://continuously-outputs-differential-tee.trycloudflare.com', 'https://2e57e34eb785a2.lhr.life']",
+  "20:38:19 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:39:23 request received: rid httptest1792528763 20 keys",
+  "20:39:23 handle httptest1792528763: first_chunk=True total=20",
+  "20:39:25 request httptest1792528763: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "20:39:25 request httptest1792528763: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
