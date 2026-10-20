@@ -1,5 +1,5 @@
 {
- "at": "2026-10-20T15:40:28+00:00",
+ "at": "2026-10-20T20:39:34+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1650,
  "log": [
-  "15:38:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:38:58 http front door: ['https://updates-stationery-developing-thank.trycloudflare.com', 'https://c74d16c364aaec.lhr.life']",
-  "15:38:58 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:40:00 request received: rid httptest1792510799 20 keys",
-  "15:40:00 handle httptest1792510799: first_chunk=True total=20",
-  "15:40:02 request httptest1792510799: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:40:04 request httptest1792510799: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:37:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:38:04 http front door: ['https://mods-initiatives-substantially-revenues.trycloudflare.com', 'https://289053232d9eea.lhr.life']",
+  "20:38:04 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:39:09 request received: rid httptest1792528748 20 keys",
+  "20:39:09 handle httptest1792528748: first_chunk=True total=20",
+  "20:39:11 request httptest1792528748: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "20:39:12 request httptest1792528748: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
