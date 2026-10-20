@@ -1,5 +1,5 @@
 {
- "at": "2026-10-20T00:49:35+00:00",
+ "at": "2026-10-20T05:38:48+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1624,
  "log": [
-  "00:47:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:48:05 http front door: ['https://yearly-northwest-perfectly-adjust.trycloudflare.com', 'https://e6377099265169.lhr.life']",
-  "00:48:05 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:49:07 request received: rid httptest1792457347 20 keys",
-  "00:49:07 handle httptest1792457347: first_chunk=True total=20",
-  "00:49:09 request httptest1792457347: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "00:49:11 request httptest1792457347: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:37:12 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:37:18 http front door: ['https://lawsuit-direct-lyrics-cars.trycloudflare.com', 'https://9d8b69d5bc6416.lhr.life']",
+  "05:37:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:38:21 request received: rid httptest1792474701 20 keys",
+  "05:38:21 handle httptest1792474701: first_chunk=True total=20",
+  "05:38:22 request httptest1792474701: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 23, 'empty': 3}, audit 0/0 agree",
+  "05:38:24 request httptest1792474701: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
