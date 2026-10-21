@@ -1,32 +1,18 @@
 {
- "at": "2026-10-21T14:33:48+00:00",
+ "at": "2026-10-21T15:42:36+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1752,
  "log": [
-  "10:39:25 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:39:30 http front door: ['https://baby-header-per-recovery.trycloudflare.com', 'https://012bd4bd71b977.lhr.life']",
-  "10:39:30 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:40:35 request received: rid httptest1792579234 20 keys",
-  "10:40:35 handle httptest1792579234: first_chunk=True total=20",
-  "10:40:36 request httptest1792579234: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:40:37 request httptest1792579234: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "10:41:02 git retry 0: b\"-46zevd': is at b1ef9240d5a0952fe386b8ffefa3720e777cced9 but expected f7278f3eefe718cf4be973b0ed34b67b7befc07e)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "13:42:12 rtc jw0jhl0m8k: answered",
-  "13:42:14 rtc jw0jhl0m8k: data channel open",
-  "13:43:12 request received: rid mvi5x0roqwfet.3 2 keys",
-  "13:43:12 handle mvi5x0roqwfet.3: first_chunk=True total=2",
-  "13:44:06 request mvi5x0roqwfet.3: chunk of 2 keys done in 54s; paths {'http': 20, 'browser-none': 2}, browser waits 2 max 41s sum 82s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "13:44:08 request mvi5x0roqwfet.3: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:45:40 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "14:30:28 rtc 33dh052s2z: answered",
-  "14:30:29 rtc 33dh052s2z: data channel open",
-  "14:31:40 request received: rid mvi7ncwygc2e3.3 2 keys",
-  "14:31:40 handle mvi7ncwygc2e3.3: first_chunk=True total=2",
-  "14:32:35 request mvi7ncwygc2e3.3: chunk of 2 keys done in 54s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 41s sum 163s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "14:32:35 request mvi7ncwygc2e3.3: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "15:41:00 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:41:06 http front door: ['https://just-powerseller-cancel-cheap.trycloudflare.com', 'https://cbe85dd07f4b86.lhr.life']",
+  "15:41:06 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:42:09 request received: rid httptest1792597328 20 keys",
+  "15:42:09 handle httptest1792597328: first_chunk=True total=20",
+  "15:42:10 request httptest1792597328: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:42:11 request httptest1792597328: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
