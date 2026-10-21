@@ -1,11 +1,11 @@
 {
- "at": "2026-10-21T13:42:28+00:00",
+ "at": "2026-10-21T13:44:02+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1616,
+ "fares_saved": 1617,
  "log": [
   "10:39:21 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:39:26 http front door: ['https://sitting-researchers-communicate-basin.trycloudflare.com', 'https://3d4b634bc37de7.lhr.life']",
@@ -17,6 +17,12 @@
   "13:42:13 rtc 806i87o0je: answered",
   "13:42:15 rtc 806i87o0je: data channel open",
   "13:42:15 request received: rid mvi5voinsomea.7 2 keys",
-  "13:42:15 handle mvi5voinsomea.7: first_chunk=True total=2"
+  "13:42:15 handle mvi5voinsomea.7: first_chunk=True total=2",
+  "13:43:09 request mvi5voinsomea.7: chunk of 2 keys done in 54s; paths {'http': 20, 'browser-none': 2}, browser waits 2 max 41s sum 81s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 3/3 agree",
+  "13:43:09 request mvi5voinsomea.7: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:43:12 request received: rid mvi5x0roqwfet.7 1 keys",
+  "13:43:12 handle mvi5x0roqwfet.7: first_chunk=True total=1",
+  "13:43:36 request mvi5x0roqwfet.7: chunk of 1 keys done in 24s; paths {'http': 20, 'browser-none': 2, 'browser': 1}, browser waits 3 max 41s sum 93s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 3, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 3/3 agree",
+  "13:43:37 request mvi5x0roqwfet.7: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
