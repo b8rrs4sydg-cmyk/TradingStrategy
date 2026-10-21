@@ -1,5 +1,5 @@
 {
- "at": "2026-10-21T14:32:03+00:00",
+ "at": "2026-10-21T14:33:35+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -31,6 +31,12 @@
   "14:31:32 request mvi7lqu6saeo1.1: chunk of 4 keys done in 62s; paths {'http': 20, 'browser-none': 10}, browser waits 10 max 49s sum 420s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 10, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
   "14:31:33 request mvi7lqu6saeo1.1: final sent (4/4); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:31:40 request received: rid mvi7ncwygc2e3.1 3 keys",
-  "14:31:40 handle mvi7ncwygc2e3.1: first_chunk=True total=3"
+  "14:31:40 handle mvi7ncwygc2e3.1: first_chunk=True total=3",
+  "14:32:39 request mvi7ncwygc2e3.1: chunk of 3 keys done in 59s; paths {'http': 20, 'browser-none': 13}, browser waits 13 max 49s sum 547s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 13, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
+  "14:32:40 request mvi7ncwygc2e3.1: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:32:41 request received: rid mvi7ontco83ef.1 1 keys",
+  "14:32:41 handle mvi7ontco83ef.1: first_chunk=True total=1",
+  "14:33:22 request mvi7ontco83ef.1: chunk of 1 keys done in 40s; paths {'http': 20, 'browser-none': 14}, browser waits 14 max 49s sum 587s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 13, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
+  "14:33:22 request mvi7ontco83ef.1: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
