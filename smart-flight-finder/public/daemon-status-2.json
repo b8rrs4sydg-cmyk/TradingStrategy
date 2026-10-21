@@ -1,5 +1,5 @@
 {
- "at": "2026-10-21T14:32:33+00:00",
+ "at": "2026-10-21T14:34:11+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -27,6 +27,13 @@
   "14:30:28 rtc jn2tpqsds8: answered",
   "14:30:30 rtc jn2tpqsds8: data channel open",
   "14:31:40 request received: rid mvi7ncwygc2e3.2 2 keys",
-  "14:31:40 handle mvi7ncwygc2e3.2: first_chunk=True total=2"
+  "14:31:40 handle mvi7ncwygc2e3.2: first_chunk=True total=2",
+  "14:32:35 request mvi7ncwygc2e3.2: chunk of 2 keys done in 54s; paths {'http': 20, 'browser-none': 3}, browser waits 3 max 41s sum 122s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 3, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
+  "14:32:36 git retry 0: b\"-46zevd': is at 328eab7ccf12410740e0536621cd20a5050fcc9c but expected 1095a7d0f9d55d5d84fadb0751c62bd8325da835)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "14:32:36 request mvi7ncwygc2e3.2: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:32:41 request received: rid mvi7ontco83ef.2 1 keys",
+  "14:32:41 handle mvi7ontco83ef.2: first_chunk=True total=1",
+  "14:33:35 request mvi7ontco83ef.2: chunk of 1 keys done in 53s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 41s sum 163s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
+  "14:33:37 request mvi7ontco83ef.2: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
