@@ -1,5 +1,5 @@
 {
- "at": "2026-10-21T00:48:27+00:00",
+ "at": "2026-10-21T05:39:03+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,13 @@
  },
  "fares_saved": 1681,
  "log": [
-  "00:46:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:46:57 http front door: ['https://develop-dear-swing-creations.trycloudflare.com', 'https://c3a93e3f77ae35.lhr.life']",
-  "00:46:57 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:48:01 request received: rid httptest1792543681 20 keys",
-  "00:48:01 handle httptest1792543681: first_chunk=True total=20",
-  "00:48:03 request httptest1792543681: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "00:48:03 request httptest1792543681: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:37:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:37:28 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "05:37:33 http front door: ['https://myrtle-valid-organisations-vii.trycloudflare.com', 'https://a9b1aa629b7787.lhr.life']",
+  "05:37:33 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:38:33 request received: rid httptest1792561113 20 keys",
+  "05:38:33 handle httptest1792561113: first_chunk=True total=20",
+  "05:38:35 request httptest1792561113: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:38:35 request httptest1792561113: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
