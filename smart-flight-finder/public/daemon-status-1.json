@@ -1,5 +1,5 @@
 {
- "at": "2026-10-21T15:42:31+00:00",
+ "at": "2026-10-21T20:39:00+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1704,
  "log": [
-  "15:40:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:41:01 http front door: ['https://cattle-synthetic-through-establishment.trycloudflare.com', 'https://6f6d20eb0b85d8.lhr.life']",
-  "15:41:01 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:42:04 request received: rid httptest1792597323 20 keys",
-  "15:42:04 handle httptest1792597323: first_chunk=True total=20",
-  "15:42:06 request httptest1792597323: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "15:42:07 request httptest1792597323: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:37:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:37:30 http front door: ['https://few-impact-trance-spirits.trycloudflare.com', 'https://604ff2bc3291eb.lhr.life']",
+  "20:37:30 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:38:33 request received: rid httptest1792615112 20 keys",
+  "20:38:33 handle httptest1792615112: first_chunk=True total=20",
+  "20:38:35 request httptest1792615112: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
+  "20:38:36 request httptest1792615112: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
