@@ -1,5 +1,5 @@
 {
- "at": "2026-10-21T00:48:45+00:00",
+ "at": "2026-10-21T05:39:09+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,14 +7,14 @@
  },
  "fares_saved": 1653,
  "log": [
-  "00:46:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:47:01 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "00:47:07 git retry 1: b\"-46zevd': is at 2623f47dd03ffe5a60ce472e8f243a6b09c980f7 but expected 9abcca457c4cfee8a4ebd4bb0c39b8cde83d6973)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "00:47:15 http front door: ['https://burton-agricultural-cartridge-display.trycloudflare.com', 'https://ee3e60989ef03f.lhr.life']",
-  "00:47:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:48:05 request received: rid httptest1792543685 20 keys",
-  "00:48:05 handle httptest1792543685: first_chunk=True total=20",
-  "00:48:07 request httptest1792543685: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "00:48:07 request httptest1792543685: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:37:23 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:37:28 git retry 0: b\"-46zevd': is at 2865c8699b02458be6c59188ebd50d93cd133e4e but expected d7c9e120f15f4d5f25824adae55752c3e0837d62)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "05:37:33 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "05:37:39 http front door: ['https://restrict-teddy-palmer-psi.trycloudflare.com', 'https://aff1543c6d0c80.lhr.life']",
+  "05:37:39 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:38:31 request received: rid httptest1792561111 20 keys",
+  "05:38:31 handle httptest1792561111: first_chunk=True total=20",
+  "05:38:36 request httptest1792561111: chunk of 20 keys done in 4s; paths {'http': 19, 'browser': 1}, browser waits 1 max 3s sum 3s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 21, 'empty': 2}, audit 1/1 agree",
+  "05:38:38 request httptest1792561111: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
