@@ -1,5 +1,5 @@
 {
- "at": "2026-10-21T13:42:48+00:00",
+ "at": "2026-10-21T13:44:20+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -20,6 +20,12 @@
   "13:42:13 rtc 108qkzj5cz: answered",
   "13:42:15 rtc 108qkzj5cz: data channel open",
   "13:42:15 request received: rid mvi5voinsomea.6 2 keys",
-  "13:42:15 handle mvi5voinsomea.6: first_chunk=True total=2"
+  "13:42:15 handle mvi5voinsomea.6: first_chunk=True total=2",
+  "13:43:09 request mvi5voinsomea.6: chunk of 2 keys done in 54s; paths {'http': 20, 'browser-none': 2}, browser waits 2 max 41s sum 81s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
+  "13:43:10 request mvi5voinsomea.6: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:43:12 request received: rid mvi5x0roqwfet.6 2 keys",
+  "13:43:12 handle mvi5x0roqwfet.6: first_chunk=True total=2",
+  "13:44:06 request mvi5x0roqwfet.6: chunk of 2 keys done in 54s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 41s sum 163s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
+  "13:44:06 request mvi5x0roqwfet.6: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
