@@ -1,21 +1,20 @@
 {
- "at": "2026-10-20T20:40:06+00:00",
+ "at": "2026-10-21T00:48:31+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1749,
+ "fares_saved": 1752,
  "log": [
-  "20:38:12 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:38:16 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "20:38:22 git retry 1: b\"-46zevd': is at 9370c1125fbf938a06a2e2afc516c8ea90065e04 but expected 893128f68556ff1a2e853cc8518b0b81c67f0dec)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "20:38:28 git retry 2: b\"-46zevd': is at b6083afa2eb6744eb522b27e361e629e863e70fe but expected 820fb21948da81bbffc65b9de8f7b1c1a5d0d605)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "20:38:36 http front door: ['https://attention-looked-cathedral-involved.trycloudflare.com', 'https://430edb463bd4df.lhr.life']",
-  "20:38:36 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:39:22 request received: rid httptest1792528762 20 keys",
-  "20:39:22 handle httptest1792528762: first_chunk=True total=20",
-  "20:39:24 request httptest1792528762: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "20:39:24 request httptest1792528762: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:46:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:46:48 git retry 0: b\"-46zevd': is at fd260d7d95d0c333572f4967ced3b7b604ba81bc but expected 3d0bac9e64b2ee8b1abfe66d0c7dc826856c2f24)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "00:46:53 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "00:47:01 http front door: ['https://powell-mph-restricted-acute.trycloudflare.com', 'https://99bc6c57a17ed5.lhr.life']",
+  "00:47:01 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:47:53 request received: rid httptest1792543672 20 keys",
+  "00:47:53 handle httptest1792543672: first_chunk=True total=20",
+  "00:47:55 request httptest1792543672: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:47:55 request httptest1792543672: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
