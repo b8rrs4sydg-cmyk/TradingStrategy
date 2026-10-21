@@ -1,7 +1,7 @@
 {
- "at": "2026-10-21T10:40:54+00:00",
+ "at": "2026-10-21T13:42:26+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
@@ -13,6 +13,10 @@
   "10:40:26 request received: rid httptest1792579225 20 keys",
   "10:40:26 handle httptest1792579225: first_chunk=True total=20",
   "10:40:27 request httptest1792579225: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:40:28 request httptest1792579225: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:40:28 request httptest1792579225: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "13:42:13 rtc fv38gp1c8d: answered",
+  "13:42:15 rtc fv38gp1c8d: data channel open",
+  "13:42:15 request received: rid mvi5voinsomea.5 4 keys",
+  "13:42:15 handle mvi5voinsomea.5: first_chunk=True total=4"
  ]
 }
