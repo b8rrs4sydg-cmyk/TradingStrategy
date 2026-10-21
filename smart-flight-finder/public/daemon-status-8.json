@@ -1,11 +1,11 @@
 {
- "at": "2026-10-21T13:42:44+00:00",
+ "at": "2026-10-21T13:44:16+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1653,
+ "fares_saved": 1654,
  "log": [
   "10:39:32 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:39:37 git retry 0: b\"-46zevd': is at d050c9269dcf0cae99acd70990bc93861bf7d829 but expected 14b2fb30959e4b407e871bf95382ed6f387438c6)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -18,6 +18,12 @@
   "13:42:12 rtc 82i3ff05y9: answered",
   "13:42:14 rtc 82i3ff05y9: data channel open",
   "13:42:15 request received: rid mvi5voinsomea.8 2 keys",
-  "13:42:15 handle mvi5voinsomea.8: first_chunk=True total=2"
+  "13:42:15 handle mvi5voinsomea.8: first_chunk=True total=2",
+  "13:43:09 request mvi5voinsomea.8: chunk of 2 keys done in 54s; paths {'http': 20, 'browser': 1, 'browser-none': 1}, browser waits 2 max 41s sum 62s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
+  "13:43:10 request mvi5voinsomea.8: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:43:12 request received: rid mvi5x0roqwfet.8 2 keys",
+  "13:43:12 handle mvi5x0roqwfet.8: first_chunk=True total=2",
+  "13:44:06 request mvi5x0roqwfet.8: chunk of 2 keys done in 54s; paths {'http': 20, 'browser': 1, 'browser-none': 3}, browser waits 4 max 41s sum 144s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
+  "13:44:07 request mvi5x0roqwfet.8: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
