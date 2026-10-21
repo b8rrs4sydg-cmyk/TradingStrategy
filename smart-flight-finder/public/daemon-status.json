@@ -1,18 +1,18 @@
 {
- "at": "2026-10-20T20:39:49+00:00",
+ "at": "2026-10-21T00:48:27+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1678,
+ "fares_saved": 1681,
  "log": [
-  "20:38:14 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:38:19 http front door: ['https://continuously-outputs-differential-tee.trycloudflare.com', 'https://2e57e34eb785a2.lhr.life']",
-  "20:38:19 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:39:23 request received: rid httptest1792528763 20 keys",
-  "20:39:23 handle httptest1792528763: first_chunk=True total=20",
-  "20:39:25 request httptest1792528763: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "20:39:25 request httptest1792528763: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:46:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:46:57 http front door: ['https://develop-dear-swing-creations.trycloudflare.com', 'https://c3a93e3f77ae35.lhr.life']",
+  "00:46:57 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:48:01 request received: rid httptest1792543681 20 keys",
+  "00:48:01 handle httptest1792543681: first_chunk=True total=20",
+  "00:48:03 request httptest1792543681: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
+  "00:48:03 request httptest1792543681: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
