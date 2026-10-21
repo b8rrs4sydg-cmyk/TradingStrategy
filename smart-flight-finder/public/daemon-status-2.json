@@ -1,5 +1,5 @@
 {
- "at": "2026-10-21T15:42:39+00:00",
+ "at": "2026-10-21T20:38:58+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1750,
  "log": [
-  "15:41:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:41:09 http front door: ['https://belfast-latter-detected-ver.trycloudflare.com', 'https://9fb983cd13a5e7.lhr.life']",
-  "15:41:09 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:42:12 request received: rid httptest1792597332 20 keys",
-  "15:42:12 handle httptest1792597332: first_chunk=True total=20",
-  "15:42:14 request httptest1792597332: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:42:15 request httptest1792597332: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:37:23 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:37:28 http front door: ['https://pink-accessed-pace-tax.trycloudflare.com', 'https://74edea1e81f990.lhr.life']",
+  "20:37:28 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:38:32 request received: rid httptest1792615112 20 keys",
+  "20:38:32 handle httptest1792615112: first_chunk=True total=20",
+  "20:38:34 request httptest1792615112: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
+  "20:38:35 request httptest1792615112: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
