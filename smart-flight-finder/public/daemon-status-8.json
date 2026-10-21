@@ -1,18 +1,18 @@
 {
- "at": "2026-10-20T20:39:46+00:00",
+ "at": "2026-10-21T00:49:22+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1650,
+ "fares_saved": 1653,
  "log": [
-  "20:38:11 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:38:16 http front door: ['https://faq-retail-combined-lung.trycloudflare.com', 'https://29cef5d75d0de6.lhr.life']",
-  "20:38:16 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:39:21 request received: rid httptest1792528760 20 keys",
-  "20:39:21 handle httptest1792528760: first_chunk=True total=20",
-  "20:39:22 request httptest1792528760: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "20:39:24 request httptest1792528760: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:47:46 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:47:52 http front door: ['https://flag-live-again-webshots.trycloudflare.com', 'https://6e3237075af318.lhr.life']",
+  "00:47:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:48:56 request received: rid httptest1792543735 20 keys",
+  "00:48:56 handle httptest1792543735: first_chunk=True total=20",
+  "00:48:58 request httptest1792543735: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:48:58 request httptest1792543735: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
