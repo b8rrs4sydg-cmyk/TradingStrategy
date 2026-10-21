@@ -1,5 +1,5 @@
 {
- "at": "2026-10-21T05:39:00+00:00",
+ "at": "2026-10-21T10:41:00+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1752,
  "log": [
-  "05:37:25 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:37:30 http front door: ['https://shorts-lamp-solaris-buildings.trycloudflare.com', 'https://d949c30c8f9380.lhr.life']",
-  "05:37:30 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:38:34 request received: rid httptest1792561113 20 keys",
-  "05:38:34 handle httptest1792561113: first_chunk=True total=20",
-  "05:38:35 request httptest1792561113: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
-  "05:38:37 request httptest1792561113: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:39:25 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "10:39:30 http front door: ['https://baby-header-per-recovery.trycloudflare.com', 'https://012bd4bd71b977.lhr.life']",
+  "10:39:30 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "10:40:35 request received: rid httptest1792579234 20 keys",
+  "10:40:35 handle httptest1792579234: first_chunk=True total=20",
+  "10:40:36 request httptest1792579234: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "10:40:37 request httptest1792579234: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
