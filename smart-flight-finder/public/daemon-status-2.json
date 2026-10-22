@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:22:07+00:00",
+ "at": "2026-10-22T20:23:38+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
@@ -7,7 +7,6 @@
  },
  "fares_saved": 1927,
  "log": [
-  "15:41:15 http front door: ['https://gtk-only-platforms-voltage.trycloudflare.com', 'https://32a5bca0ee508c.lhr.life']",
   "15:41:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "15:42:09 request received: rid httptest1792683728 20 keys",
   "15:42:09 handle httptest1792683728: first_chunk=True total=20",
@@ -156,6 +155,7 @@
   "20:21:44 request mvjzibbcs4x6n.2: chunk of 23 keys done in 144s; paths {'http': 179, 'browser': 15, 'browser-none': 274}, browser waits 289 max 144s sum 17192s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 147, 'blocked': 0, 'tries': 408, 'empty': 229}, audit 6/6 a",
   "20:21:46 request mvjzibbcs4x6n.2: final sent (23/23); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "20:22:01 request received: rid mvjzlpkae9co3.2 16 keys",
-  "20:22:01 handle mvjzlpkae9co3.2: first_chunk=True total=16"
+  "20:22:01 handle mvjzlpkae9co3.2: first_chunk=True total=16",
+  "20:23:37 request mvjzlpkae9co3.2: chunk of 16 keys done in 97s; paths {'http': 179, 'browser': 15, 'browser-none': 290}, browser waits 305 max 144s sum 18339s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 147, 'blocked': 0, 'tries': 408, 'empty': 229}, audit 6/6 ag"
  ]
 }
