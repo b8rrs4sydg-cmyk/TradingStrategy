@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:20:35+00:00",
+ "at": "2026-10-22T20:22:07+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 1927,
  "log": [
-  "15:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:41:05 git retry 0: b\"-46zevd': is at edcd7c26adddfd9d2cbb0f9e7c7f4e5c58fb52ca but expected c460ea5e0bf4199bc3fa8800ead3118cf66ae413)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "15:41:10 git retry 1: b\"-46zevd': is at 64c9c74be7b862ec1f9908c9d3489e50e5227c9a but expected acbd4611ed28f584fdf323402bc9db29bd233f0a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "15:41:15 http front door: ['https://gtk-only-platforms-voltage.trycloudflare.com', 'https://32a5bca0ee508c.lhr.life']",
   "15:41:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "15:42:09 request received: rid httptest1792683728 20 keys",
@@ -155,6 +152,10 @@
   "20:16:35 request mvjzbrhuw2eez.2: chunk of 20 keys done in 140s; paths {'http': 179, 'browser': 15, 'browser-none': 251}, browser waits 266 max 136s sum 15068s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 147, 'blocked': 0, 'tries': 408, 'empty': 229}, audit 6/6 a",
   "20:16:37 request mvjzbrhuw2eez.2: final sent (20/20); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "20:19:21 request received: rid mvjzibbcs4x6n.2 23 keys",
-  "20:19:21 handle mvjzibbcs4x6n.2: first_chunk=True total=23"
+  "20:19:21 handle mvjzibbcs4x6n.2: first_chunk=True total=23",
+  "20:21:44 request mvjzibbcs4x6n.2: chunk of 23 keys done in 144s; paths {'http': 179, 'browser': 15, 'browser-none': 274}, browser waits 289 max 144s sum 17192s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 147, 'blocked': 0, 'tries': 408, 'empty': 229}, audit 6/6 a",
+  "20:21:46 request mvjzibbcs4x6n.2: final sent (23/23); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "20:22:01 request received: rid mvjzlpkae9co3.2 16 keys",
+  "20:22:01 handle mvjzlpkae9co3.2: first_chunk=True total=16"
  ]
 }
