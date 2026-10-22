@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:07:46+00:00",
+ "at": "2026-10-22T21:09:18+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1857,
+ "fares_saved": 1864,
  "log": [
   "20:36:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:49 http front door: ['https://christ-cds-molecules-prison.trycloudflare.com', 'https://aea116e7ac13ac.lhr.life']",
@@ -55,6 +55,10 @@
   "21:05:13 handle mvk15awqr782k.5: first_chunk=True total=12",
   "21:06:12 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "21:06:50 request mvk15awqr782k.5: chunk of 12 keys done in 98s; paths {'http': 31, 'browser-none': 120, 'browser': 9}, browser waits 129 max 143s sum 8311s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 42, 'blocked': 0, 'tries': 77, 'empty': 46}, audit 2/2 agree",
-  "21:06:51 request mvk15awqr782k.5: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "21:06:51 request mvk15awqr782k.5: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "21:07:55 request received: rid mvk18s7mrkd9x.5 14 keys",
+  "21:07:55 handle mvk18s7mrkd9x.5: first_chunk=True total=14",
+  "21:09:08 request mvk18s7mrkd9x.5: chunk of 14 keys done in 73s; paths {'http': 31, 'browser-none': 127, 'browser': 16}, browser waits 143 max 143s sum 8769s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 42, 'blocked': 0, 'tries': 77, 'empty': 46}, audit 2/2 agree",
+  "21:09:09 request mvk18s7mrkd9x.5: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
