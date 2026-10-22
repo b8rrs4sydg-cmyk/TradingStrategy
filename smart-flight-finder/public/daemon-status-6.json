@@ -1,18 +1,18 @@
 {
- "at": "2026-10-21T20:39:04+00:00",
+ "at": "2026-10-22T00:49:32+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1744,
+ "fares_saved": 1747,
  "log": [
-  "20:37:28 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:37:34 http front door: ['https://sounds-flower-room-decided.trycloudflare.com', 'https://70d83446fe3bbf.lhr.life']",
-  "20:37:34 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:38:38 request received: rid httptest1792615117 20 keys",
-  "20:38:38 handle httptest1792615117: first_chunk=True total=20",
-  "20:38:40 request httptest1792615117: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "20:38:40 request httptest1792615117: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:47:56 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:48:02 http front door: ['https://movers-raymond-areas-soviet.trycloudflare.com', 'https://4838b4394a8463.lhr.life']",
+  "00:48:02 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:49:06 request received: rid httptest1792630145 20 keys",
+  "00:49:06 handle httptest1792630145: first_chunk=True total=20",
+  "00:49:07 request httptest1792630145: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:49:08 request httptest1792630145: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
