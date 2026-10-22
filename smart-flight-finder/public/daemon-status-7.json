@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:24:55+00:00",
+ "at": "2026-10-22T20:26:27+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1809,
  "log": [
-  "19:01:36 rtc uq85vbee3b: answered",
-  "19:01:38 rtc uq85vbee3b: data channel open",
   "19:01:38 request received: rid mvjwq98yp1nwz.7 2 keys",
   "19:01:38 handle mvjwq98yp1nwz.7: first_chunk=True total=2",
   "19:02:39 request mvjwq98yp1nwz.7: chunk of 2 keys done in 61s; paths {'http': 21, 'browser-none': 1}, browser waits 1 max 49s sum 49s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 1, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 3/3 agree",
@@ -156,6 +154,8 @@
   "20:24:22 request mvjzlpkae9co3.7: chunk of 24 keys done in 142s; paths {'http': 198, 'browser-none': 310, 'browser': 11}, browser waits 321 max 145s sum 20907s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 198, 'miss': 153, 'blocked': 0, 'tries': 422, 'empty': 224}, audit 5/5 a",
   "20:24:24 request mvjzlpkae9co3.7: final sent (24/24); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "20:24:40 request received: rid mvjzp4dfd7aj3.7 15 keys",
-  "20:24:40 handle mvjzp4dfd7aj3.7: first_chunk=True total=15"
+  "20:24:40 handle mvjzp4dfd7aj3.7: first_chunk=True total=15",
+  "20:26:19 request mvjzp4dfd7aj3.7: chunk of 15 keys done in 99s; paths {'http': 198, 'browser-none': 325, 'browser': 11}, browser waits 336 max 145s sum 21916s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 198, 'miss': 153, 'blocked': 0, 'tries': 422, 'empty': 224}, audit 5/5 ag",
+  "20:26:20 request mvjzp4dfd7aj3.7: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
