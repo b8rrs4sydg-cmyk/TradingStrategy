@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:47:16+00:00",
+ "at": "2026-10-22T20:48:51+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1961,
+ "fares_saved": 1963,
  "log": [
   "20:36:32 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:38 http front door: ['https://qualify-fall-venice-matching.trycloudflare.com', 'https://450b9835d590ea.lhr.life']",
@@ -23,6 +23,9 @@
   "20:45:21 handle mvk0fpjxs00pn.5: first_chunk=True total=17",
   "20:45:22 rtc vsgfmakcnc: data channel open",
   "20:46:59 request mvk0fpjxs00pn.5: chunk of 17 keys done in 98s; paths {'http': 24, 'browser': 2, 'browser-none': 31}, browser waits 33 max 98s sum 2062s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 16, 'blocked': 0, 'tries': 33, 'empty': 9}, audit 4/4 agree",
-  "20:47:00 request mvk0fpjxs00pn.5: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "20:47:00 request mvk0fpjxs00pn.5: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "20:47:17 git retry 0: b\"-46zevd': is at 965da747424d6482fcef569032eec4806dca61fb but expected 042775db9dbd3654fdadebdc8bf1a09539eeb2fb)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "20:48:19 request received: rid mvk0jj847nbbl.5 14 keys",
+  "20:48:19 handle mvk0jj847nbbl.5: first_chunk=True total=14"
  ]
 }
