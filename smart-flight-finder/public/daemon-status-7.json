@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:11:21+00:00",
+ "at": "2026-10-22T19:14:30+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1662,
+ "fares_saved": 1695,
  "log": [
   "15:41:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:07 http front door: ['https://attacked-agency-commands-kelkoo.trycloudflare.com', 'https://d6c1f413a21656.lhr.life']",
@@ -43,6 +43,13 @@
   "19:09:33 request received: rid mvjx0k1uo0a0p.7 6 keys",
   "19:09:33 handle mvjx0k1uo0a0p.7: first_chunk=True total=6",
   "19:10:26 request mvjx0k1uo0a0p.7: chunk of 6 keys done in 53s; paths {'http': 53, 'browser-none': 18, 'browser': 9}, browser waits 27 max 51s sum 884s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 53, 'miss': 27, 'blocked': 0, 'tries': 111, 'empty': 58}, audit 4/4 agree",
-  "19:10:26 request mvjx0k1uo0a0p.7: final sent (6/6); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "19:10:26 request mvjx0k1uo0a0p.7: final sent (6/6); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:11:23 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "19:13:05 request received: rid mvjx546nc3yf5.7 25 keys",
+  "19:13:05 handle mvjx546nc3yf5.7: first_chunk=True total=25",
+  "19:13:54 request mvjx546nc3yf5.7: chunk of 25 keys done in 49s; paths {'http': 73, 'browser-none': 23, 'browser': 9}, browser waits 32 max 51s sum 1106s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 73, 'miss': 32, 'blocked': 0, 'tries': 145, 'empty': 72}, audit 5/5 agree",
+  "19:13:55 request mvjx546nc3yf5.7: final sent (25/25); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:14:11 request received: rid mvjx6ifjt8ars.7 19 keys",
+  "19:14:11 handle mvjx6ifjt8ars.7: first_chunk=True total=19"
  ]
 }
