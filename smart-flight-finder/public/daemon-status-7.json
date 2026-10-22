@@ -1,7 +1,7 @@
 {
- "at": "2026-10-22T20:44:15+00:00",
+ "at": "2026-10-22T20:45:46+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
@@ -15,6 +15,12 @@
   "20:37:46 request httptest1792701464: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
   "20:37:48 request httptest1792701464: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "20:42:30 request received: rid mvk0c1tuxnf9k.6 13 keys",
-  "20:42:30 handle mvk0c1tuxnf9k.6: first_chunk=True total=13"
+  "20:42:30 handle mvk0c1tuxnf9k.6: first_chunk=True total=13",
+  "20:44:16 request mvk0c1tuxnf9k.6: chunk of 13 keys done in 106s; paths {'http': 20, 'browser-none': 13}, browser waits 13 max 87s sum 779s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 13, 'blocked': 0, 'tries': 27, 'empty': 7}, audit 3/3 agree",
+  "20:44:18 request mvk0c1tuxnf9k.6: final sent (13/13); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "20:45:20 rtc u6vbq2yeun: answered",
+  "20:45:22 request received: rid mvk0fpjxs00pn.6 23 keys",
+  "20:45:22 handle mvk0fpjxs00pn.6: first_chunk=True total=23",
+  "20:45:22 rtc u6vbq2yeun: data channel open"
  ]
 }
