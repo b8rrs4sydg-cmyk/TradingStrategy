@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:06:52+00:00",
+ "at": "2026-10-22T20:08:24+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -138,6 +138,11 @@
   "20:04:33 request received: rid mvjyz95o7r04d.2 17 keys",
   "20:04:33 handle mvjyz95o7r04d.2: first_chunk=True total=17",
   "20:04:35 rtc yghq49od5d: data channel open",
-  "20:06:52 request mvjyz95o7r04d.2: chunk of 17 keys done in 139s; paths {'http': 177, 'browser': 15, 'browser-none': 213}, browser waits 228 max 136s sum 12530s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 177, 'miss': 133, 'blocked': 0, 'tries': 395, 'empty': 218}, audit 6/6 a"
+  "20:06:52 request mvjyz95o7r04d.2: chunk of 17 keys done in 139s; paths {'http': 177, 'browser': 15, 'browser-none': 213}, browser waits 228 max 136s sum 12530s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 177, 'miss': 133, 'blocked': 0, 'tries': 395, 'empty': 218}, audit 6/6 a",
+  "20:06:53 request mvjyz95o7r04d.2: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "20:07:11 request received: rid mvjz2oj014arg.2 7 keys",
+  "20:07:11 handle mvjz2oj014arg.2: first_chunk=True total=7",
+  "20:08:01 request mvjz2oj014arg.2: chunk of 7 keys done in 50s; paths {'http': 177, 'browser': 15, 'browser-none': 220}, browser waits 235 max 136s sum 12864s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 177, 'miss': 133, 'blocked': 0, 'tries': 395, 'empty': 218}, audit 6/6 agr",
+  "20:08:02 request mvjz2oj014arg.2: final sent (7/7); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
