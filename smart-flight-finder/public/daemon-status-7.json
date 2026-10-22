@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:36:18+00:00",
+ "at": "2026-10-22T21:40:50+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1872,
+ "fares_saved": 1876,
  "log": [
   "20:36:35 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:40 http front door: ['https://taxes-tape-favors-hosting.trycloudflare.com', 'https://73601689d5ecf2.lhr.life']",
@@ -93,6 +93,8 @@
   "21:33:58 request received: rid mvk26a35o7ztd.7 16 keys",
   "21:33:58 handle mvk26a35o7ztd.7: first_chunk=True total=16",
   "21:35:33 request mvk26a35o7ztd.7: chunk of 16 keys done in 95s; paths {'http': 65, 'browser-none': 229, 'browser': 12}, browser waits 241 max 153s sum 16605s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 65, 'miss': 74, 'blocked': 0, 'tries': 110, 'empty': 45}, audit 4/5 agree",
-  "21:35:34 request mvk26a35o7ztd.7: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "21:35:34 request mvk26a35o7ztd.7: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "21:39:35 request received: rid mvk2did7f3hwc.7 21 keys",
+  "21:39:35 handle mvk2did7f3hwc.7: first_chunk=True total=21"
  ]
 }
