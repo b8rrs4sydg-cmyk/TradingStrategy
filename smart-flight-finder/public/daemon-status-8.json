@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T13:17:04+00:00",
+ "at": "2026-10-22T13:18:35+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -20,6 +20,12 @@
   "13:16:27 rtc gnt1yh0a7x: answered",
   "13:16:29 rtc gnt1yh0a7x: data channel open",
   "13:16:29 request received: rid mvjkedb1j45q8.8 1 keys",
-  "13:16:29 handle mvjkedb1j45q8.8: first_chunk=True total=1"
+  "13:16:29 handle mvjkedb1j45q8.8: first_chunk=True total=1",
+  "13:17:23 request mvjkedb1j45q8.8: chunk of 1 keys done in 53s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 41s sum 41s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
+  "13:17:24 request mvjkedb1j45q8.8: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:17:27 request received: rid mvjkfrn62ytil.8 1 keys",
+  "13:17:27 handle mvjkfrn62ytil.8: first_chunk=True total=1",
+  "13:18:21 request mvjkfrn62ytil.8: chunk of 1 keys done in 54s; paths {'http': 20, 'browser-none': 2}, browser waits 2 max 41s sum 81s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
+  "13:18:22 request mvjkfrn62ytil.8: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
