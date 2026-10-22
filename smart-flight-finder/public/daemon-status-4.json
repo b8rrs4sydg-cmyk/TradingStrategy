@@ -1,18 +1,18 @@
 {
- "at": "2026-10-21T20:38:50+00:00",
+ "at": "2026-10-22T00:49:20+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1727,
+ "fares_saved": 1730,
  "log": [
-  "20:37:14 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:37:20 http front door: ['https://advise-dozens-dried-consideration.trycloudflare.com', 'https://d649d925f7a2b3.lhr.life']",
-  "20:37:20 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:38:23 request received: rid httptest1792615102 20 keys",
-  "20:38:23 handle httptest1792615102: first_chunk=True total=20",
-  "20:38:24 request httptest1792615102: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "20:38:26 request httptest1792615102: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:47:44 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:47:50 http front door: ['https://listed-surgical-fixtures-troy.trycloudflare.com', 'https://7f123ea1cd2d0f.lhr.life']",
+  "00:47:50 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:48:54 request received: rid httptest1792630134 20 keys",
+  "00:48:54 handle httptest1792630134: first_chunk=True total=20",
+  "00:48:56 request httptest1792630134: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:48:56 request httptest1792630134: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
