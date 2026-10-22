@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:14:08+00:00",
+ "at": "2026-10-22T20:15:40+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,7 +7,6 @@
  },
  "fares_saved": 1901,
  "log": [
-  "15:41:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:10 git retry 0: b\"-46zevd': is at 64c9c74be7b862ec1f9908c9d3489e50e5227c9a but expected acbd4611ed28f584fdf323402bc9db29bd233f0a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "15:41:14 http front door: ['https://transcript-warnings-premises-variety.trycloudflare.com', 'https://96ad9a384add73.lhr.life']",
   "15:41:14 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
@@ -155,6 +154,8 @@
   "20:13:00 request received: rid mvjza42dd5zg6.2 2 keys",
   "20:13:00 handle mvjza42dd5zg6.2: first_chunk=True total=2",
   "20:13:47 request mvjza42dd5zg6.2: chunk of 2 keys done in 48s; paths {'http': 183, 'browser': 7, 'browser-none': 253}, browser waits 260 max 145s sum 16888s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 183, 'miss': 133, 'blocked': 0, 'tries': 385, 'empty': 202}, audit 7/7 agre",
-  "20:13:50 request mvjza42dd5zg6.2: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "20:13:50 request mvjza42dd5zg6.2: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:14:15 request received: rid mvjzbrhuw2eez.4 18 keys",
+  "20:14:15 handle mvjzbrhuw2eez.4: first_chunk=True total=18"
  ]
 }
