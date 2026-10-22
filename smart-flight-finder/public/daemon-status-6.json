@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:44:12+00:00",
+ "at": "2026-10-22T20:45:44+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1960,
+ "fares_saved": 1961,
  "log": [
   "20:36:32 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:38 http front door: ['https://qualify-fall-venice-matching.trycloudflare.com', 'https://450b9835d590ea.lhr.life']",
@@ -15,6 +15,12 @@
   "20:37:48 request httptest1792701461: chunk of 20 keys done in 6s; paths {'http': 19, 'browser': 1}, browser waits 1 max 6s sum 6s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 3}, audit 2/2 agree",
   "20:37:50 request httptest1792701461: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "20:42:30 request received: rid mvk0c1tuxnf9k.5 20 keys",
-  "20:42:30 handle mvk0c1tuxnf9k.5: first_chunk=True total=20"
+  "20:42:30 handle mvk0c1tuxnf9k.5: first_chunk=True total=20",
+  "20:44:24 request mvk0c1tuxnf9k.5: chunk of 20 keys done in 115s; paths {'http': 24, 'browser': 1, 'browser-none': 15}, browser waits 16 max 85s sum 964s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 16, 'blocked': 0, 'tries': 33, 'empty': 9}, audit 4/4 agree",
+  "20:44:26 request mvk0c1tuxnf9k.5: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "20:45:20 rtc vsgfmakcnc: answered",
+  "20:45:21 request received: rid mvk0fpjxs00pn.5 17 keys",
+  "20:45:21 handle mvk0fpjxs00pn.5: first_chunk=True total=17",
+  "20:45:22 rtc vsgfmakcnc: data channel open"
  ]
 }
