@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:43:03+00:00",
+ "at": "2026-10-22T20:44:35+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1897,
+ "fares_saved": 1902,
  "log": [
   "20:36:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:47 http front door: ['https://pleased-challenging-messaging-basic.trycloudflare.com', 'https://fbe0a54be40fb7.lhr.life']",
@@ -27,6 +27,8 @@
   "20:42:11 request mvk07fyw9f0kz.3: chunk of 41 keys done in 197s; paths {'http': 37, 'browser': 3, 'browser-none': 24}, browser waits 27 max 150s sum 2255s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 27, 'blocked': 0, 'tries': 61, 'empty': 24}, audit 1/1 agree",
   "20:42:12 request mvk07fyw9f0kz.3: final sent (41/41); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "20:42:30 request received: rid mvk0c1tuxnf9k.7 19 keys",
-  "20:42:30 handle mvk0c1tuxnf9k.7: first_chunk=True total=19"
+  "20:42:30 handle mvk0c1tuxnf9k.7: first_chunk=True total=19",
+  "20:44:03 request mvk0c1tuxnf9k.7: chunk of 19 keys done in 94s; paths {'http': 37, 'browser': 12, 'browser-none': 34}, browser waits 46 max 150s sum 3104s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 27, 'blocked': 0, 'tries': 61, 'empty': 24}, audit 1/1 agree",
+  "20:44:04 request mvk0c1tuxnf9k.7: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
