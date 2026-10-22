@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:54:25+00:00",
+ "at": "2026-10-22T19:55:57+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1797,
+ "fares_saved": 1798,
  "log": [
   "15:41:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:07 http front door: ['https://attacked-agency-commands-kelkoo.trycloudflare.com', 'https://d6c1f413a21656.lhr.life']",
@@ -127,6 +127,8 @@
   "19:51:31 request received: rid mvjyij18d8mc6.7 19 keys",
   "19:51:31 handle mvjyij18d8mc6.7: first_chunk=True total=19",
   "19:53:56 request mvjyij18d8mc6.7: chunk of 19 keys done in 145s; paths {'http': 188, 'browser-none': 185, 'browser': 9}, browser waits 194 max 145s sum 11682s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 188, 'miss': 112, 'blocked': 0, 'tries': 377, 'empty': 189}, audit 5/5 ag",
-  "19:53:56 request mvjyij18d8mc6.7: final sent (19/19); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "19:53:56 request mvjyij18d8mc6.7: final sent (19/19); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "19:54:54 request received: rid mvjymvoz86lqm.7 20 keys",
+  "19:54:54 handle mvjymvoz86lqm.7: first_chunk=True total=20"
  ]
 }
