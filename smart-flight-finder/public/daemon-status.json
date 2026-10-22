@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:26:47+00:00",
+ "at": "2026-10-22T20:31:19+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1815,
  "log": [
-  "15:41:21 http front door: ['https://api.trycloudflare.com', 'https://bafb47fb5af97c.lhr.life']",
-  "15:41:21 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "19:01:36 rtc lzzw9mhbb0: answered",
   "19:01:38 rtc lzzw9mhbb0: data channel open",
   "19:01:38 request received: rid mvjwq98yp1nwz.0 2 keys",
@@ -156,6 +154,8 @@
   "20:24:40 request received: rid mvjzp4dfd7aj3.0 8 keys",
   "20:24:40 handle mvjzp4dfd7aj3.0: first_chunk=True total=8",
   "20:25:42 request mvjzp4dfd7aj3.0: chunk of 8 keys done in 63s; paths {'browser': 12, 'browser-none': 333, 'http': 120}, browser waits 345 max 189s sum 23526s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 120, 'miss': 148, 'blocked': 0, 'tries': 339, 'empty': 219}, audit 2/2 agr",
-  "20:25:44 request mvjzp4dfd7aj3.0: final sent (8/8); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "20:25:44 request mvjzp4dfd7aj3.0: final sent (8/8); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "20:30:50 request received: rid mvjzx2z26dpst.0 17 keys",
+  "20:30:50 handle mvjzx2z26dpst.0: first_chunk=True total=17"
  ]
 }
