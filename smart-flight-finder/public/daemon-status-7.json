@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:05:13+00:00",
+ "at": "2026-10-22T19:06:45+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1649,
+ "fares_saved": 1655,
  "log": [
   "15:41:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:07 http front door: ['https://attacked-agency-commands-kelkoo.trycloudflare.com', 'https://d6c1f413a21656.lhr.life']",
@@ -33,6 +33,8 @@
   "19:04:33 request mvjwt0unz20g7.7: chunk of 4 keys done in 52s; paths {'http': 40, 'browser-none': 9, 'browser': 9}, browser waits 18 max 51s sum 472s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 18, 'blocked': 0, 'tries': 82, 'empty': 42}, audit 4/4 agree",
   "19:04:34 request mvjwt0unz20g7.7: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:05:13 request received: rid mvjwuzj6a8ir8.7 12 keys",
-  "19:05:13 handle mvjwuzj6a8ir8.7: first_chunk=True total=12"
+  "19:05:13 handle mvjwuzj6a8ir8.7: first_chunk=True total=12",
+  "19:06:03 request mvjwuzj6a8ir8.7: chunk of 12 keys done in 50s; paths {'http': 46, 'browser-none': 13, 'browser': 9}, browser waits 22 max 51s sum 667s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 22, 'blocked': 0, 'tries': 97, 'empty': 51}, audit 4/4 agree",
+  "19:06:05 request mvjwuzj6a8ir8.7: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
