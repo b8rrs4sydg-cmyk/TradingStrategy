@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:04:37+00:00",
+ "at": "2026-10-22T19:06:09+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1735,
+ "fares_saved": 1743,
  "log": [
   "15:49:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:49:28 http front door: ['https://trends-mail-smoke-compatibility.trycloudflare.com', 'https://cdd57da18f0644.lhr.life']",
@@ -32,6 +32,10 @@
   "19:03:42 request mvjwt0unz20g7.1: chunk of 8 keys done in 0s; paths {'http': 48, 'browser-none': 6}, browser waits 6 max 48s sum 259s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 48, 'miss': 10, 'blocked': 0, 'tries': 61, 'empty': 13}, audit 5/5 agree",
   "19:03:43 request mvjwt0unz20g7.1: final sent (8/8); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:04:21 request mvjwsusexnu3i.1: chunk of 14 keys done in 48s; paths {'http': 48, 'browser-none': 10}, browser waits 10 max 48s sum 438s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 48, 'miss': 10, 'blocked': 0, 'tries': 61, 'empty': 13}, audit 5/5 agree",
-  "19:04:21 request mvjwsusexnu3i.1: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "19:04:21 request mvjwsusexnu3i.1: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:05:13 request received: rid mvjwuzj6a8ir8.1 11 keys",
+  "19:05:13 handle mvjwuzj6a8ir8.1: first_chunk=True total=11",
+  "19:05:54 request mvjwuzj6a8ir8.1: chunk of 11 keys done in 41s; paths {'http': 55, 'browser-none': 11, 'browser': 1}, browser waits 12 max 48s sum 482s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 12, 'blocked': 0, 'tries': 73, 'empty': 18}, audit 5/5 agree",
+  "19:05:56 request mvjwuzj6a8ir8.1: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
