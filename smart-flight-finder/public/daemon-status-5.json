@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:19:00+00:00",
+ "at": "2026-10-22T19:22:02+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1711,
+ "fares_saved": 1723,
  "log": [
   "15:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:05 http front door: ['https://latex-vehicle-almost-attract.trycloudflare.com', 'https://8ae32e031fa6e1.lhr.life']",
@@ -59,6 +59,10 @@
   "19:17:24 request received: rid mvjxangp506qi.5 18 keys",
   "19:17:24 handle mvjxangp506qi.5: first_chunk=True total=18",
   "19:18:15 request mvjxangp506qi.5: chunk of 18 keys done in 51s; paths {'http': 90, 'browser': 12, 'browser-none': 57}, browser waits 69 max 103s sum 3063s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 90, 'miss': 39, 'blocked': 0, 'tries': 172, 'empty': 82}, audit 5/5 agree",
-  "19:18:16 request mvjxangp506qi.5: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "19:18:16 request mvjxangp506qi.5: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:20:32 request received: rid mvjxeomzqbb0i.5 17 keys",
+  "19:20:32 handle mvjxeomzqbb0i.5: first_chunk=True total=17",
+  "19:21:21 request mvjxeomzqbb0i.5: chunk of 17 keys done in 49s; paths {'http': 102, 'browser': 12, 'browser-none': 62}, browser waits 74 max 103s sum 3294s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 102, 'miss': 44, 'blocked': 0, 'tries': 197, 'empty': 95}, audit 5/5 agree",
+  "19:21:23 request mvjxeomzqbb0i.5: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
