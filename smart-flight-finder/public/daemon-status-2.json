@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:50:45+00:00",
+ "at": "2026-10-22T20:52:16+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1965,
+ "fares_saved": 1970,
  "log": [
   "20:36:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:56 http front door: ['https://romantic-sites-highs-circular.trycloudflare.com', 'https://c50651edf46340.lhr.life']",
@@ -34,6 +34,10 @@
   "20:47:04 request mvk0fpjxs00pn.1: chunk of 14 keys done in 103s; paths {'http': 36, 'browser': 11, 'browser-none': 62}, browser waits 73 max 149s sum 5365s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 32, 'blocked': 0, 'tries': 52, 'empty': 16}, audit 1/1 agree",
   "20:47:06 request mvk0fpjxs00pn.1: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "20:48:19 request received: rid mvk0jj847nbbl.1 27 keys",
-  "20:48:19 handle mvk0jj847nbbl.1: first_chunk=True total=27"
+  "20:48:19 handle mvk0jj847nbbl.1: first_chunk=True total=27",
+  "20:50:49 request mvk0jj847nbbl.1: chunk of 27 keys done in 150s; paths {'http': 36, 'browser': 15, 'browser-none': 85}, browser waits 100 max 150s sum 7789s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 32, 'blocked': 0, 'tries': 52, 'empty': 16}, audit 1/1 agree",
+  "20:50:51 request mvk0jj847nbbl.1: final sent (27/27); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "20:51:07 request received: rid mvk0n4qao3gi3.1 20 keys",
+  "20:51:07 handle mvk0n4qao3gi3.1: first_chunk=True total=20"
  ]
 }
