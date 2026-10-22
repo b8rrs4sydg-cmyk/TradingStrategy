@@ -1,28 +1,18 @@
 {
- "at": "2026-10-22T13:19:24+00:00",
+ "at": "2026-10-22T15:50:58+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1707,
  "log": [
-  "10:40:14 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:40:20 http front door: ['https://gauge-installing-transit-slots.trycloudflare.com', 'https://d0c6afb09cd53b.lhr.life']",
-  "10:40:20 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:41:23 request received: rid httptest1792665683 20 keys",
-  "10:41:23 handle httptest1792665683: first_chunk=True total=20",
-  "10:41:25 request httptest1792665683: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:41:26 request httptest1792665683: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "13:16:27 rtc 7t520dgj5c: answered",
-  "13:16:29 rtc 7t520dgj5c: data channel open",
-  "13:16:29 request received: rid mvjkedb1j45q8.1 4 keys",
-  "13:16:29 handle mvjkedb1j45q8.1: first_chunk=True total=4",
-  "13:17:23 request mvjkedb1j45q8.1: chunk of 4 keys done in 54s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 42s sum 166s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
-  "13:17:24 request mvjkedb1j45q8.1: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:17:27 request received: rid mvjkfrn62ytil.1 1 keys",
-  "13:17:27 handle mvjkfrn62ytil.1: first_chunk=True total=1",
-  "13:18:21 request mvjkfrn62ytil.1: chunk of 1 keys done in 53s; paths {'http': 20, 'browser-none': 5}, browser waits 5 max 42s sum 206s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 5, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
-  "13:18:21 request mvjkfrn62ytil.1: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "15:49:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:49:28 http front door: ['https://trends-mail-smoke-compatibility.trycloudflare.com', 'https://cdd57da18f0644.lhr.life']",
+  "15:49:28 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:50:31 request received: rid httptest1792684231 20 keys",
+  "15:50:31 handle httptest1792684231: first_chunk=True total=20",
+  "15:50:33 request httptest1792684231: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:50:34 request httptest1792684231: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
