@@ -1,24 +1,19 @@
 {
- "at": "2026-10-22T13:18:18+00:00",
+ "at": "2026-10-22T15:42:44+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1731,
  "log": [
-  "10:39:09 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:39:15 http front door: ['https://basics-roman-dual-strictly.trycloudflare.com', 'https://f57229318aabc9.lhr.life']",
-  "10:39:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:40:17 request received: rid httptest1792665616 20 keys",
-  "10:40:17 handle httptest1792665616: first_chunk=True total=20",
-  "10:40:18 request httptest1792665616: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "10:40:19 request httptest1792665616: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "13:16:27 rtc j5k6qyuniv: answered",
-  "13:16:28 rtc j5k6qyuniv: data channel open",
-  "13:16:29 request received: rid mvjkedb1j45q8.4 5 keys",
-  "13:16:29 handle mvjkedb1j45q8.4: first_chunk=True total=5",
-  "13:17:24 request mvjkedb1j45q8.4: chunk of 5 keys done in 55s; paths {'http': 20, 'browser': 1, 'browser-none': 4}, browser waits 5 max 42s sum 173s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 5, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 1/1 agree",
-  "13:17:25 request mvjkedb1j45q8.4: final sent (5/5); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "15:41:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:41:10 git retry 0: b\"-46zevd': is at 64c9c74be7b862ec1f9908c9d3489e50e5227c9a but expected acbd4611ed28f584fdf323402bc9db29bd233f0a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "15:41:14 http front door: ['https://transcript-warnings-premises-variety.trycloudflare.com', 'https://96ad9a384add73.lhr.life']",
+  "15:41:14 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:42:12 request received: rid httptest1792683732 20 keys",
+  "15:42:12 handle httptest1792683732: first_chunk=True total=20",
+  "15:42:14 request httptest1792683732: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:42:14 request httptest1792683732: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
