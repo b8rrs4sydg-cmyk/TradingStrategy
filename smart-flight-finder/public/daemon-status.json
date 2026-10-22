@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T05:38:38+00:00",
+ "at": "2026-10-22T10:43:29+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1684,
  "log": [
-  "05:37:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:37:08 http front door: ['https://rare-geography-ferry-nutten.trycloudflare.com', 'https://b2b4294130cddc.lhr.life']",
-  "05:37:08 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:38:12 request received: rid httptest1792647492 20 keys",
-  "05:38:12 handle httptest1792647492: first_chunk=True total=20",
-  "05:38:14 request httptest1792647492: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:38:14 request httptest1792647492: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:41:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "10:41:59 http front door: ['https://memphis-convinced-carroll-pharmaceuticals.trycloudflare.com', 'https://551e64cdbf51e8.lhr.life']",
+  "10:41:59 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "10:43:04 request received: rid httptest1792665783 20 keys",
+  "10:43:04 handle httptest1792665783: first_chunk=True total=20",
+  "10:43:05 request httptest1792665783: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "10:43:06 request httptest1792665783: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
