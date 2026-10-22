@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:22:50+00:00",
+ "at": "2026-10-22T21:24:22+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1844,
+ "fares_saved": 1852,
  "log": [
   "20:36:37 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:42 git retry 0: b\"-46zevd': is at ca0396153a8ab2e043afcb0707d46f191bfd814d but expected e4318ddd46880fa6528396f1f67983335fe8ba53)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -83,6 +83,12 @@
   "21:20:51 request mvk1n9t1pmttg.0: chunk of 16 keys done in 98s; paths {'http': 43, 'browser-none': 263}, browser waits 263 max 187s sum 20718s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 43, 'miss': 69, 'blocked': 0, 'tries': 110, 'empty': 67}, audit 3/3 agree",
   "21:20:51 request mvk1n9t1pmttg.0: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "21:22:02 request received: rid mvk1qvujfxxk8.0 21 keys",
-  "21:22:02 handle mvk1qvujfxxk8.0: first_chunk=True total=21"
+  "21:22:02 handle mvk1qvujfxxk8.0: first_chunk=True total=21",
+  "21:23:39 request mvk1qvujfxxk8.0: chunk of 21 keys done in 97s; paths {'http': 49, 'browser-none': 278}, browser waits 278 max 187s sum 21760s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 49, 'miss': 69, 'blocked': 0, 'tries': 117, 'empty': 68}, audit 3/3 agree",
+  "21:23:40 request mvk1qvujfxxk8.0: final sent (21/21); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "21:24:08 request received: rid mvk1tn083i50b.0 8 keys",
+  "21:24:08 handle mvk1tn083i50b.0: first_chunk=True total=8",
+  "21:24:14 request mvk1tn083i50b.0: chunk of 8 keys done in 5s; paths {'http': 57, 'browser-none': 278}, browser waits 278 max 187s sum 21760s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 57, 'miss': 69, 'blocked': 0, 'tries': 125, 'empty': 68}, audit 3/3 agree",
+  "21:24:14 request mvk1tn083i50b.0: final sent (8/8); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
