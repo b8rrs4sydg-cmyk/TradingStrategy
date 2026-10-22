@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:29:49+00:00",
+ "at": "2026-10-22T19:31:27+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1769,
+ "fares_saved": 1780,
  "log": [
   "15:41:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:07 http front door: ['https://attacked-agency-commands-kelkoo.trycloudflare.com', 'https://d6c1f413a21656.lhr.life']",
@@ -82,6 +82,11 @@
   "19:28:43 request mvjxn5yxlrf2g.6: chunk of 16 keys done in 94s; paths {'http': 155, 'browser-none': 57, 'browser': 9}, browser waits 66 max 92s sum 2796s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 155, 'miss': 66, 'blocked': 0, 'tries': 295, 'empty': 140}, audit 5/5 agree",
   "19:28:45 request mvjxn5yxlrf2g.6: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:28:52 request received: rid mvjxpdnv939tk.6 11 keys",
-  "19:28:52 handle mvjxpdnv939tk.6: first_chunk=True total=11"
+  "19:28:52 handle mvjxpdnv939tk.6: first_chunk=True total=11",
+  "19:29:50 git retry 0: b\"-46zevd': is at 772050ea57dd490bcd7c77c3b86b0e49fd6d8f3b but expected 1cf44d3b78be7e5674522a89e75506f067698f95)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "19:29:54 request mvjxpdnv939tk.6: chunk of 11 keys done in 61s; paths {'http': 160, 'browser-none': 63, 'browser': 9}, browser waits 72 max 92s sum 3078s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 160, 'miss': 72, 'blocked': 0, 'tries': 308, 'empty': 148}, audit 5/5 agree",
+  "19:29:56 request mvjxpdnv939tk.6: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:30:42 request received: rid mvjxrr1cn6c1i.7 18 keys",
+  "19:30:42 handle mvjxrr1cn6c1i.7: first_chunk=True total=18"
  ]
 }
