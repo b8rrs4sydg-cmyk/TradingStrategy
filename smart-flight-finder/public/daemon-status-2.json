@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:47:41+00:00",
+ "at": "2026-10-22T20:49:13+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1961,
+ "fares_saved": 1962,
  "log": [
   "20:36:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:56 http front door: ['https://romantic-sites-highs-circular.trycloudflare.com', 'https://c50651edf46340.lhr.life']",
@@ -32,6 +32,8 @@
   "20:45:21 handle mvk0fpjxs00pn.1: first_chunk=True total=14",
   "20:46:06 git retry 0: b\"-46zevd': is at 08b6987c4374d92c0445fa5ef0fd2ee40ca76141 but expected 86b56c9ebe8353b6d4bf6331fc2821a3ad24a7d9)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "20:47:04 request mvk0fpjxs00pn.1: chunk of 14 keys done in 103s; paths {'http': 36, 'browser': 11, 'browser-none': 62}, browser waits 73 max 149s sum 5365s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 32, 'blocked': 0, 'tries': 52, 'empty': 16}, audit 1/1 agree",
-  "20:47:06 request mvk0fpjxs00pn.1: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "20:47:06 request mvk0fpjxs00pn.1: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "20:48:19 request received: rid mvk0jj847nbbl.1 27 keys",
+  "20:48:19 handle mvk0jj847nbbl.1: first_chunk=True total=27"
  ]
 }
