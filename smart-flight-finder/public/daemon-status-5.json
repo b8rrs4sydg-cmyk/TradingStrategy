@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T21:06:11+00:00",
+ "at": "2026-10-22T21:07:46+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -52,6 +52,9 @@
   "21:02:32 rtc 9u827xbirg: answered",
   "21:02:33 rtc 9u827xbirg: data channel open",
   "21:05:13 request received: rid mvk15awqr782k.5 12 keys",
-  "21:05:13 handle mvk15awqr782k.5: first_chunk=True total=12"
+  "21:05:13 handle mvk15awqr782k.5: first_chunk=True total=12",
+  "21:06:12 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "21:06:50 request mvk15awqr782k.5: chunk of 12 keys done in 98s; paths {'http': 31, 'browser-none': 120, 'browser': 9}, browser waits 129 max 143s sum 8311s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 42, 'blocked': 0, 'tries': 77, 'empty': 46}, audit 2/2 agree",
+  "21:06:51 request mvk15awqr782k.5: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
