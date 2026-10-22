@@ -1,13 +1,12 @@
 {
- "at": "2026-10-22T20:08:33+00:00",
+ "at": "2026-10-22T20:10:05+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1852,
+ "fares_saved": 1854,
  "log": [
-  "15:41:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:08 git retry 0: b\"-46zevd': is at acbd4611ed28f584fdf323402bc9db29bd233f0a but expected edcd7c26adddfd9d2cbb0f9e7c7f4e5c58fb52ca)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "15:41:15 git retry 1: b\"-46zevd': is at de378e0a7d05548e911700922a2b7afd980d68c2 but expected 64c9c74be7b862ec1f9908c9d3489e50e5227c9a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "15:41:23 http front door: ['https://pgp-ipaq-previous-leslie.trycloudflare.com', 'https://2761418d08bc76.lhr.life']",
@@ -153,6 +152,10 @@
   "20:06:56 request mvjyz95o7r04d.8: chunk of 17 keys done in 144s; paths {'http': 201, 'browser': 9, 'browser-none': 216}, browser waits 225 max 146s sum 13768s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 201, 'miss': 122, 'blocked': 0, 'tries': 374, 'empty': 173}, audit 1/1 ag",
   "20:06:57 request mvjyz95o7r04d.8: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:07:11 request received: rid mvjz2oj014arg.8 17 keys",
-  "20:07:11 handle mvjz2oj014arg.8: first_chunk=True total=17"
+  "20:07:11 handle mvjz2oj014arg.8: first_chunk=True total=17",
+  "20:08:54 request mvjz2oj014arg.8: chunk of 17 keys done in 103s; paths {'http': 206, 'browser': 9, 'browser-none': 228}, browser waits 237 max 146s sum 14475s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 206, 'miss': 134, 'blocked': 0, 'tries': 393, 'empty': 187}, audit 1/1 ag",
+  "20:08:55 request mvjz2oj014arg.8: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:09:50 request received: rid mvjz6396sn1ty.8 15 keys",
+  "20:09:50 handle mvjz6396sn1ty.8: first_chunk=True total=15"
  ]
 }
