@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:46:56+00:00",
+ "at": "2026-10-22T19:48:28+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1826,
+ "fares_saved": 1827,
  "log": [
   "15:41:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:08 git retry 0: b\"-46zevd': is at acbd4611ed28f584fdf323402bc9db29bd233f0a but expected edcd7c26adddfd9d2cbb0f9e7c7f4e5c58fb52ca)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -113,6 +113,14 @@
   "19:44:34 request mvjy7i2fpk0fr.8: chunk of 12 keys done in 97s; paths {'http': 174, 'browser': 8, 'browser-none': 133}, browser waits 141 max 142s sum 8019s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 174, 'miss': 85, 'blocked': 0, 'tries': 307, 'empty': 133}, audit 1/1 agree",
   "19:44:34 request mvjy7i2fpk0fr.8: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:45:32 request received: rid mvjyau3bff0p2.8 16 keys",
-  "19:45:32 handle mvjyau3bff0p2.8: first_chunk=True total=16"
+  "19:45:32 handle mvjyau3bff0p2.8: first_chunk=True total=16",
+  "19:47:16 request mvjyau3bff0p2.8: chunk of 16 keys done in 104s; paths {'http': 181, 'browser': 8, 'browser-none': 142}, browser waits 150 max 142s sum 8527s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 181, 'miss': 94, 'blocked': 0, 'tries': 323, 'empty': 142}, audit 1/1 agre",
+  "19:47:16 request mvjyau3bff0p2.8: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:47:36 rtc xnbsnkqry3: answered",
+  "19:47:44 rtc xnbsnkqry3: data channel open",
+  "19:47:44 request received: rid mvjydfo1zc66v.8 1 keys",
+  "19:47:44 handle mvjydfo1zc66v.8: first_chunk=True total=1",
+  "19:47:53 request mvjydfo1zc66v.8: chunk of 1 keys done in 9s; paths {'http': 182, 'browser': 8, 'browser-none': 142}, browser waits 150 max 142s sum 8527s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 182, 'miss': 94, 'blocked': 0, 'tries': 324, 'empty': 142}, audit 1/1 agree",
+  "19:47:54 request mvjydfo1zc66v.8: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
