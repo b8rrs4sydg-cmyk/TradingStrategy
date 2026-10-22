@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:05:31+00:00",
+ "at": "2026-10-22T21:07:03+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1926,
+ "fares_saved": 1928,
  "log": [
   "20:47:12 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:47:17 http front door: ['https://stakeholders-favors-guide-lawyer.trycloudflare.com', 'https://c5aa255994b527.lhr.life']",
@@ -33,6 +33,8 @@
   "21:04:03 request mvk11tmrvhlj1.1: chunk of 17 keys done in 90s; paths {'http': 22, 'browser-none': 43, 'browser': 21}, browser waits 64 max 91s sum 2788s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 13, 'blocked': 0, 'tries': 25, 'empty': 3}, audit 3/3 agree",
   "21:04:04 request mvk11tmrvhlj1.1: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "21:05:13 request received: rid mvk15awqr782k.1 14 keys",
-  "21:05:13 handle mvk15awqr782k.1: first_chunk=True total=14"
+  "21:05:13 handle mvk15awqr782k.1: first_chunk=True total=14",
+  "21:06:55 request mvk15awqr782k.1: chunk of 14 keys done in 103s; paths {'http': 25, 'browser-none': 53, 'browser': 22}, browser waits 75 max 91s sum 3294s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 25, 'miss': 24, 'blocked': 0, 'tries': 34, 'empty': 9}, audit 3/3 agree",
+  "21:06:57 request mvk15awqr782k.1: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
