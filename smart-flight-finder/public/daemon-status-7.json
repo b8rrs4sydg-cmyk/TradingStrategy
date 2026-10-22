@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:46:46+00:00",
+ "at": "2026-10-22T19:48:17+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1790,
+ "fares_saved": 1792,
  "log": [
   "15:41:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:07 http front door: ['https://attacked-agency-commands-kelkoo.trycloudflare.com', 'https://d6c1f413a21656.lhr.life']",
@@ -113,6 +113,12 @@
   "19:45:32 request received: rid mvjyau3bff0p2.7 12 keys",
   "19:45:32 handle mvjyau3bff0p2.7: first_chunk=True total=12",
   "19:46:32 request mvjyau3bff0p2.7: chunk of 12 keys done in 60s; paths {'http': 181, 'browser-none': 151, 'browser': 9}, browser waits 160 max 143s sum 9040s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 181, 'miss': 97, 'blocked': 0, 'tries': 346, 'empty': 165}, audit 5/5 agree",
-  "19:46:34 request mvjyau3bff0p2.7: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "19:46:34 request mvjyau3bff0p2.7: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:47:36 rtc e0ers3jwfp: answered",
+  "19:47:44 rtc e0ers3jwfp: data channel open",
+  "19:47:44 request received: rid mvjydfo1zc66v.7 2 keys",
+  "19:47:44 handle mvjydfo1zc66v.7: first_chunk=True total=2",
+  "19:47:55 request mvjydfo1zc66v.7: chunk of 2 keys done in 11s; paths {'http': 183, 'browser-none': 151, 'browser': 9}, browser waits 160 max 143s sum 9040s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 183, 'miss': 97, 'blocked': 0, 'tries': 348, 'empty': 165}, audit 5/5 agree",
+  "19:47:56 request mvjydfo1zc66v.7: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
