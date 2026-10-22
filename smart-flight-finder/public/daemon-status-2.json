@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:29:55+00:00",
+ "at": "2026-10-22T19:31:39+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1895,
+ "fares_saved": 1905,
  "log": [
   "15:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:05 git retry 0: b\"-46zevd': is at edcd7c26adddfd9d2cbb0f9e7c7f4e5c58fb52ca but expected c460ea5e0bf4199bc3fa8800ead3118cf66ae413)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -77,6 +77,12 @@
   "19:28:44 request mvjxn5yxlrf2g.1: chunk of 22 keys done in 95s; paths {'http': 146, 'browser': 5, 'browser-none': 60}, browser waits 65 max 90s sum 2923s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 146, 'miss': 65, 'blocked': 0, 'tries': 287, 'empty': 141}, audit 6/6 agree",
   "19:28:44 request mvjxn5yxlrf2g.1: final sent (22/22); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:28:52 request received: rid mvjxpdnv939tk.1 22 keys",
-  "19:28:52 handle mvjxpdnv939tk.1: first_chunk=True total=22"
+  "19:28:52 handle mvjxpdnv939tk.1: first_chunk=True total=22",
+  "19:29:57 git retry 0: b\"-46zevd': is at 7d9e7c4ec8816c692e3482237dad84253e5123da but expected 772050ea57dd490bcd7c77c3b86b0e49fd6d8f3b)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "19:30:01 git retry 1: b\"-46zevd': is at 54e1f349c45886848bd8e1571a00c98ec43a06d7 but expected 0afa1ce89290866385f1665b1d6bfbee953846b6)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "19:30:35 request mvjxpdnv939tk.1: chunk of 22 keys done in 103s; paths {'http': 157, 'browser': 5, 'browser-none': 71}, browser waits 76 max 90s sum 3636s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 157, 'miss': 76, 'blocked': 0, 'tries': 314, 'empty': 157}, audit 6/6 agree",
+  "19:30:36 request mvjxpdnv939tk.1: final sent (22/22); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:30:42 request received: rid mvjxrr1cn6c1i.2 18 keys",
+  "19:30:42 handle mvjxrr1cn6c1i.2: first_chunk=True total=18"
  ]
 }
