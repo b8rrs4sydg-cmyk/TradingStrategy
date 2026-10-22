@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:26:41+00:00",
+ "at": "2026-10-22T20:28:13+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1928,
  "log": [
-  "15:42:11 request httptest1792683728: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:42:11 request httptest1792683728: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "15:42:47 git retry 0: b\"-46zevd': is at 017a0d5f828b0f799d4bb729024e90cfa972de0f but expected b287c6b0fb5e5b3459222cfbef8d75b0e4f811e8)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "19:01:36 rtc ggulhmxvs6: answered",
   "19:01:37 rtc ggulhmxvs6: data channel open",
@@ -156,6 +154,8 @@
   "20:23:37 request mvjzlpkae9co3.2: chunk of 16 keys done in 97s; paths {'http': 179, 'browser': 15, 'browser-none': 290}, browser waits 305 max 144s sum 18339s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 179, 'miss': 147, 'blocked': 0, 'tries': 408, 'empty': 229}, audit 6/6 ag",
   "20:23:39 request mvjzlpkae9co3.2: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
   "20:24:40 request received: rid mvjzp4dfd7aj3.2 24 keys",
-  "20:24:40 handle mvjzp4dfd7aj3.2: first_chunk=True total=24"
+  "20:24:40 handle mvjzp4dfd7aj3.2: first_chunk=True total=24",
+  "20:27:18 request mvjzp4dfd7aj3.2: chunk of 24 keys done in 158s; paths {'http': 180, 'browser': 15, 'browser-none': 313}, browser waits 328 max 144s sum 20202s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 180, 'miss': 170, 'blocked': 0, 'tries': 422, 'empty': 242}, audit 6/6 a",
+  "20:27:18 request mvjzp4dfd7aj3.2: final sent (24/24); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
