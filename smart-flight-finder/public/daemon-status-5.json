@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:03:40+00:00",
+ "at": "2026-10-22T19:05:11+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1644,
+ "fares_saved": 1657,
  "log": [
   "15:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:05 http front door: ['https://latex-vehicle-almost-attract.trycloudflare.com', 'https://8ae32e031fa6e1.lhr.life']",
@@ -25,6 +25,8 @@
   "19:03:25 request mvjwrral3qc06.5: chunk of 15 keys done in 42s; paths {'http': 31, 'browser': 4, 'browser-none': 4}, browser waits 8 max 41s sum 179s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 8, 'blocked': 0, 'tries': 41, 'empty': 10}, audit 5/5 agree",
   "19:03:25 request mvjwrral3qc06.5: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:03:33 request received: rid mvjwsusexnu3i.5 21 keys",
-  "19:03:33 handle mvjwsusexnu3i.5: first_chunk=True total=21"
+  "19:03:33 handle mvjwsusexnu3i.5: first_chunk=True total=21",
+  "19:03:41 request received: rid mvjwt0unz20g7.5 5 keys",
+  "19:03:41 handle mvjwt0unz20g7.5: first_chunk=True total=5"
  ]
 }
