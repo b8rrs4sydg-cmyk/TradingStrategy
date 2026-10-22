@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:42:51+00:00",
+ "at": "2026-10-22T20:44:27+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -27,6 +27,9 @@
   "20:42:15 request mvk07fyw9f0kz.2: chunk of 41 keys done in 201s; paths {'http': 37, 'browser': 4, 'browser-none': 28}, browser waits 32 max 147s sum 2318s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 32, 'blocked': 0, 'tries': 63, 'empty': 26}, audit 2/2 agree",
   "20:42:16 request mvk07fyw9f0kz.2: final sent (41/41); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "20:42:30 request received: rid mvk0c1tuxnf9k.2 15 keys",
-  "20:42:30 handle mvk0c1tuxnf9k.2: first_chunk=True total=15"
+  "20:42:30 handle mvk0c1tuxnf9k.2: first_chunk=True total=15",
+  "20:42:53 git retry 0: b\"-46zevd': is at 2db7aa3092a4cd5c67673ba121974b3e3d2e7d9c but expected ccfebcea8e73362cdd9a281b60850fb1042ec72d)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "20:44:10 request mvk0c1tuxnf9k.2: chunk of 15 keys done in 100s; paths {'http': 40, 'browser': 4, 'browser-none': 40}, browser waits 44 max 147s sum 3008s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 44, 'blocked': 0, 'tries': 77, 'empty': 37}, audit 2/2 agree",
+  "20:44:12 request mvk0c1tuxnf9k.2: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
