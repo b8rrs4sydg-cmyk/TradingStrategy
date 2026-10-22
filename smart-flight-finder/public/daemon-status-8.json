@@ -1,18 +1,18 @@
 {
- "at": "2026-10-21T20:39:02+00:00",
+ "at": "2026-10-22T00:49:33+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1654,
+ "fares_saved": 1657,
  "log": [
-  "20:37:26 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:37:32 http front door: ['https://answers-contamination-hamburg-fell.trycloudflare.com', 'https://98a65323edd3f1.lhr.life']",
-  "20:37:32 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:38:35 request received: rid httptest1792615115 20 keys",
-  "20:38:35 handle httptest1792615115: first_chunk=True total=20",
-  "20:38:37 request httptest1792615115: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "20:38:38 request httptest1792615115: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:47:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:48:03 http front door: ['https://things-minneapolis-presentation-dramatically.trycloudflare.com', 'https://aa5183ae6d3fe7.lhr.life']",
+  "00:48:03 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:49:08 request received: rid httptest1792630148 20 keys",
+  "00:49:08 handle httptest1792630148: first_chunk=True total=20",
+  "00:49:09 request httptest1792630148: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:49:12 request httptest1792630148: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
