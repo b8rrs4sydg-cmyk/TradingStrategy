@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:22:24+00:00",
+ "at": "2026-10-22T20:24:01+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 1859,
  "log": [
-  "19:01:36 rtc gnkhacdsov: answered",
-  "19:01:37 rtc gnkhacdsov: data channel open",
-  "19:01:38 request received: rid mvjwq98yp1nwz.9 4 keys",
   "19:01:38 handle mvjwq98yp1nwz.9: first_chunk=True total=4",
   "19:02:31 request mvjwq98yp1nwz.9: chunk of 4 keys done in 53s; paths {'http': 22, 'browser': 1, 'browser-none': 1}, browser waits 2 max 41s sum 56s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 2, 'blocked': 0, 'tries': 23, 'empty': 1}, audit 2/2 agree",
   "19:02:34 request mvjwq98yp1nwz.9: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +153,9 @@
   "20:16:35 request mvjzbrhuw2eez.8: chunk of 17 keys done in 141s; paths {'http': 200, 'browser': 17, 'browser-none': 287}, browser waits 304 max 145s sum 18956s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 200, 'miss': 135, 'blocked': 0, 'tries': 423, 'empty': 223}, audit 6/6 a",
   "20:16:37 request mvjzbrhuw2eez.8: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:22:01 request received: rid mvjzlpkae9co3.9 16 keys",
-  "20:22:01 handle mvjzlpkae9co3.9: first_chunk=True total=16"
+  "20:22:01 handle mvjzlpkae9co3.9: first_chunk=True total=16",
+  "20:22:25 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "20:23:47 request mvjzlpkae9co3.9: chunk of 16 keys done in 106s; paths {'http': 206, 'browser': 17, 'browser-none': 297}, browser waits 314 max 145s sum 19496s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 206, 'miss': 145, 'blocked': 0, 'tries': 436, 'empty': 230}, audit 6/6 a",
+  "20:23:47 request mvjzlpkae9co3.9: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
