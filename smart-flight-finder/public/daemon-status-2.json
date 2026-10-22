@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T15:42:45+00:00",
+ "at": "2026-10-22T19:03:51+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1753,
+ "fares_saved": 1772,
  "log": [
   "15:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:05 git retry 0: b\"-46zevd': is at edcd7c26adddfd9d2cbb0f9e7c7f4e5c58fb52ca but expected c460ea5e0bf4199bc3fa8800ead3118cf66ae413)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -15,6 +15,17 @@
   "15:42:09 request received: rid httptest1792683728 20 keys",
   "15:42:09 handle httptest1792683728: first_chunk=True total=20",
   "15:42:11 request httptest1792683728: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:42:11 request httptest1792683728: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "15:42:11 request httptest1792683728: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "15:42:47 git retry 0: b\"-46zevd': is at 017a0d5f828b0f799d4bb729024e90cfa972de0f but expected b287c6b0fb5e5b3459222cfbef8d75b0e4f811e8)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "19:01:36 rtc ggulhmxvs6: answered",
+  "19:01:37 rtc ggulhmxvs6: data channel open",
+  "19:02:42 request received: rid mvjwrral3qc06.2 10 keys",
+  "19:02:42 handle mvjwrral3qc06.2: first_chunk=True total=10",
+  "19:03:25 request mvjwrral3qc06.2: chunk of 10 keys done in 43s; paths {'http': 25, 'browser': 3, 'browser-none': 2}, browser waits 5 max 42s sum 97s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 25, 'miss': 5, 'blocked': 0, 'tries': 37, 'empty': 12}, audit 6/6 agree",
+  "19:03:26 request mvjwrral3qc06.2: final sent (10/10); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:03:33 request received: rid mvjwsusexnu3i.2 13 keys",
+  "19:03:33 handle mvjwsusexnu3i.2: first_chunk=True total=13",
+  "19:03:41 request received: rid mvjwt0unz20g7.2 1 keys",
+  "19:03:41 handle mvjwt0unz20g7.2: first_chunk=True total=1"
  ]
 }
