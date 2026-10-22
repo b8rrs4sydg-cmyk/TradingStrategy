@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:38:16+00:00",
+ "at": "2026-10-22T20:42:53+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1905,
+ "fares_saved": 1906,
  "log": [
   "20:36:37 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:42 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -14,6 +14,9 @@
   "20:37:46 request received: rid httptest1792701465 20 keys",
   "20:37:46 handle httptest1792701465: first_chunk=True total=20",
   "20:37:48 request httptest1792701465: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "20:37:48 request httptest1792701465: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:37:48 request httptest1792701465: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "20:38:18 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "20:42:30 request received: rid mvk0c1tuxnf9k.3 22 keys",
+  "20:42:30 handle mvk0c1tuxnf9k.3: first_chunk=True total=22"
  ]
 }
