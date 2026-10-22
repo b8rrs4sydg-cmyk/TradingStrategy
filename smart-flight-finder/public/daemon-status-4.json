@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T13:16:46+00:00",
+ "at": "2026-10-22T13:18:18+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1730,
+ "fares_saved": 1731,
  "log": [
   "10:39:09 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:39:15 http front door: ['https://basics-roman-dual-strictly.trycloudflare.com', 'https://f57229318aabc9.lhr.life']",
@@ -17,6 +17,8 @@
   "13:16:27 rtc j5k6qyuniv: answered",
   "13:16:28 rtc j5k6qyuniv: data channel open",
   "13:16:29 request received: rid mvjkedb1j45q8.4 5 keys",
-  "13:16:29 handle mvjkedb1j45q8.4: first_chunk=True total=5"
+  "13:16:29 handle mvjkedb1j45q8.4: first_chunk=True total=5",
+  "13:17:24 request mvjkedb1j45q8.4: chunk of 5 keys done in 55s; paths {'http': 20, 'browser': 1, 'browser-none': 4}, browser waits 5 max 42s sum 173s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 5, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 1/1 agree",
+  "13:17:25 request mvjkedb1j45q8.4: final sent (5/5); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
