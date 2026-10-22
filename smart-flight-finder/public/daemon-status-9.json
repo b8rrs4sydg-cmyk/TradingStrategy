@@ -1,16 +1,12 @@
 {
- "at": "2026-10-22T20:24:01+00:00",
+ "at": "2026-10-22T20:25:33+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1859,
+ "fares_saved": 1861,
  "log": [
-  "19:01:38 handle mvjwq98yp1nwz.9: first_chunk=True total=4",
-  "19:02:31 request mvjwq98yp1nwz.9: chunk of 4 keys done in 53s; paths {'http': 22, 'browser': 1, 'browser-none': 1}, browser waits 2 max 41s sum 56s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 2, 'blocked': 0, 'tries': 23, 'empty': 1}, audit 2/2 agree",
-  "19:02:34 request mvjwq98yp1nwz.9: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "19:02:42 request received: rid mvjwrral3qc06.9 12 keys",
   "19:02:42 handle mvjwrral3qc06.9: first_chunk=True total=12",
   "19:03:26 request mvjwrral3qc06.9: chunk of 12 keys done in 44s; paths {'http': 29, 'browser': 2, 'browser-none': 5}, browser waits 7 max 42s sum 229s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 29, 'miss': 7, 'blocked': 0, 'tries': 42, 'empty': 13}, audit 3/3 agree",
   "19:03:27 request mvjwrral3qc06.9: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
@@ -156,6 +152,10 @@
   "20:22:01 handle mvjzlpkae9co3.9: first_chunk=True total=16",
   "20:22:25 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "20:23:47 request mvjzlpkae9co3.9: chunk of 16 keys done in 106s; paths {'http': 206, 'browser': 17, 'browser-none': 297}, browser waits 314 max 145s sum 19496s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 206, 'miss': 145, 'blocked': 0, 'tries': 436, 'empty': 230}, audit 6/6 a",
-  "20:23:47 request mvjzlpkae9co3.9: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "20:23:47 request mvjzlpkae9co3.9: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:24:40 rtc gfdop0dei9: answered",
+  "20:24:41 rtc gfdop0dei9: data channel open",
+  "20:24:42 request received: rid mvjzp4dfd7aj3.9 12 keys",
+  "20:24:42 handle mvjzp4dfd7aj3.9: first_chunk=True total=12"
  ]
 }
