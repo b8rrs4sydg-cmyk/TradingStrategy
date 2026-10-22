@@ -1,16 +1,12 @@
 {
- "at": "2026-10-22T20:32:58+00:00",
+ "at": "2026-10-22T20:34:29+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1951,
  "log": [
-  "19:03:41 handle mvjwt0unz20g7.3: first_chunk=True total=8",
-  "19:04:17 request mvjwsusexnu3i.3: chunk of 16 keys done in 43s; paths {'http': 46, 'browser': 4, 'browser-none': 5}, browser waits 9 max 42s sum 229s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 9, 'blocked': 0, 'tries': 72, 'empty': 26}, audit 2/2 agree",
-  "19:04:17 request mvjwt0unz20g7.3: chunk of 8 keys done in 35s; paths {'http': 46, 'browser': 4, 'browser-none': 5}, browser waits 9 max 42s sum 229s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 9, 'blocked': 0, 'tries': 72, 'empty': 26}, audit 2/2 agree",
-  "19:04:17 request mvjwsusexnu3i.3: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:04:17 request mvjwt0unz20g7.3: final sent (8/8); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:05:13 request received: rid mvjwuzj6a8ir8.3 8 keys",
   "19:05:13 handle mvjwuzj6a8ir8.3: first_chunk=True total=8",
@@ -156,6 +152,10 @@
   "20:29:20 request mvjzu4qggd71r.2: chunk of 1 keys done in 48s; paths {'http': 187, 'browser': 27, 'browser-none': 327}, browser waits 354 max 146s sum 21709s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 187, 'miss': 170, 'blocked': 0, 'tries': 454, 'empty': 267}, audit 5/5 agr",
   "20:29:22 request mvjzu4qggd71r.2: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:30:50 request received: rid mvjzx2z26dpst.3 25 keys",
-  "20:30:50 handle mvjzx2z26dpst.3: first_chunk=True total=25"
+  "20:30:50 handle mvjzx2z26dpst.3: first_chunk=True total=25",
+  "20:33:14 request mvjzx2z26dpst.3: chunk of 25 keys done in 145s; paths {'http': 187, 'browser': 29, 'browser-none': 350}, browser waits 379 max 146s sum 23921s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 187, 'miss': 170, 'blocked': 0, 'tries': 454, 'empty': 267}, audit 5/5 a",
+  "20:33:17 request mvjzx2z26dpst.3: final sent (25/25); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:33:39 rtc 77a3gujkhe: answered",
+  "20:33:40 rtc 77a3gujkhe: data channel open"
  ]
 }
