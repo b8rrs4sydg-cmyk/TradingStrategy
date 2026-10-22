@@ -1,19 +1,18 @@
 {
- "at": "2026-10-21T20:39:06+00:00",
+ "at": "2026-10-22T00:49:23+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1653,
+ "fares_saved": 1656,
  "log": [
-  "20:37:24 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:37:30 git retry 0: b\"-46zevd': is at 718fa857c7c830c61f6d80c2c3e61c9e1a2e77d5 but expected 566404502f1feaf8b295aabbc63b93f0e4df720b)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "20:37:36 http front door: ['https://hammer-analyzed-earl-pavilion.trycloudflare.com', 'https://d55896234a2b53.lhr.life']",
-  "20:37:36 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:38:33 request received: rid httptest1792615113 20 keys",
-  "20:38:33 handle httptest1792615113: first_chunk=True total=20",
-  "20:38:40 request httptest1792615113: chunk of 20 keys done in 7s; paths {'http': 19, 'browser': 1}, browser waits 1 max 6s sum 6s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 3}, audit 3/3 agree",
-  "20:38:43 request httptest1792615113: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:47:47 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:47:53 http front door: ['https://respect-logo-artistic-fitting.trycloudflare.com', 'https://5d72154cdfbaee.lhr.life']",
+  "00:47:53 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:48:56 request received: rid httptest1792630136 20 keys",
+  "00:48:56 handle httptest1792630136: first_chunk=True total=20",
+  "00:48:58 request httptest1792630136: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:48:59 request httptest1792630136: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
