@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:23:16+00:00",
+ "at": "2026-10-22T20:24:47+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 1905,
  "log": [
-  "19:01:37 rtc n7gjmx8q1o: data channel open",
-  "19:01:38 request received: rid mvjwq98yp1nwz.4 4 keys",
-  "19:01:38 handle mvjwq98yp1nwz.4: first_chunk=True total=4",
-  "19:02:25 request mvjwq98yp1nwz.4: chunk of 4 keys done in 47s; paths {'http': 22, 'browser': 1, 'browser-none': 1}, browser waits 2 max 40s sum 44s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 2, 'blocked': 0, 'tries': 24, 'empty': 2}, audit 4/4 agree",
   "19:02:27 request mvjwq98yp1nwz.4: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:02:42 request received: rid mvjwrral3qc06.4 8 keys",
   "19:02:42 handle mvjwrral3qc06.4: first_chunk=True total=8",
@@ -156,6 +152,10 @@
   "20:21:08 request mvjzibbcs4x6n.4: chunk of 14 keys done in 107s; paths {'http': 187, 'browser': 7, 'browser-none': 281}, browser waits 288 max 145s sum 18848s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 187, 'miss': 150, 'blocked': 0, 'tries': 405, 'empty': 218}, audit 7/7 ag",
   "20:21:08 request mvjzibbcs4x6n.4: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:22:01 request received: rid mvjzlpkae9co3.4 15 keys",
-  "20:22:01 handle mvjzlpkae9co3.4: first_chunk=True total=15"
+  "20:22:01 handle mvjzlpkae9co3.4: first_chunk=True total=15",
+  "20:23:39 request mvjzlpkae9co3.4: chunk of 15 keys done in 98s; paths {'http': 187, 'browser': 7, 'browser-none': 296}, browser waits 303 max 145s sum 19897s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 187, 'miss': 150, 'blocked': 0, 'tries': 405, 'empty': 218}, audit 7/7 agr",
+  "20:23:40 request mvjzlpkae9co3.4: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:24:40 request received: rid mvjzp4dfd7aj3.4 17 keys",
+  "20:24:40 handle mvjzp4dfd7aj3.4: first_chunk=True total=17"
  ]
 }
