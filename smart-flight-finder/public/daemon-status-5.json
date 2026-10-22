@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:21:29+00:00",
+ "at": "2026-10-22T21:23:00+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1888,
+ "fares_saved": 1896,
  "log": [
   "20:36:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:49 http front door: ['https://christ-cds-molecules-prison.trycloudflare.com', 'https://aea116e7ac13ac.lhr.life']",
@@ -75,6 +75,8 @@
   "21:19:13 request received: rid mvk1n9t1pmttg.5 16 keys",
   "21:19:13 handle mvk1n9t1pmttg.5: first_chunk=True total=16",
   "21:20:54 request mvk1n9t1pmttg.5: chunk of 16 keys done in 101s; paths {'http': 51, 'browser-none': 154, 'browser': 20}, browser waits 174 max 143s sum 10127s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 51, 'miss': 59, 'blocked': 0, 'tries': 120, 'empty': 69}, audit 2/2 agree",
-  "21:20:55 request mvk1n9t1pmttg.5: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "21:20:55 request mvk1n9t1pmttg.5: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "21:22:02 request received: rid mvk1qvujfxxk8.5 16 keys",
+  "21:22:02 handle mvk1qvujfxxk8.5: first_chunk=True total=16"
  ]
 }
