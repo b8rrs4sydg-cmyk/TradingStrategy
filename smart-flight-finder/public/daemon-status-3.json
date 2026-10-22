@@ -1,20 +1,18 @@
 {
- "at": "2026-10-21T20:39:11+00:00",
+ "at": "2026-10-22T00:49:25+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1752,
+ "fares_saved": 1755,
  "log": [
-  "20:37:26 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:37:31 git retry 0: b\"-46zevd': is at 718fa857c7c830c61f6d80c2c3e61c9e1a2e77d5 but expected 566404502f1feaf8b295aabbc63b93f0e4df720b)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "20:37:35 git retry 1: b\"-46zevd': is at a5847c3364e079fc72e35a81484322c716c93c88 but expected a5b0dad464e8daf4a9826407c657f1a8a25d45fd)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "20:37:41 http front door: ['https://forwarding-lopez-meets-myself.trycloudflare.com', 'https://572e925a0bbc93.lhr.life']",
-  "20:37:41 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:38:34 request received: rid httptest1792615114 20 keys",
-  "20:38:34 handle httptest1792615114: first_chunk=True total=20",
-  "20:38:36 request httptest1792615114: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
-  "20:38:37 request httptest1792615114: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:47:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:47:55 http front door: ['https://steady-spend-reservation-consolidation.trycloudflare.com', 'https://cde94c152ae013.lhr.life']",
+  "00:47:55 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:48:59 request received: rid httptest1792630139 20 keys",
+  "00:48:59 handle httptest1792630139: first_chunk=True total=20",
+  "00:49:01 request httptest1792630139: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:49:01 request httptest1792630139: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
