@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:25:24+00:00",
+ "at": "2026-10-22T19:26:56+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1792,
+ "fares_saved": 1801,
  "log": [
   "15:41:04 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:10 http front door: ['https://consulting-entered-marker-absent.trycloudflare.com', 'https://4c7a2f5dba7fe6.lhr.life']",
@@ -70,6 +70,10 @@
   "19:24:09 request received: rid mvjxjb9ik8tnz.8 19 keys",
   "19:24:09 handle mvjxjb9ik8tnz.8: first_chunk=True total=19",
   "19:24:59 request mvjxjb9ik8tnz.8: chunk of 19 keys done in 50s; paths {'http': 150, 'browser': 6, 'browser-none': 41}, browser waits 47 max 84s sum 1990s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 150, 'miss': 47, 'blocked': 0, 'tries': 259, 'empty': 109}, audit 6/6 agree",
-  "19:25:00 request mvjxjb9ik8tnz.8: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "19:25:00 request mvjxjb9ik8tnz.8: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:25:52 request received: rid mvjxligdkzlxx.8 12 keys",
+  "19:25:52 handle mvjxligdkzlxx.8: first_chunk=True total=12",
+  "19:26:53 request mvjxligdkzlxx.8: chunk of 12 keys done in 61s; paths {'http': 159, 'browser': 6, 'browser-none': 44}, browser waits 50 max 84s sum 2135s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 159, 'miss': 50, 'blocked': 0, 'tries': 272, 'empty': 113}, audit 6/6 agree",
+  "19:26:53 request mvjxligdkzlxx.8: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
