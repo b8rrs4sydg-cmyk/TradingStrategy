@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:42:42+00:00",
+ "at": "2026-10-22T21:45:44+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2051,
+ "fares_saved": 2056,
  "log": [
   "20:36:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:56 http front door: ['https://romantic-sites-highs-circular.trycloudflare.com', 'https://c50651edf46340.lhr.life']",
@@ -105,6 +105,8 @@
   "21:39:35 request received: rid mvk2did7f3hwc.2 15 keys",
   "21:39:35 handle mvk2did7f3hwc.2: first_chunk=True total=15",
   "21:41:20 request mvk2did7f3hwc.2: chunk of 15 keys done in 105s; paths {'http': 106, 'browser': 31, 'browser-none': 288}, browser waits 319 max 150s sum 21848s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 106, 'miss': 115, 'blocked': 0, 'tries': 183, 'empty': 77}, audit 2/2 ag",
-  "21:41:22 request mvk2did7f3hwc.2: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "21:41:22 request mvk2did7f3hwc.2: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "21:45:26 request received: rid mvk2l0r0t2ws0.2 12 keys",
+  "21:45:26 handle mvk2l0r0t2ws0.2: first_chunk=True total=12"
  ]
 }
