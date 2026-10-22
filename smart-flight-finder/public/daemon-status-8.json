@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:11:37+00:00",
+ "at": "2026-10-22T20:13:10+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1856,
  "log": [
-  "15:41:08 git retry 0: b\"-46zevd': is at acbd4611ed28f584fdf323402bc9db29bd233f0a but expected edcd7c26adddfd9d2cbb0f9e7c7f4e5c58fb52ca)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "15:41:15 git retry 1: b\"-46zevd': is at de378e0a7d05548e911700922a2b7afd980d68c2 but expected 64c9c74be7b862ec1f9908c9d3489e50e5227c9a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "15:41:23 http front door: ['https://pgp-ipaq-previous-leslie.trycloudflare.com', 'https://2761418d08bc76.lhr.life']",
   "15:41:23 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "15:42:13 request received: rid httptest1792683732 20 keys",
@@ -156,6 +154,8 @@
   "20:08:54 request mvjz2oj014arg.8: chunk of 17 keys done in 103s; paths {'http': 206, 'browser': 9, 'browser-none': 228}, browser waits 237 max 146s sum 14475s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 206, 'miss': 134, 'blocked': 0, 'tries': 393, 'empty': 187}, audit 1/1 ag",
   "20:08:55 request mvjz2oj014arg.8: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:09:50 request received: rid mvjz6396sn1ty.8 15 keys",
-  "20:09:50 handle mvjz6396sn1ty.8: first_chunk=True total=15"
+  "20:09:50 handle mvjz6396sn1ty.8: first_chunk=True total=15",
+  "20:11:41 request mvjz6396sn1ty.8: chunk of 15 keys done in 111s; paths {'http': 210, 'browser': 9, 'browser-none': 239}, browser waits 248 max 146s sum 15084s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 210, 'miss': 145, 'blocked': 0, 'tries': 403, 'empty': 193}, audit 1/1 ag",
+  "20:11:42 request mvjz6396sn1ty.8: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
