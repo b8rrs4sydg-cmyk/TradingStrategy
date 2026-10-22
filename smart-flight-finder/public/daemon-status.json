@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:16:06+00:00",
+ "at": "2026-10-22T20:17:38+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
@@ -144,6 +144,8 @@
   "20:13:01 rtc fckfophd3k: data channel open",
   "20:14:15 request received: rid mvjzbrhuw2eez.0 25 keys",
   "20:14:15 handle mvjzbrhuw2eez.0: first_chunk=True total=25",
-  "20:14:32 git retry 0: b\"-46zevd': is at 2d30069f1b2b2a5480be10dc8f4b41ef9756a990 but expected c77be6d792968b326383ae77d24a71981dc39fd6)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\""
+  "20:14:32 git retry 0: b\"-46zevd': is at 2d30069f1b2b2a5480be10dc8f4b41ef9756a990 but expected c77be6d792968b326383ae77d24a71981dc39fd6)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "20:16:39 request mvjzbrhuw2eez.0: chunk of 25 keys done in 144s; paths {'browser': 5, 'browser-none': 294, 'http': 118}, browser waits 299 max 189s sum 20708s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 118, 'miss': 142, 'blocked': 0, 'tries': 333, 'empty': 215}, audit 2/2 ag",
+  "20:16:40 request mvjzbrhuw2eez.0: final sent (25/25); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
