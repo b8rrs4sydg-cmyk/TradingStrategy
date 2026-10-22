@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:12:14+00:00",
+ "at": "2026-10-22T21:13:45+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1932,
+ "fares_saved": 1939,
  "log": [
   "20:36:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:47 http front door: ['https://pleased-challenging-messaging-basic.trycloudflare.com', 'https://fbe0a54be40fb7.lhr.life']",
@@ -70,6 +70,8 @@
   "21:10:31 request received: rid mvk1c4nx3w6aq.9 17 keys",
   "21:10:31 handle mvk1c4nx3w6aq.9: first_chunk=True total=17",
   "21:12:01 request mvk1c4nx3w6aq.9: chunk of 17 keys done in 89s; paths {'http': 46, 'browser': 33, 'browser-none': 150}, browser waits 183 max 150s sum 10541s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 57, 'blocked': 0, 'tries': 90, 'empty': 44}, audit 1/1 agree",
-  "21:12:01 request mvk1c4nx3w6aq.9: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "21:12:01 request mvk1c4nx3w6aq.9: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "21:13:12 request received: rid mvk1fl05hvxlx.9 12 keys",
+  "21:13:12 handle mvk1fl05hvxlx.9: first_chunk=True total=12"
  ]
 }
