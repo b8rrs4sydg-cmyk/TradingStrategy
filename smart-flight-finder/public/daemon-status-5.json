@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:49:27+00:00",
+ "at": "2026-10-22T20:50:58+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1845,
+ "fares_saved": 1846,
  "log": [
   "20:36:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:49 http front door: ['https://christ-cds-molecules-prison.trycloudflare.com', 'https://aea116e7ac13ac.lhr.life']",
@@ -30,6 +30,8 @@
   "20:47:42 git retry 1: b\"-46zevd': is at cab31af880293d1da19c42a20da5ef4d23eb4f8d but expected 1eea500c71ba261b914c3d492933388cd68dbdc9)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "20:47:48 git retry 2: b\"-46zevd': is at 2eb66f57c252368ebd1ec55514259e487cfdcab1 but expected 4435d5123be28ffbd7ed9da41a2d4bc8125ffec9)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "20:48:19 request received: rid mvk0jj847nbbl.4 18 keys",
-  "20:48:19 handle mvk0jj847nbbl.4: first_chunk=True total=18"
+  "20:48:19 handle mvk0jj847nbbl.4: first_chunk=True total=18",
+  "20:50:21 request mvk0jj847nbbl.4: chunk of 18 keys done in 123s; paths {'http': 24, 'browser-none': 48, 'browser': 5}, browser waits 53 max 123s sum 3506s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 19, 'blocked': 0, 'tries': 41, 'empty': 17}, audit 2/2 agree",
+  "20:50:22 request mvk0jj847nbbl.4: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
