@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:08:52+00:00",
+ "at": "2026-10-22T20:10:24+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1941,
+ "fares_saved": 1942,
  "log": [
   "15:52:21 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:52:27 http front door: ['https://levitra-chronic-thunder-dealt.trycloudflare.com', 'https://c10ad5811c8051.lhr.life']",
@@ -143,6 +143,8 @@
   "20:07:11 request received: rid mvjz2oj014arg.6 17 keys",
   "20:07:11 handle mvjz2oj014arg.6: first_chunk=True total=17",
   "20:08:48 request mvjz2oj014arg.6: chunk of 17 keys done in 97s; paths {'http': 199, 'browser-none': 238, 'browser': 15}, browser waits 253 max 142s sum 14876s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 199, 'miss': 124, 'blocked': 0, 'tries': 387, 'empty': 188}, audit 3/3 ag",
-  "20:08:49 request mvjz2oj014arg.6: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "20:08:49 request mvjz2oj014arg.6: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "20:09:50 request received: rid mvjz6396sn1ty.6 16 keys",
+  "20:09:50 handle mvjz6396sn1ty.6: first_chunk=True total=16"
  ]
 }
