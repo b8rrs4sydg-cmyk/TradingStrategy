@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:13:18+00:00",
+ "at": "2026-10-22T20:14:49+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,9 +7,6 @@
  },
  "fares_saved": 1853,
  "log": [
-  "15:41:04 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:41:10 http front door: ['https://consulting-entered-marker-absent.trycloudflare.com', 'https://4c7a2f5dba7fe6.lhr.life']",
-  "15:41:10 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "15:42:13 request received: rid httptest1792683733 20 keys",
   "15:42:13 handle httptest1792683733: first_chunk=True total=20",
   "15:42:15 request httptest1792683733: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
@@ -155,6 +152,10 @@
   "20:10:58 request mvjz6396sn1ty.9: final sent (12/12); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:11:42 git retry 0: b\"-46zevd': is at d5410bb8250d2f559d2afd6879566803091b2550 but expected 43326a0a502f4088e4152645897561bd3fe75dc3)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "20:13:00 request received: rid mvjza42dd5zg6.6 2 keys",
-  "20:13:00 handle mvjza42dd5zg6.6: first_chunk=True total=2"
+  "20:13:00 handle mvjza42dd5zg6.6: first_chunk=True total=2",
+  "20:13:50 request mvjza42dd5zg6.6: chunk of 2 keys done in 50s; paths {'http': 200, 'browser': 17, 'browser-none': 270}, browser waits 287 max 145s sum 17685s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 200, 'miss': 128, 'blocked': 0, 'tries': 410, 'empty': 210}, audit 6/6 agr",
+  "20:13:51 request mvjza42dd5zg6.6: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:14:15 request received: rid mvjzbrhuw2eez.8 17 keys",
+  "20:14:15 handle mvjzbrhuw2eez.8: first_chunk=True total=17"
  ]
 }
