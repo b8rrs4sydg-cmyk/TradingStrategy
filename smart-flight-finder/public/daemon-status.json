@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:03:53+00:00",
+ "at": "2026-10-22T19:05:36+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1706,
+ "fares_saved": 1711,
  "log": [
   "15:40:58 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:15 git retry 0: b\"-46zevd': is at 00fb136814de2e8988bd9d87d21cccc39d8fed1b but expected de378e0a7d05548e911700922a2b7afd980d68c2)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -24,6 +24,14 @@
   "19:03:33 request received: rid mvjwsusexnu3i.0 12 keys",
   "19:03:33 handle mvjwsusexnu3i.0: first_chunk=True total=12",
   "19:03:41 request received: rid mvjwt0unz20g7.0 7 keys",
-  "19:03:41 handle mvjwt0unz20g7.0: first_chunk=True total=7"
+  "19:03:41 handle mvjwt0unz20g7.0: first_chunk=True total=7",
+  "19:03:54 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "19:04:00 git retry 1: b\"-46zevd': is at fa59e6d8f189f4177a6cace482de86801baff56f but expected caae65d3a65afed8ad1d0518909a07cc8eb74ccf)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "19:04:15 request mvjwsusexnu3i.0: chunk of 12 keys done in 42s; paths {'browser': 5, 'browser-none': 12, 'http': 18}, browser waits 17 max 45s sum 523s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 18, 'miss': 18, 'blocked': 0, 'tries': 53, 'empty': 35}, audit 2/2 agree",
+  "19:04:15 request mvjwsusexnu3i.0: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:04:22 request mvjwt0unz20g7.0: chunk of 7 keys done in 41s; paths {'browser': 5, 'browser-none': 13, 'http': 18}, browser waits 18 max 45s sum 564s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 18, 'miss': 18, 'blocked': 0, 'tries': 53, 'empty': 35}, audit 2/2 agree",
+  "19:04:24 request mvjwt0unz20g7.0: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:05:13 request received: rid mvjwuzj6a8ir8.0 11 keys",
+  "19:05:13 handle mvjwuzj6a8ir8.0: first_chunk=True total=11"
  ]
 }
