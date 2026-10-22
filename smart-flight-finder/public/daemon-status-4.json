@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:42:53+00:00",
+ "at": "2026-10-22T20:44:25+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1906,
+ "fares_saved": 1908,
  "log": [
   "20:36:37 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:42 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -17,6 +17,7 @@
   "20:37:48 request httptest1792701465: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "20:38:18 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "20:42:30 request received: rid mvk0c1tuxnf9k.3 22 keys",
-  "20:42:30 handle mvk0c1tuxnf9k.3: first_chunk=True total=22"
+  "20:42:30 handle mvk0c1tuxnf9k.3: first_chunk=True total=22",
+  "20:44:13 fetch failed rt|TSA|KIX|2027-02-06|2027-06-12: Page.goto: net::ERR_CONNECTION_CLOSED at https://www.google.com/travel/flights?tfs=GhoSCjIwMjctMDItMDZqBRIDVFNBcgUSA0tJWBoaEgoyMDI3LTA2LTEyagUSA0tJWHIFEgNUU0FCAQFIAZgBAQ%3D%3D&hl=en&gl=TW&curr=TWD\nCall log:\n  - navigating to \"https://www.google"
  ]
 }
