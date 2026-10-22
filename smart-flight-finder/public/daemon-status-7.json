@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:20:19+00:00",
+ "at": "2026-10-22T20:21:51+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
@@ -7,7 +7,6 @@
  },
  "fares_saved": 1807,
  "log": [
-  "15:41:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:07 http front door: ['https://attacked-agency-commands-kelkoo.trycloudflare.com', 'https://d6c1f413a21656.lhr.life']",
   "15:41:07 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "15:42:09 request received: rid httptest1792683728 20 keys",
@@ -155,6 +154,8 @@
   "20:18:17 rtc pp0bqvdmkb: answered",
   "20:18:18 rtc pp0bqvdmkb: data channel open",
   "20:19:21 request received: rid mvjzibbcs4x6n.7 15 keys",
-  "20:19:21 handle mvjzibbcs4x6n.7: first_chunk=True total=15"
+  "20:19:21 handle mvjzibbcs4x6n.7: first_chunk=True total=15",
+  "20:21:12 request mvjzibbcs4x6n.7: chunk of 15 keys done in 111s; paths {'http': 198, 'browser-none': 288, 'browser': 9}, browser waits 297 max 145s sum 18902s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 198, 'miss': 153, 'blocked': 0, 'tries': 422, 'empty': 224}, audit 5/5 ag",
+  "20:21:13 request mvjzibbcs4x6n.7: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
