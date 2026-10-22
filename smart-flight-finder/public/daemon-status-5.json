@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:01:40+00:00",
+ "at": "2026-10-22T21:06:11+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1856,
+ "fares_saved": 1857,
  "log": [
   "20:36:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:49 http front door: ['https://christ-cds-molecules-prison.trycloudflare.com', 'https://aea116e7ac13ac.lhr.life']",
@@ -48,6 +48,10 @@
   "20:59:53 request received: rid mvk0ygjuo3yap.5 16 keys",
   "20:59:53 handle mvk0ygjuo3yap.5: first_chunk=True total=16",
   "21:01:30 request mvk0ygjuo3yap.5: chunk of 16 keys done in 97s; paths {'http': 30, 'browser-none': 109, 'browser': 9}, browser waits 118 max 143s sum 7672s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 30, 'miss': 31, 'blocked': 0, 'tries': 61, 'empty': 31}, audit 2/2 agree",
-  "21:01:31 request mvk0ygjuo3yap.5: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "21:01:31 request mvk0ygjuo3yap.5: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "21:02:32 rtc 9u827xbirg: answered",
+  "21:02:33 rtc 9u827xbirg: data channel open",
+  "21:05:13 request received: rid mvk15awqr782k.5 12 keys",
+  "21:05:13 handle mvk15awqr782k.5: first_chunk=True total=12"
  ]
 }
