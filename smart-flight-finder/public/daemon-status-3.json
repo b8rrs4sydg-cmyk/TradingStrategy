@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:23:08+00:00",
+ "at": "2026-10-22T21:24:40+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2024,
+ "fares_saved": 2028,
  "log": [
   "20:36:34 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:38 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -90,6 +90,12 @@
   "21:20:36 request mvk1n9t1pmttg.3: chunk of 18 keys done in 83s; paths {'http': 74, 'browser': 17, 'browser-none': 222}, browser waits 239 max 147s sum 16620s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 74, 'miss': 94, 'blocked': 0, 'tries': 171, 'empty': 97}, audit 2/2 agree",
   "21:20:37 request mvk1n9t1pmttg.3: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "21:22:02 request received: rid mvk1qvujfxxk8.3 12 keys",
-  "21:22:02 handle mvk1qvujfxxk8.3: first_chunk=True total=12"
+  "21:22:02 handle mvk1qvujfxxk8.3: first_chunk=True total=12",
+  "21:23:38 request mvk1qvujfxxk8.3: chunk of 12 keys done in 96s; paths {'http': 76, 'browser': 17, 'browser-none': 232}, browser waits 249 max 147s sum 17198s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 76, 'miss': 94, 'blocked': 0, 'tries': 173, 'empty': 97}, audit 2/2 agree",
+  "21:23:38 request mvk1qvujfxxk8.3: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "21:24:08 request received: rid mvk1tn083i50b.3 4 keys",
+  "21:24:08 handle mvk1tn083i50b.3: first_chunk=True total=4",
+  "21:24:10 request mvk1tn083i50b.3: chunk of 4 keys done in 1s; paths {'http': 80, 'browser': 17, 'browser-none': 232}, browser waits 249 max 147s sum 17198s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 94, 'blocked': 0, 'tries': 177, 'empty': 97}, audit 2/2 agree",
+  "21:24:10 request mvk1tn083i50b.3: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
