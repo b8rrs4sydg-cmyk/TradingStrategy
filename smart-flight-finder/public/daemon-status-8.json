@@ -1,31 +1,20 @@
 {
- "at": "2026-10-22T13:18:35+00:00",
+ "at": "2026-10-22T15:42:53+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1657,
  "log": [
-  "10:39:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:39:12 http front door: ['https://pharmacy-salem-apparatus-visual.trycloudflare.com', 'https://fabaf9113b74b3.lhr.life']",
-  "10:39:12 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:40:16 request received: rid httptest1792665616 20 keys",
-  "10:40:16 handle httptest1792665616: first_chunk=True total=20",
-  "10:40:18 request httptest1792665616: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:40:19 request httptest1792665616: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "10:40:43 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "10:40:48 git retry 1: b\"-46zevd': is at 27512b3e8e7486a6940e10bd1d068519314b6888 but expected be6d10734814e8b0650a879a53bee731bc252afb)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "10:40:55 git retry 2: b\"-46zevd': is at a85b1a227ee3f1ffe7ce155631911f061ac648bc but expected fa5339b6e19ff3a7e68c9e42963375dc1dfa307c)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "13:16:27 rtc gnt1yh0a7x: answered",
-  "13:16:29 rtc gnt1yh0a7x: data channel open",
-  "13:16:29 request received: rid mvjkedb1j45q8.8 1 keys",
-  "13:16:29 handle mvjkedb1j45q8.8: first_chunk=True total=1",
-  "13:17:23 request mvjkedb1j45q8.8: chunk of 1 keys done in 53s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 41s sum 41s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
-  "13:17:24 request mvjkedb1j45q8.8: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:17:27 request received: rid mvjkfrn62ytil.8 1 keys",
-  "13:17:27 handle mvjkfrn62ytil.8: first_chunk=True total=1",
-  "13:18:21 request mvjkfrn62ytil.8: chunk of 1 keys done in 54s; paths {'http': 20, 'browser-none': 2}, browser waits 2 max 41s sum 81s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
-  "13:18:22 request mvjkfrn62ytil.8: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "15:41:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:41:08 git retry 0: b\"-46zevd': is at acbd4611ed28f584fdf323402bc9db29bd233f0a but expected edcd7c26adddfd9d2cbb0f9e7c7f4e5c58fb52ca)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "15:41:15 git retry 1: b\"-46zevd': is at de378e0a7d05548e911700922a2b7afd980d68c2 but expected 64c9c74be7b862ec1f9908c9d3489e50e5227c9a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "15:41:23 http front door: ['https://pgp-ipaq-previous-leslie.trycloudflare.com', 'https://2761418d08bc76.lhr.life']",
+  "15:41:23 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:42:13 request received: rid httptest1792683732 20 keys",
+  "15:42:13 handle httptest1792683732: first_chunk=True total=20",
+  "15:42:14 request httptest1792683732: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:42:16 request httptest1792683732: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
