@@ -1,29 +1,18 @@
 {
- "at": "2026-10-22T13:19:52+00:00",
+ "at": "2026-10-22T15:42:35+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 1630,
  "log": [
-  "10:39:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:39:12 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "10:39:16 http front door: ['https://contrast-lectures-scholarship-overnight.trycloudflare.com', 'https://5a0df773a453f6.lhr.life']",
-  "10:39:16 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:40:17 request received: rid httptest1792665616 20 keys",
-  "10:40:17 handle httptest1792665616: first_chunk=True total=20",
-  "10:40:18 request httptest1792665616: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "10:40:19 request httptest1792665616: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "13:16:27 rtc g6giiqdc03: answered",
-  "13:16:29 rtc g6giiqdc03: data channel open",
-  "13:16:29 request received: rid mvjkedb1j45q8.5 4 keys",
-  "13:16:29 handle mvjkedb1j45q8.5: first_chunk=True total=4",
-  "13:17:23 request mvjkedb1j45q8.5: chunk of 4 keys done in 54s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 42s sum 166s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 2/2 agree",
-  "13:17:25 request mvjkedb1j45q8.5: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "13:17:27 request received: rid mvjkfrn62ytil.5 2 keys",
-  "13:17:27 handle mvjkfrn62ytil.5: first_chunk=True total=2",
-  "13:18:28 request mvjkfrn62ytil.5: chunk of 2 keys done in 61s; paths {'http': 20, 'browser-none': 6}, browser waits 6 max 48s sum 254s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 6, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 2/2 agree",
-  "13:18:30 request mvjkfrn62ytil.5: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "15:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:41:05 http front door: ['https://latex-vehicle-almost-attract.trycloudflare.com', 'https://8ae32e031fa6e1.lhr.life']",
+  "15:41:05 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:42:08 request received: rid httptest1792683728 20 keys",
+  "15:42:08 handle httptest1792683728: first_chunk=True total=20",
+  "15:42:10 request httptest1792683728: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:42:12 request httptest1792683728: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
