@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:57:46+00:00",
+ "at": "2026-10-22T20:02:17+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1922,
+ "fares_saved": 1925,
  "log": [
   "15:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:05 git retry 0: b\"-46zevd': is at edcd7c26adddfd9d2cbb0f9e7c7f4e5c58fb52ca but expected c460ea5e0bf4199bc3fa8800ead3118cf66ae413)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -129,6 +129,8 @@
   "19:54:54 request received: rid mvjymvoz86lqm.2 11 keys",
   "19:54:54 handle mvjymvoz86lqm.2: first_chunk=True total=11",
   "19:56:28 request mvjymvoz86lqm.2: chunk of 11 keys done in 94s; paths {'http': 174, 'browser': 15, 'browser-none': 190}, browser waits 205 max 105s sum 10974s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 174, 'miss': 116, 'blocked': 0, 'tries': 361, 'empty': 187}, audit 6/6 ag",
-  "19:56:30 request mvjymvoz86lqm.2: final sent (11/11); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "19:56:30 request mvjymvoz86lqm.2: final sent (11/11); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:01:52 request received: rid mvjyvt0xslji0.2 9 keys",
+  "20:01:52 handle mvjyvt0xslji0.2: first_chunk=True total=9"
  ]
 }
