@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:26:15+00:00",
+ "at": "2026-10-22T20:27:48+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1830,
  "log": [
-  "19:02:32 request mvjwq98yp1nwz.5: chunk of 4 keys done in 54s; paths {'http': 20, 'browser': 1, 'browser-none': 3}, browser waits 4 max 41s sum 126s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 3/3 agree",
-  "19:02:32 request mvjwq98yp1nwz.5: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:02:42 request received: rid mvjwrral3qc06.5 15 keys",
   "19:02:42 handle mvjwrral3qc06.5: first_chunk=True total=15",
   "19:03:25 request mvjwrral3qc06.5: chunk of 15 keys done in 42s; paths {'http': 31, 'browser': 4, 'browser-none': 4}, browser waits 8 max 41s sum 179s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 8, 'blocked': 0, 'tries': 41, 'empty': 10}, audit 5/5 agree",
@@ -156,6 +154,8 @@
   "20:23:36 request mvjzlpkae9co3.5: chunk of 15 keys done in 95s; paths {'http': 181, 'browser': 35, 'browser-none': 327}, browser waits 362 max 147s sum 21122s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 181, 'miss': 141, 'blocked': 0, 'tries': 384, 'empty': 203}, audit 5/5 ag",
   "20:23:37 request mvjzlpkae9co3.5: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:24:40 request received: rid mvjzp4dfd7aj3.5 25 keys",
-  "20:24:40 handle mvjzp4dfd7aj3.5: first_chunk=True total=25"
+  "20:24:40 handle mvjzp4dfd7aj3.5: first_chunk=True total=25",
+  "20:27:17 request mvjzp4dfd7aj3.5: chunk of 25 keys done in 157s; paths {'http': 187, 'browser': 35, 'browser-none': 346}, browser waits 381 max 147s sum 22486s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 187, 'miss': 160, 'blocked': 0, 'tries': 396, 'empty': 209}, audit 5/5 a",
+  "20:27:19 request mvjzp4dfd7aj3.5: final sent (25/25); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
