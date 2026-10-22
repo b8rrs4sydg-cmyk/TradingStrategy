@@ -1,14 +1,12 @@
 {
- "at": "2026-10-22T20:13:10+00:00",
+ "at": "2026-10-22T20:14:42+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1856,
+ "fares_saved": 1863,
  "log": [
-  "15:41:23 http front door: ['https://pgp-ipaq-previous-leslie.trycloudflare.com', 'https://2761418d08bc76.lhr.life']",
-  "15:41:23 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "15:42:13 request received: rid httptest1792683732 20 keys",
   "15:42:13 handle httptest1792683732: first_chunk=True total=20",
   "15:42:14 request httptest1792683732: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
@@ -156,6 +154,8 @@
   "20:09:50 request received: rid mvjz6396sn1ty.8 15 keys",
   "20:09:50 handle mvjz6396sn1ty.8: first_chunk=True total=15",
   "20:11:41 request mvjz6396sn1ty.8: chunk of 15 keys done in 111s; paths {'http': 210, 'browser': 9, 'browser-none': 239}, browser waits 248 max 146s sum 15084s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 210, 'miss': 145, 'blocked': 0, 'tries': 403, 'empty': 193}, audit 1/1 ag",
-  "20:11:42 request mvjz6396sn1ty.8: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "20:11:42 request mvjz6396sn1ty.8: final sent (15/15); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:14:15 request received: rid mvjzbrhuw2eez.7 18 keys",
+  "20:14:15 handle mvjzbrhuw2eez.7: first_chunk=True total=18"
  ]
 }
