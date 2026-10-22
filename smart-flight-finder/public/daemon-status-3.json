@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T20:38:12+00:00",
+ "at": "2026-10-22T20:39:48+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1957,
+ "fares_saved": 1972,
  "log": [
   "20:36:34 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:38 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -18,6 +18,11 @@
   "20:37:46 request received: rid httptest1792701462 20 keys",
   "20:37:46 handle httptest1792701462: first_chunk=True total=20",
   "20:37:53 request httptest1792701462: chunk of 20 keys done in 6s; paths {'http': 21}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 3, 'blocked': 0, 'tries': 27, 'empty': 6}, audit 1/1 agree",
-  "20:37:54 request httptest1792701462: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "20:37:54 request httptest1792701462: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "20:38:13 git retry 0: b\"-46zevd': is at e725e90ef841e848d9d9e1f8b49acb5d2ba6db87 but expected 484b2d66e9dcd646acb3a5f6cb7d6c1c02365218)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "20:38:26 request mvk05vkg063np.2: chunk of 8 keys done in 42s; paths {'http': 22, 'browser': 4, 'browser-none': 2}, browser waits 6 max 41s sum 94s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 6, 'blocked': 0, 'tries': 28, 'empty': 6}, audit 2/2 agree",
+  "20:38:27 request mvk05vkg063np.2: final sent (8/8); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "20:38:54 request received: rid mvk07fyw9f0kz.2 41 keys",
+  "20:38:54 handle mvk07fyw9f0kz.2: first_chunk=True total=41"
  ]
 }
