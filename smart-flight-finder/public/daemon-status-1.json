@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:15:19+00:00",
+ "at": "2026-10-22T19:16:51+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1768,
+ "fares_saved": 1779,
  "log": [
   "15:49:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:49:28 http front door: ['https://trends-mail-smoke-compatibility.trycloudflare.com', 'https://cdd57da18f0644.lhr.life']",
@@ -52,6 +52,10 @@
   "19:14:11 request received: rid mvjx6ifjt8ars.1 13 keys",
   "19:14:11 handle mvjx6ifjt8ars.1: first_chunk=True total=13",
   "19:15:00 request mvjx6ifjt8ars.1: chunk of 13 keys done in 50s; paths {'http': 80, 'browser-none': 21, 'browser': 1}, browser waits 22 max 50s sum 957s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 80, 'miss': 22, 'blocked': 0, 'tries': 114, 'empty': 34}, audit 5/5 agree",
-  "19:15:01 request mvjx6ifjt8ars.1: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "19:15:01 request mvjx6ifjt8ars.1: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:15:48 request received: rid mvjx8lt4008pq.1 13 keys",
+  "19:15:48 handle mvjx8lt4008pq.1: first_chunk=True total=13",
+  "19:16:34 request mvjx8lt4008pq.1: chunk of 13 keys done in 46s; paths {'http': 91, 'browser-none': 23, 'browser': 1}, browser waits 24 max 50s sum 1047s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 91, 'miss': 24, 'blocked': 0, 'tries': 129, 'empty': 38}, audit 5/5 agree",
+  "19:16:36 request mvjx8lt4008pq.1: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
