@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:30:35+00:00",
+ "at": "2026-10-22T21:35:10+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1910,
+ "fares_saved": 1913,
  "log": [
   "20:36:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:49 http front door: ['https://christ-cds-molecules-prison.trycloudflare.com', 'https://aea116e7ac13ac.lhr.life']",
@@ -87,6 +87,9 @@
   "21:28:21 request received: rid mvk1z250i1bws.5 16 keys",
   "21:28:21 handle mvk1z250i1bws.5: first_chunk=True total=16",
   "21:30:15 request mvk1z250i1bws.5: chunk of 16 keys done in 114s; paths {'http': 73, 'browser-none': 176, 'browser': 20}, browser waits 196 max 143s sum 11369s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 73, 'miss': 81, 'blocked': 0, 'tries': 151, 'empty': 78}, audit 2/2 agree",
-  "21:30:15 request mvk1z250i1bws.5: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "21:30:15 request mvk1z250i1bws.5: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "21:30:36 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "21:33:58 request received: rid mvk26a35o7ztd.5 17 keys",
+  "21:33:58 handle mvk26a35o7ztd.5: first_chunk=True total=17"
  ]
 }
