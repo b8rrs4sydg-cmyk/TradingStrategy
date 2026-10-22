@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:32:25+00:00",
+ "at": "2026-10-22T20:33:57+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,10 +7,6 @@
  },
  "fares_saved": 1905,
  "log": [
-  "19:03:41 handle mvjwt0unz20g7.4: first_chunk=True total=2",
-  "19:04:23 request mvjwt0unz20g7.4: chunk of 2 keys done in 41s; paths {'http': 42, 'browser': 1, 'browser-none': 4}, browser waits 5 max 49s sum 187s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 6, 'blocked': 0, 'tries': 58, 'empty': 16}, audit 5/5 agree",
-  "19:04:23 request mvjwsusexnu3i.4: chunk of 15 keys done in 50s; paths {'http': 42, 'browser': 1, 'browser-none': 5}, browser waits 6 max 49s sum 236s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 6, 'blocked': 0, 'tries': 58, 'empty': 16}, audit 5/5 agree",
-  "19:04:24 request mvjwsusexnu3i.4: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:04:24 request mvjwt0unz20g7.4: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:05:13 request received: rid mvjwuzj6a8ir8.4 5 keys",
   "19:05:13 handle mvjwuzj6a8ir8.4: first_chunk=True total=5",
@@ -156,6 +152,10 @@
   "20:29:21 request mvjzu4qggd71r.3: chunk of 1 keys done in 49s; paths {'http': 187, 'browser': 7, 'browser-none': 314}, browser waits 321 max 145s sum 21206s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 187, 'miss': 150, 'blocked': 0, 'tries': 405, 'empty': 218}, audit 7/7 agre",
   "20:29:22 request mvjzu4qggd71r.3: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "20:30:50 request received: rid mvjzx2z26dpst.4 13 keys",
-  "20:30:50 handle mvjzx2z26dpst.4: first_chunk=True total=13"
+  "20:30:50 handle mvjzx2z26dpst.4: first_chunk=True total=13",
+  "20:32:28 request mvjzx2z26dpst.4: chunk of 13 keys done in 99s; paths {'http': 187, 'browser': 7, 'browser-none': 327}, browser waits 334 max 145s sum 22011s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 187, 'miss': 163, 'blocked': 0, 'tries': 420, 'empty': 233}, audit 7/7 agr",
+  "20:32:30 request mvjzx2z26dpst.4: final sent (13/13); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:33:40 request received: rid mvk00olo6y841.3 20 keys",
+  "20:33:40 handle mvk00olo6y841.3: first_chunk=True total=20"
  ]
 }
