@@ -1,20 +1,20 @@
 {
- "at": "2026-10-21T20:39:14+00:00",
+ "at": "2026-10-22T00:49:44+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1627,
+ "fares_saved": 1630,
  "log": [
-  "20:37:25 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:37:30 git retry 0: b\"-46zevd': is at 718fa857c7c830c61f6d80c2c3e61c9e1a2e77d5 but expected 566404502f1feaf8b295aabbc63b93f0e4df720b)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "20:37:37 git retry 1: b\"-46zevd': is at 00f23f507a413b967b3d17abb89037ddf5c90f95 but expected a5847c3364e079fc72e35a81484322c716c93c88)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "20:37:44 http front door: ['https://cfr-disposal-meyer-quad.trycloudflare.com', 'https://5ca0e958c074cb.lhr.life']",
-  "20:37:44 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:38:33 request received: rid httptest1792615112 20 keys",
-  "20:38:33 handle httptest1792615112: first_chunk=True total=20",
-  "20:38:34 request httptest1792615112: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
-  "20:38:36 request httptest1792615112: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:47:58 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:48:04 git retry 0: b\"-46zevd': is at 9fbc8941bee751b4327147ef7c1cbc6eec8d8a23 but expected 6551b479429254dc0c416079188da5308b53e665)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "00:48:07 git retry 1: b\"-46zevd': is at d1cd712d44a932d96c5038fd2bf88d9ab75fd81b but expected 9fbc8941bee751b4327147ef7c1cbc6eec8d8a23)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "00:48:14 http front door: ['https://visual-concentrations-without-bridges.trycloudflare.com', 'https://85b20be48e114f.lhr.life']",
+  "00:48:14 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:49:07 request received: rid httptest1792630147 20 keys",
+  "00:49:07 handle httptest1792630147: first_chunk=True total=20",
+  "00:49:09 request httptest1792630147: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
+  "00:49:10 request httptest1792630147: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
