@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T13:18:20+00:00",
+ "at": "2026-10-22T13:19:52+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -22,6 +22,8 @@
   "13:17:23 request mvjkedb1j45q8.5: chunk of 4 keys done in 54s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 42s sum 166s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 2/2 agree",
   "13:17:25 request mvjkedb1j45q8.5: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:17:27 request received: rid mvjkfrn62ytil.5 2 keys",
-  "13:17:27 handle mvjkfrn62ytil.5: first_chunk=True total=2"
+  "13:17:27 handle mvjkfrn62ytil.5: first_chunk=True total=2",
+  "13:18:28 request mvjkfrn62ytil.5: chunk of 2 keys done in 61s; paths {'http': 20, 'browser-none': 6}, browser waits 6 max 48s sum 254s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 6, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 2/2 agree",
+  "13:18:30 request mvjkfrn62ytil.5: final sent (2/2); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
