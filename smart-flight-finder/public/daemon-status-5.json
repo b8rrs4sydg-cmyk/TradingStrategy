@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T19:23:35+00:00",
+ "at": "2026-10-22T19:25:06+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1723,
+ "fares_saved": 1735,
  "log": [
   "15:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:41:05 http front door: ['https://latex-vehicle-almost-attract.trycloudflare.com', 'https://8ae32e031fa6e1.lhr.life']",
@@ -65,6 +65,12 @@
   "19:21:21 request mvjxeomzqbb0i.5: chunk of 17 keys done in 49s; paths {'http': 102, 'browser': 12, 'browser-none': 62}, browser waits 74 max 103s sum 3294s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 102, 'miss': 44, 'blocked': 0, 'tries': 197, 'empty': 95}, audit 5/5 agree",
   "19:21:23 request mvjxeomzqbb0i.5: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "19:23:02 request received: rid mvjxhutr7jtwp.4 1 keys",
-  "19:23:02 handle mvjxhutr7jtwp.4: first_chunk=True total=1"
+  "19:23:02 handle mvjxhutr7jtwp.4: first_chunk=True total=1",
+  "19:24:02 request mvjxhutr7jtwp.4: chunk of 1 keys done in 60s; paths {'http': 102, 'browser': 12, 'browser-none': 63}, browser waits 75 max 103s sum 3342s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 102, 'miss': 45, 'blocked': 0, 'tries': 197, 'empty': 95}, audit 5/5 agree",
+  "19:24:04 request mvjxhutr7jtwp.4: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:24:09 request received: rid mvjxjb9ik8tnz.4 14 keys",
+  "19:24:09 handle mvjxjb9ik8tnz.4: first_chunk=True total=14",
+  "19:24:59 request mvjxjb9ik8tnz.4: chunk of 14 keys done in 49s; paths {'http': 114, 'browser': 12, 'browser-none': 65}, browser waits 77 max 103s sum 3435s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 114, 'miss': 47, 'blocked': 0, 'tries': 214, 'empty': 100}, audit 5/5 agree",
+  "19:24:59 request mvjxjb9ik8tnz.4: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
