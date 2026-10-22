@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T21:18:03+00:00",
+ "at": "2026-10-22T21:19:35+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1845,
+ "fares_saved": 1852,
  "log": [
   "20:36:35 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "20:36:40 http front door: ['https://taxes-tape-favors-hosting.trycloudflare.com', 'https://73601689d5ecf2.lhr.life']",
@@ -71,6 +71,10 @@
   "21:16:50 request mvk1jdy66dqhf.6: chunk of 1 keys done in 41s; paths {'http': 37, 'browser-none': 180, 'browser': 7}, browser waits 187 max 153s sum 13846s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 44, 'blocked': 0, 'tries': 64, 'empty': 27}, audit 3/4 agree",
   "21:16:51 request mvk1jdy66dqhf.6: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "21:17:15 request received: rid mvk1ks7gzje29.6 16 keys",
-  "21:17:15 handle mvk1ks7gzje29.6: first_chunk=True total=16"
+  "21:17:15 handle mvk1ks7gzje29.6: first_chunk=True total=16",
+  "21:18:44 request mvk1ks7gzje29.6: chunk of 16 keys done in 89s; paths {'http': 42, 'browser-none': 190, 'browser': 8}, browser waits 198 max 153s sum 14394s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 47, 'blocked': 0, 'tries': 76, 'empty': 34}, audit 4/5 agree",
+  "21:18:45 request mvk1ks7gzje29.6: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "21:19:13 request received: rid mvk1n9t1pmttg.7 15 keys",
+  "21:19:13 handle mvk1n9t1pmttg.7: first_chunk=True total=15"
  ]
 }
