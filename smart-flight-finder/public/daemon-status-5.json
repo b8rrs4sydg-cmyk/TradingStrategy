@@ -1,5 +1,5 @@
 {
- "at": "2026-10-22T20:21:39+00:00",
+ "at": "2026-10-22T20:23:11+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -7,8 +7,6 @@
  },
  "fares_saved": 1824,
  "log": [
-  "15:42:10 request httptest1792683728: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:42:12 request httptest1792683728: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "19:01:36 rtc 8m9uu9a6a3: answered",
   "19:01:38 rtc 8m9uu9a6a3: data channel open",
   "19:01:38 request received: rid mvjwq98yp1nwz.5 4 keys",
@@ -156,6 +154,8 @@
   "20:19:20 request received: rid mvjzibbcs4x6n.5 14 keys",
   "20:19:20 handle mvjzibbcs4x6n.5: first_chunk=True total=14",
   "20:20:58 request mvjzibbcs4x6n.5: chunk of 14 keys done in 97s; paths {'http': 181, 'browser': 35, 'browser-none': 312}, browser waits 347 max 147s sum 20085s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 181, 'miss': 141, 'blocked': 0, 'tries': 384, 'empty': 203}, audit 5/5 ag",
-  "20:21:00 request mvjzibbcs4x6n.5: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "20:21:00 request mvjzibbcs4x6n.5: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "20:22:01 request received: rid mvjzlpkae9co3.5 15 keys",
+  "20:22:01 handle mvjzlpkae9co3.5: first_chunk=True total=15"
  ]
 }
