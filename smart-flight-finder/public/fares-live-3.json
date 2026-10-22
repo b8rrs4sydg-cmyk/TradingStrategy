@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-22T19:46:59+00:00",
+ "generated_at": "2026-10-22T19:48:32+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -4995,6 +4995,22 @@
     [
      "2026-10-17",
      25046
+    ]
+   ]
+  },
+  "mc|TPE-KIX-2027-02-04|NRT-TPE-2027-06-14": {
+   "price": 24562,
+   "first": {
+    "dep": "2027-02-04T11:05:00+08:00",
+    "arr": "2027-02-04T18:30:00+09:00",
+    "stops": 1,
+    "airline": "Asiana Airlines"
+   },
+   "at": "2026-10-22",
+   "hist": [
+    [
+     "2026-10-22",
+     24562
     ]
    ]
   },
@@ -32715,7 +32731,6 @@
   "mc|TPE-FUK-2026-12-31|HND-TPE-2027-02-16",
   "mc|TPE-FUK-2026-12-31|KIX-TPE-2027-03-01",
   "mc|TPE-HND-2026-12-31|FUK-TPE-2027-02-16",
-  "mc|TPE-KIX-2027-02-04|NRT-TPE-2027-06-14",
   "mc|TPE-KIX-2027-04-03|NRT-TPE-2027-06-13",
   "mc|TPE-NGO-2026-12-31|HND-TPE-2027-02-15",
   "mc|TPE-NGO-2026-12-31|KIX-TPE-2027-03-01",
