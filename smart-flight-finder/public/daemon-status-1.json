@@ -1,11 +1,11 @@
 {
- "at": "2026-10-22T15:50:58+00:00",
+ "at": "2026-10-22T19:03:00+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1707,
+ "fares_saved": 1717,
  "log": [
   "15:49:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "15:49:28 http front door: ['https://trends-mail-smoke-compatibility.trycloudflare.com', 'https://cdd57da18f0644.lhr.life']",
@@ -13,6 +13,14 @@
   "15:50:31 request received: rid httptest1792684231 20 keys",
   "15:50:31 handle httptest1792684231: first_chunk=True total=20",
   "15:50:33 request httptest1792684231: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:50:34 request httptest1792684231: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "15:50:34 request httptest1792684231: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "19:01:36 rtc yr0ttjuu6x: answered",
+  "19:01:38 rtc yr0ttjuu6x: data channel open",
+  "19:01:38 request received: rid mvjwq98yp1nwz.1 4 keys",
+  "19:01:38 handle mvjwq98yp1nwz.1: first_chunk=True total=4",
+  "19:02:32 request mvjwq98yp1nwz.1: chunk of 4 keys done in 54s; paths {'http': 20, 'browser-none': 4}, browser waits 4 max 41s sum 164s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 4, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
+  "19:02:33 request mvjwq98yp1nwz.1: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "19:02:42 request received: rid mvjwrral3qc06.1 12 keys",
+  "19:02:42 handle mvjwrral3qc06.1: first_chunk=True total=12"
  ]
 }
