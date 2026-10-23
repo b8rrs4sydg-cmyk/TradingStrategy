@@ -184,3 +184,27 @@ def test_http_reader_remembers_why_it_gave_no_price():
     f._answer = blocked
     out = asyncio.run(f.fetch("ow|TPE|NRT|2027-04-01"))
     assert out is None and f.why["ow|TPE|NRT|2027-04-01"] == "blocked"
+
+
+def test_default_pattern_allows_same_country_ends_but_not_d_in_their_country():
+    from datetime import date
+
+    from app.services.strategies.back_to_back import FourLegPlanner
+    from app.services.strategies.two_trip import TripSlot
+    from tests.fake_fares import FakeFareProvider
+
+    def slot(label, d, r):
+        return TripSlot(label=label, departs=[date(2027, *d)], returns=[date(2027, *r)])
+
+    plans = FourLegPlanner(FakeFareProvider()).plan(
+        trip_p=slot("P", (2, 5), (2, 15)),
+        trip_q=slot("Q", (4, 3), (4, 11)),
+        trip_r=slot("R", (12, 23), (12, 27)),
+        outer_stations=["NRT", "KIX"],
+        destinations=["LHR", "HND"],
+    )
+    ends = {(p.tickets[1].legs[0].origin, p.tickets[1].legs[3].destination) for p in plans}
+    assert ends
+    assert all(
+        p.tickets[1].legs[1].destination == "LHR" for p in plans
+    )  # HND shares Japan with both ends: excluded

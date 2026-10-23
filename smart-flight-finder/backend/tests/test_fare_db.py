@@ -131,7 +131,8 @@ def test_search_without_fares_explains_what_is_missing():
 
 
 # --- crawl plan ------------------------------------------------------------------
-def test_crawl_queries_follow_planners_horizon_and_country_rule():
+def test_crawl_queries_follow_planners_horizon_and_country_rule(monkeypatch):
+    monkeypatch.setenv("OUTSTATION_PATTERN", "different")
     cfg = CrawlConfig(holidays=["lunar_ny", "qingming", "duanwu", "xmas"])
     keys = planner_queries(cfg, today=TODAY)
     stage1, mc = split_stages(keys)

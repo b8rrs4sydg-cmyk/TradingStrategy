@@ -84,7 +84,8 @@ def _four_leg(outer=("HKG", "ICN"), dests=("NRT",), provider=None):
     )
 
 
-def test_four_leg_stitches_three_trips_with_first_and_last_one_ways():
+def test_four_leg_stitches_three_trips_with_first_and_last_one_ways(monkeypatch):
+    monkeypatch.setenv("OUTSTATION_PATTERN", "different")
     plans = _four_leg(dests=("LHR",))
     assert plans
     p = next(p for p in plans if p.tickets[1].legs[0].origin == "HKG")
@@ -124,7 +125,8 @@ def test_four_leg_needs_three_slots():
     assert plans == [] and any("三個" in n for n in svc.notices)
 
 
-def test_four_leg_never_starts_and_ends_in_the_same_country():
+def test_four_leg_strict_profile_never_starts_and_ends_in_the_same_country(monkeypatch):
+    monkeypatch.setenv("OUTSTATION_PATTERN", "different")
     # same-country outstations alone cannot form a plan …
     assert _four_leg(outer=("NRT", "KIX"), dests=("LHR",)) == []
     # … and with a mix, trip B always lands in a third country (not X's, not D's)

@@ -364,6 +364,6 @@ the `.plan` DOM order still equals the plan array the card handlers index into).
 
 Open jaw pairs are graded by `app/data/metro.py` (metro area / land link / separate flight / unknown); only tiers 1-2 pair by default and the
 ground cost is added to the total. The page mirrors the table between `BEGIN-METRO` / `END-METRO` (a test compares it). The four-leg planner takes
-`pattern` / `OUTSTATION_PATTERN` (default `different` because the crawl plan and the page price only that shape). Reverse/wrap plans use a
+`pattern` / `OUTSTATION_PATTERN` (default `any`: ends in different OR the same country, D outside both; `different` restores the strict profile; the page mirrors `any`; the crawl widens because it runs the same planner). Reverse/wrap plans use a
 per-candidate baseline and keep one plan per metro route. `RedisCachingProvider` forwards `prefetch` only when the wrapped source has it.
 

@@ -87,9 +87,10 @@ class FourLegPlanner:
     ) -> None:
         self.provider = provider
         self.mct = mct
-        # default stays the strict profile: the crawl plan (crawl_plan.py) and the demo page price exactly that shape,
-        # so widening it here alone would ask for fares nobody fetched. Set OUTSTATION_PATTERN=any|same to widen all.
-        self.pattern = pattern or os.getenv("OUTSTATION_PATTERN", PATTERN_DIFFERENT)
+        # default "any": ends in different countries (the old strict profile) AND ends in the same country (a common real
+        # shape). D must still lie outside both countries. The crawl plan runs this same planner, so it widens too.
+        # OUTSTATION_PATTERN=different restores the strict profile; the demo page mirrors the default.
+        self.pattern = pattern or os.getenv("OUTSTATION_PATTERN", PATTERN_ANY)
 
     def _ends_ok(self, x: str, y: str) -> bool:
         same = _country(x) == _country(y)
