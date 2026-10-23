@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T12:54:40+00:00",
+ "generated_at": "2026-10-23T12:56:11+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -24715,6 +24715,28 @@
     [
      "2026-10-22",
      8208
+    ]
+   ]
+  },
+  "rt|TPE|ICN|2026-11-06|2026-12-13": {
+   "price": 7808,
+   "by_airline": {
+    "Tigerair Taiwan": 7808,
+    "Scoot": 8599,
+    "Jeju Air": 11487,
+    "Hong Kong Express": 13161
+   },
+   "first": {
+    "dep": "2026-11-06T20:00:00+08:00",
+    "arr": "2026-11-06T23:30:00+09:00",
+    "stops": 0,
+    "airline": "Tigerair Taiwan"
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     7808
     ]
    ]
   },
