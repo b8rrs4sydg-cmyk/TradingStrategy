@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T11:32:30+00:00",
+ "at": "2026-10-23T11:34:11+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1926,
+ "fares_saved": 1929,
  "log": [
   "10:45:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:45:58 http front door: ['https://indicators-journalists-fiction-truck.trycloudflare.com', 'https://b429fdb0cd1a4a.lhr.life']",
@@ -16,6 +16,8 @@
   "10:47:04 request httptest1792752421: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "11:32:16 rtc 6rparasvgo: answered",
   "11:32:28 request received: rid mvkw48f7eio20.5 26 keys",
-  "11:32:28 handle mvkw48f7eio20.5: first_chunk=True total=26"
+  "11:32:28 handle mvkw48f7eio20.5: first_chunk=True total=26",
+  "11:32:58 request received: rid mvkw58n7fan62.5 23 keys",
+  "11:32:58 handle mvkw58n7fan62.5: first_chunk=True total=23"
  ]
 }
