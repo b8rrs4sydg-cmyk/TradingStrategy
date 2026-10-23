@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:51:39+00:00",
+ "generated_at": "2026-10-23T14:53:11+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -819,6 +819,28 @@
     [
      "2026-10-18",
      93413
+    ]
+   ]
+  },
+  "mc|FUK-TPE-2026-11-22|TPE-PUS-2026-11-27|PUS-TPE-2026-11-29|TPE-MFM-2026-12-18": {
+   "price": 31724,
+   "by_airline": {
+    "Jeju Air": 31724,
+    "EVA Air": 84089,
+    "STARLUX Airlines": 97378,
+    "Cathay Pacific": 108187
+   },
+   "first": {
+    "dep": "2026-11-22T08:55:00+09:00",
+    "arr": "2026-11-22T23:50:00+08:00",
+    "stops": 1,
+    "airline": "Jeju Air"
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     31724
     ]
    ]
   },
@@ -36013,7 +36035,17 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|KIX-TPE-2026-12-06|TPE-DMK-2026-12-18|DMK-TPE-2026-12-20|TPE-FUK-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|KIX-TPE-2026-12-06|TPE-PUS-2026-12-18|PUS-TPE-2026-12-20|TPE-HND-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|KIX-TPE-2026-12-13|TPE-CJU-2026-12-18|CJU-TPE-2026-12-20|TPE-FUK-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
@@ -36103,6 +36135,16 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|NRT-TPE-2026-12-13|TPE-PUS-2026-12-18|PUS-TPE-2026-12-20|TPE-HND-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|NRT-TPE-2026-12-20|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-FUK-2027-02-10": {
+   "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|PVG-TPE-2026-11-08|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-HND-2026-12-24": {
    "status": "parse_error",
    "at": "2026-10-23",
@@ -36159,6 +36201,11 @@
    "n": 1
   },
   "mc|PVG-TPE-2026-12-20|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-HND-2027-02-10": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|PVG-TPE-2026-12-20|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-NRT-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
