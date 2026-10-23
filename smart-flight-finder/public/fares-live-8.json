@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T13:51:17+00:00",
+ "generated_at": "2026-10-23T13:52:49+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -7516,6 +7516,28 @@
     ]
    ]
   },
+  "ow|MFM|TPE|2026-12-20": {
+   "price": 7938,
+   "first": {
+    "dep": "2026-12-20T22:05:00+08:00",
+    "arr": "2026-12-21T08:00:00+08:00",
+    "stops": 1,
+    "airline": "Thai Lion Air"
+   },
+   "by_airline": {
+    "Thai Lion Air": 7938,
+    "Air Macau": 9161,
+    "STARLUX Airlines": 11086,
+    "EVA Air": 11542
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     7938
+    ]
+   ]
+  },
   "ow|MFM|TPE|2027-04-12": {
    "price": 4230,
    "first": {
@@ -11818,6 +11840,28 @@
    "hist": [
     [
      "2026-10-19",
+     2021
+    ]
+   ]
+  },
+  "ow|TPE|HKG|2026-12-18": {
+   "price": 2021,
+   "first": {
+    "dep": "2026-12-18T21:15:00+08:00",
+    "arr": "2026-12-18T23:25:00+08:00",
+    "stops": 0,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 2021,
+    "Greater Bay Airlines": 4109,
+    "STARLUX Airlines": 4967,
+    "China Airlines": 5146
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
      2021
     ]
    ]
@@ -16759,6 +16803,28 @@
     ]
    ]
   },
+  "rt|HND|TPE|2026-12-20|2027-02-10": {
+   "price": 11945,
+   "first": {
+    "dep": "2026-12-20T05:45:00+09:00",
+    "arr": "2026-12-20T08:55:00+08:00",
+    "stops": 0,
+    "airline": "Peach Aviation"
+   },
+   "by_airline": {
+    "Peach Aviation": 11945,
+    "Tigerair Taiwan": 16369,
+    "Hong Kong Express": 17780,
+    "JAL": 26400
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     11945
+    ]
+   ]
+  },
   "rt|HND|TPE|2027-01-02|2027-02-26": {
    "price": 15753,
    "first": {
@@ -17188,6 +17254,25 @@
     [
      "2026-10-19",
      36301
+    ]
+   ]
+  },
+  "rt|ITM|TPE|2026-12-20|2027-02-10": {
+   "price": 25759,
+   "first": {
+    "dep": "2026-12-20T15:05:00+09:00",
+    "arr": "2026-12-20T20:55:00+08:00",
+    "stops": 1,
+    "airline": "JAL, EVA Air"
+   },
+   "by_airline": {
+    "JAL": 38113
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     25759
     ]
    ]
   },
@@ -33792,6 +33877,11 @@
    "at": "2026-10-23",
    "n": 2
   },
+  "rt|MMY|TSA|2026-12-20|2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "rt|NRT|RMQ|2026-11-15|2026-12-18": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -33991,6 +34081,11 @@
    "status": "timeout",
    "at": "2026-10-23",
    "n": 2
+  },
+  "rt|RMQ|ISG|2026-12-18|2026-12-27": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
   },
   "rt|RMQ|ITM|2026-11-06|2026-12-20": {
    "status": "parse_error",
