@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T11:33:58+00:00",
+ "at": "2026-10-23T11:35:37+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2065,
+ "fares_saved": 2067,
  "log": [
   "10:47:21 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:47:26 http front door: ['https://exotic-mini-caps-goes.trycloudflare.com', 'https://640175ada5ee74.lhr.life']",
@@ -18,6 +18,12 @@
   "11:32:28 request received: rid mvkw48f7eio20.2 20 keys",
   "11:32:28 handle mvkw48f7eio20.2: first_chunk=True total=20",
   "11:32:58 request received: rid mvkw58n7fan62.2 17 keys",
-  "11:32:58 handle mvkw58n7fan62.2: first_chunk=True total=17"
+  "11:32:58 handle mvkw58n7fan62.2: first_chunk=True total=17",
+  "11:34:51 request mvkw48f7eio20.2: chunk of 20 keys done in 143s; paths {'http': 23, 'browser-none': 17}, browser waits 17 max 129s sum 1253s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 17, 'blocked': 0, 'tries': 52, 'empty': 29}, audit 3/3 agree",
+  "11:34:51 request mvkw58n7fan62.2: chunk of 17 keys done in 113s; paths {'http': 23, 'browser-none': 17}, browser waits 17 max 129s sum 1253s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 17, 'blocked': 0, 'tries': 52, 'empty': 29}, audit 3/3 agree",
+  "11:34:53 request mvkw48f7eio20.2: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:34:53 request mvkw58n7fan62.2: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:35:01 request received: rid mvkw7tzkr9u8u.2 19 keys",
+  "11:35:01 handle mvkw7tzkr9u8u.2: first_chunk=True total=19"
  ]
 }
