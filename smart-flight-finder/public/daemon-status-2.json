@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T12:51:52+00:00",
+ "at": "2026-10-23T13:00:53+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2067,
+ "fares_saved": 2068,
  "log": [
   "12:50:13 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:50:22 http front door: ['https://hospitality-cakes-detail-pdt.trycloudflare.com', 'https://dddb3ca15bb2f8.lhr.life']",
@@ -13,6 +13,10 @@
   "12:51:22 request received: rid httptest1792759882 20 keys",
   "12:51:22 handle httptest1792759882: first_chunk=True total=20",
   "12:51:24 request httptest1792759882: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "12:51:26 request httptest1792759882: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "12:51:26 request httptest1792759882: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "12:55:56 rtc wk7u6bea5e: answered",
+  "12:55:57 rtc wk7u6bea5e: data channel open",
+  "12:59:46 request received: rid mvkz8u38z788s.2 12 keys",
+  "12:59:46 handle mvkz8u38z788s.2: first_chunk=True total=12"
  ]
 }
