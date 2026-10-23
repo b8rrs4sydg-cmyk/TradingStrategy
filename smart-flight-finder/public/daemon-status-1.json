@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:15:04+00:00",
+ "at": "2026-10-23T14:24:05+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2055,
+ "fares_saved": 2057,
  "log": [
   "12:37:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:37:27 http front door: ['https://muscle-thousand-yacht-antibody.trycloudflare.com', 'https://625f6590cab6f8.lhr.life']",
@@ -124,6 +124,10 @@
   "14:11:01 request received: rid mvl1sgymzto60.1 14 keys",
   "14:11:01 handle mvl1sgymzto60.1: first_chunk=True total=14",
   "14:14:02 request mvl1sgymzto60.1: chunk of 14 keys done in 181s; paths {'http': 58, 'browser-crashed': 468, 'browser': 2}, browser waits 470 max 286s sum 45407s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 58, 'miss': 144, 'blocked': 0, 'tries': 161, 'empty': 103}, audit 3/3 a",
-  "14:14:04 request mvl1sgymzto60.1: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "14:14:04 request mvl1sgymzto60.1: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:23:00 rtc mo8ur8k11t: answered",
+  "14:23:02 rtc mo8ur8k11t: data channel open",
+  "14:23:03 request received: rid mvl27vn3on3nv.1 27 keys",
+  "14:23:03 handle mvl27vn3on3nv.1: first_chunk=True total=27"
  ]
 }
