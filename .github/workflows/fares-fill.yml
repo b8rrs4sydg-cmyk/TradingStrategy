@@ -81,7 +81,6 @@ jobs:
           path: smart-flight-finder/backend/part.json
 
   merge1:
-    if: ${{ inputs.reuse_run_id == '' }}
     needs: stage1
     if: ${{ !cancelled() && inputs.reuse_run_id == '' }}
     runs-on: ubuntu-latest
