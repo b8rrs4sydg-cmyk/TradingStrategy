@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:17:34+00:00",
+ "at": "2026-10-23T13:19:05+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2036,
+ "fares_saved": 2038,
  "log": [
   "12:37:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:38:02 http front door: ['https://smell-photographic-norfolk-river.trycloudflare.com', 'https://8ecebfa314866d.lhr.life']",
@@ -54,6 +54,8 @@
   "13:15:50 request mvkzq5ufronul.6: chunk of 19 keys done in 156s; paths {'http': 33, 'browser-crashed': 171, 'browser': 11}, browser waits 182 max 205s sum 15296s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 33, 'miss': 83, 'blocked': 0, 'tries': 113, 'empty': 80}, audit 2/2 ag",
   "13:15:51 request mvkzq5ufronul.6: final sent (19/19); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:16:32 request received: rid mvkzue9oxs6h2.8 23 keys",
-  "13:16:32 handle mvkzue9oxs6h2.8: first_chunk=True total=23"
+  "13:16:32 handle mvkzue9oxs6h2.8: first_chunk=True total=23",
+  "13:19:00 request mvkzue9oxs6h2.8: chunk of 23 keys done in 148s; paths {'http': 33, 'browser-crashed': 191, 'browser': 14}, browser waits 205 max 205s sum 17273s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 33, 'miss': 83, 'blocked': 0, 'tries': 113, 'empty': 80}, audit 2/2 ag",
+  "13:19:01 request mvkzue9oxs6h2.8: final sent (23/23); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
