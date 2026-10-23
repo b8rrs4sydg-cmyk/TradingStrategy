@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T12:58:39+00:00",
+ "at": "2026-10-23T13:00:11+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2016,
+ "fares_saved": 2017,
  "log": [
   "12:37:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:37:27 http front door: ['https://muscle-thousand-yacht-antibody.trycloudflare.com', 'https://625f6590cab6f8.lhr.life']",
@@ -26,6 +26,10 @@
   "12:55:51 request mvkyxo9y7j7jt.0: chunk of 43 keys done in 286s; paths {'http': 21, 'browser-crashed': 67}, browser waits 67 max 286s sum 8841s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 25, 'blocked': 0, 'tries': 64, 'empty': 43}, audit 3/3 agree",
   "12:55:52 request mvkyxo9y7j7jt.0: final sent (43/43); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "12:55:56 request received: rid mvkz3walmy9u1.0 39 keys",
-  "12:55:56 handle mvkz3walmy9u1.0: first_chunk=True total=39"
+  "12:55:56 handle mvkz3walmy9u1.0: first_chunk=True total=39",
+  "12:59:46 request received: rid mvkz8u38z788s.1 25 keys",
+  "12:59:46 handle mvkz8u38z788s.1: first_chunk=True total=25",
+  "12:59:56 request mvkz3walmy9u1.0: chunk of 39 keys done in 240s; paths {'http': 21, 'browser-crashed': 106}, browser waits 106 max 286s sum 14246s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 27, 'blocked': 0, 'tries': 68, 'empty': 47}, audit 3/3 agree",
+  "12:59:57 request mvkz3walmy9u1.0: final sent (39/39); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
