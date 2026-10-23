@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:09:44+00:00",
+ "at": "2026-10-23T13:17:16+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1924,
+ "fares_saved": 1940,
  "log": [
   "12:49:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:55 http front door: ['https://pulling-boston-sticky-wind.trycloudflare.com', 'https://54d1fc39c8bf83.lhr.life']",
@@ -32,6 +32,10 @@
   "13:08:04 request received: rid mvkzji8hl929e.0 16 keys",
   "13:08:04 handle mvkzji8hl929e.0: first_chunk=True total=16",
   "13:09:42 request mvkzji8hl929e.0: chunk of 16 keys done in 99s; paths {'http': 24, 'browser-crashed': 57, 'browser': 4}, browser waits 61 max 144s sum 4223s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 24, 'blocked': 0, 'tries': 29, 'empty': 5}, audit 1/1 agree",
-  "13:09:43 request mvkzji8hl929e.0: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:09:43 request mvkzji8hl929e.0: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:16:32 rtc 5dw81eqjkp: answered",
+  "13:16:33 request received: rid mvkzue9oxs6h2.0 23 keys",
+  "13:16:33 handle mvkzue9oxs6h2.0: first_chunk=True total=23",
+  "13:16:33 rtc 5dw81eqjkp: data channel open"
  ]
 }
