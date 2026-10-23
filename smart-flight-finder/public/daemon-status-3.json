@@ -1,35 +1,19 @@
 {
- "at": "2026-10-23T06:11:20+00:00",
+ "at": "2026-10-23T10:38:47+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 2043,
  "log": [
-  "05:36:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:36:32 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "05:36:36 git retry 1: b\"-46zevd': is at 018ec94d6f7d069d60a55dc9c599262824bf9730 but expected 768f95a407b5164234a5a7c7ab4158553e142318)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "05:36:43 http front door: ['https://restrict-ellis-deny-lake.trycloudflare.com', 'https://bedbba401ab969.lhr.life']",
-  "05:36:43 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:37:36 request received: rid httptest1792733855 20 keys",
-  "05:37:36 handle httptest1792733855: first_chunk=True total=20",
-  "05:37:37 request httptest1792733855: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:37:38 request httptest1792733855: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "05:56:17 rtc os57tzqgvi: answered",
-  "05:56:29 request received: rid mvkk453uquuf8.3 2 keys",
-  "05:56:29 handle mvkk453uquuf8.3: first_chunk=True total=2",
-  "05:56:53 rtc qdzcxo45bm: answered",
-  "05:57:04 request received: rid mvkk4x1t0mw4m.3 2 keys",
-  "05:57:04 handle mvkk4x1t0mw4m.3: first_chunk=True total=2",
-  "05:57:30 request mvkk453uquuf8.3: chunk of 2 keys done in 61s; paths {'http': 20, 'browser-none': 2}, browser waits 2 max 49s sum 95s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
-  "05:57:30 request mvkk4x1t0mw4m.3: chunk of 2 keys done in 26s; paths {'http': 20, 'browser-none': 2}, browser waits 2 max 49s sum 95s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 1/1 agree",
-  "05:57:31 request mvkk453uquuf8.3: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:57:31 request mvkk4x1t0mw4m.3: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "06:07:27 rtc ksbdyomi8d: answered",
-  "06:07:38 request received: rid mvkkii7vp85hl.3 22 keys",
-  "06:07:38 handle mvkkii7vp85hl.3: first_chunk=True total=22",
-  "06:10:00 request mvkkii7vp85hl.3: chunk of 22 keys done in 142s; paths {'http': 23, 'browser-none': 21}, browser waits 21 max 129s sum 1587s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 21, 'blocked': 0, 'tries': 53, 'empty': 30}, audit 1/1 agree",
-  "06:10:02 request mvkkii7vp85hl.3: final sent (22/22); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "10:37:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "10:37:11 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "10:37:17 http front door: ['https://rss-kruger-recent-compact.trycloudflare.com', 'https://fa8be69f4cbe3f.lhr.life']",
+  "10:37:17 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "10:38:16 request received: rid httptest1792751895 20 keys",
+  "10:38:16 handle httptest1792751895: first_chunk=True total=20",
+  "10:38:17 request httptest1792751895: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "10:38:18 request httptest1792751895: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
