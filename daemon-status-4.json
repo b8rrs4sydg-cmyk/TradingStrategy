@@ -1,19 +1,18 @@
 {
- "at": "2026-10-23T12:26:13+00:00",
+ "at": "2026-10-23T15:43:51+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1984,
+ "fares_saved": 2071,
  "log": [
-  "12:24:32 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "12:24:37 git retry 0: b\"-46zevd': is at 59e378f356bd435ac109f17adc3c2e2a2baa4e8b but expected 5a2ba0d4cc0e894cf6ea645891f954334c553c52)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "12:24:43 http front door: ['https://emotions-ranch-promotes-huntington.trycloudflare.com', 'https://e0d3a89710ffb8.lhr.life']",
-  "12:24:43 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "12:25:41 request received: rid httptest1792758341 20 keys",
-  "12:25:41 handle httptest1792758341: first_chunk=True total=20",
-  "12:25:46 request httptest1792758341: chunk of 20 keys done in 4s; paths {'http': 19, 'browser': 1}, browser waits 1 max 3s sum 3s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 24, 'empty': 5}, audit 1/1 agree",
-  "12:25:47 request httptest1792758341: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "15:42:16 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:42:21 http front door: ['https://testament-thoroughly-merely-comp.trycloudflare.com', 'https://12fe01f79885a7.lhr.life']",
+  "15:42:21 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:43:25 request received: rid httptest1792770204 20 keys",
+  "15:43:25 handle httptest1792770204: first_chunk=True total=20",
+  "15:43:26 request httptest1792770204: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:43:28 request httptest1792770204: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }

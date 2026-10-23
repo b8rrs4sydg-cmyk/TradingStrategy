@@ -1,18 +1,18 @@
 {
- "at": "2026-10-23T12:26:08+00:00",
+ "at": "2026-10-23T15:51:24+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2015,
+ "fares_saved": 2062,
  "log": [
-  "12:24:33 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "12:24:38 http front door: ['https://spec-dance-pete-accuracy.trycloudflare.com', 'https://f404bcf7a1de19.lhr.life']",
-  "12:24:38 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "12:25:42 request received: rid httptest1792758341 20 keys",
-  "12:25:42 handle httptest1792758341: first_chunk=True total=20",
-  "12:25:46 request httptest1792758341: chunk of 20 keys done in 5s; paths {'http': 19, 'browser': 1}, browser waits 1 max 4s sum 4s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 23, 'empty': 4}, audit 0/0 agree",
-  "12:25:48 request httptest1792758341: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "15:49:49 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:49:54 http front door: ['https://marsh-rows-std-studio.trycloudflare.com', 'https://43bb8cb3afab60.lhr.life']",
+  "15:49:54 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:50:58 request received: rid httptest1792770658 20 keys",
+  "15:50:58 handle httptest1792770658: first_chunk=True total=20",
+  "15:51:03 request httptest1792770658: chunk of 20 keys done in 5s; paths {'http': 19, 'browser': 1}, browser waits 1 max 4s sum 4s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 21, 'empty': 2}, audit 0/0 agree",
+  "15:51:04 request httptest1792770658: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }

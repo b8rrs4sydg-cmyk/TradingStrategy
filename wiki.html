@@ -39,7 +39,7 @@
 <main>
   <h1>Wiki</h1>
   <p class="lead">這個網站怎麼設計、演算法怎麼運作，以及常見問題。</p>
-  <div class="toc"><a href="#design">網站設計</a><a href="#data">資料與更新</a><a href="#strategies">票型策略</a><a href="#algo">搜尋演算法</a><a href="#rank">推薦與排序</a><a href="#faq">Q&amp;A</a></div>
+  <div class="toc"><a href="#design">網站設計</a><a href="#data">資料與更新</a><a href="#strategies">票型策略</a><a href="#algo">搜尋演算法</a><a href="#rank">推薦與排序</a><a href="#compare">同類服務</a><a href="#faq">Q&amp;A</a></div>
 
   <h2 id="design">網站設計</h2>
   <p>目標很單純：在有限的查價額度內，找出符合你假期與日期條件、總成本最低的機票組合。所有票價都來自 Google Flights 的實際搜尋結果，沒有任何模擬價格；資料庫查不到的組合就是「沒有價格」，不會被估算補上。</p>
@@ -98,6 +98,9 @@
   <p>分數 = 0.5 × 比同航線中位價便宜的幅度 + 0.2 × 較上次降價幅度 + 0.3 × 絕對價格低 + 落在 2027 連假 0.10 + 直飛 0.05。同航線少於 4 筆時不算「比中位價」。只列台灣出發的行程；低於 1,000 元，或低於同航線中位價 30% 的價格視為讀取錯誤並排除。</p>
   <h3>篩選與分類</h3>
   <p>篩選面板的每個選項旁邊的數字，是套用「其他」篩選條件後會剩下的方案數。去程時刻、轉機、航空公司是真實資料；回程時刻通常未知，時間未知的方案不會被時間或轉機篩選排除。</p>
+
+  <h2 id="compare">同類服務比較</h2>
+  <p>Google Flights／ITA Matrix 查價最完整但一次一個行程；Kayak 的 Hacker Fare 把兩張單程拼成來回，本站標準來回也會這樣比（標示「拆兩張單程」）；Kiwi.com 能拼不合作的航空公司並自動排多目的地順序；Skiplagged 的隱藏城市違反運送條款，本站不做；Going、Secret Flying 是特價通知；GitHub 上的 fli、fast-flights、gflights 等只是查價工具，沒有人做「包覆票、反向票、外站四腿票怎麼組合最省」。完整表格與來源在專案的 <code>docs/competitors.md</code>。</p>
 
   <h2 id="faq">Q&amp;A</h2>
   <details><summary>為什麼有些組合沒有價格？</summary><p>可能是那條航線或日期 Google 沒有班次，也可能是查價逾時或被擋。前者記為「無結果」，後者只記為失敗並會再試。畫面上只顯示有實價的方案，不會補估算值。</p></details>
