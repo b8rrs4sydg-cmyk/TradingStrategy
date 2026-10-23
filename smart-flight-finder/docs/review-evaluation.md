@@ -29,3 +29,6 @@ KIX / NRT / HND 兩兩配對（含地面交通 400～4,200 TWD），資料庫內
 
 ## 查價失敗狀態已接上（2026-10-23）
 `FareDatabase.status`（選填欄位 `status`：key → 狀態、日期、連續次數）。爬蟲端 `Persister.add(..., failed)` 把崩潰的查詢記成 `timeout`（不再默默丟棄，也不會進 `missing`／`unavailable`）；重複失敗累計次數；查到價、被確認無結果或超過 7 天即清除。頁面忽略此欄位。HTTP 讀取器現在記住最後一次失敗原因（blocked / timeout / parse_error），崩潰的查詢以該原因寫入；注意 parse_error 也可能只是 Google 回了沒有航班的答案，所以它只在最終沒拿到價（瀏覽器也崩潰）時才寫入，不代表「確認無航班」。
+
+## 查詢計畫與 live Top-K 預算（2026-10-23）
+`RecordingProvider` 現在計算每個查詢被候選要求的次數；新增 `services/query_plan.py::prioritize`，`FareDatabaseProvider.prefetch` 改用它挑選要即時補查的票價：便宜頁面（單程／來回）先於多城市；同類中被較多候選共用的先查；各路線（以都會區正規化、不分方向）輪流取用，不再把整個預算花在列舉順序最前面的路線。測試：預算在路線間分配、先便宜後共用、略過已知價格、HND/NRT 視為同一路線。完整的 `required_queries()` 介面（讓規劃器直接輸出查詢而不重跑策略）仍未做：現行 dry-run 運作正確，且瓶頸是查價而非重跑。

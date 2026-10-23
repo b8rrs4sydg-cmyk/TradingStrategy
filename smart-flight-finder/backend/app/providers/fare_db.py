@@ -33,6 +33,7 @@ from typing import Any
 from app.providers.atomic_io import atomic_write_text, file_lock
 from app.providers.base import Segment
 from app.providers.google_flights import ISSUER, fare_key, parse_key, tz_of
+from app.services.query_plan import prioritize
 from app.services.strategies.base import FlightLeg, TicketOffer
 
 logger = logging.getLogger(__name__)
@@ -297,10 +298,8 @@ class FareDatabaseProvider:
     def prefetch(self, keys: Iterable[str]) -> int:
         if not (self.fetcher and self.live_budget):
             return 0
-        wanted = [k for k in dict.fromkeys(keys) if k not in self.db.fares]
-        # cheapest pages first: one-ways and round trips, then multi-city
-        wanted.sort(key=lambda k: k.startswith("mc|"))
-        wanted = wanted[: self.live_budget]
+        # the live budget goes to the fares that matter most (see services/query_plan.prioritize), not to the first N
+        wanted = prioritize(keys, self.live_budget, known=self.db.fares)
         if not wanted:
             return 0
         try:

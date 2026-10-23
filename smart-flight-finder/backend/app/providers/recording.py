@@ -20,7 +20,7 @@ class RecordingProvider:
     name = "recording"
 
     def __init__(self) -> None:
-        self.keys: dict[str, None] = {}
+        self.keys: dict[str, int] = {}  # query -> how many times the planners asked for it
 
     def search(
         self,
@@ -37,12 +37,12 @@ class RecordingProvider:
         else:
             segs = ((origin, destination, departure_date), (destination, origin, return_date))
             key = fare_key(segs, round_trip=True)
-        self.keys[key] = None
+        self.keys[key] = self.keys.get(key, 0) + 1
         return [_placeholder(key, segs)]
 
     def search_multi_city(self, *, segments: Sequence[Segment], adults: int = 1) -> list[TicketOffer]:
         key = fare_key(segments)
-        self.keys[key] = None
+        self.keys[key] = self.keys.get(key, 0) + 1
         return [_placeholder(key, tuple(segments))]
 
 
