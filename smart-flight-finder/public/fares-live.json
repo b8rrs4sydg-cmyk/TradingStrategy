@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:47:28+00:00",
+ "generated_at": "2026-10-23T14:49:05+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -33815,6 +33815,11 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|FUK-TPE-2026-11-22|TPE-PVG-2026-12-04|PVG-TPE-2026-12-06|TPE-HND-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|FUK-TPE-2026-11-29|TPE-PUS-2026-12-04|PUS-TPE-2026-12-06|TPE-FUK-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -33980,6 +33985,11 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|ICN-TPE-2026-11-15|TPE-DMK-2026-12-18|DMK-TPE-2026-12-20|TPE-FUK-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|ICN-TPE-2026-11-15|TPE-DMK-2026-12-18|DMK-TPE-2026-12-20|TPE-HND-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -34016,6 +34026,11 @@
    "n": 1
   },
   "mc|ICN-TPE-2026-11-15|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-KIX-2027-02-10": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-11-15|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-SHA-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
@@ -34060,6 +34075,11 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|KIX-TPE-2026-11-08|TPE-DMK-2026-12-04|DMK-TPE-2026-12-06|TPE-FUK-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|KIX-TPE-2026-11-08|TPE-DMK-2026-12-11|DMK-TPE-2026-12-13|TPE-HND-2027-02-10": {
    "status": "parse_error",
    "at": "2026-10-23",
@@ -34100,6 +34120,11 @@
    "at": "2026-10-23",
    "n": 2
   },
+  "mc|KIX-TPE-2026-12-06|TPE-DMK-2026-12-18|DMK-TPE-2026-12-20|TPE-HND-2027-02-10": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|KIX-TPE-2026-12-06|TPE-HKG-2026-12-11|HKG-TPE-2026-12-13|TPE-FUK-2027-02-10": {
    "status": "parse_error",
    "at": "2026-10-23",
@@ -34130,6 +34155,11 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|KIX-TPE-2026-12-06|TPE-PUS-2026-12-18|PUS-TPE-2026-12-20|TPE-NRT-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|KIX-TPE-2026-12-13|TPE-CJU-2026-12-18|CJU-TPE-2026-12-20|TPE-HND-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -34141,6 +34171,11 @@
    "n": 1
   },
   "mc|KIX-TPE-2026-12-13|TPE-HKG-2026-12-18|HKG-TPE-2026-12-20|TPE-NRT-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|KIX-TPE-2026-12-13|TPE-PUS-2026-12-18|PUS-TPE-2026-12-20|TPE-NRT-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
@@ -34205,6 +34240,16 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|NRT-TPE-2026-12-06|TPE-PUS-2026-12-11|PUS-TPE-2026-12-13|TPE-HND-2026-12-24": {
+   "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|NRT-TPE-2026-12-13|TPE-CJU-2026-12-18|CJU-TPE-2026-12-20|TPE-HND-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|PVG-TPE-2026-11-08|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-NRT-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -34222,6 +34267,11 @@
   },
   "mc|PVG-TPE-2026-11-15|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-ICN-2027-02-10": {
    "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|PVG-TPE-2026-11-22|TPE-CJU-2026-12-04|CJU-TPE-2026-12-06|TPE-HND-2027-02-10": {
+   "status": "timeout",
    "at": "2026-10-23",
    "n": 1
   },
@@ -34276,6 +34326,11 @@
    "n": 1
   },
   "mc|SHA-TPE-2026-11-08|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-NRT-2027-02-10": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|SHA-TPE-2026-11-08|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-PVG-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
