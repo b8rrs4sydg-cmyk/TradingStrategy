@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:50:39+00:00",
+ "at": "2026-10-23T14:52:10+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2069,
+ "fares_saved": 2070,
  "log": [
   "12:37:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:38:02 http front door: ['https://smell-photographic-norfolk-river.trycloudflare.com', 'https://8ecebfa314866d.lhr.life']",
@@ -147,6 +147,8 @@
   "14:46:04 request received: rid mvl31ipp0asxc.7 19 keys",
   "14:46:04 handle mvl31ipp0asxc.7: first_chunk=True total=19",
   "14:50:10 request mvl31ipp0asxc.7: chunk of 19 keys done in 246s; paths {'http': 60, 'browser-crashed': 529, 'browser': 18}, browser waits 547 max 328s sum 54439s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 60, 'miss': 228, 'blocked': 0, 'tries': 199, 'empty': 139}, audit 2/2 ",
-  "14:50:11 request mvl31ipp0asxc.7: final sent (19/19); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "14:50:11 request mvl31ipp0asxc.7: final sent (19/19); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "14:51:14 request received: rid mvl387ao0vz9o.8 17 keys",
+  "14:51:14 handle mvl387ao0vz9o.8: first_chunk=True total=17"
  ]
 }
