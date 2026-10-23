@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:24:54+00:00",
+ "at": "2026-10-23T14:47:26+00:00",
  "publishes": {
-  "ok": 4,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2144,
+ "fares_saved": 2150,
  "log": [
   "12:50:13 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:50:22 http front door: ['https://hospitality-cakes-detail-pdt.trycloudflare.com', 'https://dddb3ca15bb2f8.lhr.life']",
@@ -107,6 +107,12 @@
   "14:23:03 request received: rid mvl27vn3on3nv.2 14 keys",
   "14:23:03 handle mvl27vn3on3nv.2: first_chunk=True total=14",
   "14:24:40 request mvl27vn3on3nv.2: chunk of 14 keys done in 96s; paths {'http': 89, 'browser-crashed': 285, 'browser': 8}, browser waits 293 max 166s sum 22595s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 89, 'miss': 124, 'blocked': 0, 'tries': 157, 'empty': 68}, audit 3/3 agr",
-  "14:24:42 request mvl27vn3on3nv.2: final sent (14/14); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "14:24:42 request mvl27vn3on3nv.2: final sent (14/14); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "14:26:11 rtc 37axb66h0a: answered",
+  "14:26:12 rtc 37axb66h0a: data channel open",
+  "14:39:38 rtc 89uasc6q48: answered",
+  "14:39:39 rtc 89uasc6q48: data channel open",
+  "14:46:04 request received: rid mvl31ipp0asxc.2 24 keys",
+  "14:46:04 handle mvl31ipp0asxc.2: first_chunk=True total=24"
  ]
 }
