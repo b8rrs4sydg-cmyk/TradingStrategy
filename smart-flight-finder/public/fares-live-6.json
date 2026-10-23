@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T13:59:53+00:00",
+ "generated_at": "2026-10-23T14:02:56+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -4144,6 +4144,25 @@
    },
    "by_airline": {
     "Cathay Pacific": 86450
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     86450
+    ]
+   ]
+  },
+  "mc|SHA-TPE-2026-11-22|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-HND-2027-02-10": {
+   "price": 86450,
+   "by_airline": {
+    "Cathay Pacific": 86450
+   },
+   "first": {
+    "dep": "2026-11-22T13:35:00+08:00",
+    "arr": "2026-11-22T20:10:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific"
    },
    "at": "2026-10-23",
    "hist": [
@@ -35402,12 +35421,37 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|FUK-TPE-2026-11-22|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-FUK-2026-12-18": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|FUK-TPE-2026-11-22|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-KIX-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
   },
   "mc|FUK-TPE-2026-11-22|TPE-PUS-2026-12-04|PUS-TPE-2026-12-06|TPE-HND-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|FUK-TPE-2026-11-29|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-HND-2027-02-10": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|FUK-TPE-2026-12-13|TPE-HKG-2026-12-18|HKG-TPE-2026-12-20|TPE-HND-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|FUK-TPE-2026-12-13|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-HND-2027-02-10": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|HND-TPE-2026-11-08|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-HND-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
@@ -35423,6 +35467,11 @@
    "n": 1
   },
   "mc|HND-TPE-2026-11-22|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-ICN-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-11-15|TPE-HKG-2026-11-20|HKG-TPE-2026-11-22|TPE-HND-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
@@ -35463,6 +35512,16 @@
    "n": 1
   },
   "mc|NRT-TPE-2026-11-22|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-HND-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|PVG-TPE-2026-11-08|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-HND-2026-12-24": {
+   "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|PVG-TPE-2026-11-08|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-HND-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
