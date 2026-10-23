@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:50:31+00:00",
+ "at": "2026-10-23T14:52:03+00:00",
  "publishes": {
   "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2150,
+ "fares_saved": 2151,
  "log": [
   "12:50:13 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:50:22 http front door: ['https://hospitality-cakes-detail-pdt.trycloudflare.com', 'https://dddb3ca15bb2f8.lhr.life']",
@@ -115,6 +115,8 @@
   "14:46:04 request received: rid mvl31ipp0asxc.2 24 keys",
   "14:46:04 handle mvl31ipp0asxc.2: first_chunk=True total=24",
   "14:50:24 request mvl31ipp0asxc.2: chunk of 24 keys done in 260s; paths {'http': 95, 'browser-crashed': 303, 'browser': 8}, browser waits 311 max 214s sum 25111s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 95, 'miss': 142, 'blocked': 0, 'tries': 163, 'empty': 68}, audit 3/3 ag",
-  "14:50:25 request mvl31ipp0asxc.2: final sent (24/24); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
+  "14:50:25 request mvl31ipp0asxc.2: final sent (24/24); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "14:51:14 request received: rid mvl387ao0vz9o.2 26 keys",
+  "14:51:14 handle mvl387ao0vz9o.2: first_chunk=True total=26"
  ]
 }
