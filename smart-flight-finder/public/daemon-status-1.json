@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:49:06+00:00",
+ "at": "2026-10-23T13:50:37+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2039,
+ "fares_saved": 2055,
  "log": [
   "12:37:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:37:27 http front door: ['https://muscle-thousand-yacht-antibody.trycloudflare.com', 'https://625f6590cab6f8.lhr.life']",
@@ -98,6 +98,10 @@
   "13:46:22 request mvl0umq89h55y.1: chunk of 16 keys done in 99s; paths {'http': 42, 'browser-crashed': 354, 'browser': 2}, browser waits 356 max 286s sum 32827s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 91, 'blocked': 0, 'tries': 135, 'empty': 93}, audit 3/3 agre",
   "13:46:23 request mvl0umq89h55y.1: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:47:10 request received: rid mvl0xtf7so7db.1 17 keys",
-  "13:47:10 handle mvl0xtf7so7db.1: first_chunk=True total=17"
+  "13:47:10 handle mvl0xtf7so7db.1: first_chunk=True total=17",
+  "13:49:29 request mvl0xtf7so7db.1: chunk of 17 keys done in 139s; paths {'http': 42, 'browser-crashed': 371, 'browser': 2}, browser waits 373 max 286s sum 34108s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 91, 'blocked': 0, 'tries': 135, 'empty': 93}, audit 3/3 agr",
+  "13:49:31 request mvl0xtf7so7db.1: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:49:40 request received: rid mvl110mnegvv5.1 31 keys",
+  "13:49:40 handle mvl110mnegvv5.1: first_chunk=True total=31"
  ]
 }
