@@ -2239,14 +2239,27 @@ function scorePlans(plans, weights) {
  * Favorites (localStorage, defensive)
  * ========================================================================= */
 const FAV_KEY = 'sff.favorites.v1';
+/* A plan's identity does NOT include its price, so a favourite is still the same plan after its fare moves (and the move can be shown). */
 function fingerprint(plan) {
   const first = plan.tickets[0]?.legs[0];
-  return [plan.strategy, plan.tickets[0]?.offer_id || '', plan.total_cost, first?.departure || '', first ? `${first.origin}-${first.destination}` : ''].join('|');
+  return [plan.strategy, plan.tickets.map(t => t.offer_id || '').join('+'), first?.departure || '', first ? `${first.origin}-${first.destination}` : ''].join('|');
 }
 function readFavs() {
-  try { const r = localStorage.getItem(FAV_KEY); return new Set(r ? JSON.parse(r) : []); } catch { return new Set(); }
+  try {
+    // favourites saved by older versions embedded the price in the key and no longer match (a one-time reset)
+    return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+  } catch { return new Set(); }
 }
 function writeFavs(set) { try { localStorage.setItem(FAV_KEY, JSON.stringify([...set])); } catch {} }
+/* price when the plan was starred: favourites double as a watch list ("收藏時 X → 現在 Y") */
+const FAV_PRICE_KEY = 'sff.favprices.v1';
+function readFavPrices() { try { return JSON.parse(localStorage.getItem(FAV_PRICE_KEY) || '{}'); } catch { return {}; } }
+function writeFavPrices(m) { try { localStorage.setItem(FAV_PRICE_KEY, JSON.stringify(m)); } catch {} }
+function favChange(plan) {
+  const saved = readFavPrices()[fingerprint(plan)];
+  if (!saved || saved.price === plan.total_cost) return null;
+  return { was: saved.price, now: plan.total_cost, diff: plan.total_cost - saved.price, at: saved.at };
+}
 
 /* =========================================================================
  * Rendering
@@ -3033,9 +3046,11 @@ function renderPlanList(plans, groups) {
     node.querySelector('.fav-btn').addEventListener('click', e => {
       e.stopPropagation();
       const fp = fingerprint(plan);
-      if (state.favorites.has(fp)) state.favorites.delete(fp);
-      else state.favorites.add(fp);
+      const prices = readFavPrices();
+      if (state.favorites.has(fp)) { state.favorites.delete(fp); delete prices[fp]; }
+      else { state.favorites.add(fp); prices[fp] = { price: plan.total_cost, at: new Date().toISOString().slice(0, 10) }; }
       writeFavs(state.favorites);
+      writeFavPrices(prices);
       renderResults();
     });
     const check = node.querySelector('input[type=checkbox]');
@@ -3103,6 +3118,8 @@ function planFactsHtml(plan) {
   if (plan.total_travel_days > 1) bits.push(`<span>${plan.total_travel_days} 天</span>`);
   if (f.stops != null) bits.push(`<span class="${f.stops ? '' : 'good'}">${f.stops ? `${f.stops} 轉` : '直飛'}</span>`);
   if (f.airlines.length) bits.push(`<span>${escapeHtml(f.airlines.join('、'))}</span>`);
+  const ch = favChange(plan);
+  if (ch) bits.push(`<span class="${ch.diff < 0 ? 'good' : ''}" title="${ch.at} 收藏時的價格">收藏時 ${ch.was.toLocaleString()} → 現在 ${ch.now.toLocaleString()}（${ch.diff < 0 ? '降' : '漲'} ${Math.abs(ch.diff).toLocaleString()}）</span>`);
   const pos = pricePosition(plan);
   if (pos) bits.push(`<span class="${pos.cls}" title="和資料庫裡同機場、所有日期的來回票價比較">${pos.text}</span>`);
   return bits.length ? `<div class="facts">${bits.join('')}</div>` : '';
@@ -3414,6 +3431,8 @@ function runSearch(form) {
   if (fareStats.missing) {
     notices.push(`${fareStats.missing} 個查詢不在票價資料庫，爬蟲正在補查，結果會自動更新。`);
   }
+  const dropped = plans.filter(p => state.favorites.has(fingerprint(p)) && (favChange(p)?.diff || 0) < 0).length;
+  if (dropped) notices.unshift(`你收藏的 ${dropped} 個方案比收藏時便宜了。`);
   return { plans, matrix, cache, notices, fares: { real: fareStats.real, missing: fareStats.missing } };
 }
 
