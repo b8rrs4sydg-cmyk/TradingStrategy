@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T05:58:10+00:00",
+ "at": "2026-10-23T06:08:42+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2026,
+ "fares_saved": 2029,
  "log": [
   "05:41:31 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:41:37 http front door: ['https://encoding-griffin-inter-administration.trycloudflare.com', 'https://2601f62d0b362d.lhr.life']",
@@ -23,6 +23,9 @@
   "05:57:30 request mvkk453uquuf8.6: chunk of 1 keys done in 61s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 49s sum 49s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
   "05:57:30 request mvkk4x1t0mw4m.6: chunk of 1 keys done in 26s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 49s sum 49s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
   "05:57:32 request mvkk453uquuf8.6: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:57:32 request mvkk4x1t0mw4m.6: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "05:57:32 request mvkk4x1t0mw4m.6: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "06:07:27 rtc 52ktibs72e: answered",
+  "06:07:38 request received: rid mvkkii7vp85hl.6 16 keys",
+  "06:07:38 handle mvkkii7vp85hl.6: first_chunk=True total=16"
  ]
 }
