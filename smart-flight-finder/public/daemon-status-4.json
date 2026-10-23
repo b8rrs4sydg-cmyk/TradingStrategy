@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:49:33+00:00",
+ "at": "2026-10-23T13:51:05+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2045,
+ "fares_saved": 2058,
  "log": [
   "12:37:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:37:33 http front door: ['https://attorneys-commodities-receiver-multimedia.trycloudflare.com', 'https://5087fdbc320ed4.lhr.life']",
@@ -99,6 +99,8 @@
   "13:47:10 request received: rid mvl0xtf7so7db.3 11 keys",
   "13:47:10 handle mvl0xtf7so7db.3: first_chunk=True total=11",
   "13:48:42 request mvl0xtf7so7db.3: chunk of 11 keys done in 92s; paths {'http': 36, 'browser-crashed': 314, 'browser': 45}, browser waits 359 max 203s sum 27633s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 76, 'blocked': 0, 'tries': 105, 'empty': 69}, audit 2/2 agr",
-  "13:48:44 request mvl0xtf7so7db.3: final sent (11/11); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "13:48:44 request mvl0xtf7so7db.3: final sent (11/11); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "13:49:40 request received: rid mvl110mnegvv5.3 27 keys",
+  "13:49:40 handle mvl110mnegvv5.3: first_chunk=True total=27"
  ]
 }
