@@ -1,32 +1,20 @@
 {
- "at": "2026-10-23T11:35:56+00:00",
+ "at": "2026-10-23T15:43:56+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1894,
+ "fares_saved": 2007,
  "log": [
-  "10:37:00 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:37:04 http front door: ['https://circumstances-flying-terminals-burner.trycloudflare.com', 'https://c3470906bbf25b.lhr.life']",
-  "10:37:04 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:38:10 request received: rid httptest1792751889 20 keys",
-  "10:38:10 handle httptest1792751889: first_chunk=True total=20",
-  "10:38:11 request httptest1792751889: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:38:13 request httptest1792751889: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "11:32:16 rtc tok6ndxzn5: answered",
-  "11:32:28 request received: rid mvkw48f7eio20.0 5 keys",
-  "11:32:28 handle mvkw48f7eio20.0: first_chunk=True total=5",
-  "11:32:48 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "11:32:58 request received: rid mvkw58n7fan62.0 4 keys",
-  "11:32:58 handle mvkw58n7fan62.0: first_chunk=True total=4",
-  "11:33:22 request mvkw48f7eio20.0: chunk of 5 keys done in 53s; paths {'http': 21, 'browser-none': 4}, browser waits 4 max 49s sum 189s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 4, 'blocked': 0, 'tries': 28, 'empty': 7}, audit 1/1 agree",
-  "11:33:22 request mvkw58n7fan62.0: chunk of 4 keys done in 24s; paths {'http': 21, 'browser-none': 4}, browser waits 4 max 49s sum 189s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 4, 'blocked': 0, 'tries': 28, 'empty': 7}, audit 1/1 agree",
-  "11:33:23 request mvkw48f7eio20.0: final sent (5/5); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:33:23 request mvkw58n7fan62.0: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:35:01 request received: rid mvkw7tzkr9u8u.0 1 keys",
-  "11:35:01 handle mvkw7tzkr9u8u.0: first_chunk=True total=1",
-  "11:35:50 request mvkw7tzkr9u8u.0: chunk of 1 keys done in 49s; paths {'http': 21, 'browser-none': 5}, browser waits 5 max 49s sum 237s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 5, 'blocked': 0, 'tries': 30, 'empty': 9}, audit 1/1 agree",
-  "11:35:52 request mvkw7tzkr9u8u.0: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "15:42:10 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:42:16 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "15:42:20 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "15:42:26 http front door: ['https://assume-aurora-compact-electro.trycloudflare.com', 'https://fd16c4cd0aca85.lhr.life']",
+  "15:42:26 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:43:20 request received: rid httptest1792770199 20 keys",
+  "15:43:20 handle httptest1792770199: first_chunk=True total=20",
+  "15:43:22 request httptest1792770199: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "15:43:22 request httptest1792770199: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }

@@ -1,33 +1,18 @@
 {
- "at": "2026-10-23T11:37:37+00:00",
+ "at": "2026-10-23T15:43:48+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2048,
+ "fares_saved": 2113,
  "log": [
-  "10:37:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:37:11 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "10:37:17 http front door: ['https://rss-kruger-recent-compact.trycloudflare.com', 'https://fa8be69f4cbe3f.lhr.life']",
-  "10:37:17 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:38:16 request received: rid httptest1792751895 20 keys",
-  "10:38:16 handle httptest1792751895: first_chunk=True total=20",
-  "10:38:17 request httptest1792751895: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:38:18 request httptest1792751895: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "11:32:16 rtc ix1tldzdqp: answered",
-  "11:32:28 request received: rid mvkw48f7eio20.3 20 keys",
-  "11:32:28 handle mvkw48f7eio20.3: first_chunk=True total=20",
-  "11:32:57 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "11:32:58 request received: rid mvkw58n7fan62.3 16 keys",
-  "11:32:58 handle mvkw58n7fan62.3: first_chunk=True total=16",
-  "11:34:08 request mvkw48f7eio20.3: chunk of 20 keys done in 100s; paths {'http': 24, 'browser-none': 16}, browser waits 16 max 96s sum 1130s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 16, 'blocked': 0, 'tries': 54, 'empty': 30}, audit 1/1 agree",
-  "11:34:08 request mvkw58n7fan62.3: chunk of 16 keys done in 70s; paths {'http': 24, 'browser-none': 16}, browser waits 16 max 96s sum 1130s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 16, 'blocked': 0, 'tries': 54, 'empty': 30}, audit 1/1 agree",
-  "11:34:09 request mvkw48f7eio20.3: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:34:10 request mvkw58n7fan62.3: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:35:01 request received: rid mvkw7tzkr9u8u.3 14 keys",
-  "11:35:01 handle mvkw7tzkr9u8u.3: first_chunk=True total=14",
-  "11:36:38 request mvkw7tzkr9u8u.3: chunk of 14 keys done in 97s; paths {'http': 25, 'browser-none': 29}, browser waits 29 max 97s sum 1990s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 25, 'miss': 29, 'blocked': 0, 'tries': 81, 'empty': 56}, audit 1/1 agree",
-  "11:36:39 request mvkw7tzkr9u8u.3: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "15:42:12 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "15:42:18 http front door: ['https://hong-repeat-washer-delete.trycloudflare.com', 'https://0dae41d09a6e3f.lhr.life']",
+  "15:42:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "15:43:22 request received: rid httptest1792770201 20 keys",
+  "15:43:22 handle httptest1792770201: first_chunk=True total=20",
+  "15:43:23 request httptest1792770201: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
+  "15:43:24 request httptest1792770201: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
