@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T13:55:36+00:00",
+ "generated_at": "2026-10-23T13:57:08+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -3262,6 +3262,27 @@
     [
      "2026-10-18",
      91581
+    ]
+   ]
+  },
+  "mc|KIX-TPE-2026-11-08|TPE-PUS-2026-11-13|PUS-TPE-2026-11-15|TPE-NRT-2026-12-24": {
+   "price": 83011,
+   "first": {
+    "dep": "2026-11-08T18:10:00+09:00",
+    "arr": "2026-11-08T20:25:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 83011,
+    "STARLUX Airlines": 90653,
+    "Cathay Pacific": 112239
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     83011
     ]
    ]
   },
@@ -33358,6 +33379,11 @@
   },
   "mc|ICN-TPE-2026-11-06|TPE-CDG-2026-12-29|CDG-TPE-2027-01-08|TPE-ICN-2027-01-30": {
    "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-11-15|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-HND-2027-02-10": {
+   "status": "timeout",
    "at": "2026-10-23",
    "n": 1
   },
