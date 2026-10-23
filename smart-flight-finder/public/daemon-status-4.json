@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T11:34:38+00:00",
+ "at": "2026-10-23T11:36:09+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1983,
+ "fares_saved": 1984,
  "log": [
   "10:37:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:37:13 http front door: ['https://oregon-mutual-style-tournaments.trycloudflare.com', 'https://316c6e7b77afd8.lhr.life']",
@@ -24,6 +24,8 @@
   "11:33:27 request mvkw48f7eio20.4: chunk of 9 keys done in 59s; paths {'http': 22, 'browser-none': 7}, browser waits 7 max 50s sum 329s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 7, 'blocked': 0, 'tries': 35, 'empty': 13}, audit 2/2 agree",
   "11:33:27 request mvkw58n7fan62.4: chunk of 7 keys done in 29s; paths {'http': 22, 'browser-none': 7}, browser waits 7 max 50s sum 329s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 7, 'blocked': 0, 'tries': 35, 'empty': 13}, audit 2/2 agree",
   "11:33:27 request mvkw48f7eio20.4: final sent (9/9); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:33:28 request mvkw58n7fan62.4: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:33:28 request mvkw58n7fan62.4: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:35:01 request received: rid mvkw7tzkr9u8u.4 19 keys",
+  "11:35:01 handle mvkw7tzkr9u8u.4: first_chunk=True total=19"
  ]
 }
