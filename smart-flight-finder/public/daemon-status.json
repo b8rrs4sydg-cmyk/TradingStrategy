@@ -1,18 +1,28 @@
 {
- "at": "2026-10-23T05:19:48+00:00",
+ "at": "2026-10-23T05:58:53+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1871,
+ "fares_saved": 1872,
  "log": [
-  "05:18:13 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:18:18 http front door: ['https://hayes-actress-essentials-jake.trycloudflare.com', 'https://f625a1fcc6a072.lhr.life']",
-  "05:18:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:19:23 request received: rid httptest1792732762 20 keys",
-  "05:19:23 handle httptest1792732762: first_chunk=True total=20",
-  "05:19:24 request httptest1792732762: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:19:24 request httptest1792732762: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:40:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:40:49 http front door: ['https://examines-metric-level-recipes.trycloudflare.com', 'https://68ef29f1bc04c4.lhr.life']",
+  "05:40:49 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:41:52 request received: rid httptest1792734111 20 keys",
+  "05:41:52 handle httptest1792734111: first_chunk=True total=20",
+  "05:41:53 request httptest1792734111: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:41:53 request httptest1792734111: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "05:56:17 rtc 9xsdy7695m: answered",
+  "05:56:29 request received: rid mvkk453uquuf8.0 3 keys",
+  "05:56:29 handle mvkk453uquuf8.0: first_chunk=True total=3",
+  "05:56:53 rtc s74q5vo7l9: answered",
+  "05:57:04 request received: rid mvkk4x1t0mw4m.0 3 keys",
+  "05:57:04 handle mvkk4x1t0mw4m.0: first_chunk=True total=3",
+  "05:57:30 request mvkk453uquuf8.0: chunk of 3 keys done in 62s; paths {'http': 21, 'browser-none': 2}, browser waits 2 max 49s sum 94s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 2, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 0/0 agree",
+  "05:57:30 request mvkk4x1t0mw4m.0: chunk of 3 keys done in 26s; paths {'http': 21, 'browser-none': 2}, browser waits 2 max 49s sum 94s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 2, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 0/0 agree",
+  "05:57:31 request mvkk453uquuf8.0: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:57:31 request mvkk4x1t0mw4m.0: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }

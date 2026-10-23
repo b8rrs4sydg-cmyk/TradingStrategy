@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T05:38:06+00:00",
+ "at": "2026-10-23T05:57:37+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1998,
+ "fares_saved": 2000,
  "log": [
   "05:36:30 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:36:35 http front door: ['https://filename-crucial-sculpture-stud.trycloudflare.com', 'https://b3537b5f61f070.lhr.life']",
@@ -13,6 +13,16 @@
   "05:37:39 request received: rid httptest1792733859 20 keys",
   "05:37:39 handle httptest1792733859: first_chunk=True total=20",
   "05:37:40 request httptest1792733859: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:37:42 request httptest1792733859: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:37:42 request httptest1792733859: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "05:56:17 rtc ceie06euc5: answered",
+  "05:56:29 request received: rid mvkk453uquuf8.9 2 keys",
+  "05:56:29 handle mvkk453uquuf8.9: first_chunk=True total=2",
+  "05:56:53 rtc jpl4u92dmi: answered",
+  "05:57:04 request received: rid mvkk4x1t0mw4m.9 2 keys",
+  "05:57:04 handle mvkk4x1t0mw4m.9: first_chunk=True total=2",
+  "05:57:28 request mvkk453uquuf8.9: chunk of 2 keys done in 59s; paths {'http': 22, 'browser-none': 1}, browser waits 1 max 47s sum 47s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 0/0 agree",
+  "05:57:28 request mvkk4x1t0mw4m.9: chunk of 2 keys done in 24s; paths {'http': 22, 'browser-none': 1}, browser waits 1 max 47s sum 47s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 0/0 agree",
+  "05:57:29 request mvkk453uquuf8.9: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "05:57:29 request mvkk4x1t0mw4m.9: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
