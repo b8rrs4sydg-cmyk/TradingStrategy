@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T05:58:02+00:00",
+ "at": "2026-10-23T06:08:34+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1879,
+ "fares_saved": 1886,
  "log": [
   "05:36:53 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:36:59 http front door: ['https://andrews-attacked-consequence-challenged.trycloudflare.com', 'https://4f4a45c4fc1a27.lhr.life']",
@@ -23,6 +23,9 @@
   "05:57:31 request mvkk453uquuf8.7: chunk of 1 keys done in 62s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 50s sum 50s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
   "05:57:31 request mvkk4x1t0mw4m.7: chunk of 1 keys done in 27s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 50s sum 50s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
   "05:57:32 request mvkk453uquuf8.7: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:57:33 request mvkk4x1t0mw4m.7: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "05:57:33 request mvkk4x1t0mw4m.7: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "06:07:27 rtc n5n0v9p7iz: answered",
+  "06:07:38 request received: rid mvkkii7vp85hl.7 20 keys",
+  "06:07:38 handle mvkkii7vp85hl.7: first_chunk=True total=20"
  ]
 }
