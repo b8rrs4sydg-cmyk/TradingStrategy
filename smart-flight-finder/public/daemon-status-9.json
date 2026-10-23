@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T00:51:22+00:00",
+ "at": "2026-10-23T05:14:40+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1998,
  "log": [
-  "00:49:46 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:49:52 http front door: ['https://printed-grace-involved-texture.trycloudflare.com', 'https://37010d7a64a1d7.lhr.life']",
-  "00:49:52 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:50:54 request received: rid httptest1792716654 20 keys",
-  "00:50:54 handle httptest1792716654: first_chunk=True total=20",
-  "00:50:58 request httptest1792716654: chunk of 20 keys done in 4s; paths {'http': 19, 'browser': 1}, browser waits 1 max 3s sum 3s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 27, 'empty': 8}, audit 0/0 agree",
-  "00:51:00 request httptest1792716654: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:13:04 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:13:10 http front door: ['https://money-dont-january-unlike.trycloudflare.com', 'https://c9b26848ea4d7d.lhr.life']",
+  "05:13:10 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:14:11 request received: rid httptest1792732451 20 keys",
+  "05:14:11 handle httptest1792732451: first_chunk=True total=20",
+  "05:14:13 request httptest1792732451: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:14:14 request httptest1792732451: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
