@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:04:43+00:00",
+ "generated_at": "2026-10-23T14:06:15+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -4930,6 +4930,25 @@
     [
      "2026-10-18",
      82458
+    ]
+   ]
+  },
+  "mc|SHA-TPE-2026-12-06|TPE-HKG-2026-12-18|HKG-TPE-2026-12-20|TPE-HND-2026-12-24": {
+   "price": 86450,
+   "first": {
+    "dep": "2026-12-06T13:35:00+08:00",
+    "arr": "2026-12-06T20:10:00+08:00",
+    "stops": 1,
+    "airline": "Cathay Pacific"
+   },
+   "by_airline": {
+    "Cathay Pacific": 86450
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     86450
     ]
    ]
   },
