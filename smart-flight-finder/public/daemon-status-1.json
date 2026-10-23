@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T12:38:57+00:00",
+ "at": "2026-10-23T12:47:58+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2015,
+ "fares_saved": 2016,
  "log": [
   "12:37:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:37:27 http front door: ['https://muscle-thousand-yacht-antibody.trycloudflare.com', 'https://625f6590cab6f8.lhr.life']",
@@ -13,6 +13,11 @@
   "12:38:31 request received: rid httptest1792759111 20 keys",
   "12:38:31 handle httptest1792759111: first_chunk=True total=20",
   "12:38:32 request httptest1792759111: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "12:38:33 request httptest1792759111: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "12:38:33 request httptest1792759111: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "12:44:29 rtc xfzmtyhdn4: answered",
+  "12:47:37 rtc 71wynn8q0u: answered",
+  "12:47:39 rtc 71wynn8q0u: data channel open",
+  "12:47:40 request received: rid mvkyt7sdiykuw.0 25 keys",
+  "12:47:40 handle mvkyt7sdiykuw.0: first_chunk=True total=25"
  ]
 }
