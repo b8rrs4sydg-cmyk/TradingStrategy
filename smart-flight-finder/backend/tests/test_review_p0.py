@@ -116,3 +116,20 @@ def test_page_metro_table_matches_python():
     }
     assert ground == {"|".join(sorted(k)): v for k, v in GROUND.items()}
     assert SAME_METRO_TRANSFER == (75, 400)  # hard-coded in ojTransfer
+
+
+def test_fare_status_policy():
+    from app.providers.fare_status import FareStatus, is_failure, may_mark_unavailable, retry_after
+
+    assert may_mark_unavailable(FareStatus.NO_RESULT)
+    assert not any(may_mark_unavailable(s) for s in FareStatus if s is not FareStatus.NO_RESULT)
+    assert all(
+        is_failure(s) for s in (FareStatus.TIMEOUT, FareStatus.BLOCKED, FareStatus.PARSE_ERROR)
+    )
+    assert (
+        retry_after(FareStatus.TIMEOUT, 1)
+        < retry_after(FareStatus.TIMEOUT, 3)
+        <= retry_after(FareStatus.TIMEOUT, 99)
+    )
+    assert retry_after(FareStatus.BLOCKED) > retry_after(FareStatus.TIMEOUT)
+    assert retry_after(FareStatus.NOT_QUERIED) == 0
