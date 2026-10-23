@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T12:26:19+00:00",
+ "at": "2026-10-23T12:27:51+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -11,6 +11,8 @@
   "12:24:49 http front door: ['https://mystery-ethics-officers-ballet.trycloudflare.com', 'https://b38887ddbc52e7.lhr.life']",
   "12:24:49 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
   "12:25:52 request received: rid httptest1792758352 20 keys",
-  "12:25:52 handle httptest1792758352: first_chunk=True total=20"
+  "12:25:52 handle httptest1792758352: first_chunk=True total=20",
+  "12:26:37 request httptest1792758352: chunk of 20 keys done in 44s; paths {'http': 17, 'browser': 3}, browser waits 3 max 43s sum 51s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 17, 'miss': 3, 'blocked': 0, 'tries': 29, 'empty': 12}, audit 0/0 agree",
+  "12:26:37 request httptest1792758352: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
