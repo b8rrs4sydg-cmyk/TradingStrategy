@@ -186,7 +186,7 @@ def test_http_reader_remembers_why_it_gave_no_price():
     assert out is None and f.why["ow|TPE|NRT|2027-04-01"] == "blocked"
 
 
-def test_any_pattern_allows_same_country_ends_but_not_d_in_their_country():
+def test_default_pattern_allows_same_country_ends_but_not_d_in_their_country():
     from datetime import date
 
     from app.services.strategies.back_to_back import FourLegPlanner
@@ -203,8 +203,9 @@ def test_any_pattern_allows_same_country_ends_but_not_d_in_their_country():
         "outer_stations": ["NRT", "KIX"],
         "destinations": ["LHR", "HND"],
     }
-    assert not FourLegPlanner(FakeFareProvider()).plan(**kw)  # default: ends in different countries only
-    plans = FourLegPlanner(FakeFareProvider(), pattern="any").plan(**kw)
+    plans = FourLegPlanner(FakeFareProvider()).plan(**kw)  # default: same- or different-country ends
+    strict = FourLegPlanner(FakeFareProvider(), pattern="different").plan(**kw)
+    assert not strict  # NRT and KIX are both in Japan
     ends = {(p.tickets[1].legs[0].origin, p.tickets[1].legs[3].destination) for p in plans}
     assert ends
     assert all(

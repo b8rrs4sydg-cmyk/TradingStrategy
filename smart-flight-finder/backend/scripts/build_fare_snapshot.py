@@ -31,6 +31,7 @@ from app.providers.fare_db import FareDatabase, live_path
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS, scrape
 from app.services.crawl_plan import (
     CrawlConfig,
+    four_leg_hits,
     planner_queries,
     rank_multi_city,
     screen_four_leg,
@@ -114,10 +115,12 @@ def main() -> None:
     picked += [k for k in audit if k not in picked]  # after ranking, which would drop them
     print(
         f"stage2: {len(picked)} of {len(mc)} multi-city queries worth fetching "
-        f"({pruned} four-leg combinations cannot beat round trips by their one-way floor)",
+        f"({pruned} four-leg combinations screened out by the one-way floor; the screen is off unless SCREEN_ONE_WAY=1)",
         flush=True,
     )
     fares2, missing2 = crawl(picked, "stage2", concurrency=max(2, args.concurrency - 2), timeout_ms=40000)
+    hits, priced = four_leg_hits(fares2, known, cfg)
+    print(f"four-leg hit rate: {hits} of {priced} priced four-leg tickets beat their saving room", flush=True)
 
     db.coverage = {**cfg.as_dict(), "horizon_days": GOOGLE_HORIZON_DAYS, "crawled_on": today.isoformat()}
     db.merge(fares1 | fares2, today=today, missing=missing1 + missing2)

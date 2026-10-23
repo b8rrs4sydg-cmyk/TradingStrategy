@@ -7,6 +7,7 @@ separate trips, so their planners take an ordered pair of trip slots
 
 from __future__ import annotations
 
+import os
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, replace
 from datetime import date
@@ -57,10 +58,11 @@ def quote(
     return replace(t, searched_segments=segs) if t else None
 
 
-# A multi-city fare is never meaningfully below the sum of its one-way legs (measured on 70 real fares: lowest ratio 1.04).
-# 0.95 of that sum is therefore a safe floor for pruning: a ticket whose floor already reaches the best total found so
-# far cannot improve it, so it is not even asked for.
-ONE_WAY_FLOOR_FACTOR = 0.95
+# Pruning on a share of the one-way sum is OFF by default. It assumed a multi-city fare is never below the sum of its one-way legs
+# (measured on 70 fares); real data disproves it: a same-carrier four-leg (EVA, Seoul-Taipei-Paris-Taipei-Seoul) costs 39,913 while the
+# one-ways add up to about 49,600, because one-way fares of full-service airlines are dear and the through fare is built from
+# round-trip components. With 0 the only pruning left is the exact one (the singles alone already reach the best total).
+ONE_WAY_FLOOR_FACTOR = float(os.getenv("ONE_WAY_FLOOR_FACTOR", "0"))
 
 
 def one_way_floor(provider: FlightOfferProvider, segments: Sequence[Segment], adults: int) -> float | None:

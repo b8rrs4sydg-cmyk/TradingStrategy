@@ -26,6 +26,7 @@ from app.providers.fare_db import FareDatabase, live_path
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS
 from app.services.crawl_plan import (
     CrawlConfig,
+    four_leg_hits,
     planner_queries,
     rank_multi_city,
     screen_four_leg,
@@ -168,6 +169,8 @@ def main() -> None:
         print(f"stage2 shard {i}/{n}: {len(keys)} of {len(ranked)} ranked multi-city queries "
               f"({len(plan['mc'])} candidates)", flush=True)
         fares, missing = crawl(keys, f"s2-{i}", concurrency=max(3, args.concurrency - 2), timeout_ms=40000)
+        hits, priced = four_leg_hits(fares, known, cfg)
+        print(f"four-leg hit rate: {hits} of {priced} priced four-leg tickets beat their saving room", flush=True)
     write_part(args.out, fares, missing)
     print(f"{args.cmd} shard {i}/{n}: {len(fares)} fetched, {len(missing)} missing")
 

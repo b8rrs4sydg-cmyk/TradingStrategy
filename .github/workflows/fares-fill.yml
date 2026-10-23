@@ -30,7 +30,7 @@ concurrency:
 
 env:
   MAX_MC: ${{ inputs.max_multi_city || '6000' }}
-  OUTSTATION_PATTERN: ${{ inputs.outstation_pattern || 'different' }}
+  OUTSTATION_PATTERN: ${{ inputs.outstation_pattern || 'any' }}
 
 jobs:
   plan:

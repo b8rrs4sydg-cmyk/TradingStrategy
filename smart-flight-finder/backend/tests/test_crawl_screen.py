@@ -7,6 +7,7 @@ import pytest
 from app.providers.google_flights import parse_key
 from app.services.crawl_plan import (
     CrawlConfig,
+    four_leg_room,
     leg_keys,
     one_way_floor,
     planner_queries,
@@ -58,19 +59,19 @@ def test_with_leg_keys_adds_each_leg_once(plan):
 def test_cheap_legs_keep_the_combinations_dear_legs_prune_them(plan):
     stage1, _, four = plan
     cheap = prices_for(stage1, four, ow=500, leg=500)  # floor 0.95 x 2000 << room
-    kept, audit, pruned = screen_four_leg(four, cheap, CFG, drop_unknown=True)
+    kept, audit, pruned = screen_four_leg(four, cheap, CFG, drop_unknown=True, enabled=True)
     assert pruned == 0 and audit == [] and set(kept) == set(four)
     dear = prices_for(stage1, four, ow=1000, leg=9000)  # floor 0.95 x 36000 > room (36000 - 2000)
-    kept, audit, pruned = screen_four_leg(four, dear, CFG, drop_unknown=True, audit=3)
+    kept, audit, pruned = screen_four_leg(four, dear, CFG, drop_unknown=True, audit=3, enabled=True)
     assert kept == [] and len(audit) == 3 and pruned == len(four) - 3  # only the audit sample is still fetched
 
 
 def test_unknown_legs_are_kept_unless_asked_to_drop_them(plan):
     stage1, _, four = plan
     prices = {k: (20000 if "|NRT|" in k else 8000) if k.startswith("rt|") else 1000 for k in stage1}
-    kept, _, pruned = screen_four_leg(four, prices, CFG)
+    kept, _, pruned = screen_four_leg(four, prices, CFG, enabled=True)
     assert kept == list(four) and pruned == 0
-    kept, _, _ = screen_four_leg(four, prices, CFG, drop_unknown=True)
+    kept, _, _ = screen_four_leg(four, prices, CFG, drop_unknown=True, enabled=True)
     assert (
         kept == []
     )  # the legs were asked for but Google has no flight: the itinerary cannot exist
@@ -88,7 +89,7 @@ def test_two_segment_keys_are_not_screened(plan):
     two = [k for k in mc if len(parse_key(k)[1]) == 2]
     if not two:
         pytest.skip("this scenario makes no open-jaw queries")
-    kept, _, pruned = screen_four_leg(two, {}, CFG, drop_unknown=True)
+    kept, _, pruned = screen_four_leg(two, {}, CFG, drop_unknown=True, enabled=True)
     assert kept == two and pruned == 0
 
 
@@ -99,9 +100,30 @@ def test_audit_keys_survive_ranking_when_the_caller_appends_them(plan):
 
     stage1, mc, four = plan
     dear = prices_for(stage1, four, ow=1000, leg=9000)
-    kept, audit, _ = screen_four_leg(mc, dear, CFG, audit=5)
+    kept, audit, _ = screen_four_leg(mc, dear, CFG, audit=5, enabled=True)
     assert len(audit) == 5
     ranked = rank_multi_city(kept, dear, CFG, max_multi_city=260)
     assert not set(audit) & set(ranked)  # ranking alone loses them ...
     ranked += [k for k in audit if k not in ranked]
     assert set(audit) <= set(ranked)  # ... appending them afterwards keeps them
+
+
+def test_screening_is_off_by_default_and_keeps_every_key(plan):
+    _, _, four = plan
+    prices = prices_for(plan[0], four, ow=1000, leg=9000)  # dear legs: the old screen would prune them all
+    kept, audit, pruned = screen_four_leg(four, prices, CFG)
+    assert kept == list(four) and audit == [] and pruned == 0
+
+
+def test_four_leg_hits_counts_tickets_cheaper_than_their_saving_room(plan):
+    from app.services.crawl_plan import four_leg_hits
+
+    stage1, _, four = plan
+    prices = prices_for(stage1, four)
+    key = four[0]
+    room = four_leg_room(key, prices, CFG)[0]
+    assert room
+    cheap = {key: {"price": int(room) - 1}}
+    dear = {key: {"price": int(room) + 1}}
+    assert four_leg_hits(cheap, prices, CFG) == (1, 1)
+    assert four_leg_hits(dear, prices, CFG) == (0, 1)

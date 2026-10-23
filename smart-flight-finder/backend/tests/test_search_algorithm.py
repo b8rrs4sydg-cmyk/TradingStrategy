@@ -247,8 +247,9 @@ def test_one_way_floor_pruning_skips_asks_without_changing_the_plans(monkeypatch
         )
         return Counting.asks, [(p.total_cost, p.explain) for p in plans]
 
+    monkeypatch.setattr(two_trip, "ONE_WAY_FLOOR_FACTOR", 0.95)  # the opt-in pruning
     pruned_asks, pruned_plans = run()
-    monkeypatch.setattr(two_trip, "ONE_WAY_FLOOR_FACTOR", 0.0)  # floor 0: never prunes
+    monkeypatch.setattr(two_trip, "ONE_WAY_FLOOR_FACTOR", 0.0)  # the default: only the exact bound
     full_asks, full_plans = run()
     assert pruned_plans == full_plans
     assert pruned_asks < full_asks

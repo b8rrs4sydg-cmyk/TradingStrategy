@@ -28,6 +28,7 @@
 
 from __future__ import annotations
 
+import os
 from collections import defaultdict
 from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
@@ -42,7 +43,10 @@ from app.services.search import SearchService
 
 PROMISING = 0.8  # four-leg budget ≥ 80% of the trip-A round trip
 PER_GROUP = 3  # date variants per promising multi-city combination
-SCREEN_FACTOR = 0.95  # floor = this share of the sum of the legs' one-way fares
+SCREEN_FACTOR = 0.95  # floor = this share of the sum of the legs' one-way fares (only used when screening is switched on)
+# Screening on the one-way sum is OFF by default (SCREEN_ONE_WAY=1 turns it on): it pruned a four-leg ticket that does beat three
+# round trips. Stage 2 is still capped and ranked by the saving room (rank_multi_city), which does not rely on that premise.
+SCREEN_ONE_WAY = os.getenv("SCREEN_ONE_WAY", "0") == "1"
 SCREEN_AUDIT = 10  # closest pruned combinations that are fetched anyway
 
 
@@ -156,6 +160,7 @@ def screen_four_leg(
     *,
     drop_unknown: bool = False,
     audit: int = SCREEN_AUDIT,
+    enabled: bool | None = None,
 ) -> tuple[list[str], list[str], int]:
     """(keys worth fetching, audit keys, how many were left out).
 
@@ -169,6 +174,8 @@ def screen_four_leg(
     bound untested. Two-segment keys are not screened (a pair of them forms a plan).
     """
 
+    if not (SCREEN_ONE_WAY if enabled is None else enabled):
+        return list(mc_keys), [], 0
     kept: list[str] = []
     pruned: list[tuple[float, str]] = []
     for key in mc_keys:
@@ -221,3 +228,19 @@ def rank_multi_city(
         picked += items[:k]
     picked.sort(reverse=True)  # most promising first, so the cap drops the weakest
     return [key for _, key in picked[:max_multi_city]]
+
+
+def four_leg_hits(fetched: Mapping[str, dict], prices: Mapping[str, int], cfg: CrawlConfig) -> tuple[int, int]:
+    """(four-leg tickets priced this run that cost less than the saving room, four-leg tickets priced). The hit rate is the
+    number to watch when changing what stage 2 asks for."""
+
+    priced = hits = 0
+    for key, entry in fetched.items():
+        if not key.startswith("mc|") or len(parse_key(key)[1]) != 4 or not entry.get("price"):
+            continue
+        room, _, _ = four_leg_room(key, prices, cfg)
+        if room is None:
+            continue
+        priced += 1
+        hits += entry["price"] < room
+    return hits, priced

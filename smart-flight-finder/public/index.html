@@ -1798,7 +1798,10 @@ const SCREEN = {
   unscreened: new Set(),    // mc keys with a leg that has no one-way fare to measure by: asked as before
   gone: new Set(),          // one-way keys Google has no fare for / the crawler could not read
 };
-const screeningOn = () => !SCREEN.all && !SCREEN.off;
+/* The one-way-sum screen is OFF: it pruned a four-leg ticket that does beat three round trips (same-carrier through fares are not bounded
+   by the sum of the one-ways). The code stays for a calibrated re-use; SCREEN_ENABLED switches it on. */
+const SCREEN_ENABLED = false;
+const screeningOn = () => SCREEN_ENABLED && !SCREEN.all && !SCREEN.off;
 const isMirrored = segs => segs.length === 2 && segs[0][0] === segs[1][1] && segs[0][1] === segs[1][0];
 // the fare key quote() really prices a ticket under: a mirrored pair is a round trip
 const ticketKey = segs => (isMirrored(segs) ? fareKeyRT(segs[0][0], segs[0][1], segs[0][2], segs[1][2]) : fareKeyMC(segs));
@@ -2031,7 +2034,7 @@ function planFourLegTriple(req, P, Q, R) {
   const baseX = new Map(stations.map(x => [x, cheapestRoundTrip(HUB, x, P, req.adults)]));
   const baseY = new Map(stations.map(y => [y, cheapestRoundTrip(HUB, y, R, req.adults)]));
   for (const x of stations) for (const y of stations) {
-    if (countryOf(y) === countryOf(x) || !baseX.get(x) || !baseY.get(y)) continue;   // OUTSTATION_PATTERN=different (default)
+    if (!baseX.get(x) || !baseY.get(y)) continue;   // OUTSTATION_PATTERN=any (default): the ends may share a country; only D must be elsewhere
     for (const dest of new Set(req.destinations)) {
       if (dest === x || dest === y || dest === HUB || TW_AIRPORTS.has(dest)) continue;
       if (countryOf(dest) === countryOf(x) || countryOf(dest) === countryOf(y)) continue;
