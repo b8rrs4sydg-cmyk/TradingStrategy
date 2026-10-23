@@ -810,9 +810,9 @@
 
     /* one view at a time */
     body[data-view="search"] :is(#results, #top100, #dbcard),
-    body[data-view="results"] :is(.hero, #search-card, #top100, #dbcard),
-    body[data-view="top100"] :is(.hero, #search-card, #results, #dbcard),
-    body[data-view="db"] :is(.hero, #search-card, #results, #top100) { display: none }
+    body[data-view="results"] :is(.hero, #search-card, #check-card, #top100, #dbcard),
+    body[data-view="top100"] :is(.hero, #search-card, #check-card, #results, #dbcard),
+    body[data-view="db"] :is(.hero, #search-card, #check-card, #results, #top100) { display: none }
 
     /* large-title header instead of a billboard */
     .hero { padding: 14px 4px 6px; text-align: left }
@@ -931,6 +931,8 @@
     .db-actions { flex-wrap: wrap; gap: 8px }
     .t100 { padding: 14px }
   }
+  #check-card summary { cursor: pointer; font-weight: 600; font-size: 17px }
+  .chk-out { margin-top: 12px } .chk-table td { padding: 6px 8px } .chk-table .r { text-align: right }
 </style>
 </head>
 <body>
@@ -1021,6 +1023,28 @@
         <small id="elapsed" aria-live="polite"></small>
       </div>
     </form>
+  </section>
+
+
+  <section class="card" id="check-card" aria-labelledby="chk-title">
+    <details id="chk-details">
+      <summary id="chk-title">已經找到一張四腿票？貼上行程驗算</summary>
+      <p class="hint">例：首爾→台北→巴黎→台北→首爾。比較「單買三趟來回」和「單買初段＋這張四腿票＋單買最後一段」，價格取資料庫的實價；缺的可以請爬蟲查。</p>
+      <div class="grid grid-2" style="margin-top:10px">
+        <label class="field"><span>外站 X（第 1 段起點）</span><input id="chk-x" value="ICN" maxlength="3" autocapitalize="characters"></label>
+        <label class="field"><span>目的地 D</span><input id="chk-d" value="CDG" maxlength="3" autocapitalize="characters"></label>
+        <label class="field"><span>外站 Y（第 4 段終點）</span><input id="chk-y" value="ICN" maxlength="3" autocapitalize="characters"></label>
+        <label class="field"><span>四腿票每人總價 (TWD)</span><input id="chk-price" type="number" min="0" placeholder="例如 37843"></label>
+        <label class="field"><span>第 1 段 X→台北</span><input id="chk-d1" type="date"></label>
+        <label class="field"><span>第 2 段 台北→D</span><input id="chk-d2" type="date"></label>
+        <label class="field"><span>第 3 段 D→台北</span><input id="chk-d3" type="date"></label>
+        <label class="field"><span>第 4 段 台北→Y</span><input id="chk-d4" type="date"></label>
+        <label class="field"><span>單買初段 台北→X（留空＝第 1 段前一天）</span><input id="chk-h" type="date"></label>
+        <label class="field"><span>單買最後一段 Y→台北（留空＝第 4 段後 3 天）</span><input id="chk-t" type="date"></label>
+      </div>
+      <div class="submit-row" style="position:static;margin-top:12px"><button type="button" id="chk-run" class="btn-primary">驗算</button><button type="button" id="chk-ask" class="btn-ghost" hidden>請爬蟲查缺的價格</button></div>
+      <div id="chk-out" class="chk-out" aria-live="polite"></div>
+    </details>
   </section>
 
   <section class="card" id="top100" aria-labelledby="t100-title">
@@ -3786,6 +3810,42 @@ function wireTabs() {
   }));
 }
 
+
+/* ---- 四腿票驗算: the itinerary a person found elsewhere, against three ordinary round trips (real fares from the database) ---- */
+const money = n => n.toLocaleString();
+function checkFourLeg() {
+  const v = id => document.getElementById(id).value.trim();
+  const X = v('chk-x').toUpperCase(), D = v('chk-d').toUpperCase(), Y = v('chk-y').toUpperCase();
+  const price = Number(v('chk-price')), [d1, d2, d3, d4] = ['chk-d1', 'chk-d2', 'chk-d3', 'chk-d4'].map(v);
+  const out = document.getElementById('chk-out'), ask = document.getElementById('chk-ask');
+  if (!X || !D || !Y || !price || !d1 || !d2 || !d3 || !d4) { out.innerHTML = '<p class="hint">請填寫三個機場、四個日期與四腿票價格。</p>'; ask.hidden = true; return; }
+  const head = v('chk-h') || addDays(d1, -1), tail = v('chk-t') || addDays(d4, 3);
+  const rows = [], missing = [];
+  const get = (label, key) => { const e = fareEntry(key); if (!e) missing.push(key); rows.push({ label, key, price: e ? e.price : null, airline: e?.first?.airline || '' }); return e ? e.price : null; };
+  const rt1 = get(`來回 台北⇄${X}（${head}→${d1}）`, fareKeyRT(HUB, X, head, d1));
+  const rt2 = get(`來回 台北⇄${D}（${d2}→${d3}）`, fareKeyRT(HUB, D, d2, d3));
+  const rt3 = get(`來回 台北⇄${Y}（${d4}→${tail}）`, fareKeyRT(HUB, Y, d4, tail));
+  const owH = get(`單買初段 台北→${X}（${head}）`, fareKeyOW(HUB, X, head));
+  const owT = get(`單買最後一段 ${Y}→台北（${tail}）`, fareKeyOW(Y, HUB, tail));
+  const have = (...a) => a.every(x => x != null);
+  let verdict = '';
+  const table = `<table class="db-table chk-table"><tbody>${rows.map(r => `<tr><td>${escapeHtml(r.label)}</td><td class="r">${r.price != null ? money(r.price) : '資料庫沒有'}</td><td>${escapeHtml(r.airline)}</td></tr>`).join('')}</tbody></table>`;
+  if (have(rt1, rt2, rt3, owH, owT)) {
+    const base = rt1 + rt2 + rt3, mine = owH + price + owT, diff = base - mine;
+    verdict = `<p><b>單買三趟來回：</b>${money(base)}　<b>四腿票方案：</b>${money(owH)} + ${money(price)} + ${money(owT)} = ${money(mine)}</p>
+      <p class="${diff > 0 ? 'good' : ''}" style="font-size:17px"><b>${diff > 0 ? `四腿票方案便宜 ${money(diff)}（${Math.round(diff / base * 100)}%）` : diff < 0 ? `四腿票方案貴 ${money(-diff)}，不划算` : '兩者一樣'}</b></p>
+      <p class="hint">沒算：行李、改票彈性、四腿票第 1 段必須搭乘（沒搭後面全作廢）、兩邊航班品質差異（直飛與轉機）。</p>`;
+  } else {
+    verdict = `<p class="hint">還缺 ${missing.length} 筆價格，無法比較。${live.ready || live.ntfyOk ? '按下面的按鈕請爬蟲查，查到後再按「驗算」。' : '爬蟲目前不在線；之後再試。'}</p>`;
+  }
+  out.innerHTML = table + verdict;
+  ask.hidden = !missing.length || !(live.ready || live.ntfyOk);
+  ask.onclick = () => { startLookup(missing); ask.hidden = true; out.insertAdjacentHTML('beforeend', '<p class="hint">已送出查價，完成後再按「驗算」。</p>'); };
+}
+function wireCheck() {
+  document.getElementById('chk-run').addEventListener('click', checkFourLeg);
+}
+
 function wireSubmit() {
   const form = document.getElementById('search-form');
   let byUser = false;   // real clicks / shortcut only — not the automatic re-search after a database update
@@ -4742,6 +4802,7 @@ function init() {
   syncRangeLabels();
   toggleFourLegExtras();
   wireSubmit();
+  wireCheck();
   wireTabs();
   wireResultsControls();
   wireHelp();
