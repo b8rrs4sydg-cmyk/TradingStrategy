@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T12:50:05+00:00",
+ "at": "2026-10-23T12:51:37+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2019,
+ "fares_saved": 2020,
  "log": [
   "12:37:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:38:02 http front door: ['https://smell-photographic-norfolk-river.trycloudflare.com', 'https://8ecebfa314866d.lhr.life']",
@@ -20,6 +20,8 @@
   "12:47:40 request received: rid mvkyt7sdiykuw.4 24 keys",
   "12:47:40 handle mvkyt7sdiykuw.4: first_chunk=True total=24",
   "12:50:03 request mvkyt7sdiykuw.4: chunk of 24 keys done in 143s; paths {'http': 28, 'browser-crashed': 16}, browser waits 16 max 136s sum 1217s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 16, 'blocked': 0, 'tries': 62, 'empty': 34}, audit 2/2 agree",
-  "12:50:04 request mvkyt7sdiykuw.4: final sent (24/24); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "12:50:04 request mvkyt7sdiykuw.4: final sent (24/24); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "12:51:05 request received: rid mvkyxo9y7j7jt.4 30 keys",
+  "12:51:05 handle mvkyxo9y7j7jt.4: first_chunk=True total=30"
  ]
 }
