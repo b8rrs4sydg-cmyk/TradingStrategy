@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:26:22+00:00",
+ "at": "2026-10-23T14:35:24+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2019,
+ "fares_saved": 2021,
  "log": [
   "12:51:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:51:33 http front door: ['https://associates-appointment-opens-wolf.trycloudflare.com', 'https://8f7f7eb26ac955.lhr.life']",
@@ -121,6 +121,8 @@
   "14:25:24 request mvl27vn3on3nv.7: chunk of 23 keys done in 140s; paths {'http': 61, 'browser-crashed': 373, 'browser': 32}, browser waits 405 max 236s sum 31198s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 61, 'miss': 143, 'blocked': 0, 'tries': 118, 'empty': 57}, audit 0/0 a",
   "14:25:24 request mvl27vn3on3nv.7: final sent (23/23); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "14:26:11 rtc 099c2y3v3l: answered",
-  "14:26:12 rtc 099c2y3v3l: data channel open"
+  "14:26:12 rtc 099c2y3v3l: data channel open",
+  "14:33:59 request received: rid mvl2lzz8xjg3m.5 16 keys",
+  "14:33:59 handle mvl2lzz8xjg3m.5: first_chunk=True total=16"
  ]
 }

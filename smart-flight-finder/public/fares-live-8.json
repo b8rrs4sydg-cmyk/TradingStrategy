@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:26:22+00:00",
+ "generated_at": "2026-10-23T14:35:24+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -2224,6 +2224,22 @@
     ]
    ]
   },
+  "mc|HND-TPE-2026-12-06|TPE-DMK-2026-12-18|DMK-TPE-2026-12-20|TPE-HND-2026-12-24": {
+   "price": 141873,
+   "first": {
+    "dep": "2026-12-06T07:15:00+09:00",
+    "arr": "2026-12-06T12:55:00+08:00",
+    "stops": 1,
+    "airline": "ANA, EVA Air"
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     141873
+    ]
+   ]
+  },
   "mc|HND-TPE-2026-12-27|TPE-HKG-2027-02-10|HKG-TPE-2027-02-14|TPE-DAD-2027-04-30": {
    "price": 89634,
    "first": {
@@ -3917,6 +3933,28 @@
     [
      "2026-10-22",
      79179
+    ]
+   ]
+  },
+  "mc|NRT-TPE-2026-11-08|TPE-PUS-2026-11-13|PUS-TPE-2026-11-15|TPE-NRT-2026-12-24": {
+   "price": 76102,
+   "first": {
+    "dep": "2026-11-08T14:35:00+09:00",
+    "arr": "2026-11-08T17:45:00+08:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 76102,
+    "EVA Air": 91523,
+    "STARLUX Airlines": 92251,
+    "JAL": 105199
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     76102
     ]
    ]
   },
