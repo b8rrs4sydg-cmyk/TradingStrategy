@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T11:34:50+00:00",
+ "at": "2026-10-23T11:36:22+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2030,
+ "fares_saved": 2034,
  "log": [
   "10:46:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:46:32 http front door: ['https://spy-indicates-revenues-placing.trycloudflare.com', 'https://249248bafeb3b0.lhr.life']",
@@ -23,6 +23,8 @@
   "11:34:06 request mvkw48f7eio20.6: chunk of 13 keys done in 98s; paths {'http': 21, 'browser-none': 12}, browser waits 12 max 93s sum 740s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 12, 'blocked': 0, 'tries': 44, 'empty': 23}, audit 1/1 agree",
   "11:34:06 request mvkw58n7fan62.6: chunk of 12 keys done in 68s; paths {'http': 21, 'browser-none': 12}, browser waits 12 max 93s sum 740s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 12, 'blocked': 0, 'tries': 44, 'empty': 23}, audit 1/1 agree",
   "11:34:08 request mvkw48f7eio20.6: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:34:08 request mvkw58n7fan62.6: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:34:08 request mvkw58n7fan62.6: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:35:01 request received: rid mvkw7tzkr9u8u.6 21 keys",
+  "11:35:01 handle mvkw7tzkr9u8u.6: first_chunk=True total=21"
  ]
 }
