@@ -1,18 +1,18 @@
 {
- "at": "2026-10-19T12:50:36+00:00",
+ "at": "2026-10-23T00:51:07+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1462,
+ "fares_saved": 2004,
  "log": [
-  "12:49:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "12:49:06 http front door: ['https://guitar-plan-type-architect.trycloudflare.com', 'https://bf0d3d98059ebb.lhr.life']",
-  "12:49:06 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "12:50:09 request received: rid httptest1792414208 20 keys",
-  "12:50:09 handle httptest1792414208: first_chunk=True total=20",
-  "12:50:10 request httptest1792414208: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "12:50:10 request httptest1792414208: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:49:32 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:49:37 http front door: ['https://doc-wallpaper-managers-fired.trycloudflare.com', 'https://cb94414c36f938.lhr.life']",
+  "00:49:37 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:50:42 request received: rid httptest1792716642 20 keys",
+  "00:50:42 handle httptest1792716642: first_chunk=True total=20",
+  "00:50:44 request httptest1792716642: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
+  "00:50:45 request httptest1792716642: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
