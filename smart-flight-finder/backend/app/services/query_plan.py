@@ -13,9 +13,22 @@ spent the whole budget on whatever route happened to be listed first:
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping
 
 from app.data.metro import route_key
+from app.providers.recording import RecordingProvider
+
+
+def required_queries(run: Callable[[RecordingProvider], object]) -> dict[str, int]:
+    """The single way to learn what the planners will ask: run them once on a recorder, get query -> times asked.
+
+    ``run`` receives the recorder and drives the planners with it (``SearchService`` for a live search, the crawl plan
+    for the crawler), so both consumers share one definition of "the plan" instead of each re-implementing the dry run.
+    """
+
+    rec = RecordingProvider()
+    run(rec)
+    return rec.keys
 
 
 def kind_of(key: str) -> str:

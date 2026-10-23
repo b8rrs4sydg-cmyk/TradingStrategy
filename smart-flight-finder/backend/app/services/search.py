@@ -154,12 +154,13 @@ class SearchService:
         raw = self._raw_provider
         if hasattr(raw, "prefetch"):
             # Dry run to learn every query, then fetch missing ones live (if on).
-            from app.providers.recording import RecordingProvider
+            from app.services.query_plan import required_queries
 
-            rec = RecordingProvider()
-            self.provider = rec
-            self._collect(req)
-            raw.prefetch(rec.keys)
+            def dry_run(rec) -> None:
+                self.provider = rec
+                self._collect(req)
+
+            raw.prefetch(required_queries(dry_run))
 
         # Fresh cache per request — never leak offers between users.
         self.provider = CachingProvider(raw)

@@ -54,3 +54,8 @@ KIX / NRT / HND 兩兩配對（含地面交通 400～4,200 TWD），資料庫內
 
 ## 四腿票預設改回 different（2026-10-23，依使用者決定）
 取消同國頭尾的爬蟲（`fares-fill` any 輪次從未開始），`any` 預設沒有真實報價佐證，故預設改回 `different`；頁面 `planFourLegTriple` 同步。`any`／`same` 仍可用環境變數 `OUTSTATION_PATTERN` 啟用，之後有真實報價再議。
+
+## 補充：查詢計畫介面與 P(c)（2026-10-23）
+- 01：`query_plan.required_queries(run)` 成為「規劃器會問哪些查詢」的唯一入口，`SearchService` 的即時預取與爬蟲計畫（`planner_queries`）都改用它，不再各自重寫乾跑。各策略的票型生成仍各自獨立：統一成 `generate_candidates` 不改變任何結果，故不做。
+- 02：價格下界剪枝仍不做——多城市票價可低至單程總和的 1.04 倍，沒有可靠下界；有效的下界（單程地板價）已用於頁面與爬蟲的篩選，並有稽核抽樣。
+- 05：爬蟲階段 2 已是 P(c) 的可用版本：`four_leg_room` 以真實第一階段票價算出「還能划算的上限」再排序（`rank_multi_city`）。即時查價階段缺少候選基準價，無法算 P(c)，維持共用次數＋票頁成本＋路線輪流。

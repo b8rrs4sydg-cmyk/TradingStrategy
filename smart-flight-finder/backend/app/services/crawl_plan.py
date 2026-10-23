@@ -36,8 +36,8 @@ from datetime import date, timedelta
 from app.data.taiwan_holidays_2027 import LEAVE_STRATEGIES
 from app.models.enums import TicketStrategyType, TripType
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS, fare_key, parse_key
-from app.providers.recording import RecordingProvider
 from app.schemas.itinerary import CandidateWindowIn, ItineraryRequestIn
+from app.services.query_plan import required_queries
 from app.services.search import SearchService
 
 PROMISING = 0.8  # four-leg budget ≥ 80% of the trip-A round trip
@@ -90,10 +90,9 @@ def build_request(cfg: CrawlConfig, *, today: date) -> ItineraryRequestIn:
 def planner_queries(cfg: CrawlConfig, *, today: date) -> list[str]:
     """Every query the planners make for ``cfg`` within Google's horizon."""
 
-    rec = RecordingProvider()
-    SearchService(rec).run(build_request(cfg, today=today))
+    keys = required_queries(lambda rec: SearchService(rec).run(build_request(cfg, today=today)))
     horizon = today + timedelta(days=GOOGLE_HORIZON_DAYS)
-    return [k for k in rec.keys if all(today < d <= horizon for _, _, d in parse_key(k)[1])]
+    return [k for k in keys if all(today < d <= horizon for _, _, d in parse_key(k)[1])]
 
 
 def split_stages(keys: Sequence[str]) -> tuple[list[str], list[str]]:

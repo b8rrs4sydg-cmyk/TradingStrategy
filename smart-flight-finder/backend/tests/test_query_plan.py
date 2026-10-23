@@ -31,3 +31,17 @@ def test_known_fares_are_skipped_and_zero_budget_returns_nothing():
 
 def test_hnd_and_nrt_count_as_one_route():
     assert route_of("ow|TPE|HND|2027-04-01") == route_of("rt|TPE|NRT|2027-04-01|2027-04-05")
+
+
+def test_required_queries_counts_what_the_planner_asks():
+    from datetime import date
+
+    from app.services.query_plan import required_queries
+
+    def run(rec):
+        rec.search(origin="TPE", destination="NRT", departure_date=date(2027, 2, 5), return_date=date(2027, 2, 9))
+        rec.search(origin="TPE", destination="NRT", departure_date=date(2027, 2, 5), return_date=date(2027, 2, 9))
+        rec.search(origin="TPE", destination="KIX", departure_date=date(2027, 2, 5))
+
+    keys = required_queries(run)
+    assert sorted(keys.values()) == [1, 2]
