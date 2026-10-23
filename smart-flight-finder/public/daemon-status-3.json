@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:38:09+00:00",
+ "at": "2026-10-23T14:51:41+00:00",
  "publishes": {
-  "ok": 4,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2111,
+ "fares_saved": 2113,
  "log": [
   "12:51:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:51:09 http front door: ['https://wan-stones-anthropology-companies.trycloudflare.com', 'https://823da3fb65de56.lhr.life']",
@@ -121,6 +121,10 @@
   "14:33:59 handle mvl2lzz8xjg3m.2: first_chunk=True total=19",
   "14:35:03 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "14:37:11 request mvl2lzz8xjg3m.2: chunk of 19 keys done in 192s; paths {'http': 50, 'browser-crashed': 342, 'browser': 33}, browser waits 375 max 221s sum 28899s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 143, 'blocked': 0, 'tries': 101, 'empty': 51}, audit 2/2 a",
-  "14:37:12 request mvl2lzz8xjg3m.2: final sent (19/19); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "14:37:12 request mvl2lzz8xjg3m.2: final sent (19/19); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "14:46:03 rtc y7x4h2kggz: answered",
+  "14:46:04 rtc y7x4h2kggz: data channel open",
+  "14:51:14 request received: rid mvl387ao0vz9o.3 7 keys",
+  "14:51:14 handle mvl387ao0vz9o.3: first_chunk=True total=7"
  ]
 }
