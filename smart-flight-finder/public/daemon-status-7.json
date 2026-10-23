@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T05:14:32+00:00",
+ "at": "2026-10-23T05:20:05+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 1879,
  "log": [
-  "05:12:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:13:02 http front door: ['https://rim-controllers-beneath-velocity.trycloudflare.com', 'https://8f53e9dbaec3cc.lhr.life']",
-  "05:13:02 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:14:07 request received: rid httptest1792732446 20 keys",
-  "05:14:07 handle httptest1792732446: first_chunk=True total=20",
-  "05:14:08 request httptest1792732446: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:14:09 request httptest1792732446: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:18:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:18:35 http front door: ['https://wayne-excessive-rep-geo.trycloudflare.com', 'https://2f37d330071374.lhr.life']",
+  "05:18:35 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:19:37 request received: rid httptest1792732777 20 keys",
+  "05:19:37 handle httptest1792732777: first_chunk=True total=20",
+  "05:19:39 request httptest1792732777: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:19:39 request httptest1792732777: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
