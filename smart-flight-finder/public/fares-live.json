@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:39:50+00:00",
+ "generated_at": "2026-10-23T14:41:22+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -2361,6 +2361,22 @@
     ]
    ]
   },
+  "mc|HND-TPE-2026-12-06|TPE-PUS-2026-12-11|PUS-TPE-2026-12-13|TPE-NRT-2026-12-24": {
+   "price": 113443,
+   "first": {
+    "dep": "2026-12-06T07:15:00+09:00",
+    "arr": "2026-12-06T12:55:00+08:00",
+    "stops": 1,
+    "airline": "ANA, EVA Air"
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     113443
+    ]
+   ]
+  },
   "mc|HND-TPE-2026-12-27|TPE-HAN-2027-02-27|HAN-TPE-2027-03-01|TPE-BKK-2027-06-09": {
    "price": 129667,
    "first": {
@@ -4480,6 +4496,28 @@
     [
      "2026-10-22",
      75545
+    ]
+   ]
+  },
+  "mc|NRT-TPE-2026-11-08|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-FUK-2027-02-10": {
+   "price": 30337,
+   "first": {
+    "dep": "2026-11-08T13:45:00+09:00",
+    "arr": "2026-11-08T16:50:00+08:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 30337,
+    "EVA Air": 32312,
+    "Cathay Pacific": 88366,
+    "China Airlines": 90168
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     30337
     ]
    ]
   },
@@ -33872,11 +33910,6 @@
    "at": "2026-10-23",
    "n": 1
   },
-  "mc|HND-TPE-2026-12-06|TPE-PUS-2026-12-11|PUS-TPE-2026-12-13|TPE-NRT-2026-12-24": {
-   "status": "timeout",
-   "at": "2026-10-23",
-   "n": 1
-  },
   "mc|HND-TPE-2026-12-13|TPE-CJU-2026-12-18|CJU-TPE-2026-12-20|TPE-FUK-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -34124,11 +34157,6 @@
   },
   "mc|MFM-TPE-2026-12-20|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-PVG-2027-02-10": {
    "status": "timeout",
-   "at": "2026-10-23",
-   "n": 1
-  },
-  "mc|NRT-TPE-2026-11-08|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-FUK-2027-02-10": {
-   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
