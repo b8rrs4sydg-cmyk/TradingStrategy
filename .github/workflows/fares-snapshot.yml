@@ -76,8 +76,17 @@ jobs:
         run: |
           git config user.name "fare-snapshot-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add smart-flight-finder/public/fares.json smart-flight-finder/public/index.html
-          if git diff --cached --quiet; then echo "no change"; exit 0; fi
-          git commit -m "data: Google Flights fare database $(date -u +'%F %H:%M') UTC"
-          for i in 1 2 3; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done
+          cp smart-flight-finder/public/fares.json "$RUNNER_TEMP/fares.new.json"
+          # start from the branch tip each time and generate the page again: a rebase conflicts on the embedded snapshot line
+          for i in 1 2 3 4 5; do
+            git fetch -q origin "${GITHUB_REF_NAME}"
+            git reset -q --hard "origin/${GITHUB_REF_NAME}"
+            cp "$RUNNER_TEMP/fares.new.json" smart-flight-finder/public/fares.json
+            (cd smart-flight-finder/backend && python -m scripts.embed_fare_snapshot ../public/fares.json ../public/index.html)
+            git add smart-flight-finder/public/fares.json smart-flight-finder/public/index.html
+            if git diff --cached --quiet; then echo "no change"; exit 0; fi
+            git commit -q -m "data: Google Flights fare database $(date -u +'%F %H:%M') UTC"
+            git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
           exit 1

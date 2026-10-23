@@ -10,6 +10,9 @@ on:
       max_multi_city:
         description: "cap on multi-city fares (all shards together)"
         default: "6000"
+      reuse_run_id:
+        description: "only publish: reuse the artifacts of this earlier run (when its final step failed) instead of crawling again"
+        default: ""
       outstation_pattern:
         description: "四腿票 outer-station pattern: any (default: ends in the same or different countries) | different | same"
         default: "any"
@@ -27,6 +30,7 @@ env:
 
 jobs:
   plan:
+    if: ${{ inputs.reuse_run_id == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     defaults:
@@ -46,6 +50,7 @@ jobs:
           path: smart-flight-finder/backend/plan.json
 
   stage1:
+    if: ${{ inputs.reuse_run_id == '' }}
     needs: plan
     runs-on: ubuntu-latest
     timeout-minutes: 120
@@ -76,8 +81,9 @@ jobs:
           path: smart-flight-finder/backend/part.json
 
   merge1:
+    if: ${{ inputs.reuse_run_id == '' }}
     needs: stage1
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && inputs.reuse_run_id == '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -101,6 +107,7 @@ jobs:
           path: smart-flight-finder/backend/merged.json
 
   stage2:
+    if: ${{ inputs.reuse_run_id == '' }}
     needs: merge1
     runs-on: ubuntu-latest
     timeout-minutes: 330
@@ -153,10 +160,14 @@ jobs:
         with:
           name: merged
           path: smart-flight-finder/backend
+          run-id: ${{ inputs.reuse_run_id || github.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/download-artifact@v4
         with:
           pattern: s2-*
           path: parts
+          run-id: ${{ inputs.reuse_run_id || github.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: python -m scripts.fill_fares final --db merged.json --out ../public/fares.json $(find parts -name part.json)
       - run: python -m scripts.embed_fare_snapshot ../public/fares.json ../public/index.html
       - name: Commit database
@@ -164,8 +175,18 @@ jobs:
         run: |
           git config user.name "fare-fill-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add smart-flight-finder/public/fares.json smart-flight-finder/public/index.html
-          if git diff --cached --quiet; then echo "no change"; exit 0; fi
-          git commit -m "data: wide Google Flights fare database $(date -u +'%F %H:%M') UTC"
-          for i in 1 2 3 4 5; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done
+          cp smart-flight-finder/public/fares.json "$RUNNER_TEMP/fares.new.json"
+          # Rebasing a commit that rewrites the embedded snapshot line of index.html conflicts with every other change to that
+          # file (a failed run lost a whole crawl that way). So start from the branch tip each time and generate the files again.
+          for i in 1 2 3 4 5; do
+            git fetch -q origin "${GITHUB_REF_NAME}"
+            git reset -q --hard "origin/${GITHUB_REF_NAME}"
+            cp "$RUNNER_TEMP/fares.new.json" smart-flight-finder/public/fares.json
+            (cd smart-flight-finder/backend && python -m scripts.embed_fare_snapshot ../public/fares.json ../public/index.html)
+            git add smart-flight-finder/public/fares.json smart-flight-finder/public/index.html
+            if git diff --cached --quiet; then echo "no change"; exit 0; fi
+            git commit -q -m "data: wide Google Flights fare database $(date -u +'%F %H:%M') UTC"
+            git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
           exit 1
