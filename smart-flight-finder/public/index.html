@@ -1457,6 +1457,19 @@ function planStandard(req, expanded) {
   return out;
 }
 
+// Open-jaw geography (mirror of backend app/data/metro.py; tests/test_review_p0.py compares the two).
+// BEGIN-METRO
+const METRO_OF = {HND:'TYO',NRT:'TYO',KIX:'OSA',ITM:'OSA',UKB:'OSA',NGO:'NGO',NKM:'NGO',FUK:'FUK',KKJ:'FUK',CTS:'SPK',OKA:'OKA',ISG:'OKA',MMY:'OKA',ICN:'SEL',GMP:'SEL',PUS:'PUS',BKK:'BKK',DMK:'BKK',SGN:'SGN',HAN:'HAN',PVG:'SHA',SHA:'SHA',PEK:'BJS',PKX:'BJS',TPE:'TPE',TSA:'TPE'};
+const GROUND = {'OSA|TYO':[150,4200],'NGO|OSA':[50,1500],'NGO|TYO':[100,3300],'PUS|SEL':[150,1700],'BJS|SHA':[270,2000]};
+// END-METRO
+function ojTransfer(a, b) {
+  const ma = METRO_OF[a], mb = METRO_OF[b];
+  if (!ma || !mb) return { tier: 4, cost: null, min: null };
+  if (ma === mb) return { tier: 1, cost: 400, min: 75 };
+  const g = GROUND[[ma, mb].sort().join('|')];
+  return g ? { tier: 2, min: g[0], cost: g[1] } : { tier: 3, cost: null, min: null };
+}
+
 function planOpenJaw(req, expanded) {
   if (req.tripType === 'one_way') return [];
   if (req.destinations.length < 2) return [];
@@ -1470,10 +1483,12 @@ function planOpenJaw(req, expanded) {
         if (i === j) continue;
         const a = distinctDest[i], b = distinctDest[j];
         if (countryOf(a) !== countryOf(b)) continue;   // 不同進出點 = same country (飛香港、從馬尼拉回 is two trips)
-        // baseline: cheapest round-trip origin↔a
+        const hop = ojTransfer(a, b);
+        if (hop.tier > 2) continue;                    // island hop / no metro data: not an ordinary open jaw (大阪進、沖繩出)
+        // baseline: cheapest round trip into either airport
         let baseline = 0;
-        for (const [od, rd] of pairs) {
-          const rt = CachingProvider.search({ origin, destination: a, departureDate: od, returnDate: rd, adults: req.adults })[0];
+        for (const [od, rd] of pairs) for (const dest of [a, b]) {
+          const rt = CachingProvider.search({ origin, destination: dest, departureDate: od, returnDate: rd, adults: req.adults })[0];
           if (rt && (!baseline || rt.total_price < baseline)) baseline = rt.total_price;
         }
         let best = null;
@@ -1481,10 +1496,10 @@ function planOpenJaw(req, expanded) {
           const outbound = CachingProvider.search({ origin, destination: a, departureDate: od, returnDate: null, adults: req.adults })[0];
           const inbound  = CachingProvider.search({ origin: b, destination: origin, departureDate: rd, returnDate: null, adults: req.adults })[0];
           if (!outbound || !inbound) continue;
-          const total = outbound.total_price + inbound.total_price;
+          const total = outbound.total_price + inbound.total_price + (hop.cost || 0);
           if (baseline && total >= baseline * (1 - MIN_SAV)) continue;
-          const warnings = [{ level: 'low', code: 'open_jaw_awareness', message: `開放式行程：${a} 入境、${b} 出境，需自理 ${a}→${b} 的陸路/內陸交通` }];
-          if (baseline && baseline - total > 0) warnings.push({ level: 'low', code: 'open_jaw_savings_estimate', message: `較 ${origin}↔${a} 來回估省 ${(baseline-total).toLocaleString()} TWD` });
+          const warnings = [{ level: 'low', code: 'open_jaw_awareness', message: `開放式行程（兩張獨立單程票）：${a} 入境、${b} 出境；已計入地面交通約 ${hop.cost.toLocaleString()} TWD、${hop.min} 分鐘（估算）` }];
+          if (baseline && baseline - total > 0) warnings.push({ level: 'low', code: 'open_jaw_savings_estimate', message: `較 ${origin} 來回（${a} 或 ${b}）估省 ${(baseline-total).toLocaleString()} TWD` });
           const plan = {
             strategy: 'open_jaw',
             tickets: [outbound, inbound],

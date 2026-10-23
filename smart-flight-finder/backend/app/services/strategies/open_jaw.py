@@ -19,6 +19,7 @@ from collections.abc import Iterable
 from datetime import date
 
 from app.data.airports import BY_CODE
+from app.data.metro import Tier, transfer
 from app.models.enums import DateWindowRole, TicketStrategyType
 from app.providers.base import FlightOfferProvider
 from app.services.date_matrix import ExpandedWindow
@@ -35,8 +36,10 @@ class OpenJawPlanner:
 
     MIN_SAVINGS_PCT = 0.05  # 5% 以上才錄取 (open-jaw 風險比 4-leg 小很多)
 
-    def __init__(self, provider: FlightOfferProvider) -> None:
+    def __init__(self, provider: FlightOfferProvider, *, allow_separate: bool = False) -> None:
         self.provider = provider
+        # tier 3 pairs (a flight between the two airports, e.g. 大阪進沖繩出) are off unless asked for
+        self.allow_separate = allow_separate
 
     def plan(
         self,
@@ -66,8 +69,9 @@ class OpenJawPlanner:
             return baseline_cache[key]
 
         for origin in origins:
-            for a, b in _distinct_pairs(destinations):
-                baseline = baseline_for(origin, a)
+            for a, b in _distinct_pairs(destinations, allow_separate=self.allow_separate):
+                # fair baseline: the cheaper of an ordinary round trip into either airport
+                baseline = min((x for x in (baseline_for(origin, a), baseline_for(origin, b)) if x), default=0)
                 for out_date in out_dates:
                     for ret_date in ret_dates:
                         if (ret_date - out_date).days < 1:
@@ -102,15 +106,20 @@ class OpenJawPlanner:
         inbound = self._cheapest(dest_b, origin, ret_date, None, adults)
         if outbound is None or inbound is None:
             return None
-        total = outbound.total_price + inbound.total_price
+        hop = transfer(dest_a, dest_b)
+        total = outbound.total_price + inbound.total_price + (hop.cost_twd or 0)
         if baseline and total >= baseline * (1 - self.MIN_SAVINGS_PCT):
             return None
 
+        if hop.cost_twd is not None:
+            hop_msg = f"已計入 {dest_a}→{dest_b} 地面交通約 {hop.cost_twd:,} TWD、{hop.minutes} 分鐘（估算）"
+        else:
+            hop_msg = f"{dest_a}→{dest_b} 之間需另搭航班或交通資料未驗證，費用未計入"
         warnings: list[RiskWarning] = [
             RiskWarning(
-                level=RiskLevel.LOW,
+                level=RiskLevel.LOW if hop.tier <= Tier.GROUND else RiskLevel.MEDIUM,
                 code="open_jaw_awareness",
-                message=f"開放式行程：{dest_a} 入境、{dest_b} 出境，需自理 {dest_a}→{dest_b} 的陸路/內陸交通",
+                message=f"開放式行程（兩張獨立單程票）：{dest_a} 入境、{dest_b} 出境；{hop_msg}",
             )
         ]
         if baseline:
@@ -120,7 +129,7 @@ class OpenJawPlanner:
                     RiskWarning(
                         level=RiskLevel.LOW,
                         code="open_jaw_savings_estimate",
-                        message=f"較 {origin}↔{dest_a} 來回估省 {savings:,} TWD",
+                        message=f"較 {origin} 來回（{dest_a} 或 {dest_b}）估省 {savings:,} TWD",
                     )
                 )
 
@@ -177,13 +186,17 @@ def _same_country(a: str, b: str) -> bool:
     return ca is not None and cb is not None and ca.country == cb.country
 
 
-def _distinct_pairs(items: Iterable[str]) -> Iterable[tuple[str, str]]:
-    """In/out airport pairs of ONE country only: 不同進出點 means e.g. 東京進、大阪出 —
-    flying into Hong Kong and home from Manila is two trips, not an open jaw."""
+def _distinct_pairs(items: Iterable[str], *, allow_separate: bool = False) -> Iterable[tuple[str, str]]:
+    """In/out airport pairs that are one reasonable trip: same country AND a known transfer (same metro area or a
+    listed land link). Same country alone is not enough — 大阪進、沖繩出 needs a flight, so it is tier 3 and only
+    allowed with ``allow_separate``; airports without metro data (tier 4) never pair."""
 
     seen = list(dict.fromkeys(items))  # preserve order, dedup
     for i, a in enumerate(seen):
         for b in seen[i + 1 :]:
-            if _same_country(a, b):
+            if not _same_country(a, b):
+                continue
+            tier = transfer(a, b).tier
+            if tier <= Tier.GROUND or (allow_separate and tier == Tier.SEPARATE):
                 yield a, b
                 yield b, a

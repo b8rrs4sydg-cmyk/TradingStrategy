@@ -103,6 +103,14 @@ class RedisCachingProvider:
         self._safe_set(key, _encode_offers(offers))
         return offers
 
+    def __getattr__(self, name: str):
+        """Capability forwarding: only a source that can batch-fetch (``prefetch``) makes this wrapper look like one,
+        because SearchService probes with ``hasattr``; a wrapper that hid it silently skipped the live prefetch."""
+
+        if name == "prefetch" and not name.startswith("_") and hasattr(self.__dict__.get("_inner"), "prefetch"):
+            return self._inner.prefetch
+        raise AttributeError(name)
+
     def stats(self) -> dict[str, int]:
         return {"hits": self._hits, "misses": self._misses}
 

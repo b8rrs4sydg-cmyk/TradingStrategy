@@ -14,7 +14,6 @@ from __future__ import annotations
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from datetime import date, timedelta
-from itertools import product
 
 from app.models.enums import DateWindowRole, TripType
 from app.schemas.itinerary import DateWindowIn, ItineraryRequestIn
@@ -79,28 +78,33 @@ def iter_date_combos(
     if not windows:
         return
 
-    for combo in product(*(w.candidates for w in windows)):
-        if trip_type is TripType.ROUND_TRIP:
-            outbound = next(
-                (c for c, w in zip(combo, windows) if w.role is DateWindowRole.OUTBOUND),
-                None,
-            )
-            ret = next(
-                (c for c, w in zip(combo, windows) if w.role is DateWindowRole.RETURN),
-                None,
-            )
-            if outbound is None or ret is None:
-                yield combo
-                continue
-            gap = (ret - outbound).days
-            if gap < min_days_abroad:
-                continue
-            if max_days_abroad is not None and gap > max_days_abroad:
-                continue
-        elif trip_type is TripType.MULTI_CITY:
-            if any(combo[i] >= combo[i + 1] for i in range(len(combo) - 1)):
-                continue
-        yield combo
+    out_i = next((i for i, w in enumerate(windows) if w.role is DateWindowRole.OUTBOUND), None)
+    ret_i = next((i for i, w in enumerate(windows) if w.role is DateWindowRole.RETURN), None)
+    check_pair = trip_type is TripType.ROUND_TRIP and out_i is not None and ret_i is not None
+
+    def ok_prefix(prefix: tuple[date, ...]) -> bool:
+        """False as soon as the dates chosen so far already break an ordering rule: the whole subtree is skipped
+        instead of being built by the cartesian product and filtered afterwards."""
+
+        n = len(prefix)
+        if trip_type is TripType.MULTI_CITY and n >= 2 and prefix[-2] >= prefix[-1]:
+            return False
+        if check_pair and max(out_i, ret_i) < n:
+            gap = (prefix[ret_i] - prefix[out_i]).days
+            if gap < min_days_abroad or (max_days_abroad is not None and gap > max_days_abroad):
+                return False
+        return True
+
+    def walk(prefix: tuple[date, ...]) -> Iterator[tuple[date, ...]]:
+        if len(prefix) == len(windows):
+            yield prefix
+            return
+        for c in windows[len(prefix)].candidates:
+            nxt = (*prefix, c)
+            if ok_prefix(nxt):
+                yield from walk(nxt)
+
+    yield from walk(())
 
 
 def matrix_cardinality(expanded: Iterable[ExpandedWindow]) -> int:

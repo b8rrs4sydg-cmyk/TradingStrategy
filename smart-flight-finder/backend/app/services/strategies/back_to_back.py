@@ -24,6 +24,7 @@ still returned, flagged ``no_saving``, so the real comparison stays visible.
 
 from __future__ import annotations
 
+import os
 from collections.abc import Sequence
 from itertools import product
 
@@ -53,12 +54,28 @@ def _country(code: str) -> str:
     return BY_CODE[code].country if code in BY_CODE else code
 
 
+# Which (X, Y) outer-station pairs are candidates. D (the main destination) must always be outside both of their
+# countries; whether a given fare product can actually be ticketed is decided by the quote, not by country rules.
+PATTERN_DIFFERENT = "different"   # X and Y in different countries (the original, strict profile)
+PATTERN_SAME = "same"             # X and Y in the same country (a common real-world shape)
+PATTERN_ANY = "any"               # both shapes
+
+
 class FourLegPlanner:
     strategy = TicketStrategyType.BACK_TO_BACK_4LEG
 
-    def __init__(self, provider: FlightOfferProvider, *, mct: MctPolicy = DEFAULT_MCT) -> None:
+    def __init__(
+        self, provider: FlightOfferProvider, *, mct: MctPolicy = DEFAULT_MCT, pattern: str | None = None
+    ) -> None:
         self.provider = provider
         self.mct = mct
+        # default stays the strict profile: the crawl plan (crawl_plan.py) and the demo page price exactly that shape,
+        # so widening it here alone would ask for fares nobody fetched. Set OUTSTATION_PATTERN=any|same to widen all.
+        self.pattern = pattern or os.getenv("OUTSTATION_PATTERN", PATTERN_DIFFERENT)
+
+    def _ends_ok(self, x: str, y: str) -> bool:
+        same = _country(x) == _country(y)
+        return same if self.pattern == PATTERN_SAME else (not same) if self.pattern == PATTERN_DIFFERENT else True
 
     def plan(
         self,
@@ -88,8 +105,8 @@ class FourLegPlanner:
         plans: list[StrategyPlan] = []
         losers: list[tuple[int, StrategyPlan]] = []
         for x, y in product(stations, stations):
-            if _country(y) == _country(x) or base_x[x] is None or base_y[y] is None:
-                continue  # 頭尾不同國家: trip 3 must not revisit trip 1's country
+            if not self._ends_ok(x, y) or base_x[x] is None or base_y[y] is None:
+                continue
             for dest in dict.fromkeys(destinations):
                 if dest in (x, y, HUB) or dest in TW_AIRPORT_CODES:
                     continue

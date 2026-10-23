@@ -31,6 +31,7 @@ from collections.abc import Sequence
 from datetime import date
 
 from app.data.airports import BY_CODE
+from app.data.metro import route_key
 from app.models.enums import TicketStrategyType
 from app.providers.base import FlightOfferProvider
 from app.services.strategies.base import RiskLevel, RiskWarning, StrategyPlan, TicketOffer
@@ -87,8 +88,20 @@ class ReverseTicketPlanner:
         rt_b = [t for d in dests if (t := self._baseline(home, d, b, adults))]
         if not rt_a or not rt_b:
             return []
-        # Ordinary alternative: the cheapest plain round trip into this country, per trip.
-        baseline = cheapest(rt_a).total_price + cheapest(rt_b).total_price
+        by_a = {t.legs[0].destination: t for t in rt_a}
+        by_b = {t.legs[0].destination: t for t in rt_b}
+        fallback = cheapest(rt_a).total_price + cheapest(rt_b).total_price
+
+        def baseline_for(trip_a_cities, trip_b_cities) -> int:
+            """The ordinary alternative for THIS candidate: a plain round trip into one of the cities each trip
+            actually visits (the cheaper of its in / out city), not the cheapest city of the whole country."""
+
+            def one(cities, table):
+                prices = [table[c].total_price for c in cities if c in table]
+                return min(prices) if prices else None
+
+            ba, bb = one(trip_a_cities, by_a), one(trip_b_cities, by_b)
+            return ba + bb if ba is not None and bb is not None else fallback
         backs = {
             (a_out, b_in): self._reverse_tickets(home, a_out, b_in, a, b, adults)
             for a_out in dests
@@ -106,8 +119,10 @@ class ReverseTicketPlanner:
                 best = best_pair(front, back, _compatible)
                 if best is None:
                     continue
+                baseline = baseline_for((a_in, a_out), (b_in, b_out))
                 built = self._build(variant, home, (a_in, a_out), (b_in, b_out), a, b, best, baseline)
                 (out if best[0] < baseline else losers).append(built)
+        out = _one_per_route(out)
         out.sort(key=lambda p: p.total_cost)
         if not out and losers:  # show the closest real comparison anyway
             out.append(min(losers, key=lambda p: p.total_cost))
@@ -196,6 +211,19 @@ class ReverseTicketPlanner:
             ticket_roles=roles,
             trips=trips,
         )
+
+
+def _one_per_route(plans: list[StrategyPlan]) -> list[StrategyPlan]:
+    """Keep the cheapest plan per metro route (HND/NRT, KIX/ITM count as one city), so date or airport variants of
+    the same trip pair do not fill the list; the real best price is kept."""
+
+    best: dict[tuple, StrategyPlan] = {}
+    for p in plans:
+        legs = [t.legs[0].destination for t in p.tickets] + [t.legs[-1].origin for t in p.tickets]
+        key = tuple(sorted(route_key(c) for c in legs))
+        if key not in best or p.total_cost < best[key].total_cost:
+            best[key] = p
+    return list(best.values())
 
 
 def _compatible(front: _Front, back: _Back) -> bool:
