@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:30:45+00:00",
+ "at": "2026-10-23T14:39:47+00:00",
  "publishes": {
-  "ok": 4,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2065,
+ "fares_saved": 2066,
  "log": [
   "12:37:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:37:33 http front door: ['https://attorneys-commodities-receiver-multimedia.trycloudflare.com', 'https://5087fdbc320ed4.lhr.life']",
@@ -133,6 +133,10 @@
   "14:26:11 request received: rid mvl2bymd1aeuv.2 23 keys",
   "14:26:11 handle mvl2bymd1aeuv.2: first_chunk=True total=23",
   "14:30:35 request mvl2bymd1aeuv.2: chunk of 23 keys done in 265s; paths {'http': 49, 'browser-crashed': 453, 'browser': 52}, browser waits 505 max 223s sum 43873s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 49, 'miss': 175, 'blocked': 0, 'tries': 138, 'empty': 89}, audit 2/2 a",
-  "14:30:37 request mvl2bymd1aeuv.2: final sent (23/23); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
+  "14:30:37 request mvl2bymd1aeuv.2: final sent (23/23); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "14:33:59 rtc k4pskrzl6w: answered",
+  "14:34:00 rtc k4pskrzl6w: data channel open",
+  "14:39:38 request received: rid mvl2t98n3mbyw.2 26 keys",
+  "14:39:38 handle mvl2t98n3mbyw.2: first_chunk=True total=26"
  ]
 }
