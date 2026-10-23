@@ -1497,7 +1497,7 @@ function loadFareSnapshot() {
     const el = document.getElementById('fare-snapshot');
     if (el && el.textContent.trim()) FARES = JSON.parse(el.textContent);
   } catch (e) { console.warn('fare snapshot unreadable', e); }
-  (FARES.unavailable || []).forEach(k => live.notFound.add(k));
+  (FARES.unavailable || []).filter(confirmedGone).forEach(k => live.notFound.add(k));
 }
 /* What the crawler covers — drives defaults, the 無資料 marks and the status bar. */
 function fareCoverage() {
@@ -1804,8 +1804,12 @@ const isMirrored = segs => segs.length === 2 && segs[0][0] === segs[1][1] && seg
 const ticketKey = segs => (isMirrored(segs) ? fareKeyRT(segs[0][0], segs[0][1], segs[0][2], segs[1][2]) : fareKeyMC(segs));
 const ticketPriced = segs => { const e = fareEntry(ticketKey(segs)); return !!e && !e.separate; };
 
+/* "No such flight" is trusted only for one-way queries. Older crawls stored slow or errored round-trip / multi-city pages as unavailable
+   too (they were never confirmed), so those keys are asked again instead of being skipped for good. */
+const confirmedGone = k => typeof k === 'string' && k.startsWith('ow|');
+
 function refreshGone() {
-  SCREEN.gone = new Set([...(FARES.missing || []), ...(FARES.unavailable || [])]);
+  SCREEN.gone = new Set([...(FARES.missing || []), ...(FARES.unavailable || [])].filter(confirmedGone));
   try { live.notFound.forEach(k => SCREEN.gone.add(k)); } catch { /* the lookup state is not there yet */ }
 }
 
@@ -4301,7 +4305,7 @@ async function loadSiblingFares() {
       const mine = FARES.fares[k];
       if (!mine || (v.at || '') > (mine.at || '')) { FARES.fares[k] = v; changed = true; }
     }
-    (d.unavailable || []).forEach(k => live.notFound.add(k));
+    (d.unavailable || []).filter(confirmedGone).forEach(k => live.notFound.add(k));
     if (name === 'fares.json' && d.generated_at && (!FARES.generated_at || d.generated_at > FARES.generated_at)) {
       FARES.generated_at = d.generated_at; FARES.coverage = d.coverage || FARES.coverage; changed = true;
     }
@@ -4641,7 +4645,7 @@ async function subscribeLiveFares() {
     if (FARES.generated_at && Date.parse(meta.generated_at) <= Date.parse(FARES.generated_at)) { renderDbStatus(); return; }
     for (const [k, v] of Object.entries(liveOverlay)) if (!fares[k] || (v.at || '') >= (fares[k].at || '')) fares[k] = v;
     FARES = { ...FARES, generated_at: meta.generated_at, coverage: meta.coverage || FARES.coverage, fares };
-    (meta.unavailable || []).forEach(k => live.notFound.add(k));
+    (meta.unavailable || []).filter(confirmedGone).forEach(k => live.notFound.add(k));
     applyCoverage();
     if (state.result) document.getElementById('search-form').requestSubmit();   // re-run only a search the user started
   }, () => {});

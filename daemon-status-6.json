@@ -1,33 +1,18 @@
 {
- "at": "2026-10-23T06:10:14+00:00",
+ "at": "2026-10-23T10:48:02+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 2029,
  "log": [
-  "05:41:31 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:41:37 http front door: ['https://encoding-griffin-inter-administration.trycloudflare.com', 'https://2601f62d0b362d.lhr.life']",
-  "05:41:37 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:42:41 request received: rid httptest1792734160 20 keys",
-  "05:42:41 handle httptest1792734160: first_chunk=True total=20",
-  "05:42:42 request httptest1792734160: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:42:43 request httptest1792734160: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "05:56:17 rtc bpaunc51js: answered",
-  "05:56:29 request received: rid mvkk453uquuf8.6 1 keys",
-  "05:56:29 handle mvkk453uquuf8.6: first_chunk=True total=1",
-  "05:56:53 rtc 33oeyyx4x3: answered",
-  "05:57:04 request received: rid mvkk4x1t0mw4m.6 1 keys",
-  "05:57:04 handle mvkk4x1t0mw4m.6: first_chunk=True total=1",
-  "05:57:30 request mvkk453uquuf8.6: chunk of 1 keys done in 61s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 49s sum 49s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
-  "05:57:30 request mvkk4x1t0mw4m.6: chunk of 1 keys done in 26s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 49s sum 49s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 4/4 agree",
-  "05:57:32 request mvkk453uquuf8.6: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:57:32 request mvkk4x1t0mw4m.6: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "06:07:27 rtc 52ktibs72e: answered",
-  "06:07:38 request received: rid mvkkii7vp85hl.6 16 keys",
-  "06:07:38 handle mvkkii7vp85hl.6: first_chunk=True total=16",
-  "06:09:15 request mvkkii7vp85hl.6: chunk of 16 keys done in 97s; paths {'http': 23, 'browser-none': 14}, browser waits 14 max 93s sum 879s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 14, 'blocked': 0, 'tries': 47, 'empty': 24}, audit 4/4 agree",
-  "06:09:16 request mvkkii7vp85hl.6: final sent (16/16); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "10:46:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "10:46:32 http front door: ['https://spy-indicates-revenues-placing.trycloudflare.com', 'https://249248bafeb3b0.lhr.life']",
+  "10:46:32 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "10:47:36 request received: rid httptest1792752456 20 keys",
+  "10:47:36 handle httptest1792752456: first_chunk=True total=20",
+  "10:47:37 request httptest1792752456: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "10:47:38 request httptest1792752456: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
