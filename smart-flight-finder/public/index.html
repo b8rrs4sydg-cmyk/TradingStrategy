@@ -1666,6 +1666,27 @@ function planStandard(req, expanded) {
           const offers = CachingProvider.search({ origin, destination, departureDate: od, returnDate: rd, adults: req.adults });
           if (!offers.length) continue;
           const cheapest = offers.reduce((a,b) => a.total_price <= b.total_price ? a : b);
+          // two separate one-way tickets (possibly different airlines) when they cost less than the round trip: a "hacker fare"
+          const outs = CachingProvider.search({ origin, destination, departureDate: od, returnDate: null, adults: req.adults });
+          const backs = CachingProvider.search({ origin: destination, destination: origin, departureDate: rd, returnDate: null, adults: req.adults });
+          if (outs.length && backs.length) {
+            const a = outs.reduce((x, y) => x.total_price <= y.total_price ? x : y);
+            const b = backs.reduce((x, y) => x.total_price <= y.total_price ? x : y);
+            if (a.total_price + b.total_price < cheapest.total_price) {
+              const total = a.total_price + b.total_price;
+              out.push({
+                strategy: 'standard',
+                tickets: [a, b],
+                total_cost: total,
+                currency: a.currency,
+                total_travel_days: daysBetween(od, rd) + 1,
+                warnings: [{ level: 'low', code: 'split_one_ways', message: `拆成兩張單程票（比一張來回省 ${(cheapest.total_price - total).toLocaleString()}）：兩張票的行李、改票與延誤保障各自獨立，去程延誤不會影響回程票；可能是不同航空公司。` }],
+                explain: `拆兩張單程：${origin}→${destination} ${od} + ${destination}→${origin} ${rd}`,
+                ticket_roles: ['去程單程', '回程單程'],
+              });
+              continue;
+            }
+          }
           out.push({
             strategy: 'standard',
             tickets: [cheapest],
@@ -2833,6 +2854,7 @@ function renderResults() {
   const el = document.getElementById('results');
   if (!state.result) { el.hidden = true; return; }
   el.hidden = false;
+  ROUTE_RT = null;   // the price-position index is rebuilt from the fares the page holds now
   const { plans, matrix, cache, fares } = state.result;
 
   document.getElementById('r-plan-count').textContent = plans.length;
@@ -3044,6 +3066,36 @@ function priceDelta(t) {
 }
 
 // One line under the title: what you would otherwise have to open the card for.
+/* Price position, in the spirit of Google Flights' "prices are lower than usual": where a plan's total sits among every round trip
+   the database holds for the same airports (all dates). Shown only when the route has enough fares and the plan is clearly
+   cheap or dear, so it stays a hint and not a verdict. */
+let ROUTE_RT = null;
+function routeRoundTrips(origin, destination) {
+  if (!ROUTE_RT) {
+    ROUTE_RT = new Map();
+    for (const [k, v] of Object.entries(FARES.fares || {})) {
+      if (!k.startsWith('rt|') || !v.price) continue;
+      const [, o, d] = k.split('|');
+      const r = `${o}|${d}`;
+      if (!ROUTE_RT.has(r)) ROUTE_RT.set(r, []);
+      ROUTE_RT.get(r).push(v.price);
+    }
+    for (const list of ROUTE_RT.values()) list.sort((a, b) => a - b);
+  }
+  return ROUTE_RT.get(`${origin}|${destination}`) || [];
+}
+function pricePosition(plan) {
+  if (plan.strategy !== 'standard' || plan.tickets.length > 2) return null;
+  const first = plan.tickets[0]?.legs?.[0];
+  if (!first) return null;
+  const list = routeRoundTrips(first.origin, first.destination);
+  if (list.length < 8) return null;
+  const below = list.filter(p => p < plan.total_cost).length / list.length;   // share of this route's fares that are cheaper
+  if (below <= 0.15) return { text: `同航線最便宜的 ${Math.max(1, Math.round(below * 100))}%`, cls: 'good' };
+  if (below >= 0.85) return { text: `同航線偏貴（比 ${Math.round(below * 100)}% 的票價高）`, cls: '' };
+  return null;
+}
+
 function planFactsHtml(plan) {
   const f = planFacts(plan), bits = [];
   if (f.outDate) bits.push(`<span title="去程出發（當地時間）">去 ${mdDay(f.outDate)}${f.outMin != null ? ` ${pfClock(f.outMin)}` : ''}${f.arrMin != null ? `→${pfClock(f.arrMin)}` : ''}</span>`);
@@ -3051,6 +3103,8 @@ function planFactsHtml(plan) {
   if (plan.total_travel_days > 1) bits.push(`<span>${plan.total_travel_days} 天</span>`);
   if (f.stops != null) bits.push(`<span class="${f.stops ? '' : 'good'}">${f.stops ? `${f.stops} 轉` : '直飛'}</span>`);
   if (f.airlines.length) bits.push(`<span>${escapeHtml(f.airlines.join('、'))}</span>`);
+  const pos = pricePosition(plan);
+  if (pos) bits.push(`<span class="${pos.cls}" title="和資料庫裡同機場、所有日期的來回票價比較">${pos.text}</span>`);
   return bits.length ? `<div class="facts">${bits.join('')}</div>` : '';
 }
 

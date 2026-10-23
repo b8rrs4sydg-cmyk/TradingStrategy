@@ -36,7 +36,7 @@ def prices_for(stage1, four, *, rt_nrt=20000, rt_other=8000, ow=1000, leg=None):
     }
     for key in four:
         for lk in leg_keys(key):
-            prices.setdefault(lk, ow if leg is None else leg)
+            prices[lk] = ow if leg is None else leg
     return prices
 
 

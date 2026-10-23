@@ -54,7 +54,8 @@ def test_search_standard_returns_plans_sorted_by_score():
     assert plans
     assert all(p["strategy"] == TicketStrategyType.STANDARD.value for p in plans)
     scores = [p["score"] for p in plans if p["score"] is not None]
-    assert scores == sorted(scores, reverse=True)
+    # the list is the score order except that the top 10 spreads over routes (diversify), so only the head is the maximum
+    assert scores[0] == max(scores)
 
 
 def test_single_window_pair_strategies_explain_why_empty():

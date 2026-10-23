@@ -115,7 +115,9 @@ def test_live_prefetch_fetches_missing_queries_once_and_saves(tmp_path):
                                              depart_flex=0, return_flex=0)],
     )
     _, plans, _ = SearchService(provider).run(req)
-    assert calls == [[RT]]
+    # the round trip, plus the two one-ways that could undercut it (a pair of separate tickets); each asked once
+    assert len(calls) == 1 and set(calls[0]) == {RT, "ow|TPE|NRT|2027-02-05", "ow|NRT|TPE|2027-02-15"}
+    assert len(calls[0]) == 3
     assert plans and plans[0].tickets[0].issuer == "google_flights"
     assert RT in json.loads(path.read_text())["fares"]
 

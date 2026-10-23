@@ -12,7 +12,7 @@ from datetime import date
 from app.models.enums import DateWindowRole, TicketStrategyType, TripType
 from app.providers.base import FlightOfferProvider
 from app.services.date_matrix import ExpandedWindow, iter_date_combos
-from app.services.strategies.base import StrategyPlan
+from app.services.strategies.base import RiskLevel, RiskWarning, StrategyPlan, TicketOffer
 
 
 class StandardPlanner:
@@ -72,6 +72,10 @@ class StandardPlanner:
                         continue
                     cheapest = min(offers, key=lambda o: o.total_price)
                     travel_days = ((ret_date - out_date).days + 1) if ret_date else 1
+                    split = self._split_one_ways(origin, destination, out_date, ret_date, adults, cheapest)
+                    if split is not None:
+                        plans.append(split)
+                        continue
                     plans.append(
                         StrategyPlan(
                             strategy=self.strategy,
@@ -88,6 +92,47 @@ class StandardPlanner:
                     )
         plans.sort(key=lambda p: p.total_cost)
         return plans[:max_results]
+
+    def _split_one_ways(
+        self,
+        origin: str,
+        destination: str,
+        out_date: date,
+        ret_date: date | None,
+        adults: int,
+        round_trip: TicketOffer,
+    ) -> StrategyPlan | None:
+        """Two separate one-way tickets (possibly on different airlines) when they cost less than the round trip —
+        what Kayak calls a hacker fare. ``None`` when there is no return date, a leg has no fare, or the round trip is as cheap."""
+
+        if ret_date is None:
+            return None
+        outs = self.provider.search(origin=origin, destination=destination, departure_date=out_date, adults=adults)
+        backs = self.provider.search(origin=destination, destination=origin, departure_date=ret_date, adults=adults)
+        if not outs or not backs:
+            return None
+        out, back = min(outs, key=lambda o: o.total_price), min(backs, key=lambda o: o.total_price)
+        total = out.total_price + back.total_price
+        if total >= round_trip.total_price:
+            return None
+        saving = round_trip.total_price - total
+        return StrategyPlan(
+            strategy=self.strategy,
+            tickets=(out, back),
+            total_cost=total,
+            currency=out.currency,
+            total_travel_days=(ret_date - out_date).days + 1,
+            warnings=(
+                RiskWarning(
+                    RiskLevel.LOW,
+                    "split_one_ways",
+                    f"拆成兩張單程票（比一張來回省 {saving:,}）：兩張票的行李、改票與延誤保障各自獨立，"
+                    "去程延誤不會影響回程票；可能是不同航空公司。",
+                ),
+            ),
+            explain=f"拆兩張單程：{origin}→{destination} {out_date} + {destination}→{origin} {ret_date}",
+            ticket_roles=("去程單程", "回程單程"),
+        )
 
     # ------------------------------------------------------------------
     def _plan_multi_city(
