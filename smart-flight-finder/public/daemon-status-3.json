@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:18:40+00:00",
+ "at": "2026-10-23T13:21:42+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2075,
+ "fares_saved": 2078,
  "log": [
   "12:51:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:51:09 http front door: ['https://wan-stones-anthropology-companies.trycloudflare.com', 'https://823da3fb65de56.lhr.life']",
@@ -44,6 +44,10 @@
   "13:16:32 request received: rid mvkzue9oxs6h2.3 19 keys",
   "13:16:32 handle mvkzue9oxs6h2.3: first_chunk=True total=19",
   "13:17:39 request mvkzue9oxs6h2.3: chunk of 19 keys done in 67s; paths {'http': 27, 'browser-crashed': 84, 'browser': 20}, browser waits 104 max 140s sum 5967s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 25, 'blocked': 0, 'tries': 30, 'empty': 3}, audit 1/1 agree",
-  "13:17:41 request mvkzue9oxs6h2.3: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:17:41 request mvkzue9oxs6h2.3: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:20:16 request received: rid mvkzz7kjwaqsr.2 10 keys",
+  "13:20:16 handle mvkzz7kjwaqsr.2: first_chunk=True total=10",
+  "13:21:37 request mvkzz7kjwaqsr.2: chunk of 10 keys done in 82s; paths {'http': 27, 'browser-crashed': 91, 'browser': 23}, browser waits 114 max 140s sum 6447s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 25, 'blocked': 0, 'tries': 30, 'empty': 3}, audit 1/1 agree",
+  "13:21:39 request mvkzz7kjwaqsr.2: final sent (10/10); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
