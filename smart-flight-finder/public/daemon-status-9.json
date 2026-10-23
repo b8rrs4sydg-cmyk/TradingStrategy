@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T11:32:41+00:00",
+ "at": "2026-10-23T11:34:23+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -16,6 +16,12 @@
   "10:38:16 request httptest1792751892: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "11:32:16 rtc ri3qcjdoiu: answered",
   "11:32:28 request received: rid mvkw48f7eio20.9 15 keys",
-  "11:32:28 handle mvkw48f7eio20.9: first_chunk=True total=15"
+  "11:32:28 handle mvkw48f7eio20.9: first_chunk=True total=15",
+  "11:32:58 request received: rid mvkw58n7fan62.9 7 keys",
+  "11:32:58 handle mvkw58n7fan62.9: first_chunk=True total=7",
+  "11:33:32 request mvkw48f7eio20.9: chunk of 15 keys done in 64s; paths {'http': 28, 'browser-none': 7}, browser waits 7 max 50s sum 330s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 7, 'blocked': 0, 'tries': 36, 'empty': 8}, audit 3/3 agree",
+  "11:33:32 request mvkw58n7fan62.9: chunk of 7 keys done in 34s; paths {'http': 28, 'browser-none': 7}, browser waits 7 max 50s sum 330s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 7, 'blocked': 0, 'tries': 36, 'empty': 8}, audit 3/3 agree",
+  "11:33:33 request mvkw48f7eio20.9: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:33:33 request mvkw58n7fan62.9: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
