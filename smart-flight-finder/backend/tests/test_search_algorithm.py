@@ -1,6 +1,6 @@
 """Search-algorithm checks: ground truth against brute force, validation, completeness and diversity."""
 
-from datetime import date, timedelta
+from datetime import UTC, date, datetime, timedelta
 from itertools import product
 
 from app.models.enums import DateWindowRole, TicketStrategyType
@@ -129,3 +129,71 @@ def test_four_leg_validator_rejects_a_ticket_that_is_not_the_intended_itinerary(
     assert not _four_leg_matches(wrong_order, "HKG", "NRT", "ICN", *d)
     other = TicketOffer("o", good.legs, 1, searched_segments=(*segs[:3], ("TPE", "BKK", d[3])))
     assert not _four_leg_matches(other, "HKG", "NRT", "ICN", *d)
+
+
+class _McFares(_Fares):
+    """Multi-city = 90 % of its one-way legs, so the multi-ticket plans beat the 12,000 round trips."""
+
+    def search_multi_city(self, *, segments, adults=1):
+        price = int(0.9 * sum(1500 + 100 * d.day for _, _, d in segments))
+        legs = []
+        for o, d, day in segments:
+            dep = datetime(day.year, day.month, day.day, 9, tzinfo=UTC)
+            legs.append(FlightLeg(o, d, dep, dep + timedelta(hours=3), "XX", "XX1"))
+        return [TicketOffer("mc", tuple(legs), price)]
+
+
+def _slot(label, dep, ret):
+    from app.services.strategies.two_trip import TripSlot
+
+    return TripSlot(
+        label=label, departs=[date(2027, *d) for d in dep], returns=[date(2027, *r) for r in ret]
+    )
+
+
+def test_reverse_wrap_best_plan_equals_brute_force():
+    from app.services.strategies import ReverseTicketPlanner
+
+    p = _McFares()
+    a, b = (
+        _slot("A", [(4, 2), (4, 3)], [(4, 6), (4, 7)]),
+        _slot("B", [(4, 20), (4, 21)], [(4, 24), (4, 25)]),
+    )
+    dests = ["NRT", "KIX"]
+    plans = ReverseTicketPlanner(p).plan(trip_a=a, trip_b=b, origins=["TPE"], destinations=dests)
+    assert plans
+    price = lambda segs: p.search_multi_city(segments=segs)[0].total_price
+    best = min(
+        price([("TPE", ai, ad), (bo, "TPE", br)]) + price([(ao, "TPE", ar), ("TPE", bi, bd)])
+        for ai, ao, bi, bo in product(dests, repeat=4)
+        for ad, br, ar, bd in product(a.departs, b.returns, a.returns, b.departs)
+        if ad < ar < bd < br
+    )
+    assert min(pl.total_cost for pl in plans) == best
+
+
+def test_four_leg_best_plan_equals_brute_force():
+    from app.services.strategies.back_to_back import FourLegPlanner
+
+    p = _McFares()
+    P = _slot("P", [(2, 5), (2, 6)], [(2, 12), (2, 13)])
+    Q = _slot("Q", [(4, 3), (4, 4)], [(4, 9), (4, 10)])
+    R = _slot("R", [(6, 9), (6, 10)], [(6, 13), (6, 14)])
+    plans = FourLegPlanner(p, pattern="any").plan(
+        trip_p=P, trip_q=Q, trip_r=R, outer_stations=["HKG", "ICN"], destinations=["NRT"]
+    )
+    assert plans
+    one = lambda o, d, day: p.search(origin=o, destination=d, departure_date=day)[0].total_price
+    best = min(
+        one("TPE", x, pd)
+        + p.search_multi_city(
+            segments=[(x, "TPE", c1), ("TPE", "NRT", c2), ("NRT", "TPE", qr), ("TPE", y, rd)]
+        )[0].total_price
+        + one(y, "TPE", rr)
+        for x, y in product(["HKG", "ICN"], repeat=2)
+        for pd, c1, c2, qr, rd, rr in product(
+            P.departs, P.returns, Q.departs, Q.returns, R.departs, R.returns
+        )
+        if pd < c1 < c2 < qr < rd < rr
+    )
+    assert min(pl.total_cost for pl in plans) == best
