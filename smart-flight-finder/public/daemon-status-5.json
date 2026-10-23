@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T11:34:11+00:00",
+ "at": "2026-10-23T11:35:43+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1929,
+ "fares_saved": 1931,
  "log": [
   "10:45:52 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:45:58 http front door: ['https://indicators-journalists-fiction-truck.trycloudflare.com', 'https://b429fdb0cd1a4a.lhr.life']",
@@ -18,6 +18,12 @@
   "11:32:28 request received: rid mvkw48f7eio20.5 26 keys",
   "11:32:28 handle mvkw48f7eio20.5: first_chunk=True total=26",
   "11:32:58 request received: rid mvkw58n7fan62.5 23 keys",
-  "11:32:58 handle mvkw58n7fan62.5: first_chunk=True total=23"
+  "11:32:58 handle mvkw58n7fan62.5: first_chunk=True total=23",
+  "11:34:56 request mvkw48f7eio20.5: chunk of 26 keys done in 147s; paths {'http': 23, 'browser-none': 23}, browser waits 23 max 143s sum 2105s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 23, 'blocked': 0, 'tries': 67, 'empty': 44}, audit 3/3 agree",
+  "11:34:56 request mvkw58n7fan62.5: chunk of 23 keys done in 118s; paths {'http': 23, 'browser-none': 23}, browser waits 23 max 143s sum 2105s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 23, 'blocked': 0, 'tries': 67, 'empty': 44}, audit 3/3 agree",
+  "11:34:57 request mvkw48f7eio20.5: final sent (26/26); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:34:57 request mvkw58n7fan62.5: final sent (23/23); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:35:01 request received: rid mvkw7tzkr9u8u.5 17 keys",
+  "11:35:01 handle mvkw7tzkr9u8u.5: first_chunk=True total=17"
  ]
 }
