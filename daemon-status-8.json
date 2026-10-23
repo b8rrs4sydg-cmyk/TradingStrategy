@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T05:57:40+00:00",
+ "at": "2026-10-23T06:09:43+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1939,
+ "fares_saved": 1942,
  "log": [
   "05:36:32 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:36:38 http front door: ['https://sandwich-initiated-cams-coins.trycloudflare.com', 'https://a192ac7a0d1573.lhr.life']",
@@ -23,6 +23,11 @@
   "05:57:04 request received: rid mvkk4x1t0mw4m.8 1 keys",
   "05:57:04 handle mvkk4x1t0mw4m.8: first_chunk=True total=1",
   "05:57:04 request mvkk4x1t0mw4m.8: chunk of 1 keys done in 0s; paths {'http': 21}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 4/4 agree",
-  "05:57:05 request mvkk4x1t0mw4m.8: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "05:57:05 request mvkk4x1t0mw4m.8: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "06:07:27 rtc euvbet1enw: answered",
+  "06:07:39 request received: rid mvkkii7vp85hl.8 13 keys",
+  "06:07:39 handle mvkkii7vp85hl.8: first_chunk=True total=13",
+  "06:09:15 request mvkkii7vp85hl.8: chunk of 13 keys done in 96s; paths {'http': 24, 'browser-none': 10}, browser waits 10 max 83s sum 586s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 10, 'blocked': 0, 'tries': 36, 'empty': 12}, audit 4/4 agree",
+  "06:09:17 request mvkkii7vp85hl.8: final sent (13/13); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
