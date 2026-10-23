@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:11:19+00:00",
+ "at": "2026-10-23T13:12:50+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1955,
+ "fares_saved": 1957,
  "log": [
   "12:51:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:51:33 http front door: ['https://associates-appointment-opens-wolf.trycloudflare.com', 'https://8f7f7eb26ac955.lhr.life']",
@@ -33,6 +33,8 @@
   "13:10:30 request mvkzji8hl929e.7: chunk of 21 keys done in 146s; paths {'http': 21, 'browser-crashed': 70, 'browser': 1}, browser waits 71 max 146s sum 5449s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 18, 'blocked': 0, 'tries': 29, 'empty': 8}, audit 0/0 agree",
   "13:10:31 request mvkzji8hl929e.7: final sent (21/21); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "13:10:47 request received: rid mvkzn0ljwiio6.6 23 keys",
-  "13:10:47 handle mvkzn0ljwiio6.6: first_chunk=True total=23"
+  "13:10:47 handle mvkzn0ljwiio6.6: first_chunk=True total=23",
+  "13:12:48 request mvkzn0ljwiio6.6: chunk of 23 keys done in 122s; paths {'http': 28, 'browser-crashed': 84, 'browser': 3}, browser waits 87 max 146s sum 6393s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 34, 'blocked': 0, 'tries': 38, 'empty': 10}, audit 0/0 agree",
+  "13:12:49 request mvkzn0ljwiio6.6: final sent (23/23); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
