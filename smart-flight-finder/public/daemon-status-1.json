@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:36:52+00:00",
+ "at": "2026-10-23T13:38:23+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2032,
+ "fares_saved": 2039,
  "log": [
   "12:37:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:37:27 http front door: ['https://muscle-thousand-yacht-antibody.trycloudflare.com', 'https://625f6590cab6f8.lhr.life']",
@@ -80,6 +80,8 @@
   "13:34:35 request received: rid mvl0hltj6cmo0.1 11 keys",
   "13:34:35 handle mvl0hltj6cmo0.1: first_chunk=True total=11",
   "13:36:10 request mvl0hltj6cmo0.1: chunk of 11 keys done in 95s; paths {'http': 35, 'browser-crashed': 283, 'browser': 2}, browser waits 285 max 286s sum 27243s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 35, 'miss': 73, 'blocked': 0, 'tries': 114, 'empty': 79}, audit 3/3 agre",
-  "13:36:11 request mvl0hltj6cmo0.1: final sent (11/11); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "13:36:11 request mvl0hltj6cmo0.1: final sent (11/11); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:37:03 request received: rid mvl0ksjdiohan.1 25 keys",
+  "13:37:03 handle mvl0ksjdiohan.1: first_chunk=True total=25"
  ]
 }
