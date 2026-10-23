@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T05:58:53+00:00",
+ "at": "2026-10-23T06:07:54+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1872,
+ "fares_saved": 1874,
  "log": [
   "05:40:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:40:49 http front door: ['https://examines-metric-level-recipes.trycloudflare.com', 'https://68ef29f1bc04c4.lhr.life']",
@@ -23,6 +23,9 @@
   "05:57:30 request mvkk453uquuf8.0: chunk of 3 keys done in 62s; paths {'http': 21, 'browser-none': 2}, browser waits 2 max 49s sum 94s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 2, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 0/0 agree",
   "05:57:30 request mvkk4x1t0mw4m.0: chunk of 3 keys done in 26s; paths {'http': 21, 'browser-none': 2}, browser waits 2 max 49s sum 94s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 2, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 0/0 agree",
   "05:57:31 request mvkk453uquuf8.0: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:57:31 request mvkk4x1t0mw4m.0: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "05:57:31 request mvkk4x1t0mw4m.0: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "06:07:27 rtc 0646583joi: answered",
+  "06:07:38 request received: rid mvkkii7vp85hl.0 4 keys",
+  "06:07:38 handle mvkkii7vp85hl.0: first_chunk=True total=4"
  ]
 }
