@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T19:55:49+00:00",
+ "at": "2026-10-23T20:38:51+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2071,
  "log": [
-  "19:54:13 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "19:54:19 http front door: ['https://infant-tabs-justin-directors.trycloudflare.com', 'https://526c0b065715c1.lhr.life']",
-  "19:54:19 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "19:55:22 request received: rid httptest1792785322 20 keys",
-  "19:55:22 handle httptest1792785322: first_chunk=True total=20",
-  "19:55:24 request httptest1792785322: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "19:55:25 request httptest1792785322: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:37:16 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:37:21 http front door: ['https://integrated-kilometers-javascript-homepage.trycloudflare.com', 'https://650123458da128.lhr.life']",
+  "20:37:21 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:38:25 request received: rid httptest1792787905 20 keys",
+  "20:38:25 handle httptest1792787905: first_chunk=True total=20",
+  "20:38:27 request httptest1792787905: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 23, 'empty': 3}, audit 0/0 agree",
+  "20:38:29 request httptest1792787905: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }

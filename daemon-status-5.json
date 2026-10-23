@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T19:55:34+00:00",
+ "at": "2026-10-23T20:43:19+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2038,
  "log": [
-  "19:53:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "19:54:04 http front door: ['https://dictionaries-head-legs-schema.trycloudflare.com', 'https://16359c9bc043a2.lhr.life']",
-  "19:54:04 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "19:55:08 request received: rid httptest1792785308 20 keys",
-  "19:55:08 handle httptest1792785308: first_chunk=True total=20",
-  "19:55:10 request httptest1792785308: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "19:55:10 request httptest1792785308: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:41:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:41:49 http front door: ['https://sleeps-confidential-nomination-dual.trycloudflare.com', 'https://8d29b9aa9ac40b.lhr.life']",
+  "20:41:49 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:42:51 request received: rid httptest1792788170 20 keys",
+  "20:42:51 handle httptest1792788170: first_chunk=True total=20",
+  "20:42:52 request httptest1792788170: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
+  "20:42:53 request httptest1792788170: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
