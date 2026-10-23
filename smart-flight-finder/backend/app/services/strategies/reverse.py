@@ -219,8 +219,14 @@ def _one_per_route(plans: list[StrategyPlan]) -> list[StrategyPlan]:
 
     best: dict[tuple, StrategyPlan] = {}
     for p in plans:
-        legs = [t.legs[0].destination for t in p.tickets] + [t.legs[-1].origin for t in p.tickets]
-        key = tuple(sorted(route_key(c) for c in legs))
+        # roles and directions stay in the key (trip A in/out, trip B in/out); only airports of one metro merge
+        wrap, rev = p.tickets
+        key = (
+            route_key(wrap.legs[0].destination),   # A in
+            route_key(rev.legs[0].origin),          # A out
+            route_key(rev.legs[-1].destination),    # B in
+            route_key(wrap.legs[-1].origin),        # B out
+        )
         if key not in best or p.total_cost < best[key].total_cost:
             best[key] = p
     return list(best.values())

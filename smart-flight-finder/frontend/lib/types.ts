@@ -134,6 +134,8 @@ export type StrategyPlanOut = {
   window_label?: string | null;
   ticket_roles?: string[];
   trips?: string[];
+  cost_complete?: boolean;
+  unknown_costs?: string[];
 };
 
 export type ProviderCacheStats = {

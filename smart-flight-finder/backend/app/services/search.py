@@ -17,6 +17,7 @@ from app.providers.base import FlightOfferProvider
 from app.providers.cache import CachingProvider
 from app.schemas.itinerary import CandidateWindowIn, DateWindowIn, ItineraryRequestIn
 from app.services.date_matrix import expand_window, matrix_cardinality
+from app.services.diversity import diversify
 from app.services.scoring import score_plans
 from app.services.strategies import (
     FourLegPlanner,
@@ -173,7 +174,7 @@ class SearchService:
             at = (getattr(getattr(raw, "db", None), "generated_at", None) or "—")[:16].replace("T", " ")
             self.notices.append(UNCOVERED.format(n=raw.misses, at=at))
 
-        ranked = score_plans(plans, weights=req.scoring_weights)
+        ranked = diversify(score_plans(plans, weights=req.scoring_weights))
         stats = self.provider.stats() if isinstance(self.provider, CachingProvider) else {}
         return total_matrix, ranked, stats
 

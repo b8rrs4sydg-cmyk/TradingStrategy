@@ -141,6 +141,8 @@ class OpenJawPlanner:
             total_travel_days=(ret_date - out_date).days + 1,
             warnings=tuple(warnings),
             explain=f"Open-jaw：{origin}→{dest_a} ({out_date}) + {dest_b}→{origin} ({ret_date})",
+            cost_complete=hop.cost_twd is not None,
+            unknown_costs=() if hop.cost_twd is not None else (f"{dest_a}→{dest_b} 地面／國內交通",),
         )
 
     def _baseline_round_trip(

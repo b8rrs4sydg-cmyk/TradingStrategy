@@ -92,6 +92,10 @@ class StrategyPlan:
     window_label: str | None = None  # candidate time slot this plan came from
     ticket_roles: tuple[str, ...] = ()  # one per ticket, e.g. "反向票：NRT 出發"
     trips: tuple[str, ...] = ()         # human-readable outline of each trip
+    # False when a cost the trip needs is not in total_cost (e.g. the ground transfer of an open jaw whose link is not
+    # known): such a plan is never ranked above a complete one on price alone.
+    cost_complete: bool = True
+    unknown_costs: tuple[str, ...] = ()
 
     @property
     def trip_count(self) -> int:

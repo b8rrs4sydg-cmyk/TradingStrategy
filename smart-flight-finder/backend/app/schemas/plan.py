@@ -99,6 +99,8 @@ class StrategyPlanOut(BaseModel):
     window_label: str | None = None
     ticket_roles: list[str] = Field(default_factory=list)
     trips: list[str] = Field(default_factory=list)
+    cost_complete: bool = True
+    unknown_costs: list[str] = Field(default_factory=list)
 
     @classmethod
     def of(
@@ -117,6 +119,8 @@ class StrategyPlanOut(BaseModel):
             window_label=p.window_label,
             ticket_roles=list(p.ticket_roles),
             trips=list(p.trips),
+            cost_complete=p.cost_complete,
+            unknown_costs=list(p.unknown_costs),
         )
 
 

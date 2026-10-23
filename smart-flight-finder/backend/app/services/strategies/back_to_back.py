@@ -26,7 +26,7 @@ from __future__ import annotations
 
 import os
 from collections.abc import Sequence
-from itertools import product
+from itertools import pairwise, product
 
 from app.data.airports import BY_CODE, TW_AIRPORT_CODES
 from app.models.enums import TicketStrategyType
@@ -59,6 +59,24 @@ def _country(code: str) -> str:
 PATTERN_DIFFERENT = "different"   # X and Y in different countries (the original, strict profile)
 PATTERN_SAME = "same"             # X and Y in the same country (a common real-world shape)
 PATTERN_ANY = "any"               # both shapes
+
+
+def _four_leg_matches(four, x, dest, y, c1, c2, q_ret, r_dep) -> bool:
+    """The ticket must really be the intended X→TPE→D→TPE→Y itinerary, not merely "has four legs": the segments
+    it was priced over, the order of the dates, and (when it carries one leg per segment) each leg's airports and
+    day. A ticket with extra connecting legs keeps its endpoints checked."""
+
+    want = ((x, HUB, c1), (HUB, dest, c2), (dest, HUB, q_ret), (HUB, y, r_dep))
+    if four.searched_segments and tuple(four.searched_segments) != want:
+        return False
+    legs = four.legs
+    if len(legs) < 4 or legs[0].origin != x or legs[-1].destination != y:
+        return False
+    if len(legs) == 4:
+        for leg, (o, d, day) in zip(legs, want, strict=True):
+            if (leg.origin, leg.destination) != (o, d) or leg.departure.date() != day:
+                return False
+    return all(a.arrival <= b.departure for a, b in pairwise(legs))
 
 
 class FourLegPlanner:
@@ -161,7 +179,7 @@ class FourLegPlanner:
                 [(x, HUB, c1), (HUB, dest, c2), (dest, HUB, q_ret), (HUB, y, r_dep)],
                 adults,
             )
-            if four is None or len(four.legs) < 4:
+            if four is None or not _four_leg_matches(four, x, dest, y, c1, c2, q_ret, r_dep):
                 continue
             total = first.total_price + four.total_price + last.total_price
             if best is None or total < best[0]:
