@@ -161,7 +161,12 @@ def test_by_airline_is_kept_per_single_airline_row():
 
 
 def test_a_combination_one_airline_flies_gets_more_date_variants():
-    from app.services.crawl_plan import PER_GROUP, PER_GROUP_NETWORK, CarrierNetwork, rank_multi_city
+    from app.services.crawl_plan import (
+        PER_GROUP,
+        PER_GROUP_NETWORK,
+        CarrierNetwork,
+        rank_multi_city,
+    )
 
     base = "mc|ICN-TPE-2026-11-06|TPE-CDG-2026-12-29|CDG-TPE-2027-01-08|TPE-ICN-2027-0{}"
     keys = [base.format(f"1-{d:02d}") for d in range(9, 9 + 8)]
