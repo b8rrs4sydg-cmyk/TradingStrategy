@@ -378,3 +378,5 @@ change an algorithm or a rule, update the Wiki, not a hint text in the page.
 - The page never searches on load: a search starts only when the user presses 搜尋.
 
 - Strategy dispatch: `SearchService` drives every strategy through `RUNNERS` (`StrategyRunner(arity, run)`; arity 1 = windows, 2 = slot pair, 3 = slot triple). A new strategy = a planner + one `RUNNERS` entry. The planners' query list comes from `query_plan.required_queries`; live-lookup budget order from `query_plan.prioritize(..., promise_of=promise)`; the four-leg planner prunes on the one-way floor (`two_trip.one_way_floor`).
+
+- Phone layout (`max-width: 720px`, block at the end of the main `<style>`): a bottom tab bar (`#tabbar`, `setView`) shows ONE of 搜尋 / 結果 / 精選 / 資料庫 at a time (`body[data-view]`); a finished search switches to 結果. Filters open as a bottom sheet (`body.sheet-open`, `.f-sheet`), airport pickers fold into one row, the DB table turns into rows. Desktop keeps one scrolling page. Check both widths (390 and 1280) after UI changes. Recent searches (slots + airports, 8 max) live in `localStorage` key `sff.history.v1` (`rememberSearch` / `renderHistory` / `applyHistory`).

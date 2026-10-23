@@ -784,6 +784,153 @@
   .heat, table.heat td { border-radius: 6px }
   .eyebrow { display: none }
   .picker .gbtn { white-space: nowrap }
+
+  /* recent searches */
+  .slot-history { margin: 6px 0 14px; display: grid; gap: 8px }
+  .slot-history .sh-head { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--fg-faint) }
+  .slot-history .sh-item { background: var(--card); border-radius: 14px; padding: 10px 12px; display: grid; gap: 8px }
+  .slot-history .sh-main { all: unset; cursor: pointer; display: grid; gap: 2px; min-width: 0 }
+  .slot-history .sh-main b { font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+  .slot-history .sh-main small { color: var(--fg-faint); font-size: 12px }
+  .slot-history .sh-main:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px }
+  .slot-history .sh-slots { display: flex; flex-wrap: wrap; gap: 6px }
+  .slot-history .sh-slots .chip { font-size: 12.5px }
+
+  /* ===== Phone: an app, not a long web page. Tab bar, one view at a time, sheets, 44px targets. ===== */
+  .tabbar, #sheet-backdrop, .results-nav, .f-sheet-head { display: none }
+  .f-sheet { display: contents }
+  @media (max-width: 720px) {
+    body { font-size: 16px; padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); overscroll-behavior-y: none }
+    .page { padding: 0 12px 24px }
+    .topnav { height: 44px; padding: 0 16px; gap: 12px }
+    .topnav a:not(.brand) { display: none }
+    .topnav a[href="wiki.html"] { display: inline }
+    .fab-row { display: none }
+    footer.site { margin-top: 24px; padding-bottom: 8px }
+
+    /* one view at a time */
+    body[data-view="search"] :is(#results, #top100, #dbcard),
+    body[data-view="results"] :is(.hero, #search-card, #top100, #dbcard),
+    body[data-view="top100"] :is(.hero, #search-card, #results, #dbcard),
+    body[data-view="db"] :is(.hero, #search-card, #results, #top100) { display: none }
+
+    /* large-title header instead of a billboard */
+    .hero { padding: 14px 4px 6px; text-align: left }
+    .hero h1 { font-size: 30px; margin: 0 0 4px }
+    .hero p { display: none }
+    .hero-stats { justify-content: flex-start; gap: 18px; margin-top: 2px; font-size: 13px; color: var(--fg-muted) }
+    .hero-stats b { display: inline; font-size: 15px; margin-right: 5px; color: var(--fg) }
+    .hero-stats > div { display: flex; align-items: baseline }
+
+    .card { padding: 16px; border-radius: 16px; margin-bottom: 12px }
+    .card h2, #search-title { font-size: 20px; margin-bottom: 8px }
+
+    /* tab bar */
+    .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding-bottom: env(safe-area-inset-bottom, 0px);
+      background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-top: .5px solid var(--border-strong) }
+    .tabbar > * { flex: 1; min-width: 0; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+      font: 500 10.5px/1 var(--font-body); color: var(--fg-faint); background: none; border: 0; padding: 6px 0 4px; text-decoration: none; position: relative; cursor: pointer }
+    .tabbar svg { width: 24px; height: 24px }
+    .tabbar [aria-current="page"] { color: var(--brand) }
+    .tabbar .badge { position: absolute; top: 4px; left: calc(50% + 8px); min-width: 16px; padding: 2px 4px; border-radius: 999px; background: var(--brand); color: #fff; font: 600 10px/1 var(--font-body); text-align: center }
+
+    /* form: big touch targets, 16px text (no iOS zoom) */
+    input, select, textarea, .num { font-size: 16px !important; min-height: 44px }
+    input[type=checkbox], input[type=radio] { min-height: 0 }
+    .field > input, .field > select { padding: 10px 12px; border-radius: 12px }
+    .field > span { font-size: 12px; letter-spacing: .04em; text-transform: none }
+    #search-form > .grid-2:first-child { grid-template-columns: 1fr 1fr }
+    fieldset { padding: 12px; border: 0; border-radius: 14px; background: var(--card-sunken) }
+    fieldset legend { font-size: 13px; padding: 0 0 6px; letter-spacing: 0 }
+    .strategies { grid-template-columns: 1fr; gap: 0 }
+    .strategies label { min-height: 44px; font-size: 15px }
+    .picker { padding: 8px 10px; border-radius: 14px }
+    .picker label { min-height: 40px; display: inline-flex; align-items: center }
+    .slot { padding: 12px; border-radius: 14px }
+    .slot .pair { grid-template-columns: 1fr 88px }
+    .slot-tools { gap: 8px }
+    .slot-tools .btn-ghost, .btn-ghost { min-height: 40px }
+    .chips .chip, .chip { min-height: 38px }
+    details.spec summary { min-height: 44px; display: flex; align-items: center }
+    .submit-row { position: sticky; bottom: calc(56px + env(safe-area-inset-bottom, 0px)); z-index: 20; margin: 14px -16px -16px; padding: 10px 16px;
+      background: color-mix(in srgb, var(--card) 88%, transparent); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: .5px solid var(--border);
+      border-radius: 0 0 16px 16px }
+    .submit-row .btn-primary { width: 100%; min-height: 50px; font-size: 17px }
+    .submit-row small:not(#elapsed) { display: none }
+    .slot-history .sh-item { padding: 12px }
+
+    /* results */
+    .results-nav { display: block; margin: 4px 0 8px }
+    .results-head { flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 14px }
+    .results-head .counts { font-size: 13px }
+    .controls { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; margin: 0 -14px; padding: 2px 14px; scrollbar-width: none }
+    .controls::-webkit-scrollbar { display: none }
+    .controls > * { flex: none }
+    .f-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px }
+    .f-actives { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; flex: 1 1 100%; order: 3; scrollbar-width: none }
+    .f-actives > * { flex: none }
+    .plan { border-radius: 16px }
+    .plan-head { flex-direction: column; align-items: stretch; gap: 6px }
+    .plan-head > div:last-child { order: -1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap }
+    .plan-head .price { font-size: 24px }
+    .plan-head .score { display: none }
+    .plan-head .per-trip { text-align: left }
+    .plan .sel-col { padding: 12px 6px 0 10px }
+    .plan .sel-col input[type=checkbox] { width: 22px; height: 22px }
+    .plan .fav-btn { font-size: 24px; min-height: 36px }
+    .plan-body { padding: 12px 12px 0 6px }
+    .g-tools { justify-content: flex-start }
+    .results-head .counts { flex-wrap: wrap; gap: 4px 10px }
+    #notices .notice, #lookup-all { margin: 0 0 8px; padding: 10px 12px; line-height: 1.45 }
+    .live-lookup { margin: 0 0 10px }
+    .results-head, .results-head .controls { min-width: 0; max-width: 100% }
+    .heatmap { overflow-x: auto }
+    .page { overflow-x: clip }
+
+    /* airport pickers fold into one row: 出發 · 已選 1 › */
+    .picker { padding: 0; overflow: hidden }
+    .picker > .head { display: flex; align-items: center; justify-content: flex-start; gap: 6px; min-height: 48px; padding: 0 14px; cursor: pointer; font-size: 15px; color: var(--fg) }
+    .picker > .head::after { margin-left: auto; content: '›'; font-size: 22px; color: var(--fg-faint); transform: rotate(90deg); transition: transform .15s }
+    .picker.open > .head::after { transform: rotate(-90deg) }
+    .picker:not(.open) > :not(.head), .picker:not(.open) > details.row { display: none }
+    .picker.open > :not(.head) { display: block }
+    .picker.open { padding-bottom: 8px }
+    .picker.open > .row, .picker.open > details.row { margin: 0 12px }
+    .picker .head .psearch { display: none }
+    .picker.open > .head { flex-wrap: wrap; padding-bottom: 8px }
+    .picker.open .head .psearch { display: block; flex: 1 1 100%; order: 3; min-width: 0; margin-bottom: 2px }
+
+    /* filters become a bottom sheet */
+    .f-sheet { display: none }
+    body.sheet-open { overflow: hidden }
+    body.sheet-open .f-sheet { display: flex; flex-direction: column; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; max-height: 84vh;
+      background: var(--card); border-radius: 20px 20px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,.28); padding-bottom: env(safe-area-inset-bottom, 0px) }
+    .f-sheet-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: .5px solid var(--border-strong) }
+    .f-sheet-head .btn-primary { padding: 8px 20px; min-height: 36px }
+    .f-sheet .f-panel { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 16px 28px; border-top: 0 }
+    body.sheet-open #sheet-backdrop { display: block; position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.42) }
+    .f-chip { min-height: 36px; font-size: 14px }
+    .f-preset { min-height: 36px }
+
+    /* database as a list of rows, not a 7-column table */
+    .db-wrap { overflow: visible }
+    .db-table, .db-table tbody, .db-table tr, .db-table td { display: block }
+    .db-table thead { display: none }
+    .db-table tr { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px 2px; border-bottom: .5px solid var(--border) }
+    .db-table td { padding: 0; border: 0; font-size: 13px; color: var(--fg-muted) }
+    .db-table td:nth-child(2) { grid-column: 1; grid-row: 1; font-size: 15px; font-weight: 600; color: var(--fg) }
+    .db-table td:nth-child(5) { grid-column: 2; grid-row: 1; text-align: right; font-size: 16px; font-weight: 600; color: var(--fg) }
+    .db-table td:nth-child(3) { grid-column: 1; grid-row: 2 }
+    .db-table td:nth-child(6) { grid-column: 2; grid-row: 2; text-align: right }
+    .db-table td:nth-child(4) { grid-column: 1; grid-row: 3 }
+    .db-table td:nth-child(7) { grid-column: 2; grid-row: 3; text-align: right }
+    .db-table td:nth-child(1) { display: none }
+    .db-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+    .db-filters #db-q { grid-column: 1 / -1 }
+    .db-actions { flex-wrap: wrap; gap: 8px }
+    .t100 { padding: 14px }
+  }
 </style>
 </head>
 <body>
@@ -828,6 +975,7 @@
         <legend>備選時段</legend>
         <div class="hint">點選連假加入備選時段</div>
         <div id="holiday-chips" class="chips"></div>
+        <div id="slot-history" class="slot-history" hidden></div>
         <ol id="slot-list" class="slot-list"></ol>
         <div class="slot-tools">
           <button type="button" class="btn-ghost" id="btn-add-slot">+ 自訂時段</button>
@@ -925,6 +1073,7 @@
   </section>
 
   <section id="results" hidden aria-live="polite">
+    <div class="results-nav"><button type="button" id="btn-edit" class="btn-ghost">‹ 修改搜尋條件</button></div>
     <div class="results-head">
       <div class="counts">
         <span><b id="r-plan-count">0</b> 個方案</span>
@@ -961,7 +1110,10 @@
         <span id="f-shown" class="f-shown"></span>
         <button type="button" id="f-reset" class="btn-ghost" hidden>全部重設</button>
       </div>
-      <div id="f-panel" class="f-panel"></div>
+      <div class="f-sheet">
+        <div class="f-sheet-head"><b>篩選方案</b><button type="button" id="f-done" class="btn-primary">完成</button></div>
+        <div id="f-panel" class="f-panel"></div>
+      </div>
     </section>
 
     <div id="live-lookup" class="live-lookup" hidden aria-live="polite"></div>
@@ -984,6 +1136,14 @@
 
 </div>
 
+<nav class="tabbar" id="tabbar" aria-label="頁面">
+  <button type="button" data-view="search" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>搜尋</button>
+  <button type="button" data-view="results"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>結果<span class="badge" id="tab-badge" hidden></span></button>
+  <button type="button" data-view="top100"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>精選</button>
+  <button type="button" data-view="db"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>資料庫</button>
+  <a href="wiki.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M9 7h6"/></svg>說明</a>
+</nav>
+<div id="sheet-backdrop" hidden></div>
 <div class="fab-row">
   <button class="fab" type="button" id="fab-theme" aria-label="切換主題">☼ 系統</button>
   <button class="fab" type="button" id="fab-help">? 快捷鍵</button>
@@ -2314,15 +2474,24 @@ function renderFilters(plans) {
   return active;
 }
 
+const phoneMQ = window.matchMedia('(max-width: 720px)');
+
 function wirePlanFilters() {
   const bar = document.getElementById('filters'), panel = document.getElementById('f-panel');
-  let open = window.innerWidth >= 900;                              // a phone shows the results first
-  try { const v = localStorage.getItem(PF_OPEN_KEY); if (v != null) open = v === '1'; } catch {}
+  let open = !phoneMQ.matches && window.innerWidth >= 900;          // a phone shows the results first; filters open as a sheet
+  if (!phoneMQ.matches) { try { const v = localStorage.getItem(PF_OPEN_KEY); if (v != null) open = v === '1'; } catch {} }
   const setOpen = v => {
-    open = v; panel.hidden = !v;
+    open = v;
+    const sheet = phoneMQ.matches;
+    panel.hidden = sheet ? false : !v;                               // on a phone the sheet itself is shown or hidden by CSS
+    document.body.classList.toggle('sheet-open', sheet && v);
+    document.getElementById('sheet-backdrop').hidden = !(sheet && v);
     document.getElementById('f-toggle').setAttribute('aria-expanded', String(v));
-    try { localStorage.setItem(PF_OPEN_KEY, v ? '1' : '0'); } catch {}
+    if (!sheet) { try { localStorage.setItem(PF_OPEN_KEY, v ? '1' : '0'); } catch {} }
   };
+  document.getElementById('f-done').addEventListener('click', () => setOpen(false));
+  document.getElementById('sheet-backdrop').addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('sheet-open')) setOpen(false); });
   setOpen(open);
   document.getElementById('f-toggle').addEventListener('click', () => setOpen(!open));
   let timer = null;
@@ -3284,6 +3453,76 @@ function updateSlotSummary() {
   return !invalid;
 }
 
+
+/* ---- recent searches: the time slots (and airports) of earlier searches, to run again with one tap ---- */
+const HISTORY_KEY = 'sff.history.v1';
+const HISTORY_MAX = 8;
+const loadHistory = () => { try { const h = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); return Array.isArray(h) ? h : []; } catch { return []; } };
+const saveHistory = list => { try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list)); } catch { /* private mode: history is a convenience */ } };
+const slotSig = s => [s.depart, s.ret, s.departFlex, s.retFlex].join('|');
+const slotSpan = s => (s.ret && s.ret >= s.depart ? `${s.depart.slice(5).replace('-', '/')}–${s.ret.slice(5).replace('-', '/')}` : s.depart.slice(5).replace('-', '/')) + (s.departFlex || s.retFlex ? ` ±${Math.max(s.departFlex, s.retFlex)}` : '');
+
+function rememberSearch() {
+  const entry = {
+    at: Date.now(),
+    trip: document.getElementById('f-trip').value,
+    slots: slots.map(({ label, holidayKey, depart, ret, departFlex, retFlex }) => ({ label, holidayKey, depart, ret, departFlex, retFlex })),
+    origins: checkedCodes('pick-origins'),
+    dests: checkedCodes('pick-dest'),
+  };
+  const sig = e => [e.trip, e.slots.map(slotSig).sort().join(','), e.origins.join(','), e.dests.join(',')].join('#');
+  const list = [entry, ...loadHistory().filter(h => sig(h) !== sig(entry))].slice(0, HISTORY_MAX);
+  saveHistory(list);
+  renderHistory();
+}
+
+function renderHistory() {
+  const box = document.getElementById('slot-history');
+  const list = loadHistory();
+  box.hidden = !list.length;
+  if (!list.length) { box.innerHTML = ''; return; }
+  const when = t => { const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()}`; };
+  box.innerHTML = `<div class="sh-head"><span>最近搜尋過</span><button type="button" class="btn-ghost" data-act="clear">清除紀錄</button></div>` +
+    list.map((h, i) => `<div class="sh-item">
+      <button type="button" class="sh-main" data-act="apply" data-i="${i}" title="整組套用：時段、出發地與目的地">
+        <b>${escapeHtml(h.slots.map(s => slotLabel({ ...s, label: s.label || '' })).join('、') || '（無時段）')}</b>
+        <small>${escapeHtml(h.origins.slice(0, 2).join('/'))} → ${escapeHtml(h.dests.slice(0, 3).join('/'))}${h.dests.length > 3 ? ` +${h.dests.length - 3}` : ''} · ${when(h.at)}</small>
+      </button>
+      <span class="sh-slots">${h.slots.map((s, j) => `<button type="button" class="chip" data-act="add" data-i="${i}" data-j="${j}" title="只加入這個時段">+ ${escapeHtml(slotLabel({ ...s, label: s.label || '' }))}<span class="mono">${slotSpan(s)}</span></button>`).join('')}</span>
+    </div>`).join('');
+}
+
+function applyHistory(entry) {
+  document.getElementById('f-trip').value = entry.trip;
+  slots.length = 0;
+  for (const s of entry.slots) slots.push({ id: nextSlotId++, ...s, label: s.label || '' });
+  for (const [id, codes] of [['pick-origins', entry.origins], ['pick-dest', entry.dests]]) {
+    const want = new Set(codes);
+    const el = document.getElementById(id);
+    el.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = want.has(c.value); });
+    el.dispatchEvent(new Event('change'));
+  }
+  renderSlots();
+}
+
+function wireHistory() {
+  renderHistory();
+  document.getElementById('slot-history').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    const list = loadHistory();
+    const entry = list[Number(btn.dataset.i)];
+    if (btn.dataset.act === 'clear') { saveHistory([]); renderHistory(); return; }
+    if (!entry) return;
+    if (btn.dataset.act === 'apply') { applyHistory(entry); return; }
+    const s = entry.slots[Number(btn.dataset.j)];
+    if (s && !slots.some(x => slotSig(x) === slotSig(s))) {
+      slots.push({ id: nextSlotId++, ...s, label: s.label || '' });
+      renderSlots();
+    }
+  });
+}
+
 function wireSlots() {
   // Defaults = the crawled holidays (Google Flights sells ~11 months ahead).
   const cov = fareCoverage();
@@ -3352,6 +3591,10 @@ function renderPicker(id, title, airports, selected) {
       const nsel = list.filter(a => selected.has(a.code)).length;
       return `<details class="row" data-group="${escapeHtml(g)}" ${nsel ? 'open' : ''}><summary><span class="grp">${g}</span><span class="gcount">${list.length} 個機場${nsel ? ` · 已選 ${nsel}` : ''}</span><button type="button" class="gbtn" data-act="all">全選</button><button type="button" class="gbtn" data-act="none">清除</button></summary><div class="chips">${list.map(label).join('')}</div></details>`;
     }).join('');
+  const head = el.querySelector('.head');
+  head.addEventListener('click', e => {   // a phone folds each picker into one row; a desktop shows them open
+    if (phoneMQ.matches && !e.target.closest('.psearch')) el.classList.toggle('open');
+  });
   const refresh = () => {
     el.querySelector('.n').textContent = checkedCodes(id).length;
     el.querySelectorAll('details.row').forEach(d => {
@@ -3425,6 +3668,44 @@ function toggleFourLegExtras() {
   check();
 }
 
+
+/* ---- app-style views on a phone: a tab bar switches between 搜尋 / 結果 / 精選 / 資料庫 (all stay on one page on a desktop) ---- */
+function setView(view) {
+  document.body.dataset.view = view;
+  document.querySelectorAll('#tabbar [data-view]').forEach(b => {
+    if (b.dataset.view === view) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
+  if (!phoneMQ.matches) return;
+  for (const [v, id] of [['top100', 't100-toggle'], ['db', 'db-toggle']]) {   // their bodies start folded: open them in their own view
+    const t = document.getElementById(id);
+    if (view === v && t && t.getAttribute('aria-expanded') === 'false') t.click();
+  }
+  window.scrollTo(0, 0);
+}
+
+function updateTabBadge() {
+  const n = state.result ? state.result.plans.length : 0;
+  const b = document.getElementById('tab-badge');
+  b.hidden = !n;
+  b.textContent = n > 99 ? '99+' : n;
+}
+
+function wireTabs() {
+  setView('search');
+  document.getElementById('tabbar').addEventListener('click', e => {
+    const b = e.target.closest('button[data-view]');
+    if (!b) return;
+    if (b.dataset.view === 'results' && !state.result) { setView('search'); return; }   // nothing searched yet
+    setView(b.dataset.view);
+  });
+  document.getElementById('btn-edit').addEventListener('click', () => setView('search'));
+  document.querySelectorAll('.topnav a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+    if (!phoneMQ.matches) return;
+    const id = a.getAttribute('href').slice(1);
+    setView(id === 'top100' ? 'top100' : id === 'dbcard' ? 'db' : 'search');
+  }));
+}
+
 function wireSubmit() {
   const form = document.getElementById('search-form');
   let byUser = false;   // real clicks / shortcut only — not the automatic re-search after a database update
@@ -3435,6 +3716,7 @@ function wireSubmit() {
     const user = byUser;
     byUser = false;
     if (!updateSlotSummary()) return;
+    if (user) rememberSearch();
     const btn = form.querySelector('.btn-primary');
     btn.disabled = true;
     btn.textContent = '搜尋中…';
@@ -3449,6 +3731,8 @@ function wireSubmit() {
         updateCompareButton();
         document.getElementById('r-sel-pill').hidden = true;
         renderResults();
+        updateTabBadge();
+        if (user && phoneMQ.matches) setView('results');
         elapsed.textContent = `· 搜尋耗時 ${Math.round(performance.now() - t0)} ms`;
         maybeLookup(user);
       } finally {
@@ -4374,9 +4658,11 @@ function init() {
   subscribeLiveFares();
   wirePickers();
   wireSlots();
+  wireHistory();
   syncRangeLabels();
   toggleFourLegExtras();
   wireSubmit();
+  wireTabs();
   wireResultsControls();
   wireHelp();
   wireTheme();
