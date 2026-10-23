@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T05:14:29+00:00",
+ "at": "2026-10-23T05:19:54+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2004,
  "log": [
-  "05:12:55 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:12:59 http front door: ['https://visited-independent-floral-variable.trycloudflare.com', 'https://782507a9e0a81f.lhr.life']",
-  "05:12:59 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:14:04 request received: rid httptest1792732444 20 keys",
-  "05:14:04 handle httptest1792732444: first_chunk=True total=20",
-  "05:14:06 request httptest1792732444: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:14:08 request httptest1792732444: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:18:19 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:18:24 http front door: ['https://decent-seal-conservation-belong.trycloudflare.com', 'https://7c5c3df778f52e.lhr.life']",
+  "05:18:24 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:19:27 request received: rid httptest1792732766 20 keys",
+  "05:19:27 handle httptest1792732766: first_chunk=True total=20",
+  "05:19:28 request httptest1792732766: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:19:28 request httptest1792732766: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
