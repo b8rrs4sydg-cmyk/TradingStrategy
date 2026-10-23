@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:03:25+00:00",
+ "generated_at": "2026-10-23T14:07:59+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -2908,6 +2908,28 @@
     [
      "2026-10-19",
      25647
+    ]
+   ]
+  },
+  "mc|KIX-TPE-2026-11-08|TPE-HKG-2026-11-20|HKG-TPE-2026-11-22|TPE-FUK-2026-11-27": {
+   "price": 30640,
+   "by_airline": {
+    "STARLUX Airlines": 30640,
+    "EVA Air": 32160,
+    "Cathay Pacific": 91447,
+    "China Airlines": 94597
+   },
+   "first": {
+    "dep": "2026-11-08T14:00:00+09:00",
+    "arr": "2026-11-08T16:20:00+08:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "at": "2026-10-23",
+   "hist": [
+    [
+     "2026-10-23",
+     30640
     ]
    ]
   },
@@ -34635,6 +34657,11 @@
  ],
  "missing_v": 2,
  "status": {
+  "mc|FUK-TPE-2026-11-22|TPE-CJU-2026-11-27|CJU-TPE-2026-11-29|TPE-HND-2027-02-10": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|FUK-TPE-2026-11-22|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-FUK-2026-12-18": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -34670,6 +34697,11 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|FUK-TPE-2026-12-06|TPE-HKG-2026-12-11|HKG-TPE-2026-12-13|TPE-FUK-2027-02-10": {
+   "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|HND-TPE-2026-11-08|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-NRT-2027-02-10": {
    "status": "parse_error",
    "at": "2026-10-23",
@@ -34700,12 +34732,22 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|HND-TPE-2026-12-06|TPE-HKG-2026-12-18|HKG-TPE-2026-12-20|TPE-NRT-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|HND-TPE-2026-12-20|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-HND-2027-02-10": {
    "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
   "mc|ICN-TPE-2026-11-15|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-ICN-2027-02-10": {
+   "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-11-15|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-PVG-2026-12-24": {
    "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
@@ -34750,6 +34792,21 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|NRT-TPE-2026-11-08|TPE-HKG-2026-11-20|HKG-TPE-2026-11-22|TPE-NRT-2026-12-24": {
+   "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|NRT-TPE-2026-11-29|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-NRT-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|NRT-TPE-2026-12-13|TPE-HKG-2026-12-18|HKG-TPE-2026-12-20|TPE-HND-2026-12-24": {
+   "status": "timeout",
+   "at": "2026-10-23",
+   "n": 1
+  },
   "mc|NRT-TPE-2026-12-13|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-HND-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -34776,6 +34833,11 @@
    "n": 1
   },
   "mc|SHA-TPE-2026-11-22|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-NRT-2026-12-24": {
+   "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|SHA-TPE-2026-12-06|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-HND-2027-02-10": {
    "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
