@@ -6,9 +6,6 @@
 <meta name="description" content="2027 台灣連假機票湊票引擎 — 彈性日期矩陣、反向票、外站四段票與 MCT 檢查，純前端 demo">
 <style>:root{padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Smart Flight Finder</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 
 <style>
   /* Layout: hero band at the top, a sticky search form card, then results
@@ -709,26 +706,97 @@
   @media (prefers-reduced-motion: no-preference) {
     .plan-detail { transition: opacity 0.15s ease }
   }
+
+  /* ===== Minimal (Apple-style) layer: system fonts, hairlines, quiet colour, generous space ===== */
+  :root {
+    --bg: #f5f5f7; --fg: #1d1d1f; --fg-muted: #6e6e73; --fg-faint: #86868b;
+    --card: #ffffff; --card-sunken: #f5f5f7; --border: #e8e8ed; --border-strong: #d2d2d7;
+    --brand: #0071e3; --brand-ink: #0066cc; --brand-wash: #eaf3fe; --accent: #bf4800; --accent-wash: #fdf0e6;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #000; --fg: #f5f5f7; --fg-muted: #a1a1a6; --fg-faint: #6e6e73; --card: #1c1c1e; --card-sunken: #2c2c2e;
+      --border: #2c2c2e; --border-strong: #3a3a3c; --brand: #2997ff; --brand-ink: #64b5ff; --brand-wash: #0a2a47;
+      --accent: #ff9f0a; --accent-wash: #3a2a10;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #000; --fg: #f5f5f7; --fg-muted: #a1a1a6; --fg-faint: #6e6e73; --card: #1c1c1e; --card-sunken: #2c2c2e;
+    --border: #2c2c2e; --border-strong: #3a3a3c; --brand: #2997ff; --brand-ink: #64b5ff; --brand-wash: #0a2a47;
+    --accent: #ff9f0a; --accent-wash: #3a2a10;
+  }
+  body { font-family: var(--font-body); -webkit-font-smoothing: antialiased; letter-spacing: -0.003em }
+  .page { max-width: 980px }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em }
+  a { color: var(--brand) }
+
+  /* top bar */
+  .topnav { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 22px; height: 48px; padding: 0 max(20px, env(safe-area-inset-left));
+    background: color-mix(in srgb, var(--bg) 75%, transparent); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: .5px solid var(--border-strong) }
+  .topnav a { color: var(--fg); text-decoration: none; font-size: 13px } .topnav a:hover { color: var(--brand) }
+  .topnav .brand { font-weight: 600; font-size: 14px } .topnav .sp { flex: 1 }
+  @media (max-width: 640px) { .topnav { gap: 14px } .topnav a[href="#dbcard"], .topnav a[href="#top100"] { display: none } }
+
+  /* hero: one headline, one line, two numbers */
+  .hero { padding: 56px 0 28px; text-align: center; background: none; border: 0 }
+  .hero h1 { font-size: clamp(34px, 6.5vw, 56px); line-height: 1.07; font-weight: 700; margin: 0 0 10px }
+  .hero p { margin: 0 auto; max-width: 36em; font-size: clamp(17px, 2.4vw, 21px); color: var(--fg-muted); line-height: 1.4 }
+  .hero-stats { justify-content: center; gap: 40px; margin-top: 28px; border: 0; background: none; padding: 0 }
+  .hero-stats b { display: block; font-size: 28px; font-weight: 600; letter-spacing: -.02em }
+
+  /* surfaces: soft cards without outlines */
+  .card, .results-head, .heatmap, .compare, .filters, .plan, .t100, .live-lookup, details.spec {
+    border-color: transparent; box-shadow: none; border-radius: 18px;
+  }
+  .card { padding: 28px 28px; margin-bottom: 20px }
+  .card h2, #search-title { font-size: 28px; font-weight: 700; margin: 0 0 12px }
+  .plan, .t100 { border: 0; background: var(--card) }
+  .plan { border-radius: 16px }
+  .plan .strat, .plan .rank, .plan .slot-tag, .pill { background: var(--card-sunken); color: var(--fg-muted); font-weight: 500 }
+  .plan.four-leg .strat { background: var(--card-sunken); color: var(--fg-muted) }
+  .plan-head .price, .t100 .price { font-family: var(--font-display); font-weight: 600; letter-spacing: -.02em }
+  .group-head { background: transparent; border: 0; border-bottom: .5px solid var(--border-strong); border-radius: 0; padding: 12px 4px }
+  .group-head:hover { border-color: var(--border-strong); background: transparent }
+
+  /* controls */
+  .btn-primary { background: var(--brand); border-radius: 980px; padding: 12px 26px; font-weight: 500; font-size: 15px; letter-spacing: 0 }
+  .btn-primary:hover { background: var(--brand-ink) }
+  .btn-ghost, .fab { border: 0; background: var(--card-sunken); border-radius: 980px; padding: 8px 15px; color: var(--fg); font-weight: 400; font-size: 13px }
+  .btn-ghost:hover, .fab:hover { background: color-mix(in srgb, var(--fg) 10%, var(--card-sunken)) }
+  .btn-ghost[aria-pressed="true"], .btn-ghost.active { background: var(--brand-wash); color: var(--brand-ink) }
+  select.btn-ghost { appearance: none; padding-right: 15px }
+  input, select, .num { border-radius: 10px; border: .5px solid var(--border-strong); background: var(--card); font-family: var(--font-body) }
+  input:focus, select:focus { outline: 2px solid var(--brand); outline-offset: 0; border-color: transparent }
+  .f-chip, .f-active, .f-preset, .chips .chip, .picker label { border: 0; background: var(--card-sunken); border-radius: 980px }
+  .f-chip.on, .f-active, .f-preset.on { background: var(--brand-wash); color: var(--brand-ink) }
+  .f-chip.zero { opacity: .4 }
+  .filters { background: var(--card) } .f-panel { border-top: .5px solid var(--border) }
+
+  /* quiet the loudest text */
+  .hint, .caption, .f-hint { color: var(--fg-faint); font-size: 12.5px }
+  .notice { background: var(--card-sunken); border: 0; color: var(--fg-muted); border-radius: 12px; padding: 10px 14px; font-size: 13px }
+  .db-status { background: transparent; border: 0; padding: 0; color: var(--fg-muted); font-size: 13px; margin: 0 0 16px }
+  .db-status.empty { color: var(--crit) }
+  footer.site { border-top: .5px solid var(--border-strong); margin-top: 56px; padding: 18px 0 40px; font-size: 12px; color: var(--fg-faint) }
+  .heat, table.heat td { border-radius: 6px }
+  .eyebrow { display: none }
+  .picker .gbtn { white-space: nowrap }
 </style>
 </head>
 <body>
 
+<nav class="topnav" aria-label="主選單"><a class="brand" href="#">Smart Flight Finder</a><a href="#search-card">搜尋</a><a href="#top100">精選</a><a href="#dbcard">資料庫</a><span class="sp"></span><a href="wiki.html">Wiki</a></nav>
 <div class="page">
 
   <header class="hero">
-    <span class="eyebrow">2027 連假 · 進階票規策略</span>
-    <h1>以假期為核心的機票湊票引擎</h1>
-    <p>
-      所有票價都來自 Google Flights 實際搜尋 —— 爬蟲每 6 小時把湊票策略需要的每一個查詢
-      (單程、來回、多段) 爬進票價資料庫，沒有任何模擬價格。以 2027 台灣連假為參考選「備選時段」，
-      引擎依「標準直購 / 反向票＋倒買法 / Open-jaw / 外站四腿票」排列組合，把兩個時段配成
-      「一次購票、兩趟旅程」，每張票附 Trip.com / Google Flights 多段訂票連結。
-    </p>
+    <h1>找到最便宜的連假機票</h1>
+    <p>真實 Google Flights 票價，依你的假期自動配出最省的行程。<a href="wiki.html">了解原理</a></p>
     <div class="hero-stats">
       <div><b id="hs-count">—</b>筆實價票價</div>
       <div><b id="hs-age">—</b>資料更新</div>
-      <div><b>每 6h</b>自動爬取</div>
-      <div><b>4-leg</b> 外站四腿票湊票</div>
     </div>
   </header>
 
@@ -758,7 +826,7 @@
 
       <fieldset>
         <legend>備選時段</legend>
-        <div class="hint">2027 連假參考 — 點選加入 / 移除備選時段 (可多選)，加入後可再調整日期與彈性</div>
+        <div class="hint">點選連假加入備選時段</div>
         <div id="holiday-chips" class="chips"></div>
         <ol id="slot-list" class="slot-list"></ol>
         <div class="slot-tools">
@@ -810,7 +878,7 @@
   <section class="card" id="top100" aria-labelledby="t100-title">
     <div class="t100-bar">
       <button type="button" id="t100-toggle" class="btn-ghost" aria-expanded="false" aria-controls="t100-body"><span id="t100-title">資料庫精選 Top 100</span> <span id="t100-count" class="pill pill-sel"></span></button>
-      <span class="hint">不用搜尋：從資料庫全部實價挑出比同航線便宜、近期降價、落在連假的票</span>
+      <span class="hint">不用搜尋 · <a href="wiki.html#rank">推薦怎麼算</a></span>
     </div>
     <div id="t100-body" hidden>
       <div class="controls t100-controls">
@@ -823,7 +891,7 @@
         </select>
       </div>
       <div id="t100-list"></div>
-      <div class="hint">只列台灣出發的行程；明顯低於同航線行情的價格視為讀取錯誤而排除。推薦分數＝0.5×比同航線中位價便宜幅度＋0.2×較上次降價幅度＋0.3×絕對價格低＋連假／直飛加成；同航線少於 4 筆時不算「比中位價」。多段票只有第 1 段有實際航班時刻。</div>
+      <div class="hint">計算方式與排除規則見 <a href="wiki.html#rank">Wiki</a></div>
     </div>
   </section>
 
@@ -831,7 +899,7 @@
     <div class="t100-bar">
       <button type="button" id="db-toggle" class="btn-ghost" aria-expanded="false" aria-controls="db-body"><span id="db-title">資料庫全部資料</span> <span id="db-count" class="pill pill-sel"></span></button>
       <button type="button" id="db-reload" class="btn-ghost">重新載入全部資料</button>
-      <span id="db-status" class="hint"></span>
+      <span id="db-load" class="hint"></span>
     </div>
     <div id="db-body" hidden>
       <div class="db-filters">
@@ -910,8 +978,8 @@
   </section>
 
   <footer class="site">
-    <div>Smart Flight Finder：票價全部是 Google Flights 實際搜尋結果（1 位成人經濟艙最低總價，每 6 小時更新；多段票只有第 1 段的航班時刻，後段在訂票網站選）。資料庫沒有的查詢不顯示價格；訂票前請點各票連結確認即時價格。</div>
-    <div><a href="https://github.com/b8rrs4sydg-cmyk/tradingstrategy/tree/claude/zealous-darwin-1kexus/smart-flight-finder" target="_blank" rel="noopener">GitHub 原始碼</a></div>
+    <div>價格為 Google Flights 搜尋當下的結果，訂票前請以訂票網站為準。<a href="wiki.html#faq">常見問題</a></div>
+    <div><a href="https://github.com/b8rrs4sydg-cmyk/tradingstrategy/tree/claude/zealous-darwin-1kexus/smart-flight-finder" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
 
 </div>
@@ -1306,10 +1374,7 @@ function renderDbStatus() {
     el.innerHTML = '票價資料庫目前沒有資料 —— 爬蟲尚未完成第一次執行，所有搜尋都不會有結果。';
     return;
   }
-  const name = code => AIRPORT_BY_CODE.get(code)?.name || code;
-  const hol = [...c.holidays].map(k => holidayByKey.get(k)?.label.split('請')[0] || k).join('、');
-  el.innerHTML = `票價資料庫：<b>${c.count.toLocaleString()}</b> 筆 Google Flights 實價，更新於 <b>${tpeTime(FARES.generated_at)}</b>（台北時間，${ageText(FARES.generated_at)}）${liveDb ? '<span class="live">● 即時同步</span>' : ''}<br>
-    已爬取：${hol || '—'} ±${c.flex} 天 · 目的地 ${c.destinations.map(name).join('、') || '—'} · 四腿票外站 ${c.outer.map(name).join('、') || '—'}。標「無資料」的機場/連假還沒爬，選了不會有價格。`;
+  el.innerHTML = `<b>${c.count.toLocaleString()}</b> 筆實價 · 更新於 ${tpeTime(FARES.generated_at)}（${ageText(FARES.generated_at)}）${liveDb ? '<span class="live">● 即時同步</span>' : ''} · 標「無資料」的機場或連假尚未爬取，<a href="wiki.html#data">了解更多</a>`;
 }
 
 const fareKeyOW = (o, d, day) => `ow|${o}|${d}|${day}`;
@@ -2526,7 +2591,7 @@ function renderDbCard() {
   document.getElementById('db-count').textContent = `${total.toLocaleString()} 筆`;
   const ok = DBLOAD.files.filter(f => f.source !== '讀取失敗');
   const gh = ok.filter(f => f.source === 'GitHub').length;
-  document.getElementById('db-status').textContent = DBLOAD.busy ? '載入中…'
+  document.getElementById('db-load').textContent = DBLOAD.busy ? '載入中…'
     : DBLOAD.at ? `已讀取 ${ok.length}/${DBLOAD.files.length} 個資料檔（${gh} 個來自 GitHub，${ok.length - gh} 個為網站副本）· ${DBLOAD.at.toLocaleTimeString('zh-TW')}` : '';
   document.getElementById('db-reload').disabled = DBLOAD.busy;
   document.getElementById('db-toggle').setAttribute('aria-expanded', String(DB.open));
@@ -2642,7 +2707,7 @@ function renderResults() {
   // Favorites bubble to top within whatever order picked
   visible.sort((a,b) => (state.favorites.has(fingerprint(b)) ? 1 : 0) - (state.favorites.has(fingerprint(a)) ? 1 : 0));
 
-  document.getElementById('notices').innerHTML = (state.result.notices || []).map(n => `<div class="notice">${escapeHtml(n)}</div>`).join('');
+  document.getElementById('notices').innerHTML = (state.result.notices || []).map(n => `<div class="notice">${escapeHtml(n)} <a href="wiki.html#algo" target="_blank" rel="noopener">原理</a></div>`).join('');
   renderHeatmap(plans.filter(p => !(p.trips || []).length && pfPass(p)));
   renderPlanList(visible, grouped.groups);
   renderCompare(visible);
@@ -3083,9 +3148,9 @@ function runSearch(form) {
     for (const a of tripSlots) for (const b of tripSlots) {
       if (a !== b && a.returns[a.returns.length - 1] < b.departs[0]) pairs.push([a, b]);
     }
-    if (!pairs.length) notices.push('反向票＋倒買法是「一次購票、兩趟旅程」的買法，需要至少兩個不重疊的備選時段（例如 春節 + 聖誕）且行程類型為來回。');
+    if (!pairs.length) notices.push('反向票＋倒買法需要至少兩個不重疊的備選時段，且行程類型為來回。');
     const skipped = req.destinations.filter(d => !daomaiCountry(d));
-    if (paired.includes('reverse') && skipped.length) notices.push(`倒買法只適用日本、泰國（偶爾韓國）等亞洲短程 — 這些國家出發的來回票才便宜且常見；${skipped.join(', ')} 不套用反向票＋倒買法。`);
+    if (paired.includes('reverse') && skipped.length) notices.push(`倒買法只適用日本、泰國、韓國；${skipped.join(', ')} 不套用。`);
     for (const [a, b] of pairs) {
       if (paired.includes('reverse')) planReversePair(req, a, b).forEach(p => add(p, `${a.label} + ${b.label}`));
     }
@@ -3096,16 +3161,16 @@ function runSearch(form) {
     for (const a of tripSlots) for (const b of tripSlots) for (const c of tripSlots) {
       if (a !== b && b !== c && a !== c && before(a, b) && before(b, c)) triples.push([a, b, c]);
     }
-    if (!triples.length) notices.push('外站四腿票串起三趟旅程（單買初段＋第1段 / 第2+3段 / 第4段＋單買最後一段），需要至少三個不重疊的備選時段（例如 春節 + 清明 + 端午）且行程類型為來回。');
+    if (!triples.length) notices.push('外站四腿票需要至少三個不重疊的備選時段，且行程類型為來回。');
     for (const [a, b, c] of triples) planFourLegTriple(req, a, b, c).forEach(p => add(p, `${a.label} + ${b.label} + ${c.label}`));
   }
   if (req.budget) plans = plans.filter(p => p.total_cost <= req.budget);
-  if (req.destinations.length > 30) notices.push(`已選 ${req.destinations.length} 個目的地：每個目的地 × 每個日期組合都要一筆票價，沒爬過的機場要由爬蟲即時去查，數量會很大、要等很久。想快一點可以先只選幾個城市，或用目的地清單旁的「清除」縮小範圍。`);
+  if (req.destinations.length > 30) notices.push(`已選 ${req.destinations.length} 個目的地，查價數量會很大；可先縮小範圍。`);
   flushAudit(req.adults);
   for (const k of [...SCREEN.skipped]) if (fareEntry(k) || fareStats.missingKeys.has(k)) SCREEN.skipped.delete(k);
-  if (SCREEN.unscreened.size) notices.push(`${SCREEN.unscreened.size} 張多城市票有某段單程查不到票價，無法用單程下限篩選，照常查多城市實價。`);
-  if (SCREEN.off) notices.push('單程下限篩選已自動關閉：有多城市票價低於各段單程相加，下限不成立，現在改為照原本方式查多城市票價。');
-  else if (SCREEN.skipped.size) notices.push(`單程下限篩選：${SCREEN.skipped.size.toLocaleString()} 張多城市票的各段單程票價相加，已經高到不可能讓整個方案比一般來回省錢（實測多城市票價從不低於各段單程相加），所以沒有逐一查多城市實價；最接近的幾組仍會查來驗證這個下限。要全部查請按「查找所有排列組合」。`);
+  if (SCREEN.unscreened.size) notices.push(`${SCREEN.unscreened.size} 張多城市票有某段單程查不到價，照常查實價。`);
+  if (SCREEN.off) notices.push('單程下限篩選已自動關閉（有多城市票價低於下限）。');
+  else if (SCREEN.skipped.size) notices.push(`單程下限篩選：${SCREEN.skipped.size.toLocaleString()} 張多城市票不可能比來回省，未查價；按「查找所有排列組合」可全查。`);
 
   const weights = {
     price: Number(document.getElementById('w-price').value) || 0,
@@ -3117,7 +3182,7 @@ function runSearch(form) {
 
   const cache = CachingProvider.stats();
   if (fareStats.missing) {
-    notices.push(`${fareStats.missing} 個查詢不在票價資料庫 —— 爬蟲會先查單程／來回票價，再從上萬種多城市日期組合中挑「預期最能省」的路線，每條路線先查 1 個日期、實價接近三張來回票時再展開更多日期（上限 ${MC_BUDGET} 筆/次搜尋），查到後結果會自動更新；不會用模擬價格補。`);
+    notices.push(`${fareStats.missing} 個查詢不在票價資料庫，爬蟲正在補查，結果會自動更新。`);
   }
   return { plans, matrix, cache, notices, fares: { real: fareStats.real, missing: fareStats.missing } };
 }
@@ -3324,9 +3389,9 @@ function checkedCodes(id) {
 function wirePickers() {
   // Defaults = what the crawler covers, so the first search is all real fares.
   const c = fareCoverage();
-  renderPicker('pick-origins', '出發機場（台灣）', AIRPORTS.filter(a => a.group === '台灣'), new Set(['TPE']));
-  renderPicker('pick-dest', '目的地（亞洲全部機場 + 歐美紐澳；可多選，反向票/倒買法可讓兩趟去不同城市）', AIRPORTS.filter(a => a.group !== '台灣'), new Set(c.destinations.length ? c.destinations.slice(0, 5) : ['NRT', 'KIX']));
-  renderPicker('pick-outer', '四腿票外站 (第1段出發、第4段抵達第三國；至少選 2 個不同國家)', AIRPORTS.filter(a => a.outstation), new Set(c.outer.length ? c.outer.slice(0, 3) : ['HKG', 'ICN']));
+  renderPicker('pick-origins', '出發', AIRPORTS.filter(a => a.group === '台灣'), new Set(['TPE']));
+  renderPicker('pick-dest', '目的地', AIRPORTS.filter(a => a.group !== '台灣'), new Set(c.destinations.length ? c.destinations.slice(0, 5) : ['NRT', 'KIX']));
+  renderPicker('pick-outer', '四腿票外站', AIRPORTS.filter(a => a.outstation), new Set(c.outer.length ? c.outer.slice(0, 3) : ['HKG', 'ICN']));
   document.getElementById('f-bulk-flex').value = c.flex;
 }
 

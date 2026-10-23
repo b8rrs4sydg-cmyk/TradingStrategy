@@ -367,3 +367,10 @@ ground cost is added to the total. The page mirrors the table between `BEGIN-MET
 `pattern` / `OUTSTATION_PATTERN` (default `any`: ends in different OR the same country, D outside both; `different` restores the strict profile; the page mirrors `any`; the crawl widens because it runs the same planner). Reverse/wrap plans use a
 per-candidate baseline and keep one plan per metro route. `RedisCachingProvider` forwards `prefetch` only when the wrapped source has it.
 
+## Minimal UI and the Wiki
+
+The page uses an Apple-style minimal layer (the last block of the main `<style>`: system fonts, no outlines, soft cards, pill buttons, frosted
+top bar; no web fonts). Explanations do NOT live in the page: `public/wiki.html` (design, data, strategies, algorithm, ranking, Q&A) holds them and
+the page links to its anchors (`#design #data #strategies #algo #rank #faq`; `tests/test_review_p0.py` checks every linked anchor exists). When you
+change an algorithm or a rule, update the Wiki, not a hint text in the page.
+

@@ -208,3 +208,16 @@ def test_default_pattern_allows_same_country_ends_but_not_d_in_their_country():
     assert all(
         p.tickets[1].legs[1].destination == "LHR" for p in plans
     )  # HND shares Japan with both ends: excluded
+
+
+def test_every_wiki_anchor_the_page_links_to_exists():
+    import re
+    from pathlib import Path
+
+    pub = Path(__file__).resolve().parents[2] / "public"
+    page = (pub / "index.html").read_text(encoding="utf-8")
+    wiki = (pub / "wiki.html").read_text(encoding="utf-8")
+    wanted = set(re.findall(r"wiki\.html#(\w+)", page))
+    assert wanted
+    ids = set(re.findall(r'id="(\w+)"', wiki))
+    assert wanted <= ids, wanted - ids
