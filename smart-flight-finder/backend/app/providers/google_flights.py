@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import os
 import random
 import re
 import sys
@@ -260,40 +261,75 @@ async def scrape(
 
     fares: dict[str, dict] = {}
     missing: list[str] = []
-    sem = asyncio.Semaphore(concurrency)
+    sem = asyncio.Semaphore(concurrency)  # browser pages at once
     done = 0
+    stats = {"http": 0, "browser": 0}
+    audit: list[bool] = []
+    http = None
+    if os.getenv("FARE_HTTP_FIRST", "1") == "1":  # plain HTTP first (about 0.5 s a key); the browser reads what it could not
+        from app.providers.google_http import HttpFetcher
+
+        http = HttpFetcher(attempts=2, timeout=8.0)
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
         ctx = await browser.new_context(locale="en-US", user_agent=_UA)
 
+        async def browser_entry(key: str) -> tuple[dict | None, str]:
+            entry = None
+            reasons: dict[str, str] = {}
+            for attempt in range(3):
+                try:
+                    entry = await _fetch_one(ctx, key, timeout_ms, reasons)
+                except Exception as e:  # noqa: BLE001
+                    print(f"retry {key}: {e}", file=sys.stderr)
+                    reasons[key] = "timeout"
+                    continue
+                if entry or reasons.get(key) == "no_result":
+                    break  # a price, or Google says there is no such flight
+                await asyncio.sleep(2 + 3 * attempt)  # slow or errored page: ask again
+            return entry, reasons.get(key, "timeout")
+
         async def one(key: str) -> None:
             nonlocal done
-            async with sem:
-                await asyncio.sleep(random.uniform(0.3, 1.2))  # be gentle
-                entry = None
-                reasons: dict[str, str] = {}
-                for attempt in range(3):
-                    try:
-                        entry = await _fetch_one(ctx, key, timeout_ms, reasons)
-                    except Exception as e:  # noqa: BLE001
-                        print(f"retry {key}: {e}", file=sys.stderr)
-                        reasons[key] = "timeout"
-                        continue
-                    if entry or reasons.get(key) == "no_result":
-                        break  # a price, or Google says there is no such flight
-                    await asyncio.sleep(2 + 3 * attempt)  # slow or errored page: ask again
+            entry = None
+            reason = "timeout"
+            if http is not None:
+                try:
+                    entry = await http.fetch(key)
+                except Exception as e:  # noqa: BLE001
+                    print(f"http failed {key}: {e}", file=sys.stderr)
                 if entry:
-                    fares[key] = entry
-                else:
-                    missing.append(key)
-                    if why is not None:
-                        why[key] = reasons.get(key, "timeout")
-                done += 1
-                if progress:
-                    progress(done, len(keys), len(missing))
+                    stats["http"] += 1
+                    if random.random() < 0.03:  # a few are priced by the browser too: the two must agree
+                        async with sem:
+                            check, _ = await browser_entry(key)
+                        if check:
+                            audit.append(abs(check["price"] - entry["price"]) <= 0.03 * check["price"])
+            if entry is None:
+                async with sem:
+                    await asyncio.sleep(random.uniform(0.3, 1.2))  # be gentle
+                    entry, reason = await browser_entry(key)
+                stats["browser"] += 1
+            if entry:
+                fares[key] = entry
+            else:
+                missing.append(key)
+                if why is not None:
+                    why[key] = reason
+            done += 1
+            if progress:
+                progress(done, len(keys), len(missing))
 
         await asyncio.gather(*(one(k) for k in keys))
         await browser.close()
+    if http is not None:
+        await http.aclose()
+    print(
+        f"scrape: {stats['http']} priced by plain HTTP, {stats['browser']} asked the browser"
+        + (f"; audit {audit.count(True)}/{len(audit)} agree" if audit else ""),
+        file=sys.stderr,
+        flush=True,
+    )
     return fares, missing
 
 
