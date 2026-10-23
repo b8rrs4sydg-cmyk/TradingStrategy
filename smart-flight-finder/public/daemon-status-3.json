@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T11:34:33+00:00",
+ "at": "2026-10-23T11:36:05+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2047,
+ "fares_saved": 2048,
  "log": [
   "10:37:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:37:11 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -24,6 +24,8 @@
   "11:34:08 request mvkw48f7eio20.3: chunk of 20 keys done in 100s; paths {'http': 24, 'browser-none': 16}, browser waits 16 max 96s sum 1130s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 16, 'blocked': 0, 'tries': 54, 'empty': 30}, audit 1/1 agree",
   "11:34:08 request mvkw58n7fan62.3: chunk of 16 keys done in 70s; paths {'http': 24, 'browser-none': 16}, browser waits 16 max 96s sum 1130s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 16, 'blocked': 0, 'tries': 54, 'empty': 30}, audit 1/1 agree",
   "11:34:09 request mvkw48f7eio20.3: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:34:10 request mvkw58n7fan62.3: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:34:10 request mvkw58n7fan62.3: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:35:01 request received: rid mvkw7tzkr9u8u.3 14 keys",
+  "11:35:01 handle mvkw7tzkr9u8u.3: first_chunk=True total=14"
  ]
 }
