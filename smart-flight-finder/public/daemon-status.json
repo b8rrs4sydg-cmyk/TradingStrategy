@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T11:32:36+00:00",
+ "at": "2026-10-23T11:34:24+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -16,6 +16,13 @@
   "10:38:13 request httptest1792751889: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
   "11:32:16 rtc tok6ndxzn5: answered",
   "11:32:28 request received: rid mvkw48f7eio20.0 5 keys",
-  "11:32:28 handle mvkw48f7eio20.0: first_chunk=True total=5"
+  "11:32:28 handle mvkw48f7eio20.0: first_chunk=True total=5",
+  "11:32:48 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "11:32:58 request received: rid mvkw58n7fan62.0 4 keys",
+  "11:32:58 handle mvkw58n7fan62.0: first_chunk=True total=4",
+  "11:33:22 request mvkw48f7eio20.0: chunk of 5 keys done in 53s; paths {'http': 21, 'browser-none': 4}, browser waits 4 max 49s sum 189s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 4, 'blocked': 0, 'tries': 28, 'empty': 7}, audit 1/1 agree",
+  "11:33:22 request mvkw58n7fan62.0: chunk of 4 keys done in 24s; paths {'http': 21, 'browser-none': 4}, browser waits 4 max 49s sum 189s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 4, 'blocked': 0, 'tries': 28, 'empty': 7}, audit 1/1 agree",
+  "11:33:23 request mvkw48f7eio20.0: final sent (5/5); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:33:23 request mvkw58n7fan62.0: final sent (4/4); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
