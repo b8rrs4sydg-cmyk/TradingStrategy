@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:25:59+00:00",
+ "at": "2026-10-23T14:35:01+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2107,
+ "fares_saved": 2111,
  "log": [
   "12:51:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:51:09 http front door: ['https://wan-stones-anthropology-companies.trycloudflare.com', 'https://823da3fb65de56.lhr.life']",
@@ -114,6 +114,10 @@
   "14:23:03 request received: rid mvl27vn3on3nv.3 15 keys",
   "14:23:03 handle mvl27vn3on3nv.3: first_chunk=True total=15",
   "14:24:43 request mvl27vn3on3nv.3: chunk of 15 keys done in 100s; paths {'http': 46, 'browser-crashed': 327, 'browser': 33}, browser waits 360 max 221s sum 27219s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 128, 'blocked': 0, 'tries': 97, 'empty': 51}, audit 2/2 ag",
-  "14:24:45 request mvl27vn3on3nv.3: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "14:24:45 request mvl27vn3on3nv.3: final sent (15/15); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "14:26:11 rtc 6b5re97uig: answered",
+  "14:26:12 rtc 6b5re97uig: data channel open",
+  "14:33:59 request received: rid mvl2lzz8xjg3m.2 19 keys",
+  "14:33:59 handle mvl2lzz8xjg3m.2: first_chunk=True total=19"
  ]
 }
