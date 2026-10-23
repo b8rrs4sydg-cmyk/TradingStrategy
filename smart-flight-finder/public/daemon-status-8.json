@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:14:15+00:00",
+ "at": "2026-10-23T14:23:17+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2014,
+ "fares_saved": 2016,
  "log": [
   "12:51:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:51:33 http front door: ['https://associates-appointment-opens-wolf.trycloudflare.com', 'https://8f7f7eb26ac955.lhr.life']",
@@ -113,6 +113,10 @@
   "14:11:01 request received: rid mvl1sgymzto60.7 15 keys",
   "14:11:01 handle mvl1sgymzto60.7: first_chunk=True total=15",
   "14:13:55 request mvl1sgymzto60.7: chunk of 15 keys done in 174s; paths {'http': 57, 'browser-crashed': 355, 'browser': 31}, browser waits 386 max 236s sum 29846s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 57, 'miss': 124, 'blocked': 0, 'tries': 96, 'empty': 39}, audit 0/0 ag",
-  "14:13:56 request mvl1sgymzto60.7: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "14:13:56 request mvl1sgymzto60.7: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "14:23:01 rtc tpfsg3aebv: answered",
+  "14:23:03 rtc tpfsg3aebv: data channel open",
+  "14:23:03 request received: rid mvl27vn3on3nv.7 23 keys",
+  "14:23:03 handle mvl27vn3on3nv.7: first_chunk=True total=23"
  ]
 }
