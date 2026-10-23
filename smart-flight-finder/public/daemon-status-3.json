@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T05:14:28+00:00",
+ "at": "2026-10-23T05:19:43+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,13 +7,12 @@
  },
  "fares_saved": 2040,
  "log": [
-  "05:12:49 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "05:12:54 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
-  "05:12:58 http front door: ['https://races-losses-utils-adjustments.trycloudflare.com', 'https://67d15c5b3c0896.lhr.life']",
-  "05:12:58 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "05:13:59 request received: rid httptest1792732438 20 keys",
-  "05:13:59 handle httptest1792732438: first_chunk=True total=20",
-  "05:14:00 request httptest1792732438: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "05:14:02 request httptest1792732438: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:18:09 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:18:13 http front door: ['https://dot-router-tions-excluded.trycloudflare.com', 'https://95c7caf1fd5277.lhr.life']",
+  "05:18:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:19:18 request received: rid httptest1792732758 20 keys",
+  "05:19:18 handle httptest1792732758: first_chunk=True total=20",
+  "05:19:19 request httptest1792732758: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:19:20 request httptest1792732758: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
