@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T10:48:02+00:00",
+ "at": "2026-10-23T11:33:04+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2029,
+ "fares_saved": 2030,
  "log": [
   "10:46:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:46:32 http front door: ['https://spy-indicates-revenues-placing.trycloudflare.com', 'https://249248bafeb3b0.lhr.life']",
@@ -13,6 +13,11 @@
   "10:47:36 request received: rid httptest1792752456 20 keys",
   "10:47:36 handle httptest1792752456: first_chunk=True total=20",
   "10:47:37 request httptest1792752456: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:47:38 request httptest1792752456: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:47:38 request httptest1792752456: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:32:16 rtc u7agbjgval: answered",
+  "11:32:28 request received: rid mvkw48f7eio20.6 13 keys",
+  "11:32:28 handle mvkw48f7eio20.6: first_chunk=True total=13",
+  "11:32:58 request received: rid mvkw58n7fan62.6 12 keys",
+  "11:32:58 handle mvkw58n7fan62.6: first_chunk=True total=12"
  ]
 }
