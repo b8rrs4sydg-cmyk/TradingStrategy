@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:42:54+00:00",
+ "generated_at": "2026-10-23T14:44:26+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -33811,7 +33811,7 @@
    "n": 2
   },
   "mc|FUK-TPE-2026-11-22|TPE-ICN-2026-11-27|ICN-TPE-2026-11-29|TPE-HND-2027-02-10": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
@@ -33911,7 +33911,7 @@
    "n": 1
   },
   "mc|HND-TPE-2026-12-13|TPE-CJU-2026-12-18|CJU-TPE-2026-12-20|TPE-FUK-2026-12-24": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
@@ -33963,7 +33963,7 @@
   "mc|ICN-TPE-2026-11-15|TPE-DMK-2026-12-04|DMK-TPE-2026-12-06|TPE-NRT-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "mc|ICN-TPE-2026-11-15|TPE-DMK-2026-12-11|DMK-TPE-2026-12-13|TPE-HND-2027-02-10": {
    "status": "timeout",
@@ -34073,7 +34073,7 @@
   "mc|KIX-TPE-2026-11-22|TPE-CJU-2026-11-27|CJU-TPE-2026-11-29|TPE-HND-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "mc|KIX-TPE-2026-11-22|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-HND-2026-12-24": {
    "status": "timeout",
@@ -34088,7 +34088,7 @@
   "mc|KIX-TPE-2026-11-29|TPE-CJU-2026-12-04|CJU-TPE-2026-12-06|TPE-FUK-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "mc|KIX-TPE-2026-12-06|TPE-HKG-2026-12-11|HKG-TPE-2026-12-13|TPE-FUK-2027-02-10": {
    "status": "parse_error",
@@ -34103,7 +34103,7 @@
   "mc|KIX-TPE-2026-12-06|TPE-HKG-2026-12-11|HKG-TPE-2026-12-13|TPE-PVG-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "mc|KIX-TPE-2026-12-06|TPE-HKG-2026-12-11|HKG-TPE-2026-12-13|TPE-PVG-2027-02-10": {
    "status": "timeout",
@@ -34296,7 +34296,7 @@
    "n": 1
   },
   "mc|SHA-TPE-2026-12-20|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-FUK-2027-02-10": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
