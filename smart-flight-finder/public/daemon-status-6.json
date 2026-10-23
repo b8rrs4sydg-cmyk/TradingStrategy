@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T13:21:36+00:00",
+ "at": "2026-10-23T13:23:12+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -59,6 +59,9 @@
   "13:18:10 request mvkzue9oxs6h2.6: chunk of 14 keys done in 98s; paths {'http': 30, 'browser-crashed': 209, 'browser': 23}, browser waits 232 max 240s sum 20983s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 30, 'miss': 73, 'blocked': 1, 'tries': 106, 'empty': 76}, audit 2/2 agr",
   "13:18:11 request mvkzue9oxs6h2.6: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:20:16 request received: rid mvkzz7kjwaqsr.5 16 keys",
-  "13:20:16 handle mvkzz7kjwaqsr.5: first_chunk=True total=16"
+  "13:20:16 handle mvkzz7kjwaqsr.5: first_chunk=True total=16",
+  "13:21:37 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "13:21:55 request mvkzz7kjwaqsr.5: chunk of 16 keys done in 99s; paths {'http': 30, 'browser-crashed': 225, 'browser': 23}, browser waits 248 max 240s sum 22119s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 30, 'miss': 73, 'blocked': 1, 'tries': 106, 'empty': 76}, audit 2/2 agr",
+  "13:21:56 request mvkzz7kjwaqsr.5: final sent (16/16); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
