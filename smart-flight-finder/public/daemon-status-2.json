@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:14:20+00:00",
+ "at": "2026-10-23T14:23:22+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2140,
+ "fares_saved": 2144,
  "log": [
   "12:50:13 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:50:22 http front door: ['https://hospitality-cakes-detail-pdt.trycloudflare.com', 'https://dddb3ca15bb2f8.lhr.life']",
@@ -101,6 +101,10 @@
   "14:11:01 request received: rid mvl1sgymzto60.2 14 keys",
   "14:11:01 handle mvl1sgymzto60.2: first_chunk=True total=14",
   "14:13:48 request mvl1sgymzto60.2: chunk of 14 keys done in 166s; paths {'http': 85, 'browser-crashed': 275, 'browser': 8}, browser waits 283 max 166s sum 21998s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 85, 'miss': 114, 'blocked': 0, 'tries': 135, 'empty': 50}, audit 3/3 ag",
-  "14:13:48 request mvl1sgymzto60.2: final sent (14/14); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "14:13:48 request mvl1sgymzto60.2: final sent (14/14); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "14:23:01 rtc fhzgex7n32: answered",
+  "14:23:03 rtc fhzgex7n32: data channel open",
+  "14:23:03 request received: rid mvl27vn3on3nv.2 14 keys",
+  "14:23:03 handle mvl27vn3on3nv.2: first_chunk=True total=14"
  ]
 }
