@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:54:21+00:00",
+ "at": "2026-10-23T13:55:53+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2007,
+ "fares_saved": 2010,
  "log": [
   "12:51:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:51:33 http front door: ['https://associates-appointment-opens-wolf.trycloudflare.com', 'https://8f7f7eb26ac955.lhr.life']",
@@ -97,6 +97,8 @@
   "13:51:59 request received: rid mvl13zly4cbb4.7 18 keys",
   "13:51:59 handle mvl13zly4cbb4.7: first_chunk=True total=18",
   "13:54:00 request mvl13zly4cbb4.7: chunk of 18 keys done in 121s; paths {'http': 54, 'browser-crashed': 293, 'browser': 27}, browser waits 320 max 146s sum 22122s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 54, 'miss': 94, 'blocked': 0, 'tries': 93, 'empty': 39}, audit 0/0 agr",
-  "13:54:02 request mvl13zly4cbb4.7: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:54:02 request mvl13zly4cbb4.7: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:55:18 request received: rid mvl1890584odq.7 16 keys",
+  "13:55:18 handle mvl1890584odq.7: first_chunk=True total=16"
  ]
 }
