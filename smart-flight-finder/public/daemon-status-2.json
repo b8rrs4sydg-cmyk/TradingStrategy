@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T10:48:56+00:00",
+ "at": "2026-10-23T11:33:58+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2062,
+ "fares_saved": 2065,
  "log": [
   "10:47:21 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:47:26 http front door: ['https://exotic-mini-caps-goes.trycloudflare.com', 'https://640175ada5ee74.lhr.life']",
@@ -13,6 +13,11 @@
   "10:48:30 request received: rid httptest1792752509 20 keys",
   "10:48:30 handle httptest1792752509: first_chunk=True total=20",
   "10:48:31 request httptest1792752509: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:48:33 request httptest1792752509: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:48:33 request httptest1792752509: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:32:16 rtc 1gk7d567sm: answered",
+  "11:32:28 request received: rid mvkw48f7eio20.2 20 keys",
+  "11:32:28 handle mvkw48f7eio20.2: first_chunk=True total=20",
+  "11:32:58 request received: rid mvkw58n7fan62.2 17 keys",
+  "11:32:58 handle mvkw58n7fan62.2: first_chunk=True total=17"
  ]
 }
