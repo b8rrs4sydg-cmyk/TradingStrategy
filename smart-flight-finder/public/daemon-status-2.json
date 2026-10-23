@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T19:56:07+00:00",
+ "at": "2026-10-23T20:38:55+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2153,
  "log": [
-  "19:54:32 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "19:54:37 http front door: ['https://helmet-grande-particularly-agent.trycloudflare.com', 'https://73385f3172bd04.lhr.life']",
-  "19:54:37 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "19:55:40 request received: rid httptest1792785339 20 keys",
-  "19:55:40 handle httptest1792785339: first_chunk=True total=20",
-  "19:55:41 request httptest1792785339: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "19:55:43 request httptest1792785339: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:37:19 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:37:25 http front door: ['https://set-instrument-assignments-casey.trycloudflare.com', 'https://9bd96864a67549.lhr.life']",
+  "20:37:25 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:38:28 request received: rid httptest1792787907 20 keys",
+  "20:38:28 handle httptest1792787907: first_chunk=True total=20",
+  "20:38:29 request httptest1792787907: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 25, 'empty': 5}, audit 0/0 agree",
+  "20:38:31 request httptest1792787907: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
