@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:32:57+00:00",
+ "at": "2026-10-23T13:35:58+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2092,
+ "fares_saved": 2100,
  "log": [
   "12:50:13 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:50:22 http front door: ['https://hospitality-cakes-detail-pdt.trycloudflare.com', 'https://dddb3ca15bb2f8.lhr.life']",
@@ -50,6 +50,10 @@
   "13:31:19 handle mvl0dedrdhhdl.2: first_chunk=True total=18",
   "13:31:22 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "13:32:22 request mvl0dedrdhhdl.2: chunk of 18 keys done in 63s; paths {'http': 44, 'browser-crashed': 118, 'browser': 1}, browser waits 119 max 145s sum 8855s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 44, 'miss': 41, 'blocked': 0, 'tries': 75, 'empty': 31}, audit 2/2 agree",
-  "13:32:24 request mvl0dedrdhhdl.2: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "13:32:24 request mvl0dedrdhhdl.2: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:34:35 rtc qyva5npitv: answered",
+  "13:34:36 request received: rid mvl0hltj6cmo0.2 18 keys",
+  "13:34:36 handle mvl0hltj6cmo0.2: first_chunk=True total=18",
+  "13:34:36 rtc qyva5npitv: data channel open"
  ]
 }
