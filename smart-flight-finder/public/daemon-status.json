@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T06:09:26+00:00",
+ "at": "2026-10-23T06:13:58+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1874,
+ "fares_saved": 1893,
  "log": [
   "05:40:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:40:49 http front door: ['https://examines-metric-level-recipes.trycloudflare.com', 'https://68ef29f1bc04c4.lhr.life']",
@@ -28,6 +28,8 @@
   "06:07:38 request received: rid mvkkii7vp85hl.0 4 keys",
   "06:07:38 handle mvkkii7vp85hl.0: first_chunk=True total=4",
   "06:08:41 request mvkkii7vp85hl.0: chunk of 4 keys done in 63s; paths {'http': 23, 'browser-none': 4}, browser waits 4 max 50s sum 194s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 4, 'blocked': 0, 'tries': 25, 'empty': 2}, audit 0/0 agree",
-  "06:08:42 request mvkkii7vp85hl.0: final sent (4/4); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "06:08:42 request mvkkii7vp85hl.0: final sent (4/4); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "06:13:42 request received: rid mvkkqngciqjhw 55 keys",
+  "06:13:42 handle mvkkqngciqjhw: first_chunk=True total=55"
  ]
 }
