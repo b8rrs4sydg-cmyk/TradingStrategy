@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T11:34:23+00:00",
+ "at": "2026-10-23T11:35:54+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2010,
+ "fares_saved": 2011,
  "log": [
   "10:37:04 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:37:09 http front door: ['https://coordinator-sale-briefly-steve.trycloudflare.com', 'https://9e51c7f8123d1a.lhr.life']",
@@ -22,6 +22,8 @@
   "11:33:32 request mvkw48f7eio20.9: chunk of 15 keys done in 64s; paths {'http': 28, 'browser-none': 7}, browser waits 7 max 50s sum 330s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 7, 'blocked': 0, 'tries': 36, 'empty': 8}, audit 3/3 agree",
   "11:33:32 request mvkw58n7fan62.9: chunk of 7 keys done in 34s; paths {'http': 28, 'browser-none': 7}, browser waits 7 max 50s sum 330s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 7, 'blocked': 0, 'tries': 36, 'empty': 8}, audit 3/3 agree",
   "11:33:33 request mvkw48f7eio20.9: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:33:33 request mvkw58n7fan62.9: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "11:33:33 request mvkw58n7fan62.9: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:35:01 request received: rid mvkw7tzkr9u8u.9 20 keys",
+  "11:35:01 handle mvkw7tzkr9u8u.9: first_chunk=True total=20"
  ]
 }
