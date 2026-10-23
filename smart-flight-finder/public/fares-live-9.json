@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:09:30+00:00",
+ "generated_at": "2026-10-23T14:11:02+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -34769,6 +34769,11 @@
   },
   "mc|ICN-TPE-2026-11-15|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-PVG-2026-12-24": {
    "status": "parse_error",
+   "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-11-15|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-KIX-2026-12-24": {
+   "status": "timeout",
    "at": "2026-10-23",
    "n": 1
   },
