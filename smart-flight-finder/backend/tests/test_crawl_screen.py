@@ -127,3 +127,34 @@ def test_four_leg_hits_counts_tickets_cheaper_than_their_saving_room(plan):
     dear = {key: {"price": int(room) + 1}}
     assert four_leg_hits(cheap, prices, CFG) == (1, 1)
     assert four_leg_hits(dear, prices, CFG) == (0, 1)
+
+
+def test_carrier_network_knows_which_airline_flies_every_leg():
+    from app.services.crawl_plan import NETWORK_BONUS, CarrierNetwork
+
+    fares = {
+        "ow|TPE|ICN|2027-01-09": {"price": 4800, "by_airline": {"EVA Air": 5200, "Scoot": 4800}},
+        "rt|TPE|CDG|2026-12-29|2027-01-08": {"price": 32455, "by_airline": {"EVA Air": 41000, "Cathay Pacific": 32455}},
+        "ow|TPE|BKK|2027-02-01": {"price": 3000, "by_airline": {"Thai": 3000}},
+    }
+    net = CarrierNetwork.from_fares(fares)
+    four = "mc|ICN-TPE-2026-11-06|TPE-CDG-2026-12-29|CDG-TPE-2027-01-08|TPE-ICN-2027-01-09"
+    assert net.common([("ICN", "TPE"), ("TPE", "CDG")]) == {"EVA Air"}  # direction-free
+    assert net.bonus(four) == NETWORK_BONUS
+    other = "mc|BKK-TPE-2026-11-06|TPE-CDG-2026-12-29|CDG-TPE-2027-01-08|TPE-ICN-2027-01-09"
+    assert net.bonus(other) == 0.0  # Thai flies BKK only, nobody known on all legs
+    assert net.common([("TPE", "XXX")]) is None  # no data is unknown, not "no airline"
+
+
+def test_by_airline_is_kept_per_single_airline_row():
+    from app.providers.google_flights import cheapest_entry
+    from app.providers.google_flights import parse_key as pk
+
+    label = lambda price, airline: (
+        f"From {price} New Taiwan dollars round trip total. Nonstop flight with {airline}. "
+        "Leaves Taipei at 10:00 AM on Friday, January 8 and arrives at Seoul at 1:30 PM on Friday, January 8."
+    )
+    entry = cheapest_entry(
+        [label(5200, "EVA Air"), label(4800, "Scoot"), label(6000, "EVA Air and ANA")], pk("ow|TPE|ICN|2027-01-08")[1]
+    )
+    assert entry["price"] == 4800 and entry["by_airline"] == {"Scoot": 4800, "EVA Air": 5200}

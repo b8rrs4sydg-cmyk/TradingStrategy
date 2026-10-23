@@ -25,6 +25,7 @@ from zoneinfo import ZoneInfo
 from app.providers.fare_db import FareDatabase, live_path
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS
 from app.services.crawl_plan import (
+    CarrierNetwork,
     CrawlConfig,
     four_leg_hits,
     planner_queries,
@@ -163,7 +164,9 @@ def main() -> None:
     else:
         known = {k: e["price"] for k, e in db.fares.items()}
         mc_left, audit, _ = screen_four_leg(plan["mc"], known, cfg)  # unknown legs may be failed loads: keep
-        ranked = rank_multi_city(mc_left, known, cfg, max_multi_city=args.max_multi_city)
+        ranked = rank_multi_city(
+            mc_left, known, cfg, max_multi_city=args.max_multi_city, carriers=CarrierNetwork.from_fares(db.fares)
+        )
         ranked += [k for k in audit if k not in ranked]  # after ranking, which would drop them
         keys = stale(ranked, db, args.fresh_hours)[i::n]
         print(f"stage2 shard {i}/{n}: {len(keys)} of {len(ranked)} ranked multi-city queries "

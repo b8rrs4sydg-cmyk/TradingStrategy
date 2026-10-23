@@ -161,6 +161,12 @@ def cheapest_entry(
     entry: dict = {"price": best.price}
     if not single:
         entry["separate"] = True
+    by_airline: dict[str, int] = {}
+    for p in single:
+        if p.airline and "," not in p.airline and " and " not in p.airline:  # one airline sells the whole itinerary
+            by_airline[p.airline] = min(p.price, by_airline.get(p.airline, p.price))
+    if by_airline:
+        entry["by_airline"] = dict(sorted(by_airline.items(), key=lambda kv: kv[1])[:4])
     if best.dep and best.arr:
         entry["first"] = {
             "dep": best.dep.isoformat(),

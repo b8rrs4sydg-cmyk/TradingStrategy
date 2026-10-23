@@ -155,18 +155,29 @@ def first_slice(item: list, segments: Sequence[Segment]) -> dict | None:
         return None
 
 
+BY_AIRLINE_MAX = 4  # cheapest single-airline fares kept per query
+
+
 def entry_from(payloads: Iterator[object], segments: Sequence[Segment]) -> dict | None:
     best: list | None = None
+    by_airline: dict[str, int] = {}
     for p in payloads:
         for row in itineraries(p):
-            if best is None or row[1][0][1] < best[1][0][1]:
+            price = row[1][0][1]
+            if best is None or price < best[1][0][1]:
                 best = row
+            names = row[0][1] if isinstance(row[0][1], list) else []
+            if len(names) == 1 and names[0]:  # one airline sells the whole itinerary: its own fare, comparable with its other fares
+                name = str(names[0])
+                by_airline[name] = min(price, by_airline.get(name, price))
     if best is None:
         return None
     entry: dict = {"price": best[1][0][1]}
     first = first_slice(best, segments)
     if first:
         entry["first"] = first
+    if by_airline:
+        entry["by_airline"] = dict(sorted(by_airline.items(), key=lambda kv: kv[1])[:BY_AIRLINE_MAX])
     return entry
 
 

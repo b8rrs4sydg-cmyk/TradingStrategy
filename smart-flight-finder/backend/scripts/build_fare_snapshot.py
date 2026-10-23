@@ -30,6 +30,7 @@ from zoneinfo import ZoneInfo
 from app.providers.fare_db import FareDatabase, live_path
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS, scrape
 from app.services.crawl_plan import (
+    CarrierNetwork,
     CrawlConfig,
     four_leg_hits,
     planner_queries,
@@ -111,7 +112,8 @@ def main() -> None:
     known = {k: e["price"] for k, e in db.fares.items()} | {k: e["price"] for k, e in fares1.items()}
     # a leg missing from `known` may just have failed to load, so such keys stay (drop_unknown=False)
     mc_left, audit, pruned = screen_four_leg(mc, known, cfg)
-    picked = rank_multi_city(mc_left, known, cfg, max_multi_city=args.max_multi_city)
+    network = CarrierNetwork.from_fares(db.fares | fares1)
+    picked = rank_multi_city(mc_left, known, cfg, max_multi_city=args.max_multi_city, carriers=network)
     picked += [k for k in audit if k not in picked]  # after ranking, which would drop them
     print(
         f"stage2: {len(picked)} of {len(mc)} multi-city queries worth fetching "

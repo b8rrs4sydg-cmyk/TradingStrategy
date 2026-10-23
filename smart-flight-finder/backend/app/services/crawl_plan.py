@@ -34,6 +34,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from datetime import date, timedelta
 
+from app.data.metro import route_key
 from app.data.taiwan_holidays_2027 import LEAVE_STRATEGIES
 from app.models.enums import TicketStrategyType, TripType
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS, fare_key, parse_key
@@ -211,12 +212,25 @@ def open_jaw_score(key: str, prices: Mapping[str, int]) -> tuple[float | None, t
 
 
 def rank_multi_city(
-    mc_keys: Sequence[str], prices: Mapping[str, int], cfg: CrawlConfig, *, max_multi_city: int
+    mc_keys: Sequence[str],
+    prices: Mapping[str, int],
+    cfg: CrawlConfig,
+    *,
+    max_multi_city: int,
+    carriers: CarrierNetwork | None = None,
 ) -> list[str]:
+    """The multi-city keys worth the stage-2 budget, most promising first.
+
+    ``carriers`` (optional) adds :data:`NETWORK_BONUS` to a four-leg combination that ONE airline is known to fly end to end:
+    only such a combination can be sold as a single through fare. It only reorders; nothing is dropped for lacking it.
+    """
+
     groups: dict[tuple, list[tuple[float, str]]] = defaultdict(list)
     for key in mc_keys:
         four = len(parse_key(key)[1]) == 4
         score, group = four_leg_budget(key, prices, cfg) if four else open_jaw_score(key, prices)
+        if score is not None and four and carriers is not None:
+            score += carriers.bonus(key)
         groups[group].append((float("-inf") if score is None else score, key))
     picked: list[tuple[float, str]] = []
     for group, items in groups.items():
@@ -244,3 +258,45 @@ def four_leg_hits(fetched: Mapping[str, dict], prices: Mapping[str, int], cfg: C
         priced += 1
         hits += entry["price"] < room
     return hits, priced
+
+
+# --- which airline flies what (from the fares already priced) ------------------------------------------------------------
+NETWORK_BONUS = 0.3  # added to a combination's saving room when ONE airline is known to fly every leg of it
+
+
+class CarrierNetwork:
+    """Airlines seen selling a single-airline fare on a route (metro-normalised, direction-free), from ``by_airline`` of every
+    ow / rt / mc entry. Only a ranking hint: a route with no data is unknown, never "not flown"."""
+
+    def __init__(self) -> None:
+        self.routes: dict[tuple[str, str], set[str]] = defaultdict(set)
+
+    @classmethod
+    def from_fares(cls, fares: Mapping[str, dict]) -> CarrierNetwork:
+        net = cls()
+        for key, entry in fares.items():
+            airlines = entry.get("by_airline")
+            if not airlines:
+                continue
+            for o, d, _ in parse_key(key)[1]:
+                a, b = route_key(o), route_key(d)
+                net.routes[(a, b) if a <= b else (b, a)].update(airlines)
+        return net
+
+    def serving(self, origin: str, dest: str) -> set[str]:
+        a, b = route_key(origin), route_key(dest)
+        return self.routes.get((a, b) if a <= b else (b, a), set())
+
+    def common(self, pairs: Sequence[tuple[str, str]]) -> set[str] | None:
+        """Airlines known on EVERY pair; ``None`` when some pair has no data at all (unknown, not "none")."""
+
+        sets = [self.serving(o, d) for o, d in pairs]
+        if any(not x for x in sets):
+            return None
+        return set.intersection(*sets)
+
+    def bonus(self, key: str) -> float:
+        """NETWORK_BONUS when one airline flies all legs of ``key``, 0 otherwise (unknown or no common airline)."""
+
+        common = self.common([(o, d) for o, d, _ in parse_key(key)[1]])
+        return NETWORK_BONUS if common else 0.0
