@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T15:51:24+00:00",
+ "at": "2026-10-23T19:50:55+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2062,
  "log": [
-  "15:49:49 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:49:54 http front door: ['https://marsh-rows-std-studio.trycloudflare.com', 'https://43bb8cb3afab60.lhr.life']",
-  "15:49:54 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:50:58 request received: rid httptest1792770658 20 keys",
-  "15:50:58 handle httptest1792770658: first_chunk=True total=20",
-  "15:51:03 request httptest1792770658: chunk of 20 keys done in 5s; paths {'http': 19, 'browser': 1}, browser waits 1 max 4s sum 4s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 21, 'empty': 2}, audit 0/0 agree",
-  "15:51:04 request httptest1792770658: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "19:49:21 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "19:49:25 http front door: ['https://fishing-maximize-membership-surgeons.trycloudflare.com', 'https://7dcf9d70a40281.lhr.life']",
+  "19:49:25 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "19:50:30 request received: rid httptest1792785030 20 keys",
+  "19:50:30 handle httptest1792785030: first_chunk=True total=20",
+  "19:50:35 request httptest1792785030: chunk of 20 keys done in 5s; paths {'http': 19, 'browser': 1}, browser waits 1 max 4s sum 4s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 26, 'empty': 7}, audit 2/2 agree",
+  "19:50:35 request httptest1792785030: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }

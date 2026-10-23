@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T16:00:43+00:00",
+ "at": "2026-10-23T19:50:37+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2024,
  "log": [
-  "15:59:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:59:13 http front door: ['https://labs-confidence-encountered-power.trycloudflare.com', 'https://05ede7128cc3fc.lhr.life']",
-  "15:59:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "16:00:19 request received: rid httptest1792771217 20 keys",
-  "16:00:19 handle httptest1792771217: first_chunk=True total=20",
-  "16:00:20 request httptest1792771217: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "16:00:22 request httptest1792771217: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "19:49:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "19:49:07 http front door: ['https://thousands-wisdom-workforce-winner.trycloudflare.com', 'https://930957b47428bb.lhr.life']",
+  "19:49:07 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "19:50:08 request received: rid httptest1792785008 20 keys",
+  "19:50:08 handle httptest1792785008: first_chunk=True total=20",
+  "19:50:10 request httptest1792785008: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "19:50:11 request httptest1792785008: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
