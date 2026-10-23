@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:25:06+00:00",
+ "at": "2026-10-23T13:26:38+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2007,
+ "fares_saved": 2010,
  "log": [
   "12:37:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:37:33 http front door: ['https://attorneys-commodities-receiver-multimedia.trycloudflare.com', 'https://5087fdbc320ed4.lhr.life']",
@@ -63,6 +63,10 @@
   "13:22:41 request mvkzz7kjwaqsr.3: chunk of 21 keys done in 146s; paths {'http': 26, 'browser-crashed': 206, 'browser': 11}, browser waits 217 max 203s sum 19826s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 26, 'miss': 48, 'blocked': 0, 'tries': 74, 'empty': 48}, audit 2/2 agr",
   "13:22:43 request mvkzz7kjwaqsr.3: final sent (21/21); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:24:18 request received: rid mvl04e4w8ihzf.4 19 keys",
-  "13:24:18 handle mvl04e4w8ihzf.4: first_chunk=True total=19"
+  "13:24:18 handle mvl04e4w8ihzf.4: first_chunk=True total=19",
+  "13:26:08 request mvl04e4w8ihzf.4: chunk of 19 keys done in 110s; paths {'http': 32, 'browser-crashed': 219, 'browser': 11}, browser waits 230 max 203s sum 20616s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 61, 'blocked': 0, 'tries': 93, 'empty': 61}, audit 2/2 agr",
+  "13:26:10 request mvl04e4w8ihzf.4: final sent (19/19); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "13:26:20 request received: rid mvl06zgv28h8n.3 13 keys",
+  "13:26:20 handle mvl06zgv28h8n.3: first_chunk=True total=13"
  ]
 }
