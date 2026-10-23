@@ -1,31 +1,16 @@
 {
- "at": "2026-10-23T11:38:57+00:00",
+ "at": "2026-10-23T12:26:19+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 0,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 2011,
  "log": [
-  "10:37:04 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "10:37:09 http front door: ['https://coordinator-sale-briefly-steve.trycloudflare.com', 'https://9e51c7f8123d1a.lhr.life']",
-  "10:37:09 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "10:38:13 request received: rid httptest1792751892 20 keys",
-  "10:38:13 handle httptest1792751892: first_chunk=True total=20",
-  "10:38:14 request httptest1792751892: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "10:38:16 request httptest1792751892: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
-  "11:32:16 rtc ri3qcjdoiu: answered",
-  "11:32:28 request received: rid mvkw48f7eio20.9 15 keys",
-  "11:32:28 handle mvkw48f7eio20.9: first_chunk=True total=15",
-  "11:32:58 request received: rid mvkw58n7fan62.9 7 keys",
-  "11:32:58 handle mvkw58n7fan62.9: first_chunk=True total=7",
-  "11:33:32 request mvkw48f7eio20.9: chunk of 15 keys done in 64s; paths {'http': 28, 'browser-none': 7}, browser waits 7 max 50s sum 330s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 7, 'blocked': 0, 'tries': 36, 'empty': 8}, audit 3/3 agree",
-  "11:33:32 request mvkw58n7fan62.9: chunk of 7 keys done in 34s; paths {'http': 28, 'browser-none': 7}, browser waits 7 max 50s sum 330s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 7, 'blocked': 0, 'tries': 36, 'empty': 8}, audit 3/3 agree",
-  "11:33:33 request mvkw48f7eio20.9: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:33:33 request mvkw58n7fan62.9: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
-  "11:35:01 request received: rid mvkw7tzkr9u8u.9 20 keys",
-  "11:35:01 handle mvkw7tzkr9u8u.9: first_chunk=True total=20",
-  "11:37:26 request mvkw7tzkr9u8u.9: chunk of 20 keys done in 145s; paths {'http': 29, 'browser-none': 26}, browser waits 26 max 143s sum 1901s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 29, 'miss': 26, 'blocked': 0, 'tries': 75, 'empty': 46}, audit 3/3 agree",
-  "11:37:27 request mvkw7tzkr9u8u.9: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "12:24:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "12:24:49 http front door: ['https://mystery-ethics-officers-ballet.trycloudflare.com', 'https://b38887ddbc52e7.lhr.life']",
+  "12:24:49 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "12:25:52 request received: rid httptest1792758352 20 keys",
+  "12:25:52 handle httptest1792758352: first_chunk=True total=20"
  ]
 }
