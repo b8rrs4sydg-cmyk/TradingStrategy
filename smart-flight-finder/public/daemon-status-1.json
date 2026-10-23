@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T05:57:55+00:00",
+ "at": "2026-10-23T06:09:59+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2005,
+ "fares_saved": 2012,
  "log": [
   "05:36:47 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:36:53 http front door: ['https://forming-passing-shirt-chair.trycloudflare.com', 'https://b2e39a6b98bb0b.lhr.life']",
@@ -23,6 +23,11 @@
   "05:57:31 request mvkk453uquuf8.1: chunk of 3 keys done in 62s; paths {'http': 21, 'browser-none': 2}, browser waits 2 max 50s sum 96s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 2, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 0/0 agree",
   "05:57:31 request mvkk4x1t0mw4m.1: chunk of 2 keys done in 27s; paths {'http': 21, 'browser-none': 2}, browser waits 2 max 50s sum 96s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 2, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 0/0 agree",
   "05:57:33 request mvkk453uquuf8.1: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "05:57:34 request mvkk4x1t0mw4m.1: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "05:57:34 request mvkk4x1t0mw4m.1: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "06:07:27 rtc w9in8hd0q3: answered",
+  "06:07:39 request received: rid mvkkii7vp85hl.1 16 keys",
+  "06:07:39 handle mvkkii7vp85hl.1: first_chunk=True total=16",
+  "06:09:14 request mvkkii7vp85hl.1: chunk of 16 keys done in 95s; paths {'http': 28, 'browser-none': 11}, browser waits 11 max 94s sum 564s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 28, 'miss': 11, 'blocked': 0, 'tries': 46, 'empty': 18}, audit 0/0 agree",
+  "06:09:15 request mvkkii7vp85hl.1: final sent (16/16); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }

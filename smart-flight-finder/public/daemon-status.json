@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T06:07:54+00:00",
+ "at": "2026-10-23T06:18:34+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 24,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1874,
+ "fares_saved": 1893,
  "log": [
   "05:40:43 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:40:49 http front door: ['https://examines-metric-level-recipes.trycloudflare.com', 'https://68ef29f1bc04c4.lhr.life']",
@@ -26,6 +26,12 @@
   "05:57:31 request mvkk4x1t0mw4m.0: final sent (3/3); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "06:07:27 rtc 0646583joi: answered",
   "06:07:38 request received: rid mvkkii7vp85hl.0 4 keys",
-  "06:07:38 handle mvkkii7vp85hl.0: first_chunk=True total=4"
+  "06:07:38 handle mvkkii7vp85hl.0: first_chunk=True total=4",
+  "06:08:41 request mvkkii7vp85hl.0: chunk of 4 keys done in 63s; paths {'http': 23, 'browser-none': 4}, browser waits 4 max 50s sum 194s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 4, 'blocked': 0, 'tries': 25, 'empty': 2}, audit 0/0 agree",
+  "06:08:42 request mvkkii7vp85hl.0: final sent (4/4); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "06:13:42 request received: rid mvkkqngciqjhw 55 keys",
+  "06:13:42 handle mvkkqngciqjhw: first_chunk=True total=55",
+  "06:17:30 request mvkkqngciqjhw: chunk of 55 keys done in 227s; paths {'http': 42, 'browser-none': 39}, browser waits 39 max 214s sum 4311s; ntfy publishes {'ok': 23, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 39, 'blocked': 0, 'tries': 111, 'empty': 69}, audit 0/0 agree",
+  "06:17:32 request mvkkqngciqjhw: final sent (55/55); ntfy publishes {'ok': 24, 'r429': 0, 'fail': 0}"
  ]
 }

@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T05:59:14+00:00",
+ "at": "2026-10-23T06:09:53+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1980,
+ "fares_saved": 1981,
  "log": [
   "05:36:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:36:34 git retry 0: b\"-46zevd': is at 768f95a407b5164234a5a7c7ab4158553e142318 but expected f2e8f35ee1d94eceb1507d95bc81d9d17800dc89)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -24,6 +24,12 @@
   "05:57:30 request mvkk453uquuf8.4: chunk of 1 keys done in 61s; paths {'http': 20, 'browser-none': 1}, browser waits 1 max 49s sum 49s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
   "05:57:32 request mvkk453uquuf8.4: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "05:58:04 request mvkk4x1t0mw4m.4: chunk of 2 keys done in 60s; paths {'http': 20, 'browser-none': 2}, browser waits 2 max 49s sum 96s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 2/2 agree",
-  "05:58:05 request mvkk4x1t0mw4m.4: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "05:58:05 request mvkk4x1t0mw4m.4: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "06:07:27 rtc iml6xlsozx: answered",
+  "06:07:38 request received: rid mvkkii7vp85hl.4 17 keys",
+  "06:07:38 handle mvkkii7vp85hl.4: first_chunk=True total=17",
+  "06:08:17 git retry 0: b\"-46zevd': is at a87505352c46e94bdb1aca49a976c218f574bd34 but expected de31476f375e6ccf31b5e447bfe950f79dfed40a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "06:09:17 request mvkkii7vp85hl.4: chunk of 17 keys done in 99s; paths {'http': 21, 'browser-none': 18}, browser waits 18 max 94s sum 1201s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 18, 'blocked': 0, 'tries': 48, 'empty': 27}, audit 2/2 agree",
+  "06:09:19 request mvkkii7vp85hl.4: final sent (17/17); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
