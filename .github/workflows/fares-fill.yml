@@ -11,15 +11,8 @@ on:
         description: "cap on multi-city fares (all shards together)"
         default: "6000"
       outstation_pattern:
-        description: "四腿票 outer-station pattern: different (default) | same | any (also same-country ends)"
-        default: "different"
-  # New workflows cannot be dispatched before they reach the default branch,
-  # so touching this file or public/.fill-request on the branch starts a fill.
-  push:
-    branches: [claude/zealous-darwin-1kexus]
-    paths:
-      - ".github/workflows/fares-fill.yml"
-      - "smart-flight-finder/public/.fill-request"
+        description: "四腿票 outer-station pattern: any (default: ends in the same or different countries) | different | same"
+        default: "any"
 
 permissions:
   contents: write
