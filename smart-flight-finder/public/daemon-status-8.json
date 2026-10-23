@@ -1,7 +1,7 @@
 {
- "at": "2026-10-23T14:24:49+00:00",
+ "at": "2026-10-23T14:26:22+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
@@ -117,6 +117,10 @@
   "14:23:01 rtc tpfsg3aebv: answered",
   "14:23:03 rtc tpfsg3aebv: data channel open",
   "14:23:03 request received: rid mvl27vn3on3nv.7 23 keys",
-  "14:23:03 handle mvl27vn3on3nv.7: first_chunk=True total=23"
+  "14:23:03 handle mvl27vn3on3nv.7: first_chunk=True total=23",
+  "14:25:24 request mvl27vn3on3nv.7: chunk of 23 keys done in 140s; paths {'http': 61, 'browser-crashed': 373, 'browser': 32}, browser waits 405 max 236s sum 31198s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 61, 'miss': 143, 'blocked': 0, 'tries': 118, 'empty': 57}, audit 0/0 a",
+  "14:25:24 request mvl27vn3on3nv.7: final sent (23/23); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "14:26:11 rtc 099c2y3v3l: answered",
+  "14:26:12 rtc 099c2y3v3l: data channel open"
  ]
 }
