@@ -158,3 +158,19 @@ def test_by_airline_is_kept_per_single_airline_row():
         [label(5200, "EVA Air"), label(4800, "Scoot"), label(6000, "EVA Air and ANA")], pk("ow|TPE|ICN|2027-01-08")[1]
     )
     assert entry["price"] == 4800 and entry["by_airline"] == {"Scoot": 4800, "EVA Air": 5200}
+
+
+def test_a_combination_one_airline_flies_gets_more_date_variants():
+    from app.services.crawl_plan import PER_GROUP, PER_GROUP_NETWORK, CarrierNetwork, rank_multi_city
+
+    base = "mc|ICN-TPE-2026-11-06|TPE-CDG-2026-12-29|CDG-TPE-2027-01-08|TPE-ICN-2027-0{}"
+    keys = [base.format(f"1-{d:02d}") for d in range(9, 9 + 8)]
+    prices = {"rt|TPE|ICN|2026-11-05|2026-11-06": 8000, "rt|TPE|CDG|2026-12-29|2027-01-08": 32000,
+              "rt|TPE|ICN|2027-01-09|2027-01-12": 9000, "ow|TPE|ICN|2026-11-05": 4000, "ow|ICN|TPE|2027-01-12": 4000}
+    cfg = CrawlConfig(destinations=["CDG"], outer_stations=["ICN"], holidays=["lunar_ny"])
+    fares = {"ow|TPE|ICN|2027-01-09": {"price": 4800, "by_airline": {"EVA Air": 5000}},
+             "rt|TPE|CDG|2026-12-29|2027-01-08": {"price": 32000, "by_airline": {"EVA Air": 41000}}}
+    plain = rank_multi_city(keys, prices, cfg, max_multi_city=50)
+    net = rank_multi_city(keys, prices, cfg, max_multi_city=50, carriers=CarrierNetwork.from_fares(fares))
+    assert len(net) >= len(plain)
+    assert len(net) <= PER_GROUP_NETWORK and len(plain) <= PER_GROUP

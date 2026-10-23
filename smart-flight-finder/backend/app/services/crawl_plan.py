@@ -44,6 +44,7 @@ from app.services.search import SearchService
 
 PROMISING = 0.8  # four-leg budget ≥ 80% of the trip-A round trip
 PER_GROUP = 3  # date variants per promising multi-city combination
+PER_GROUP_NETWORK = 6  # ... when one airline is known to fly every leg: its through fare moves with the date (the same Seoul-Paris four-leg cost 39,913 / 46,475 / 52,956 with the last leg on Jan 9 / 16 / 30)
 SCREEN_FACTOR = 0.95  # floor = this share of the sum of the legs' one-way fares (only used when screening is switched on)
 # Screening on the one-way sum is OFF by default (SCREEN_ONE_WAY=1 turns it on): it pruned a four-leg ticket that does beat three
 # round trips. Stage 2 is still capped and ranked by the saving room (rank_multi_city), which does not rely on that premise.
@@ -237,6 +238,8 @@ def rank_multi_city(
         items.sort(reverse=True)
         if group[0] == "4leg":
             k = PER_GROUP if items[0][0] >= PROMISING else 1
+            if carriers is not None and carriers.bonus(items[0][1]) > 0:
+                k = max(k, PER_GROUP_NETWORK)
         else:
             k = 2
         picked += items[:k]
