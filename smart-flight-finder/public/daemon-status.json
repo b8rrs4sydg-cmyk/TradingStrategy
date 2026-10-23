@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:26:26+00:00",
+ "at": "2026-10-23T13:27:58+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1958,
+ "fares_saved": 1961,
  "log": [
   "12:49:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:55 http front door: ['https://pulling-boston-sticky-wind.trycloudflare.com', 'https://54d1fc39c8bf83.lhr.life']",
@@ -48,6 +48,8 @@
   "13:25:59 request mvl04e4w8ihzf.0: chunk of 18 keys done in 101s; paths {'http': 58, 'browser-crashed': 79, 'browser': 4}, browser waits 83 max 144s sum 5300s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 58, 'miss': 46, 'blocked': 0, 'tries': 80, 'empty': 22}, audit 1/1 agree",
   "13:26:01 request mvl04e4w8ihzf.0: final sent (18/18); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "13:26:20 request received: rid mvl06zgv28h8n.0 9 keys",
-  "13:26:20 handle mvl06zgv28h8n.0: first_chunk=True total=9"
+  "13:26:20 handle mvl06zgv28h8n.0: first_chunk=True total=9",
+  "13:27:22 request mvl06zgv28h8n.0: chunk of 9 keys done in 63s; paths {'http': 61, 'browser-crashed': 85, 'browser': 4}, browser waits 89 max 144s sum 5584s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 61, 'miss': 52, 'blocked': 0, 'tries': 87, 'empty': 26}, audit 1/1 agree",
+  "13:27:24 request mvl06zgv28h8n.0: final sent (9/9); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
