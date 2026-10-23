@@ -38,6 +38,7 @@ from app.services.strategies.base import FlightLeg, TicketOffer
 
 logger = logging.getLogger(__name__)
 
+MISSING_VERSION = 2  # 2: ``missing`` holds only confirmed "no such flight" answers (see fare_status.may_mark_unavailable)
 SCHEMA = 2
 MAX_AGE_DAYS = 7      # entries not re-fetched for a week are dropped
 HISTORY_POINTS = 14   # price points kept per key
@@ -59,12 +60,18 @@ class FareDatabase:
 
     @classmethod
     def from_json(cls, data: dict[str, Any]) -> FareDatabase:
+        missing, unavailable = list(data.get("missing", [])), list(data.get("unavailable", []))
+        if data.get("missing_v", 1) < MISSING_VERSION:
+            # Older crawls stored every page they could not read (slow, errored) as "missing" too. Only one-way pages were
+            # reliable enough to trust, so the rest are asked again; files rewritten by this code carry ``missing_v``.
+            missing = [k for k in missing if k.startswith("ow|")]
+            unavailable = [k for k in unavailable if k.startswith("ow|")]
         return cls(
             fares=dict(data.get("fares", {})),
             generated_at=data.get("generated_at"),
             coverage=dict(data.get("coverage") or data.get("config") or {}),
-            missing=list(data.get("missing", [])),
-            unavailable=list(data.get("unavailable", [])),
+            missing=missing,
+            unavailable=unavailable,
             status=dict(data.get("status") or {}),
         )
 
@@ -110,6 +117,7 @@ class FareDatabase:
             "coverage": self.coverage,
             "fares": dict(sorted(self.fares.items())),
             "missing": sorted(self.missing),
+            "missing_v": MISSING_VERSION,
             **({"unavailable": sorted(self.unavailable)} if self.unavailable else {}),
             **({"status": dict(sorted(self.status.items()))} if self.status else {}),
         }

@@ -25,6 +25,7 @@ Key format (shared with the demo page's JS)::
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import random
 import re
 import sys
@@ -171,19 +172,66 @@ def cheapest_entry(
 
 
 # --- fetching -----------------------------------------------------------------
-async def _fetch_one(ctx, key: str, timeout_ms: int) -> dict | None:
+# Why a browser page gave no price. Only NO_RESULT means "Google has no such itinerary"; the others are failures to read
+# the page (slow, errored) and must never be stored as unavailable. Multi-city pages are slow on Google's side: measured
+# on a runner a page needs 2-18 s when it works and otherwise hangs on "Loading results" or answers "Oops, something went wrong".
+MC_TIMEOUT_MS = 75000  # multi-city pages get this long before they count as slow
+_ERROR_TEXT = ("something went wrong", "oops")
+_EMPTY_TEXT = ("no flights found", "no flights available", "we couldn't find any flights")
+
+
+def classify_page(body: str) -> str:
+    """``timeout`` (still loading / unknown), ``error`` (Google's error page) or ``no_result`` (Google says no flights)."""
+
+    text = body.lower()
+    if any(t in text for t in _ERROR_TEXT):
+        return "error"
+    if "loading results" in text:
+        return "timeout"
+    if any(t in text for t in _EMPTY_TEXT):
+        return "no_result"
+    return "timeout"  # unknown page: not proof that there is no flight
+
+
+async def _wait_rows(page, timeout_ms: int) -> bool:
+    try:
+        await page.wait_for_selector(_ROW_LABELS, timeout=timeout_ms)
+        return True
+    except Exception:  # noqa: BLE001
+        return False
+
+
+async def _fetch_one(ctx, key: str, timeout_ms: int, why: dict[str, str] | None = None) -> dict | None:
+    """Entry for ``key``; ``None`` when no price was read, with the reason in ``why[key]`` (``no_result`` / ``timeout`` / ``error``)."""
+
     page = await ctx.new_page()
     try:
+        if key.startswith("mc|"):
+            timeout_ms = max(timeout_ms, MC_TIMEOUT_MS)
         await page.goto(url_for(key), wait_until="domcontentloaded", timeout=60000)
-        try:
-            await page.wait_for_selector(_ROW_LABELS, timeout=timeout_ms)
-        except Exception:  # noqa: BLE001 — no results / blocked → missing
-            return None
+        ok = await _wait_rows(page, min(timeout_ms, 40000))
+        if not ok:
+            body = await page.evaluate("() => document.body.innerText.slice(0, 2000)")
+            reason = classify_page(body)
+            if reason == "error":  # Google's error page: its own Reload button usually works
+                with contextlib.suppress(Exception):  # no Reload button / click failed: the retry in scrape asks again
+                    await page.get_by_role("button", name="Reload").click(timeout=3000)
+                    ok = await _wait_rows(page, max(timeout_ms - 40000, 20000))
+            elif reason == "timeout" and timeout_ms > 40000:  # still loading: give a slow multi-city page the rest of the time
+                ok = await _wait_rows(page, timeout_ms - 40000)
+            if not ok:
+                if why is not None:
+                    body = await page.evaluate("() => document.body.innerText.slice(0, 2000)")
+                    why[key] = classify_page(body)
+                return None
         await page.wait_for_timeout(1500)  # let the "other flights" list render too
         labels = await page.eval_on_selector_all(
             _ROW_LABELS, "els => els.map(e => e.getAttribute('aria-label'))"
         )
-        return cheapest_entry(labels, parse_key(key)[1])
+        entry = cheapest_entry(labels, parse_key(key)[1])
+        if entry is None and why is not None:
+            why[key] = "parse_error"
+        return entry
     finally:
         await page.close()
 
@@ -194,8 +242,13 @@ async def scrape(
     concurrency: int = 4,
     timeout_ms: int = 35000,
     progress: Callable[[int, int, int], None] | None = None,
+    why: dict[str, str] | None = None,
 ) -> tuple[dict[str, dict], list[str]]:
-    """Fetch every key in a headless Chromium → (entries, missing keys)."""
+    """Fetch every key in a headless Chromium → (entries, missing keys).
+
+    ``why`` (optional) receives the reason for every missing key: ``no_result`` is the only one that means "no such
+    flight"; ``timeout`` / ``error`` / ``parse_error`` are failures to read the page.
+    """
 
     from playwright.async_api import async_playwright
 
@@ -212,13 +265,23 @@ async def scrape(
             async with sem:
                 await asyncio.sleep(random.uniform(0.3, 1.2))  # be gentle
                 entry = None
-                for _ in range(2):
+                reasons: dict[str, str] = {}
+                for attempt in range(3):
                     try:
-                        entry = await _fetch_one(ctx, key, timeout_ms)
-                        break
+                        entry = await _fetch_one(ctx, key, timeout_ms, reasons)
                     except Exception as e:  # noqa: BLE001
                         print(f"retry {key}: {e}", file=sys.stderr)
-                (fares.__setitem__(key, entry) if entry else missing.append(key))
+                        reasons[key] = "timeout"
+                        continue
+                    if entry or reasons.get(key) == "no_result":
+                        break  # a price, or Google says there is no such flight
+                    await asyncio.sleep(2 + 3 * attempt)  # slow or errored page: ask again
+                if entry:
+                    fares[key] = entry
+                else:
+                    missing.append(key)
+                    if why is not None:
+                        why[key] = reasons.get(key, "timeout")
                 done += 1
                 if progress:
                     progress(done, len(keys), len(missing))

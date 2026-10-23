@@ -89,12 +89,16 @@ def main() -> None:
     def progress(done: int, total: int, missing: int) -> None:
         status.post("pending", f"{done}/{total} rid={rid} missing={missing}", force=done == total)
 
-    fares, missing = asyncio.run(scrape(keys, concurrency=5, timeout_ms=40000, progress=progress))
+    why: dict[str, str] = {}
+    fares, missed = asyncio.run(scrape(keys, concurrency=5, timeout_ms=40000, progress=progress, why=why))
+    # only a confirmed "no such flight" is stored as unavailable; slow / errored pages are failures to read
+    missing = [k for k in missed if why.get(k) == "no_result"]
+    failures = {k: {"error": "parse_error"}.get(why.get(k, "timeout"), why.get(k, "timeout")) for k in missed if k not in missing}
     db = FareDatabase.load(args.db)
-    db.merge(fares, today=datetime.now(UTC).date(), missing=[*db.missing, *missing])
+    db.merge(fares, today=datetime.now(UTC).date(), missing=[*db.missing, *missing], failures=failures)
     db.save(args.db)
-    status.post("success", f"{len(fares)}/{len(keys)} found rid={rid} missing={len(missing)}", force=True)
-    print(f"lookup {rid}: {len(fares)} found, {len(missing)} not on Google Flights")
+    status.post("success", f"{len(fares)}/{len(keys)} found rid={rid} no-flight={len(missing)} failed={len(failures)}", force=True)
+    print(f"lookup {rid}: {len(fares)} found, {len(missing)} no such flight, {len(failures)} could not be read {sorted(failures.items())[:5]}")
 
 
 if __name__ == "__main__":

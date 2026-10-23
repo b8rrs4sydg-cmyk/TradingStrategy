@@ -381,6 +381,7 @@ class Daemon:
         self.persist.why_failed = lambda key: self.failure_reason(key)
         self.limiter = RateLimiter()
         # prices over plain HTTP first; two tries of 6 s at most per key, then the browser takes over
+        self.browser_why: dict[str, str] = {}  # key -> why the browser page gave no price (a failure, not 'no flight')
         self.http: HttpFetcher | None = (
             HttpFetcher(timeout=6.0, attempts=2, concurrency=6)
             if os.getenv("DAEMON_FAST_FETCH", "1") == "1"
@@ -558,7 +559,7 @@ class Daemon:
         """Status for a key whose price could not be read: what the plain-HTTP reader last saw (blocked / parse_error /
         timeout), else a generic timeout (the browser crashed)."""
 
-        why = self.http.why.pop(key, None) if self.http else None
+        why = self.browser_why.pop(key, None) or (self.http.why.pop(key, None) if self.http else None)
         return why if why in {s.value for s in FareStatus} else FareStatus.TIMEOUT.value
 
     async def priced(self, key: str, ctx, sem: PriorityGate, seq: int) -> tuple[dict | None, bool]:
@@ -590,7 +591,13 @@ class Daemon:
 
         await sem.acquire((-seq, key.startswith("mc|")))
         try:
-            return await _fetch_one(ctx, key, 40000), False
+            reasons: dict[str, str] = {}
+            entry = await _fetch_one(ctx, key, 40000, reasons)
+            if entry is None and reasons.get(key, "no_result") != "no_result":
+                # the page was slow / errored: a failure to read it, not proof that the itinerary does not exist
+                self.browser_why[key] = {"error": "parse_error", "parse_error": "parse_error"}.get(reasons[key], "timeout")
+                return None, True
+            return entry, False
         except Exception as e:  # noqa: BLE001
             log(f"fetch failed {key}: {e}")
             return None, True

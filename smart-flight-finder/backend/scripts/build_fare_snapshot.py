@@ -50,15 +50,22 @@ def _progress(label: str):
 def crawl(keys: list[str], label: str, *, concurrency: int, timeout_ms: int) -> tuple[dict, list[str]]:
     if not keys:
         return {}, []
+    why: dict[str, str] = {}
     fares, missing = asyncio.run(
-        scrape(keys, concurrency=concurrency, timeout_ms=timeout_ms, progress=_progress(label))
+        scrape(keys, concurrency=concurrency, timeout_ms=timeout_ms, progress=_progress(label), why=why)
     )
-    if missing:  # slow pages under load — one gentler pass
-        more, missing = asyncio.run(
-            scrape(missing, concurrency=2, timeout_ms=60000, progress=_progress(f"{label} retry"))
+    retry = [k for k in missing if why.get(k) != "no_result"]
+    if retry:  # slow pages under load — one gentler pass; a confirmed "no flight" is not asked again
+        more, still = asyncio.run(
+            scrape(retry, concurrency=2, timeout_ms=60000, progress=_progress(f"{label} retry"), why=why)
         )
         fares |= more
-    return fares, missing
+        missing = [k for k in missing if k not in retry] + still
+    # only a confirmed "no such flight" counts as missing; unreadable pages are not stored as unavailable
+    unreadable = [k for k in missing if why.get(k) != "no_result"]
+    if unreadable:
+        print(f"[{label}] {len(unreadable)} pages could not be read (slow / error), not marked unavailable", flush=True)
+    return fares, [k for k in missing if why.get(k) == "no_result"]
 
 
 def main() -> None:

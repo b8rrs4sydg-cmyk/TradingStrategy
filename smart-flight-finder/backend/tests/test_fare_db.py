@@ -282,3 +282,18 @@ def test_daemon_priority_gate_serves_newest_request_first():
         return order
 
     assert asyncio.run(run()) == ["new-ow", "new-mc", "old-ow", "old-mc"]
+
+
+def test_legacy_missing_lists_keep_only_one_way_keys(tmp_path):
+    """Older crawls stored unreadable round-trip / multi-city pages as missing; they are asked again."""
+
+    from app.providers.fare_db import FareDatabase
+
+    legacy = {
+        "fares": {},
+        "missing": ["ow|TPE|XXX|2027-02-01", "rt|TPE|ICN|2027-02-01|2027-02-05", "mc|A-B-2027-02-01|B-A-2027-02-05"],
+    }
+    db = FareDatabase.from_json(legacy)
+    assert db.missing == ["ow|TPE|XXX|2027-02-01"]
+    current = FareDatabase.from_json({**db.to_json(), "missing": legacy["missing"]})
+    assert len(current.missing) == 3  # a file written by this code is trusted as it is
