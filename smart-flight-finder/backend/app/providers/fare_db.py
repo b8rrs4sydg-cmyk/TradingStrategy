@@ -33,7 +33,7 @@ from typing import Any
 from app.providers.atomic_io import atomic_write_text, file_lock
 from app.providers.base import Segment
 from app.providers.google_flights import ISSUER, fare_key, parse_key, tz_of
-from app.services.query_plan import prioritize
+from app.services.query_plan import prioritize, promise
 from app.services.strategies.base import FlightLeg, TicketOffer
 
 logger = logging.getLogger(__name__)
@@ -299,7 +299,10 @@ class FareDatabaseProvider:
         if not (self.fetcher and self.live_budget):
             return 0
         # the live budget goes to the fares that matter most (see services/query_plan.prioritize), not to the first N
-        wanted = prioritize(keys, self.live_budget, known=self.db.fares)
+        prices = {k: v["price"] for k, v in self.db.fares.items() if isinstance(v, dict) and v.get("price")}
+        wanted = prioritize(
+            keys, self.live_budget, known=self.db.fares, promise_of=lambda k: promise(k, prices)
+        )
         if not wanted:
             return 0
         try:

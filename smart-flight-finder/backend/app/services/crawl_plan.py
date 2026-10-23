@@ -37,7 +37,7 @@ from app.data.taiwan_holidays_2027 import LEAVE_STRATEGIES
 from app.models.enums import TicketStrategyType, TripType
 from app.providers.google_flights import GOOGLE_HORIZON_DAYS, fare_key, parse_key
 from app.schemas.itinerary import CandidateWindowIn, ItineraryRequestIn
-from app.services.query_plan import required_queries
+from app.services.query_plan import four_leg_room_for, required_queries
 from app.services.search import SearchService
 
 PROMISING = 0.8  # four-leg budget ≥ 80% of the trip-A round trip
@@ -100,18 +100,6 @@ def split_stages(keys: Sequence[str]) -> tuple[list[str], list[str]]:
 
 
 # --- stage 2 ranking ----------------------------------------------------------
-def _min_price(prices: Mapping[str, int], prefix: str, ok) -> int | None:
-    vals = [p for k, p in prices.items() if k.startswith(prefix) and ok(k)]
-    return min(vals) if vals else None
-
-
-def _near(day: date, flex: int):
-    def ok(key: str) -> bool:
-        return abs((parse_key(key)[1][0][2] - day).days) <= flex + 1
-
-    return ok
-
-
 def four_leg_room(
     key: str, prices: Mapping[str, int], cfg: CrawlConfig
 ) -> tuple[float | None, int | None, tuple]:
@@ -122,19 +110,7 @@ def four_leg_room(
     to beat them is rt(X) + rt(D) + rt(Y) − ow(TPE→X) − ow(Y→TPE).
     """
 
-    _, segs = parse_key(key)
-    (x, _, c1), (_, d, c2), _, (_, y, r_dep) = segs
-    group = ("4leg", x, d, y, c1.month, c2.month, r_dep.month)
-    ow_first = _min_price(prices, f"ow|TPE|{x}|", lambda k: parse_key(k)[1][0][2] < c1)
-    ow_last = _min_price(prices, f"ow|{y}|TPE|", lambda k: parse_key(k)[1][0][2] > r_dep)
-    rt_x = _min_price(
-        prices, f"rt|TPE|{x}|", lambda k: abs((parse_key(k)[1][1][2] - c1).days) <= cfg.flex + 1
-    )
-    rt_d = _min_price(prices, f"rt|TPE|{d}|", _near(c2, cfg.flex))
-    rt_y = _min_price(prices, f"rt|TPE|{y}|", _near(r_dep, cfg.flex))
-    if None in (ow_first, ow_last, rt_x, rt_d, rt_y):
-        return None, None, group
-    return rt_x + rt_d + rt_y - ow_first - ow_last, rt_d, group
+    return four_leg_room_for(key, prices, cfg.flex)
 
 
 def four_leg_budget(

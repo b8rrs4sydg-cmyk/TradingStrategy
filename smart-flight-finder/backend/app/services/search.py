@@ -8,7 +8,8 @@ from __future__ import annotations
 
 import logging
 import os
-from dataclasses import replace
+from collections.abc import Callable
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 from app.data.taiwan_holidays_2027 import LEAVE_STRATEGIES
@@ -118,7 +119,6 @@ UNCOVERED = (
 
 
 # Strategies whose whole point is covering TWO trips with interleaved tickets.
-PAIR_STRATEGIES = frozenset({TicketStrategyType.REVERSE})
 
 NEED_TWO_SLOTS = (
     "反向票＋倒買法是「一次購票、兩趟旅程」的買法，"
@@ -200,84 +200,84 @@ class SearchService:
             seen.add(key)
             plans.append(replace(plan, window_label=label) if label else plan)
 
-        single = [s for s in req.strategies if s not in PAIR_STRATEGIES]
-        paired = [s for s in req.strategies if s in PAIR_STRATEGIES]
+        wanted = [s for s in req.strategies if s in RUNNERS]
+        # one loop for every strategy: each declares how many trips (slots) it spans and gets those subjects
+        by_arity: dict[int, list[TicketStrategyType]] = {}
+        for strategy in wanted:
+            if strategy is TicketStrategyType.BACK_TO_BACK_4LEG and not req.back_to_back_outer_stations:
+                continue
+            by_arity.setdefault(RUNNERS[strategy].arity, []).append(strategy)
 
         total_matrix = 0
         for label, windows in slots:
             expanded = [expand_window(w) for w in windows]
             total_matrix += matrix_cardinality(expanded)
-            for strategy in single:
-                for plan in self._run_strategy(strategy, req, expanded):
+            for strategy in by_arity.get(1, []):
+                for plan in RUNNERS[strategy].run(self.provider, req, expanded):
                     add(plan, label)
 
-        if paired:
-            pairs = _slot_pairs(req)
-            if not pairs:
-                self.notices.append(NEED_TWO_SLOTS)
-            if TicketStrategyType.REVERSE in paired:
+        for arity, empty_notice in ((2, NEED_TWO_SLOTS), (3, NEED_THREE_SLOTS)):
+            strategies = by_arity.get(arity, [])
+            if not strategies:
+                continue
+            chains = _slot_pairs(req) if arity == 2 else _slot_triples(req)
+            if not chains:
+                self.notices.append(empty_notice)
+            if TicketStrategyType.REVERSE in strategies:
                 skipped = [d for d in req.destinations if daomai_country(d) is None]
                 if skipped:
                     self.notices.append(DAOMAI_ASIA_ONLY.format(", ".join(skipped)))
-            for a, b in pairs:
-                for strategy in paired:
-                    for plan in self._run_pair_strategy(strategy, req, a, b):
-                        add(plan, f"{a.label} + {b.label}")
-        if TicketStrategyType.BACK_TO_BACK_4LEG in req.strategies and req.back_to_back_outer_stations:
-            triples = _slot_triples(req)
-            if not triples:
-                self.notices.append(NEED_THREE_SLOTS)
-            for p_, q_, r_ in triples:
-                for plan in FourLegPlanner(self.provider).plan(
-                    trip_p=p_,
-                    trip_q=q_,
-                    trip_r=r_,
-                    outer_stations=req.back_to_back_outer_stations,
-                    destinations=req.destinations,
-                    adults=req.adults,
-                ):
-                    add(plan, f"{p_.label} + {q_.label} + {r_.label}")
+            for chain in chains:
+                for strategy in strategies:
+                    for plan in RUNNERS[strategy].run(self.provider, req, chain):
+                        add(plan, " + ".join(t.label for t in chain))
         return total_matrix, plans
 
-    # ------------------------------------------------------------------
-    def _run_strategy(
-        self,
-        strategy: TicketStrategyType,
-        req: ItineraryRequestIn,
-        expanded,
-    ) -> list[StrategyPlan]:
-        if strategy is TicketStrategyType.STANDARD:
-            return StandardPlanner(self.provider).plan(
-                expanded=expanded,
-                origins=req.origins,
-                destinations=req.destinations,
-                trip_type=req.trip_type,
-                adults=req.adults,
-            )
-        if strategy is TicketStrategyType.OPEN_JAW:
-            return OpenJawPlanner(self.provider).plan(
-                expanded=expanded,
-                origins=req.origins,
-                destinations=req.destinations,
-                adults=req.adults,
-            )
-        # Hidden-city planner intentionally left out — needs careful fare-rule
-        # review before shipping, and the UX implications are non-trivial.
-        return []
+
+@dataclass(frozen=True)
+class StrategyRunner:
+    """How the orchestrator drives one strategy: how many trips it spans and how to run its planner on them."""
+
+    arity: int  # 1 = date windows of one trip, 2 = ordered pair of slots, 3 = ordered triple of slots
+    run: Callable[[FlightOfferProvider, ItineraryRequestIn, object], list[StrategyPlan]]
 
 
-    def _run_pair_strategy(
-        self, strategy: TicketStrategyType, req: ItineraryRequestIn, a: TripSlot, b: TripSlot
-    ) -> list[StrategyPlan]:
-        if strategy is TicketStrategyType.REVERSE:
-            return ReverseTicketPlanner(self.provider).plan(
-                trip_a=a,
-                trip_b=b,
-                origins=req.origins,
-                destinations=req.destinations,
-                adults=req.adults,
-            )
-        return []
+RUNNERS: dict[TicketStrategyType, StrategyRunner] = {
+    TicketStrategyType.STANDARD: StrategyRunner(
+        1,
+        lambda prov, req, expanded: StandardPlanner(prov).plan(
+            expanded=expanded,
+            origins=req.origins,
+            destinations=req.destinations,
+            trip_type=req.trip_type,
+            adults=req.adults,
+        ),
+    ),
+    TicketStrategyType.OPEN_JAW: StrategyRunner(
+        1,
+        lambda prov, req, expanded: OpenJawPlanner(prov).plan(
+            expanded=expanded, origins=req.origins, destinations=req.destinations, adults=req.adults
+        ),
+    ),
+    TicketStrategyType.REVERSE: StrategyRunner(
+        2,
+        lambda prov, req, ab: ReverseTicketPlanner(prov).plan(
+            trip_a=ab[0], trip_b=ab[1], origins=req.origins, destinations=req.destinations, adults=req.adults
+        ),
+    ),
+    TicketStrategyType.BACK_TO_BACK_4LEG: StrategyRunner(
+        3,
+        lambda prov, req, pqr: FourLegPlanner(prov).plan(
+            trip_p=pqr[0],
+            trip_q=pqr[1],
+            trip_r=pqr[2],
+            outer_stations=req.back_to_back_outer_stations,
+            destinations=req.destinations,
+            adults=req.adults,
+        ),
+    ),
+}
+# Hidden-city planner intentionally left out — needs careful fare-rule review before shipping.
 
 
 def _slots(req: ItineraryRequestIn) -> list[TripSlot]:
