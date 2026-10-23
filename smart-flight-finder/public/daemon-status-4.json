@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T10:38:43+00:00",
+ "at": "2026-10-23T11:37:41+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1981,
+ "fares_saved": 1984,
  "log": [
   "10:37:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:37:13 http front door: ['https://oregon-mutual-style-tournaments.trycloudflare.com', 'https://316c6e7b77afd8.lhr.life']",
@@ -13,6 +13,21 @@
   "10:38:16 request received: rid httptest1792751896 20 keys",
   "10:38:16 handle httptest1792751896: first_chunk=True total=20",
   "10:38:18 request httptest1792751896: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
-  "10:38:19 request httptest1792751896: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:38:19 request httptest1792751896: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:32:16 rtc vkjunc3bcv: answered",
+  "11:32:28 request received: rid mvkw48f7eio20.4 9 keys",
+  "11:32:28 handle mvkw48f7eio20.4: first_chunk=True total=9",
+  "11:32:55 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "11:32:58 request received: rid mvkw58n7fan62.4 7 keys",
+  "11:32:58 handle mvkw58n7fan62.4: first_chunk=True total=7",
+  "11:33:00 git retry 1: b\"-46zevd': is at 1c1a7534e4ee12e877268a052da72ae3adde96b7 but expected 272b78b1b7cc46d152cef777331aae5bcbef06bb)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "11:33:27 request mvkw48f7eio20.4: chunk of 9 keys done in 59s; paths {'http': 22, 'browser-none': 7}, browser waits 7 max 50s sum 329s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 7, 'blocked': 0, 'tries': 35, 'empty': 13}, audit 2/2 agree",
+  "11:33:27 request mvkw58n7fan62.4: chunk of 7 keys done in 29s; paths {'http': 22, 'browser-none': 7}, browser waits 7 max 50s sum 329s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 7, 'blocked': 0, 'tries': 35, 'empty': 13}, audit 2/2 agree",
+  "11:33:27 request mvkw48f7eio20.4: final sent (9/9); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:33:28 request mvkw58n7fan62.4: final sent (7/7); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:35:01 request received: rid mvkw7tzkr9u8u.4 19 keys",
+  "11:35:01 handle mvkw7tzkr9u8u.4: first_chunk=True total=19",
+  "11:37:23 request mvkw7tzkr9u8u.4: chunk of 19 keys done in 142s; paths {'http': 23, 'browser-none': 25}, browser waits 25 max 141s sum 1731s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 23, 'miss': 25, 'blocked': 0, 'tries': 71, 'empty': 48}, audit 2/2 agree",
+  "11:37:24 request mvkw7tzkr9u8u.4: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }

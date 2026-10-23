@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T10:38:45+00:00",
+ "at": "2026-10-23T11:37:34+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1886,
+ "fares_saved": 1891,
  "log": [
   "10:37:10 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:37:15 http front door: ['https://joe-sullivan-finishing-cooler.trycloudflare.com', 'https://7106ac1c3d3481.lhr.life']",
@@ -13,6 +13,20 @@
   "10:38:18 request received: rid httptest1792751897 20 keys",
   "10:38:18 handle httptest1792751897: first_chunk=True total=20",
   "10:38:19 request httptest1792751897: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:38:21 request httptest1792751897: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:38:21 request httptest1792751897: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "11:32:16 rtc b5zmpxbivq: answered",
+  "11:32:29 request received: rid mvkw48f7eio20.7 19 keys",
+  "11:32:29 handle mvkw48f7eio20.7: first_chunk=True total=19",
+  "11:32:57 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "11:32:58 request received: rid mvkw58n7fan62.7 17 keys",
+  "11:32:58 handle mvkw58n7fan62.7: first_chunk=True total=17",
+  "11:34:49 request mvkw48f7eio20.7: chunk of 19 keys done in 140s; paths {'http': 22, 'browser-none': 17}, browser waits 17 max 133s sum 1357s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 17, 'blocked': 0, 'tries': 54, 'empty': 32}, audit 2/2 agree",
+  "11:34:49 request mvkw58n7fan62.7: chunk of 17 keys done in 111s; paths {'http': 22, 'browser-none': 17}, browser waits 17 max 133s sum 1357s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 17, 'blocked': 0, 'tries': 54, 'empty': 32}, audit 2/2 agree",
+  "11:34:50 request mvkw48f7eio20.7: final sent (19/19); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:34:50 request mvkw58n7fan62.7: final sent (17/17); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:35:01 request received: rid mvkw7tzkr9u8u.7 18 keys",
+  "11:35:01 handle mvkw7tzkr9u8u.7: first_chunk=True total=18",
+  "11:36:38 request mvkw7tzkr9u8u.7: chunk of 18 keys done in 98s; paths {'http': 24, 'browser-none': 32, 'browser': 1}, browser waits 33 max 133s sum 2344s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 21, 'blocked': 0, 'tries': 62, 'empty': 38}, audit 2/2 agree",
+  "11:36:40 request mvkw7tzkr9u8u.7: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
