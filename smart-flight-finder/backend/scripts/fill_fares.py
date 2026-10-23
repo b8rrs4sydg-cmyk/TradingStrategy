@@ -128,6 +128,7 @@ def main() -> None:
         p.add_argument("--out", type=Path, required=True)
         p.add_argument("--fresh-hours", type=float, default=20)
         p.add_argument("--concurrency", type=int, default=8)
+        p.add_argument("--budget-minutes", type=float, default=0, help="stop starting lookups after this long (0: no limit)")
         if name == "stage2":
             p.add_argument("--max-multi-city", type=int, default=6000)
     for name in ("merge", "final"):
@@ -154,13 +155,14 @@ def main() -> None:
         print(f"{args.cmd}: merged {n} fares from {len(args.parts)} parts → {len(db.fares)} in database → {args.out}")
         return
 
+    deadline = time.time() + args.budget_minutes * 60 if args.budget_minutes else None
     plan = json.loads(args.plan.read_text(encoding="utf-8"))
     db = load_db(args.db)
     i, n = shard_of(args.shard)
     if args.cmd == "stage1":
         keys = stale(plan["stage1"], db, args.fresh_hours)[i::n]
         print(f"stage1 shard {i}/{n}: {len(keys)} of {len(plan['stage1'])} queries to fetch", flush=True)
-        fares, missing = crawl(keys, f"s1-{i}", concurrency=args.concurrency, timeout_ms=25000)
+        fares, missing = crawl(keys, f"s1-{i}", concurrency=args.concurrency, timeout_ms=25000, deadline=deadline)
     else:
         known = {k: e["price"] for k, e in db.fares.items()}
         mc_left, audit, _ = screen_four_leg(plan["mc"], known, cfg)  # unknown legs may be failed loads: keep
@@ -171,7 +173,7 @@ def main() -> None:
         keys = stale(ranked, db, args.fresh_hours)[i::n]
         print(f"stage2 shard {i}/{n}: {len(keys)} of {len(ranked)} ranked multi-city queries "
               f"({len(plan['mc'])} candidates)", flush=True)
-        fares, missing = crawl(keys, f"s2-{i}", concurrency=max(3, args.concurrency - 2), timeout_ms=40000)
+        fares, missing = crawl(keys, f"s2-{i}", concurrency=max(3, args.concurrency - 2), timeout_ms=40000, deadline=deadline)
         hits, priced = four_leg_hits(fares, known, cfg)
         print(f"four-leg hit rate: {hits} of {priced} priced four-leg tickets beat their saving room", flush=True)
     write_part(args.out, fares, missing)

@@ -78,7 +78,7 @@ jobs:
         with:
           name: plan
           path: smart-flight-finder/backend
-      - run: python -m scripts.fill_fares stage1 --plan plan.json --db ../public/fares.json --shard ${{ matrix.shard }}/8 --fresh-hours "$FRESH_HOURS" --out part.json
+      - run: python -m scripts.fill_fares stage1 --plan plan.json --db ../public/fares.json --shard ${{ matrix.shard }}/8 --fresh-hours "$FRESH_HOURS" --budget-minutes 100 --out part.json
       - uses: actions/upload-artifact@v4
         with:
           name: s1-${{ matrix.shard }}
@@ -138,7 +138,7 @@ jobs:
         with:
           name: merged
           path: smart-flight-finder/backend
-      - run: python -m scripts.fill_fares stage2 --plan plan.json --db merged.json --shard ${{ matrix.shard }}/12 --max-multi-city "$MAX_MC" --fresh-hours "$FRESH_HOURS" --out part.json
+      - run: python -m scripts.fill_fares stage2 --plan plan.json --db merged.json --shard ${{ matrix.shard }}/12 --max-multi-city "$MAX_MC" --fresh-hours "$FRESH_HOURS" --budget-minutes 300 --out part.json
       - uses: actions/upload-artifact@v4
         with:
           name: s2-${{ matrix.shard }}

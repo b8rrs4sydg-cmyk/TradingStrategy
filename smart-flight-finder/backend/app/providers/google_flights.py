@@ -30,6 +30,7 @@ import os
 import random
 import re
 import sys
+import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
@@ -250,11 +251,15 @@ async def scrape(
     timeout_ms: int = 35000,
     progress: Callable[[int, int, int], None] | None = None,
     why: dict[str, str] | None = None,
+    deadline: float | None = None,
 ) -> tuple[dict[str, dict], list[str]]:
     """Fetch every key in a headless Chromium → (entries, missing keys).
 
     ``why`` (optional) receives the reason for every missing key: ``no_result`` is the only one that means "no such
     flight"; ``timeout`` / ``error`` / ``parse_error`` are failures to read the page.
+
+    ``deadline`` (epoch seconds) stops new lookups from starting after that time; keys not started are left out of both
+    results (not missing), so a job that must end by a hard limit can still hand over what it has.
     """
 
     from playwright.async_api import async_playwright
@@ -263,7 +268,7 @@ async def scrape(
     missing: list[str] = []
     sem = asyncio.Semaphore(concurrency)  # browser pages at once
     done = 0
-    stats = {"http": 0, "browser": 0}
+    stats = {"http": 0, "browser": 0, "skipped": 0}
     audit: list[bool] = []
     http = None
     if os.getenv("FARE_HTTP_FIRST", "1") == "1":  # plain HTTP first (about 0.5 s a key); the browser reads what it could not
@@ -291,6 +296,10 @@ async def scrape(
 
         async def one(key: str) -> None:
             nonlocal done
+            if deadline is not None and time.time() > deadline:
+                stats["skipped"] += 1
+                done += 1
+                return
             entry = None
             reason = "timeout"
             if http is not None:
@@ -326,6 +335,7 @@ async def scrape(
         await http.aclose()
     print(
         f"scrape: {stats['http']} priced by plain HTTP, {stats['browser']} asked the browser"
+        + (f"; {stats['skipped']} not started (time budget)" if stats["skipped"] else "")
         + (f"; audit {audit.count(True)}/{len(audit)} agree" if audit else ""),
         file=sys.stderr,
         flush=True,

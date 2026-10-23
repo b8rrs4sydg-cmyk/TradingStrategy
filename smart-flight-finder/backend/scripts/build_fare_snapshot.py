@@ -49,14 +49,16 @@ def _progress(label: str):
     return report
 
 
-def crawl(keys: list[str], label: str, *, concurrency: int, timeout_ms: int) -> tuple[dict, list[str]]:
+def crawl(
+    keys: list[str], label: str, *, concurrency: int, timeout_ms: int, deadline: float | None = None
+) -> tuple[dict, list[str]]:
     if not keys:
         return {}, []
     why: dict[str, str] = {}
     fares, missing = asyncio.run(
-        scrape(keys, concurrency=concurrency, timeout_ms=timeout_ms, progress=_progress(label), why=why)
+        scrape(keys, concurrency=concurrency, timeout_ms=timeout_ms, progress=_progress(label), why=why, deadline=deadline)
     )
-    retry = [k for k in missing if why.get(k) != "no_result"]
+    retry = [k for k in missing if why.get(k) != "no_result"] if deadline is None or time.time() < deadline else []
     if retry:  # slow pages under load — one gentler pass; a confirmed "no flight" is not asked again
         more, still = asyncio.run(
             scrape(retry, concurrency=2, timeout_ms=60000, progress=_progress(f"{label} retry"), why=why)
