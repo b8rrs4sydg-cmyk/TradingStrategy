@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T14:24:05+00:00",
+ "generated_at": "2026-10-23T14:25:37+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -34872,7 +34872,7 @@
   "rt|GMP|RMQ|2026-11-08|2026-11-20": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|GMP|RMQ|2026-11-08|2026-12-18": {
    "status": "timeout",
@@ -35202,7 +35202,7 @@
   "rt|MMY|RMQ|2026-11-08|2026-11-13": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|MMY|RMQ|2026-11-08|2026-11-20": {
    "status": "timeout",
@@ -35222,7 +35222,7 @@
   "rt|MMY|TPE|2026-11-08|2026-11-20": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|MMY|TPE|2026-11-22|2026-12-18": {
    "status": "timeout",
@@ -35392,7 +35392,7 @@
   "rt|PUS|TSA|2026-11-08|2026-11-20": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|PUS|TSA|2026-11-08|2026-11-27": {
    "status": "timeout",
@@ -35452,7 +35452,7 @@
   "rt|RMQ|CJU|2026-11-27|2026-11-29": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|RMQ|CJU|2026-12-04|2026-12-20": {
    "status": "timeout",
@@ -35462,7 +35462,7 @@
   "rt|RMQ|CJU|2026-12-18|2026-12-20": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|RMQ|CTS|2026-11-06|2026-12-13": {
    "status": "timeout",
@@ -35475,7 +35475,7 @@
    "n": 1
   },
   "rt|RMQ|CTS|2027-02-10|2027-02-14": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
@@ -35977,7 +35977,7 @@
   "rt|TSA|CJU|2026-11-06|2026-11-22": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|TSA|CJU|2026-11-13|2026-11-29": {
    "status": "timeout",
@@ -36190,7 +36190,7 @@
    "n": 1
   },
   "rt|TSA|UEO|2026-11-06|2026-11-22": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
@@ -36242,7 +36242,7 @@
   "rt|UEO|TPE|2026-11-08|2026-11-27": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|UEO|TPE|2026-11-08|2026-12-18": {
    "status": "timeout",
