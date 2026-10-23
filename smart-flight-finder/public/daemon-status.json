@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:38:18+00:00",
+ "at": "2026-10-23T14:39:50+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2002,
+ "fares_saved": 2003,
  "log": [
   "12:49:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:49:55 http front door: ['https://pulling-boston-sticky-wind.trycloudflare.com', 'https://54d1fc39c8bf83.lhr.life']",
@@ -118,6 +118,10 @@
   "14:29:24 request mvl2bymd1aeuv.0: chunk of 23 keys done in 193s; paths {'http': 93, 'browser-crashed': 331, 'browser': 12}, browser waits 343 max 245s sum 27647s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 93, 'miss': 156, 'blocked': 0, 'tries': 163, 'empty': 70}, audit 1/1 a",
   "14:29:24 request mvl2bymd1aeuv.0: final sent (23/23); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
   "14:33:59 request received: rid mvl2lzz8xjg3m.0 30 keys",
-  "14:33:59 handle mvl2lzz8xjg3m.0: first_chunk=True total=30"
+  "14:33:59 handle mvl2lzz8xjg3m.0: first_chunk=True total=30",
+  "14:39:35 request mvl2lzz8xjg3m.0: chunk of 30 keys done in 336s; paths {'http': 93, 'browser-crashed': 360, 'browser': 13}, browser waits 373 max 336s sum 33485s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 93, 'miss': 156, 'blocked': 0, 'tries': 163, 'empty': 70}, audit 1/1 a",
+  "14:39:36 request mvl2lzz8xjg3m.0: final sent (30/30); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "14:39:38 request received: rid mvl2t98n3mbyw.0 22 keys",
+  "14:39:38 handle mvl2t98n3mbyw.0: first_chunk=True total=22"
  ]
 }
