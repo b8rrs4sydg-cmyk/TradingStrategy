@@ -153,3 +153,19 @@ def test_outstation_pattern_reaches_the_crawl_plan(monkeypatch):
     monkeypatch.setenv("OUTSTATION_PATTERN", "any")
     wide = set(planner_queries(cfg, today=date(2026, 10, 17)))
     assert base < wide  # strictly more queries once same-country ends (NRT … KIX) are allowed
+
+
+def test_failures_are_recorded_counted_and_cleared_when_priced(tmp_path):
+    from datetime import UTC, datetime
+
+    from app.providers.fare_db import FareDatabase
+
+    path = tmp_path / "fares-live.json"
+    today = datetime.now(UTC).date()
+    key = "ow|TPE|NRT|2099-04-01"
+    for expected in (1, 2):
+        db = FareDatabase.merge_into_file(path, {}, today=today, failures={key: "timeout"})
+        assert db.status[key]["n"] == expected and key not in db.missing
+    assert FareDatabase.load(path).status[key]["status"] == "timeout"  # persisted, optional field
+    db = FareDatabase.merge_into_file(path, {key: {"price": 5000}}, today=today)
+    assert key not in db.status and key in db.fares  # priced: the failure is forgotten

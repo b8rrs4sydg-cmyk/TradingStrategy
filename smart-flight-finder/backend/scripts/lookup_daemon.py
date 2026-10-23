@@ -38,6 +38,7 @@ import time
 import urllib.error
 import urllib.request
 from collections import Counter, deque
+from collections.abc import Iterable
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -47,6 +48,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 
 from app.providers.atomic_io import atomic_write_text
 from app.providers.fare_db import FareDatabase
+from app.providers.fare_status import FareStatus
 from app.providers.google_flights import _fetch_one
 from app.providers.google_http import HttpFetcher
 from scripts.lookup_fares import MAX_KEYS, valid_keys
@@ -264,6 +266,7 @@ class Persister:
         self.db = FareDatabase.load(self.path)
         self.pending: dict[str, dict] = {}
         self.missing: list[str] = []
+        self.failures: dict[str, str] = {}
         self.lock = threading.Lock()  # guards pending / missing / dirty
         self.flush_lock = threading.Lock()  # one flush at a time: the periodic and the final one run in threads
         self.dirty = False  # request activity since the last push → publish daemon-status.json
@@ -272,23 +275,25 @@ class Persister:
         with self.lock:
             self.dirty = True
 
-    def add(self, fares: dict, nf: list) -> None:
+    def add(self, fares: dict, nf: list, failed: Iterable[str] = ()) -> None:
         with self.lock:
             self.pending.update(fares)
             self.missing += nf
+            for key in failed:  # a lookup that crashed: recorded as a failure, never as "no flight"
+                self.failures[key] = FareStatus.TIMEOUT.value
 
     def flush(self, push: bool) -> int:
         with self.flush_lock:
             with self.lock:
-                fares, missing = self.pending, self.missing
-                self.pending, self.missing = {}, []
+                fares, missing, failures = self.pending, self.missing, self.failures
+                self.pending, self.missing, self.failures = {}, [], {}
                 dirty, self.dirty = self.dirty, False
-            if not fares and not missing and not dirty:
+            if not fares and not missing and not failures and not dirty:
                 return 0
-            if fares or missing:
+            if fares or missing or failures:
                 # read-modify-write under a file lock: whatever is on disk now is merged, nothing is overwritten
                 self.db = FareDatabase.merge_into_file(
-                    self.path, fares, today=datetime.now(UTC).date(), missing=missing
+                    self.path, fares, today=datetime.now(UTC).date(), missing=missing, failures=failures
                 )
             self.write_status({"fares_saved": len(self.db.fares)})
             if push and os.getenv("GITHUB_TOKEN"):
@@ -481,6 +486,7 @@ class Daemon:
                 "done": 0,
                 "f": {},
                 "nf": [],
+                "fail": [],
                 "active": 0,
                 "last_sent": 0.0,
                 "last_activity": time.time(),
@@ -524,6 +530,8 @@ class Daemon:
                 state["f"][key] = {**entry, "at": datetime.now(UTC).date().isoformat()}
             elif not failed:
                 state["nf"].append(key)
+            else:
+                state["fail"].append(key)
 
         t0 = time.time()
         try:
@@ -740,7 +748,8 @@ class Daemon:
                     continue
                 f, n = st["f"], st["nf"]
                 st["f"], st["nf"] = {}, []
-                self.persist.add(f, n)
+                self.persist.add(f, n, st["fail"])
+                st["fail"] = []
                 for text in split_results(rid, f, n, st["done"], st["total"], final=finished):
                     await self.send(rid, text, st["via"])
                     await asyncio.sleep(0.2)

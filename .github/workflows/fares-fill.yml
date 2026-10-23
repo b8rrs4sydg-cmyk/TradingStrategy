@@ -10,6 +10,9 @@ on:
       max_multi_city:
         description: "cap on multi-city fares (all shards together)"
         default: "6000"
+      outstation_pattern:
+        description: "四腿票 outer-station pattern: different (default) | same | any (also same-country ends)"
+        default: "different"
   # New workflows cannot be dispatched before they reach the default branch,
   # so touching this file or public/.fill-request on the branch starts a fill.
   push:
@@ -27,6 +30,7 @@ concurrency:
 
 env:
   MAX_MC: ${{ inputs.max_multi_city || '6000' }}
+  OUTSTATION_PATTERN: ${{ inputs.outstation_pattern || 'different' }}
 
 jobs:
   plan:

@@ -52,6 +52,9 @@ class FareDatabase:
     missing: list[str] = field(default_factory=list)
     # keys a live lookup found no itinerary for (the page does not re-ask)
     unavailable: list[str] = field(default_factory=list)
+    # keys the last lookups FAILED on (not "no flight"): key -> {"status": FareStatus, "at": day, "n": tries in a row}.
+    # Optional in the file: older readers (the page) ignore it.
+    status: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     @classmethod
     def from_json(cls, data: dict[str, Any]) -> FareDatabase:
@@ -61,6 +64,7 @@ class FareDatabase:
             coverage=dict(data.get("coverage") or data.get("config") or {}),
             missing=list(data.get("missing", [])),
             unavailable=list(data.get("unavailable", [])),
+            status=dict(data.get("status") or {}),
         )
 
     @classmethod
@@ -106,6 +110,7 @@ class FareDatabase:
             "fares": dict(sorted(self.fares.items())),
             "missing": sorted(self.missing),
             **({"unavailable": sorted(self.unavailable)} if self.unavailable else {}),
+            **({"status": dict(sorted(self.status.items()))} if self.status else {}),
         }
 
     def save(self, path: str | Path) -> None:
@@ -113,19 +118,32 @@ class FareDatabase:
 
     @classmethod
     def merge_into_file(
-        cls, path: str | Path, fetched: dict[str, dict], *, today: date, missing: Iterable[str] = ()
+        cls,
+        path: str | Path,
+        fetched: dict[str, dict],
+        *,
+        today: date,
+        missing: Iterable[str] = (),
+        failures: dict[str, str] | None = None,
     ) -> FareDatabase:
         """Read-modify-write of ``path`` that no other process can interleave with: lock, re-read what is on disk NOW
         (another writer may have added to it since this process last looked), merge, atomic save. Returns the result."""
 
         with file_lock(path):
             db = cls.load(path)
-            db.merge(fetched, today=today, missing=[*db.missing, *missing])
+            db.merge(fetched, today=today, missing=[*db.missing, *missing], failures=failures)
             db.save(path)
         return db
 
     # ------------------------------------------------------------------
-    def merge(self, fetched: dict[str, dict], *, today: date, missing: Iterable[str] = ()) -> None:
+    def merge(
+        self,
+        fetched: dict[str, dict],
+        *,
+        today: date,
+        missing: Iterable[str] = (),
+        failures: dict[str, str] | None = None,
+    ) -> None:
         """Upsert today's fetches, keeping price history; expire stale entries.
 
         A query that failed today keeps its last price while it is at most
@@ -154,6 +172,15 @@ class FareDatabase:
                 keep[key] = {**entry, "at": at[:10]}
         self.fares = keep
         self.missing = sorted(k for k in set(missing) if k not in keep)
+        # failed lookups: count tries in a row, forget a key once it is priced / confirmed missing / a week old
+        for key, st in (failures or {}).items():
+            old = self.status.get(key, {})
+            self.status[key] = {"status": st, "at": day, "n": old.get("n", 0) + 1 if old.get("status") == st else 1}
+        self.status = {
+            k: v
+            for k, v in self.status.items()
+            if k not in keep and k not in self.missing and (today - date.fromisoformat(v["at"])).days <= MAX_AGE_DAYS
+        }
         self.generated_at = datetime.now(UTC).isoformat(timespec="seconds")
 
 
