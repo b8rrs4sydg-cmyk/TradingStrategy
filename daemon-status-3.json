@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T00:51:19+00:00",
+ "at": "2026-10-23T05:19:43+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2040,
  "log": [
-  "00:49:44 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:49:49 http front door: ['https://admitted-qualify-prayers-laws.trycloudflare.com', 'https://940a3546fef37d.lhr.life']",
-  "00:49:49 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:50:54 request received: rid httptest1792716653 20 keys",
-  "00:50:54 handle httptest1792716653: first_chunk=True total=20",
-  "00:51:01 request httptest1792716653: chunk of 20 keys done in 8s; paths {'http': 19, 'browser': 1}, browser waits 1 max 7s sum 7s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 19, 'miss': 1, 'blocked': 0, 'tries': 24, 'empty': 5}, audit 3/3 agree",
-  "00:51:03 request httptest1792716653: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:18:09 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:18:13 http front door: ['https://dot-router-tions-excluded.trycloudflare.com', 'https://95c7caf1fd5277.lhr.life']",
+  "05:18:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:19:18 request received: rid httptest1792732758 20 keys",
+  "05:19:18 handle httptest1792732758: first_chunk=True total=20",
+  "05:19:19 request httptest1792732758: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:19:20 request httptest1792732758: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }

@@ -1802,7 +1802,7 @@ function planFourLegTriple(req, P, Q, R) {
   const baseX = new Map(stations.map(x => [x, cheapestRoundTrip(HUB, x, P, req.adults)]));
   const baseY = new Map(stations.map(y => [y, cheapestRoundTrip(HUB, y, R, req.adults)]));
   for (const x of stations) for (const y of stations) {
-    if (countryOf(y) === countryOf(x) || !baseX.get(x) || !baseY.get(y)) continue;
+    if (!baseX.get(x) || !baseY.get(y)) continue;   // outer stations may share a country (OUTSTATION_PATTERN=any); only D must be elsewhere
     for (const dest of new Set(req.destinations)) {
       if (dest === x || dest === y || dest === HUB || TW_AIRPORTS.has(dest)) continue;
       if (countryOf(dest) === countryOf(x) || countryOf(dest) === countryOf(y)) continue;
