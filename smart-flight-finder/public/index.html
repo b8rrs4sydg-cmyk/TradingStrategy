@@ -1867,7 +1867,7 @@ function planFourLegTriple(req, P, Q, R) {
   const baseX = new Map(stations.map(x => [x, cheapestRoundTrip(HUB, x, P, req.adults)]));
   const baseY = new Map(stations.map(y => [y, cheapestRoundTrip(HUB, y, R, req.adults)]));
   for (const x of stations) for (const y of stations) {
-    if (!baseX.get(x) || !baseY.get(y)) continue;   // outer stations may share a country (OUTSTATION_PATTERN=any); only D must be elsewhere
+    if (countryOf(y) === countryOf(x) || !baseX.get(x) || !baseY.get(y)) continue;   // OUTSTATION_PATTERN=different (default)
     for (const dest of new Set(req.destinations)) {
       if (dest === x || dest === y || dest === HUB || TW_AIRPORTS.has(dest)) continue;
       if (countryOf(dest) === countryOf(x) || countryOf(dest) === countryOf(y)) continue;
@@ -3931,7 +3931,7 @@ async function ntfyPost(text, topic = T_REQ) {
  * re-run (debounced) — the results list grows while the crawler works. */
 let refreshTimer = null;
 function scheduleRefresh() {
-  if (refreshTimer) return;
+  if (refreshTimer || !state.result) return;   // nothing to refresh until the user has searched
   refreshTimer = setTimeout(() => {
     refreshTimer = null;
     try {
@@ -4359,7 +4359,7 @@ async function subscribeLiveFares() {
     FARES = { ...FARES, generated_at: meta.generated_at, coverage: meta.coverage || FARES.coverage, fares };
     (meta.unavailable || []).forEach(k => live.notFound.add(k));
     applyCoverage();
-    document.getElementById('search-form').requestSubmit();
+    if (state.result) document.getElementById('search-form').requestSubmit();   // re-run only a search the user started
   }, () => {});
 }
 
@@ -4381,9 +4381,7 @@ function init() {
   wireHelp();
   wireTheme();
   tryLoadSharedPlan();
-
-  // Auto-run so the page is complete at rest (shows a realistic result immediately).
-  document.getElementById('search-form').requestSubmit();
+  // No auto-run: a search starts only when the user presses 搜尋.
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
