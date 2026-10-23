@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-23T13:26:38+00:00",
+ "generated_at": "2026-10-23T13:28:11+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -33469,7 +33469,7 @@
    "n": 1
   },
   "rt|CJU|TSA|2026-11-22|2026-12-11": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
@@ -33746,7 +33746,7 @@
   "rt|PUS|TSA|2026-11-22|2026-12-18": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|RMQ|CJU|2026-11-20|2026-11-29": {
    "status": "timeout",
@@ -33776,7 +33776,7 @@
   "rt|RMQ|FUK|2026-11-20|2026-12-13": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|RMQ|GMP|2026-11-06|2026-11-29": {
    "status": "parse_error",
@@ -33896,7 +33896,7 @@
   "rt|RMQ|MMY|2026-11-20|2026-12-06": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|RMQ|MMY|2026-12-11|2026-12-13": {
    "status": "parse_error",
@@ -34029,7 +34029,7 @@
    "n": 1
   },
   "rt|TPE|ISG|2026-11-20|2026-12-20": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
@@ -34054,7 +34054,7 @@
    "n": 1
   },
   "rt|TPE|MMY|2026-11-20|2026-12-20": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-23",
    "n": 1
   },
@@ -34106,7 +34106,7 @@
   "rt|TPE|UEO|2026-11-20|2026-12-13": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|TSA|CJU|2026-11-06|2026-11-08": {
    "status": "timeout",
@@ -34241,7 +34241,7 @@
   "rt|TSA|OKA|2026-11-20|2026-12-20": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|TSA|PUS|2026-11-13|2026-12-27": {
    "status": "timeout",
@@ -34291,7 +34291,7 @@
   "rt|UEO|TPE|2026-11-22|2026-12-11": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   },
   "rt|UEO|TSA|2026-11-15|2026-12-24": {
    "status": "timeout",
@@ -34301,7 +34301,7 @@
   "rt|UEO|TSA|2026-11-22|2026-12-11": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
+   "n": 2
   }
  }
 }
