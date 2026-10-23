@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T13:46:26+00:00",
+ "at": "2026-10-23T13:52:28+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2098,
+ "fares_saved": 2099,
  "log": [
   "12:51:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:51:09 http front door: ['https://wan-stones-anthropology-companies.trycloudflare.com', 'https://823da3fb65de56.lhr.life']",
@@ -86,6 +86,8 @@
   "13:44:42 request received: rid mvl0umq89h55y.3 15 keys",
   "13:44:42 handle mvl0umq89h55y.3: first_chunk=True total=15",
   "13:46:19 request mvl0umq89h55y.3: chunk of 15 keys done in 97s; paths {'http': 40, 'browser-crashed': 241, 'browser': 30}, browser waits 271 max 191s sum 18708s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 64, 'blocked': 0, 'tries': 67, 'empty': 27}, audit 2/2 agre",
-  "13:46:21 request mvl0umq89h55y.3: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "13:46:21 request mvl0umq89h55y.3: final sent (15/15); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "13:51:59 request received: rid mvl13zly4cbb4.3 22 keys",
+  "13:51:59 handle mvl13zly4cbb4.3: first_chunk=True total=22"
  ]
 }
