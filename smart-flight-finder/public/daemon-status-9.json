@@ -1,11 +1,11 @@
 {
- "at": "2026-10-23T14:23:10+00:00",
+ "at": "2026-10-23T14:24:42+00:00",
  "publishes": {
   "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2068,
+ "fares_saved": 2069,
  "log": [
   "12:37:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "12:38:02 http front door: ['https://smell-photographic-norfolk-river.trycloudflare.com', 'https://8ecebfa314866d.lhr.life']",
@@ -128,6 +128,8 @@
   "14:23:01 rtc o8sx8ey8o1: answered",
   "14:23:02 rtc o8sx8ey8o1: data channel open",
   "14:23:03 request received: rid mvl27vn3on3nv.8 12 keys",
-  "14:23:03 handle mvl27vn3on3nv.8: first_chunk=True total=12"
+  "14:23:03 handle mvl27vn3on3nv.8: first_chunk=True total=12",
+  "14:24:40 request mvl27vn3on3nv.8: chunk of 12 keys done in 96s; paths {'http': 60, 'browser-crashed': 427, 'browser': 18}, browser waits 445 max 217s sum 37350s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 60, 'miss': 174, 'blocked': 0, 'tries': 198, 'empty': 138}, audit 2/2 a",
+  "14:24:41 request mvl27vn3on3nv.8: final sent (12/12); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
