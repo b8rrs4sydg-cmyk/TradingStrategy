@@ -28,4 +28,4 @@ KIX / NRT / HND 兩兩配對（含地面交通 400～4,200 TWD），資料庫內
 `OUTSTATION_PATTERN=any|same` 會同時放寬規劃器與爬蟲計畫（`planner_queries` 跑同一個規劃器，`tests/test_review_p0.py` 驗證查詢數嚴格增加）。要用真實報價驗收：在爬蟲工作流程環境設定 `OUTSTATION_PATTERN=any` 跑一輪 `fares-fill`，再比較同國頭尾四腿票與普通三趟來回的價格；頁面端（`planFourLegTriple`）尚未支援，確認有划算報價後再移植並改預設。
 
 ## 查價失敗狀態已接上（2026-10-23）
-`FareDatabase.status`（選填欄位 `status`：key → 狀態、日期、連續次數）。爬蟲端 `Persister.add(..., failed)` 把崩潰的查詢記成 `timeout`（不再默默丟棄，也不會進 `missing`／`unavailable`）；重複失敗累計次數；查到價、被確認無結果或超過 7 天即清除。頁面忽略此欄位。注意：目前只有「瀏覽器崩潰」會寫入；HTTP 被封鎖（blocked）與解析失敗（parse_error）尚未由讀取器回報，仍是下一步。
+`FareDatabase.status`（選填欄位 `status`：key → 狀態、日期、連續次數）。爬蟲端 `Persister.add(..., failed)` 把崩潰的查詢記成 `timeout`（不再默默丟棄，也不會進 `missing`／`unavailable`）；重複失敗累計次數；查到價、被確認無結果或超過 7 天即清除。頁面忽略此欄位。HTTP 讀取器現在記住最後一次失敗原因（blocked / timeout / parse_error），崩潰的查詢以該原因寫入；注意 parse_error 也可能只是 Google 回了沒有航班的答案，所以它只在最終沒拿到價（瀏覽器也崩潰）時才寫入，不代表「確認無航班」。

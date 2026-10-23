@@ -169,3 +169,18 @@ def test_failures_are_recorded_counted_and_cleared_when_priced(tmp_path):
     assert FareDatabase.load(path).status[key]["status"] == "timeout"  # persisted, optional field
     db = FareDatabase.merge_into_file(path, {key: {"price": 5000}}, today=today)
     assert key not in db.status and key in db.fares  # priced: the failure is forgotten
+
+
+def test_http_reader_remembers_why_it_gave_no_price():
+    import asyncio
+
+    from app.providers.google_http import HttpFetcher
+
+    f = HttpFetcher(timeout=1, attempts=1)
+
+    async def blocked(key, segments):
+        raise PermissionError("429")
+
+    f._answer = blocked
+    out = asyncio.run(f.fetch("ow|TPE|NRT|2027-04-01"))
+    assert out is None and f.why["ow|TPE|NRT|2027-04-01"] == "blocked"

@@ -275,12 +275,15 @@ class Persister:
         with self.lock:
             self.dirty = True
 
+    why_failed = staticmethod(lambda key: FareStatus.TIMEOUT.value)  # the daemon swaps in the HTTP reader's reason
+
     def add(self, fares: dict, nf: list, failed: Iterable[str] = ()) -> None:
         with self.lock:
             self.pending.update(fares)
             self.missing += nf
             for key in failed:  # a lookup that crashed: recorded as a failure, never as "no flight"
-                self.failures[key] = FareStatus.TIMEOUT.value
+                reason = self.why_failed(key)
+                self.failures[key] = reason
 
     def flush(self, push: bool) -> int:
         with self.flush_lock:
@@ -375,6 +378,7 @@ class Daemon:
         # the page splits a lookup between them. Instance 0 also owns the ntfy relay and the legacy file names.
         self.instance = instance
         self.persist = Persister(db_path, "" if instance == 0 else f"-{instance}")
+        self.persist.why_failed = lambda key: self.failure_reason(key)
         self.limiter = RateLimiter()
         # prices over plain HTTP first; two tries of 6 s at most per key, then the browser takes over
         self.http: HttpFetcher | None = (
@@ -549,6 +553,13 @@ class Daemon:
                 else ""
             )
         )
+
+    def failure_reason(self, key: str) -> str:
+        """Status for a key whose price could not be read: what the plain-HTTP reader last saw (blocked / parse_error /
+        timeout), else a generic timeout (the browser crashed)."""
+
+        why = self.http.why.pop(key, None) if self.http else None
+        return why if why in {s.value for s in FareStatus} else FareStatus.TIMEOUT.value
 
     async def priced(self, key: str, ctx, sem: PriorityGate, seq: int) -> tuple[dict | None, bool]:
         """(entry, crashed) for ``key``: from the cache, from the lookup already running for it, or a new one."""

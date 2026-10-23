@@ -270,6 +270,7 @@ class HttpFetcher:
         self.stats = {"hit": 0, "miss": 0, "blocked": 0, "tries": 0, "empty": 0}
         # per kind (ow / rt / mc): recent outcomes; a kind that mostly fails is not tried for a while (the browser
         # would only be asked after the wasted tries)
+        self.why: dict[str, str] = {}  # key -> why the last try gave no price: blocked / timeout / unreadable
         self.recent: dict[str, deque[bool]] = {}
         self.kind_pause: dict[str, float] = {}
 
@@ -320,11 +321,13 @@ class HttpFetcher:
             text = await self._answer(key, segments)
         except httpx.HTTPError:
             self.sid = ""  # maybe a stale session: take a fresh one next time
+            self.why[key] = "timeout"
             return None
         self.stats["tries"] += 1
         entry = entry_from(rpc_payloads(text), segments)
         if not entry:
             self.stats["empty"] += 1
+            self.why[key] = "parse_error"  # an answer without a readable itinerary: may be 'no flight' or a changed payload
         return entry
 
     async def fetch(self, key: str) -> dict | None:
@@ -346,6 +349,7 @@ class HttpFetcher:
                         if entry:
                             break
                 except PermissionError:
+                    self.why[key] = "blocked"
                     self.blocked += 1
                     self.stats["blocked"] += 1
                     if self.blocked >= _BLOCK_LIMIT:
