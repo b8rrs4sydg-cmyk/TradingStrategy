@@ -133,3 +133,23 @@ def test_fare_status_policy():
     )
     assert retry_after(FareStatus.BLOCKED) > retry_after(FareStatus.TIMEOUT)
     assert retry_after(FareStatus.NOT_QUERIED) == 0
+
+
+def test_outstation_pattern_reaches_the_crawl_plan(monkeypatch):
+    """OUTSTATION_PATTERN widens the crawl too, because the crawl plan runs the same planner."""
+
+    from datetime import date
+
+    from app.services.crawl_plan import CrawlConfig, planner_queries
+
+    cfg = CrawlConfig(
+        destinations=["LHR"],
+        outer_stations=["NRT", "KIX", "HKG"],
+        holidays=["lunar_ny", "qingming", "duanwu"],
+    )
+
+    monkeypatch.setenv("OUTSTATION_PATTERN", "different")
+    base = set(planner_queries(cfg, today=date(2026, 10, 17)))
+    monkeypatch.setenv("OUTSTATION_PATTERN", "any")
+    wide = set(planner_queries(cfg, today=date(2026, 10, 17)))
+    assert base < wide  # strictly more queries once same-country ends (NRT … KIX) are allowed
