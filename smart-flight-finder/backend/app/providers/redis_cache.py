@@ -107,6 +107,8 @@ class RedisCachingProvider:
         """Capability forwarding: only a source that can batch-fetch (``prefetch``) makes this wrapper look like one,
         because SearchService probes with ``hasattr``; a wrapper that hid it silently skipped the live prefetch."""
 
+        if name == "prices_are_real":
+            return getattr(self.__dict__.get("_inner"), "prices_are_real", True)
         if name == "prefetch" and not name.startswith("_") and hasattr(self.__dict__.get("_inner"), "prefetch"):
             return self._inner.prefetch
         raise AttributeError(name)

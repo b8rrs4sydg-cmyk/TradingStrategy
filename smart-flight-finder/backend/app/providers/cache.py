@@ -29,6 +29,10 @@ class CachingProvider:
         self._misses = 0
 
     @property
+    def prices_are_real(self) -> bool:
+        return getattr(self._inner, "prices_are_real", True)
+
+    @property
     def name(self) -> str:
         return f"cached:{self._inner.name}"
 

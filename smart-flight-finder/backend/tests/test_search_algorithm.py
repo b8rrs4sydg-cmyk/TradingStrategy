@@ -197,3 +197,58 @@ def test_four_leg_best_plan_equals_brute_force():
         if pd < c1 < c2 < qr < rd < rr
     )
     assert min(pl.total_cost for pl in plans) == best
+
+
+def test_one_way_floor_pruning_skips_asks_without_changing_the_plans(monkeypatch):
+    """A four-leg ticket whose one-way floor already reaches the best total is not asked for; the plans stay the same."""
+
+    from dataclasses import replace
+    from datetime import date
+
+    from app.services.strategies import two_trip
+    from app.services.strategies.back_to_back import FourLegPlanner
+    from app.services.strategies.two_trip import TripSlot
+    from tests.fake_fares import FakeFareProvider
+
+    class Counting(FakeFareProvider):
+        asks = 0
+
+        def search(self, **kw):
+            offers = super().search(**kw)
+            if kw.get("return_date") is not None:
+                return offers
+            surge = 1 + (kw["departure_date"].toordinal() % 7) / 2  # one-way fares differ a lot between days
+            return [replace(o, total_price=round(o.total_price * surge)) for o in offers]
+
+        def search_multi_city(self, *, segments, adults=1):
+            # the premise of the pruning, measured on real fares: a multi-city fare is >= 1.04 x its one-way legs
+            Counting.asks += 1
+            legs = [
+                min(o.total_price for o in self.search(origin=a, destination=b, departure_date=d, adults=adults))
+                for a, b, d in segments
+            ]
+            ratio = 1.04
+            return [
+                replace(o, total_price=round(ratio * sum(legs)))
+                for o in super().search_multi_city(segments=segments, adults=adults)
+            ]
+
+    def slot(label, deps, rets):
+        return TripSlot(label=label, departs=tuple(deps), returns=tuple(rets))
+
+    def run():
+        Counting.asks = 0
+        plans = FourLegPlanner(Counting(), pattern="any").plan(
+            trip_p=slot("P", [date(2027, 2, d) for d in (4, 5, 6)], [date(2027, 2, d) for d in (12, 13, 14)]),
+            trip_q=slot("Q", [date(2027, 4, d) for d in (2, 3)], [date(2027, 4, d) for d in (9, 10)]),
+            trip_r=slot("R", [date(2027, 12, d) for d in (22, 23)], [date(2027, 12, d) for d in (27, 28)]),
+            outer_stations=["NRT", "ICN"],
+            destinations=["LHR"],
+        )
+        return Counting.asks, [(p.total_cost, p.explain) for p in plans]
+
+    pruned_asks, pruned_plans = run()
+    monkeypatch.setattr(two_trip, "ONE_WAY_FLOOR_FACTOR", 0.0)  # floor 0: never prunes
+    full_asks, full_plans = run()
+    assert pruned_plans == full_plans
+    assert pruned_asks < full_asks

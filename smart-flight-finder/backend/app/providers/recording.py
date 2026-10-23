@@ -18,6 +18,7 @@ from app.services.strategies.base import FlightLeg, TicketOffer
 
 class RecordingProvider:
     name = "recording"
+    prices_are_real = False  # planners must not prune on these prices and must not add queries of their own
 
     def __init__(self) -> None:
         self.keys: dict[str, int] = {}  # query -> how many times the planners asked for it

@@ -38,6 +38,7 @@ from app.services.strategies.two_trip import (
     cheapest,
     fmt_day,
     nearest,
+    one_way_floor,
     quote,
     saving_warning,
 )
@@ -163,9 +164,20 @@ class FourLegPlanner:
 
     def _best_loop(self, x, y, dest, p_deps, c1s, c2s, q_rets, r_deps, first_legs, last_legs, adults):
         best = None
-        for c1, c2, q_ret, r_dep in product(c1s, c2s, q_rets, r_deps):
-            if not (c1 < c2 < q_ret < r_dep):
-                continue
+        combos = [
+            (c1, c2, q_ret, r_dep)
+            for c1, c2, q_ret, r_dep in product(c1s, c2s, q_rets, r_deps)
+            if c1 < c2 < q_ret < r_dep
+        ]
+
+        def segments(combo):
+            c1, c2, q_ret, r_dep = combo
+            return [(x, HUB, c1), (HUB, dest, c2), (dest, HUB, q_ret), (HUB, y, r_dep)]
+
+        # cheapest one-way floor first: the first real fares set a tight bar, so most of the rest are never asked for
+        floors = {c: one_way_floor(self.provider, segments(c), adults) for c in combos}
+        combos.sort(key=lambda c: (floors[c] is None, floors[c] or 0, c))
+        for c1, c2, q_ret, r_dep in combos:
             firsts = [(t.total_price, d, t) for d, t in first_legs.items() if t and d < c1]
             lasts = [(t.total_price, d, t) for d, t in last_legs.items() if t and d > r_dep]
             if not firsts or not lasts:
@@ -174,11 +186,11 @@ class FourLegPlanner:
             _, r_ret, last = min(lasts, key=lambda o: o[0])
             if best and first.total_price + last.total_price >= best[0]:
                 continue
-            four = quote(
-                self.provider,
-                [(x, HUB, c1), (HUB, dest, c2), (dest, HUB, q_ret), (HUB, y, r_dep)],
-                adults,
-            )
+            segs = segments((c1, c2, q_ret, r_dep))
+            floor = floors[(c1, c2, q_ret, r_dep)]
+            if best and floor is not None and first.total_price + floor + last.total_price >= best[0]:
+                continue  # cannot beat the best total found so far
+            four = quote(self.provider, segs, adults)
             if four is None or not _four_leg_matches(four, x, dest, y, c1, c2, q_ret, r_dep):
                 continue
             total = first.total_price + four.total_price + last.total_price
