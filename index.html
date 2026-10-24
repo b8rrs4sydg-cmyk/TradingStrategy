@@ -806,6 +806,20 @@
   .slot-history .sh-slots { display: flex; flex-wrap: wrap; gap: 6px }
   .slot-history .sh-slots .chip { font-size: 12.5px }
 
+  .slot-sum { display: none }
+  .quick-chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 0 8px }
+  .qchip { appearance: none; border: 1px solid var(--border-strong); background: var(--card); color: var(--fg); border-radius: 999px; padding: 6px 14px; font: 500 13px/1.2 var(--font-body); cursor: pointer; min-height: 34px }
+  .qchip.on { background: var(--brand); border-color: var(--brand); color: #fff }
+  .p-title { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 2px 0 4px }
+  .p-title b { font-size: 17px; font-weight: 600 }
+  .p-code { font: 500 12px/1 var(--font-mono); color: var(--fg-faint) }
+  .p-badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--card-sunken); color: var(--fg-muted) }
+  .p-badge.good { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); font-weight: 600 }
+  .price-note { font-size: 11.5px; color: var(--fg-faint); margin-top: 1px }
+  .plan-cta { margin-top: 8px }
+  .cta-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 0; background: var(--brand); color: #fff; font: 600 14px/1 var(--font-body); text-decoration: none; cursor: pointer }
+  .cta-btn.ghost { background: var(--card-sunken); color: var(--fg) }
+  .plan.open .plan-cta .cta-btn.ghost { display: none }
   /* ===== Phone: an app, not a long web page. Tab bar, one view at a time, sheets, 44px targets. ===== */
   .tabbar, #sheet-backdrop, .results-nav, .f-sheet-head { display: none }
   .f-sheet { display: contents }
@@ -886,6 +900,28 @@
     .submit-row .btn-primary { width: 100%; min-height: 50px; font-size: 17px }
     .submit-row small:not(#elapsed) { display: none }
     .slot-history .sh-item { padding: 12px }
+    /* time slots collapse to one summary until 修改 is pressed */
+    .slot-sum { display: block; margin: 4px 0 8px }
+    .ss-head { display: flex; align-items: baseline; gap: 10px }
+    .ss-head b { font-size: 15px } .ss-head span { color: var(--fg-muted); font-size: 13px; flex: 1 }
+    .ss-edit { appearance: none; border: 0; background: none; color: var(--brand); font: 600 14px/1 var(--font-body); padding: 8px 4px; cursor: pointer }
+    .ss-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px }
+    .ss-chip { display: inline-flex; align-items: center; gap: 2px; padding: 4px 4px 4px 12px; border-radius: 999px; background: var(--brand-wash); color: var(--brand-ink); font: 500 13px/1.2 var(--font-mono) }
+    .ss-chip.bad { background: var(--risk-high-bg); color: var(--risk-high-fg) }
+    .ss-chip button { appearance: none; border: 0; background: none; color: inherit; font-size: 16px; width: 26px; height: 26px; border-radius: 50%; cursor: pointer }
+    .slots-fs:not(.editing):not(.empty) :is(#slot-list, .slot-tools) { display: none }
+    .quick-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -2px; padding: 2px 2px 8px }
+    .quick-chips::-webkit-scrollbar { display: none }
+    .qchip { flex: none }
+    .plan-cta .cta-btn { width: 100% }
+    /* the list comes first; hints, the date matrix and the like follow it */
+    #results:not([hidden]) { display: flex; flex-direction: column }
+    #results > * { order: 5 }
+    #results > .results-nav { order: 0 } #results > .results-head { order: 1 } #results > #filters { order: 2 } #results > #live-lookup { order: 3 }
+    #results > #compare { order: 4 } #results > #g-tools { order: 6 } #results > #plan-list { order: 7 } #results > #empty { order: 8 }
+    #results > #lookup-all { order: 20 } #results > #notices { order: 21 } #results > #heatmap { order: 22 }
+    .p-title b { font-size: 18px }
+    .plan.has-title .plan-head .explain { display: none }
 
     /* results */
     .results-nav { display: block; margin: 4px 0 8px }
@@ -1009,11 +1045,12 @@
         <p class="hint" id="airport-err" style="color:var(--crit)" hidden>請至少勾選一個出發機場與一個目的地</p>
       </div>
 
-      <fieldset>
+      <fieldset id="slots-fs" class="slots-fs">
         <legend>備選時段</legend>
         <div class="hint">點選連假加入備選時段</div>
         <div id="holiday-chips" class="chips"></div>
         <div id="slot-history" class="slot-history" hidden></div>
+        <div id="slot-sum" class="slot-sum"></div>
         <ol id="slot-list" class="slot-list"></ol>
         <div class="slot-tools">
           <button type="button" class="btn-ghost" id="btn-add-slot">+ 自訂時段</button>
@@ -1164,6 +1201,7 @@
     </div>
 
     <section id="filters" class="filters" aria-label="篩選方案" hidden>
+      <div id="quick-chips" class="quick-chips" role="group" aria-label="快速篩選"></div>
       <div class="f-bar">
         <button type="button" id="f-toggle" class="btn-ghost" aria-expanded="true" aria-controls="f-panel">篩選 <span id="f-count" class="pill pill-sel" hidden>0</span></button>
         <div id="f-chips" class="f-actives"></div>
@@ -2351,7 +2389,7 @@ const pfEmpty = () => ({
   labels: new Set(), origins: new Set(), dests: new Set(), airlines: new Set(),
   priceMin: null, priceMax: null, outFrom: null, outTo: null, retFrom: null, retTo: null,
   outDateFrom: '', outDateTo: '', retDateFrom: '', retDateTo: '',
-  stops: 'any', daysMin: null, daysMax: null, hideNoSave: false, favOnly: false,
+  stops: 'any', daysMin: null, daysMax: null, hideNoSave: false, favOnly: false, cheap: false,
 });
 let PF = pfEmpty();
 const PF_OPEN_KEY = 'sff-filters-open';
@@ -2416,6 +2454,7 @@ function pfPass(p, skip) {
   if (c.daysMax != null && days > c.daysMax) return false;
   if (c.hideNoSave && f.nosave) return false;
   if (c.favOnly && !state.favorites.has(fingerprint(p))) return false;
+  if (c.cheap && !isCheapForRoute(p)) return false;
   return true;
 }
 
@@ -2437,6 +2476,7 @@ function pfActive() {
   if (c.daysMin != null || c.daysMax != null) add('days', `旅行天數 ${c.daysMin ?? '不限'} – ${c.daysMax ?? '不限'}`);
   if (c.hideNoSave) add('hideNoSave', '隱藏「不划算」');
   if (c.favOnly) add('favOnly', '只看收藏');
+  if (c.cheap) add('cheap', '同航線偏便宜');
   return out;
 }
 
@@ -2445,7 +2485,7 @@ function pfClear(key) {
   const map = {
     labels: ['labels'], origins: ['origins'], dests: ['dests'], airlines: ['airlines'], price: ['priceMin', 'priceMax'],
     out: ['outFrom', 'outTo'], ret: ['retFrom', 'retTo'], outDate: ['outDateFrom', 'outDateTo'], retDate: ['retDateFrom', 'retDateTo'],
-    stops: ['stops'], days: ['daysMin', 'daysMax'], hideNoSave: ['hideNoSave'], favOnly: ['favOnly'],
+    stops: ['stops'], days: ['daysMin', 'daysMax'], hideNoSave: ['hideNoSave'], favOnly: ['favOnly'], cheap: ['cheap'],
   };
   if (key === 'strategy') state.filter = 'all';
   else (map[key] || []).forEach(k => { PF[k] = e[k]; });
@@ -2532,6 +2572,23 @@ function pfSyncInputs(panel) {
 }
 
 let pfSignature = '';
+/* one-tap filters above the list (the two people reach for most) */
+function renderQuickChips() {
+  const box = document.getElementById('quick-chips');
+  if (!box) return;
+  const chips = [['direct', '僅直飛', PF.stops === '0'], ['cheap', '同航線偏便宜', PF.cheap], ['fav', '只看收藏', PF.favOnly]];
+  box.innerHTML = chips.map(([k, t, on]) => `<button type="button" class="qchip ${on ? 'on' : ''}" data-q="${k}" aria-pressed="${on}">${t}</button>`).join('');
+}
+function wireQuickChips() {
+  document.getElementById('quick-chips').addEventListener('click', e => {
+    const b = e.target.closest('button[data-q]');
+    if (!b) return;
+    if (b.dataset.q === 'direct') PF.stops = PF.stops === '0' ? 'any' : '0';
+    else if (b.dataset.q === 'cheap') PF.cheap = !PF.cheap;
+    else PF.favOnly = !PF.favOnly;
+    renderResults();
+  });
+}
 function renderFilters(plans) {
   const bar = document.getElementById('filters');
   bar.hidden = !plans.length;
@@ -2924,23 +2981,19 @@ function renderResults() {
   const el = document.getElementById('results');
   if (!state.result) { el.hidden = true; return; }
   el.hidden = false;
-  ROUTE_RT = null;   // the price-position index is rebuilt from the fares the page holds now
+  ROUTE_RT = null; ROUTE_GEN++;   // the price-position index is rebuilt from the fares the page holds now
   const { plans, matrix, cache, fares } = state.result;
 
   document.getElementById('r-plan-count').textContent = plans.length;
   document.getElementById('r-matrix').textContent = matrix;
 
   const pill = document.getElementById('r-cache-pill');
-  if (cache.total) {
-    const rate = Math.round((cache.hits / cache.total) * 100);
-    pill.hidden = false;
-    pill.textContent = `Cache ${rate}% · 省 ${cache.hits.toLocaleString()} 次 provider 呼叫`;
-  } else pill.hidden = true;
+  pill.hidden = true;   // an internal cache statistic: nothing a traveller can act on
 
   const farePill = document.getElementById('r-fare-pill');
   if (fares && fares.real + fares.missing) {
     farePill.hidden = false;
-    farePill.textContent = `實價命中 ${fares.real} / ${fares.real + fares.missing} 次查詢 · 資料 ${tpeTime(FARES.generated_at)}`;
+    farePill.textContent = `票價資料更新 ${tpeTime(FARES.generated_at)}`;
     farePill.classList.toggle('none', !fares.real);
   } else farePill.hidden = true;
 
@@ -2960,6 +3013,7 @@ function renderResults() {
 
   // Filter + sort
   const activeFilters = renderFilters(plans);
+  renderQuickChips();
   let visible = plans.filter(p => (state.filter === 'all' || p.strategy === state.filter) && pfPass(p));
   const startOf = p => { const f = planFacts(p); return `${f.outDate}T${pfClock(f.outMin ?? 720)}`; };
   if (state.sort === 'price') visible.sort((a,b) => a.total_cost - b.total_cost);
@@ -3097,9 +3151,11 @@ function renderPlanList(plans, groups) {
     const plan = plans[idx];
     const key = `${plan.strategy}-${idx}-${plan.tickets[0]?.offer_id || ''}`;
     node.querySelector('.plan-head').addEventListener('click', e => {
-      if (e.target.closest('button') || e.target.closest('input')) return;
+      if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a')) return;
       node.classList.toggle('open');
     });
+    const openBtn = node.querySelector('[data-open]');
+    if (openBtn) openBtn.addEventListener('click', e => { e.stopPropagation(); node.classList.add('open'); node.querySelector('.plan-detail')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
     node.querySelector('.fav-btn').addEventListener('click', e => {
       e.stopPropagation();
       const fp = fingerprint(plan);
@@ -3142,6 +3198,15 @@ function priceDelta(t) {
    the database holds for the same airports (all dates). Shown only when the route has enough fares and the plan is clearly
    cheap or dear, so it stays a hint and not a verdict. */
 let ROUTE_RT = null;
+let ROUTE_GEN = 0;
+const cheapMemo = new WeakMap();
+function isCheapForRoute(p) {
+  const m = cheapMemo.get(p);
+  if (m && m.gen === ROUTE_GEN) return m.v;
+  const v = pricePosition(p)?.cls === 'good';
+  cheapMemo.set(p, { gen: ROUTE_GEN, v });
+  return v;
+}
 function routeRoundTrips(origin, destination) {
   if (!ROUTE_RT) {
     ROUTE_RT = new Map();
@@ -3177,7 +3242,8 @@ function planFactsHtml(plan) {
   if (f.outDate) bits.push(`<span title="去程出發（當地時間）">去 ${mdDay(f.outDate)}${f.outMin != null ? ` ${pfClock(f.outMin)}` : ''}${f.arrMin != null ? `→${pfClock(f.arrMin)}` : ''}</span>`);
   if (f.retDate) bits.push(`<span title="回程出發；航班時刻在訂票網站選">回 ${mdDay(f.retDate)}${f.retMin != null ? ` ${pfClock(f.retMin)}` : ''}</span>`);
   if (plan.total_travel_days > 1) bits.push(`<span>${plan.total_travel_days} 天</span>`);
-  if (f.stops != null) bits.push(`<span class="${f.stops ? '' : 'good'}">${f.stops ? `${f.stops} 轉` : '直飛'}</span>`);
+  const titled = plan.strategy !== 'back_to_back_4leg' && !(plan.trips || []).length && f.dest;   // the card title already says 直飛 / N 轉
+  if (f.stops != null && !titled) bits.push(`<span class="${f.stops ? '' : 'good'}">${f.stops ? `${f.stops} 轉` : '直飛'}</span>`);
   if (f.airlines.length) bits.push(`<span>${escapeHtml(f.airlines.join('、'))}</span>`);
   const ch = favChange(plan);
   if (ch) bits.push(`<span class="${ch.diff < 0 ? 'good' : ''}" title="${ch.at} 收藏時的價格">收藏時 ${ch.was.toLocaleString()} → 現在 ${ch.now.toLocaleString()}（${ch.diff < 0 ? '降' : '漲'} ${Math.abs(ch.diff).toLocaleString()}）</span>`);
@@ -3214,9 +3280,23 @@ function renderPlan(plan, rank) {
   const isFourLeg = plan.strategy === 'back_to_back_4leg';
   const warnings = plan.warnings.map(w => `<span class="warn-pill ${w.level}"><b>${w.level}</b> ${escapeHtml(w.message)}</span>`).join('');
   const ticketCount = plan.tickets.length;
+  const pf = planFacts(plan);
+  const nameOf = c => AIRPORT_BY_CODE.get(c)?.name || c;
+  const isTrip = (plan.trips || []).length > 0 || isFourLeg;
+  const title = !isTrip && pf.dest
+    ? `<div class="p-title"><b>${escapeHtml(nameOf(pf.dest))}</b><span class="p-code">${escapeHtml(pf.home)} → ${escapeHtml(pf.dest)}</span>${pf.stops === 0 ? '<span class="p-badge good">直飛</span>' : pf.stops ? `<span class="p-badge">${pf.stops} 轉</span>` : ''}</div>` : '';
+  const legsN = plan.tickets[0]?.legs?.length || 0;
+  const adults = plan.adults || 1;
+  const priceNote = ticketCount === 1 ? `${legsN > 1 ? '來回' : '單程'} · ${adults > 1 ? `${adults} 人合計` : '每人'}` : '';
+  let cta = '';
+  if (ticketCount === 1) {
+    const links = bookingLinks(plan.tickets[0], adults);
+    const g = links.find(b => /google/i.test(b.label)) || links[0];
+    if (g) cta = `<a class="cta-btn" href="${escapeHtml(g.url)}" target="_blank" rel="noopener noreferrer">前往 ${escapeHtml(g.label)} 訂票 ↗</a>`;
+  } else cta = `<button type="button" class="cta-btn ghost" data-open>看 ${ticketCount} 張票與訂票連結</button>`;
 
   return `
-    <article class="plan ${open} ${isFourLeg ? 'four-leg' : ''}">
+    <article class="plan ${open} ${isFourLeg ? 'four-leg' : ''} ${title ? 'has-title' : ''}">
       <div class="sel-col">
         <input type="checkbox" aria-label="選擇方案 ${rank} 比較" ${checked ? 'checked' : ''} ${atLimit ? 'disabled' : ''}>
         <button class="fav-btn ${fav ? 'on' : ''}" aria-label="${fav ? '取消收藏' : '收藏'}" aria-pressed="${fav}">${fav ? '★' : '☆'}</button>
@@ -3231,10 +3311,13 @@ function renderPlan(plan, rank) {
             ${plan.window_label ? `<span class="slot-tag">${escapeHtml(plan.window_label)}</span>` : ''}
             <span class="explain">${escapeHtml(plan.explain || '')}</span>
           </div>
+          ${title}
           ${planFactsHtml(plan)}
+          <div class="plan-cta">${cta}</div>
           </div>
           <div>
             <div class="price mono">${plan.currency} ${plan.total_cost.toLocaleString()}</div>
+            ${priceNote ? `<div class="price-note">${priceNote}</div>` : ''}
             ${(plan.trips || []).length > 1 ? `<div class="per-trip">${plan.trips.length} 趟合計 · 平均每趟 ${Math.round(plan.total_cost / plan.trips.length).toLocaleString()}</div>` : ''}
           </div>
         </div>
@@ -3599,6 +3682,20 @@ function renderSlots() {
   updateSlotSummary();
 }
 
+/* compact view of the time slots (phone): one chip per slot and the total days; the editable cards open with 修改 */
+function slotDays(s) {
+  if (!isRoundTrip() || !s.ret || s.ret < s.depart) return 1;
+  return Math.round((Date.parse(`${s.ret}T00:00:00Z`) - Date.parse(`${s.depart}T00:00:00Z`)) / 864e5) + 1;
+}
+function renderSlotSum() {
+  const box = document.getElementById('slot-sum'), fs = document.getElementById('slots-fs');
+  if (!box || !fs) return;
+  fs.classList.toggle('empty', slots.length === 0);
+  const days = slots.reduce((n, s) => n + slotDays(s), 0);
+  const editing = fs.classList.contains('editing');
+  box.innerHTML = slots.length === 0 ? '' : `<div class="ss-head"><b>你的空檔</b><span>${slots.length} 段 · ${days} 天</span><button type="button" class="ss-edit" data-edit aria-expanded="${editing}">${editing ? '完成' : '修改'}</button></div>
+    <div class="ss-chips">${slots.map(s => `<span class="ss-chip ${slotInvalid(s) ? 'bad' : ''}" title="${escapeHtml(s.label || '')}">${escapeHtml(slotSpan(s).replace(/ ±\d+$/, ''))}<button type="button" data-rm="${s.id}" aria-label="移除這個時段">×</button></span>`).join('')}</div>`;
+}
 function updateSlotSummary() {
   const rt = isRoundTrip();
   const combos = slots.reduce((n, s) => n + (2 * s.departFlex + 1) * (rt ? 2 * s.retFlex + 1 : 1), 0);
@@ -3606,6 +3703,7 @@ function updateSlotSummary() {
   document.getElementById('airport-err').hidden = !noAirports;
   updatePairHint();
   const invalid = slots.length === 0 || slots.some(slotInvalid) || noAirports;
+  renderSlotSum();
   document.getElementById('slot-summary').innerHTML = slots.length === 0
     ? '<span style="color:var(--crit)">請至少加入一個備選時段</span>'
     : `<b>${slots.length}</b> 個時段 · 共 <b>${combos}</b> 組日期 × 每個勾選策略`;
@@ -3735,6 +3833,11 @@ function wireSlots() {
     renderSlots();
   });
   document.getElementById('f-trip').addEventListener('change', renderSlots);
+  document.getElementById('slot-sum').addEventListener('click', e => {
+    const rm = e.target.closest('button[data-rm]');
+    if (rm) { const i = slots.findIndex(x => x.id === Number(rm.dataset.rm)); if (i >= 0) slots.splice(i, 1); renderSlots(); return; }
+    if (e.target.closest('button[data-edit]')) { document.getElementById('slots-fs').classList.toggle('editing'); renderSlotSum(); }
+  });
   renderSlots();
 }
 
@@ -4874,6 +4977,7 @@ function init() {
   wireResultsControls();
   wireHelp();
   wireTheme();
+  wireQuickChips();
   tryLoadSharedPlan();
   // No auto-run: a search starts only when the user presses 搜尋.
 }
