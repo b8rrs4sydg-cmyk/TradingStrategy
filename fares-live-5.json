@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:01:30+00:00",
+ "generated_at": "2026-10-24T10:04:32+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -3438,6 +3438,28 @@
     [
      "2026-10-18",
      59485
+    ]
+   ]
+  },
+  "mc|KIX-TPE-2027-01-02|TPE-FUK-2027-02-27": {
+   "price": 18976,
+   "first": {
+    "dep": "2027-01-02T12:20:00+09:00",
+    "arr": "2027-01-02T14:40:00+08:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 18976,
+    "EVA Air": 24751,
+    "Jetstar": 26934,
+    "China Airlines": 40458
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18976
     ]
    ]
   },

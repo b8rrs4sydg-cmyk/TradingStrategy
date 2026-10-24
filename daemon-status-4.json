@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:02:38+00:00",
+ "at": "2026-10-24T10:05:42+00:00",
  "publishes": {
-  "ok": 12,
+  "ok": 13,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2179,
+ "fares_saved": 2185,
  "log": [
   "05:34:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:59 http front door: ['https://theatre-retired-prospective-achieving.trycloudflare.com', 'https://2309115a0dc2f2.lhr.life']",
@@ -67,6 +67,9 @@
   "10:00:11 request received: rid mvm89dljkl9ao.3 16 keys",
   "10:00:11 handle mvm89dljkl9ao.3: first_chunk=True total=16",
   "10:01:11 request mvm89dljkl9ao.3: chunk of 16 keys done in 60s; paths {'http': 113, 'browser-crashed': 25, 'browser': 12}, browser waits 37 max 150s sum 2198s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 113, 'miss': 37, 'blocked': 0, 'tries': 123, 'empty': 10}, audit 8/8 agr",
-  "10:01:12 request mvm89dljkl9ao.3: final sent (16/16); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
+  "10:01:12 request mvm89dljkl9ao.3: final sent (16/16); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:03:50 rtc ypcbm1hawp: answered",
+  "10:04:02 request received: rid mvm8ecumtl6d9.4 12 keys",
+  "10:04:02 handle mvm8ecumtl6d9.4: first_chunk=True total=12"
  ]
 }
