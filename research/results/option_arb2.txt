@@ -1,0 +1,27 @@
+
+===== BTCUSDT: 3,501 hourly snapshots
+   futures leg priced from: {'bookTicker': 3492} hours
+   option-implied forward minus quarterly future (mid, near ATM): median -4.3 bp, p5 -27.4, p95 +18.2
+
+===== ETHUSDT: 3,501 hourly snapshots
+   futures leg priced from: {'bookTicker': 3493} hours
+   option-implied forward minus quarterly future (mid, near ATM): median -6.4 bp, p5 -30.5, p95 +17.4
+
+coin                   check  checked  profitable hours_with_opp  episodes  persistent_ep  median_edge_bp  usd_once_per_ep  usd_persistent_ep  top10_share
+ BTC             A1 monotone  1802342         221       206/3501        33             23             7.4               94                 78         0.75
+ BTC                A2 width  1839225         133        71/3501        44             16            21.8             1448                214         0.96
+ BTC            A3 butterfly   604294         846       742/3501       110             69            25.9             1838                805         0.75
+ BTC             A4 calendar   384571           5         5/3501         5              0            14.0                2                  0         1.00
+ BTC B buy synth + short fut    20908         567       359/3501       239             97             4.0            22977              14145         0.30
+ BTC B sell synth + long fut    20903         140       104/3501        42             16             9.8             3174               2090         0.75
+ ETH             A1 monotone  2292276         560       458/3501       101             69             7.2             1161                442         0.77
+ ETH                A2 width  2321474        1396       604/3501       341            196            33.1             2495               2154         0.69
+ ETH            A3 butterfly   760325        1640      1125/3501       313            184            16.0             5935               4602         0.73
+ ETH             A4 calendar   547471         104        99/3501        41             22            37.0               72                 31         0.94
+ ETH B buy synth + short fut    18537         257       204/3501       155             44             4.0             3968               1486         0.65
+ ETH B sell synth + long fut    18529         105        89/3501        44             20            17.7              677                594         0.94
+
+episode           = same violation in consecutive hourly snapshots, counted once
+usd_once_per_ep   = sum over episodes of (best edge x touch size): what one fill per episode would earn
+usd_persistent_ep = same, only episodes still there one hour later (one-snapshot ones are likely stale)
+top10_share       = share of that total coming from the 10 biggest episodes

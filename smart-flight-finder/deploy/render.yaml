@@ -1,0 +1,51 @@
+# Render.com blueprint — one-click deploy for the Phase 1 stack.
+# Reference: https://render.com/docs/blueprint-spec
+#
+# What this provisions:
+#   - Managed Postgres 16 (free tier for dev)
+#   - Managed Redis
+#   - Backend Web Service running uvicorn behind Render's TLS
+#
+# After deploy:
+#   1. Fill AMADEUS_* / SKYSCANNER_RAPIDAPI_KEY on the backend service.
+#   2. Point the frontend (Vercel) env NEXT_PUBLIC_API_BASE_URL at the
+#      backend's public URL.
+#   3. Run `alembic upgrade head` once from the Render shell.
+
+databases:
+  - name: smart-flight-pg
+    plan: free
+    databaseName: flight
+    user: flight
+
+services:
+  - type: redis
+    name: smart-flight-redis
+    plan: free
+    ipAllowList: []
+
+  - type: web
+    name: smart-flight-api
+    env: python
+    rootDir: smart-flight-finder/backend
+    buildCommand: pip install -e .
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    autoDeploy: true
+    envVars:
+      - key: APP_DATABASE_URL
+        fromDatabase:
+          name: smart-flight-pg
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: smart-flight-redis
+          property: connectionString
+      - key: APP_CORS_ORIGINS
+        value: https://smart-flight.vercel.app
+      - key: AMADEUS_CLIENT_ID
+        sync: false
+      - key: AMADEUS_CLIENT_SECRET
+        sync: false
+      - key: SKYSCANNER_RAPIDAPI_KEY
+        sync: false
