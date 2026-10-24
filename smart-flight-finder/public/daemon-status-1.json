@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:03:53+00:00",
+ "at": "2026-10-24T11:20:25+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2152,
+ "fares_saved": 2163,
  "log": [
   "10:33:45 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:51 http front door: ['https://opposed-knowledgestorm-fireplace-nextel.trycloudflare.com', 'https://92baeb433686b2.lhr.life']",
@@ -19,6 +19,12 @@
   "11:02:46 request received: rid mvmai6o7eauoy.1 1 keys",
   "11:02:46 handle mvmai6o7eauoy.1: first_chunk=True total=1",
   "11:02:46 request mvmai6o7eauoy.1: chunk of 1 keys done in 0s; paths {'http': 21}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 0/0 agree",
-  "11:02:48 request mvmai6o7eauoy.1: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "11:02:48 request mvmai6o7eauoy.1: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "11:13:17 rtc nn4puk7g7v: answered",
+  "11:19:09 rtc zi0qx2axu3: answered",
+  "11:19:22 request received: rid mvmb33owxkkra.1 13 keys",
+  "11:19:22 handle mvmb33owxkkra.1: first_chunk=True total=13",
+  "11:20:10 request mvmb33owxkkra.1: chunk of 13 keys done in 48s; paths {'http': 32, 'browser-crashed': 2}, browser waits 2 max 47s sum 93s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 2, 'blocked': 0, 'tries': 37, 'empty': 5}, audit 0/0 agree",
+  "11:20:11 request mvmb33owxkkra.1: final sent (13/13); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
