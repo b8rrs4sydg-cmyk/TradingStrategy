@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T00:53:13+00:00",
+ "at": "2026-10-24T05:36:30+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2041,
  "log": [
-  "00:51:38 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:51:43 http front door: ['https://employed-temporary-heavy-faced.trycloudflare.com', 'https://d107d6ed471045.lhr.life']",
-  "00:51:43 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:52:47 request received: rid httptest1792803167 20 keys",
-  "00:52:47 handle httptest1792803167: first_chunk=True total=20",
-  "00:52:49 request httptest1792803167: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "00:52:49 request httptest1792803167: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:34:55 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:35:00 http front door: ['https://ports-houston-largest-grown.trycloudflare.com', 'https://348d2b6b4789ab.lhr.life']",
+  "05:35:00 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:36:04 request received: rid httptest1792820163 20 keys",
+  "05:36:04 handle httptest1792820163: first_chunk=True total=20",
+  "05:36:05 request httptest1792820163: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:36:06 request httptest1792820163: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
