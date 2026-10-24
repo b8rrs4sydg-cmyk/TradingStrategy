@@ -406,3 +406,5 @@ change an algorithm or a rule, update the Wiki, not a hint text in the page.
 - Phone density (block at the end of the main `<style>`): slot cards are one name row (+ 還原/移除) and one inline date row each; backup-period chips are a 2-column grid; result cards put compare / star in the top-right corner instead of a side column. Check 390 px screenshots after touching them.
 
 - Dark mode: the top bar has a sun/moon icon button (`#theme-btn`, `wireTheme`) that flips light/dark (stored in `sff.theme.v1`; until the first click the system setting applies). The old text button in the desktop corner is gone.
+
+- Competitor-inspired UI (see `docs/competitors.md`, VibelySpot): phone time slots collapse to a summary + chips (`renderSlotSum`, `#slot-sum`, `.slots-fs.editing`); result cards carry a destination title (`.p-title`), price note and a booking button (`.plan-cta`); one-tap filters `#quick-chips` (`PF.cheap` = `isCheapForRoute`, memoised per `ROUTE_GEN`); on the phone `#results` is a flex column and hints / date matrix are ordered after the plan list.
