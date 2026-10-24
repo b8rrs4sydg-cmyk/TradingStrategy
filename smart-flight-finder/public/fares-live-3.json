@@ -1,11 +1,32 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:10:14+00:00",
+ "generated_at": "2026-10-24T10:16:16+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
  "fares": {
+  "mc|BKK-TPE-2026-12-26|TPE-NGO-2026-12-31|NGO-TPE-2027-01-02|TPE-ICN-2027-02-09": {
+   "price": 73706,
+   "first": {
+    "dep": "2026-12-26T02:15:00+07:00",
+    "arr": "2026-12-26T06:50:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 73706,
+    "China Airlines": 96493,
+    "THAI": 101318
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     73706
+    ]
+   ]
+  },
   "mc|BKK-TPE-2027-01-02|TPE-FUK-2027-02-04|FUK-TPE-2027-02-15|TPE-HKG-2027-02-25": {
    "price": 73234,
    "first": {
