@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:08:42+00:00",
+ "at": "2026-10-24T10:10:14+00:00",
  "publishes": {
-  "ok": 14,
+  "ok": 15,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2227,
+ "fares_saved": 2230,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -72,6 +72,11 @@
   "10:06:57 request mvm8ecumtl6d9.3: chunk of 20 keys done in 175s; paths {'http': 122, 'browser-crashed': 30, 'browser': 9}, browser waits 39 max 140s sum 2491s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 122, 'miss': 39, 'blocked': 0, 'tries': 130, 'empty': 8}, audit 7/7 agre",
   "10:06:57 request mvm8ecumtl6d9.3: final sent (20/20); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
   "10:07:48 request mvm8ht50bgb20.3: chunk of 13 keys done in 63s; paths {'http': 122, 'browser-crashed': 33, 'browser': 9}, browser waits 42 max 140s sum 2635s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 122, 'miss': 42, 'blocked': 0, 'tries': 130, 'empty': 8}, audit 7/7 agree",
-  "10:07:50 request mvm8ht50bgb20.3: final sent (13/13); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}"
+  "10:07:50 request mvm8ht50bgb20.3: final sent (13/13); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "10:09:08 rtc afwf9tjs1x: answered",
+  "10:09:23 request received: rid mvm8l5tifc2sr.3 3 keys",
+  "10:09:23 handle mvm8l5tifc2sr.3: first_chunk=True total=3",
+  "10:09:23 request mvm8l5tifc2sr.3: chunk of 3 keys done in 1s; paths {'http': 125, 'browser-crashed': 33, 'browser': 9}, browser waits 42 max 140s sum 2635s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 125, 'miss': 42, 'blocked': 0, 'tries': 133, 'empty': 8}, audit 7/7 agree",
+  "10:09:24 request mvm8l5tifc2sr.3: final sent (3/3); ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}"
  ]
 }
