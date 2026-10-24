@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:35:23+00:00",
+ "generated_at": "2026-10-24T10:42:54+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -25562,20 +25562,32 @@
    ]
   },
   "rt|TPE|CTS|2027-02-10|2027-02-13": {
-   "price": 19846,
+   "price": 19885,
    "first": {
     "dep": "2027-02-10T17:05:00+08:00",
     "arr": "2027-02-11T10:45:00+09:00",
     "stops": 1,
     "airline": "Asiana Airlines"
    },
-   "at": "2026-10-18",
+   "by_airline": {
+    "Asiana Airlines": 19885,
+    "Korean Air": 21795,
+    "Jetstar": 27588,
+    "Tigerair Taiwan": 28787
+   },
+   "at": "2026-10-24",
    "hist": [
     [
      "2026-10-18",
      19846
+    ],
+    [
+     "2026-10-24",
+     19885
     ]
-   ]
+   ],
+   "prev": 19846,
+   "prev_at": "2026-10-18"
   },
   "rt|TPE|CTS|2027-02-11|2027-02-13": {
    "price": 19929,
