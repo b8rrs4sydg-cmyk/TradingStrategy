@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:25:03+00:00",
+ "generated_at": "2026-10-24T12:32:35+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -26171,6 +26171,28 @@
     [
      "2026-10-24",
      11530
+    ]
+   ]
+  },
+  "rt|TPE|CGK|2027-04-29|2027-05-02": {
+   "price": 11342,
+   "first": {
+    "dep": "2027-04-29T20:00:00+08:00",
+    "arr": "2027-04-30T00:30:00+07:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 11342,
+    "Scoot": 11892,
+    "EVA Air": 12786,
+    "Cathay Pacific": 14911
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11342
     ]
    ]
   },
