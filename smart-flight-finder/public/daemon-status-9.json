@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:03:56+00:00",
+ "at": "2026-10-24T11:20:28+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2203,
+ "fares_saved": 2220,
  "log": [
   "10:33:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:53 http front door: ['https://historical-shoe-antonio-coming.trycloudflare.com', 'https://a7d7ffeb22fda1.lhr.life']",
@@ -23,6 +23,12 @@
   "11:02:46 request received: rid mvmai6o7eauoy.9 1 keys",
   "11:02:46 handle mvmai6o7eauoy.9: first_chunk=True total=1",
   "11:02:46 request mvmai6o7eauoy.9: chunk of 1 keys done in 0s; paths {'http': 22}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 3/3 agree",
-  "11:02:48 request mvmai6o7eauoy.9: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "11:02:48 request mvmai6o7eauoy.9: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "11:13:17 rtc yw9niii64m: answered",
+  "11:19:10 rtc fwl86z7roj: answered",
+  "11:19:22 request received: rid mvmb33owxkkra.9 20 keys",
+  "11:19:22 handle mvmb33owxkkra.9: first_chunk=True total=20",
+  "11:20:11 request mvmb33owxkkra.9: chunk of 20 keys done in 49s; paths {'http': 39, 'browser-crashed': 3}, browser waits 3 max 48s sum 142s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 39, 'miss': 3, 'blocked': 0, 'tries': 46, 'empty': 7}, audit 3/3 agree",
+  "11:20:11 request mvmb33owxkkra.9: final sent (20/20); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
