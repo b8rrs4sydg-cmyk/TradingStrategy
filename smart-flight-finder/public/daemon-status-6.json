@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:04:09+00:00",
+ "at": "2026-10-24T11:20:41+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2297,
+ "fares_saved": 2316,
  "log": [
   "10:34:02 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:34:08 http front door: ['https://bedrooms-intense-dublin-nam.trycloudflare.com', 'https://389d678c0c4829.lhr.life']",
@@ -19,6 +19,12 @@
   "11:02:46 request received: rid mvmai6o7eauoy.6 2 keys",
   "11:02:46 handle mvmai6o7eauoy.6: first_chunk=True total=2",
   "11:02:46 request mvmai6o7eauoy.6: chunk of 2 keys done in 0s; paths {'http': 22}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 2/2 agree",
-  "11:02:47 request mvmai6o7eauoy.6: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "11:02:47 request mvmai6o7eauoy.6: final sent (2/2); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "11:13:17 rtc owq1lmcqnq: answered",
+  "11:19:10 rtc i243m2orkh: answered",
+  "11:19:22 request received: rid mvmb33owxkkra.6 20 keys",
+  "11:19:22 handle mvmb33owxkkra.6: first_chunk=True total=20",
+  "11:20:12 request mvmb33owxkkra.6: chunk of 20 keys done in 49s; paths {'http': 41, 'browser-crashed': 1}, browser waits 1 max 48s sum 48s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 41, 'miss': 1, 'blocked': 0, 'tries': 45, 'empty': 4}, audit 2/2 agree",
+  "11:20:12 request mvmb33owxkkra.6: final sent (20/20); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
