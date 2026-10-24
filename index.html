@@ -513,8 +513,11 @@
     padding: 4px 8px;
     text-align: right;
     position: sticky;
+    top: 0;
+    background: var(--card);
+    white-space: nowrap;
   }
-  table.heat th.row-head { left: 0; background: var(--card); z-index: 1; text-align: left }
+  table.heat th.row-head { left: 0; background: var(--card); z-index: 2; text-align: left }
   table.heat td {
     padding: 6px 10px;
     text-align: right;
@@ -845,6 +848,9 @@
   .f-more-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 20px; padding: 6px 0 4px }
   .f-more > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 8px 0; list-style-position: inside }
   .f-more > summary small { font-weight: 400; color: var(--fg-faint); margin-left: 6px }
+  #lookup-all { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px }
+  #lookup-all[hidden] { display: none }
+  .la-btn { padding: 6px 14px; min-height: 34px; font-size: 13px }
   .cal-wrap { margin: 0 0 10px }
   .cal-wrap > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 6px 0 }
   .cal { max-width: 360px; margin: 4px auto 6px; padding: 10px; border: 1px solid var(--border); border-radius: 14px; background: var(--card) }
@@ -3153,7 +3159,7 @@ function renderHeatmap(plans) {
     <h3>價格矩陣（去程 × 回程）</h3>
     <div class="caption">每格 = 該日期組合下的最低總價 · 淺色較便宜、深色較貴</div>
     <div class="heatmap-wrap"><table class="heat">
-      <thead><tr><th class="row-head">去 ↓ / 回 →</th>${rets.map(r => `<th>${fmtDay(r)}</th>`).join('')}</tr></thead>
+      <thead><tr><th class="row-head" title="直列＝去程日，橫列＝回程日">去＼回</th>${rets.map(r => `<th>${fmtDay(r)}</th>`).join('')}</tr></thead>
       <tbody>${outs.map(o => `<tr><th class="row-head">${fmtDay(o)}</th>${rets.map(r => cell(matrix.get(`${o}|${r}`))).join('')}</tr>`).join('')}</tbody>
     </table></div>`;
 }
@@ -4434,7 +4440,7 @@ function renderAllButton() {
   el.hidden = false;
   el.innerHTML = live.campaign.all
     ? `正在查找<b>所有排列組合</b>：還有 ${n} 筆多城市票價待查（${etaText}；重新搜尋可停止）`
-    : `目前只查預期最能省的多城市組合，還有 <b>${n}</b> 筆沒查。 <button type="button" class="btn-ghost" id="btn-lookup-all"${busy ? ' disabled' : ''}>查找所有排列組合（${n} 筆，${etaText}）</button>`;
+    : `<span class="la-text">已先查最有機會省錢的多城市組合，還有 <b>${n}</b> 筆沒查</span> <button type="button" class="btn-ghost la-btn" id="btn-lookup-all"${busy ? ' disabled' : ''}>全部都查（${etaText}）</button>`;
   const b = document.getElementById('btn-lookup-all');
   if (b) b.onclick = () => {
     if (n > 2000 && !confirm(`共 ${n} 筆，${etaText}。確定要全部查？`)) return;
