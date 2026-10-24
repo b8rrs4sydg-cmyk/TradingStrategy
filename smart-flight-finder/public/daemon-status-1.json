@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:09:06+00:00",
+ "at": "2026-10-24T10:10:37+00:00",
  "publishes": {
-  "ok": 14,
+  "ok": 15,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2138,
+ "fares_saved": 2143,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 http front door: ['https://mere-correction-cognitive-invisible.trycloudflare.com', 'https://bbb67b6f9cd928.lhr.life']",
@@ -84,6 +84,9 @@
   "10:07:13 request mvm8ecumtl6d9.1: chunk of 18 keys done in 191s; paths {'http': 79, 'browser-crashed': 53, 'browser': 14}, browser waits 67 max 152s sum 4310s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 79, 'miss': 49, 'blocked': 0, 'tries': 83, 'empty': 4}, audit 4/4 agree",
   "10:07:14 request mvm8ecumtl6d9.1: final sent (18/18); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
   "10:08:35 request mvm8ht50bgb20.1: chunk of 15 keys done in 110s; paths {'http': 79, 'browser-crashed': 67, 'browser': 14}, browser waits 81 max 152s sum 5385s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 79, 'miss': 49, 'blocked': 0, 'tries': 83, 'empty': 4}, audit 4/4 agree",
-  "10:08:37 request mvm8ht50bgb20.1: final sent (15/15); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}"
+  "10:08:37 request mvm8ht50bgb20.1: final sent (15/15); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}",
+  "10:09:08 rtc my3p4a9mh7: answered",
+  "10:09:23 request received: rid mvm8l5tifc2sr.1 14 keys",
+  "10:09:23 handle mvm8l5tifc2sr.1: first_chunk=True total=14"
  ]
 }
