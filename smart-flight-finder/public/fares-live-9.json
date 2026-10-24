@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T09:56:23+00:00",
+ "generated_at": "2026-10-24T09:59:24+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -18812,6 +18812,28 @@
    ],
    "prev": 19321,
    "prev_at": "2026-10-18"
+  },
+  "rt|KIX|TPE|2027-01-02|2027-02-11": {
+   "price": 11031,
+   "first": {
+    "dep": "2027-01-02T07:15:00+09:00",
+    "arr": "2027-01-02T09:45:00+08:00",
+    "stops": 0,
+    "airline": "Peach Aviation"
+   },
+   "by_airline": {
+    "Peach Aviation": 11031,
+    "Jetstar": 11120,
+    "Tigerair Taiwan": 12954,
+    "Thai Lion Air": 12962
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11031
+    ]
+   ]
   },
   "rt|KIX|TPE|2027-01-03|2027-04-29": {
    "price": 13558,
@@ -37754,11 +37776,6 @@
    "status": "timeout",
    "at": "2026-10-23",
    "n": 2
-  },
-  "rt|KIX|TPE|2027-01-02|2027-02-11": {
-   "status": "timeout",
-   "at": "2026-10-24",
-   "n": 1
   },
   "rt|KIX|TSA|2026-11-22|2027-02-10": {
    "status": "timeout",

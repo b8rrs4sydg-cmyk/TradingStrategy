@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:56:23+00:00",
+ "at": "2026-10-24T09:59:24+00:00",
  "publishes": {
   "ok": 11,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2154,
+ "fares_saved": 2155,
  "log": [
   "05:34:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:55 http front door: ['https://popular-infringement-grass-ellen.trycloudflare.com', 'https://00af10b67dcf6d.lhr.life']",
@@ -60,6 +60,10 @@
   "09:54:18 request received: rid mvm80q6erqxi3.9 13 keys",
   "09:54:18 handle mvm80q6erqxi3.9: first_chunk=True total=13",
   "09:55:20 request mvm80q6erqxi3.9: chunk of 13 keys done in 61s; paths {'http': 97, 'browser-crashed': 18, 'browser': 4}, browser waits 22 max 85s sum 1343s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 97, 'miss': 22, 'blocked': 0, 'tries': 99, 'empty': 2}, audit 1/1 agree",
-  "09:55:22 request mvm80q6erqxi3.9: final sent (13/13); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}"
+  "09:55:22 request mvm80q6erqxi3.9: final sent (13/13); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "09:58:47 request received: rid mvm87xf6csfjl.8 1 keys",
+  "09:58:47 handle mvm87xf6csfjl.8: first_chunk=True total=1",
+  "09:58:48 request mvm87xf6csfjl.8: chunk of 1 keys done in 1s; paths {'http': 98, 'browser-crashed': 18, 'browser': 4}, browser waits 22 max 85s sum 1343s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 98, 'miss': 22, 'blocked': 0, 'tries': 100, 'empty': 2}, audit 1/1 agree",
+  "09:58:50 request mvm87xf6csfjl.8: final sent (1/1); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}"
  ]
 }
