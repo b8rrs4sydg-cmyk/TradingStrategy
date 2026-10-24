@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T11:46:50+00:00",
+ "generated_at": "2026-10-24T11:49:52+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -10999,6 +10999,25 @@
     ]
    ]
   },
+  "ow|RMQ|ISG|2027-02-11": {
+   "price": 11584,
+   "first": {
+    "dep": "2027-02-11T18:30:00+08:00",
+    "arr": "2027-02-12T12:30:00+09:00",
+    "stops": 1,
+    "airline": "Jin Air"
+   },
+   "by_airline": {
+    "Jin Air": 11584
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11584
+    ]
+   ]
+  },
   "ow|RMQ|ISG|2027-06-08": {
    "price": 9220,
    "first": {
@@ -11342,6 +11361,28 @@
     [
      "2026-10-18",
      6076
+    ]
+   ]
+  },
+  "ow|RMQ|OKA|2027-02-09": {
+   "price": 9880,
+   "first": {
+    "dep": "2027-02-09T17:00:00+08:00",
+    "arr": "2027-02-09T19:30:00+09:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 9880,
+    "Hong Kong Express": 10672,
+    "Korean Air": 13697,
+    "China Airlines": 15657
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     9880
     ]
    ]
   },
@@ -40883,20 +40924,10 @@
    "at": "2026-10-23",
    "n": 1
   },
-  "ow|RMQ|ISG|2027-02-11": {
-   "status": "timeout",
-   "at": "2026-10-24",
-   "n": 3
-  },
-  "ow|RMQ|OKA|2027-02-09": {
-   "status": "timeout",
-   "at": "2026-10-24",
-   "n": 3
-  },
   "ow|TSA|DPS|2027-02-10": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "ow|TSA|NRT|2027-06-09": {
    "status": "timeout",
@@ -41626,7 +41657,7 @@
   "rt|RMQ|GMP|2027-02-10|2027-02-14": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 5
+   "n": 6
   },
   "rt|RMQ|HND|2026-11-06|2026-11-29": {
    "status": "timeout",
@@ -42211,7 +42242,7 @@
   "rt|TSA|DMK|2027-02-10|2027-02-14": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 4
+   "n": 5
   },
   "rt|TSA|DPS|2027-12-23|2027-12-27": {
    "status": "timeout",
@@ -42431,12 +42462,12 @@
   "rt|TSA|NRT|2027-02-11|2027-02-14": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 3
+   "n": 4
   },
   "rt|TSA|NRT|2027-04-29|2027-05-02": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 3
+   "n": 4
   },
   "rt|TSA|OKA|2026-11-06|2026-12-20": {
    "status": "timeout",
@@ -42481,7 +42512,7 @@
   "rt|TSA|TAG|2027-02-10|2027-02-14": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 3
+   "n": 4
   },
   "rt|TSA|UEO|2026-11-06|2026-12-20": {
    "status": "timeout",

@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:46:50+00:00",
+ "at": "2026-10-24T11:49:52+00:00",
  "publishes": {
-  "ok": 6,
+  "ok": 7,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2330,
+ "fares_saved": 2332,
  "log": [
   "10:34:02 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:34:08 http front door: ['https://bedrooms-intense-dublin-nam.trycloudflare.com', 'https://389d678c0c4829.lhr.life']",
@@ -60,6 +60,9 @@
   "11:43:40 request received: rid mvmbys4jahkw0.5 15 keys",
   "11:43:40 handle mvmbys4jahkw0.5: first_chunk=True total=15",
   "11:45:18 request mvmbys4jahkw0.5: chunk of 15 keys done in 98s; paths {'http': 55, 'browser-crashed': 140}, browser waits 140 max 165s sum 11408s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 60, 'blocked': 0, 'tries': 165, 'empty': 110}, audit 2/2 agree",
-  "11:45:20 request mvmbys4jahkw0.5: final sent (15/15); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
+  "11:45:20 request mvmbys4jahkw0.5: final sent (15/15); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:48:18 rtc f7m144wlk5: answered",
+  "11:48:32 request received: rid mvmc4p5dc2rvt.6 21 keys",
+  "11:48:32 handle mvmc4p5dc2rvt.6: first_chunk=True total=21"
  ]
 }
