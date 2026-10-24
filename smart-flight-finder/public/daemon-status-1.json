@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:38:17+00:00",
+ "at": "2026-10-24T06:39:49+00:00",
  "publishes": {
   "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2087,
+ "fares_saved": 2088,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 http front door: ['https://mere-correction-cognitive-invisible.trycloudflare.com', 'https://bbb67b6f9cd928.lhr.life']",
@@ -35,6 +35,8 @@
   "06:35:56 rtc nlp1ejfu3r: answered",
   "06:37:45 rtc n95o74sdu: answered",
   "06:37:57 request received: rid mvm11bp48pd12.1 17 keys",
-  "06:37:57 handle mvm11bp48pd12.1: first_chunk=True total=17"
+  "06:37:57 handle mvm11bp48pd12.1: first_chunk=True total=17",
+  "06:39:33 request mvm11bp48pd12.1: chunk of 17 keys done in 97s; paths {'http': 42, 'browser-crashed': 16, 'browser': 1}, browser waits 17 max 150s sum 1455s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 17, 'blocked': 0, 'tries': 45, 'empty': 3}, audit 2/2 agree",
+  "06:39:35 request mvm11bp48pd12.1: final sent (17/17); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
  ]
 }

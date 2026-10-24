@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T06:38:17+00:00",
+ "generated_at": "2026-10-24T06:39:49+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -4456,6 +4456,28 @@
     [
      "2026-10-24",
      13903
+    ]
+   ]
+  },
+  "mc|TPE-KIX-2027-02-06|NGO-TPE-2027-02-28": {
+   "price": 29295,
+   "by_airline": {
+    "Korean Air": 29295,
+    "China Airlines": 31232,
+    "STARLUX Airlines": 42066,
+    "EVA Air": 45237
+   },
+   "first": {
+    "dep": "2027-02-06T12:25:00+08:00",
+    "arr": "2027-02-06T20:45:00+09:00",
+    "stops": 1,
+    "airline": "Korean Air"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     29295
     ]
    ]
   },
@@ -34994,6 +35016,11 @@
  ],
  "missing_v": 2,
  "status": {
+  "mc|BKK-TPE-2027-01-02|TPE-NRT-2027-02-04|NRT-TPE-2027-02-14|TPE-ICN-2027-02-26": {
+   "status": "parse_error",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|FUK-TPE-2026-11-15|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-HND-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -35569,6 +35596,11 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|KIX-TPE-2027-02-16|TPE-NRT-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|MFM-TPE-2026-11-08|TPE-PUS-2026-11-13|PUS-TPE-2026-11-15|TPE-HND-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -35832,12 +35864,7 @@
   "mc|TPE-FUK-2027-01-01|NGO-TPE-2027-02-16": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
-  },
-  "mc|TPE-KIX-2027-02-06|NGO-TPE-2027-02-28": {
-   "status": "timeout",
-   "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "ow|ITM|RMQ|2026-12-27": {
    "status": "timeout",
