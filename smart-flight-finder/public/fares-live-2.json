@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:35:30+00:00",
+ "generated_at": "2026-10-24T10:43:02+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -26565,36 +26565,60 @@
    ]
   },
   "rt|TPE|CTS|2027-02-09|2027-02-13": {
-   "price": 21804,
+   "price": 22559,
    "first": {
     "dep": "2027-02-09T18:15:00+08:00",
     "arr": "2027-02-10T11:50:00+09:00",
     "stops": 1,
     "airline": "Jetstar"
    },
-   "at": "2026-10-18",
+   "by_airline": {
+    "Jetstar": 22559,
+    "JAL": 28457,
+    "Thai AirAsia": 29330,
+    "Tigerair Taiwan": 29433
+   },
+   "at": "2026-10-24",
    "hist": [
     [
      "2026-10-18",
      21804
+    ],
+    [
+     "2026-10-24",
+     22559
     ]
-   ]
+   ],
+   "prev": 21804,
+   "prev_at": "2026-10-18"
   },
   "rt|TPE|CTS|2027-02-10|2027-02-14": {
-   "price": 20856,
+   "price": 20895,
    "first": {
     "dep": "2027-02-10T17:05:00+08:00",
     "arr": "2027-02-11T10:45:00+09:00",
     "stops": 1,
     "airline": "Asiana Airlines"
    },
-   "at": "2026-10-18",
+   "by_airline": {
+    "Asiana Airlines": 20895,
+    "Jetstar": 23905,
+    "Korean Air": 24105,
+    "Tigerair Taiwan": 27687
+   },
+   "at": "2026-10-24",
    "hist": [
     [
      "2026-10-18",
      20856
+    ],
+    [
+     "2026-10-24",
+     20895
     ]
-   ]
+   ],
+   "prev": 20856,
+   "prev_at": "2026-10-18"
   },
   "rt|TPE|CTU|2027-02-05|2027-02-16": {
    "price": 17640,
