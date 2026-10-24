@@ -2,6 +2,24 @@
 
 All commits on `claude/zealous-darwin-1kexus`, oldest first (newest summary on top).
 
+## 2026-10-23 / 24 — search quality, data quality, phone UI
+
+- Ten crawlers with rendezvous-hash dispatch and race-free files; the crawlers' home is the default branch; the page reads the fare files straight
+  from GitHub every five minutes.
+- Review follow-ups: metro-area open jaws, per-candidate baselines, four-leg itinerary validation, completeness-first ranking with diversity,
+  strategy runners, promise-ordered live lookups, early date pruning, fare status plumbing (see `docs/review-evaluation.md`).
+- Browser pricing tells a slow or errored page from "no such flight" (about 30,000 wrongly "unavailable" keys were being skipped for good);
+  multi-city read rate 10-60 % -> about 99 %; plain HTTP first for the crawls; crawl time budget; publishing no longer loses a crawl to a rebase
+  conflict (`reuse_run_id` republishes an earlier run).
+- Real fares disproved the one-way-sum screen (a same-carrier four-leg ticket can cost less than its one-ways): it is off, four-leg ends may share a
+  country, per-airline fares (`by_airline`) feed an airline-aware ranking and more date variants.
+- Competitor research (`docs/competitors.md`): ordinary round trips also try two separate one-way tickets (Kayak-style hacker fare); price
+  position chips; favourites as a price watch list; cheapest fare per airline on ticket cards; four-leg checker for an itinerary found elsewhere.
+- Page: Apple-style minimal layer with the explanations in `wiki.html`; phone layout with a tab bar, filter sheet and folded pickers; recent
+  searches; the page searches only when 搜尋 is pressed.
+- Measured: of 3,060 priced four-leg tickets 2 beat three round trips (0.07 %); the airline-aware ordering is promising (both hits have a common
+  airline) but the sample is too small to confirm.
+
 ## 2026-10-17 — real fares only
 
 - Removed every simulated fare source from the product: prices come only
