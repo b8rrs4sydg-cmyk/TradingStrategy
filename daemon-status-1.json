@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T11:32:48+00:00",
+ "at": "2026-10-24T11:44:57+00:00",
  "publishes": {
-  "ok": 5,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
@@ -44,6 +44,19 @@
   "11:31:19 request mvmbekvi22ogv.1: chunk of 26 keys done in 185s; paths {'http': 45, 'browser-crashed': 64}, browser waits 64 max 185s sum 5028s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 34, 'blocked': 0, 'tries': 113, 'empty': 68}, audit 0/0 agree",
   "11:31:20 request mvmbekvi22ogv.1: final sent (26/26); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
   "11:31:39 request received: rid mvmbjcdq2c2ar.1 30 keys",
-  "11:31:39 handle mvmbjcdq2c2ar.1: first_chunk=True total=30"
+  "11:31:39 handle mvmbjcdq2c2ar.1: first_chunk=True total=30",
+  "11:34:52 request mvmbjcdq2c2ar.1: chunk of 30 keys done in 194s; paths {'http': 45, 'browser-crashed': 94}, browser waits 94 max 193s sum 8485s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 51, 'blocked': 0, 'tries': 147, 'empty': 102}, audit 0/0 agree",
+  "11:34:54 request mvmbjcdq2c2ar.1: final sent (30/30); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:35:12 rtc i7jeypd55x: answered",
+  "11:35:25 request received: rid mvmbnu5v86tnk.1 20 keys",
+  "11:35:25 handle mvmbnu5v86tnk.1: first_chunk=True total=20",
+  "11:37:49 request mvmbnu5v86tnk.1: chunk of 20 keys done in 144s; paths {'http': 45, 'browser-crashed': 114}, browser waits 114 max 193s sum 10200s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 51, 'blocked': 0, 'tries': 147, 'empty': 102}, audit 0/0 agree",
+  "11:37:49 request mvmbnu5v86tnk.1: final sent (20/20); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:37:54 request received: rid mvmbrdwfr0cz6.0 20 keys",
+  "11:37:54 handle mvmbrdwfr0cz6.0: first_chunk=True total=20",
+  "11:40:16 request mvmbrdwfr0cz6.0: chunk of 20 keys done in 143s; paths {'http': 45, 'browser-crashed': 134}, browser waits 134 max 193s sum 11916s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 51, 'blocked': 0, 'tries': 147, 'empty': 102}, audit 0/0 agree",
+  "11:40:17 request mvmbrdwfr0cz6.0: final sent (20/20); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:43:40 request received: rid mvmbys4jahkw0.0 14 keys",
+  "11:43:40 handle mvmbys4jahkw0.0: first_chunk=True total=14"
  ]
 }
