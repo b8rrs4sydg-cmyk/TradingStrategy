@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:15:41+00:00",
+ "generated_at": "2026-10-24T12:17:12+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -9372,6 +9372,27 @@
     ]
    ]
   },
+  "ow|MFM|TPE|2027-09-19": {
+   "price": 6614,
+   "first": {
+    "dep": "2027-09-19T20:50:00+08:00",
+    "arr": "2027-09-19T22:40:00+08:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 6614,
+    "EVA Air": 6828,
+    "China Southern": 22432
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     6614
+    ]
+   ]
+  },
   "ow|MMY|TPE|2026-12-13": {
    "price": 15214,
    "first": {
@@ -13486,6 +13507,27 @@
    "prev": 4864,
    "prev_at": "2026-10-18"
   },
+  "ow|TPE|CRK|2027-02-09": {
+   "price": 4058,
+   "first": {
+    "dep": "2027-02-09T13:55:00+08:00",
+    "arr": "2027-02-10T09:35:00+08:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 4058,
+    "EVA Air": 8091,
+    "STARLUX Airlines": 9599
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     4058
+    ]
+   ]
+  },
   "ow|TPE|CTS|2026-11-06": {
    "price": 5723,
    "first": {
@@ -15840,6 +15882,28 @@
     ]
    ]
   },
+  "ow|TPE|PEN|2027-02-11": {
+   "price": 4090,
+   "first": {
+    "dep": "2027-02-11T00:30:00+08:00",
+    "arr": "2027-02-11T07:45:00+08:00",
+    "stops": 1,
+    "airline": "AirAsia"
+   },
+   "by_airline": {
+    "AirAsia": 4090,
+    "Hong Kong Express": 5362,
+    "Scoot": 6440,
+    "THAI": 9426
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     4090
+    ]
+   ]
+  },
   "ow|TPE|PKX|2027-02-05": {
    "price": 6903,
    "first": {
@@ -16077,6 +16141,27 @@
     [
      "2026-10-22",
      16485
+    ]
+   ]
+  },
+  "ow|TPE|RGN|2027-02-11": {
+   "price": 6719,
+   "first": {
+    "dep": "2027-02-11T18:35:00+08:00",
+    "arr": "2027-02-12T08:00:00+06:30",
+    "stops": 1,
+    "airline": "Thai AirAsia"
+   },
+   "by_airline": {
+    "Thai AirAsia": 6719,
+    "THAI": 9151,
+    "China Southern": 14378
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     6719
     ]
    ]
   },
@@ -39318,7 +39403,6 @@
   "ow|KMJ|TSA|2027-10-17",
   "ow|KOJ|RMQ|2026-12-27",
   "ow|KOJ|RMQ|2027-09-19",
-  "ow|MFM|TPE|2027-09-19",
   "ow|MFM|TSA|2027-12-27",
   "ow|MMY|RMQ|2027-10-16",
   "ow|MMY|TPE|2027-09-19",
