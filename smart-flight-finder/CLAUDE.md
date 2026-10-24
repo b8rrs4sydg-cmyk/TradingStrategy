@@ -400,3 +400,5 @@ change an algorithm or a rule, update the Wiki, not a hint text in the page.
 - Ticket cards show a bag-fee hint (`bagHintHtml`, `BAG20_TWD` in `public/index.html`) only for airlines with a published 20 kg add-on price (Tigerair Taiwan 950, Scoot 820 TWD per segment; source funtime.com.tw, undated). Hint only: it never changes prices or ranking.
 
 - User-facing wording: the page shows only what a traveller needs (no relay/tunnel/crawler/offer-id/score text; the technical reason of a failed lookup sits in a `<details>`, the score in the rank tooltip). The lookup box (`renderLookup`) builds `.ll-body` + `.bar` once and only updates them, so the bar width eases (`transition: width`) instead of restarting; unknown progress uses the sliding `.indet` bar.
+
+- Top 100 score is now `0.8·saving + 0.2·drop + 0.10·連假 + 0.05·直飛` (saving = below the median of the SAME route and kind, needs ≥ 4 fares). The old cross-route "price rank" term was removed: it favoured routes that are cheap by distance.
