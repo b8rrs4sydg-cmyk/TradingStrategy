@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:12:40+00:00",
+ "at": "2026-10-24T09:27:42+00:00",
  "publishes": {
-  "ok": 8,
+  "ok": 9,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2097,
+ "fares_saved": 2106,
  "log": [
   "05:34:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:55 http front door: ['https://popular-infringement-grass-ellen.trycloudflare.com', 'https://00af10b67dcf6d.lhr.life']",
@@ -41,6 +41,9 @@
   "09:12:00 request received: rid mvm6jt60zat1p.9 3 keys",
   "09:12:00 handle mvm6jt60zat1p.9: first_chunk=True total=3",
   "09:12:01 request mvm6jt60zat1p.9: chunk of 3 keys done in 1s; paths {'http': 44, 'browser-crashed': 14}, browser waits 14 max 85s sum 1106s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 44, 'miss': 14, 'blocked': 0, 'tries': 45, 'empty': 1}, audit 1/1 agree",
-  "09:12:02 request mvm6jt60zat1p.9: final sent (3/3); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}"
+  "09:12:02 request mvm6jt60zat1p.9: final sent (3/3); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "09:26:59 rtc v87wzm5alc: answered",
+  "09:27:08 request received: rid mvm72wjy78wzp.9 10 keys",
+  "09:27:08 handle mvm72wjy78wzp.9: first_chunk=True total=10"
  ]
 }
