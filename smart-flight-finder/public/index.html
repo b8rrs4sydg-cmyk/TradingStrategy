@@ -853,8 +853,25 @@
     .strategies label { min-height: 44px; font-size: 15px }
     .picker { padding: 8px 10px; border-radius: 14px }
     .picker label { min-height: 40px; display: inline-flex; align-items: center }
-    .slot { padding: 12px; border-radius: 14px }
-    .slot .pair { grid-template-columns: 1fr 88px }
+    /* compact slot card: name + the two buttons on one row, then one date row each */
+    .slot { padding: 10px; border-radius: 14px; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name btns" "out out" "ret ret"; gap: 6px 8px; align-items: end }
+    .slot .s-name { grid-area: name } .slot .btns { grid-area: btns } .slot > .pair:nth-of-type(1) { grid-area: out } .slot > .pair:nth-of-type(2) { grid-area: ret }
+    .slot > .err { grid-area: auto; grid-column: 1 / -1 }
+    .slot .s-name > span { display: none }
+    .slot .pair .field { display: flex; align-items: center; gap: 6px; min-width: 0 }
+    .slot .pair .field > span { font-size: 12px; margin: 0; white-space: nowrap; flex: none }
+    .slot .pair .field > input { flex: 1; min-width: 0 }
+    .slot .pair { grid-template-columns: minmax(0, 1fr) 92px !important }
+    .slot input, .slot .num { min-height: 40px }
+    .slot input[type=date] { font-size: 14.5px !important; padding-left: 10px; padding-right: 6px; letter-spacing: -.01em }
+    .slot .pair { grid-template-columns: minmax(0, 1fr) 76px; gap: 6px }
+    .slot .btns .btn-ghost { min-height: 40px; padding: 0 12px }
+    .slot-list { gap: 8px }
+    /* backup periods: two per row, name over dates */
+    #holiday-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 6px 0 10px }
+    #holiday-chips .chip { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-height: 42px; padding: 5px 10px; border-radius: 12px; text-align: left; font-size: 13px; line-height: 1.25 }
+    #holiday-chips .chip .mono { margin: 0; font-size: 11px }
+    #holiday-chips .chip.nodata::after { position: absolute; right: 8px; top: 6px; margin: 0 }
     .slot-tools { gap: 8px }
     .slot-tools .btn-ghost, .btn-ghost { min-height: 40px }
     .chips .chip, .chip { min-height: 38px }
@@ -876,16 +893,25 @@
     .f-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px }
     .f-actives { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; flex: 1 1 100%; order: 3; scrollbar-width: none }
     .f-actives > * { flex: none }
-    .plan { border-radius: 16px }
-    .plan-head { flex-direction: column; align-items: stretch; gap: 6px }
+    /* dense result cards: compare / star sit in the top-right corner instead of a side column */
+    .plan { border-radius: 14px; grid-template-columns: 1fr; position: relative; margin-bottom: 8px }
+    .plan .sel-col { position: absolute; top: 6px; right: 6px; z-index: 2; flex-direction: row; align-items: center; gap: 2px; padding: 0; background: none; border: 0 }
+    .plan .sel-col input[type=checkbox] { margin: 0 6px }
+    .plan-head { flex-direction: column; align-items: stretch; gap: 4px; padding-bottom: 8px }
+    .plan-head > div:last-child { padding-right: 78px }
+    .plan-head .meta { gap: 6px }
+    .plan .strat, .plan .rank, .plan .slot-tag { padding: 2px 8px; font-size: 11px }
+    .plan-head .explain { font-size: 12px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden }
+    .plan .facts { font-size: 12px; gap: 2px 8px }
+    .plan .facts span + span::before { margin-right: 8px }
     .plan-head > div:last-child { order: -1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap }
-    .plan-head .price { font-size: 24px }
+    .plan-head .price { font-size: 22px }
     .plan-head .score { display: none }
     .plan-head .per-trip { text-align: left }
-    .plan .sel-col { padding: 12px 6px 0 10px }
-    .plan .sel-col input[type=checkbox] { width: 22px; height: 22px }
-    .plan .fav-btn { font-size: 24px; min-height: 36px }
-    .plan-body { padding: 12px 12px 0 6px }
+    .plan .sel-col input[type=checkbox] { width: 20px; height: 20px }
+    .plan .fav-btn { font-size: 22px; min-height: 36px; min-width: 32px }
+    .plan-body { padding: 10px 12px 0 12px }
+    .plan-detail { padding: 10px 12px 12px }
     .g-tools { justify-content: flex-start }
     .results-head .counts { flex-wrap: wrap; gap: 4px 10px }
     #notices .notice, #lookup-all { margin: 0 0 8px; padding: 10px 12px; line-height: 1.45 }
@@ -3549,7 +3575,7 @@ function renderSlots() {
     const bad = slotInvalid(slot);
     return `
       <li class="slot ${bad ? 'bad' : ''}" data-id="${slot.id}">
-        <label class="field"><span>${h ? '參考：' + h.label : '自訂時段'}</span>
+        <label class="field s-name"><span>${h ? '參考：' + h.label : '自訂時段'}</span>
           <input type="text" data-f="label" maxlength="40" value="${escapeHtml(slot.label)}" placeholder="${escapeHtml(h ? h.label : '名稱 (選填)')}"></label>
         <div class="pair">
           <label class="field"><span>去程日</span><input type="date" data-f="depart" value="${slot.depart}"></label>
