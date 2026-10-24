@@ -820,6 +820,14 @@
   .cta-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 0; background: var(--brand); color: #fff; font: 600 14px/1 var(--font-body); text-decoration: none; cursor: pointer }
   .cta-btn.ghost { background: var(--card-sunken); color: var(--fg) }
   .plan.open .plan-cta .cta-btn.ghost { display: none }
+  /* the card's tag row reads as one quiet line: #1 · 一般來回 · 228 請 1 休 4 */
+  .plan .meta { gap: 0 6px }
+  .plan .meta :is(.rank, .strat, .slot-tag) { background: none; padding: 0; border-radius: 0; font-size: 12px; font-weight: 500; color: var(--fg-muted); letter-spacing: 0 }
+  .plan .meta > span + span::before { content: '·'; margin-right: 6px; color: var(--fg-faint) }
+  .plan .meta .tag-nosave { margin-left: 0 }
+  .price-spark { display: inline-flex; align-items: center; gap: 5px; color: var(--fg-faint); font-size: 12px; vertical-align: middle }
+  .spark { display: block; color: var(--fg-faint) } .spark.down { color: var(--good) } .spark.up { color: var(--crit) }
+  .spark-pct.down { color: var(--good) } .spark-pct.up { color: var(--crit) }
   .cal-wrap { margin: 0 0 10px }
   .cal-wrap > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 6px 0 }
   .cal { max-width: 360px; margin: 4px auto 6px; padding: 10px; border: 1px solid var(--border); border-radius: 14px; background: var(--card) }
@@ -1679,7 +1687,7 @@ function offerFromEntry(key, segments, e, adults) {
   return {
     offer_id: `gf-${key}`, legs, total_price: e.price * adults, currency: 'TWD',
     fare_class: legs.length > 1 ? '後段航班待選' : null, baggage_through_checked: true,
-    issuer: 'google_flights', fare_at: e.at || (FARES.generated_at || '').slice(0, 10), unit_price: e.price, prev: e.prev, prev_at: e.prev_at,
+    issuer: 'google_flights', fare_at: e.at || (FARES.generated_at || '').slice(0, 10), unit_price: e.price, prev: e.prev, prev_at: e.prev_at, hist: e.hist,
   };
 }
 
@@ -2599,7 +2607,8 @@ let pfSignature = '';
 function renderQuickChips() {
   const box = document.getElementById('quick-chips');
   if (!box) return;
-  const chips = [['direct', '僅直飛', PF.stops === '0'], ['cheap', '同航線偏便宜', PF.cheap], ['fav', '只看收藏', PF.favOnly]];
+  const drops = (state.result?.plans || []).filter(p => state.favorites.has(fingerprint(p)) && (favChange(p)?.diff || 0) < 0).length;
+  const chips = [['direct', '僅直飛', PF.stops === '0'], ['cheap', '同航線偏便宜', PF.cheap], ['fav', `只看收藏${drops ? ` · ${drops} 個降價` : ''}`, PF.favOnly]];
   box.innerHTML = chips.map(([k, t, on]) => `<button type="button" class="qchip ${on ? 'on' : ''}" data-q="${k}" aria-pressed="${on}">${t}</button>`).join('');
 }
 function wireQuickChips() {
@@ -3260,6 +3269,19 @@ function pricePosition(plan) {
   return null;
 }
 
+/* the recent crawls of this exact fare as a tiny line (the database keeps up to 14 points per query) */
+function sparkHtml(plan) {
+  if (plan.tickets.length !== 1) return '';
+  const h = plan.tickets[0].hist;
+  if (!Array.isArray(h) || h.length < 3) return '';
+  const v = h.map(x => x[1]), lo = Math.min(...v), hi = Math.max(...v);
+  const pts = v.map((y, i) => `${(i / (v.length - 1) * 64).toFixed(1)},${(hi === lo ? 10 : 18 - (y - lo) / (hi - lo) * 16).toFixed(1)}`).join(' ');
+  const pct = v[0] ? Math.round(Math.abs(v[v.length - 1] - v[0]) / v[0] * 100) : 0;
+  const d = pct < 1 ? 0 : v[v.length - 1] - v[0], dir = d < 0 ? 'down' : d > 0 ? 'up' : '';   // under 1 % counts as flat
+  const tip = `最近 ${h.length} 次查價：${h[0][0].slice(5).replace('-', '/')} ${v[0].toLocaleString()} → ${h[h.length - 1][0].slice(5).replace('-', '/')} ${v[v.length - 1].toLocaleString()}`;
+  return `<span class="price-spark" title="${escapeHtml(tip)}"><svg class="spark ${dir}" viewBox="0 0 64 20" width="64" height="20" role="img" aria-label="${escapeHtml(tip)}"><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg><span class="spark-pct ${dir}">${d ? `${d < 0 ? '↓' : '↑'} ${pct}%` : '持平'}</span></span>`;
+}
+
 function planFactsHtml(plan) {
   const f = planFacts(plan), bits = [];
   if (f.outDate) bits.push(`<span title="去程出發（當地時間）">去 ${mdDay(f.outDate)}${f.outMin != null ? ` ${pfClock(f.outMin)}` : ''}${f.arrMin != null ? `→${pfClock(f.arrMin)}` : ''}</span>`);
@@ -3270,6 +3292,8 @@ function planFactsHtml(plan) {
   if (f.airlines.length) bits.push(`<span>${escapeHtml(f.airlines.join('、'))}</span>`);
   const ch = favChange(plan);
   if (ch) bits.push(`<span class="${ch.diff < 0 ? 'good' : ''}" title="${ch.at} 收藏時的價格">收藏時 ${ch.was.toLocaleString()} → 現在 ${ch.now.toLocaleString()}（${ch.diff < 0 ? '降' : '漲'} ${Math.abs(ch.diff).toLocaleString()}）</span>`);
+  const spark = sparkHtml(plan);
+  if (spark) bits.push(spark);
   const pos = pricePosition(plan);
   if (pos) bits.push(`<span class="${pos.cls}" title="${escapeHtml(pos.tip)}">${pos.text}</span>`);
   return bits.length ? `<div class="facts">${bits.join('')}</div>` : '';
@@ -3619,7 +3643,7 @@ function runSearch(form) {
     notices.push(`有 ${fareStats.missing} 筆票價資料庫還沒有，正在查詢最新價格，結果會自動更新。`);
   }
   const dropped = plans.filter(p => state.favorites.has(fingerprint(p)) && (favChange(p)?.diff || 0) < 0).length;
-  if (dropped) notices.unshift(`你收藏的 ${dropped} 個方案比收藏時便宜了。`);
+  if (dropped) notices.unshift(`你收藏的 ${dropped} 個方案比收藏時便宜了，點上方「只看收藏」查看。`);
   return { plans, matrix, cache, notices, fares: { real: fareStats.real, missing: fareStats.missing } };
 }
 
@@ -3788,7 +3812,39 @@ const saveHistory = list => { try { localStorage.setItem(HISTORY_KEY, JSON.strin
 const slotSig = s => [s.depart, s.ret, s.departFlex, s.retFlex].join('|');
 const slotSpan = s => (s.ret && s.ret >= s.depart ? `${s.depart.slice(5).replace('-', '/')}–${s.ret.slice(5).replace('-', '/')}` : s.depart.slice(5).replace('-', '/')) + (s.departFlex || s.retFlex ? ` ±${Math.max(s.departFlex, s.retFlex)}` : '');
 
+/* what the form looked like at the last search (strategies, flexibility, airports): the next visit starts from there */
+const PREFS_KEY = 'sff.prefs.v1';
+function savePrefs() {
+  try {
+    localStorage.setItem(PREFS_KEY, JSON.stringify({
+      trip: document.getElementById('f-trip').value,
+      flex: bulkFlex(),
+      strategies: [...document.querySelectorAll('#search-form .strategies input[type=checkbox]:checked')].map(c => c.value),
+      origins: checkedCodes('pick-origins'), dests: checkedCodes('pick-dest'), outer: checkedCodes('pick-outer'),
+    }));
+  } catch { /* private mode: a convenience only */ }
+}
+function applyPrefs() {
+  let p;
+  try { p = JSON.parse(localStorage.getItem(PREFS_KEY) || 'null'); } catch { p = null; }
+  if (!p) return;
+  if (p.trip === 'round_trip' || p.trip === 'one_way') document.getElementById('f-trip').value = p.trip;
+  if (Number.isFinite(p.flex)) document.getElementById('f-bulk-flex').value = clampFlex(p.flex);
+  if (Array.isArray(p.strategies) && p.strategies.length)
+    document.querySelectorAll('#search-form .strategies input[type=checkbox]').forEach(c => { c.checked = p.strategies.includes(c.value); });
+  for (const [id, codes] of [['pick-origins', p.origins], ['pick-dest', p.dests], ['pick-outer', p.outer]]) {
+    const el = document.getElementById(id);
+    if (!el || !Array.isArray(codes)) continue;
+    const boxes = [...el.querySelectorAll('input[type=checkbox]')], want = new Set(codes);
+    if (!boxes.some(c => want.has(c.value))) continue;   // none of them exists any more: keep the defaults
+    boxes.forEach(c => { c.checked = want.has(c.value); });
+    el.dispatchEvent(new Event('change'));
+  }
+  toggleFourLegExtras();
+  renderSlots();
+}
 function rememberSearch() {
+  savePrefs();
   const entry = {
     at: Date.now(),
     trip: document.getElementById('f-trip').value,
@@ -5037,6 +5093,7 @@ function init() {
   wirePickers();
   wireSlots();
   wireHistory();
+  applyPrefs();
   syncRangeLabels();
   toggleFourLegExtras();
   wireSubmit();

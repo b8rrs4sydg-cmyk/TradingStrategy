@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:28:41+00:00",
+ "at": "2026-10-24T09:43:45+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1913,
+ "fares_saved": 1922,
  "log": [
   "06:40:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:40:32 http front door: ['https://skirts-retailer-screen-pretty.trycloudflare.com', 'https://d9d3dfbfcbc859.lhr.life']",
@@ -28,6 +28,11 @@
   "09:27:08 request received: rid mvm72wjy78wzp.7 18 keys",
   "09:27:08 handle mvm72wjy78wzp.7: first_chunk=True total=18",
   "09:27:59 request mvm72wjy78wzp.7: chunk of 18 keys done in 51s; paths {'http': 31, 'browser-crashed': 1, 'browser': 8}, browser waits 9 max 49s sum 138s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 9, 'blocked': 0, 'tries': 31, 'empty': 0}, audit 5/5 agree",
-  "09:28:00 request mvm72wjy78wzp.7: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "09:28:00 request mvm72wjy78wzp.7: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "09:41:23 rtc fpfyewf17f: answered",
+  "09:41:37 request received: rid mvm7ljb9dc80t.7 11 keys",
+  "09:41:37 handle mvm7ljb9dc80t.7: first_chunk=True total=11",
+  "09:42:39 request mvm7ljb9dc80t.7: chunk of 11 keys done in 61s; paths {'http': 40, 'browser-crashed': 3, 'browser': 8}, browser waits 11 max 49s sum 233s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 11, 'blocked': 0, 'tries': 42, 'empty': 2}, audit 5/5 agree",
+  "09:42:40 request mvm7ljb9dc80t.7: final sent (11/11); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }

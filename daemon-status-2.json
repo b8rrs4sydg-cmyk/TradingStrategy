@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:29:10+00:00",
+ "at": "2026-10-24T09:42:41+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2167,
+ "fares_saved": 2185,
  "log": [
   "06:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:41:05 http front door: ['https://stephen-fat-broad-div.trycloudflare.com', 'https://298438ca5aa964.lhr.life']",
@@ -24,6 +24,11 @@
   "09:27:08 request received: rid mvm72wjy78wzp.2 11 keys",
   "09:27:08 handle mvm72wjy78wzp.2: first_chunk=True total=11",
   "09:28:37 request mvm72wjy78wzp.2: chunk of 11 keys done in 89s; paths {'http': 25, 'browser': 6, 'browser-crashed': 2}, browser waits 8 max 77s sum 230s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 25, 'miss': 8, 'blocked': 0, 'tries': 25, 'empty': 0}, audit 0/0 agree",
-  "09:28:39 request mvm72wjy78wzp.2: final sent (11/11); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
+  "09:28:39 request mvm72wjy78wzp.2: final sent (11/11); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}",
+  "09:41:23 rtc 810gb4ukyk: answered",
+  "09:41:37 request received: rid mvm7ljb9dc80t.2 20 keys",
+  "09:41:37 handle mvm7ljb9dc80t.2: first_chunk=True total=20",
+  "09:42:25 request mvm7ljb9dc80t.2: chunk of 20 keys done in 48s; paths {'http': 40, 'browser': 9, 'browser-crashed': 4}, browser waits 13 max 77s sum 296s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 13, 'blocked': 0, 'tries': 53, 'empty': 13}, audit 0/0 agree",
+  "09:42:26 request mvm7ljb9dc80t.2: final sent (20/20); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
