@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:33:48+00:00",
+ "at": "2026-10-24T09:28:10+00:00",
  "publishes": {
-  "ok": 3,
+  "ok": 9,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2139,
+ "fares_saved": 2183,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 git retry 0: b\"-46zevd': is at 5f4a019bd1ecd3a261bf10b948b6715190ea3816 but expected a8e636007280e86ae999cb1929cdf69f3e68816c)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -21,6 +21,34 @@
   "06:25:57 rtc w1tymqjtl4: answered",
   "06:32:19 rtc 6rxbrdzbj5: answered",
   "06:32:31 request received: rid mvm0uckasil89.5 24 keys",
-  "06:32:31 handle mvm0uckasil89.5: first_chunk=True total=24"
+  "06:32:31 handle mvm0uckasil89.5: first_chunk=True total=24",
+  "06:33:49 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "06:34:57 rtc n7wetjozr9: answered",
+  "06:35:25 git retry 0: b\"-46zevd': is at b32c11376cd8d935237beac719d11e8ad9b9a558 but expected 05fd347cc4e57f6eb9acdbc0f4b512f182fb08d0)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "06:35:31 request mvm0uckasil89.5: chunk of 24 keys done in 180s; paths {'http': 33, 'browser-crashed': 11}, browser waits 11 max 152s sum 1158s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 33, 'miss': 11, 'blocked': 0, 'tries': 33, 'empty': 0}, audit 3/3 agree",
+  "06:35:33 request mvm0uckasil89.5: final sent (24/24); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "06:35:56 rtc m9it9wdh6m: answered",
+  "06:37:45 rtc ntytoxqf94: answered",
+  "06:37:57 request received: rid mvm11bp48pd12.5 20 keys",
+  "06:37:57 handle mvm11bp48pd12.5: first_chunk=True total=20",
+  "06:39:48 request mvm11bp48pd12.5: chunk of 20 keys done in 111s; paths {'http': 48, 'browser-crashed': 16}, browser waits 16 max 152s sum 1578s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 48, 'miss': 16, 'blocked': 0, 'tries': 48, 'empty': 0}, audit 3/3 agree",
+  "06:39:48 request mvm11bp48pd12.5: final sent (20/20); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "06:42:13 request received: rid mvm175immovu6.5 7 keys",
+  "06:42:13 handle mvm175immovu6.5: first_chunk=True total=7",
+  "06:42:14 request mvm175immovu6.5: chunk of 7 keys done in 1s; paths {'http': 55, 'browser-crashed': 16}, browser waits 16 max 152s sum 1578s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 55, 'miss': 16, 'blocked': 0, 'tries': 55, 'empty': 0}, audit 3/3 agree",
+  "06:42:14 request mvm175immovu6.5: final sent (7/7); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "06:47:20 rtc 9825bgtckq: answered",
+  "09:11:43 rtc k8fqffmkf5: answered",
+  "09:11:55 request received: rid mvm6jbuogh2k4.6 1 keys",
+  "09:11:55 handle mvm6jbuogh2k4.6: first_chunk=True total=1",
+  "09:11:56 request mvm6jbuogh2k4.6: chunk of 1 keys done in 1s; paths {'http': 56, 'browser-crashed': 16}, browser waits 16 max 152s sum 1578s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 56, 'miss': 16, 'blocked': 0, 'tries': 56, 'empty': 0}, audit 3/3 agree",
+  "09:11:58 request mvm6jbuogh2k4.6: final sent (1/1); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "09:12:00 request received: rid mvm6jt60zat1p.6 1 keys",
+  "09:12:00 handle mvm6jt60zat1p.6: first_chunk=True total=1",
+  "09:12:01 request mvm6jt60zat1p.6: chunk of 1 keys done in 0s; paths {'http': 57, 'browser-crashed': 16}, browser waits 16 max 152s sum 1578s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 57, 'miss': 16, 'blocked': 0, 'tries': 58, 'empty': 1}, audit 3/3 agree",
+  "09:12:02 request mvm6jt60zat1p.6: final sent (1/1); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "09:26:59 rtc teq205krwo: answered",
+  "09:27:08 request received: rid mvm72wjy78wzp.6 21 keys",
+  "09:27:08 handle mvm72wjy78wzp.6: first_chunk=True total=21"
  ]
 }
