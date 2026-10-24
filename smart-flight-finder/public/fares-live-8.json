@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:01:12+00:00",
+ "generated_at": "2026-10-24T10:05:46+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -4764,6 +4764,28 @@
     ]
    ]
   },
+  "mc|NRT-TPE-2027-02-16|TPE-FUK-2027-02-26": {
+   "price": 18733,
+   "first": {
+    "dep": "2027-02-16T13:00:00+09:00",
+    "arr": "2027-02-16T16:05:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 18733,
+    "STARLUX Airlines": 19273,
+    "Jetstar": 22040,
+    "JAL": 28727
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18733
+    ]
+   ]
+  },
   "mc|NRT-TPE-2027-02-16|TPE-FUK-2027-02-27": {
    "price": 17591,
    "first": {
@@ -5542,6 +5564,27 @@
     ]
    ]
   },
+  "mc|TPE-KIX-2027-02-06|FUK-TPE-2027-03-02": {
+   "price": 32092,
+   "by_airline": {
+    "China Airlines": 32092,
+    "EVA Air": 32266,
+    "STARLUX Airlines": 32584
+   },
+   "first": {
+    "dep": "2027-02-06T09:45:00+08:00",
+    "arr": "2027-02-06T13:20:00+09:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     32092
+    ]
+   ]
+  },
   "mc|TPE-KIX-2027-04-04|NRT-TPE-2027-06-13": {
    "price": 17496,
    "first": {
@@ -5690,6 +5733,50 @@
     [
      "2026-10-18",
      21031
+    ]
+   ]
+  },
+  "mc|TPE-NRT-2027-01-02|KIX-TPE-2027-03-01": {
+   "price": 20601,
+   "first": {
+    "dep": "2027-01-02T02:30:00+08:00",
+    "arr": "2027-01-02T06:35:00+09:00",
+    "stops": 0,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 20601,
+    "China Airlines": 23329,
+    "Cathay Pacific": 23507,
+    "EVA Air": 26444
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     20601
+    ]
+   ]
+  },
+  "mc|TPE-NRT-2027-02-06|HND-TPE-2027-03-01": {
+   "price": 35450,
+   "first": {
+    "dep": "2027-02-06T15:20:00+08:00",
+    "arr": "2027-02-06T19:20:00+09:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 35450,
+    "China Airlines": 40877,
+    "JAL": 47888,
+    "Cathay Pacific": 64768
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     35450
     ]
    ]
   },
