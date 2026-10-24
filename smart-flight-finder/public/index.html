@@ -3284,6 +3284,7 @@ function priceDelta(t) {
 /* Price position, in the spirit of Google Flights' "prices are lower than usual": where a plan's total sits among every round trip
    the database holds for the same airports (all dates). Shown only when the route has enough fares and the plan is clearly
    cheap or dear, so it stays a hint and not a verdict. */
+const metroOf = c => METRO_OF[c] || c;   // the same grouping the open-jaw planner uses
 let ROUTE_RT = null;
 let ROUTE_GEN = 0;
 const cheapMemo = new WeakMap();
@@ -3300,13 +3301,13 @@ function routeRoundTrips(origin, destination) {
     for (const [k, v] of Object.entries(FARES.fares || {})) {
       if (!k.startsWith('rt|') || !v.price) continue;
       const [, o, d] = k.split('|');
-      const r = `${o}|${d}`;
+      const r = `${metroOf(o)}|${metroOf(d)}`;   // 松山 / 桃園、羽田 / 成田 count as the same route
       if (!ROUTE_RT.has(r)) ROUTE_RT.set(r, []);
       ROUTE_RT.get(r).push(v.price);
     }
     for (const list of ROUTE_RT.values()) list.sort((a, b) => a - b);
   }
-  return ROUTE_RT.get(`${origin}|${destination}`) || [];
+  return ROUTE_RT.get(`${metroOf(origin)}|${metroOf(destination)}`) || [];
 }
 function pricePosition(plan) {
   if (plan.strategy !== 'standard' || plan.tickets.length > 2) return null;
@@ -3317,7 +3318,7 @@ function pricePosition(plan) {
   const n = list.length;
   const below = list.filter(p => p < plan.total_cost).length / n;   // share of this route's fares that are cheaper than this plan
   const above = list.filter(p => p > plan.total_cost).length / n;   // share that cost more
-  const route = `${first.origin}↔${first.destination}`;
+  const route = `${first.origin}↔${first.destination}（含同城市其他機場）`;
   const tip = `資料庫裡 ${route} 共 ${n} 筆來回票價（含其他日期），這張票比其中 ${Math.round(above * 100)}% 便宜、比 ${Math.round(below * 100)}% 貴；只標示特別便宜或特別貴的`;
   if (below <= 0.15) return { text: below === 0 ? '同航線最低價' : `比 ${Math.round(above * 100)}% 的同航線票價便宜`, cls: 'good', tip };
   if (below >= 0.85) return { text: `比 ${Math.round(below * 100)}% 的同航線票價貴`, cls: '', tip };
