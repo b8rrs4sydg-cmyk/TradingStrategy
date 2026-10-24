@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:22:28+00:00",
+ "at": "2026-10-24T11:23:59+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2322,
+ "fares_saved": 2324,
  "log": [
   "10:34:02 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:34:08 http front door: ['https://bedrooms-intense-dublin-nam.trycloudflare.com', 'https://389d678c0c4829.lhr.life']",
@@ -29,6 +29,10 @@
   "11:20:42 rtc u2mfjxsoiv: answered",
   "11:20:53 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "11:20:54 request received: rid mvmb57cajznaw.6 19 keys",
-  "11:20:54 handle mvmb57cajznaw.6: first_chunk=True total=19"
+  "11:20:54 handle mvmb57cajznaw.6: first_chunk=True total=19",
+  "11:22:30 request mvmb57cajznaw.6: chunk of 19 keys done in 96s; paths {'http': 47, 'browser-crashed': 14}, browser waits 14 max 95s sum 899s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 47, 'miss': 14, 'blocked': 0, 'tries': 78, 'empty': 31}, audit 2/2 agree",
+  "11:22:31 request mvmb57cajznaw.6: final sent (19/19); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:22:46 request received: rid mvmb7y6f41bhv.6 13 keys",
+  "11:22:46 handle mvmb7y6f41bhv.6: first_chunk=True total=13"
  ]
 }
