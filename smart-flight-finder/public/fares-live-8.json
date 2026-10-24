@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T06:48:57+00:00",
+ "generated_at": "2026-10-24T09:12:58+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -7072,6 +7072,26 @@
     [
      "2026-10-18",
      14475
+    ]
+   ]
+  },
+  "ow|HND|RMQ|2027-01-19": {
+   "price": 8954,
+   "first": {
+    "dep": "2027-01-19T01:55:00+09:00",
+    "arr": "2027-01-19T09:25:00+08:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 8954,
+    "Korean Air": 14058
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     8954
     ]
    ]
   },
