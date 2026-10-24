@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:42:54+00:00",
+ "generated_at": "2026-10-24T11:03:56+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -21738,6 +21738,28 @@
     [
      "2026-10-22",
      22812
+    ]
+   ]
+  },
+  "rt|RMQ|FUK|2027-02-11|2027-02-16": {
+   "price": 16943,
+   "first": {
+    "dep": "2027-02-11T20:35:00+08:00",
+    "arr": "2027-02-12T17:00:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 16943,
+    "Trinity Airways": 17211,
+    "Jin Air": 17841,
+    "Korean Air": 19231
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     16943
     ]
    ]
   },
