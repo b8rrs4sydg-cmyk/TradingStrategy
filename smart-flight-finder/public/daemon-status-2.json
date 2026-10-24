@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:59:16+00:00",
+ "at": "2026-10-24T10:00:48+00:00",
  "publishes": {
-  "ok": 5,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2205,
+ "fares_saved": 2222,
  "log": [
   "06:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:41:05 http front door: ['https://stephen-fat-broad-div.trycloudflare.com', 'https://298438ca5aa964.lhr.life']",
@@ -38,6 +38,11 @@
   "09:58:47 request received: rid mvm87xf6csfjl.1 5 keys",
   "09:58:47 handle mvm87xf6csfjl.1: first_chunk=True total=5",
   "09:58:59 request mvm87xf6csfjl.1: chunk of 5 keys done in 12s; paths {'http': 60, 'browser': 9, 'browser-crashed': 7}, browser waits 16 max 77s sum 442s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 60, 'miss': 16, 'blocked': 0, 'tries': 73, 'empty': 13}, audit 1/1 agree",
-  "09:59:00 request mvm87xf6csfjl.1: final sent (5/5); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
+  "09:59:00 request mvm87xf6csfjl.1: final sent (5/5); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "09:59:58 rtc 6lmmgdezyo: answered",
+  "10:00:11 request received: rid mvm89dljkl9ao.1 17 keys",
+  "10:00:11 handle mvm89dljkl9ao.1: first_chunk=True total=17",
+  "10:00:28 request mvm89dljkl9ao.1: chunk of 17 keys done in 16s; paths {'http': 74, 'browser': 12, 'browser-crashed': 7}, browser waits 19 max 77s sum 453s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 74, 'miss': 19, 'blocked': 0, 'tries': 87, 'empty': 13}, audit 2/2 agree",
+  "10:00:28 request mvm89dljkl9ao.1: final sent (17/17); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
  ]
 }
