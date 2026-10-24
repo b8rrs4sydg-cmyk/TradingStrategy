@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:06:04+00:00",
+ "at": "2026-10-24T10:07:35+00:00",
  "publishes": {
-  "ok": 13,
+  "ok": 14,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2134,
+ "fares_saved": 2145,
  "log": [
   "05:34:55 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:00 http front door: ['https://ports-houston-largest-grown.trycloudflare.com', 'https://348d2b6b4789ab.lhr.life']",
@@ -69,6 +69,11 @@
   "10:00:29 request mvm89dljkl9ao.4: final sent (18/18); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
   "10:03:50 rtc gz6yc0z10y: answered",
   "10:04:02 request received: rid mvm8ecumtl6d9.5 10 keys",
-  "10:04:02 handle mvm8ecumtl6d9.5: first_chunk=True total=10"
+  "10:04:02 handle mvm8ecumtl6d9.5: first_chunk=True total=10",
+  "10:06:32 rtc y379l3z4o9: answered",
+  "10:06:45 request received: rid mvm8ht50bgb20.5 16 keys",
+  "10:06:45 handle mvm8ht50bgb20.5: first_chunk=True total=16",
+  "10:06:52 request mvm8ecumtl6d9.5: chunk of 10 keys done in 170s; paths {'http': 106, 'browser-crashed': 52, 'browser': 9}, browser waits 61 max 212s sum 5253s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 106, 'miss': 61, 'blocked': 0, 'tries': 110, 'empty': 4}, audit 2/2 agre",
+  "10:06:54 request mvm8ecumtl6d9.5: final sent (10/10); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}"
  ]
 }
