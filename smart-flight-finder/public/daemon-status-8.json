@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T12:17:34+00:00",
+ "at": "2026-10-24T12:19:09+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
@@ -95,6 +95,9 @@
   "12:16:32 request mvmd0obzjwavb.8: chunk of 26 keys done in 190s; paths {'http': 51, 'browser-crashed': 182, 'browser': 1}, browser waits 183 max 190s sum 13281s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 51, 'miss': 78, 'blocked': 0, 'tries': 197, 'empty': 146}, audit 2/2 a",
   "12:16:33 request mvmd0obzjwavb.8: final sent (26/26); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
   "12:17:02 request received: rid mvmd5pdyo6ju3.8 19 keys",
-  "12:17:02 handle mvmd5pdyo6ju3.8: first_chunk=True total=19"
+  "12:17:02 handle mvmd5pdyo6ju3.8: first_chunk=True total=19",
+  "12:17:35 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "12:18:39 request mvmd5pdyo6ju3.8: chunk of 19 keys done in 97s; paths {'http': 56, 'browser-crashed': 196, 'browser': 1}, browser waits 197 max 190s sum 14231s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 56, 'miss': 82, 'blocked': 0, 'tries': 210, 'empty': 154}, audit 2/2 ag",
+  "12:18:41 request mvmd5pdyo6ju3.8: final sent (19/19); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
  ]
 }
