@@ -819,6 +819,8 @@
   .qchip.on { background: var(--brand); border-color: var(--brand); color: #fff }
   .p-title { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 2px 0 4px }
   .p-title b { font-size: 17px; font-weight: 600 }
+  .p-dates { font-size: 16px; font-weight: 600; margin: 0 0 4px }
+  .p-days { margin-left: 8px; font-size: 12.5px; font-weight: 500; color: var(--fg-muted) }
   .p-code { font: 500 12px/1 var(--font-mono); color: var(--fg-faint) }
   .p-badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--card-sunken); color: var(--fg-muted) }
   .p-badge.good { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); font-weight: 600 }
@@ -3347,10 +3349,15 @@ function fareAgeDays(plan) {
 const STALE_DAYS = 3;
 function planFactsHtml(plan) {
   const f = planFacts(plan), bits = [];
-  if (f.outDate) bits.push(`<span title="去程出發（當地時間）">去 ${mdDay(f.outDate)}${f.outMin != null ? ` ${pfClock(f.outMin)}` : ''}${f.arrMin != null ? `→${pfClock(f.arrMin)}` : ''}</span>`);
-  if (f.retDate) bits.push(`<span title="回程出發；航班時刻在訂票網站選">回 ${mdDay(f.retDate)}${f.retMin != null ? ` ${pfClock(f.retMin)}` : ''}</span>`);
-  if (plan.total_travel_days > 1) bits.push(`<span>${plan.total_travel_days} 天</span>`);
-  const titled = plan.strategy !== 'back_to_back_4leg' && !(plan.trips || []).length && f.dest;   // the card title already says 直飛 / N 轉
+  const titled = plan.strategy !== 'back_to_back_4leg' && !(plan.trips || []).length && f.dest;   // the card title already carries the dates and 直飛 / N 轉
+  if (titled) {
+    if (f.outMin != null) bits.push(`<span title="去程出發 → 抵達（當地時間）">去程 ${pfClock(f.outMin)}${f.arrMin != null ? `→${pfClock(f.arrMin)}` : ''}</span>`);
+    if (f.retMin != null) bits.push(`<span title="回程出發；航班時刻在訂票網站選">回程 ${pfClock(f.retMin)}</span>`);
+  } else {
+    if (f.outDate) bits.push(`<span title="去程出發（當地時間）">去 ${mdDay(f.outDate)}${f.outMin != null ? ` ${pfClock(f.outMin)}` : ''}${f.arrMin != null ? `→${pfClock(f.arrMin)}` : ''}</span>`);
+    if (f.retDate) bits.push(`<span title="回程出發；航班時刻在訂票網站選">回 ${mdDay(f.retDate)}${f.retMin != null ? ` ${pfClock(f.retMin)}` : ''}</span>`);
+    if (plan.total_travel_days > 1) bits.push(`<span>${plan.total_travel_days} 天</span>`);
+  }
   if (f.stops != null && !titled) bits.push(`<span class="${f.stops ? '' : 'good'}">${f.stops ? `${f.stops} 轉` : '直飛'}</span>`);
   if (f.airlines.length) bits.push(`<span>${escapeHtml(f.airlines.join('、'))}</span>`);
   const ch = favChange(plan);
@@ -3401,6 +3408,7 @@ function renderPlan(plan, rank) {
   const isTrip = (plan.trips || []).length > 0 || isFourLeg;
   const title = !isTrip && pf.dest
     ? `<div class="p-title"><b>${escapeHtml(nameOf(pf.dest))}</b><span class="p-code">${escapeHtml(pf.home)} → ${escapeHtml(pf.dest)}</span>${pf.stops === 0 ? '<span class="p-badge good">直飛</span>' : pf.stops ? `<span class="p-badge">${pf.stops} 轉</span>` : ''}</div>` : '';
+  const dateLine = title && pf.outDate ? `<div class="p-dates">${mdDay(pf.outDate)}${pf.retDate ? ` → ${mdDay(pf.retDate)}` : ''}${plan.total_travel_days > 1 ? `<span class="p-days">${plan.total_travel_days} 天</span>` : ''}</div>` : '';
   const legsN = plan.tickets[0]?.legs?.length || 0;
   const adults = plan.adults || 1;
   const priceNote = ticketCount === 1 ? `${legsN > 1 ? '來回' : '單程'} · ${adults > 1 ? `${adults} 人合計` : '每人'}` : '';
@@ -3427,7 +3435,7 @@ function renderPlan(plan, rank) {
             ${plan.window_label ? `<span class="slot-tag">${escapeHtml(plan.window_label)}</span>` : ''}
             <span class="explain">${escapeHtml(plan.explain || '')}</span>
           </div>
-          ${title}
+          ${title}${dateLine}
           ${planFactsHtml(plan)}
           <div class="plan-cta">${cta}</div>
           </div>
@@ -3754,7 +3762,10 @@ function slotLabel(slot) {
   if (slot.label.trim()) return slot.label.trim();
   const h = holidayByKey.get(slot.holidayKey);
   if (h) return h.label;
-  return slot.ret && isRoundTrip() ? `${slot.depart.slice(5).replace('-','/')}–${slot.ret.slice(5).replace('-','/')}` : slot.depart;
+  // a plain date window: say it is the searched window (the dates of each plan inside it differ by the ± days)
+  const fx = Math.max(slot.departFlex || 0, slot.retFlex || 0);
+  const span = slot.ret && isRoundTrip() ? `${slot.depart.slice(5).replace('-','/')}–${slot.ret.slice(5).replace('-','/')}` : slot.depart;
+  return `空檔 ${span}${fx ? ` ±${fx}` : ''}`;
 }
 
 function slotInvalid(slot) {
