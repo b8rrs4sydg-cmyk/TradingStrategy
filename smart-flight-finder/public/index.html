@@ -3854,7 +3854,7 @@ function renderSlotSum() {
   const days = slots.reduce((n, s) => n + slotDays(s), 0);
   const editing = fs.classList.contains('editing');
   box.innerHTML = slots.length === 0 ? '' : `<div class="ss-head"><b>你的空檔</b><span>${slots.length} 段 · ${days} 天</span><button type="button" class="ss-edit" data-edit aria-expanded="${editing}">${editing ? '完成' : '修改'}</button></div>
-    <div class="ss-chips">${slots.map(s => `<span class="ss-chip ${slotInvalid(s) ? 'bad' : ''}" title="${escapeHtml(s.label || '')}">${escapeHtml(slotSpan(s).replace(/ ±\d+$/, ''))}<button type="button" data-rm="${s.id}" aria-label="移除這個時段">×</button></span>`).join('')}</div>`;
+    <div class="ss-chips">${slots.map(s => `<span class="ss-chip ${slotInvalid(s) ? 'bad' : ''}" title="${escapeHtml(s.label || '')}">${escapeHtml(slotSpan(s))}<button type="button" data-rm="${s.id}" aria-label="移除這個時段">×</button></span>`).join('')}</div>`;
 }
 function updateSlotSummary() {
   const rt = isRoundTrip();
