@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:58:55+00:00",
+ "at": "2026-10-24T12:00:26+00:00",
  "publishes": {
   "ok": 8,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2289,
+ "fares_saved": 2292,
  "log": [
   "10:33:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:55 http front door: ['https://cultures-fog-depending-unlike.trycloudflare.com', 'https://30dcb49416743f.lhr.life']",
@@ -77,6 +77,8 @@
   "11:56:32 request mvmccxrj837se.3: chunk of 15 keys done in 96s; paths {'http': 66, 'browser-crashed': 152}, browser waits 152 max 144s sum 11003s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 66, 'miss': 68, 'blocked': 0, 'tries': 181, 'empty': 115}, audit 3/3 agree",
   "11:56:33 request mvmccxrj837se.3: final sent (15/15); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
   "11:58:49 request received: rid mvmciaybajqco.2 18 keys",
-  "11:58:49 handle mvmciaybajqco.2: first_chunk=True total=18"
+  "11:58:49 handle mvmciaybajqco.2: first_chunk=True total=18",
+  "11:59:03 request received: rid mvmcimwvyh1j6.2 22 keys",
+  "11:59:03 handle mvmcimwvyh1j6.2: first_chunk=True total=22"
  ]
 }
