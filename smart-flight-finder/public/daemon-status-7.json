@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:27:09+00:00",
+ "at": "2026-10-24T09:28:41+00:00",
  "publishes": {
   "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1895,
+ "fares_saved": 1913,
  "log": [
   "06:40:27 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:40:32 http front door: ['https://skirts-retailer-screen-pretty.trycloudflare.com', 'https://d9d3dfbfcbc859.lhr.life']",
@@ -26,6 +26,8 @@
   "09:12:02 request mvm6jt60zat1p.7: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
   "09:26:59 rtc o2wlkxln98: answered",
   "09:27:08 request received: rid mvm72wjy78wzp.7 18 keys",
-  "09:27:08 handle mvm72wjy78wzp.7: first_chunk=True total=18"
+  "09:27:08 handle mvm72wjy78wzp.7: first_chunk=True total=18",
+  "09:27:59 request mvm72wjy78wzp.7: chunk of 18 keys done in 51s; paths {'http': 31, 'browser-crashed': 1, 'browser': 8}, browser waits 9 max 49s sum 138s; ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 31, 'miss': 9, 'blocked': 0, 'tries': 31, 'empty': 0}, audit 5/5 agree",
+  "09:28:00 request mvm72wjy78wzp.7: final sent (18/18); ntfy publishes {'ok': 3, 'r429': 0, 'fail': 0}"
  ]
 }
