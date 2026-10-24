@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T11:46:55+00:00",
+ "at": "2026-10-24T11:49:57+00:00",
  "publishes": {
-  "ok": 6,
+  "ok": 7,
   "r429": 0,
   "fail": 0
  },
@@ -58,6 +58,9 @@
   "11:43:40 request received: rid mvmbys4jahkw0.4 20 keys",
   "11:43:40 handle mvmbys4jahkw0.4: first_chunk=True total=20",
   "11:46:03 request mvmbys4jahkw0.4: chunk of 20 keys done in 143s; paths {'http': 52, 'browser-crashed': 108}, browser waits 108 max 141s sum 7921s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 52, 'miss': 59, 'blocked': 0, 'tries': 157, 'empty': 105}, audit 2/2 agree",
-  "11:46:05 request mvmbys4jahkw0.4: final sent (20/20); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
+  "11:46:05 request mvmbys4jahkw0.4: final sent (20/20); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:48:18 rtc p7etyg4jhg: answered",
+  "11:48:32 request received: rid mvmc4p5dc2rvt.5 20 keys",
+  "11:48:32 handle mvmc4p5dc2rvt.5: first_chunk=True total=20"
  ]
 }
