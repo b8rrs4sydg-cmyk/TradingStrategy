@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T00:46:48+00:00",
+ "at": "2026-10-24T01:01:45+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2074,
  "log": [
-  "00:45:14 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:45:18 http front door: ['https://monsters-substance-principles-peace.trycloudflare.com', 'https://8ac1a71bd4dec2.lhr.life']",
-  "00:45:18 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:46:23 request received: rid httptest1792802782 20 keys",
-  "00:46:23 handle httptest1792802782: first_chunk=True total=20",
-  "00:46:24 request httptest1792802782: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "00:46:24 request httptest1792802782: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "01:00:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "01:00:15 http front door: ['https://bullet-lloyd-irc-specialized.trycloudflare.com', 'https://3588f05028f297.lhr.life']",
+  "01:00:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "01:01:17 request received: rid httptest1792803677 20 keys",
+  "01:01:17 handle httptest1792803677: first_chunk=True total=20",
+  "01:01:18 request httptest1792803677: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "01:01:19 request httptest1792803677: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
