@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T06:41:09+00:00",
+ "generated_at": "2026-10-24T09:12:40+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -7267,6 +7267,28 @@
     ]
    ]
   },
+  "ow|HND|TSA|2027-01-19": {
+   "price": 7763,
+   "first": {
+    "dep": "2027-01-19T07:55:00+09:00",
+    "arr": "2027-01-19T10:55:00+08:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 7763,
+    "EVA Air": 7986,
+    "ANA": 24500,
+    "JAL": 31584
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     7763
+    ]
+   ]
+  },
   "ow|ICN|RMQ|2026-11-15": {
    "price": 4305,
    "first": {
@@ -8310,6 +8332,22 @@
     [
      "2026-10-18",
      17604
+    ]
+   ]
+  },
+  "ow|NRT|TSA|2027-01-19": {
+   "price": 82314,
+   "first": {
+    "dep": "2027-01-19T20:40:00+09:00",
+    "arr": "2027-01-20T18:20:00+08:00",
+    "stops": 2,
+    "airline": "Korean Air, Asiana Airlines, China Airlines"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     82314
     ]
    ]
   },
@@ -15288,6 +15326,25 @@
     [
      "2026-10-17",
      12537
+    ]
+   ]
+  },
+  "ow|TSA|NRT|2027-01-15": {
+   "price": 13680,
+   "first": {
+    "dep": "2027-01-15T14:05:00+08:00",
+    "arr": "2027-01-16T17:55:00+09:00",
+    "stops": 1,
+    "airline": "Trinity Airways"
+   },
+   "by_airline": {
+    "Trinity Airways": 13680
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     13680
     ]
    ]
   },
