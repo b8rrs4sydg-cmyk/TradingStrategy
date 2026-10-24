@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T12:09:28+00:00",
+ "at": "2026-10-24T12:10:59+00:00",
  "publishes": {
   "ok": 9,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2240,
+ "fares_saved": 2248,
  "log": [
   "10:33:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:53 http front door: ['https://historical-shoe-antonio-coming.trycloudflare.com', 'https://a7d7ffeb22fda1.lhr.life']",
@@ -89,6 +89,10 @@
   "12:02:53 request mvmciaybajqco.7: final sent (24/24); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
   "12:07:43 rtc 1xtr14nt43: answered",
   "12:07:56 request received: rid mvmctnwxkba1z.9 17 keys",
-  "12:07:56 handle mvmctnwxkba1z.9: first_chunk=True total=17"
+  "12:07:56 handle mvmctnwxkba1z.9: first_chunk=True total=17",
+  "12:10:12 request mvmctnwxkba1z.9: chunk of 17 keys done in 136s; paths {'http': 72, 'browser-crashed': 233}, browser waits 233 max 241s sum 19517s; ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 72, 'miss': 101, 'blocked': 0, 'tries': 252, 'empty': 180}, audit 3/3 agree",
+  "12:10:12 request mvmctnwxkba1z.9: final sent (17/17); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}",
+  "12:10:38 request received: rid mvmcxhojepxl4.9 15 keys",
+  "12:10:38 handle mvmcxhojepxl4.9: first_chunk=True total=15"
  ]
 }
