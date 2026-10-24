@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:07:35+00:00",
+ "generated_at": "2026-10-24T10:10:39+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -19259,6 +19259,28 @@
     ]
    ]
   },
+  "rt|NGO|TPE|2026-12-26|2027-02-10": {
+   "price": 18964,
+   "first": {
+    "dep": "2026-12-26T16:40:00+09:00",
+    "arr": "2026-12-26T19:10:00+08:00",
+    "stops": 0,
+    "airline": "Cathay Pacific"
+   },
+   "by_airline": {
+    "Cathay Pacific": 18964,
+    "Peach Aviation": 19342,
+    "Tigerair Taiwan": 21709,
+    "JAL": 26010
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18964
+    ]
+   ]
+  },
   "rt|NGO|TPE|2026-12-27|2027-02-10": {
    "price": 19939,
    "first": {
@@ -19744,6 +19766,28 @@
     [
      "2026-10-24",
      17965
+    ]
+   ]
+  },
+  "rt|NRT|TPE|2026-12-28|2027-02-11": {
+   "price": 17194,
+   "first": {
+    "dep": "2026-12-28T08:30:00+09:00",
+    "arr": "2026-12-28T11:50:00+08:00",
+    "stops": 0,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 17194,
+    "Tigerair Taiwan": 17925,
+    "Peach Aviation": 18133,
+    "Thai Lion Air": 18183
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     17194
     ]
    ]
   },
@@ -27126,6 +27170,28 @@
     ]
    ]
   },
+  "rt|TPE|HND|2026-12-23|2027-02-13": {
+   "price": 15920,
+   "first": {
+    "dep": "2026-12-23T20:55:00+08:00",
+    "arr": "2026-12-24T00:50:00+09:00",
+    "stops": 0,
+    "airline": "Peach Aviation"
+   },
+   "by_airline": {
+    "Peach Aviation": 15920,
+    "Asiana Airlines": 19038,
+    "Tigerair Taiwan": 20792,
+    "JAL": 24225
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     15920
+    ]
+   ]
+  },
   "rt|TPE|HND|2026-12-23|2027-02-14": {
    "price": 15920,
    "by_airline": {
@@ -29982,6 +30048,28 @@
     [
      "2026-10-24",
      11907
+    ]
+   ]
+  },
+  "rt|TPE|NRT|2026-12-25|2027-02-15": {
+   "price": 16947,
+   "first": {
+    "dep": "2026-12-25T18:15:00+08:00",
+    "arr": "2026-12-26T08:50:00+09:00",
+    "stops": 1,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 16947,
+    "Peach Aviation": 17510,
+    "Thai Lion Air": 18033,
+    "Scoot": 18665
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     16947
     ]
    ]
   },
@@ -38025,6 +38113,11 @@
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
+  },
+  "rt|NRT|TPE|2026-12-26|2027-02-11": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
   },
   "rt|NRT|TSA|2026-11-08|2026-12-11": {
    "status": "timeout",

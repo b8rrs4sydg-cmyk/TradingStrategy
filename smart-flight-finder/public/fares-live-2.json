@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:08:23+00:00",
+ "generated_at": "2026-10-24T10:09:54+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -26413,6 +26413,28 @@
     ]
    ]
   },
+  "rt|TPE|FUK|2026-12-24|2027-02-14": {
+   "price": 21158,
+   "first": {
+    "dep": "2026-12-24T02:50:00+08:00",
+    "arr": "2026-12-24T14:10:00+09:00",
+    "stops": 1,
+    "airline": "Jeju Air"
+   },
+   "by_airline": {
+    "Jeju Air": 21158,
+    "AirAsia": 22390,
+    "Tigerair Taiwan": 24761,
+    "Jin Air": 24880
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     21158
+    ]
+   ]
+  },
   "rt|TPE|FUK|2026-12-25|2026-12-28": {
    "price": 15366,
    "first": {
@@ -38972,11 +38994,6 @@
    "status": "timeout",
    "at": "2026-10-23",
    "n": 1
-  },
-  "rt|TPE|FUK|2026-12-24|2027-02-14": {
-   "status": "timeout",
-   "at": "2026-10-24",
-   "n": 2
   },
   "rt|TPE|HND|2026-11-13|2026-11-29": {
    "status": "timeout",
