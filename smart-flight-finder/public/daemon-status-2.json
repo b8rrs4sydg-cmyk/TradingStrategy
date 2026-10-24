@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T12:12:52+00:00",
+ "at": "2026-10-24T12:14:24+00:00",
  "publishes": {
-  "ok": 9,
+  "ok": 10,
   "r429": 0,
   "fail": 0
  },
@@ -88,6 +88,11 @@
   "12:09:33 request mvmctnwxkba1z.2: chunk of 14 keys done in 97s; paths {'http': 56, 'browser-crashed': 191}, browser waits 191 max 189s sum 14702s; ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 56, 'miss': 90, 'blocked': 0, 'tries': 223, 'empty': 167}, audit 6/6 agree",
   "12:09:33 request mvmctnwxkba1z.2: final sent (14/14); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}",
   "12:10:38 request received: rid mvmcxhojepxl4.2 19 keys",
-  "12:10:38 handle mvmcxhojepxl4.2: first_chunk=True total=19"
+  "12:10:38 handle mvmcxhojepxl4.2: first_chunk=True total=19",
+  "12:13:02 request mvmcxhojepxl4.2: chunk of 19 keys done in 144s; paths {'http': 56, 'browser-crashed': 210}, browser waits 210 max 189s sum 16266s; ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 56, 'miss': 90, 'blocked': 0, 'tries': 223, 'empty': 167}, audit 6/6 agree",
+  "12:13:03 request mvmcxhojepxl4.2: final sent (19/19); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}",
+  "12:13:10 rtc 3el6rer015: answered",
+  "12:13:22 request received: rid mvmd0obzjwavb.2 14 keys",
+  "12:13:22 handle mvmd0obzjwavb.2: first_chunk=True total=14"
  ]
 }
