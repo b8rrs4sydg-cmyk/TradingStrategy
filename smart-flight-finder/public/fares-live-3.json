@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T06:44:17+00:00",
+ "generated_at": "2026-10-24T09:12:49+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -10097,6 +10097,26 @@
     ]
    ]
   },
+  "ow|RMQ|HND|2027-01-15": {
+   "price": 6130,
+   "first": {
+    "dep": "2027-01-15T13:10:00+08:00",
+    "arr": "2027-01-15T22:45:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 6130,
+    "Korean Air": 10853
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     6130
+    ]
+   ]
+  },
   "ow|RMQ|HND|2027-02-09": {
    "price": 12928,
    "first": {
@@ -10682,6 +10702,28 @@
     [
      "2026-10-22",
      6983
+    ]
+   ]
+  },
+  "ow|RMQ|NRT|2027-01-15": {
+   "price": 6134,
+   "first": {
+    "dep": "2027-01-15T10:10:00+08:00",
+    "arr": "2027-01-15T19:05:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 6134,
+    "Jin Air": 10025,
+    "Korean Air": 10853,
+    "STARLUX Airlines": 26509
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     6134
     ]
    ]
   },
