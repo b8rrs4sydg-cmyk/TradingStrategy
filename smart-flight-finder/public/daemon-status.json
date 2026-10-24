@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:37:24+00:00",
+ "at": "2026-10-24T11:41:55+00:00",
  "publishes": {
-  "ok": 8,
+  "ok": 14,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2233,
+ "fares_saved": 2243,
  "log": [
   "10:33:45 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:49 http front door: ['https://asking-anything-cylinder-suffering.trycloudflare.com', 'https://78e015c662ae45.lhr.life']",
@@ -51,6 +51,10 @@
   "11:35:25 request received: rid mvmbnu5v86tnk.0 15 keys",
   "11:35:25 handle mvmbnu5v86tnk.0: first_chunk=True total=15",
   "11:37:02 request mvmbnu5v86tnk.0: chunk of 15 keys done in 97s; paths {'http': 57, 'browser-crashed': 49}, browser waits 49 max 94s sum 2516s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 57, 'miss': 26, 'blocked': 0, 'tries': 100, 'empty': 43}, audit 3/3 agree",
-  "11:37:04 request mvmbnu5v86tnk.0: final sent (15/15); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}"
+  "11:37:04 request mvmbnu5v86tnk.0: final sent (15/15); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "11:40:41 request received: rid mvmbv01tffyfo 89 keys",
+  "11:40:41 handle mvmbv01tffyfo: first_chunk=True total=160",
+  "11:40:42 request received: rid mvmbv01tffyfo 71 keys",
+  "11:40:42 handle mvmbv01tffyfo: first_chunk=False total=160"
  ]
 }
