@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:43:02+00:00",
+ "at": "2026-10-24T11:20:33+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 4,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2260,
+ "fares_saved": 2274,
  "log": [
   "10:33:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:56 git retry 0: b\"-46zevd': is at a7f9c69048653c7b1b08235adffc39daaef3368a but expected 86df765003b515e7113a0dd26073c504d55a7392)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -23,6 +23,13 @@
   "10:42:01 request received: rid mvm9rkobx1d9l.2 1 keys",
   "10:42:01 handle mvm9rkobx1d9l.2: first_chunk=True total=1",
   "10:42:01 request mvm9rkobx1d9l.2: chunk of 1 keys done in 0s; paths {'http': 22}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 22, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 0}, audit 5/5 agree",
-  "10:42:03 request mvm9rkobx1d9l.2: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "10:42:03 request mvm9rkobx1d9l.2: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "11:00:32 rtc glwxtvvsyd: answered",
+  "11:13:17 rtc w2btp56x7q: answered",
+  "11:19:10 rtc 88otag4ghs: answered",
+  "11:19:22 request received: rid mvmb33owxkkra.2 16 keys",
+  "11:19:22 handle mvmb33owxkkra.2: first_chunk=True total=16",
+  "11:20:12 request mvmb33owxkkra.2: chunk of 16 keys done in 50s; paths {'http': 36, 'browser-crashed': 2}, browser waits 2 max 49s sum 94s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 36, 'miss': 2, 'blocked': 0, 'tries': 41, 'empty': 5}, audit 6/6 agree",
+  "11:20:12 request mvmb33owxkkra.2: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}"
  ]
 }
