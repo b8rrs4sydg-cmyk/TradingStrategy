@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T06:35:12+00:00",
+ "at": "2026-10-24T06:36:44+00:00",
  "publishes": {
-  "ok": 4,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
@@ -20,6 +20,9 @@
   "06:32:19 rtc l0tgd38gvv: answered",
   "06:32:31 request received: rid mvm0uckasil89.6 17 keys",
   "06:32:31 handle mvm0uckasil89.6: first_chunk=True total=17",
-  "06:34:57 rtc h08f1y7xk6: answered"
+  "06:34:57 rtc h08f1y7xk6: answered",
+  "06:35:31 request mvm0uckasil89.6: chunk of 17 keys done in 180s; paths {'http': 24, 'browser-crashed': 13}, browser waits 13 max 152s sum 1402s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 24, 'miss': 13, 'blocked': 0, 'tries': 24, 'empty': 0}, audit 1/1 agree",
+  "06:35:32 request mvm0uckasil89.6: final sent (17/17); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "06:35:57 rtc bw8zbsq23w: answered"
  ]
 }
