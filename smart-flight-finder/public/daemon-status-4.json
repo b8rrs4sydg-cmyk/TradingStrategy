@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T12:02:36+00:00",
+ "at": "2026-10-24T12:08:38+00:00",
  "publishes": {
-  "ok": 8,
+  "ok": 9,
   "r429": 0,
   "fail": 0
  },
@@ -85,6 +85,9 @@
   "12:01:08 request mvmcimwvyh1j6.3: chunk of 17 keys done in 125s; paths {'http': 53, 'browser': 1, 'browser-crashed': 155}, browser waits 156 max 148s sum 11066s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 53, 'miss': 79, 'blocked': 0, 'tries': 203, 'empty': 150}, audit 5/5 ag",
   "12:01:09 request mvmcimwvyh1j6.3: final sent (17/17); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
   "12:01:14 request mvmciaybajqco.3: chunk of 14 keys done in 145s; paths {'http': 53, 'browser': 1, 'browser-crashed': 161}, browser waits 162 max 148s sum 11927s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 53, 'miss': 79, 'blocked': 0, 'tries': 203, 'empty': 150}, audit 5/5 ag",
-  "12:01:15 request mvmciaybajqco.3: final sent (14/14); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}"
+  "12:01:15 request mvmciaybajqco.3: final sent (14/14); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "12:07:43 rtc ivihaplt6n: answered",
+  "12:07:56 request received: rid mvmctnwxkba1z.4 23 keys",
+  "12:07:56 handle mvmctnwxkba1z.4: first_chunk=True total=23"
  ]
 }
