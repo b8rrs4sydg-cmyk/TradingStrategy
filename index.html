@@ -828,6 +828,14 @@
   .price-spark { display: inline-flex; align-items: center; gap: 5px; color: var(--fg-faint); font-size: 12px; vertical-align: middle }
   .spark { display: block; color: var(--fg-faint) } .spark.down { color: var(--good) } .spark.up { color: var(--crit) }
   .spark-pct.down { color: var(--good) } .spark-pct.up { color: var(--crit) }
+  .intro { margin: 0 0 14px; padding: 12px 14px; border-radius: 12px; background: var(--brand-wash); color: var(--fg); font-size: 14px; line-height: 1.55 }
+  .intro ol { margin: 6px 0 6px 18px; padding: 0 } .intro p { margin: 4px 0 8px; color: var(--fg-muted); font-size: 13px }
+  .strategies label { align-items: flex-start }
+  .strategies label > span { display: block }
+  .s-desc { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--fg-muted); line-height: 1.45 }
+  .f-more { grid-column: 1 / -1; margin-top: 6px; border-top: 1px solid var(--border); padding-top: 6px }
+  .f-more > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 8px 0; list-style-position: inside }
+  .f-more > summary small { font-weight: 400; color: var(--fg-faint); margin-left: 6px }
   .cal-wrap { margin: 0 0 10px }
   .cal-wrap > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 6px 0 }
   .cal { max-width: 360px; margin: 4px auto 6px; padding: 10px; border: 1px solid var(--border); border-radius: 14px; background: var(--card) }
@@ -1050,6 +1058,12 @@
 
   <section class="card" id="search-card" aria-labelledby="search-title">
     <h2 id="search-title">搜尋條件</h2>
+    <div id="intro" class="intro" hidden>
+      <b>第一次來？三步驟找到最省的連假機票</b>
+      <ol><li>選日期：用日曆點出發日與回程日，或直接點連假。</li><li>選出發地與目的地。</li><li>按「搜尋」。系統會用真實的 Google Flights 票價，把能組合的買法都比給你看。</li></ol>
+      <p>價格是查詢當下的結果，訂票前請以訂票網站為準。<a href="wiki.html" target="_blank" rel="noopener">了解原理</a></p>
+      <button type="button" id="intro-ok" class="btn-ghost">知道了</button>
+    </div>
     <div id="db-status" class="db-status" role="status"></div>
     <form id="search-form" class="grid" novalidate>
       <div class="grid grid-2">
@@ -1094,10 +1108,10 @@
       <fieldset>
         <legend>策略</legend>
         <div class="strategies">
-          <label><input type="checkbox" value="standard" checked> 一般來回 / 直購</label>
-          <label><input type="checkbox" value="reverse" checked> 反向票＋倒買法 (一次買兩趟)</label>
-          <label><input type="checkbox" value="open_jaw"> Open-jaw (不同進出點)</label>
-          <label><input type="checkbox" value="back_to_back_4leg" checked> 外站四腿票 (一次買兩趟)</label>
+          <label><input type="checkbox" value="standard" checked><span>一般來回 / 直購<small class="s-desc">最單純：一張來回票，或拆成兩張單程票。</small></span></label>
+          <label><input type="checkbox" value="reverse" checked><span>反向票＋倒買法（兩趟一起買）<small class="s-desc">兩趟旅行合併規劃：一張從台灣出發、一張從國外飛回來，連假時有時比買兩張來回便宜。</small></span></label>
+          <label><input type="checkbox" value="open_jaw"><span>Open-jaw（進出不同城市）<small class="s-desc">去程和回程用不同機場，例如大阪進、東京出。</small></span></label>
+          <label><input type="checkbox" value="back_to_back_4leg" checked><span>外站四腿票（三趟一起買）<small class="s-desc">用一張多城市票串起三趟旅行，需要三個不重疊的時段；不一定便宜，結果會列出實價比較。</small></span></label>
         </div>
         <p class="hint" id="pair-hint" style="margin-top:8px"></p>
         <div id="four-leg-extras" class="four-leg-extras" style="grid-template-columns:1fr">
@@ -2554,36 +2568,42 @@ function pfChips(facet, o, nameOf = v => v) {
   }).join('');
 }
 
+let pfMoreOpen = false;
+const pfMoreActive = () => PF.labels.size || PF.origins.size || PF.retFrom != null || PF.retTo != null || PF.outDateFrom || PF.outDateTo || PF.retDateFrom || PF.retDateTo || PF.daysMin != null || PF.daysMax != null;
 function pfPanelHtml(o) {
+  const moreOpen = pfMoreOpen || pfMoreActive();
   const range = (title, kMin, kMax, type, extra = '', phLo = '', phHi = '') => `
     <div class="f-range"><input class="num" type="${type}" data-k="${kMin}" aria-label="${title} 起" placeholder="${phLo}" ${extra}><span>~</span><input class="num" type="${type}" data-k="${kMax}" aria-label="${title} 迄" placeholder="${phHi}" ${extra}></div>`;
   const presets = which => `<div class="f-presets">${PF_PRESETS.map(([n, a, b]) => `<button type="button" class="f-preset" data-preset="${which}:${a}-${b}">${n} <small>${pfClock(a)}–${a === 1080 ? '24:00' : pfClock(b)}</small></button>`).join('')}</div>`;
   const destCount = o.all.dests.size;
   return `
-    <fieldset class="f-group"><legend>時間段名稱</legend><div class="f-chips">${pfChips('labels', o)}</div></fieldset>
-    <fieldset class="f-group"><legend>出發地</legend><div class="f-chips">${pfChips('origins', o, pfCode)}</div></fieldset>
-    <fieldset class="f-group f-wide"><legend>目的地／途經地點${destCount > 12 ? '<input type="search" class="psearch" id="f-dsearch" placeholder="搜尋機場代碼或名稱" aria-label="搜尋目的地">' : ''}</legend>
-      <div class="f-chips f-scroll" id="f-dest-chips">${pfChips('dests', o, pfCode)}</div></fieldset>
     <fieldset class="f-group"><legend>價格區間（TWD）</legend>
       ${range('價格', 'priceMin', 'priceMax', 'number', 'min="0" step="500"', `最低 ${o.priceLo}`, `最高 ${o.priceHi}`)}
       <input type="range" class="f-slider" data-k="priceMax" min="${o.priceLo}" max="${o.priceHi}" step="500" aria-label="價格上限" ${o.priceHi <= o.priceLo ? 'disabled' : ''}>
       <small class="f-hint">資料範圍 ${o.priceLo.toLocaleString()} – ${o.priceHi.toLocaleString()}</small></fieldset>
+    <fieldset class="f-group"><legend>去程轉機</legend>
+      <div class="f-seg" role="radiogroup">${[['any', '不限'], ['0', '直飛'], ['1', '最多 1 轉']].map(([v, n]) => `<label class="f-chip ${PF.stops === v ? 'on' : ''}"><input type="radio" name="f-stops" data-k="stops" value="${v}" ${PF.stops === v ? 'checked' : ''}>${n}</label>`).join('')}</div></fieldset>
+    <fieldset class="f-group"><legend>航空公司（去程）</legend><div class="f-chips f-scroll">${pfChips('airlines', o)}</div></fieldset>
+    <fieldset class="f-group f-wide"><legend>目的地／途經地點${destCount > 12 ? '<input type="search" class="psearch" id="f-dsearch" placeholder="搜尋機場代碼或名稱" aria-label="搜尋目的地">' : ''}</legend>
+      <div class="f-chips f-scroll" id="f-dest-chips">${pfChips('dests', o, pfCode)}</div></fieldset>
     <fieldset class="f-group"><legend>去程出發時間（當地）</legend>
       ${range('去程出發時間', 'outFrom', 'outTo', 'time')}${presets('out')}
       <small class="f-hint">${o.stopsKnown ? 'Google 回傳的去程航班時刻；沒有時刻的方案不會被排除' : '這批方案沒有去程航班時刻'}</small></fieldset>
+    <fieldset class="f-group"><legend>其他</legend>
+      <label class="f-chip ${PF.hideNoSave ? 'on' : ''}"><input type="checkbox" data-k="hideNoSave" ${PF.hideNoSave ? 'checked' : ''}>隱藏「不划算」</label>
+      <label class="f-chip ${PF.cheap ? 'on' : ''}"><input type="checkbox" data-k="cheap" ${PF.cheap ? 'checked' : ''}>同航線偏便宜</label>
+      <label class="f-chip ${PF.favOnly ? 'on' : ''}"><input type="checkbox" data-k="favOnly" ${PF.favOnly ? 'checked' : ''}>只看收藏 ★</label></fieldset>
+    <details class="f-more"${moreOpen ? ' open' : ''}><summary>更多條件 <small>時段名稱、出發地、回程時間、日期、旅行天數</small></summary>
+    <fieldset class="f-group"><legend>時間段名稱</legend><div class="f-chips">${pfChips('labels', o)}</div></fieldset>
+    <fieldset class="f-group"><legend>出發地</legend><div class="f-chips">${pfChips('origins', o, pfCode)}</div></fieldset>
     <fieldset class="f-group"><legend>回程出發時間（當地）</legend>
       ${range('回程出發時間', 'retFrom', 'retTo', 'time', o.retKnown ? '' : 'disabled')}${o.retKnown ? presets('ret') : ''}
       <small class="f-hint">${o.retKnown ? `${o.retKnown} 個方案有回程航班時刻；其餘回程航班要到訂票網站選，不會被排除` : 'Google 結果只含去程航班時刻，回程時刻要到訂票網站才選得到，所以這批方案無法依回程時間篩選 —— 請用下面的回程日期'}</small></fieldset>
     <fieldset class="f-group"><legend>去程日期</legend>${range('去程日期', 'outDateFrom', 'outDateTo', 'date')}</fieldset>
     <fieldset class="f-group"><legend>回程日期</legend>${range('回程日期', 'retDateFrom', 'retDateTo', 'date')}</fieldset>
-    <fieldset class="f-group"><legend>去程轉機</legend>
-      <div class="f-seg" role="radiogroup">${[['any', '不限'], ['0', '直飛'], ['1', '最多 1 轉']].map(([v, n]) => `<label class="f-chip ${PF.stops === v ? 'on' : ''}"><input type="radio" name="f-stops" data-k="stops" value="${v}" ${PF.stops === v ? 'checked' : ''}>${n}</label>`).join('')}</div></fieldset>
-    <fieldset class="f-group"><legend>航空公司（去程）</legend><div class="f-chips f-scroll">${pfChips('airlines', o)}</div></fieldset>
     <fieldset class="f-group"><legend>旅行天數</legend>
       ${range('旅行天數', 'daysMin', 'daysMax', 'number', 'min="1" step="1"', `最少 ${o.daysLo}`, `最多 ${o.daysHi}`)}</fieldset>
-    <fieldset class="f-group"><legend>其他</legend>
-      <label class="f-chip ${PF.hideNoSave ? 'on' : ''}"><input type="checkbox" data-k="hideNoSave" ${PF.hideNoSave ? 'checked' : ''}>隱藏「不划算」</label>
-      <label class="f-chip ${PF.favOnly ? 'on' : ''}"><input type="checkbox" data-k="favOnly" ${PF.favOnly ? 'checked' : ''}>只看收藏 ★</label></fieldset>`;
+    </details>`;
 }
 
 // write PF into the inputs (not the one being typed in)
@@ -2711,6 +2731,7 @@ function wirePlanFilters() {
     if (t.type === 'range') panel.querySelectorAll(`input.num[data-k="${k}"]`).forEach(n => { if (n !== t) n.value = PF[k] == null ? '' : PF[k]; });
     later();
   });
+  panel.addEventListener('toggle', e => { if (e.target.classList?.contains('f-more')) pfMoreOpen = e.target.open; }, true);
   panel.addEventListener('click', e => {
     const b = e.target.closest('.f-preset');
     if (!b) return;
@@ -4042,8 +4063,8 @@ function updatePairHint() {
   const on = new Set([...document.querySelectorAll('.strategies input:checked')].map(c => c.value));
   const el = document.getElementById('pair-hint');
   const need = on.has('back_to_back_4leg') ? 3 : on.has('reverse') ? 2 : 0;
-  el.innerHTML = !need ? '' : '反向票＋倒買法：一次購票、兩趟旅程 (備選時段兩兩配對)；外站四腿票：一張票串起三趟旅程 (單買初段＋第1段、第2+3段、第4段＋單買最後一段)，三個時段依序當旅程 1、2、3。'
-    + (slots.length < need ? ` <b style="color:var(--warn)">目前只有 ${slots.length} 個時段，請再加入 ${need - slots.length} 個 (例如 春節 + 清明 + 端午)。</b>` : '');
+  el.innerHTML = !need || slots.length >= need ? ''
+    : `<b style="color:var(--warn)">目前只有 ${slots.length} 個時段，勾選的買法需要至少 ${need} 個不重疊的時段，請再加入 ${need - slots.length} 個（例如 春節 + 清明 + 端午）。</b>`;
 }
 
 function toggleFourLegExtras() {
@@ -4209,6 +4230,13 @@ function wireHelp() {
   });
 }
 
+function wireIntro() {
+  const box = document.getElementById('intro'), KEY = 'sff.intro.v1';
+  let seen = false;
+  try { seen = localStorage.getItem(KEY) === '1'; } catch { /* no storage: show it every time */ }
+  box.hidden = seen;
+  document.getElementById('intro-ok').addEventListener('click', () => { box.hidden = true; try { localStorage.setItem(KEY, '1'); } catch {} });
+}
 function wireTheme() {
   const btn = document.getElementById('theme-btn');
   const KEY = 'sff.theme.v1';
@@ -5093,6 +5121,7 @@ function init() {
   wirePickers();
   wireSlots();
   wireHistory();
+  wireIntro();
   applyPrefs();
   syncRangeLabels();
   toggleFourLegExtras();
