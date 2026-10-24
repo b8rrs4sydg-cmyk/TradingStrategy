@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:27:35+00:00",
+ "at": "2026-10-24T06:33:37+00:00",
  "publishes": {
-  "ok": 2,
+  "ok": 3,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2065,
+ "fares_saved": 2074,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 http front door: ['https://mere-correction-cognitive-invisible.trycloudflare.com', 'https://bbb67b6f9cd928.lhr.life']",
@@ -24,6 +24,9 @@
   "06:26:28 request received: rid mvm0m59wvvtg2.1 1 keys",
   "06:26:28 handle mvm0m59wvvtg2.1: first_chunk=True total=1",
   "06:27:17 request mvm0m59wvvtg2.1: chunk of 1 keys done in 49s; paths {'http': 20, 'browser-crashed': 2}, browser waits 2 max 49s sum 95s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 2, 'blocked': 0, 'tries': 23, 'empty': 3}, audit 2/2 agree",
-  "06:27:18 request mvm0m59wvvtg2.1: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "06:27:18 request mvm0m59wvvtg2.1: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "06:32:19 rtc x745gdqnkr: answered",
+  "06:32:31 request received: rid mvm0uckasil89.1 20 keys",
+  "06:32:31 handle mvm0uckasil89.1: first_chunk=True total=20"
  ]
 }

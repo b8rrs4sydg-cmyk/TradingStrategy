@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T05:36:46+00:00",
+ "generated_at": "2026-10-24T06:33:48+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -997,6 +997,28 @@
     ]
    ]
   },
+  "mc|FUK-TPE-2027-01-04|TPE-NGO-2027-02-25": {
+   "price": 21799,
+   "first": {
+    "dep": "2027-01-04T17:05:00+09:00",
+    "arr": "2027-01-04T23:40:00+08:00",
+    "stops": 1,
+    "airline": "Jin Air"
+   },
+   "by_airline": {
+    "Jin Air": 21799,
+    "Asiana Airlines": 22880,
+    "Korean Air": 23295,
+    "STARLUX Airlines": 24086
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     21799
+    ]
+   ]
+  },
   "mc|FUK-TPE-2027-02-14|TPE-HKG-2027-02-27|HKG-TPE-2027-03-01|TPE-HKT-2027-06-09": {
    "price": 89102,
    "first": {
@@ -1010,6 +1032,27 @@
     [
      "2026-10-18",
      89102
+    ]
+   ]
+  },
+  "mc|FUK-TPE-2027-02-16|TPE-NRT-2027-02-25": {
+   "price": 14614,
+   "first": {
+    "dep": "2027-02-16T12:10:00+09:00",
+    "arr": "2027-02-16T13:50:00+08:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 14614,
+    "EVA Air": 18249,
+    "China Airlines": 40852
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     14614
     ]
    ]
   },
@@ -1394,6 +1437,26 @@
     [
      "2026-10-18",
      72807
+    ]
+   ]
+  },
+  "mc|HKG-TPE-2027-01-02|TPE-NRT-2027-02-04|NRT-TPE-2027-02-14|TPE-HKG-2027-02-25": {
+   "price": 50081,
+   "first": {
+    "dep": "2027-01-02T10:20:00+08:00",
+    "arr": "2027-01-02T12:05:00+08:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 50081,
+    "Cathay Pacific": 84743
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     50081
     ]
    ]
   },
@@ -2178,6 +2241,25 @@
     [
      "2026-10-18",
      79589
+    ]
+   ]
+  },
+  "mc|HND-TPE-2027-01-04|TPE-KIX-2027-02-25": {
+   "price": 21396,
+   "first": {
+    "dep": "2027-01-04T20:35:00+09:00",
+    "arr": "2027-01-05T14:25:00+08:00",
+    "stops": 1,
+    "airline": "ANA, EVA Air"
+   },
+   "by_airline": {
+    "Asiana Airlines": 23015
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     21396
     ]
    ]
   },
@@ -3135,6 +3217,28 @@
     ]
    ]
   },
+  "mc|KIX-TPE-2027-02-16|TPE-NRT-2027-02-27": {
+   "price": 16673,
+   "first": {
+    "dep": "2027-02-16T12:45:00+09:00",
+    "arr": "2027-02-16T15:00:00+08:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 16673,
+    "STARLUX Airlines": 16899,
+    "Jetstar": 18147,
+    "EVA Air": 19142
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     16673
+    ]
+   ]
+  },
   "mc|KIX-TPE-2027-03-01|TPE-CEB-2027-04-29|CEB-TPE-2027-05-02|TPE-BKK-2027-06-09": {
    "price": 46186,
    "first": {
@@ -4015,6 +4119,28 @@
     ]
    ]
   },
+  "mc|NRT-TPE-2027-02-16|TPE-FUK-2027-02-25": {
+   "price": 17549,
+   "first": {
+    "dep": "2027-02-16T13:00:00+09:00",
+    "arr": "2027-02-16T16:05:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 17549,
+    "STARLUX Airlines": 17591,
+    "JAL": 27273,
+    "China Airlines": 51370
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     17549
+    ]
+   ]
+  },
   "mc|NRT-TPE-2027-03-01|TPE-HKG-2027-04-29|HKG-TPE-2027-05-02|TPE-BKK-2027-06-09": {
    "price": 44835,
    "first": {
@@ -4605,6 +4731,27 @@
     ]
    ]
   },
+  "mc|TPE-FUK-2026-12-31|NRT-TPE-2027-03-01": {
+   "price": 18502,
+   "first": {
+    "dep": "2026-12-31T16:25:00+08:00",
+    "arr": "2026-12-31T19:35:00+09:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 18502,
+    "EVA Air": 21046,
+    "Cathay Pacific": 23288
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18502
+    ]
+   ]
+  },
   "mc|TPE-FUK-2027-01-01|HND-TPE-2027-02-28": {
    "price": 19976,
    "first": {
@@ -4618,6 +4765,27 @@
     [
      "2026-10-18",
      19976
+    ]
+   ]
+  },
+  "mc|TPE-FUK-2027-01-02|NRT-TPE-2027-03-02": {
+   "price": 18425,
+   "first": {
+    "dep": "2027-01-02T07:45:00+08:00",
+    "arr": "2027-01-02T11:00:00+09:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 18425,
+    "China Airlines": 20052,
+    "EVA Air": 20896
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18425
     ]
    ]
   },
@@ -4637,6 +4805,28 @@
     ]
    ]
   },
+  "mc|TPE-KIX-2026-12-31|FUK-TPE-2027-02-28": {
+   "price": 14147,
+   "first": {
+    "dep": "2026-12-31T07:40:00+08:00",
+    "arr": "2026-12-31T11:10:00+09:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 14147,
+    "Asiana Airlines": 16353,
+    "China Airlines": 18562,
+    "Cathay Pacific": 19848
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     14147
+    ]
+   ]
+  },
   "mc|TPE-KIX-2027-04-02|NRT-TPE-2027-06-12": {
    "price": 19546,
    "first": {
@@ -4650,6 +4840,28 @@
     [
      "2026-10-17",
      19546
+    ]
+   ]
+  },
+  "mc|TPE-NGO-2026-12-31|FUK-TPE-2027-02-28": {
+   "price": 14033,
+   "first": {
+    "dep": "2026-12-31T15:30:00+08:00",
+    "arr": "2026-12-31T19:05:00+09:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 14033,
+    "China Airlines": 17930,
+    "Cathay Pacific": 22398,
+    "Jin Air": 23528
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     14033
     ]
    ]
   },
@@ -4685,6 +4897,50 @@
     ]
    ]
   },
+  "mc|TPE-NGO-2027-01-02|HND-TPE-2027-02-15": {
+   "price": 23598,
+   "first": {
+    "dep": "2027-01-02T12:25:00+08:00",
+    "arr": "2027-01-02T20:40:00+09:00",
+    "stops": 1,
+    "airline": "Korean Air"
+   },
+   "by_airline": {
+    "Korean Air": 23598,
+    "China Airlines": 31469,
+    "JAL": 41235,
+    "Cathay Pacific": 51189
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     23598
+    ]
+   ]
+  },
+  "mc|TPE-NRT-2026-12-31|KIX-TPE-2027-03-02": {
+   "price": 11920,
+   "first": {
+    "dep": "2026-12-31T12:10:00+08:00",
+    "arr": "2026-12-31T16:25:00+09:00",
+    "stops": 0,
+    "airline": "Thai Lion Air"
+   },
+   "by_airline": {
+    "Thai Lion Air": 11920,
+    "Jetstar": 16871,
+    "STARLUX Airlines": 17821,
+    "China Airlines": 18395
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11920
+    ]
+   ]
+  },
   "mc|TPE-NRT-2027-02-04|KIX-TPE-2027-06-13": {
    "price": 25569,
    "first": {
@@ -4714,6 +4970,28 @@
     [
      "2026-10-17",
      23805
+    ]
+   ]
+  },
+  "mc|TPE-NRT-2027-02-06|KIX-TPE-2027-02-28": {
+   "price": 22974,
+   "first": {
+    "dep": "2027-02-06T16:45:00+08:00",
+    "arr": "2027-02-06T20:55:00+09:00",
+    "stops": 0,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 22974,
+    "China Airlines": 27949,
+    "EVA Air": 28744,
+    "STARLUX Airlines": 34828
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     22974
     ]
    ]
   },
