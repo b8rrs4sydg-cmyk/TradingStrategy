@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:43:01+00:00",
+ "at": "2026-10-24T09:13:03+00:00",
  "publishes": {
-  "ok": 6,
+  "ok": 8,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2046,
+ "fares_saved": 2049,
  "log": [
   "05:35:04 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:10 http front door: ['https://save-area-river-repairs.trycloudflare.com', 'https://571753091d17b0.lhr.life']",
@@ -33,6 +33,16 @@
   "06:42:13 request received: rid mvm175immovu6.0 6 keys",
   "06:42:13 handle mvm175immovu6.0: first_chunk=True total=6",
   "06:42:14 request mvm175immovu6.0: chunk of 6 keys done in 1s; paths {'http': 51, 'browser-crashed': 16}, browser waits 16 max 144s sum 1451s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 51, 'miss': 16, 'blocked': 0, 'tries': 51, 'empty': 0}, audit 3/3 agree",
-  "06:42:14 request mvm175immovu6.0: final sent (6/6); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
+  "06:42:14 request mvm175immovu6.0: final sent (6/6); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "06:47:20 rtc 97d9l81qyq: answered",
+  "09:11:43 rtc jb07q3alta: answered",
+  "09:11:55 request received: rid mvm6jbuogh2k4.0 1 keys",
+  "09:11:55 handle mvm6jbuogh2k4.0: first_chunk=True total=1",
+  "09:11:56 request mvm6jbuogh2k4.0: chunk of 1 keys done in 1s; paths {'http': 52, 'browser-crashed': 16}, browser waits 16 max 144s sum 1451s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 52, 'miss': 16, 'blocked': 0, 'tries': 52, 'empty': 0}, audit 3/3 agree",
+  "09:11:58 request mvm6jbuogh2k4.0: final sent (1/1); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "09:12:00 request received: rid mvm6jt60zat1p.0 2 keys",
+  "09:12:00 handle mvm6jt60zat1p.0: first_chunk=True total=2",
+  "09:12:01 request mvm6jt60zat1p.0: chunk of 2 keys done in 0s; paths {'http': 54, 'browser-crashed': 16}, browser waits 16 max 144s sum 1451s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 54, 'miss': 16, 'blocked': 0, 'tries': 54, 'empty': 0}, audit 3/3 agree",
+  "09:12:02 request mvm6jt60zat1p.0: final sent (2/2); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}"
  ]
 }

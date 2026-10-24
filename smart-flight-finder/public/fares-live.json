@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T06:43:01+00:00",
+ "generated_at": "2026-10-24T09:13:03+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -7871,6 +7871,27 @@
     [
      "2026-10-18",
      13038
+    ]
+   ]
+  },
+  "ow|HND|TPE|2027-01-19": {
+   "price": 4325,
+   "first": {
+    "dep": "2027-01-19T05:45:00+09:00",
+    "arr": "2027-01-19T08:55:00+08:00",
+    "stops": 0,
+    "airline": "Peach Aviation"
+   },
+   "by_airline": {
+    "Peach Aviation": 4325,
+    "Tigerair Taiwan": 5356,
+    "Hong Kong Express": 8954
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     4325
     ]
    ]
   },
@@ -15910,6 +15931,28 @@
     ]
    ]
   },
+  "ow|TSA|HND|2027-01-15": {
+   "price": 12282,
+   "first": {
+    "dep": "2027-01-15T18:25:00+08:00",
+    "arr": "2027-01-15T22:15:00+09:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 12282,
+    "ANA": 13971,
+    "JAL": 14292,
+    "EVA Air": 15279
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     12282
+    ]
+   ]
+  },
   "ow|TSA|HND|2027-02-10": {
    "price": 9053,
    "first": {
@@ -22571,6 +22614,28 @@
     [
      "2026-10-19",
      18543
+    ]
+   ]
+  },
+  "rt|RMQ|NRT|2027-01-15|2027-01-19": {
+   "price": 12772,
+   "first": {
+    "dep": "2027-01-15T10:10:00+08:00",
+    "arr": "2027-01-15T19:05:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 12772,
+    "Jin Air": 16468,
+    "Korean Air": 17809,
+    "STARLUX Airlines": 23882
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     12772
     ]
    ]
   },
