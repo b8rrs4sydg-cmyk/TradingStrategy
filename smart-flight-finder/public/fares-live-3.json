@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T11:30:01+00:00",
+ "generated_at": "2026-10-24T11:36:03+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -24616,6 +24616,26 @@
     ]
    ]
   },
+  "rt|RMQ|PQC|2027-02-09|2027-02-14": {
+   "price": 17917,
+   "first": {
+    "dep": "2027-02-09T10:10:00+08:00",
+    "arr": "2027-02-09T18:05:00+07:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 17917,
+    "Jin Air": 32034
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     17917
+    ]
+   ]
+  },
   "rt|RMQ|PQC|2027-02-10|2027-02-14": {
    "price": 13602,
    "first": {
@@ -40420,11 +40440,6 @@
   "rt|RMQ|OKA|2026-12-04|2027-02-14": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
-  },
-  "rt|RMQ|PQC|2027-02-09|2027-02-14": {
-   "status": "timeout",
-   "at": "2026-10-24",
    "n": 1
   },
   "rt|RMQ|PUS|2026-11-06|2026-12-27": {
