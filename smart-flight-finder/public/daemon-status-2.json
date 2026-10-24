@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T11:57:39+00:00",
+ "at": "2026-10-24T12:08:10+00:00",
  "publishes": {
-  "ok": 8,
+  "ok": 9,
   "r429": 0,
   "fail": 0
  },
@@ -80,6 +80,9 @@
   "11:54:56 request received: rid mvmccxrj837se.2 23 keys",
   "11:54:56 handle mvmccxrj837se.2: first_chunk=True total=23",
   "11:57:21 request mvmccxrj837se.2: chunk of 23 keys done in 145s; paths {'http': 56, 'browser-crashed': 177}, browser waits 177 max 189s sum 13795s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 56, 'miss': 76, 'blocked': 0, 'tries': 200, 'empty': 144}, audit 6/6 agree",
-  "11:57:22 request mvmccxrj837se.2: final sent (23/23); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}"
+  "11:57:22 request mvmccxrj837se.2: final sent (23/23); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "12:07:43 rtc wz6gk4yikm: answered",
+  "12:07:56 request received: rid mvmctnwxkba1z.2 14 keys",
+  "12:07:56 handle mvmctnwxkba1z.2: first_chunk=True total=14"
  ]
 }
