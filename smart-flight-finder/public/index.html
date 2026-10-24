@@ -853,6 +853,9 @@
   #lookup-all { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px }
   #lookup-all[hidden] { display: none }
   .la-btn { padding: 6px 14px; min-height: 34px; font-size: 13px }
+  .refresh-stale { appearance: none; border: 1px solid var(--warn); background: none; color: var(--warn); border-radius: 999px; padding: 4px 12px; font: 600 12.5px/1.2 var(--font-body); cursor: pointer }
+  .refresh-stale:hover { background: color-mix(in srgb, var(--warn) 14%, transparent) }
+  .refresh-stale:disabled { opacity: .55; cursor: default }
   .cal-wrap { margin: 0 0 10px }
   .cal-wrap > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 6px 0 }
   .cal { max-width: 360px; margin: 4px auto 6px; padding: 10px; border: 1px solid var(--border); border-radius: 14px; background: var(--card) }
@@ -1000,6 +1003,7 @@
     .f-actives > * { flex: none }
     #f-shown { order: 4; flex: 1 1 auto; width: auto; margin: 0; font-size: 12.5px; color: var(--fg-muted) }
     @media (max-width: 380px) { .controls .btn-ghost { font-size: 12px; padding: 0 3px } }
+    #filters:not(:has(#f-count:not([hidden]))) #f-shown { display: none }
     #f-reset { order: 5; min-height: 0; padding: 4px 8px; background: none; color: var(--crit); font-size: 12.5px; font-weight: 600 }
     .plan { border-radius: 14px; grid-template-columns: 1fr; position: relative; margin-bottom: 8px }
     .plan .sel-col { position: absolute; top: 6px; right: 6px; z-index: 2; flex-direction: row; align-items: center; gap: 2px; padding: 0; background: none; border: 0 }
@@ -1259,6 +1263,7 @@
         <span>· 展開 <b id="r-matrix">0</b> 個日期組合</span>
         <span id="r-cache-pill" class="pill pill-cache" hidden></span>
         <span id="r-fare-pill" class="pill pill-fare" hidden></span>
+        <button type="button" id="btn-refresh-stale" class="refresh-stale" hidden></button>
         <span id="r-sel-pill" class="pill pill-sel" hidden></span>
       </div>
       <div class="controls">
@@ -3130,6 +3135,7 @@ function renderResults() {
   document.getElementById('notices').innerHTML = (state.result.notices || []).map(n => `<div class="notice">${escapeHtml(n)} <a href="wiki.html#algo" target="_blank" rel="noopener">原理</a></div>`).join('');
   renderHeatmap(plans.filter(p => !(p.trips || []).length && pfPass(p)));
   renderPlanList(visible, grouped.groups);
+  renderRefreshStale(visible);
   renderCompare(visible);
 
   const empty = document.getElementById('empty');
@@ -3145,6 +3151,36 @@ function renderResults() {
   document.getElementById('plan-list').hidden = visible.length === 0;
 }
 
+/* one button to re-check every old price in the list (the plans on screen, best first, at most one lookup request) */
+function staleKeysOf(plans) {
+  const keys = new Set();
+  for (const p of plans) {
+    if (fareAgeDays(p) < STALE_DAYS) continue;
+    for (const t of p.tickets) { const id = String(t.offer_id || ''); if (id.startsWith('gf-')) keys.add(id.slice(3)); }
+    if (keys.size >= LOOKUP_MAX) break;
+  }
+  return [...keys].slice(0, LOOKUP_MAX);
+}
+function renderRefreshStale(plans) {
+  const b = document.getElementById('btn-refresh-stale');
+  if (!b) return;
+  const keys = staleKeysOf(plans);
+  const busy = live.rid && live.doc?.status !== 'done' && live.doc?.status !== 'error';
+  b.hidden = !keys.length || !(live.ready || live.ntfyOk);
+  b.disabled = !!busy;
+  b.dataset.keys = JSON.stringify(keys);
+  b.textContent = busy ? '↻ 查詢中…' : `↻ 重查過期票價（${keys.length}）`;
+  b.title = `把清單裡超過 ${STALE_DAYS} 天沒更新的 ${keys.length} 筆票價請爬蟲重查，查到後結果自動更新`;
+}
+function wireRefreshStale() {
+  const b = document.getElementById('btn-refresh-stale');
+  b.addEventListener('click', () => {
+    let keys = []; try { keys = JSON.parse(b.dataset.keys || '[]'); } catch {}
+    if (!keys.length) return;
+    b.disabled = true; b.textContent = '↻ 查詢中…';
+    startLookup(keys);
+  });
+}
 function renderHeatmap(plans) {
   const box = document.getElementById('heatmap');
   const matrix = new Map();
@@ -5210,6 +5246,7 @@ function init() {
   wireHelp();
   wireTheme();
   wireQuickChips();
+  wireRefreshStale();
   tryLoadSharedPlan();
   // No auto-run: a search starts only when the user presses 搜尋.
 }
