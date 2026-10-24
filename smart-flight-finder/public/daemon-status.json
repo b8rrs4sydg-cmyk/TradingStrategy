@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T15:35:00+00:00",
+ "at": "2026-10-24T20:33:53+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,13 +7,12 @@
  },
  "fares_saved": 2243,
  "log": [
-  "15:33:21 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:33:25 git retry 0: b\"-46zevd': is at 643de94a46a4c3c2cef9d3aa8644a7fcab8c4062 but expected 0dfd595b0adf02a807a4a403fb16935bfeeac338)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "15:33:30 http front door: ['https://highlighted-easy-medieval-focus.trycloudflare.com', 'https://b8bfdf7c574042.lhr.life']",
-  "15:33:30 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:34:30 request received: rid httptest1792856070 20 keys",
-  "15:34:30 handle httptest1792856070: first_chunk=True total=20",
-  "15:34:32 request httptest1792856070: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:34:32 request httptest1792856070: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:32:17 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:32:23 http front door: ['https://expects-incl-projection-mood.trycloudflare.com', 'https://eef89a42fe815c.lhr.life']",
+  "20:32:23 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:33:27 request received: rid httptest1792874006 20 keys",
+  "20:33:27 handle httptest1792874006: first_chunk=True total=20",
+  "20:33:28 request httptest1792874006: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "20:33:29 request httptest1792874006: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
