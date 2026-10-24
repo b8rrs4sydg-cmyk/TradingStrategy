@@ -1,18 +1,18 @@
 {
- "at": "2026-10-23T22:41:47+00:00",
+ "at": "2026-10-24T00:46:42+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2153,
+ "fares_saved": 2156,
  "log": [
-  "22:40:12 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "22:40:17 http front door: ['https://optimum-latex-harold-justin.trycloudflare.com', 'https://121b1d475f6466.lhr.life']",
-  "22:40:17 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "22:41:21 request received: rid httptest1792795281 20 keys",
-  "22:41:21 handle httptest1792795281: first_chunk=True total=20",
-  "22:41:26 request httptest1792795281: chunk of 20 keys done in 5s; paths {'http': 17, 'browser': 3}, browser waits 3 max 4s sum 12s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 17, 'miss': 3, 'blocked': 0, 'tries': 26, 'empty': 9}, audit 0/0 agree",
-  "22:41:28 request httptest1792795281: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:45:06 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:45:12 http front door: ['https://these-britain-pioneer-university.trycloudflare.com', 'https://1b70694c49271b.lhr.life']",
+  "00:45:12 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:46:16 request received: rid httptest1792802775 20 keys",
+  "00:46:16 handle httptest1792802775: first_chunk=True total=20",
+  "00:46:17 request httptest1792802775: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:46:18 request httptest1792802775: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
