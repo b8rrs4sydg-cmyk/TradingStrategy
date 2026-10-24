@@ -3134,9 +3134,13 @@ function pricePosition(plan) {
   if (!first) return null;
   const list = routeRoundTrips(first.origin, first.destination);
   if (list.length < 8) return null;
-  const below = list.filter(p => p < plan.total_cost).length / list.length;   // share of this route's fares that are cheaper
-  if (below <= 0.15) return { text: `同航線最便宜的 ${Math.max(1, Math.round(below * 100))}%`, cls: 'good' };
-  if (below >= 0.85) return { text: `同航線偏貴（比 ${Math.round(below * 100)}% 的票價高）`, cls: '' };
+  const n = list.length;
+  const below = list.filter(p => p < plan.total_cost).length / n;   // share of this route's fares that are cheaper than this plan
+  const above = list.filter(p => p > plan.total_cost).length / n;   // share that cost more
+  const route = `${first.origin}↔${first.destination}`;
+  const tip = `資料庫裡 ${route} 共 ${n} 筆來回票價（含其他日期），這張票比其中 ${Math.round(above * 100)}% 便宜、比 ${Math.round(below * 100)}% 貴；只標示特別便宜或特別貴的`;
+  if (below <= 0.15) return { text: below === 0 ? '同航線最低價' : `比 ${Math.round(above * 100)}% 的同航線票價便宜`, cls: 'good', tip };
+  if (below >= 0.85) return { text: `比 ${Math.round(below * 100)}% 的同航線票價貴`, cls: '', tip };
   return null;
 }
 
@@ -3150,7 +3154,7 @@ function planFactsHtml(plan) {
   const ch = favChange(plan);
   if (ch) bits.push(`<span class="${ch.diff < 0 ? 'good' : ''}" title="${ch.at} 收藏時的價格">收藏時 ${ch.was.toLocaleString()} → 現在 ${ch.now.toLocaleString()}（${ch.diff < 0 ? '降' : '漲'} ${Math.abs(ch.diff).toLocaleString()}）</span>`);
   const pos = pricePosition(plan);
-  if (pos) bits.push(`<span class="${pos.cls}" title="和資料庫裡同機場、所有日期的來回票價比較">${pos.text}</span>`);
+  if (pos) bits.push(`<span class="${pos.cls}" title="${escapeHtml(pos.tip)}">${pos.text}</span>`);
   return bits.length ? `<div class="facts">${bits.join('')}</div>` : '';
 }
 
