@@ -1,18 +1,24 @@
 {
- "at": "2026-10-24T00:53:15+00:00",
+ "at": "2026-10-24T06:21:34+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 1,
   "r429": 0,
   "fail": 0
  },
  "fares_saved": 2065,
  "log": [
-  "00:51:39 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:51:45 http front door: ['https://dept-computer-other-york.trycloudflare.com', 'https://955f194eb9998c.lhr.life']",
-  "00:51:45 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:52:49 request received: rid httptest1792803168 20 keys",
-  "00:52:49 handle httptest1792803168: first_chunk=True total=20",
-  "00:52:50 request httptest1792803168: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "00:52:51 request httptest1792803168: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:34:56 http front door: ['https://mere-correction-cognitive-invisible.trycloudflare.com', 'https://bbb67b6f9cd928.lhr.life']",
+  "05:34:56 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:36:00 request received: rid httptest1792820160 20 keys",
+  "05:36:00 handle httptest1792820160: first_chunk=True total=20",
+  "05:36:02 request httptest1792820160: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "05:36:02 request httptest1792820160: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "06:19:31 rtc vv139tq8i2: answered",
+  "06:19:43 request received: rid mvm0dw0trbvsw.1 1 keys",
+  "06:19:43 handle mvm0dw0trbvsw.1: first_chunk=True total=1",
+  "06:19:58 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "06:20:39 request mvm0dw0trbvsw.1: chunk of 1 keys done in 56s; paths {'http': 20, 'browser-crashed': 1}, browser waits 1 max 47s sum 47s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 2/2 agree",
+  "06:20:40 request mvm0dw0trbvsw.1: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
  ]
 }
