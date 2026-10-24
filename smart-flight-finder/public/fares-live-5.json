@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:15:47+00:00",
+ "generated_at": "2026-10-24T12:17:19+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -7954,6 +7954,28 @@
     ]
    ]
   },
+  "ow|HKG|TPE|2027-09-19": {
+   "price": 4629,
+   "first": {
+    "dep": "2027-09-19T14:05:00+08:00",
+    "arr": "2027-09-19T15:55:00+08:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 4629,
+    "EVA Air": 5501,
+    "Cathay Pacific": 7080,
+    "STARLUX Airlines": 7953
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     4629
+    ]
+   ]
+  },
   "ow|HKT|RMQ|2026-12-06": {
    "price": 6453,
    "first": {
@@ -12007,6 +12029,28 @@
     [
      "2026-10-22",
      6693
+    ]
+   ]
+  },
+  "ow|SIN|TPE|2027-09-19": {
+   "price": 3497,
+   "first": {
+    "dep": "2027-09-19T01:00:00+08:00",
+    "arr": "2027-09-19T05:45:00+08:00",
+    "stops": 0,
+    "airline": "Scoot"
+   },
+   "by_airline": {
+    "Scoot": 3497,
+    "Cebu Pacific": 6063,
+    "China Airlines": 6819,
+    "STARLUX Airlines": 10238
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     3497
     ]
    ]
   },
@@ -37376,7 +37420,6 @@
   "ow|HAN|TSA|2027-10-18",
   "ow|HIJ|TSA|2027-09-19",
   "ow|HKG|RMQ|2027-12-27",
-  "ow|HKG|TPE|2027-09-19",
   "ow|HKT|RMQ|2027-10-16",
   "ow|HKT|RMQ|2027-10-18",
   "ow|HKT|TPE|2027-10-17",
@@ -37521,7 +37564,6 @@
   "ow|SHA|TSA|2027-12-28",
   "ow|SHA|TSA|2028-01-01",
   "ow|SHA|TSA|2028-01-02",
-  "ow|SIN|TPE|2027-09-19",
   "ow|SIN|TSA|2027-12-27",
   "ow|SZX|RMQ|2027-03-01",
   "ow|SZX|RMQ|2027-04-10",
