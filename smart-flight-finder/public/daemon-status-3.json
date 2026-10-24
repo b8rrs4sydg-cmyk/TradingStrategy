@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:30:01+00:00",
+ "at": "2026-10-24T11:45:12+00:00",
  "publishes": {
-  "ok": 5,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2286,
+ "fares_saved": 2287,
  "log": [
   "10:33:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:55 http front door: ['https://cultures-fog-depending-unlike.trycloudflare.com', 'https://30dcb49416743f.lhr.life']",
@@ -48,6 +48,17 @@
   "11:28:14 request received: rid mvmbekvi22ogv.3 14 keys",
   "11:28:14 handle mvmbekvi22ogv.3: first_chunk=True total=14",
   "11:29:52 request mvmbekvi22ogv.3: chunk of 14 keys done in 98s; paths {'http': 63, 'browser-crashed': 50}, browser waits 50 max 97s sum 3169s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 63, 'miss': 31, 'blocked': 0, 'tries': 114, 'empty': 51}, audit 3/3 agree",
-  "11:29:52 request mvmbekvi22ogv.3: final sent (14/14); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
+  "11:29:52 request mvmbekvi22ogv.3: final sent (14/14); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:35:12 rtc oblt9wuwl6: answered",
+  "11:35:25 request received: rid mvmbnu5v86tnk.3 21 keys",
+  "11:35:25 handle mvmbnu5v86tnk.3: first_chunk=True total=21",
+  "11:37:48 request mvmbnu5v86tnk.3: chunk of 21 keys done in 143s; paths {'http': 64, 'browser-crashed': 70}, browser waits 70 max 130s sum 4832s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 45, 'blocked': 0, 'tries': 137, 'empty': 73}, audit 3/3 agree",
+  "11:37:48 request mvmbnu5v86tnk.3: final sent (21/21); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:37:54 request received: rid mvmbrdwfr0cz6.2 19 keys",
+  "11:37:54 handle mvmbrdwfr0cz6.2: first_chunk=True total=19",
+  "11:40:18 request mvmbrdwfr0cz6.2: chunk of 19 keys done in 144s; paths {'http': 64, 'browser-crashed': 89}, browser waits 89 max 144s sum 6418s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 64, 'miss': 45, 'blocked': 0, 'tries': 137, 'empty': 73}, audit 3/3 agree",
+  "11:40:20 request mvmbrdwfr0cz6.2: final sent (19/19); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:43:40 request received: rid mvmbys4jahkw0.2 14 keys",
+  "11:43:40 handle mvmbys4jahkw0.2: first_chunk=True total=14"
  ]
 }
