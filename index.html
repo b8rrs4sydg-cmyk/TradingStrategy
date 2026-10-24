@@ -838,6 +838,7 @@
   .strategies label > span { display: block }
   .s-desc { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--fg-muted); line-height: 1.45 }
   .f-more { grid-column: 1 / -1; margin-top: 6px; border-top: 1px solid var(--border); padding-top: 6px }
+  .f-more-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px 20px; padding: 6px 0 4px }
   .f-more > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 8px 0; list-style-position: inside }
   .f-more > summary small { font-weight: 400; color: var(--fg-faint); margin-left: 6px }
   .cal-wrap { margin: 0 0 10px }
@@ -1021,7 +1022,12 @@
     .f-sheet-head .btn-primary { padding: 8px 20px; min-height: 36px }
     .f-sheet .f-panel { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 16px 28px; border-top: 0 }
     body.sheet-open #sheet-backdrop { display: block; position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.42) }
-    .f-chip { min-height: 36px; font-size: 14px }
+    .f-chip { min-height: 36px; font-size: 14px; max-width: 100%; white-space: normal; text-align: left }
+    .f-panel, .f-more-body { grid-template-columns: minmax(0, 1fr) }
+    .f-sheet .f-panel { overflow-x: hidden }
+    .f-range { flex-wrap: nowrap } .f-range .num { min-width: 0; width: 100% }
+    .f-chips.f-scroll { max-height: 11em; -webkit-mask-image: linear-gradient(#000 82%, transparent); mask-image: linear-gradient(#000 82%, transparent) }
+    .f-more > summary small { display: block; margin: 2px 0 0 }
     .f-preset { min-height: 36px }
 
     /* database as a list of rows, not a 7-column table */
@@ -2598,6 +2604,7 @@ function pfPanelHtml(o) {
       <label class="f-chip ${PF.cheap ? 'on' : ''}"><input type="checkbox" data-k="cheap" ${PF.cheap ? 'checked' : ''}>同航線偏便宜</label>
       <label class="f-chip ${PF.favOnly ? 'on' : ''}"><input type="checkbox" data-k="favOnly" ${PF.favOnly ? 'checked' : ''}>只看收藏 ★</label></fieldset>
     <details class="f-more"${moreOpen ? ' open' : ''}><summary>更多條件 <small>時段名稱、出發地、回程時間、日期、旅行天數</small></summary>
+    <div class="f-more-body">
     <fieldset class="f-group"><legend>時間段名稱</legend><div class="f-chips">${pfChips('labels', o)}</div></fieldset>
     <fieldset class="f-group"><legend>出發地</legend><div class="f-chips">${pfChips('origins', o, pfCode)}</div></fieldset>
     <fieldset class="f-group"><legend>回程出發時間（當地）</legend>
@@ -2607,6 +2614,8 @@ function pfPanelHtml(o) {
     <fieldset class="f-group"><legend>回程日期</legend>${range('回程日期', 'retDateFrom', 'retDateTo', 'date')}</fieldset>
     <fieldset class="f-group"><legend>旅行天數</legend>
       ${range('旅行天數', 'daysMin', 'daysMax', 'number', 'min="1" step="1"', `最少 ${o.daysLo}`, `最多 ${o.daysHi}`)}</fieldset>
+    
+    </div>
     </details>`;
 }
 

@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:47:58+00:00",
+ "at": "2026-10-24T10:01:33+00:00",
  "publishes": {
-  "ok": 10,
+  "ok": 12,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2215,
+ "fares_saved": 2267,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 git retry 0: b\"-46zevd': is at 5f4a019bd1ecd3a261bf10b948b6715190ea3816 but expected a8e636007280e86ae999cb1929cdf69f3e68816c)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -62,6 +62,24 @@
   "09:46:34 request received: rid mvm7s863gn7yg.0 15 keys",
   "09:46:34 handle mvm7s863gn7yg.0: first_chunk=True total=15",
   "09:47:34 request mvm7s863gn7yg.0: chunk of 15 keys done in 60s; paths {'http': 99, 'browser-crashed': 19, 'browser': 10}, browser waits 29 max 152s sum 1819s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 99, 'miss': 29, 'blocked': 0, 'tries': 106, 'empty': 7}, audit 4/4 agree",
-  "09:47:35 request mvm7s863gn7yg.0: final sent (15/15); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
+  "09:47:35 request mvm7s863gn7yg.0: final sent (15/15); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "09:53:15 rtc kgqc3rf6za: answered",
+  "09:54:18 request received: rid mvm80q6erqxi3.6 13 keys",
+  "09:54:18 handle mvm80q6erqxi3.6: first_chunk=True total=13",
+  "09:55:22 request mvm80q6erqxi3.6: chunk of 13 keys done in 63s; paths {'http': 108, 'browser-crashed': 23, 'browser': 10}, browser waits 33 max 152s sum 2011s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 108, 'miss': 33, 'blocked': 0, 'tries': 115, 'empty': 7}, audit 4/4 agre",
+  "09:55:24 request mvm80q6erqxi3.6: final sent (13/13); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "09:58:47 request received: rid mvm87xf6csfjl.5 5 keys",
+  "09:58:47 handle mvm87xf6csfjl.5: first_chunk=True total=5",
+  "09:58:48 request mvm87xf6csfjl.5: chunk of 5 keys done in 1s; paths {'http': 113, 'browser-crashed': 23, 'browser': 10}, browser waits 33 max 152s sum 2011s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 113, 'miss': 33, 'blocked': 0, 'tries': 120, 'empty': 7}, audit 4/4 agree",
+  "09:58:50 request mvm87xf6csfjl.5: final sent (5/5); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "09:59:58 rtc rvnwfyj48b: answered",
+  "10:00:11 request received: rid mvm89dljkl9ao.5 20 keys",
+  "10:00:11 handle mvm89dljkl9ao.5: first_chunk=True total=20",
+  "10:00:18 request mvm89dljkl9ao.5: chunk of 20 keys done in 7s; paths {'http': 133, 'browser-crashed': 23, 'browser': 10}, browser waits 33 max 152s sum 2011s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 133, 'miss': 33, 'blocked': 0, 'tries': 140, 'empty': 7}, audit 7/7 agree",
+  "10:00:20 request mvm89dljkl9ao.5: final sent (20/20); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
+  "10:00:55 request received: rid mvm8apnz38gja.0 18 keys",
+  "10:00:55 handle mvm8apnz38gja.0: first_chunk=True total=18",
+  "10:01:11 request mvm8apnz38gja.0: chunk of 18 keys done in 16s; paths {'http': 149, 'browser-crashed': 23, 'browser': 12}, browser waits 35 max 152s sum 2016s; ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 149, 'miss': 35, 'blocked': 0, 'tries': 156, 'empty': 7}, audit 9/9 agre",
+  "10:01:11 request mvm8apnz38gja.0: final sent (18/18); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}"
  ]
 }
