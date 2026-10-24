@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T12:35:31+00:00",
+ "at": "2026-10-24T12:37:02+00:00",
  "publishes": {
   "ok": 11,
   "r429": 0,
@@ -106,6 +106,8 @@
   "12:32:11 rtc 12a22h7v5g: answered",
   "12:33:24 request received: rid mvmdqsed3vgyo.5 18 keys",
   "12:33:24 handle mvmdqsed3vgyo.5: first_chunk=True total=18",
-  "12:33:57 git retry 0: b\"-46zevd': is at f91d5f8f0a65fc5a8279665cf05a70b74280288e but expected 34831d261a75dacff2b04eff32b76132f227968e)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\""
+  "12:33:57 git retry 0: b\"-46zevd': is at f91d5f8f0a65fc5a8279665cf05a70b74280288e but expected 34831d261a75dacff2b04eff32b76132f227968e)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "12:36:22 request mvmdqsed3vgyo.5: chunk of 18 keys done in 178s; paths {'http': 68, 'browser-crashed': 263, 'browser': 1}, browser waits 264 max 193s sum 20469s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 68, 'miss': 130, 'blocked': 0, 'tries': 267, 'empty': 199}, audit 2/2 ",
+  "12:36:23 request mvmdqsed3vgyo.5: final sent (18/18); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}"
  ]
 }
