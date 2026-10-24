@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="2027 台灣連假機票湊票引擎 — 彈性日期矩陣、反向票、外站四段票與 MCT 檢查，純前端 demo">
-<style>:root{padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>:root{padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{margin:0;font:14px/1.5 system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Smart Flight Finder</title>
 
 <style>
@@ -427,6 +427,10 @@
   .f-chip:focus-within { outline: 2px solid var(--brand); outline-offset: 1px }
   .f-range { display: flex; align-items: center; gap: 8px }
   .f-range .num { flex: 1; min-width: 0 }
+  .f-rl { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px }
+  .f-range:has(.f-rl) { align-items: flex-end } .f-range:has(.f-rl) > span { padding-bottom: 12px }
+  .f-rl small { font-size: 11px; color: var(--fg-faint) }
+  .f-rl .num { width: 100%; min-height: 44px }
   .f-range .num:disabled { opacity: .5 }
   .f-slider { width: 100%; margin: 8px 0 0; accent-color: var(--brand) }
   .f-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px }
@@ -2582,8 +2586,10 @@ let pfMoreOpen = false;
 const pfMoreActive = () => PF.labels.size || PF.origins.size || PF.retFrom != null || PF.retTo != null || PF.outDateFrom || PF.outDateTo || PF.retDateFrom || PF.retDateTo || PF.daysMin != null || PF.daysMax != null;
 function pfPanelHtml(o) {
   const moreOpen = pfMoreOpen || pfMoreActive();
+  // time / date boxes are blank when empty on iOS, so they carry a small 從 / 到 caption
+  const cap = (type, t, html) => ['time', 'date'].includes(type) ? `<label class="f-rl"><small>${t}</small>${html}</label>` : html;
   const range = (title, kMin, kMax, type, extra = '', phLo = '', phHi = '') => `
-    <div class="f-range"><input class="num" type="${type}" data-k="${kMin}" aria-label="${title} 起" placeholder="${phLo}" ${extra}><span>~</span><input class="num" type="${type}" data-k="${kMax}" aria-label="${title} 迄" placeholder="${phHi}" ${extra}></div>`;
+    <div class="f-range">${cap(type, '從', `<input class="num" type="${type}" data-k="${kMin}" aria-label="${title} 起" placeholder="${phLo}" ${extra}>`)}<span>~</span>${cap(type, '到', `<input class="num" type="${type}" data-k="${kMax}" aria-label="${title} 迄" placeholder="${phHi}" ${extra}>`)}</div>`;
   const presets = which => `<div class="f-presets">${PF_PRESETS.map(([n, a, b]) => `<button type="button" class="f-preset" data-preset="${which}:${a}-${b}">${n} <small>${pfClock(a)}–${a === 1080 ? '24:00' : pfClock(b)}</small></button>`).join('')}</div>`;
   const destCount = o.all.dests.size;
   return `
