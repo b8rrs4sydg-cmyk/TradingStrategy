@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:06:51+00:00",
+ "at": "2026-10-24T10:08:23+00:00",
  "publishes": {
   "ok": 8,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2223,
+ "fares_saved": 2233,
  "log": [
   "06:40:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "06:41:05 http front door: ['https://stephen-fat-broad-div.trycloudflare.com', 'https://298438ca5aa964.lhr.life']",
@@ -49,6 +49,10 @@
   "10:04:02 handle mvm8ecumtl6d9.2: first_chunk=True total=13",
   "10:06:31 rtc lyom9mrn1e: answered",
   "10:06:45 request received: rid mvm8ht50bgb20.2 11 keys",
-  "10:06:45 handle mvm8ht50bgb20.2: first_chunk=True total=11"
+  "10:06:45 handle mvm8ht50bgb20.2: first_chunk=True total=11",
+  "10:07:01 request mvm8ecumtl6d9.2: chunk of 13 keys done in 178s; paths {'http': 84, 'browser': 13, 'browser-crashed': 19}, browser waits 32 max 153s sum 1786s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 84, 'miss': 33, 'blocked': 0, 'tries': 97, 'empty': 13}, audit 2/2 agree",
+  "10:07:03 request mvm8ecumtl6d9.2: final sent (13/13); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "10:07:46 request mvm8ht50bgb20.2: chunk of 11 keys done in 61s; paths {'http': 84, 'browser': 13, 'browser-crashed': 20}, browser waits 33 max 153s sum 1834s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 84, 'miss': 33, 'blocked': 0, 'tries': 97, 'empty': 13}, audit 2/2 agree",
+  "10:07:48 request mvm8ht50bgb20.2: final sent (11/11); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}"
  ]
 }
