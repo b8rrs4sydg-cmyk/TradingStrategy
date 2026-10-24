@@ -958,12 +958,12 @@
     .quick-chips::-webkit-scrollbar { display: none }
     .qchip { flex: none }
     .plan-cta .cta-btn:first-child { flex: 1 1 100% }
-    /* the list comes first; hints, the date matrix and the like follow it */
+    /* the price matrix sits above the list (it scrolls inside a short box); hints follow the list */
     #results:not([hidden]) { display: flex; flex-direction: column }
     #results > * { order: 5 }
     #results > .results-nav { order: 0 } #results > .results-head { order: 1 } #results > #filters { order: 2 } #results > #live-lookup { order: 3 }
     #results > #compare { order: 4 } #results > #g-tools { order: 6 } #results > #plan-list { order: 7 } #results > #empty { order: 8 }
-    #results > #lookup-all { order: 20 } #results > #notices { order: 21 } #results > #heatmap { order: 22 }
+    #results > #heatmap { order: 5; max-height: 330px; overflow: auto; -webkit-overflow-scrolling: touch } #results > #lookup-all { order: 20 } #results > #notices { order: 21 }
     .p-title b { font-size: 18px }
     .plan.has-title .plan-head .explain { display: none }
 

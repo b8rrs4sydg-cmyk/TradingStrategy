@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:04:30+00:00",
+ "at": "2026-10-24T10:07:34+00:00",
  "publishes": {
-  "ok": 13,
+  "ok": 14,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2137,
+ "fares_saved": 2138,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 http front door: ['https://mere-correction-cognitive-invisible.trycloudflare.com', 'https://bbb67b6f9cd928.lhr.life']",
@@ -77,6 +77,11 @@
   "10:01:48 request mvm89dljkl9ao.0: final sent (18/18); ntfy publishes {'ok': 12, 'r429': 0, 'fail': 0}",
   "10:03:50 rtc wqp43teydu: answered",
   "10:04:02 request received: rid mvm8ecumtl6d9.1 18 keys",
-  "10:04:02 handle mvm8ecumtl6d9.1: first_chunk=True total=18"
+  "10:04:02 handle mvm8ecumtl6d9.1: first_chunk=True total=18",
+  "10:06:32 rtc cvujr8olrb: answered",
+  "10:06:45 request received: rid mvm8ht50bgb20.1 15 keys",
+  "10:06:45 handle mvm8ht50bgb20.1: first_chunk=True total=15",
+  "10:07:13 request mvm8ecumtl6d9.1: chunk of 18 keys done in 191s; paths {'http': 79, 'browser-crashed': 53, 'browser': 14}, browser waits 67 max 152s sum 4310s; ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 79, 'miss': 49, 'blocked': 0, 'tries': 83, 'empty': 4}, audit 4/4 agree",
+  "10:07:14 request mvm8ecumtl6d9.1: final sent (18/18); ntfy publishes {'ok': 14, 'r429': 0, 'fail': 0}"
  ]
 }
