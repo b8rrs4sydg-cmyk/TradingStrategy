@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:22:21+00:00",
+ "at": "2026-10-24T11:23:53+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2277,
+ "fares_saved": 2284,
  "log": [
   "10:33:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:55 http front door: ['https://cultures-fog-depending-unlike.trycloudflare.com', 'https://30dcb49416743f.lhr.life']",
@@ -34,6 +34,10 @@
   "11:20:42 rtc qjjxd140ry: answered",
   "11:20:44 git retry 1: b\"-46zevd': is at b6dfa6b62d8522d5c7df9b83cdcb348502a99b66 but expected 3f1e9bd01b7b7cf6acb7825384bd925d7a3f0ed4)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:20:54 request received: rid mvmb57cajznaw.3 23 keys",
-  "11:20:54 handle mvmb57cajznaw.3: first_chunk=True total=23"
+  "11:20:54 handle mvmb57cajznaw.3: first_chunk=True total=23",
+  "11:22:31 request mvmb57cajznaw.3: chunk of 23 keys done in 97s; paths {'http': 54, 'browser-crashed': 9}, browser waits 9 max 83s sum 500s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 54, 'miss': 9, 'blocked': 0, 'tries': 65, 'empty': 11}, audit 3/3 agree",
+  "11:22:32 request mvmb57cajznaw.3: final sent (23/23); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:22:46 request received: rid mvmb7y6f41bhv.3 19 keys",
+  "11:22:46 handle mvmb7y6f41bhv.3: first_chunk=True total=19"
  ]
 }
