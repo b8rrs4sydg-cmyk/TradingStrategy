@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T05:36:38+00:00",
+ "generated_at": "2026-10-24T06:35:12+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -1370,6 +1370,28 @@
     [
      "2026-10-18",
      87544
+    ]
+   ]
+  },
+  "mc|FUK-TPE-2027-02-16|TPE-KIX-2027-02-25": {
+   "price": 16587,
+   "first": {
+    "dep": "2027-02-16T12:10:00+09:00",
+    "arr": "2027-02-16T13:50:00+08:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 16587,
+    "EVA Air": 17314,
+    "Korean Air": 22880,
+    "China Airlines": 43345
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     16587
     ]
    ]
   },
@@ -3284,6 +3306,28 @@
     ]
    ]
   },
+  "mc|KIX-TPE-2027-01-02|TPE-HND-2027-02-27": {
+   "price": 21238,
+   "first": {
+    "dep": "2027-01-02T10:30:00+09:00",
+    "arr": "2027-01-02T15:55:00+08:00",
+    "stops": 1,
+    "airline": "Asiana Airlines"
+   },
+   "by_airline": {
+    "Asiana Airlines": 21238,
+    "China Airlines": 50849,
+    "Korean Air": 60454,
+    "Cathay Pacific": 70487
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     21238
+    ]
+   ]
+  },
   "mc|KIX-TPE-2027-01-03|TPE-CEB-2027-02-26|CEB-TPE-2027-03-01|TPE-SGN-2027-06-09": {
    "price": 59082,
    "first": {
@@ -4918,6 +4962,25 @@
     ]
    ]
   },
+  "mc|TPE-HND-2027-01-01|FUK-TPE-2027-02-16": {
+   "price": 22863,
+   "first": {
+    "dep": "2027-01-01T17:05:00+08:00",
+    "arr": "2027-01-01T23:25:00+09:00",
+    "stops": 1,
+    "airline": "Asiana Airlines"
+   },
+   "by_airline": {
+    "Asiana Airlines": 22863
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     22863
+    ]
+   ]
+  },
   "mc|TPE-HND-2027-01-02|NRT-TPE-2027-02-28": {
    "price": 25526,
    "first": {
@@ -4995,6 +5058,28 @@
     [
      "2026-10-17",
      17496
+    ]
+   ]
+  },
+  "mc|TPE-NGO-2027-01-01|FUK-TPE-2027-03-02": {
+   "price": 19192,
+   "first": {
+    "dep": "2027-01-01T14:55:00+08:00",
+    "arr": "2027-01-01T18:30:00+09:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 19192,
+    "China Airlines": 19267,
+    "Jin Air": 21728,
+    "Cathay Pacific": 23298
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     19192
     ]
    ]
   },
@@ -33991,6 +34076,21 @@
  ],
  "missing_v": 2,
  "status": {
+  "mc|BKK-TPE-2027-01-02|TPE-HND-2027-02-04|HND-TPE-2027-02-14|TPE-BKK-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|BKK-TPE-2027-01-02|TPE-NGO-2027-02-04|NGO-TPE-2027-02-14|TPE-ICN-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|BKK-TPE-2027-01-02|TPE-NRT-2027-02-04|NRT-TPE-2027-02-14|TPE-BKK-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|FUK-TPE-2026-11-15|TPE-HKG-2026-11-20|HKG-TPE-2026-11-22|TPE-NRT-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -34101,6 +34201,11 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|HKG-TPE-2027-01-02|TPE-HND-2027-02-04|HND-TPE-2027-02-14|TPE-ICN-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|HND-TPE-2026-11-08|TPE-HKG-2026-11-13|HKG-TPE-2026-11-15|TPE-HND-2026-11-20": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -34171,6 +34276,11 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|HND-TPE-2027-01-04|TPE-NGO-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|ICN-TPE-2026-11-08|TPE-HKG-2026-12-04|HKG-TPE-2026-12-06|TPE-ICN-2026-12-24": {
    "status": "parse_error",
    "at": "2026-10-23",
@@ -34239,6 +34349,21 @@
   "mc|ICN-TPE-2026-12-06|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-FUK-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|ICN-TPE-2027-01-02|TPE-FUK-2027-02-04|FUK-TPE-2027-02-14|TPE-ICN-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2027-01-02|TPE-HND-2027-02-04|HND-TPE-2027-02-14|TPE-ICN-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2027-01-02|TPE-NGO-2027-02-04|NGO-TPE-2027-02-14|TPE-ICN-2027-02-25": {
+   "status": "timeout",
+   "at": "2026-10-24",
    "n": 1
   },
   "mc|KIX-TPE-2026-11-08|TPE-DMK-2026-11-20|DMK-TPE-2026-11-22|TPE-HND-2027-02-10": {
