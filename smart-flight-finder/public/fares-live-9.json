@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T06:38:05+00:00",
+ "generated_at": "2026-10-24T06:39:37+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -4939,6 +4939,26 @@
     ]
    ]
   },
+  "mc|TPE-HND-2027-01-02|NGO-TPE-2027-03-02": {
+   "price": 29312,
+   "first": {
+    "dep": "2027-01-02T15:50:00+08:00",
+    "arr": "2027-01-02T22:10:00+09:00",
+    "stops": 1,
+    "airline": "JAL"
+   },
+   "by_airline": {
+    "JAL": 29312,
+    "Asiana Airlines": 50733
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     29312
+    ]
+   ]
+  },
   "mc|TPE-KIX-2026-12-31|FUK-TPE-2027-03-01": {
    "price": 19153,
    "first": {
@@ -5101,6 +5121,28 @@
     ]
    ]
   },
+  "mc|TPE-NGO-2027-01-01|NRT-TPE-2027-02-16": {
+   "price": 20561,
+   "first": {
+    "dep": "2027-01-01T07:40:00+08:00",
+    "arr": "2027-01-01T11:10:00+09:00",
+    "stops": 0,
+    "airline": "China Airlines"
+   },
+   "by_airline": {
+    "China Airlines": 20561,
+    "Cathay Pacific": 22749,
+    "JAL": 23797,
+    "STARLUX Airlines": 23834
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     20561
+    ]
+   ]
+  },
   "mc|TPE-NGO-2027-01-02|FUK-TPE-2027-03-02": {
    "price": 19426,
    "first": {
@@ -5146,6 +5188,28 @@
     [
      "2026-10-18",
      19315
+    ]
+   ]
+  },
+  "mc|TPE-NRT-2026-12-31|KIX-TPE-2027-02-28": {
+   "price": 11320,
+   "first": {
+    "dep": "2026-12-31T12:10:00+08:00",
+    "arr": "2026-12-31T16:25:00+09:00",
+    "stops": 0,
+    "airline": "Thai Lion Air"
+   },
+   "by_airline": {
+    "Thai Lion Air": 11320,
+    "China Airlines": 15487,
+    "EVA Air": 17294,
+    "Jetstar": 17451
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11320
     ]
    ]
   },
@@ -35977,11 +36041,6 @@
   "mc|SHA-TPE-2026-12-20|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-PVG-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
-   "n": 1
-  },
-  "mc|TPE-NGO-2027-01-01|NRT-TPE-2027-02-16": {
-   "status": "timeout",
-   "at": "2026-10-24",
    "n": 1
   },
   "ow|MMY|RMQ|2026-11-08": {
