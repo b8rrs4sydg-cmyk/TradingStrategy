@@ -1,11 +1,31 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:25:25+00:00",
+ "generated_at": "2026-10-24T12:34:27+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
  "fares": {
+  "mc|BKI-TPE-2027-02-14|TPE-MNL-2027-04-29|MNL-TPE-2027-05-02|TPE-BKI-2027-09-15": {
+   "price": 56010,
+   "first": {
+    "dep": "2027-02-14T05:20:00+08:00",
+    "arr": "2027-02-14T14:10:00+08:00",
+    "stops": 1,
+    "airline": "Malaysia Airlines"
+   },
+   "by_airline": {
+    "Malaysia Airlines": 56010,
+    "China Southern": 70942
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     56010
+    ]
+   ]
+  },
   "mc|BKK-TPE-2026-12-26|TPE-FUK-2027-01-01|FUK-TPE-2027-01-02|TPE-ICN-2027-01-14": {
    "price": 73046,
    "first": {
@@ -1065,6 +1085,44 @@
     ]
    ]
   },
+  "mc|DMK-TPE-2027-02-14|TPE-MNL-2027-06-09|MNL-TPE-2027-06-13|TPE-BKI-2027-09-15": {
+   "price": 88509,
+   "first": {
+    "dep": "2027-02-14T08:50:00+07:00",
+    "arr": "2027-02-14T21:25:00+08:00",
+    "stops": 2,
+    "airline": "Bangkok Airways, EVA Air"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     88509
+    ]
+   ]
+  },
+  "mc|DPS-TPE-2027-05-02|TPE-HAN-2027-06-09|HAN-TPE-2027-06-13|TPE-BKI-2027-09-15": {
+   "price": 90304,
+   "by_airline": {
+    "Philippine Airlines": 90304,
+    "EVA Air": 94768,
+    "China Southern": 101787,
+    "Cathay Pacific": 119115
+   },
+   "first": {
+    "dep": "2027-05-02T00:55:00+08:00",
+    "arr": "2027-05-02T08:40:00+08:00",
+    "stops": 1,
+    "airline": "Philippine Airlines"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     90304
+    ]
+   ]
+  },
   "mc|FUK-TPE-2026-12-06|TPE-HKG-2026-12-11|HKG-TPE-2026-12-13|TPE-PVG-2026-12-18": {
    "price": 62607,
    "by_airline": {
@@ -1306,6 +1364,26 @@
     [
      "2026-10-18",
      42265
+    ]
+   ]
+  },
+  "mc|FUK-TPE-2027-05-02|TPE-MNL-2027-06-09|MNL-TPE-2027-06-13|TPE-BKI-2027-09-15": {
+   "price": 53618,
+   "first": {
+    "dep": "2027-05-02T12:20:00+09:00",
+    "arr": "2027-05-02T13:45:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 53618,
+    "Cathay Pacific": 108236
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     53618
     ]
    ]
   },
@@ -2280,6 +2358,22 @@
     [
      "2026-10-24",
      23619
+    ]
+   ]
+  },
+  "mc|HND-TPE-2027-02-14|TPE-MNL-2027-04-29|MNL-TPE-2027-05-02|TPE-GMP-2027-06-09": {
+   "price": 84462,
+   "first": {
+    "dep": "2027-02-14T07:15:00+09:00",
+    "arr": "2027-02-14T12:55:00+08:00",
+    "stops": 1,
+    "airline": "ANA and EVA Air"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     84462
     ]
    ]
   },
@@ -3329,6 +3423,28 @@
     ]
    ]
   },
+  "mc|KUL-TPE-2027-02-14|TPE-MNL-2027-04-29|MNL-TPE-2027-05-02|TPE-BKI-2027-09-15": {
+   "price": 47858,
+   "first": {
+    "dep": "2027-02-14T12:55:00+08:00",
+    "arr": "2027-02-14T17:35:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 47858,
+    "Malaysia Airlines": 60907,
+    "Cathay Pacific": 86145,
+    "THAI": 92606
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     47858
+    ]
+   ]
+  },
   "mc|KUL-TPE-2027-03-01|TPE-SGN-2027-04-29|SGN-TPE-2027-05-02|TPE-MFM-2027-06-09": {
    "price": 53419,
    "first": {
@@ -4181,6 +4297,25 @@
     ]
    ]
   },
+  "mc|NRT-TPE-2027-02-14|TPE-MNL-2027-04-29|MNL-TPE-2027-05-02|TPE-GMP-2027-06-09": {
+   "price": 92104,
+   "first": {
+    "dep": "2027-02-14T15:30:00+09:00",
+    "arr": "2027-02-14T18:35:00+08:00",
+    "stops": 0,
+    "airline": "Cathay Pacific"
+   },
+   "by_airline": {
+    "Cathay Pacific": 92104
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     92104
+    ]
+   ]
+  },
   "mc|NRT-TPE-2027-02-15|TPE-NGO-2027-02-25": {
    "price": 18548,
    "first": {
@@ -4241,6 +4376,27 @@
     ]
    ]
   },
+  "mc|PEN-TPE-2027-02-14|TPE-HKG-2027-06-09|HKG-TPE-2027-06-13|TPE-BKI-2027-09-15": {
+   "price": 39946,
+   "first": {
+    "dep": "2027-02-14T06:30:00+08:00",
+    "arr": "2027-02-14T14:10:00+08:00",
+    "stops": 1,
+    "airline": "Malaysia Airlines"
+   },
+   "by_airline": {
+    "Malaysia Airlines": 39946,
+    "Cathay Pacific": 91936,
+    "THAI": 105711
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     39946
+    ]
+   ]
+  },
   "mc|PVG-TPE-2026-11-22|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-PVG-2026-12-24": {
    "price": 67055,
    "by_airline": {
@@ -4282,6 +4438,46 @@
     [
      "2026-10-23",
      75890
+    ]
+   ]
+  },
+  "mc|RGN-TPE-2027-02-14|TPE-HKG-2027-04-29|HKG-TPE-2027-05-02|TPE-GMP-2027-06-09": {
+   "price": 84474,
+   "first": {
+    "dep": "2027-02-14T09:25:00+06:30",
+    "arr": "2027-02-14T17:15:00+08:00",
+    "stops": 1,
+    "airline": "THAI, EVA Air"
+   },
+   "by_airline": {
+    "THAI": 116831,
+    "China Southern": 148544
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     84474
+    ]
+   ]
+  },
+  "mc|RGN-TPE-2027-02-14|TPE-MNL-2027-04-29|MNL-TPE-2027-05-02|TPE-RGN-2027-06-09": {
+   "price": 69639,
+   "first": {
+    "dep": "2027-02-14T09:25:00+06:30",
+    "arr": "2027-02-14T17:15:00+08:00",
+    "stops": 1,
+    "airline": "THAI, EVA Air"
+   },
+   "by_airline": {
+    "China Southern": 94320,
+    "THAI": 103691
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     69639
     ]
    ]
   },
