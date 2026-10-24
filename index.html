@@ -820,6 +820,25 @@
   .cta-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 0; background: var(--brand); color: #fff; font: 600 14px/1 var(--font-body); text-decoration: none; cursor: pointer }
   .cta-btn.ghost { background: var(--card-sunken); color: var(--fg) }
   .plan.open .plan-cta .cta-btn.ghost { display: none }
+  .cal-wrap { margin: 0 0 10px }
+  .cal-wrap > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 6px 0 }
+  .cal { max-width: 360px; margin: 4px auto 6px; padding: 10px; border: 1px solid var(--border); border-radius: 14px; background: var(--card) }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px }
+  .cal-head b { font-size: 15px }
+  .cal-nav { appearance: none; border: 0; background: none; color: var(--fg); font-size: 22px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer }
+  .cal-nav:disabled { opacity: .25; cursor: default }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 2px; text-align: center }
+  .cal-grid > span { font-size: 12px; color: var(--fg-faint); padding: 4px 0 }
+  .cd { appearance: none; border: 0; background: none; color: var(--fg); font: 500 14px/1 var(--font-body); height: 38px; margin: 0 auto; width: 100%; max-width: 44px; border-radius: 50%; position: relative; cursor: pointer }
+  .cd:disabled { color: var(--fg-faint); opacity: .4; cursor: default }
+  .cd.hol::after { content: ''; position: absolute; left: 50%; bottom: 3px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--accent, var(--brand)) }
+  .cd.today { box-shadow: inset 0 0 0 1px var(--border-strong) }
+  .cd.in { background: var(--brand-wash); color: var(--brand-ink); border-radius: 0 }
+  .cd.in.start { border-radius: 999px 0 0 999px } .cd.in.end { border-radius: 0 999px 999px 0 } .cd.in.start.end { border-radius: 999px }
+  .cd.in.start, .cd.in.end { background: var(--brand); color: #fff }
+  .cd.pend { background: var(--brand); color: #fff }
+  .cal-hint { margin-top: 6px; font-size: 12.5px; color: var(--fg-muted); text-align: center }
+  .cal-cancel { appearance: none; border: 0; background: none; color: var(--brand); font: 600 12.5px/1 var(--font-body); padding: 4px 6px; cursor: pointer }
   /* ===== Phone: an app, not a long web page. Tab bar, one view at a time, sheets, 44px targets. ===== */
   .tabbar, #sheet-backdrop, .results-nav, .f-sheet-head { display: none }
   .f-sheet { display: contents }
@@ -1047,7 +1066,11 @@
 
       <fieldset id="slots-fs" class="slots-fs">
         <legend>備選時段</legend>
-        <div class="hint">點選連假加入備選時段</div>
+        <details id="cal-wrap" class="cal-wrap" open>
+          <summary>用日曆選日期</summary>
+          <div id="cal" class="cal"></div>
+        </details>
+        <div class="hint">或點選連假加入備選時段</div>
         <div id="holiday-chips" class="chips"></div>
         <div id="slot-history" class="slot-history" hidden></div>
         <div id="slot-sum" class="slot-sum"></div>
@@ -3687,10 +3710,54 @@ function slotDays(s) {
   if (!isRoundTrip() || !s.ret || s.ret < s.depart) return 1;
   return Math.round((Date.parse(`${s.ret}T00:00:00Z`) - Date.parse(`${s.depart}T00:00:00Z`)) / 864e5) + 1;
 }
+/* ---- calendar: tap the leaving day, then the returning day (one tap for a one-way trip); tap a marked day to remove that slot ---- */
+const CAL = { y: 0, m: 0, pending: null };
+const isoDay = (y, m, d) => `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+function calToday() { const t = new Date(); return isoDay(t.getFullYear(), t.getMonth(), t.getDate()); }
+function renderCalendar() {
+  const box = document.getElementById('cal');
+  if (!box) return;
+  if (!CAL.y) { const t = new Date(); CAL.y = t.getFullYear(); CAL.m = t.getMonth(); }
+  const today = calToday(), rt = isRoundTrip();
+  const first = new Date(Date.UTC(CAL.y, CAL.m, 1)), lead = first.getUTCDay();
+  const days = new Date(Date.UTC(CAL.y, CAL.m + 1, 0)).getUTCDate();
+  const now = new Date(), minIdx = now.getFullYear() * 12 + now.getMonth(), idx = CAL.y * 12 + CAL.m;
+  const slotOf = d => slots.find(s => d >= s.depart && d <= (rt && s.ret >= s.depart ? s.ret : s.depart));
+  const holiday = d => LEAVE_STRATEGIES_2027.some(h => d >= h.start && d <= h.end);
+  let cells = '';
+  for (let i = 0; i < lead; i++) cells += '<span></span>';
+  for (let d = 1; d <= days; d++) {
+    const iso = isoDay(CAL.y, CAL.m, d), sl = slotOf(iso), past = iso < today;
+    const edge = sl && (iso === sl.depart ? ' start' : '') + (rt && iso === sl.ret ? ' end' : '');
+    cells += `<button type="button" class="cd${sl ? ' in' : ''}${edge || ''}${iso === CAL.pending ? ' pend' : ''}${holiday(iso) ? ' hol' : ''}${iso === today ? ' today' : ''}" data-d="${iso}" ${past ? 'disabled' : ''} aria-pressed="${!!sl}" aria-label="${iso}">${d}</button>`;
+  }
+  const hint = !rt ? '點一下加入出發日；點已標示的日期可移除'
+    : CAL.pending ? `出發 ${CAL.pending.slice(5).replace('-', '/')}，再點回程日` : '先點出發日，再點回程日；點已標示的日期可移除';
+  box.innerHTML = `<div class="cal-head"><button type="button" class="cal-nav" data-nav="-1" aria-label="上個月" ${idx <= minIdx ? 'disabled' : ''}>‹</button><b>${CAL.y} 年 ${CAL.m + 1} 月</b><button type="button" class="cal-nav" data-nav="1" aria-label="下個月" ${idx >= minIdx + 14 ? 'disabled' : ''}>›</button></div>
+    <div class="cal-grid"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>${cells}</div>
+    <div class="cal-hint">${hint}${CAL.pending ? ' <button type="button" class="cal-cancel" data-cancel>取消</button>' : ''}</div>`;
+}
+function wireCalendar() {
+  document.getElementById('cal').addEventListener('click', e => {
+    const nav = e.target.closest('[data-nav]');
+    if (nav) { const t = CAL.y * 12 + CAL.m + Number(nav.dataset.nav); CAL.y = Math.floor(t / 12); CAL.m = t % 12; renderCalendar(); return; }
+    if (e.target.closest('[data-cancel]')) { CAL.pending = null; renderCalendar(); return; }
+    const b = e.target.closest('button.cd');
+    if (!b || b.disabled) return;
+    const d = b.dataset.d, rt = isRoundTrip();
+    const hit = slots.findIndex(s => d >= s.depart && d <= (rt && s.ret >= s.depart ? s.ret : s.depart));
+    if (hit >= 0) { slots.splice(hit, 1); CAL.pending = null; renderSlots(); return; }
+    const add = (depart, ret) => { slots.push({ id: nextSlotId++, label: '', holidayKey: null, depart, ret, departFlex: bulkFlex(), retFlex: bulkFlex() }); CAL.pending = null; renderSlots(); };
+    if (!rt) { add(d, d); return; }
+    if (!CAL.pending || d < CAL.pending) { CAL.pending = d; renderCalendar(); return; }
+    add(CAL.pending, d);
+  });
+}
 function renderSlotSum() {
   const box = document.getElementById('slot-sum'), fs = document.getElementById('slots-fs');
   if (!box || !fs) return;
   fs.classList.toggle('empty', slots.length === 0);
+  renderCalendar();
   const days = slots.reduce((n, s) => n + slotDays(s), 0);
   const editing = fs.classList.contains('editing');
   box.innerHTML = slots.length === 0 ? '' : `<div class="ss-head"><b>你的空檔</b><span>${slots.length} 段 · ${days} 天</span><button type="button" class="ss-edit" data-edit aria-expanded="${editing}">${editing ? '完成' : '修改'}</button></div>
@@ -3833,6 +3900,7 @@ function wireSlots() {
     renderSlots();
   });
   document.getElementById('f-trip').addEventListener('change', renderSlots);
+  wireCalendar();
   document.getElementById('slot-sum').addEventListener('click', e => {
     const rm = e.target.closest('button[data-rm]');
     if (rm) { const i = slots.findIndex(x => x.id === Number(rm.dataset.rm)); if (i >= 0) slots.splice(i, 1); renderSlots(); return; }
