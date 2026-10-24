@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:21:28+00:00",
+ "at": "2026-10-24T06:27:29+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2073,
+ "fares_saved": 2074,
  "log": [
   "05:34:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:55 http front door: ['https://popular-infringement-grass-ellen.trycloudflare.com', 'https://00af10b67dcf6d.lhr.life']",
@@ -18,6 +18,11 @@
   "06:19:43 request received: rid mvm0dw0trbvsw.7 1 keys",
   "06:19:43 handle mvm0dw0trbvsw.7: first_chunk=True total=1",
   "06:20:35 request mvm0dw0trbvsw.7: chunk of 1 keys done in 52s; paths {'http': 20, 'browser-crashed': 1}, browser waits 1 max 45s sum 45s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 1, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 1/1 agree",
-  "06:20:37 request mvm0dw0trbvsw.7: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "06:20:37 request mvm0dw0trbvsw.7: final sent (1/1); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "06:25:57 rtc dulyksr58m: answered",
+  "06:26:28 request received: rid mvm0m59wvvtg2.7 1 keys",
+  "06:26:28 handle mvm0m59wvvtg2.7: first_chunk=True total=1",
+  "06:26:28 request mvm0m59wvvtg2.7: chunk of 1 keys done in 1s; paths {'http': 21, 'browser-crashed': 1}, browser waits 1 max 45s sum 45s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 1, 'blocked': 0, 'tries': 22, 'empty': 1}, audit 1/1 agree",
+  "06:26:29 request mvm0m59wvvtg2.7: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
