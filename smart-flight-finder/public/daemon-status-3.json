@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:35:06+00:00",
+ "at": "2026-10-24T09:29:23+00:00",
  "publishes": {
-  "ok": 4,
+  "ok": 9,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2123,
+ "fares_saved": 2154,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -20,6 +20,29 @@
   "06:32:19 rtc eywva56zm9: answered",
   "06:32:31 request received: rid mvm0uckasil89.2 16 keys",
   "06:32:31 handle mvm0uckasil89.2: first_chunk=True total=16",
-  "06:34:57 rtc 2xf2ho7par: answered"
+  "06:34:57 rtc 2xf2ho7par: answered",
+  "06:35:23 request mvm0uckasil89.2: chunk of 16 keys done in 172s; paths {'http': 27, 'browser-crashed': 9}, browser waits 9 max 137s sum 798s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 9, 'blocked': 0, 'tries': 28, 'empty': 1}, audit 2/2 agree",
+  "06:35:24 request mvm0uckasil89.2: final sent (16/16); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
+  "06:35:56 rtc kbhpyq73e8: answered",
+  "06:37:45 rtc dhkjcdpgh5: answered",
+  "06:37:57 request received: rid mvm11bp48pd12.2 19 keys",
+  "06:37:57 handle mvm11bp48pd12.2: first_chunk=True total=19",
+  "06:39:33 request mvm11bp48pd12.2: chunk of 19 keys done in 97s; paths {'http': 38, 'browser-crashed': 12, 'browser': 5}, browser waits 17 max 137s sum 1099s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 38, 'miss': 17, 'blocked': 0, 'tries': 41, 'empty': 3}, audit 3/3 agree",
+  "06:39:34 request mvm11bp48pd12.2: final sent (19/19); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "06:42:13 request received: rid mvm175immovu6.2 3 keys",
+  "06:42:13 handle mvm175immovu6.2: first_chunk=True total=3",
+  "06:43:39 request mvm175immovu6.2: chunk of 3 keys done in 85s; paths {'http': 40, 'browser-crashed': 13, 'browser': 5}, browser waits 18 max 137s sum 1184s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 18, 'blocked': 0, 'tries': 45, 'empty': 5}, audit 3/3 agree",
+  "06:43:39 request mvm175immovu6.2: final sent (3/3); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "06:47:20 rtc bpaib6xidu: answered",
+  "09:11:43 rtc pqtfgm9zql: answered",
+  "09:12:00 request received: rid mvm6jt60zat1p.3 2 keys",
+  "09:12:00 handle mvm6jt60zat1p.3: first_chunk=True total=2",
+  "09:12:02 request mvm6jt60zat1p.3: chunk of 2 keys done in 1s; paths {'http': 42, 'browser-crashed': 13, 'browser': 5}, browser waits 18 max 137s sum 1184s; ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 42, 'miss': 18, 'blocked': 0, 'tries': 47, 'empty': 5}, audit 3/3 agree",
+  "09:12:03 request mvm6jt60zat1p.3: final sent (2/2); ntfy publishes {'ok': 8, 'r429': 0, 'fail': 0}",
+  "09:26:53 rtc hqggtkeu9v: answered",
+  "09:27:08 request received: rid mvm72wjy78wzp.3 12 keys",
+  "09:27:08 handle mvm72wjy78wzp.3: first_chunk=True total=12",
+  "09:28:28 request mvm72wjy78wzp.3: chunk of 12 keys done in 80s; paths {'http': 50, 'browser-crashed': 14, 'browser': 8}, browser waits 22 max 137s sum 1269s; ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 50, 'miss': 22, 'blocked': 0, 'tries': 57, 'empty': 7}, audit 3/3 agree",
+  "09:28:29 request mvm72wjy78wzp.3: final sent (12/12); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}"
  ]
 }
