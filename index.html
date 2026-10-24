@@ -977,15 +977,30 @@
 
     /* results */
     .results-nav { display: block; margin: 4px 0 8px }
-    .results-head { flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 14px }
-    .results-head .counts { font-size: 13px }
-    .controls { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; margin: 0 -14px; padding: 2px 14px; scrollbar-width: none }
-    .controls::-webkit-scrollbar { display: none }
-    .controls > * { flex: none }
-    .f-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px }
-    .f-actives { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; flex: 1 1 100%; order: 3; scrollbar-width: none }
+    .results-head { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 12px }
+    .results-head .counts { font-size: 13px; gap: 2px 8px }
+    /* the four list controls share one row (no sideways scrolling); a control that changes the list is tinted */
+    .controls { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; overflow: visible }
+    .controls > * { min-width: 0 }
+    .controls .btn-ghost { min-height: 36px; padding: 0 6px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; text-align-last: center }
+    #r-filter { order: 1 } #r-group { order: 2 } #r-sort { order: 3 } #btn-compare { order: 4 }
+    .controls .btn-ghost.set { background: var(--brand-wash); color: var(--brand-ink); font-weight: 600 }
+    #btn-compare:disabled { opacity: .5 }
+    #btn-compare:not(:disabled) { background: var(--brand); color: #fff; font-weight: 600 }
+    /* filter row: 篩選 + one-tap chips on one line; active filters and the count below */
+    #filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 10px 12px }
+    .f-bar { display: contents }
+    #f-toggle { order: 0; min-height: 36px; border: 1px solid var(--border-strong); background: none; font-weight: 600 }
+    #filters:has(#f-count:not([hidden])) #f-toggle { background: var(--brand); border-color: var(--brand); color: #fff }
+    #f-toggle .pill-sel { background: #fff; color: var(--brand-ink); margin-left: 4px }
+    .quick-chips { order: 1; flex: 1 1 0; min-width: 0; flex-wrap: nowrap; overflow-x: auto; margin: 0; padding: 0; gap: 6px }
+    .qchip { min-height: 36px; padding: 0 12px; font-size: 13px; white-space: nowrap }
+    .f-actives { order: 3; display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; flex: 1 1 100%; scrollbar-width: none }
+    .f-actives:empty { display: none }
     .f-actives > * { flex: none }
-    /* dense result cards: compare / star sit in the top-right corner instead of a side column */
+    #f-shown { order: 4; flex: 1 1 auto; width: auto; margin: 0; font-size: 12.5px; color: var(--fg-muted) }
+    @media (max-width: 380px) { .controls .btn-ghost { font-size: 12px; padding: 0 3px } }
+    #f-reset { order: 5; min-height: 0; padding: 4px 8px; background: none; color: var(--crit); font-size: 12.5px; font-weight: 600 }
     .plan { border-radius: 14px; grid-template-columns: 1fr; position: relative; margin-bottom: 8px }
     .plan .sel-col { position: absolute; top: 6px; right: 6px; z-index: 2; flex-direction: row; align-items: center; gap: 2px; padding: 0; background: none; border: 0 }
     .plan .sel-col input[type=checkbox] { margin: 0 6px }
@@ -1253,16 +1268,16 @@
         </select>
         <select id="r-group" class="btn-ghost" aria-label="分類方式">
           <option value="none">不分類</option>
-          <option value="holiday">按假期分類</option>
-          <option value="place">按目的地分類</option>
-          <option value="country">按國家／地區分類</option>
+          <option value="holiday">按時段</option>
+          <option value="place">按目的地</option>
+          <option value="country">按國家</option>
         </select>
         <select id="r-sort" class="btn-ghost" aria-label="排序">
-          <option value="score">綜合分數</option>
-          <option value="price">總價 (低→高)</option>
-          <option value="price_desc">總價 (高→低)</option>
-          <option value="depart">去程出發 (早→晚)</option>
-          <option value="pto">停留天數 (多→少)</option>
+          <option value="score">綜合推薦</option>
+          <option value="price">價低→高</option>
+          <option value="price_desc">價高→低</option>
+          <option value="depart">出發早→晚</option>
+          <option value="pto">天數多→少</option>
         </select>
       </div>
     </div>
@@ -2655,8 +2670,9 @@ function renderQuickChips() {
   const box = document.getElementById('quick-chips');
   if (!box) return;
   const drops = (state.result?.plans || []).filter(p => state.favorites.has(fingerprint(p)) && (favChange(p)?.diff || 0) < 0).length;
-  const chips = [['direct', '僅直飛', PF.stops === '0'], ['cheap', '同航線偏便宜', PF.cheap], ['fav', `只看收藏${drops ? ` · ${drops} 個降價` : ''}`, PF.favOnly]];
-  box.innerHTML = chips.map(([k, t, on]) => `<button type="button" class="qchip ${on ? 'on' : ''}" data-q="${k}" aria-pressed="${on}">${t}</button>`).join('');
+  const chips = [['direct', '直飛', '只留去程直飛的方案', PF.stops === '0'], ['cheap', '偏便宜', '只留比同航線多數票價便宜的方案', PF.cheap],
+    ['fav', `收藏${drops ? ` ↓${drops}` : ''}`, drops ? `只看收藏（其中 ${drops} 個比收藏時便宜）` : '只看收藏的方案', PF.favOnly]];
+  box.innerHTML = chips.map(([k, t, tip, on]) => `<button type="button" class="qchip ${on ? 'on' : ''}" data-q="${k}" aria-pressed="${on}" title="${tip}">${t}</button>`).join('');
 }
 function wireQuickChips() {
   document.getElementById('quick-chips').addEventListener('click', e => {
@@ -3065,6 +3081,8 @@ function renderResults() {
   const { plans, matrix, cache, fares } = state.result;
 
   document.getElementById('r-plan-count').textContent = plans.length;
+  const tint = (id, on) => document.getElementById(id)?.classList.toggle('set', !!on);
+  tint('r-filter', state.filter !== 'all'); tint('r-group', state.group !== 'none'); tint('r-sort', state.sort !== 'score');
   document.getElementById('r-matrix').textContent = matrix;
 
   const pill = document.getElementById('r-cache-pill');
@@ -3088,7 +3106,7 @@ function renderResults() {
   for (const p of plans) counts.set(p.strategy, (counts.get(p.strategy) || 0) + 1);
   const filterSel = document.getElementById('r-filter');
   const prev = filterSel.value;
-  filterSel.innerHTML = `<option value="all">全部 (${plans.length})</option>` + [...counts].map(([k,c]) => `<option value="${k}">${STRATEGY_LABEL[k]||k} (${c})</option>`).join('');
+  filterSel.innerHTML = `<option value="all">全部策略</option>` + [...counts].map(([k,c]) => `<option value="${k}">${STRATEGY_LABEL[k]||k} (${c})</option>`).join('');
   filterSel.value = counts.has(prev) || prev === 'all' ? prev : 'all';
 
   // Filter + sort

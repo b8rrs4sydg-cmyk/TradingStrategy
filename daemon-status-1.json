@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T11:26:43+00:00",
+ "at": "2026-10-24T11:32:48+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
@@ -38,6 +38,12 @@
   "11:24:35 request received: rid mvmba9z9gch1o.1 14 keys",
   "11:24:35 handle mvmba9z9gch1o.1: first_chunk=True total=14",
   "11:26:21 request mvmba9z9gch1o.1: chunk of 14 keys done in 107s; paths {'http': 45, 'browser-crashed': 38}, browser waits 38 max 106s sum 2401s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 21, 'blocked': 0, 'tries': 87, 'empty': 42}, audit 0/0 agree",
-  "11:26:23 request mvmba9z9gch1o.1: final sent (14/14); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
+  "11:26:23 request mvmba9z9gch1o.1: final sent (14/14); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:28:14 request received: rid mvmbekvi22ogv.1 26 keys",
+  "11:28:14 handle mvmbekvi22ogv.1: first_chunk=True total=26",
+  "11:31:19 request mvmbekvi22ogv.1: chunk of 26 keys done in 185s; paths {'http': 45, 'browser-crashed': 64}, browser waits 64 max 185s sum 5028s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 45, 'miss': 34, 'blocked': 0, 'tries': 113, 'empty': 68}, audit 0/0 agree",
+  "11:31:20 request mvmbekvi22ogv.1: final sent (26/26); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:31:39 request received: rid mvmbjcdq2c2ar.1 30 keys",
+  "11:31:39 handle mvmbjcdq2c2ar.1: first_chunk=True total=30"
  ]
 }
