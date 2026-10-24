@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T11:57:40+00:00",
+ "generated_at": "2026-10-24T11:59:12+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -5416,6 +5416,28 @@
     ]
    ]
   },
+  "ow|CEB|TPE|2027-06-13": {
+   "price": 3709,
+   "first": {
+    "dep": "2027-06-13T00:45:00+08:00",
+    "arr": "2027-06-13T09:00:00+08:00",
+    "stops": 1,
+    "airline": "Cebu Pacific"
+   },
+   "by_airline": {
+    "Cebu Pacific": 3709,
+    "China Airlines": 6222,
+    "STARLUX Airlines": 7382,
+    "Philippine Airlines": 7944
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     3709
+    ]
+   ]
+  },
   "ow|CEB|TSA|2026-12-26": {
    "price": 58629,
    "first": {
@@ -6063,20 +6085,30 @@
    ]
   },
   "ow|DAD|RMQ|2027-06-13": {
-   "price": 6681,
+   "price": 6721,
    "first": {
     "dep": "2027-06-13T05:10:00+07:00",
     "arr": "2027-06-13T14:30:00+08:00",
     "stops": 1,
     "airline": "Vietjet"
    },
-   "at": "2026-10-18",
+   "by_airline": {
+    "Vietjet": 6721,
+    "Hong Kong Express": 7486
+   },
+   "at": "2026-10-24",
    "hist": [
     [
      "2026-10-18",
      6681
+    ],
+    [
+     "2026-10-24",
+     6721
     ]
-   ]
+   ],
+   "prev": 6681,
+   "prev_at": "2026-10-18"
   },
   "ow|DAD|TPE|2026-11-15": {
    "price": 5676,
@@ -6171,6 +6203,27 @@
     [
      "2026-10-19",
      8541
+    ]
+   ]
+  },
+  "ow|DMK|TPE|2027-06-13": {
+   "price": 3555,
+   "first": {
+    "dep": "2027-06-13T07:25:00+07:00",
+    "arr": "2027-06-13T12:20:00+08:00",
+    "stops": 0,
+    "airline": "Thai AirAsia"
+   },
+   "by_airline": {
+    "Thai AirAsia": 3555,
+    "Philippines AirAsia": 8998,
+    "AirAsia": 13282
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     3555
     ]
    ]
   },
@@ -11700,20 +11753,32 @@
    ]
   },
   "ow|TPE|CEB|2027-06-09": {
-   "price": 4050,
+   "price": 4049,
    "first": {
-    "dep": "2027-06-09T10:20:00+08:00",
-    "arr": "2027-06-09T17:55:00+08:00",
+    "dep": "2027-06-09T03:15:00+08:00",
+    "arr": "2027-06-09T10:05:00+08:00",
     "stops": 1,
     "airline": "Cebu Pacific"
    },
-   "at": "2026-10-17",
+   "by_airline": {
+    "Cebu Pacific": 4049,
+    "Philippine Airlines": 5429,
+    "STARLUX Airlines": 6596,
+    "Cathay Pacific": 6945
+   },
+   "at": "2026-10-24",
    "hist": [
     [
      "2026-10-17",
      4050
+    ],
+    [
+     "2026-10-24",
+     4049
     ]
-   ]
+   ],
+   "prev": 4050,
+   "prev_at": "2026-10-17"
   },
   "ow|TPE|CJU|2026-11-28": {
    "price": 3265,
@@ -14109,20 +14174,32 @@
    ]
   },
   "ow|TPE|NRT|2027-02-09": {
-   "price": 7130,
+   "price": 7047,
    "first": {
     "dep": "2027-02-09T18:15:00+08:00",
     "arr": "2027-02-10T08:50:00+09:00",
     "stops": 1,
     "airline": "Jetstar"
    },
-   "at": "2026-10-19",
+   "by_airline": {
+    "Jetstar": 7047,
+    "Peach Aviation": 7230,
+    "Scoot": 7364,
+    "Thai Lion Air": 8153
+   },
+   "at": "2026-10-24",
    "hist": [
     [
      "2026-10-19",
      7130
+    ],
+    [
+     "2026-10-24",
+     7047
     ]
-   ]
+   ],
+   "prev": 7130,
+   "prev_at": "2026-10-19"
   },
   "ow|TPE|NRT|2027-02-27": {
    "price": 6751,
