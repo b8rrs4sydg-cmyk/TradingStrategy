@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T10:19:59+00:00",
+ "at": "2026-10-24T10:21:30+00:00",
  "publishes": {
   "ok": 16,
   "r429": 0,
@@ -100,6 +100,8 @@
   "10:15:57 handle mvm8tzwci3kqw.1: first_chunk=True total=17",
   "10:16:52 git retry 0: b\"-46zevd': is at 79d4f5a4667c7f3af03818c244429df819d73abf but expected 13ceb1fef31b5534548ecf7dcbfba2fafadf1e9d)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "10:18:58 request mvm8tzwci3kqw.1: chunk of 17 keys done in 181s; paths {'http': 90, 'browser-crashed': 94, 'browser': 16}, browser waits 110 max 152s sum 7299s; ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 90, 'miss': 78, 'blocked': 0, 'tries': 94, 'empty': 4}, audit 5/5 agree",
-  "10:18:59 request mvm8tzwci3kqw.1: final sent (17/17); ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}"
+  "10:18:59 request mvm8tzwci3kqw.1: final sent (17/17); ntfy publishes {'ok': 16, 'r429': 0, 'fail': 0}",
+  "10:21:24 request received: rid mvm90yr6ogkxq.1 15 keys",
+  "10:21:24 handle mvm90yr6ogkxq.1: first_chunk=True total=15"
  ]
 }
