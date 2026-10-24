@@ -3163,6 +3163,16 @@ function airlineFaresHtml(t) {
   return `<div class="hint" title="Google Flights 同一行程、單一航空公司販售整張票的最低價">各航司最低：${list.map(([a, p]) => `${escapeHtml(a)} ${Number(p).toLocaleString()}`).join(' · ')}</div>`;
 }
 
+/* Low-cost carriers sell the fare without a checked bag. Only airlines with a published price are listed (never a guess); the figures come from
+   a Taiwanese travel blog's table (funtime.com.tw, undated), bought at booking time, per flight, and change by route and date: a hint, not a quote. */
+const BAG20_TWD = { 'Tigerair Taiwan': 950, 'Scoot': 820 };
+function bagHintHtml(t) {
+  const airline = (t.legs || []).map(l => l.carrier).find(c => BAG20_TWD[c]);
+  if (!airline) return '';
+  const n = (t.legs || []).filter(l => l.carrier === airline || l.estimated).length || 1;
+  return `<div class="hint" title="來源：funtime.com.tw 整理的廉航行李價（日期不詳），訂票時加購；依航線與日期變動，請以航空公司官網為準">不含托運行李；加購 20kg 約 +${BAG20_TWD[airline].toLocaleString()} 每段（${escapeHtml(airline)}${n > 1 ? `，${n} 段` : ''}）</div>`;
+}
+
 function renderPlan(plan, rank) {
   const fav = state.favorites.has(fingerprint(plan));
   const key = `${plan.strategy}-${rank-1}-${plan.tickets[0]?.offer_id || ''}`;
@@ -3207,6 +3217,7 @@ function renderPlan(plan, rank) {
                 <h4>${plan.ticket_roles?.[ti] ? `票 ${ti+1}｜${escapeHtml(plan.ticket_roles[ti])}` : ticketCount > 1 ? `票 ${ti+1}` : '票'} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
                 <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()}${priceDelta(t)} · ${t.fare_class || '經濟艙'} · ${t.baggage_through_checked ? '行李直掛' : '需提領重掛'}</div>
                 ${airlineFaresHtml(t)}
+                ${bagHintHtml(t)}
                 <ol>${t.legs.map(l => `<li>${escapeHtml(l.origin)}→${escapeHtml(l.destination)} · ${l.estimated ? `航班待選 · ${l.departure.slice(0, 10)}` : `${escapeHtml(l.flight_number || l.carrier)} · ${l.departure.slice(0,16).replace('T',' ')}`}</li>`).join('')}</ol>
                 <div class="src ${t.issuer === 'google_flights' ? 'real' : ''}">價格來源：${escapeHtml(ISSUER_LABEL[t.issuer] || t.issuer || '—')}${t.issuer === 'google_flights' ? `（${t.fare_at} 擷取，1 位成人最低總價）` : ''}
                   <div class="links">${bookingLinks(t, plan.adults || 1).map(b => `<a href="${escapeHtml(b.url)}" target="_blank" rel="noopener noreferrer">${b.label} ↗</a>`).join('')}</div>
