@@ -404,3 +404,5 @@ change an algorithm or a rule, update the Wiki, not a hint text in the page.
 - Top 100 score is now `0.8·saving + 0.2·drop + 0.10·連假 + 0.05·直飛` (saving = below the median of the SAME route and kind, needs ≥ 4 fares). The old cross-route "price rank" term was removed: it favoured routes that are cheap by distance.
 
 - Phone density (block at the end of the main `<style>`): slot cards are one name row (+ 還原/移除) and one inline date row each; backup-period chips are a 2-column grid; result cards put compare / star in the top-right corner instead of a side column. Check 390 px screenshots after touching them.
+
+- Dark mode: the top bar has a sun/moon icon button (`#theme-btn`, `wireTheme`) that flips light/dark (stored in `sff.theme.v1`; until the first click the system setting applies). The old text button in the desktop corner is gone.
