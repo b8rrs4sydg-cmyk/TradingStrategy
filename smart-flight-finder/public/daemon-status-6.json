@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T12:09:39+00:00",
+ "at": "2026-10-24T12:11:10+00:00",
  "publishes": {
   "ok": 9,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2332,
+ "fares_saved": 2333,
  "log": [
   "10:34:02 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:34:08 http front door: ['https://bedrooms-intense-dublin-nam.trycloudflare.com', 'https://389d678c0c4829.lhr.life']",
@@ -87,6 +87,8 @@
   "12:07:56 request received: rid mvmctnwxkba1z.6 11 keys",
   "12:07:56 handle mvmctnwxkba1z.6: first_chunk=True total=11",
   "12:09:32 request mvmctnwxkba1z.6: chunk of 11 keys done in 96s; paths {'http': 57, 'browser-crashed': 256}, browser waits 256 max 328s sum 24810s; ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 57, 'miss': 105, 'blocked': 0, 'tries': 249, 'empty': 192}, audit 2/2 agree",
-  "12:09:33 request mvmctnwxkba1z.6: final sent (11/11); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}"
+  "12:09:33 request mvmctnwxkba1z.6: final sent (11/11); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}",
+  "12:10:38 request received: rid mvmcxhojepxl4.6 12 keys",
+  "12:10:38 handle mvmcxhojepxl4.6: first_chunk=True total=12"
  ]
 }
