@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T12:15:57+00:00",
+ "at": "2026-10-24T12:17:34+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2162,
+ "fares_saved": 2167,
  "log": [
   "10:33:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:34:00 git retry 0: b\"-46zevd': is at b4d57bf450440c854c916d45704dc53fde5043d5 but expected a7f9c69048653c7b1b08235adffc39daaef3368a)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -90,6 +90,11 @@
   "12:12:15 request mvmcxhojepxl4.8: final sent (13/13); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}",
   "12:13:10 rtc 5ag0ep30tf: answered",
   "12:13:22 request received: rid mvmd0obzjwavb.8 26 keys",
-  "12:13:22 handle mvmd0obzjwavb.8: first_chunk=True total=26"
+  "12:13:22 handle mvmd0obzjwavb.8: first_chunk=True total=26",
+  "12:15:58 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "12:16:32 request mvmd0obzjwavb.8: chunk of 26 keys done in 190s; paths {'http': 51, 'browser-crashed': 182, 'browser': 1}, browser waits 183 max 190s sum 13281s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 51, 'miss': 78, 'blocked': 0, 'tries': 197, 'empty': 146}, audit 2/2 a",
+  "12:16:33 request mvmd0obzjwavb.8: final sent (26/26); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:17:02 request received: rid mvmd5pdyo6ju3.8 19 keys",
+  "12:17:02 handle mvmd5pdyo6ju3.8: first_chunk=True total=19"
  ]
 }
