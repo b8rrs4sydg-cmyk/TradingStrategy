@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:41:24+00:00",
+ "at": "2026-10-24T06:42:55+00:00",
  "publishes": {
   "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2061,
+ "fares_saved": 2075,
  "log": [
   "05:34:55 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:00 http front door: ['https://ports-houston-largest-grown.trycloudflare.com', 'https://348d2b6b4789ab.lhr.life']",
@@ -29,6 +29,8 @@
   "06:37:57 request received: rid mvm11bp48pd12.4 26 keys",
   "06:37:57 handle mvm11bp48pd12.4: first_chunk=True total=26",
   "06:40:58 request mvm11bp48pd12.4: chunk of 26 keys done in 181s; paths {'http': 40, 'browser-crashed': 30}, browser waits 30 max 212s sum 3635s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 40, 'miss': 30, 'blocked': 0, 'tries': 40, 'empty': 0}, audit 1/1 agree",
-  "06:41:00 request mvm11bp48pd12.4: final sent (26/26); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
+  "06:41:00 request mvm11bp48pd12.4: final sent (26/26); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "06:42:13 request received: rid mvm175immovu6.4 17 keys",
+  "06:42:13 handle mvm175immovu6.4: first_chunk=True total=17"
  ]
 }
