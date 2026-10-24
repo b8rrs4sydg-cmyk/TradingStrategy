@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:15:55+00:00",
+ "generated_at": "2026-10-24T12:17:27+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -9462,6 +9462,28 @@
     ]
    ]
   },
+  "ow|PEN|TPE|2027-09-19": {
+   "price": 7179,
+   "first": {
+    "dep": "2027-09-19T05:50:00+08:00",
+    "arr": "2027-09-19T14:10:00+08:00",
+    "stops": 1,
+    "airline": "Malaysia Airlines"
+   },
+   "by_airline": {
+    "Malaysia Airlines": 7179,
+    "THAI": 8926,
+    "China Southern": 9229,
+    "China Airlines": 10481
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     7179
+    ]
+   ]
+  },
   "ow|PQC|RMQ|2026-12-27": {
    "price": 7712,
    "first": {
@@ -9699,6 +9721,27 @@
     [
      "2026-10-22",
      9860
+    ]
+   ]
+  },
+  "ow|RGN|TPE|2027-09-19": {
+   "price": 12391,
+   "first": {
+    "dep": "2027-09-19T15:00:00+06:30",
+    "arr": "2027-09-20T13:05:00+08:00",
+    "stops": 1,
+    "airline": "THAI"
+   },
+   "by_airline": {
+    "THAI": 12391,
+    "China Southern": 15548,
+    "Malaysia Airlines": 16510
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     12391
     ]
    ]
   },
@@ -11967,6 +12010,28 @@
     ]
    ]
   },
+  "ow|TPE|BKI|2027-04-29": {
+   "price": 6890,
+   "first": {
+    "dep": "2027-04-29T18:50:00+08:00",
+    "arr": "2027-04-29T22:25:00+08:00",
+    "stops": 0,
+    "airline": "AirAsia"
+   },
+   "by_airline": {
+    "AirAsia": 6890,
+    "Hong Kong Express": 7930,
+    "Scoot": 8313,
+    "Royal Brunei": 10760
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     6890
+    ]
+   ]
+  },
   "ow|TPE|BKK|2026-11-05": {
    "price": 6472,
    "first": {
@@ -12674,6 +12739,27 @@
     [
      "2026-10-22",
      7523
+    ]
+   ]
+  },
+  "ow|TPE|CRK|2027-02-11": {
+   "price": 4058,
+   "first": {
+    "dep": "2027-02-11T14:50:00+08:00",
+    "arr": "2027-02-12T09:35:00+08:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 4058,
+    "STARLUX Airlines": 8039,
+    "EVA Air": 8091
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     4058
     ]
    ]
   },
