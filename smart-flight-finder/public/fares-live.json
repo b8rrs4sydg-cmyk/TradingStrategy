@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:12:02+00:00",
+ "generated_at": "2026-10-24T10:35:19+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -37865,6 +37865,51 @@
  ],
  "missing_v": 2,
  "status": {
+  "mc|BKK-TPE-2026-12-26|TPE-KIX-2027-01-01|KIX-TPE-2027-01-02|TPE-HKG-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-KIX-2027-01-14|KIX-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-NGO-2027-01-01|NGO-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-NRT-2026-12-31|NRT-TPE-2027-01-02|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-NRT-2026-12-31|NRT-TPE-2027-01-02|TPE-HKG-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-NRT-2027-01-01|NRT-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-NRT-2027-01-14|NRT-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|BKK-TPE-2027-01-02|TPE-FUK-2027-01-14|FUK-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|BKK-TPE-2027-01-02|TPE-NRT-2027-01-14|NRT-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
   "mc|FUK-TPE-2026-11-22|TPE-CJU-2026-11-27|CJU-TPE-2026-11-29|TPE-FUK-2026-12-18": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -37964,6 +38009,46 @@
    "status": "timeout",
    "at": "2026-10-24",
    "n": 1
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-HND-2026-12-31|HND-TPE-2027-01-02|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-KIX-2026-12-31|KIX-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-KIX-2026-12-31|KIX-TPE-2027-01-02|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-KIX-2027-01-01|KIX-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-NGO-2026-12-31|NGO-TPE-2027-01-02|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-NRT-2026-12-31|NRT-TPE-2027-01-02|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|HKG-TPE-2027-01-02|TPE-FUK-2027-01-14|FUK-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|HKG-TPE-2027-01-02|TPE-KIX-2027-01-14|KIX-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
   },
   "mc|HKG-TPE-2027-01-02|TPE-NRT-2027-02-04|NRT-TPE-2027-02-14|TPE-ICN-2027-02-27": {
    "status": "timeout",
@@ -38205,10 +38290,55 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|ICN-TPE-2026-12-26|TPE-FUK-2027-01-01|FUK-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-HND-2026-12-31|HND-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-KIX-2026-12-31|KIX-TPE-2027-01-02|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-KIX-2026-12-31|KIX-TPE-2027-01-02|TPE-HKG-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-KIX-2027-01-01|KIX-TPE-2027-01-02|TPE-HKG-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-NGO-2026-12-31|NGO-TPE-2027-01-02|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-NGO-2027-01-01|NGO-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-NGO-2027-01-01|NGO-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
+  },
   "mc|ICN-TPE-2027-01-02|TPE-KIX-2027-02-04|KIX-TPE-2027-02-15|TPE-HKG-2027-02-25": {
    "status": "timeout",
    "at": "2026-10-24",
    "n": 1
+  },
+  "mc|ICN-TPE-2027-01-02|TPE-NGO-2027-01-14|NGO-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 2
   },
   "mc|ICN-TPE-2027-01-02|TPE-NRT-2027-02-04|NRT-TPE-2027-02-14|TPE-ICN-2027-02-25": {
    "status": "timeout",
@@ -38778,7 +38908,7 @@
   "rt|HND|TPE|2026-12-26|2027-02-10": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|HND|TPE|2027-01-02|2027-02-11": {
    "status": "timeout",
@@ -38788,12 +38918,12 @@
   "rt|HND|TPE|2027-01-03|2027-02-10": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 3
+   "n": 4
   },
   "rt|HND|TPE|2027-01-04|2027-02-11": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 3
+   "n": 4
   },
   "rt|HND|TPE|2027-01-18|2027-02-09": {
    "status": "timeout",
@@ -38968,12 +39098,12 @@
   "rt|KIX|TPE|2026-12-27|2027-02-09": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|KIX|TPE|2026-12-28|2027-02-10": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|KIX|TPE|2027-01-03|2027-02-09": {
    "status": "timeout",
@@ -38988,7 +39118,7 @@
   "rt|KIX|TPE|2027-01-04|2027-02-10": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|KIX|TPE|2027-01-04|2027-02-11": {
    "status": "timeout",
@@ -39088,7 +39218,7 @@
   "rt|NRT|TPE|2026-12-26|2027-02-09": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|NRT|TPE|2027-01-03|2027-01-15": {
    "status": "timeout",
@@ -39363,22 +39493,22 @@
   "rt|TPE|BKK|2027-01-14|2027-01-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|BKK|2027-01-14|2027-01-20": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|BKK|2027-01-15|2027-01-19": {
-   "status": "blocked",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
   "rt|TPE|BKK|2027-01-16|2027-01-18": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|CJU|2026-11-27|2026-12-27": {
    "status": "timeout",
@@ -39458,7 +39588,7 @@
   "rt|TPE|HND|2026-12-25|2027-02-15": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|HND|2027-01-01|2027-02-13": {
    "status": "timeout",
@@ -39503,12 +39633,12 @@
   "rt|TPE|KIX|2026-12-23|2027-02-14": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|KIX|2026-12-25|2027-02-15": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|KIX|2027-01-15|2027-02-15": {
    "status": "timeout",
@@ -39533,17 +39663,17 @@
   "rt|TPE|NGO|2026-12-24|2027-02-14": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|NGO|2026-12-25|2027-02-13": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|NGO|2026-12-31|2027-01-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 3
+   "n": 4
   },
   "rt|TPE|NRT|2026-11-13|2026-11-29": {
    "status": "timeout",

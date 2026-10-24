@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:08:33+00:00",
+ "generated_at": "2026-10-24T11:03:56+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -1564,6 +1564,49 @@
     ]
    ]
   },
+  "mc|HKG-TPE-2026-12-26|TPE-NRT-2026-12-31|NRT-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "price": 77360,
+   "first": {
+    "dep": "2026-12-26T10:10:00+08:00",
+    "arr": "2026-12-26T12:00:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 77360,
+    "Cathay Pacific": 92734,
+    "China Airlines": 94217
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     77360
+    ]
+   ]
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-NRT-2027-01-14|NRT-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 63785,
+   "first": {
+    "dep": "2026-12-26T15:30:00+08:00",
+    "arr": "2026-12-26T17:10:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 63785,
+    "Cathay Pacific": 65073,
+    "China Airlines": 110725,
+    "STARLUX Airlines": 111270
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     63785
+    ]
+   ]
+  },
   "mc|HKG-TPE-2027-01-02|TPE-FUK-2027-02-04|FUK-TPE-2027-02-14|TPE-BKK-2027-02-27": {
    "price": 76080,
    "first": {
@@ -1606,6 +1649,26 @@
     ]
    ]
   },
+  "mc|HKG-TPE-2027-01-02|TPE-HND-2027-01-14|HND-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 69087,
+   "first": {
+    "dep": "2027-01-02T10:10:00+08:00",
+    "arr": "2027-01-02T12:00:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 69087,
+    "Cathay Pacific": 70375
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     69087
+    ]
+   ]
+  },
   "mc|HKG-TPE-2027-01-02|TPE-KIX-2027-02-04|KIX-TPE-2027-02-16|TPE-ICN-2027-02-27": {
    "price": 75674,
    "first": {
@@ -1635,6 +1698,27 @@
     [
      "2026-10-18",
      75674
+    ]
+   ]
+  },
+  "mc|HKG-TPE-2027-01-02|TPE-NGO-2027-01-14|NGO-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "price": 77921,
+   "first": {
+    "dep": "2027-01-02T10:10:00+08:00",
+    "arr": "2027-01-02T12:00:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 77921,
+    "Cathay Pacific": 93295,
+    "China Airlines": 97076
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     77921
     ]
    ]
   },
@@ -2571,6 +2655,25 @@
     [
      "2026-10-23",
      64773
+    ]
+   ]
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-NRT-2027-01-14|NRT-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 66207,
+   "first": {
+    "dep": "2026-12-26T11:40:00+09:00",
+    "arr": "2026-12-26T13:30:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 66207
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     66207
     ]
    ]
   },
@@ -21638,6 +21741,28 @@
     ]
    ]
   },
+  "rt|RMQ|FUK|2027-02-11|2027-02-16": {
+   "price": 16943,
+   "first": {
+    "dep": "2027-02-11T20:35:00+08:00",
+    "arr": "2027-02-12T17:00:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 16943,
+    "Trinity Airways": 17211,
+    "Jin Air": 17841,
+    "Korean Air": 19231
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     16943
+    ]
+   ]
+  },
   "rt|RMQ|FUK|2027-04-02|2027-04-10": {
    "price": 17418,
    "first": {
@@ -25459,20 +25584,32 @@
    ]
   },
   "rt|TPE|CTS|2027-02-10|2027-02-13": {
-   "price": 19846,
+   "price": 19885,
    "first": {
     "dep": "2027-02-10T17:05:00+08:00",
     "arr": "2027-02-11T10:45:00+09:00",
     "stops": 1,
     "airline": "Asiana Airlines"
    },
-   "at": "2026-10-18",
+   "by_airline": {
+    "Asiana Airlines": 19885,
+    "Korean Air": 21795,
+    "Jetstar": 27588,
+    "Tigerair Taiwan": 28787
+   },
+   "at": "2026-10-24",
    "hist": [
     [
      "2026-10-18",
      19846
+    ],
+    [
+     "2026-10-24",
+     19885
     ]
-   ]
+   ],
+   "prev": 19846,
+   "prev_at": "2026-10-18"
   },
   "rt|TPE|CTS|2027-02-11|2027-02-13": {
    "price": 19929,
@@ -37500,6 +37637,16 @@
  ],
  "missing_v": 2,
  "status": {
+  "mc|BKK-TPE-2026-12-26|TPE-HND-2026-12-31|HND-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-NGO-2027-01-14|NGO-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|BKK-TPE-2027-01-02|TPE-FUK-2027-02-04|FUK-TPE-2027-02-14|TPE-HKG-2027-02-26": {
    "status": "timeout",
    "at": "2026-10-24",
@@ -37718,6 +37865,16 @@
   "mc|HKG-TPE-2026-11-08|TPE-PUS-2026-11-13|PUS-TPE-2026-11-15|TPE-HND-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-FUK-2027-01-14|FUK-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|HKG-TPE-2027-01-02|TPE-FUK-2027-01-14|FUK-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
    "n": 1
   },
   "mc|HND-TPE-2026-11-08|TPE-CJU-2026-12-04|CJU-TPE-2026-12-06|TPE-NRT-2026-12-24": {
@@ -37969,6 +38126,16 @@
    "status": "timeout",
    "at": "2026-10-23",
    "n": 2
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-KIX-2026-12-31|KIX-TPE-2027-01-02|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-NRT-2027-01-01|NRT-TPE-2027-01-02|TPE-HKG-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
   },
   "mc|ICN-TPE-2027-01-02|TPE-NRT-2027-02-04|NRT-TPE-2027-02-15|TPE-BKK-2027-02-26": {
    "status": "timeout",

@@ -1,11 +1,75 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:10:43+00:00",
+ "generated_at": "2026-10-24T11:04:09+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
  "fares": {
+  "mc|BKK-TPE-2026-12-26|TPE-FUK-2027-01-01|FUK-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "price": 39726,
+   "first": {
+    "dep": "2026-12-26T14:50:00+07:00",
+    "arr": "2026-12-26T19:30:00+08:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 39726,
+    "EVA Air": 46495,
+    "China Airlines": 48459,
+    "THAI": 82425
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     39726
+    ]
+   ]
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-HND-2027-01-14|HND-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 78965,
+   "first": {
+    "dep": "2026-12-26T12:45:00+07:00",
+    "arr": "2026-12-26T17:15:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 78965,
+    "THAI": 82714
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     78965
+    ]
+   ]
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-NRT-2027-01-14|NRT-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 37338,
+   "by_airline": {
+    "EVA Air": 37338,
+    "STARLUX Airlines": 39861,
+    "China Airlines": 51315,
+    "THAI": 82560
+   },
+   "first": {
+    "dep": "2026-12-26T08:25:00+07:00",
+    "arr": "2026-12-26T13:05:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     37338
+    ]
+   ]
+  },
   "mc|BKK-TPE-2027-01-02|TPE-FUK-2027-02-04|FUK-TPE-2027-02-14|TPE-BKK-2027-02-25": {
    "price": 57529,
    "first": {
@@ -151,6 +215,27 @@
     [
      "2026-10-24",
      73465
+    ]
+   ]
+  },
+  "mc|BKK-TPE-2027-01-02|TPE-NGO-2027-01-14|NGO-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "price": 73706,
+   "first": {
+    "dep": "2027-01-02T14:35:00+07:00",
+    "arr": "2027-01-02T19:15:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 73706,
+    "China Airlines": 96493,
+    "THAI": 108285
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     73706
     ]
    ]
   },
@@ -1649,6 +1734,28 @@
     ]
    ]
   },
+  "mc|HKG-TPE-2026-12-26|TPE-KIX-2027-01-14|KIX-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 67774,
+   "first": {
+    "dep": "2026-12-26T10:10:00+08:00",
+    "arr": "2026-12-26T12:00:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 67774,
+    "Cathay Pacific": 79500,
+    "China Airlines": 107850,
+    "STARLUX Airlines": 110580
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     67774
+    ]
+   ]
+  },
   "mc|HKG-TPE-2027-01-02|TPE-FUK-2027-02-04|FUK-TPE-2027-02-14|TPE-BKK-2027-02-25": {
    "price": 76080,
    "first": {
@@ -2780,6 +2887,45 @@
     [
      "2026-10-18",
      76304
+    ]
+   ]
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-NGO-2026-12-31|NGO-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "price": 51380,
+   "first": {
+    "dep": "2026-12-26T10:40:00+09:00",
+    "arr": "2026-12-26T12:35:00+08:00",
+    "stops": 0,
+    "airline": "Jeju Air"
+   },
+   "by_airline": {
+    "Jeju Air": 51380,
+    "EVA Air": 74356
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     51380
+    ]
+   ]
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-NRT-2027-01-01|NRT-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "price": 66207,
+   "first": {
+    "dep": "2026-12-26T11:40:00+09:00",
+    "arr": "2026-12-26T13:30:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 66207
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     66207
     ]
    ]
   },
@@ -28193,6 +28339,28 @@
     ]
    ]
   },
+  "rt|TPE|FUK|2027-02-10|2027-02-16": {
+   "price": 13261,
+   "first": {
+    "dep": "2027-02-10T06:45:00+08:00",
+    "arr": "2027-02-10T10:00:00+09:00",
+    "stops": 0,
+    "airline": "Tigerair Taiwan"
+   },
+   "by_airline": {
+    "Tigerair Taiwan": 13261,
+    "Cebu Pacific": 14824,
+    "Asiana Airlines": 15203,
+    "AirAsia": 16090
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     13261
+    ]
+   ]
+  },
   "rt|TPE|FUK|2027-04-04|2027-04-11": {
    "price": 14434,
    "first": {
@@ -35725,6 +35893,26 @@
     ]
    ]
   },
+  "rt|TSA|FUK|2027-02-11|2027-02-16": {
+   "price": 19764,
+   "first": {
+    "dep": "2027-02-11T13:30:00+08:00",
+    "arr": "2027-02-12T10:55:00+09:00",
+    "stops": 1,
+    "airline": "ANA"
+   },
+   "by_airline": {
+    "ANA": 19764,
+    "JAL": 27806
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     19764
+    ]
+   ]
+  },
   "rt|TSA|FUK|2027-02-27|2027-05-02": {
    "price": 24210,
    "first": {
@@ -39255,6 +39443,16 @@
  ],
  "missing_v": 2,
  "status": {
+  "mc|BKK-TPE-2026-12-26|TPE-FUK-2026-12-31|FUK-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "parse_error",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-NGO-2027-01-01|NGO-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|FUK-TPE-2026-11-08|TPE-PUS-2026-11-13|PUS-TPE-2026-11-15|TPE-FUK-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -39417,6 +39615,11 @@
   },
   "mc|FUK-TPE-2027-02-16|TPE-NRT-2027-02-27": {
    "status": "parse_error",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-NRT-2026-12-31|NRT-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
@@ -39613,6 +39816,21 @@
   "mc|ICN-TPE-2026-12-20|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-NRT-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-FUK-2026-12-31|FUK-TPE-2027-01-02|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-KIX-2026-12-31|KIX-TPE-2027-01-02|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2027-01-02|TPE-FUK-2027-01-14|FUK-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
    "n": 1
   },
   "mc|KIX-TPE-2026-11-08|TPE-CJU-2026-11-27|CJU-TPE-2026-11-29|TPE-FUK-2026-12-24": {
