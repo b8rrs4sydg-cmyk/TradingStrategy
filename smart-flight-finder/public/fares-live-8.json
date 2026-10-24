@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:25:12+00:00",
+ "generated_at": "2026-10-24T12:32:43+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -31348,6 +31348,28 @@
     [
      "2026-10-24",
      12473
+    ]
+   ]
+  },
+  "rt|TPE|PEN|2027-04-29|2027-05-02": {
+   "price": 11203,
+   "first": {
+    "dep": "2027-04-29T23:50:00+08:00",
+    "arr": "2027-04-30T10:05:00+08:00",
+    "stops": 1,
+    "airline": "Scoot"
+   },
+   "by_airline": {
+    "Scoot": 11203,
+    "Cathay Pacific": 11678,
+    "Hong Kong Express": 15261,
+    "THAI": 15471
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11203
     ]
    ]
   },
