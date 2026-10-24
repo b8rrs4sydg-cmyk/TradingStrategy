@@ -1,11 +1,33 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:14:55+00:00",
+ "generated_at": "2026-10-24T10:16:27+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
  "fares": {
+  "mc|BKK-TPE-2026-12-26|TPE-FUK-2027-01-14|FUK-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 39726,
+   "first": {
+    "dep": "2026-12-26T14:50:00+07:00",
+    "arr": "2026-12-26T19:30:00+08:00",
+    "stops": 0,
+    "airline": "STARLUX Airlines"
+   },
+   "by_airline": {
+    "STARLUX Airlines": 39726,
+    "EVA Air": 40522,
+    "China Airlines": 48459,
+    "THAI": 82425
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     39726
+    ]
+   ]
+  },
   "mc|BKK-TPE-2027-01-02|TPE-FUK-2027-02-04|FUK-TPE-2027-02-14|TPE-ICN-2027-02-26": {
    "price": 79979,
    "first": {
@@ -1959,6 +1981,27 @@
     [
      "2026-10-18",
      81610
+    ]
+   ]
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-FUK-2027-01-14|FUK-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "price": 77231,
+   "first": {
+    "dep": "2026-12-26T10:10:00+08:00",
+    "arr": "2026-12-26T12:00:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 77231,
+    "Cathay Pacific": 92605,
+    "China Airlines": 96386
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     77231
     ]
    ]
   },
