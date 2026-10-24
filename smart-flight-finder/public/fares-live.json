@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:35:19+00:00",
+ "generated_at": "2026-10-24T11:14:21+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -28595,6 +28595,28 @@
     [
      "2026-10-18",
      17306
+    ]
+   ]
+  },
+  "rt|TPE|FUK|2027-02-11|2027-02-15": {
+   "price": 14061,
+   "first": {
+    "dep": "2027-02-11T06:45:00+08:00",
+    "arr": "2027-02-11T10:00:00+09:00",
+    "stops": 0,
+    "airline": "Tigerair Taiwan"
+   },
+   "by_airline": {
+    "Tigerair Taiwan": 14061,
+    "Asiana Airlines": 15403,
+    "Cebu Pacific": 16461,
+    "China Airlines": 17683
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     14061
     ]
    ]
   },

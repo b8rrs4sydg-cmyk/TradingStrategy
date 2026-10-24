@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:35:19+00:00",
+ "at": "2026-10-24T11:14:21+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2196,
+ "fares_saved": 2197,
  "log": [
   "10:33:45 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:49 http front door: ['https://asking-anything-cylinder-suffering.trycloudflare.com', 'https://78e015c662ae45.lhr.life']",
@@ -13,6 +13,13 @@
   "10:34:54 request received: rid httptest1792838094 20 keys",
   "10:34:54 handle httptest1792838094: first_chunk=True total=20",
   "10:34:56 request httptest1792838094: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:34:57 request httptest1792838094: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:34:57 request httptest1792838094: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "10:41:41 rtc 7etvkrbo97: answered",
+  "11:00:32 rtc pcvtobggzp: answered",
+  "11:13:17 rtc 1p0vhcyzvr: answered",
+  "11:13:45 request received: rid mvmavnavi0l9o 1 keys",
+  "11:13:45 handle mvmavnavi0l9o: first_chunk=True total=1",
+  "11:13:46 request mvmavnavi0l9o: chunk of 1 keys done in 1s; paths {'http': 21}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 3/3 agree",
+  "11:13:47 request mvmavnavi0l9o: final sent (1/1); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
  ]
 }
