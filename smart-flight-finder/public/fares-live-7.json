@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T11:43:57+00:00",
+ "generated_at": "2026-10-24T11:45:29+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -34630,7 +34630,7 @@
    "n": 1
   },
   "rt|RMQ|HKG|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
@@ -34652,7 +34652,7 @@
   "rt|RMQ|NRT|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|RMQ|NRT|2027-12-23|2027-12-27": {
    "status": "timeout",
@@ -34680,7 +34680,7 @@
    "n": 1
   },
   "rt|TPE|BKK|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
@@ -34697,15 +34697,15 @@
   "rt|TPE|HKT|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|HND|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
   "rt|TPE|ISG|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
@@ -34750,7 +34750,7 @@
    "n": 1
   },
   "rt|TSA|BKK|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
@@ -34765,7 +34765,12 @@
    "n": 1
   },
   "rt|TSA|CTS|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "rt|TSA|FUK|2027-09-15|2027-09-19": {
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
@@ -34777,7 +34782,7 @@
   "rt|TSA|HND|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TSA|KIX|2027-12-23|2027-12-27": {
    "status": "timeout",
@@ -34810,12 +34815,12 @@
    "n": 2
   },
   "rt|TSA|PUS|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
   "rt|TSA|SHA|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
