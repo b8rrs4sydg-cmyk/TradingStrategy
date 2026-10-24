@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T09:31:07+00:00",
+ "at": "2026-10-24T09:32:39+00:00",
  "publishes": {
-  "ok": 18,
+  "ok": 23,
   "r429": 0,
   "fail": 0
  },
@@ -55,6 +55,7 @@
   "09:30:21 handle mvm77dmck7n04: first_chunk=False total=145",
   "09:30:22 request received: rid mvm77dmck7n04 41 keys",
   "09:30:22 handle mvm77dmck7n04: first_chunk=False total=145",
-  "09:30:31 request mvm77dmck7n04: chunk of 41 keys done in 9s; paths {'http': 197, 'browser-crashed': 16, 'browser': 4}, browser waits 20 max 144s sum 1500s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 197, 'miss': 21, 'blocked': 0, 'tries': 199, 'empty': 2}, audit 4/4 agree"
+  "09:30:31 request mvm77dmck7n04: chunk of 41 keys done in 9s; paths {'http': 197, 'browser-crashed': 16, 'browser': 4}, browser waits 20 max 144s sum 1500s; ntfy publishes {'ok': 15, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 197, 'miss': 21, 'blocked': 0, 'tries': 199, 'empty': 2}, audit 4/4 agree",
+  "09:31:45 request mvm77dmck7n04: chunk of 36 keys done in 84s; paths {'http': 197, 'browser-crashed': 17, 'browser': 4}, browser waits 21 max 144s sum 1584s; ntfy publishes {'ok': 20, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 197, 'miss': 22, 'blocked': 0, 'tries': 199, 'empty': 2}, audit 4/4 agree"
  ]
 }
