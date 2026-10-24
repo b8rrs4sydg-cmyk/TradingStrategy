@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T11:51:41+00:00",
+ "generated_at": "2026-10-24T11:53:12+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -11831,6 +11831,22 @@
     [
      "2026-10-24",
      5589
+    ]
+   ]
+  },
+  "ow|TAG|TSA|2027-05-02": {
+   "price": 37692,
+   "first": {
+    "dep": "2027-05-02T07:10:00+08:00",
+    "arr": "2027-05-02T21:45:00+08:00",
+    "stops": 2,
+    "airline": "Philippine Airlines and EVA Air"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     37692
     ]
    ]
   },
@@ -38165,7 +38181,7 @@
   "rt|RMQ|CNX|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|RMQ|CTS|2026-11-06|2026-11-22": {
    "status": "timeout",
@@ -38318,9 +38334,9 @@
    "n": 1
   },
   "rt|RMQ|KIX|2027-09-15|2027-09-19": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-24",
-   "n": 2
+   "n": 1
   },
   "rt|RMQ|KLO|2027-12-23|2027-12-27": {
    "status": "timeout",
@@ -38428,7 +38444,7 @@
    "n": 4
   },
   "rt|RMQ|UKB|2027-09-15|2027-09-19": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
@@ -38440,12 +38456,12 @@
   "rt|RMQ|UTP|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|TPE|CEB|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|TPE|CJU|2026-11-20|2026-12-27": {
    "status": "timeout",
@@ -38550,7 +38566,7 @@
   "rt|TPE|KLO|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|TPE|MMY|2026-11-06|2026-12-27": {
    "status": "timeout",
@@ -38620,12 +38636,12 @@
   "rt|TPE|USM|2027-09-15|2027-09-19": {
    "status": "parse_error",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TSA|CEB|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|TSA|CJU|2026-11-06|2026-11-29": {
    "status": "timeout",
@@ -38685,7 +38701,7 @@
   "rt|TSA|DAD|2027-09-15|2027-09-19": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 2
+   "n": 3
   },
   "rt|TSA|FUK|2026-11-20|2026-12-27": {
    "status": "timeout",
@@ -38890,7 +38906,7 @@
   "rt|TSA|TAG|2027-09-15|2027-09-19": {
    "status": "parse_error",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TSA|UEO|2026-11-06|2026-11-08": {
    "status": "timeout",
@@ -38943,9 +38959,9 @@
    "n": 2
   },
   "rt|TSA|USM|2027-09-15|2027-09-19": {
-   "status": "timeout",
+   "status": "parse_error",
    "at": "2026-10-24",
-   "n": 2
+   "n": 1
   },
   "rt|UEO|RMQ|2026-11-08|2026-12-18": {
    "status": "timeout",
