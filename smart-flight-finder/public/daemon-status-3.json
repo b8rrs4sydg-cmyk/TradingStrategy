@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:38:10+00:00",
+ "at": "2026-10-24T06:39:43+00:00",
  "publishes": {
   "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2130,
+ "fares_saved": 2139,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
@@ -26,6 +26,8 @@
   "06:35:56 rtc kbhpyq73e8: answered",
   "06:37:45 rtc dhkjcdpgh5: answered",
   "06:37:57 request received: rid mvm11bp48pd12.2 19 keys",
-  "06:37:57 handle mvm11bp48pd12.2: first_chunk=True total=19"
+  "06:37:57 handle mvm11bp48pd12.2: first_chunk=True total=19",
+  "06:39:33 request mvm11bp48pd12.2: chunk of 19 keys done in 97s; paths {'http': 38, 'browser-crashed': 12, 'browser': 5}, browser waits 17 max 137s sum 1099s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 38, 'miss': 17, 'blocked': 0, 'tries': 41, 'empty': 3}, audit 3/3 agree",
+  "06:39:34 request mvm11bp48pd12.2: final sent (19/19); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
  ]
 }
