@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T11:33:20+00:00",
+ "at": "2026-10-24T11:34:52+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
@@ -49,6 +49,8 @@
   "11:30:08 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "11:30:12 git retry 1: b\"-46zevd': is at 08e56371bb1998bed80d2124bb3905c6e952030b but expected f1d25e5c054e3a4187c5c97e4012a410202e40a4)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "11:31:38 request received: rid mvmbjcdq2c2ar.5 20 keys",
-  "11:31:38 handle mvmbjcdq2c2ar.5: first_chunk=True total=20"
+  "11:31:38 handle mvmbjcdq2c2ar.5: first_chunk=True total=20",
+  "11:34:01 request mvmbjcdq2c2ar.5: chunk of 20 keys done in 143s; paths {'http': 54, 'browser-crashed': 73, 'browser': 2}, browser waits 75 max 143s sum 5208s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 54, 'miss': 38, 'blocked': 0, 'tries': 122, 'empty': 68}, audit 2/2 agree",
+  "11:34:02 request mvmbjcdq2c2ar.5: final sent (20/20); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}"
  ]
 }
