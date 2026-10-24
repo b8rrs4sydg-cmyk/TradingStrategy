@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T11:57:47+00:00",
+ "generated_at": "2026-10-24T12:08:18+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -19453,6 +19453,28 @@
     [
      "2026-10-24",
      8195
+    ]
+   ]
+  },
+  "rt|KIX|TPE|2027-02-14|2027-04-29": {
+   "price": 18262,
+   "first": {
+    "dep": "2027-02-14T21:10:00+09:00",
+    "arr": "2027-02-15T11:50:00+08:00",
+    "stops": 1,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 18262,
+    "AirAsia": 19592,
+    "Tigerair Taiwan": 19726,
+    "China Airlines": 31027
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18262
     ]
    ]
   },
