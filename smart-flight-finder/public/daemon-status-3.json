@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T12:18:44+00:00",
+ "at": "2026-10-24T12:23:16+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2306,
+ "fares_saved": 2308,
  "log": [
   "10:33:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:55 http front door: ['https://cultures-fog-depending-unlike.trycloudflare.com', 'https://30dcb49416743f.lhr.life']",
@@ -101,6 +101,8 @@
   "12:17:02 request received: rid mvmd5pdyo6ju3.3 17 keys",
   "12:17:02 handle mvmd5pdyo6ju3.3: first_chunk=True total=17",
   "12:18:39 request mvmd5pdyo6ju3.3: chunk of 17 keys done in 97s; paths {'http': 91, 'browser-crashed': 231}, browser waits 231 max 191s sum 17270s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 91, 'miss': 101, 'blocked': 0, 'tries': 260, 'empty': 169}, audit 3/3 agree",
-  "12:18:40 request mvmd5pdyo6ju3.3: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
+  "12:18:40 request mvmd5pdyo6ju3.3: final sent (17/17); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:23:01 request received: rid mvmddd0tshusb.3 13 keys",
+  "12:23:01 handle mvmddd0tshusb.3: first_chunk=True total=13"
  ]
 }
