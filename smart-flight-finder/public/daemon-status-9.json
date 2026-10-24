@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:40:34+00:00",
+ "at": "2026-10-24T11:45:06+00:00",
  "publishes": {
   "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2235,
+ "fares_saved": 2237,
  "log": [
   "10:33:48 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:53 http front door: ['https://historical-shoe-antonio-coming.trycloudflare.com', 'https://a7d7ffeb22fda1.lhr.life']",
@@ -60,6 +60,8 @@
   "11:37:54 request received: rid mvmbrdwfr0cz6.8 15 keys",
   "11:37:54 handle mvmbrdwfr0cz6.8: first_chunk=True total=15",
   "11:39:32 request mvmbrdwfr0cz6.8: chunk of 15 keys done in 98s; paths {'http': 54, 'browser-crashed': 111}, browser waits 111 max 148s sum 8144s; ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 54, 'miss': 52, 'blocked': 0, 'tries': 142, 'empty': 88}, audit 3/3 agree",
-  "11:39:32 request mvmbrdwfr0cz6.8: final sent (15/15); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}"
+  "11:39:32 request mvmbrdwfr0cz6.8: final sent (15/15); ntfy publishes {'ok': 6, 'r429': 0, 'fail': 0}",
+  "11:43:40 request received: rid mvmbys4jahkw0.8 20 keys",
+  "11:43:40 handle mvmbys4jahkw0.8: first_chunk=True total=20"
  ]
 }
