@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T09:56:38+00:00",
+ "generated_at": "2026-10-24T09:59:40+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -17724,6 +17724,28 @@
    "prev": 14140,
    "prev_at": "2026-10-17"
   },
+  "rt|FUK|TPE|2027-01-19|2027-02-10": {
+   "price": 13161,
+   "by_airline": {
+    "Tigerair Taiwan": 13161,
+    "AirAsia": 13680,
+    "Hong Kong Express": 14959,
+    "Cebu Pacific": 15026
+   },
+   "first": {
+    "dep": "2027-01-19T10:55:00+09:00",
+    "arr": "2027-01-19T12:40:00+08:00",
+    "stops": 0,
+    "airline": "Tigerair Taiwan"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     13161
+    ]
+   ]
+  },
   "rt|FUK|TPE|2027-02-15|2027-06-08": {
    "price": 14979,
    "first": {
@@ -18698,6 +18720,28 @@
     ]
    ]
   },
+  "rt|KIX|TPE|2027-01-03|2027-02-09": {
+   "price": 12450,
+   "by_airline": {
+    "Jetstar": 12450,
+    "Tigerair Taiwan": 16194,
+    "Peach Aviation": 16661,
+    "AirAsia": 16686
+   },
+   "first": {
+    "dep": "2027-01-03T23:10:00+09:00",
+    "arr": "2027-01-04T01:30:00+08:00",
+    "stops": 0,
+    "airline": "Jetstar"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     12450
+    ]
+   ]
+  },
   "rt|KIX|TPE|2027-01-03|2027-02-26": {
    "price": 13558,
    "first": {
@@ -18882,6 +18926,28 @@
     [
      "2026-10-18",
      20492
+    ]
+   ]
+  },
+  "rt|NGO|TPE|2027-01-03|2027-02-11": {
+   "price": 15936,
+   "first": {
+    "dep": "2027-01-03T22:50:00+09:00",
+    "arr": "2027-01-04T01:30:00+08:00",
+    "stops": 0,
+    "airline": "Peach Aviation"
+   },
+   "by_airline": {
+    "Peach Aviation": 15936,
+    "Tigerair Taiwan": 16433,
+    "STARLUX Airlines": 17200,
+    "JAL": 17493
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     15936
     ]
    ]
   },
@@ -26926,6 +26992,27 @@
     [
      "2026-10-24",
      11985
+    ]
+   ]
+  },
+  "rt|TPE|HND|2027-01-01|2027-02-13": {
+   "price": 19220,
+   "by_airline": {
+    "Peach Aviation": 19220,
+    "Tigerair Taiwan": 21792,
+    "Hong Kong Express": 27673
+   },
+   "first": {
+    "dep": "2027-01-01T20:55:00+08:00",
+    "arr": "2027-01-02T00:50:00+09:00",
+    "stops": 0,
+    "airline": "Peach Aviation"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     19220
     ]
    ]
   },
