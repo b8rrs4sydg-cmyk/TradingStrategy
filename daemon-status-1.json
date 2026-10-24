@@ -1,18 +1,18 @@
 {
- "at": "2026-10-23T22:41:57+00:00",
+ "at": "2026-10-24T00:46:45+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2062,
+ "fares_saved": 2065,
  "log": [
-  "22:40:20 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "22:40:27 http front door: ['https://delivers-usually-conscious-greeting.trycloudflare.com', 'https://1cd4dd1baddd31.lhr.life']",
-  "22:40:27 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "22:41:30 request received: rid httptest1792795289 20 keys",
-  "22:41:30 handle httptest1792795289: first_chunk=True total=20",
-  "22:41:31 request httptest1792795289: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "22:41:33 request httptest1792795289: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:45:09 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:45:15 http front door: ['https://thu-realty-nova-neutral.trycloudflare.com', 'https://30f72bf99d8526.lhr.life']",
+  "00:45:15 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:46:18 request received: rid httptest1792802778 20 keys",
+  "00:46:18 handle httptest1792802778: first_chunk=True total=20",
+  "00:46:19 request httptest1792802778: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:46:21 request httptest1792802778: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
