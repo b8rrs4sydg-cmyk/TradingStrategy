@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:16:27+00:00",
+ "generated_at": "2026-10-24T10:17:59+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -2942,6 +2942,25 @@
     [
      "2026-10-18",
      36007
+    ]
+   ]
+  },
+  "mc|ICN-TPE-2027-01-02|TPE-HND-2027-01-14|HND-TPE-2027-01-18|TPE-HKG-2027-02-09": {
+   "price": 68829,
+   "first": {
+    "dep": "2027-01-02T11:40:00+09:00",
+    "arr": "2027-01-02T13:30:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 68829
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     68829
     ]
    ]
   },
@@ -36186,6 +36205,16 @@
  ],
  "missing_v": 2,
  "status": {
+  "mc|BKK-TPE-2026-12-26|TPE-FUK-2027-01-14|FUK-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|BKK-TPE-2026-12-26|TPE-KIX-2027-01-01|KIX-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|BKK-TPE-2027-01-02|TPE-HND-2027-02-04|HND-TPE-2027-02-14|TPE-ICN-2027-02-26": {
    "status": "timeout",
    "at": "2026-10-24",
@@ -36466,10 +36495,40 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "mc|ICN-TPE-2026-12-26|TPE-HND-2027-01-14|HND-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-KIX-2026-12-31|KIX-TPE-2027-01-02|TPE-BKK-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-KIX-2027-01-14|KIX-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2026-12-26|TPE-NRT-2027-01-01|NRT-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|ICN-TPE-2027-01-02|TPE-KIX-2027-01-14|KIX-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|ICN-TPE-2027-01-02|TPE-NGO-2027-02-04|NGO-TPE-2027-02-14|TPE-ICN-2027-02-25": {
    "status": "timeout",
    "at": "2026-10-24",
    "n": 3
+  },
+  "mc|ICN-TPE-2027-01-02|TPE-NRT-2027-01-14|NRT-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
   },
   "mc|ICN-TPE-2027-01-02|TPE-NRT-2027-02-04|NRT-TPE-2027-02-15|TPE-HKG-2027-02-27": {
    "status": "timeout",
