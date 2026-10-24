@@ -110,7 +110,7 @@ jobs:
           path: smart-flight-finder/backend/merged.json
 
   stage2:
-    if: ${{ inputs.reuse_run_id == '' }}
+    if: ${{ !cancelled() && inputs.reuse_run_id == '' }}
     needs: merge1
     runs-on: ubuntu-latest
     timeout-minutes: 330

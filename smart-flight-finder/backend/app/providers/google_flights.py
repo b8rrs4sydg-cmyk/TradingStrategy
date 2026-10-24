@@ -329,7 +329,16 @@ async def scrape(
             if progress:
                 progress(done, len(keys), len(missing))
 
-        await asyncio.gather(*(one(k) for k in keys))
+        tasks = [asyncio.ensure_future(one(k)) for k in keys]
+        # past the deadline no new lookup starts; the ones still running get a few minutes, then they are cancelled so the
+        # job ends on time with what it has (a lookup that retries a slow multi-city page can take over ten minutes)
+        grace = max(0.0, deadline + 300 - time.time()) if deadline is not None else None
+        _, pending = await asyncio.wait(tasks, timeout=grace)
+        for t in pending:
+            t.cancel()
+        if pending:
+            stats["skipped"] += len(pending)
+            await asyncio.gather(*pending, return_exceptions=True)
         await browser.close()
     if http is not None:
         await http.aclose()
