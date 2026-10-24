@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:41:43+00:00",
+ "at": "2026-10-24T09:47:58+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2202,
+ "fares_saved": 2215,
  "log": [
   "05:34:51 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:56 git retry 0: b\"-46zevd': is at 5f4a019bd1ecd3a261bf10b948b6715190ea3816 but expected a8e636007280e86ae999cb1929cdf69f3e68816c)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -55,6 +55,13 @@
   "09:41:25 rtc jhas9za8t3: answered",
   "09:41:37 request received: rid mvm7ljb9dc80t.6 19 keys",
   "09:41:37 handle mvm7ljb9dc80t.6: first_chunk=True total=19",
-  "09:41:42 request mvm7ljb9dc80t.6: chunk of 19 keys done in 5s; paths {'http': 86, 'browser-crashed': 17, 'browser': 10}, browser waits 27 max 152s sum 1726s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 86, 'miss': 27, 'blocked': 0, 'tries': 93, 'empty': 7}, audit 4/4 agree"
+  "09:41:42 request mvm7ljb9dc80t.6: chunk of 19 keys done in 5s; paths {'http': 86, 'browser-crashed': 17, 'browser': 10}, browser waits 27 max 152s sum 1726s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 86, 'miss': 27, 'blocked': 0, 'tries': 93, 'empty': 7}, audit 4/4 agree",
+  "09:41:43 request mvm7ljb9dc80t.6: final sent (19/19); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "09:41:45 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "09:41:49 git retry 1: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "09:46:34 request received: rid mvm7s863gn7yg.0 15 keys",
+  "09:46:34 handle mvm7s863gn7yg.0: first_chunk=True total=15",
+  "09:47:34 request mvm7s863gn7yg.0: chunk of 15 keys done in 60s; paths {'http': 99, 'browser-crashed': 19, 'browser': 10}, browser waits 29 max 152s sum 1819s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 99, 'miss': 29, 'blocked': 0, 'tries': 106, 'empty': 7}, audit 4/4 agree",
+  "09:47:35 request mvm7s863gn7yg.0: final sent (15/15); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
  ]
 }
