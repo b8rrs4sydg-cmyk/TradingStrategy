@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T09:56:33+00:00",
+ "at": "2026-10-24T09:59:35+00:00",
  "publishes": {
   "ok": 11,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2162,
+ "fares_saved": 2164,
  "log": [
   "05:34:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:59 http front door: ['https://theatre-retired-prospective-achieving.trycloudflare.com', 'https://2309115a0dc2f2.lhr.life']",
@@ -58,6 +58,8 @@
   "09:54:18 request received: rid mvm80q6erqxi3.4 19 keys",
   "09:54:18 handle mvm80q6erqxi3.4: first_chunk=True total=19",
   "09:55:19 request mvm80q6erqxi3.4: chunk of 19 keys done in 61s; paths {'http': 97, 'browser-crashed': 23, 'browser': 11}, browser waits 34 max 150s sum 2099s; ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 97, 'miss': 34, 'blocked': 0, 'tries': 107, 'empty': 10}, audit 7/7 agree",
-  "09:55:22 request mvm80q6erqxi3.4: final sent (19/19); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}"
+  "09:55:22 request mvm80q6erqxi3.4: final sent (19/19); ntfy publishes {'ok': 11, 'r429': 0, 'fail': 0}",
+  "09:58:47 request received: rid mvm87xf6csfjl.3 3 keys",
+  "09:58:47 handle mvm87xf6csfjl.3: first_chunk=True total=3"
  ]
 }
