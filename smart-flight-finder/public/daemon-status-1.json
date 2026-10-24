@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T12:15:23+00:00",
+ "at": "2026-10-24T12:18:24+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2177,
+ "fares_saved": 2180,
  "log": [
   "10:33:45 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:51 http front door: ['https://opposed-knowledgestorm-fireplace-nextel.trycloudflare.com', 'https://92baeb433686b2.lhr.life']",
@@ -95,6 +95,8 @@
   "12:13:22 request received: rid mvmd0obzjwavb.1 15 keys",
   "12:13:22 handle mvmd0obzjwavb.1: first_chunk=True total=15",
   "12:15:00 request mvmd0obzjwavb.1: chunk of 15 keys done in 98s; paths {'http': 46, 'browser-crashed': 309}, browser waits 309 max 289s sum 29916s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 46, 'miss': 112, 'blocked': 0, 'tries': 251, 'empty': 205}, audit 0/0 agree",
-  "12:15:01 request mvmd0obzjwavb.1: final sent (15/15); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
+  "12:15:01 request mvmd0obzjwavb.1: final sent (15/15); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}",
+  "12:17:02 request received: rid mvmd5pdyo6ju3.1 14 keys",
+  "12:17:02 handle mvmd5pdyo6ju3.1: first_chunk=True total=14"
  ]
 }
