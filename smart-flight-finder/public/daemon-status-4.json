@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T15:34:56+00:00",
+ "at": "2026-10-24T20:34:16+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2254,
  "log": [
-  "15:33:22 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:33:26 http front door: ['https://handles-telecommunications-mississippi-exp.trycloudflare.com', 'https://486d8017f61ee2.lhr.life']",
-  "15:33:26 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:34:31 request received: rid httptest1792856071 20 keys",
-  "15:34:31 handle httptest1792856071: first_chunk=True total=20",
-  "15:34:33 request httptest1792856071: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:34:35 request httptest1792856071: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:32:41 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:32:46 http front door: ['https://delight-entries-initiative-tom.trycloudflare.com', 'https://563eb50fc19b54.lhr.life']",
+  "20:32:46 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:33:48 request received: rid httptest1792874028 20 keys",
+  "20:33:48 handle httptest1792874028: first_chunk=True total=20",
+  "20:33:50 request httptest1792874028: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "20:33:50 request httptest1792874028: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
