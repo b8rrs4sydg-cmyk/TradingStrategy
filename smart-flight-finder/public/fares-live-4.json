@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T11:59:32+00:00",
+ "generated_at": "2026-10-24T12:01:03+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -38936,6 +38936,16 @@
    "at": "2026-10-23",
    "n": 1
   },
+  "ow|RMQ|MMY|2027-12-23": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "ow|RMQ|PVG|2027-12-23": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "ow|UKB|TPE|2027-12-27": {
    "status": "parse_error",
    "at": "2026-10-24",
@@ -39824,7 +39834,7 @@
   "rt|TPE|DAD|2027-12-23|2027-12-27": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 3
+   "n": 4
   },
   "rt|TPE|DMK|2026-11-06|2026-12-27": {
    "status": "timeout",
