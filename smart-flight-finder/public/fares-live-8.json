@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:35:35+00:00",
+ "generated_at": "2026-10-24T11:04:07+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -26755,6 +26755,28 @@
     [
      "2026-10-17",
      16627
+    ]
+   ]
+  },
+  "rt|TPE|FUK|2027-02-11|2027-02-16": {
+   "price": 12261,
+   "first": {
+    "dep": "2027-02-11T06:45:00+08:00",
+    "arr": "2027-02-11T10:00:00+09:00",
+    "stops": 0,
+    "airline": "Tigerair Taiwan"
+   },
+   "by_airline": {
+    "Tigerair Taiwan": 12261,
+    "Asiana Airlines": 14453,
+    "AirAsia": 14490,
+    "China Airlines": 15032
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     12261
     ]
    ]
   },
