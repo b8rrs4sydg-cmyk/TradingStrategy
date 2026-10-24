@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T11:23:53+00:00",
+ "at": "2026-10-24T11:25:25+00:00",
  "publishes": {
   "ok": 5,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2284,
+ "fares_saved": 2286,
  "log": [
   "10:33:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:55 http front door: ['https://cultures-fog-depending-unlike.trycloudflare.com', 'https://30dcb49416743f.lhr.life']",
@@ -38,6 +38,10 @@
   "11:22:31 request mvmb57cajznaw.3: chunk of 23 keys done in 97s; paths {'http': 54, 'browser-crashed': 9}, browser waits 9 max 83s sum 500s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 54, 'miss': 9, 'blocked': 0, 'tries': 65, 'empty': 11}, audit 3/3 agree",
   "11:22:32 request mvmb57cajznaw.3: final sent (23/23); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
   "11:22:46 request received: rid mvmb7y6f41bhv.3 19 keys",
-  "11:22:46 handle mvmb7y6f41bhv.3: first_chunk=True total=19"
+  "11:22:46 handle mvmb7y6f41bhv.3: first_chunk=True total=19",
+  "11:24:26 request mvmb7y6f41bhv.3: chunk of 19 keys done in 99s; paths {'http': 61, 'browser-crashed': 21}, browser waits 21 max 87s sum 1180s; ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 61, 'miss': 21, 'blocked': 0, 'tries': 92, 'empty': 31}, audit 3/3 agree",
+  "11:24:28 request mvmb7y6f41bhv.3: final sent (19/19); ntfy publishes {'ok': 5, 'r429': 0, 'fail': 0}",
+  "11:24:35 request received: rid mvmba9z9gch1o.3 17 keys",
+  "11:24:35 handle mvmba9z9gch1o.3: first_chunk=True total=17"
  ]
 }
