@@ -398,3 +398,5 @@ change an algorithm or a rule, update the Wiki, not a hint text in the page.
 - Ticket cards show `各航司最低：A x · B y` from `by_airline` (`airlineFaresHtml`) when the database has it for that exact query.
 
 - Ticket cards show a bag-fee hint (`bagHintHtml`, `BAG20_TWD` in `public/index.html`) only for airlines with a published 20 kg add-on price (Tigerair Taiwan 950, Scoot 820 TWD per segment; source funtime.com.tw, undated). Hint only: it never changes prices or ranking.
+
+- User-facing wording: the page shows only what a traveller needs (no relay/tunnel/crawler/offer-id/score text; the technical reason of a failed lookup sits in a `<details>`, the score in the rank tooltip). The lookup box (`renderLookup`) builds `.ll-body` + `.bar` once and only updates them, so the bar width eases (`transition: width`) instead of restarting; unknown progress uses the sliding `.indet` bar.

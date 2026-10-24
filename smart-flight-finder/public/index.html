@@ -311,10 +311,16 @@
   .live-lookup .steps span.on { border-color: var(--brand); color: var(--brand-ink); font-weight: 600 }
   .live-lookup .steps span.done { color: var(--good); border-color: var(--good) }
   .live-lookup .bar { height: 8px; border-radius: 999px; background: var(--card); overflow: hidden }
-  .live-lookup .bar i { display: block; height: 100%; background: var(--brand); transition: width .4s ease }
-  .live-lookup .bar i.indet { width: 30% !important; animation: indet 1.4s ease-in-out infinite }
-  @keyframes indet { 0% { margin-left: -30% } 100% { margin-left: 100% } }
-  @media (prefers-reduced-motion: reduce) { .live-lookup .bar i.indet { animation: none; width: 100% !important; opacity: .4 } }
+  .live-lookup .bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--brand); position: relative; overflow: hidden; transition: width .7s cubic-bezier(.22,.8,.3,1), background-color .3s }
+  .live-lookup .bar i::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); transform: translateX(-100%); animation: shimmer 1.6s linear infinite }
+  .live-lookup .bar i.indet { width: 35% !important; transition: none; animation: indet 1.5s ease-in-out infinite }
+  .live-lookup .bar i.indet::after { display: none }
+  .live-lookup.ok .bar i { background: var(--good) }
+  .live-lookup.ok .bar i::after { animation: none; display: none }
+  .live-lookup .pct { font-variant-numeric: tabular-nums }
+  @keyframes indet { 0% { transform: translateX(-100%) } 100% { transform: translateX(290%) } }
+  @keyframes shimmer { to { transform: translateX(100%) } }
+  @media (prefers-reduced-motion: reduce) { .live-lookup .bar i, .live-lookup .bar i.indet { animation: none; transition: none } .live-lookup .bar i::after { display: none } .live-lookup .bar i.indet { width: 100% !important; opacity: .4 } }
   .live-lookup button { margin-top: 8px }
   .pill-fare { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good) }
   .pill-fare.none { background: var(--card-sunken); color: var(--fg-muted) }
@@ -1029,7 +1035,7 @@
   <section class="card" id="check-card" aria-labelledby="chk-title">
     <details id="chk-details">
       <summary id="chk-title">已經找到一張四腿票？貼上行程驗算</summary>
-      <p class="hint">例：首爾→台北→巴黎→台北→首爾。比較「單買三趟來回」和「單買初段＋這張四腿票＋單買最後一段」，價格取資料庫的實價；缺的可以請爬蟲查。</p>
+      <p class="hint">例：首爾→台北→巴黎→台北→首爾。比較「單買三趟來回」和「單買初段＋這張四腿票＋單買最後一段」，價格取資料庫的實價；缺的價格可以即時查詢。</p>
       <div class="grid grid-2" style="margin-top:10px">
         <label class="field"><span>外站 X（第 1 段起點）</span><input id="chk-x" value="ICN" maxlength="3" autocapitalize="characters"></label>
         <label class="field"><span>目的地 D</span><input id="chk-d" value="CDG" maxlength="3" autocapitalize="characters"></label>
@@ -1042,7 +1048,7 @@
         <label class="field"><span>單買初段 台北→X（留空＝第 1 段前一天）</span><input id="chk-h" type="date"></label>
         <label class="field"><span>單買最後一段 Y→台北（留空＝第 4 段後 3 天）</span><input id="chk-t" type="date"></label>
       </div>
-      <div class="submit-row" style="position:static;margin-top:12px"><button type="button" id="chk-run" class="btn-primary">驗算</button><button type="button" id="chk-ask" class="btn-ghost" hidden>請爬蟲查缺的價格</button></div>
+      <div class="submit-row" style="position:static;margin-top:12px"><button type="button" id="chk-run" class="btn-primary">驗算</button><button type="button" id="chk-ask" class="btn-ghost" hidden>查詢缺少的價格</button></div>
       <div id="chk-out" class="chk-out" aria-live="polite"></div>
     </details>
   </section>
@@ -1555,7 +1561,7 @@ function renderDbStatus() {
   document.getElementById('hs-age').textContent = ageText(FARES.generated_at);
   el.classList.toggle('empty', !c.count);
   if (!c.count) {
-    el.innerHTML = '票價資料庫目前沒有資料 —— 爬蟲尚未完成第一次執行，所有搜尋都不會有結果。';
+    el.innerHTML = '票價資料庫目前沒有資料，搜尋不會有結果，請稍後再試。';
     return;
   }
   el.innerHTML = `<b>${c.count.toLocaleString()}</b> 筆實價 · 更新於 ${tpeTime(FARES.generated_at)}（${ageText(FARES.generated_at)}）${liveDb ? '<span class="live">● 即時同步</span>' : ''} · 標「無資料」的機場或連假尚未爬取，<a href="wiki.html#data">了解更多</a>`;
@@ -2210,7 +2216,7 @@ function bookingLinks(ticket, adults) {
   ];
 }
 
-const ISSUER_LABEL = { google_flights: 'Google Flights 實際票價' };
+const ISSUER_LABEL = { google_flights: 'Google Flights 實價' };
 
 /* =========================================================================
  * Scoring
@@ -3197,7 +3203,7 @@ function renderPlan(plan, rank) {
         <div class="plan-head">
           <div class="head-main">
           <div class="meta">
-            <span class="rank mono">#${rank}</span>
+            <span class="rank mono" title="${plan.score != null ? `綜合評分 ${plan.score.toFixed(3)}（價格、飛行時間、請假效率等加權，越低越好）` : ''}">#${rank}</span>
             <span class="strat">${STRATEGY_LABEL[plan.strategy] || plan.strategy}</span>
             ${plan.warnings.some(w => w.code === 'no_saving') ? '<span class="tag-nosave">不划算 · 僅供比較</span>' : ''}
             ${plan.window_label ? `<span class="slot-tag">${escapeHtml(plan.window_label)}</span>` : ''}
@@ -3208,22 +3214,21 @@ function renderPlan(plan, rank) {
           <div>
             <div class="price mono">${plan.currency} ${plan.total_cost.toLocaleString()}</div>
             ${(plan.trips || []).length > 1 ? `<div class="per-trip">${plan.trips.length} 趟合計 · 平均每趟 ${Math.round(plan.total_cost / plan.trips.length).toLocaleString()}</div>` : ''}
-            ${plan.score != null ? `<div class="score">score ${plan.score.toFixed(3)}</div>` : ''}
           </div>
         </div>
         <div class="plan-detail">
           ${(plan.trips || []).length
             ? `<ol class="trips">${plan.trips.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ol>`
-            : `<div class="timeline">${renderTimeline(plan)}<div class="caption">紅色虛線 = 跨票交接 (建議 ≥ 3.5h 緩衝)。</div></div>`}
+            : `<div class="timeline">${renderTimeline(plan)}${plan.tickets.length > 1 ? '<div class="caption">紅色虛線 = 兩張票之間的轉機（建議至少留 3.5 小時）。</div>' : ''}</div>`}
           <div class="ticket-grid">
             ${plan.tickets.map((t, ti) => `
               <section class="ticket">
-                <h4>${plan.ticket_roles?.[ti] ? `票 ${ti+1}｜${escapeHtml(plan.ticket_roles[ti])}` : ticketCount > 1 ? `票 ${ti+1}` : '票'} · <span class="mono" style="text-transform:none;color:var(--fg-faint)">${escapeHtml(t.offer_id)}</span></h4>
-                <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()}${priceDelta(t)} · ${t.fare_class || '經濟艙'} · ${t.baggage_through_checked ? '行李直掛' : '需提領重掛'}</div>
+                <h4>${plan.ticket_roles?.[ti] ? `票 ${ti+1}｜${escapeHtml(plan.ticket_roles[ti])}` : ticketCount > 1 ? `票 ${ti+1}` : '機票'}</h4>
+                <div class="ticket-price">${t.currency} ${t.total_price.toLocaleString()}${priceDelta(t)} · 經濟艙${t.baggage_through_checked ? '' : ' · 需提領重掛行李'}</div>
                 ${airlineFaresHtml(t)}
                 ${bagHintHtml(t)}
-                <ol>${t.legs.map(l => `<li>${escapeHtml(l.origin)}→${escapeHtml(l.destination)} · ${l.estimated ? `航班待選 · ${l.departure.slice(0, 10)}` : `${escapeHtml(l.flight_number || l.carrier)} · ${l.departure.slice(0,16).replace('T',' ')}`}</li>`).join('')}</ol>
-                <div class="src ${t.issuer === 'google_flights' ? 'real' : ''}">價格來源：${escapeHtml(ISSUER_LABEL[t.issuer] || t.issuer || '—')}${t.issuer === 'google_flights' ? `（${t.fare_at} 擷取，1 位成人最低總價）` : ''}
+                <ol>${t.legs.map(l => `<li>${escapeHtml(l.origin)}→${escapeHtml(l.destination)} · ${l.estimated ? `${l.departure.slice(5, 10).replace('-', '/')} · 航班時刻到訂票網站選` : `${escapeHtml(l.carrier || l.flight_number)} · ${l.departure.slice(5,16).replace('-', '/').replace('T',' ')}`}</li>`).join('')}</ol>
+                <div class="src ${t.issuer === 'google_flights' ? 'real' : ''}">${escapeHtml(ISSUER_LABEL[t.issuer] || t.issuer || '—')}${t.issuer === 'google_flights' ? `（${String(t.fare_at || '').slice(5, 10).replace('-', '/')} 查詢，1 位成人最低價）` : ''}
                   <div class="links">${bookingLinks(t, plan.adults || 1).map(b => `<a href="${escapeHtml(b.url)}" target="_blank" rel="noopener noreferrer">${b.label} ↗</a>`).join('')}</div>
                 </div>
               </section>
@@ -3483,7 +3488,7 @@ function runSearch(form) {
 
   const cache = CachingProvider.stats();
   if (fareStats.missing) {
-    notices.push(`${fareStats.missing} 個查詢不在票價資料庫，爬蟲正在補查，結果會自動更新。`);
+    notices.push(`有 ${fareStats.missing} 筆票價資料庫還沒有，正在查詢最新價格，結果會自動更新。`);
   }
   const dropped = plans.filter(p => state.favorites.has(fingerprint(p)) && (favChange(p)?.diff || 0) < 0).length;
   if (dropped) notices.unshift(`你收藏的 ${dropped} 個方案比收藏時便宜了。`);
@@ -3540,7 +3545,7 @@ function renderChips() {
   box.innerHTML = LEAVE_STRATEGIES_2027.map(h => {
     const on = slots.some(s => s.holidayKey === h.key);
     const nodata = !fareCoverage().holidays.has(h.key);
-    return `<button type="button" class="chip ${on ? 'on' : ''} ${nodata ? 'nodata' : ''}" data-key="${h.key}" aria-pressed="${on}" title="${escapeHtml(h.desc)}${nodata ? '（爬蟲尚未涵蓋：Google Flights 只賣約 11 個月內的機票，或不在爬取清單）' : ''}">${on ? '✓' : '+'} ${h.label}<span class="mono">${h.start.slice(5)}→${h.end.slice(5)}</span></button>`;
+    return `<button type="button" class="chip ${on ? 'on' : ''} ${nodata ? 'nodata' : ''}" data-key="${h.key}" aria-pressed="${on}" title="${escapeHtml(h.desc)}${nodata ? '（資料庫還沒有：Google Flights 只賣約 11 個月內的機票）' : ''}">${on ? '✓' : '+'} ${h.label}<span class="mono">${h.start.slice(5)}→${h.end.slice(5)}</span></button>`;
   }).join('');
 }
 
@@ -3718,7 +3723,7 @@ function renderPicker(id, title, airports, selected) {
   const covered = fareCoverage().airports;
   const many = airports.length > 24;   // the Asia-wide lists: collapsible groups + a search box
   const label = a =>
-    `<label data-q="${escapeHtml((a.name + ' ' + a.code + ' ' + a.country + ' ' + (COUNTRY_ZH[a.country] || '') + ' ' + a.group).toLowerCase())}" class="${covered.has(a.code) ? '' : 'nodata'}" title="${covered.has(a.code) ? '' : '爬蟲尚未涵蓋，選了不會有價格（按搜尋後爬蟲會即時去查）'}"><input type="checkbox" value="${a.code}" ${selected.has(a.code) ? 'checked' : ''}>${a.name}<span class="code">${a.code}</span></label>`;
+    `<label data-q="${escapeHtml((a.name + ' ' + a.code + ' ' + a.country + ' ' + (COUNTRY_ZH[a.country] || '') + ' ' + a.group).toLowerCase())}" class="${covered.has(a.code) ? '' : 'nodata'}" title="${covered.has(a.code) ? '' : '資料庫還沒有這個機場的票價（按搜尋後會即時查詢）'}"><input type="checkbox" value="${a.code}" ${selected.has(a.code) ? 'checked' : ''}>${a.name}<span class="code">${a.code}</span></label>`;
   el.innerHTML = `<div class="head">${title} · 已選 <span class="n">${selected.size}</span>${many ? '<input type="search" class="psearch" placeholder="搜尋機場 / 城市 / 代碼 / 國家（例：上海、印度、KIX）" aria-label="搜尋機場">' : ''}</div>` +
     [...groups].map(([g, list]) => {
       if (!many) return `<div class="row"><span class="grp">${g}</span>${list.map(label).join('')}</div>`;
@@ -3778,7 +3783,7 @@ function applyCoverage() {
   for (const label of document.querySelectorAll('.picker label')) {
     const ok = covered.has(label.querySelector('input').value);
     label.classList.toggle('nodata', !ok);
-    label.title = ok ? '' : '爬蟲尚未涵蓋，選了不會有價格';
+    label.title = ok ? '' : '資料庫還沒有這個機場的票價';
   }
   renderChips();
   renderDbStatus();
@@ -3866,7 +3871,7 @@ function checkFourLeg() {
       <p class="${diff > 0 ? 'good' : ''}" style="font-size:17px"><b>${diff > 0 ? `四腿票方案便宜 ${money(diff)}（${Math.round(diff / base * 100)}%）` : diff < 0 ? `四腿票方案貴 ${money(-diff)}，不划算` : '兩者一樣'}</b></p>
       <p class="hint">沒算：行李、改票彈性、四腿票第 1 段必須搭乘（沒搭後面全作廢）、兩邊航班品質差異（直飛與轉機）。</p>`;
   } else {
-    verdict = `<p class="hint">還缺 ${missing.length} 筆價格，無法比較。${live.ready || live.ntfyOk ? '按下面的按鈕請爬蟲查，查到後再按「驗算」。' : '爬蟲目前不在線；之後再試。'}</p>`;
+    verdict = `<p class="hint">還缺 ${missing.length} 筆價格，無法比較。${live.ready || live.ntfyOk ? '按下面的按鈕查詢，查到後再按「驗算」。' : '目前無法即時查詢，請稍後再試。'}</p>`;
   }
   out.innerHTML = table + verdict;
   ask.hidden = !missing.length || !(live.ready || live.ntfyOk);
@@ -3988,7 +3993,7 @@ const T_REQ = 'sff-q-1dbc38bf5255bfa8b886187c';   // page → crawler
 const T_RES = 'sff-r-dbe95166c8687164a93fc60e';   // crawler → page
 const NTFY_FIRST_MS = 45000;                      // no reply at all → crawler is down → Claude fallback
 const NTFY_SILENCE_MS = 120000;                   // gap between messages once it is working
-const NTFY_STEPS = [['queued', '連線中繼'], ['dispatched', '等爬蟲接手'], ['running', '查詢 Google Flights'], ['done', '完成']];
+const NTFY_STEPS = [['queued', '送出查詢'], ['dispatched', '等待查詢'], ['running', '取得票價'], ['done', '完成']];
 const LIVE_CACHE_KEY = 'sff.livefares.v1';
 // The crawler announces its public tunnel URL in daemon.json (committed to the repo); read via the GitHub API (no cache lag).
 const DAEMON_RAW = 'https://raw.githubusercontent.com/b8rrs4sydg-cmyk/TradingStrategy/claude/zealous-darwin-1kexus/smart-flight-finder/public/daemon.json';
@@ -3998,7 +4003,7 @@ const WORKER_SESSION = 'session_013kKEszjSVCbMpRKkq9i8Gg';
 const WORKER_TRIGGER = 'trig_01YJmjteUtHz6uoWp6moa8fM';
 const LOOKUP_MAX = 160;            // keys per request (crawler limit)
 const MC_BUDGET = 600;             // multi-city fares fetched per search (the most promising ones)
-const LOOKUP_STEPS = [['queued', '送出請求'], ['dispatched', '啟動爬蟲'], ['running', '查詢 Google Flights'], ['saving', '寫入資料庫'], ['done', '完成']];
+const LOOKUP_STEPS = [['queued', '送出查詢'], ['dispatched', '等待查詢'], ['running', '取得票價'], ['saving', '整理結果'], ['done', '完成']];
 const live = { db: null, mcp: null, ready: false, rid: null, doc: null, keys: [], started: 0, unsub: null, timer: null,
   asked: new Set(), notFound: new Set(), answered: new Set(), needsApproval: false, error: null,
   mode: 'ntfy', steps: NTFY_STEPS, ntfyOk: true, campaign: { asked: 0, batch: 0, mcLeft: MC_BUDGET, found: 0 } };
@@ -4027,8 +4032,8 @@ function campaignText() {
   const c = live.campaign;
   if (!c || !c.batch) return '';
   const left = Math.max(0, (c.left || 0) - (live.keys?.length || 0));
-  const stage = c.stage === 1 ? '階段 1：單程／來回票價' : c.all ? '階段 2：多城市（全部排列組合）' : '階段 2：多城市（依預期可省幅度，只查最有希望的）';
-  return `<div class="hint" style="margin-top:4px">第 ${c.batch} 批 · ${stage} · 本次搜尋已送出 ${c.asked} 筆、找到 ${c.found + (live.doc?.status === 'done' ? 0 : (live.doc?.found || 0))} 筆實價${left ? `，還有約 ${left} 筆待查（查完會自動繼續）` : ''}</div>`;
+  const found = c.found + (live.doc?.status === 'done' ? 0 : (live.doc?.found || 0));
+  return `<div class="hint" style="margin-top:4px">這次搜尋已查 ${c.asked} 筆、找到 ${found} 筆實價${left ? `；還有約 ${left} 筆，查完會自動繼續` : ''}</div>`;
 }
 
 function renderLookup() {
@@ -4036,16 +4041,27 @@ function renderLookup() {
   const d = live.doc;
   if (!live.rid && !live.needsApproval && !live.error) { el.hidden = true; return; }
   el.hidden = false;
+  // The bar lives outside the text that is re-rendered, so its width eases between values instead of restarting.
+  if (!el.querySelector('.ll-body')) el.innerHTML = '<div class="ll-body"></div><div class="bar"><i></i></div>';
+  const body = el.querySelector('.ll-body'), bar = el.querySelector('.bar'), fill = bar.firstElementChild;
   el.className = 'live-lookup' + (live.error || d?.status === 'error' ? ' err' : d?.status === 'done' ? ' ok' : '');
+  const showBar = (pct, indeterminate) => {
+    bar.hidden = false;
+    fill.classList.toggle('indet', !!indeterminate);
+    if (!indeterminate) fill.style.width = `${pct}%`;
+  };
   if (live.needsApproval) {
-    el.innerHTML = `<div>有 ${live.keys.length} 個查詢不在票價資料庫。即時查詢要透過 <b>Claude Code Remote</b> 連接器請 Claude 去 Google Flights 查。</div>
-      <button type="button" class="btn-ghost" id="btn-lookup-allow">允許並即時查詢</button>`;
+    bar.hidden = true;
+    body.innerHTML = `<div>有 ${live.keys.length} 筆票價資料庫還沒有，要即時查詢嗎？</div>
+      <button type="button" class="btn-ghost" id="btn-lookup-allow">即時查詢</button>`;
     document.getElementById('btn-lookup-allow').onclick = () => { live.needsApproval = false; startLookup(live.keys, true); };
     return;
   }
   if (live.error || d?.status === 'error') {
-    el.innerHTML = `<div><b>即時查詢失敗</b>：${escapeHtml(live.error || d?.message || d?.error || '工作階段沒有回報原因')}</div>
-      <div class="hint">${escapeHtml(transportText())}</div>
+    bar.hidden = true;
+    const why = live.error || d?.message || d?.error || '';
+    body.innerHTML = `<div><b>暫時查不到最新票價</b>，先顯示資料庫裡已有的結果。</div>
+      ${why ? `<details class="hint"><summary>詳細原因</summary>${escapeHtml(why)}<br>${escapeHtml(transportText())}</details>` : ''}
       <button type="button" class="btn-ghost" id="btn-lookup-retry">重新查詢</button>`;
     document.getElementById('btn-lookup-retry').onclick = () => { const k = live.keys; resetLookup(); startLookup(k); };
     return;
@@ -4059,25 +4075,23 @@ function renderLookup() {
   const stalled = live.mode !== 'ntfy' && status === 'queued' && elapsed > 120;
   let head, pct = null;
   if (status === 'done') {
-    head = `<b>即時查詢完成</b>：${d.found ?? done} 筆找到實價${(d.not_found || []).length ? `，${d.not_found.length} 筆 Google Flights 沒有可售行程` : ''} —— 結果已更新`;
+    head = `<b>查詢完成</b>：${d.found ?? done} 筆找到實價${(d.not_found || []).length ? `，${d.not_found.length} 筆目前沒有可買的航班` : ''}，結果已更新`;
     pct = 100;
   } else if (status === 'running') {
-    head = `<b>正在即時查詢 Google Flights</b>：${done} / ${total} 筆${live.mode === 'ntfy' ? `（已找到 ${d.found || 0} 筆實價，結果邊查邊更新）` : ''}`;
     pct = total ? Math.round(done / total * 100) : 0;
+    head = `<b>正在查詢最新票價</b>：${done} / ${total} 筆${d.found ? `（已找到 ${d.found} 筆實價，結果邊查邊更新）` : ''}`;
   } else if (status === 'saving') {
-    head = '<b>寫入票價資料庫</b>…'; pct = 100;
+    head = '<b>整理結果</b>…'; pct = 100;
   } else if (stalled) {
-    head = '<b>Claude 工作階段還沒接手</b> —— 它可能正在處理其他事或已休眠，請稍候或重試';
-  } else if (live.mode === 'ntfy') {
-    head = `<b>已送出 ${total} 筆缺少的票價</b>，等待爬蟲接手…（資料庫已有的結果先列在下方）`;
+    head = '<b>還沒開始查詢</b>，請稍候或重新送出';
   } else {
-    head = `<b>即時查詢 ${total} 筆缺少的票價</b>…`;
+    head = `<b>正在查詢 ${total} 筆缺少的票價</b>…（資料庫已有的結果先列在下方）`;
   }
   el.title = transportText();
-  el.innerHTML = `<div class="row">${head}<span class="mono">${status === 'done' ? `共 ${fmtSec(elapsed)}` : `已等 ${fmtSec(elapsed)} · 預估約 ${fmtSec(Math.max(eta - elapsed, 5))}`}</span></div>${campaignText()}<div class="hint" style="margin-top:2px">${escapeHtml(transportText())}</div>
+  body.innerHTML = `<div class="row"><span>${head}</span><span class="mono">${status === 'done' ? `共 ${fmtSec(elapsed)}` : `${pct != null && status === 'running' ? `<span class="pct">${pct}%</span> · ` : ''}已等 ${fmtSec(elapsed)} · 約再 ${fmtSec(Math.max(eta - elapsed, 5))}`}</span></div>${campaignText()}
     <div class="steps">${live.steps.map(([k, label], i) => `<span class="${i < idx ? 'done' : i === idx ? 'on' : ''}">${i < idx ? '✓ ' : ''}${label}</span>`).join('')}</div>
-    <div class="bar"><i class="${pct == null ? 'indet' : ''}" style="width:${pct ?? 30}%"></i></div>
     ${stalled ? '<button type="button" class="btn-ghost" id="btn-lookup-retry">重新送出</button>' : ''}`;
+  showBar(pct ?? 0, pct == null || (status === 'running' && pct === 0));
   const retry = document.getElementById('btn-lookup-retry');
   if (retry) retry.onclick = () => { const k = live.keys; resetLookup(); startLookup(k); };
 }
@@ -4099,11 +4113,11 @@ function renderAllButton() {
   const etaText = `預估約 ${fmtSec(n * 2.5 / Math.max(peers, 1))}`;
   el.hidden = false;
   el.innerHTML = live.campaign.all
-    ? `正在查找<b>所有排列組合</b>：還有 ${n} 筆多城市票價待查（${peers || '?'} 個爬蟲並行，${etaText}；可隨時重新搜尋來停止）`
-    : `目前只查「預期最能省」且單程下限允許的多城市票，還有 <b>${n}</b> 筆排列組合沒查${skipped ? `（其中 ${skipped} 筆被單程下限篩掉）` : ''}。 <button type="button" class="btn-ghost" id="btn-lookup-all"${busy ? ' disabled' : ''}>查找所有排列組合（${n} 筆，${etaText}）</button>`;
+    ? `正在查找<b>所有排列組合</b>：還有 ${n} 筆多城市票價待查（${etaText}；重新搜尋可停止）`
+    : `目前只查預期最能省的多城市組合，還有 <b>${n}</b> 筆沒查。 <button type="button" class="btn-ghost" id="btn-lookup-all"${busy ? ' disabled' : ''}>查找所有排列組合（${n} 筆，${etaText}）</button>`;
   const b = document.getElementById('btn-lookup-all');
   if (b) b.onclick = () => {
-    if (n > 2000 && !confirm(`共 ${n} 筆，${etaText}（${peers || '?'} 個爬蟲並行），期間爬蟲會被佔用。確定要全部查？`)) return;
+    if (n > 2000 && !confirm(`共 ${n} 筆，${etaText}。確定要全部查？`)) return;
     live.campaign.all = true;
     live.campaign.mcLeft = Infinity;
     SCREEN.all = true;   // ask for the combinations the one-way screening had skipped as well
