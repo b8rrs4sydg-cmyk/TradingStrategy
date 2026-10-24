@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:24:51+00:00",
+ "generated_at": "2026-10-24T12:33:52+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -4922,6 +4922,26 @@
     [
      "2026-10-17",
      17023
+    ]
+   ]
+  },
+  "mc|RGN-TPE-2027-02-14|TPE-MNL-2027-04-29|MNL-TPE-2027-05-02|TPE-SIN-2027-06-09": {
+   "price": 107838,
+   "first": {
+    "dep": "2027-02-14T11:05:00+06:30",
+    "arr": "2027-02-15T14:15:00+08:00",
+    "stops": 1,
+    "airline": "China Southern"
+   },
+   "by_airline": {
+    "China Southern": 107838,
+    "THAI": 111155
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     107838
     ]
    ]
   },
@@ -41125,6 +41145,11 @@
    "at": "2026-10-24",
    "n": 1
   },
+  "ow|TPE|REP|2027-06-09": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "ow|TSA|DPS|2027-02-10": {
    "status": "timeout",
    "at": "2026-10-24",
@@ -42474,6 +42499,11 @@
    "status": "timeout",
    "at": "2026-10-24",
    "n": 2
+  },
+  "rt|TPE|RGN|2027-04-29|2027-05-02": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
   },
   "rt|TPE|SIN|2027-12-23|2027-12-27": {
    "status": "timeout",
