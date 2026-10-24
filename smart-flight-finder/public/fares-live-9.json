@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:16:04+00:00",
+ "generated_at": "2026-10-24T10:17:36+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -1564,6 +1564,49 @@
     ]
    ]
   },
+  "mc|HKG-TPE-2026-12-26|TPE-NRT-2026-12-31|NRT-TPE-2027-01-02|TPE-ICN-2027-01-14": {
+   "price": 77360,
+   "first": {
+    "dep": "2026-12-26T10:10:00+08:00",
+    "arr": "2026-12-26T12:00:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 77360,
+    "Cathay Pacific": 92734,
+    "China Airlines": 94217
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     77360
+    ]
+   ]
+  },
+  "mc|HKG-TPE-2026-12-26|TPE-NRT-2027-01-14|NRT-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 63785,
+   "first": {
+    "dep": "2026-12-26T15:30:00+08:00",
+    "arr": "2026-12-26T17:10:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 63785,
+    "Cathay Pacific": 65073,
+    "China Airlines": 110725,
+    "STARLUX Airlines": 111270
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     63785
+    ]
+   ]
+  },
   "mc|HKG-TPE-2027-01-02|TPE-FUK-2027-02-04|FUK-TPE-2027-02-14|TPE-BKK-2027-02-27": {
    "price": 76080,
    "first": {
@@ -1606,6 +1649,26 @@
     ]
    ]
   },
+  "mc|HKG-TPE-2027-01-02|TPE-HND-2027-01-14|HND-TPE-2027-01-18|TPE-BKK-2027-02-09": {
+   "price": 69087,
+   "first": {
+    "dep": "2027-01-02T10:10:00+08:00",
+    "arr": "2027-01-02T12:00:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 69087,
+    "Cathay Pacific": 70375
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     69087
+    ]
+   ]
+  },
   "mc|HKG-TPE-2027-01-02|TPE-KIX-2027-02-04|KIX-TPE-2027-02-16|TPE-ICN-2027-02-27": {
    "price": 75674,
    "first": {
@@ -1635,6 +1698,27 @@
     [
      "2026-10-18",
      75674
+    ]
+   ]
+  },
+  "mc|HKG-TPE-2027-01-02|TPE-NGO-2027-01-14|NGO-TPE-2027-01-18|TPE-ICN-2027-02-09": {
+   "price": 77921,
+   "first": {
+    "dep": "2027-01-02T10:10:00+08:00",
+    "arr": "2027-01-02T12:00:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 77921,
+    "Cathay Pacific": 93295,
+    "China Airlines": 97076
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     77921
     ]
    ]
   },
