@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:25:08+00:00",
+ "generated_at": "2026-10-24T12:34:10+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -1526,6 +1526,48 @@
     [
      "2026-10-18",
      70823
+    ]
+   ]
+  },
+  "mc|HAN-TPE-2027-02-14|TPE-ICN-2027-06-09|ICN-TPE-2027-06-13|TPE-BKI-2027-09-15": {
+   "price": 63526,
+   "first": {
+    "dep": "2027-02-14T12:35:00+07:00",
+    "arr": "2027-02-14T16:10:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 63526,
+    "Cathay Pacific": 86074,
+    "China Southern": 116391
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     63526
+    ]
+   ]
+  },
+  "mc|HAN-TPE-2027-02-14|TPE-MNL-2027-06-09|MNL-TPE-2027-06-13|TPE-BKI-2027-09-15": {
+   "price": 77071,
+   "first": {
+    "dep": "2027-02-14T12:35:00+07:00",
+    "arr": "2027-02-14T16:10:00+08:00",
+    "stops": 0,
+    "airline": "EVA Air"
+   },
+   "by_airline": {
+    "EVA Air": 77071,
+    "Cathay Pacific": 80524,
+    "China Southern": 89374
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     77071
     ]
    ]
   },
@@ -3916,6 +3958,25 @@
     [
      "2026-10-17",
      229886
+    ]
+   ]
+  },
+  "mc|NRT-TPE-2027-02-14|TPE-HKG-2027-04-29|HKG-TPE-2027-05-02|TPE-BKI-2027-09-15": {
+   "price": 89416,
+   "first": {
+    "dep": "2027-02-14T15:30:00+09:00",
+    "arr": "2027-02-14T18:35:00+08:00",
+    "stops": 0,
+    "airline": "Cathay Pacific"
+   },
+   "by_airline": {
+    "Cathay Pacific": 89416
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     89416
     ]
    ]
   },
