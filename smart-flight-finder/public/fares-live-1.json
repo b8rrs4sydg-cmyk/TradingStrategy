@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T06:43:04+00:00",
+ "generated_at": "2026-10-24T09:13:06+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -20550,6 +20550,26 @@
     ]
    ]
   },
+  "rt|RMQ|HND|2027-01-15|2027-01-19": {
+   "price": 15089,
+   "first": {
+    "dep": "2027-01-15T13:10:00+08:00",
+    "arr": "2027-01-15T22:45:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 15089,
+    "Korean Air": 17814
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     15089
+    ]
+   ]
+  },
   "rt|RMQ|HND|2027-02-11|2027-02-14": {
    "price": 23354,
    "first": {
@@ -25783,6 +25803,28 @@
     [
      "2026-10-17",
      17692
+    ]
+   ]
+  },
+  "rt|TPE|HND|2027-01-15|2027-01-19": {
+   "price": 10511,
+   "first": {
+    "dep": "2027-01-15T13:55:00+08:00",
+    "arr": "2027-01-15T22:45:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 10511,
+    "Peach Aviation": 12785,
+    "Tigerair Taiwan": 14324,
+    "Asiana Airlines": 15088
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     10511
     ]
    ]
   },
