@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T12:09:34+00:00",
+ "at": "2026-10-24T12:11:05+00:00",
  "publishes": {
   "ok": 9,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2292,
+ "fares_saved": 2302,
  "log": [
   "10:33:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:55 http front door: ['https://cultures-fog-depending-unlike.trycloudflare.com', 'https://30dcb49416743f.lhr.life']",
@@ -87,6 +87,9 @@
   "12:07:43 rtc b7apyqma8q: answered",
   "12:07:56 request received: rid mvmctnwxkba1z.3 15 keys",
   "12:07:56 handle mvmctnwxkba1z.3: first_chunk=True total=15",
-  "12:09:33 request mvmctnwxkba1z.3: chunk of 15 keys done in 97s; paths {'http': 77, 'browser-crashed': 196}, browser waits 196 max 191s sum 15131s; ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 77, 'miss': 87, 'blocked': 0, 'tries': 230, 'empty': 153}, audit 3/3 agree"
+  "12:09:33 request mvmctnwxkba1z.3: chunk of 15 keys done in 97s; paths {'http': 77, 'browser-crashed': 196}, browser waits 196 max 191s sum 15131s; ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 77, 'miss': 87, 'blocked': 0, 'tries': 230, 'empty': 153}, audit 3/3 agree",
+  "12:09:34 request mvmctnwxkba1z.3: final sent (15/15); ntfy publishes {'ok': 9, 'r429': 0, 'fail': 0}",
+  "12:10:39 request received: rid mvmcxhojepxl4.3 20 keys",
+  "12:10:39 handle mvmcxhojepxl4.3: first_chunk=True total=20"
  ]
 }
