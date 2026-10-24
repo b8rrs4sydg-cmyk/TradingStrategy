@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T10:05:29+00:00",
+ "generated_at": "2026-10-24T10:07:01+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -18348,6 +18348,28 @@
     ]
    ]
   },
+  "rt|HND|TPE|2026-12-26|2027-02-11": {
+   "price": 18813,
+   "first": {
+    "dep": "2026-12-26T05:45:00+09:00",
+    "arr": "2026-12-26T08:55:00+08:00",
+    "stops": 0,
+    "airline": "Peach Aviation"
+   },
+   "by_airline": {
+    "Peach Aviation": 18813,
+    "Tigerair Taiwan": 23330,
+    "Hong Kong Express": 27124,
+    "JAL": 42246
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18813
+    ]
+   ]
+  },
   "rt|HND|TPE|2027-01-03|2027-02-25": {
    "price": 16266,
    "first": {
@@ -19859,6 +19881,28 @@
     [
      "2026-10-23",
      9469
+    ]
+   ]
+  },
+  "rt|NRT|TPE|2026-12-26|2027-02-10": {
+   "price": 19039,
+   "first": {
+    "dep": "2026-12-26T16:55:00+09:00",
+    "arr": "2026-12-27T01:30:00+08:00",
+    "stops": 1,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 19039,
+    "Scoot": 20849,
+    "Tigerair Taiwan": 22786,
+    "Peach Aviation": 23617
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     19039
     ]
    ]
   },
@@ -37277,6 +37321,11 @@
    "at": "2026-10-24",
    "n": 1
   },
+  "mc|BKK-TPE-2027-01-02|TPE-NGO-2027-02-04|NGO-TPE-2027-02-14|TPE-BKK-2027-02-27": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|FUK-TPE-2026-11-15|TPE-HKG-2026-11-27|HKG-TPE-2026-11-29|TPE-ICN-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -37460,6 +37509,11 @@
   "mc|FUK-TPE-2026-12-13|TPE-HKG-2026-12-18|HKG-TPE-2026-12-20|TPE-ICN-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|FUK-TPE-2027-01-04|TPE-HND-2027-02-26": {
+   "status": "timeout",
+   "at": "2026-10-24",
    "n": 1
   },
   "mc|FUK-TPE-2027-02-16|TPE-KIX-2027-02-26": {
@@ -37722,6 +37776,11 @@
    "at": "2026-10-23",
    "n": 2
   },
+  "mc|ICN-TPE-2027-01-02|TPE-NRT-2027-02-04|NRT-TPE-2027-02-15|TPE-BKK-2027-02-26": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|KIX-TPE-2026-11-08|TPE-CJU-2026-11-27|CJU-TPE-2026-11-29|TPE-NRT-2026-12-24": {
    "status": "timeout",
    "at": "2026-10-23",
@@ -37892,6 +37951,11 @@
    "at": "2026-10-24",
    "n": 1
   },
+  "mc|NGO-TPE-2027-02-16|TPE-HND-2027-02-26": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
   "mc|NRT-TPE-2026-11-08|TPE-HKG-2026-11-20|HKG-TPE-2026-11-22|TPE-NRT-2026-12-24": {
    "status": "parse_error",
    "at": "2026-10-23",
@@ -37945,6 +38009,11 @@
   "mc|NRT-TPE-2026-12-13|TPE-HKG-2026-12-24|HKG-TPE-2026-12-27|TPE-HND-2027-02-10": {
    "status": "timeout",
    "at": "2026-10-23",
+   "n": 1
+  },
+  "mc|NRT-TPE-2027-02-16|TPE-KIX-2027-02-26": {
+   "status": "timeout",
+   "at": "2026-10-24",
    "n": 1
   },
   "mc|PVG-TPE-2026-11-08|TPE-HKG-2026-11-13|HKG-TPE-2026-11-15|TPE-FUK-2026-11-20": {
@@ -38058,6 +38127,21 @@
    "n": 1
   },
   "mc|TPE-FUK-2026-12-31|NGO-TPE-2027-02-15": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|TPE-NGO-2026-12-31|NRT-TPE-2027-02-15": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|TPE-NGO-2027-01-01|HND-TPE-2027-02-28": {
+   "status": "timeout",
+   "at": "2026-10-24",
+   "n": 1
+  },
+  "mc|TPE-NRT-2026-12-31|NGO-TPE-2027-02-15": {
    "status": "timeout",
    "at": "2026-10-24",
    "n": 1
