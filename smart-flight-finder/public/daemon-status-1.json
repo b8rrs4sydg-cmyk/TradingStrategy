@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T09:41:47+00:00",
+ "at": "2026-10-24T09:43:19+00:00",
  "publishes": {
   "ok": 10,
   "r429": 0,
@@ -58,6 +58,8 @@
   "09:29:42 git retry 0: b\"-46zevd': is at 7db092eecbd239b9c841a9cb87cd8470a31b57b7 but expected e795ceae7b56e18e712b9fa724b68805d5ea7f48)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
   "09:41:22 rtc sgk91v2wmi: answered",
   "09:41:37 request received: rid mvm7ljb9dc80t.1 8 keys",
-  "09:41:37 handle mvm7ljb9dc80t.1: first_chunk=True total=8"
+  "09:41:37 handle mvm7ljb9dc80t.1: first_chunk=True total=8",
+  "09:42:35 request mvm7ljb9dc80t.1: chunk of 8 keys done in 58s; paths {'http': 62, 'browser-crashed': 19, 'browser': 5}, browser waits 24 max 150s sum 1649s; ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 62, 'miss': 24, 'blocked': 0, 'tries': 66, 'empty': 4}, audit 3/3 agree",
+  "09:42:36 request mvm7ljb9dc80t.1: final sent (8/8); ntfy publishes {'ok': 10, 'r429': 0, 'fail': 0}"
  ]
 }
