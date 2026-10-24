@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T09:29:46+00:00",
+ "generated_at": "2026-10-24T09:41:52+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -8552,6 +8552,28 @@
     ]
    ]
   },
+  "ow|KIX|TPE|2027-01-20": {
+   "price": 3885,
+   "first": {
+    "dep": "2027-01-20T13:40:00+09:00",
+    "arr": "2027-01-20T15:40:00+08:00",
+    "stops": 0,
+    "airline": "Thai Lion Air"
+   },
+   "by_airline": {
+    "Thai Lion Air": 3885,
+    "Peach Aviation": 3891,
+    "Thai Vietjet Air": 4033,
+    "Jetstar": 4253
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     3885
+    ]
+   ]
+  },
   "ow|KIX|TPE|2027-02-28": {
    "price": 5283,
    "first": {
@@ -14738,6 +14760,28 @@
     ]
    ]
   },
+  "ow|TPE|NGO|2027-01-16": {
+   "price": 6028,
+   "first": {
+    "dep": "2027-01-16T21:15:00+08:00",
+    "arr": "2027-01-17T19:45:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 6028,
+    "Asiana Airlines": 10078,
+    "Philippine Airlines": 10733,
+    "Korean Air": 10853
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     6028
+    ]
+   ]
+  },
   "ow|TPE|NGO|2027-02-06": {
    "price": 11527,
    "first": {
@@ -17818,6 +17862,72 @@
    "prev": 19920,
    "prev_at": "2026-10-17"
   },
+  "rt|FUK|TPE|2027-01-19|2027-02-09": {
+   "price": 12253,
+   "first": {
+    "dep": "2027-01-19T10:55:00+09:00",
+    "arr": "2027-01-19T12:40:00+08:00",
+    "stops": 0,
+    "airline": "Tigerair Taiwan"
+   },
+   "by_airline": {
+    "Tigerair Taiwan": 12253,
+    "China Airlines": 13204,
+    "Cebu Pacific": 15026,
+    "AirAsia": 15814
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     12253
+    ]
+   ]
+  },
+  "rt|FUK|TPE|2027-01-20|2027-02-09": {
+   "price": 11933,
+   "first": {
+    "dep": "2027-01-20T20:45:00+09:00",
+    "arr": "2027-01-21T11:50:00+08:00",
+    "stops": 1,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 11933,
+    "China Airlines": 13204,
+    "Cebu Pacific": 15046,
+    "Tigerair Taiwan": 15375
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11933
+    ]
+   ]
+  },
+  "rt|FUK|TPE|2027-01-20|2027-02-10": {
+   "price": 11933,
+   "first": {
+    "dep": "2027-01-20T20:45:00+09:00",
+    "arr": "2027-01-21T11:50:00+08:00",
+    "stops": 1,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 11933,
+    "Tigerair Taiwan": 12675,
+    "China Airlines": 13204,
+    "AirAsia": 13529
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11933
+    ]
+   ]
+  },
   "rt|FUK|TPE|2027-02-14|2027-02-27": {
    "price": 16288,
    "first": {
@@ -19210,6 +19320,28 @@
     [
      "2026-10-18",
      11870
+    ]
+   ]
+  },
+  "rt|NRT|TPE|2027-01-18|2027-02-11": {
+   "price": 8449,
+   "first": {
+    "dep": "2027-01-18T08:30:00+09:00",
+    "arr": "2027-01-18T11:50:00+08:00",
+    "stops": 0,
+    "airline": "Jetstar"
+   },
+   "by_airline": {
+    "Jetstar": 8449,
+    "Scoot": 12843,
+    "Thai Lion Air": 13821,
+    "STARLUX Airlines": 14351
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     8449
     ]
    ]
   },
@@ -26504,6 +26636,28 @@
    "prev": 15092,
    "prev_at": "2026-10-17"
   },
+  "rt|TPE|HND|2027-01-14|2027-01-18": {
+   "price": 10430,
+   "first": {
+    "dep": "2027-01-14T14:50:00+08:00",
+    "arr": "2027-01-15T00:45:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 10430,
+    "Peach Aviation": 12785,
+    "Tigerair Taiwan": 14324,
+    "Asiana Airlines": 16038
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     10430
+    ]
+   ]
+  },
   "rt|TPE|HND|2027-02-05|2027-02-28": {
    "price": 20784,
    "first": {
@@ -28632,6 +28786,94 @@
    "prev": 20591,
    "prev_at": "2026-10-17"
   },
+  "rt|TPE|NGO|2027-01-15|2027-01-18": {
+   "price": 13369,
+   "first": {
+    "dep": "2027-01-15T21:15:00+08:00",
+    "arr": "2027-01-16T19:45:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 13369,
+    "Asiana Airlines": 14671,
+    "Tigerair Taiwan": 15691,
+    "Peach Aviation": 16270
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     13369
+    ]
+   ]
+  },
+  "rt|TPE|NGO|2027-01-15|2027-02-14": {
+   "price": 18964,
+   "first": {
+    "dep": "2027-01-15T12:25:00+08:00",
+    "arr": "2027-01-15T20:40:00+09:00",
+    "stops": 1,
+    "airline": "Korean Air"
+   },
+   "by_airline": {
+    "Korean Air": 18964,
+    "Tigerair Taiwan": 21891,
+    "Hong Kong Express": 23756,
+    "Peach Aviation": 25100
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18964
+    ]
+   ]
+  },
+  "rt|TPE|NGO|2027-01-16|2027-01-19": {
+   "price": 11147,
+   "first": {
+    "dep": "2027-01-16T21:15:00+08:00",
+    "arr": "2027-01-17T19:45:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 11147,
+    "Asiana Airlines": 15621,
+    "Jin Air": 16403,
+    "JAL": 17311
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     11147
+    ]
+   ]
+  },
+  "rt|TPE|NGO|2027-01-16|2027-02-13": {
+   "price": 18964,
+   "first": {
+    "dep": "2027-01-16T12:25:00+08:00",
+    "arr": "2027-01-16T20:40:00+09:00",
+    "stops": 1,
+    "airline": "Korean Air"
+   },
+   "by_airline": {
+    "Korean Air": 18964,
+    "JAL": 24549,
+    "Hong Kong Express": 26036,
+    "Cathay Pacific": 28437
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     18964
+    ]
+   ]
+  },
   "rt|TPE|NGO|2027-02-04|2027-04-11": {
    "price": 23442,
    "first": {
@@ -28887,6 +29129,50 @@
    ],
    "prev": 20288,
    "prev_at": "2026-10-18"
+  },
+  "rt|TPE|NRT|2027-01-14|2027-01-18": {
+   "price": 9269,
+   "first": {
+    "dep": "2027-01-14T21:15:00+08:00",
+    "arr": "2027-01-15T07:05:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 9269,
+    "Thai Lion Air": 9613,
+    "Jetstar": 10833,
+    "Peach Aviation": 11090
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     9269
+    ]
+   ]
+  },
+  "rt|TPE|NRT|2027-01-15|2027-01-18": {
+   "price": 9350,
+   "first": {
+    "dep": "2027-01-15T21:15:00+08:00",
+    "arr": "2027-01-16T15:55:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 9350,
+    "Thai Lion Air": 10413,
+    "Jetstar": 10833,
+    "Peach Aviation": 11090
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     9350
+    ]
+   ]
   },
   "rt|TPE|NRT|2027-02-06|2027-03-01": {
    "price": 17279,
