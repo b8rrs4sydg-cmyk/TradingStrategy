@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T11:48:04+00:00",
+ "at": "2026-10-24T11:49:35+00:00",
  "publishes": {
-  "ok": 33,
+  "ok": 39,
   "r429": 0,
   "fail": 0
  },
@@ -57,6 +57,10 @@
   "11:40:42 request received: rid mvmbv01tffyfo 71 keys",
   "11:40:42 handle mvmbv01tffyfo: first_chunk=False total=160",
   "11:43:38 rtc xcngu66im: answered",
-  "11:46:30 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\""
+  "11:46:30 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
+  "11:48:18 rtc 3b6tvz97z6: answered",
+  "11:48:32 request received: rid mvmc4p5dc2rvt.0 8 keys",
+  "11:48:32 handle mvmc4p5dc2rvt.0: first_chunk=True total=8",
+  "11:48:53 request mvmbv01tffyfo: chunk of 71 keys done in 491s; paths {'http': 67, 'browser-crashed': 126}, browser waits 126 max 478s sum 22642s; ntfy publishes {'ok': 37, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 67, 'miss': 176, 'blocked': 0, 'tries': 405, 'empty': 338}, audit 3/3 agree"
  ]
 }
