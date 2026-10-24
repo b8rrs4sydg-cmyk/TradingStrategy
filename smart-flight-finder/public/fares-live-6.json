@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:15:44+00:00",
+ "generated_at": "2026-10-24T12:17:16+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -6803,6 +6803,28 @@
     ]
    ]
   },
+  "ow|CEB|TPE|2027-09-19": {
+   "price": 3709,
+   "first": {
+    "dep": "2027-09-19T00:45:00+08:00",
+    "arr": "2027-09-19T09:00:00+08:00",
+    "stops": 1,
+    "airline": "Cebu Pacific"
+   },
+   "by_airline": {
+    "Cebu Pacific": 3709,
+    "Philippine Airlines": 5602,
+    "STARLUX Airlines": 6212,
+    "China Airlines": 6222
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     3709
+    ]
+   ]
+  },
   "ow|CEB|TSA|2027-01-03": {
    "price": 58629,
    "first": {
@@ -9334,6 +9356,28 @@
     [
      "2026-10-17",
      2160
+    ]
+   ]
+  },
+  "ow|MNL|TPE|2027-09-19": {
+   "price": 2476,
+   "first": {
+    "dep": "2027-09-19T06:35:00+08:00",
+    "arr": "2027-09-19T09:00:00+08:00",
+    "stops": 0,
+    "airline": "Cebu Pacific"
+   },
+   "by_airline": {
+    "Cebu Pacific": 2476,
+    "STARLUX Airlines": 5682,
+    "China Airlines": 6181,
+    "EVA Air": 6366
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     2476
     ]
    ]
   },
@@ -12672,6 +12716,28 @@
     ]
    ]
   },
+  "ow|TPE|CGK|2027-02-10": {
+   "price": 5609,
+   "first": {
+    "dep": "2027-02-10T03:15:00+08:00",
+    "arr": "2027-02-10T22:40:00+07:00",
+    "stops": 1,
+    "airline": "Cebu Pacific"
+   },
+   "by_airline": {
+    "Cebu Pacific": 5609,
+    "Scoot": 7415,
+    "Thai Lion Air": 9969,
+    "STARLUX Airlines": 11383
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     5609
+    ]
+   ]
+  },
   "ow|TPE|CJU|2026-11-06": {
    "price": 5450,
    "first": {
@@ -15133,6 +15199,28 @@
     [
      "2026-10-22",
      9666
+    ]
+   ]
+  },
+  "ow|TPE|PEN|2027-02-09": {
+   "price": 6091,
+   "first": {
+    "dep": "2027-02-09T13:55:00+08:00",
+    "arr": "2027-02-10T00:05:00+08:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 6091,
+    "Scoot": 7261,
+    "THAI": 9426,
+    "AirAsia": 9831
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     6091
     ]
    ]
   },
@@ -39812,7 +39900,6 @@
   "ow|BKK|TPE|2027-12-28",
   "ow|BKK|TSA|2027-10-16",
   "ow|CEB|RMQ|2027-12-26",
-  "ow|CEB|TPE|2027-09-19",
   "ow|CEB|TPE|2028-01-03",
   "ow|CEB|TSA|2027-10-18",
   "ow|CJU|RMQ|2027-09-20",
@@ -39898,7 +39985,6 @@
   "ow|MMY|RMQ|2027-12-28",
   "ow|MMY|TSA|2027-09-18",
   "ow|MMY|TSA|2028-01-01",
-  "ow|MNL|TPE|2027-09-19",
   "ow|MNL|TPE|2027-12-26",
   "ow|MNL|TSA|2027-10-17",
   "ow|NGO|RMQ|2027-10-16",
