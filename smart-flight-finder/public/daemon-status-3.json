@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T10:35:25+00:00",
+ "at": "2026-10-24T11:00:57+00:00",
  "publishes": {
-  "ok": 0,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2243,
+ "fares_saved": 2244,
  "log": [
   "10:33:50 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "10:33:55 http front door: ['https://cultures-fog-depending-unlike.trycloudflare.com', 'https://30dcb49416743f.lhr.life']",
@@ -13,6 +13,12 @@
   "10:34:58 request received: rid httptest1792838098 20 keys",
   "10:34:58 handle httptest1792838098: first_chunk=True total=20",
   "10:35:00 request httptest1792838098: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "10:35:02 request httptest1792838098: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "10:35:02 request httptest1792838098: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "10:41:42 rtc d2gpzd68xx: answered",
+  "11:00:32 rtc br4h8sqdze: answered",
+  "11:00:44 request received: rid mvmaf9q1neeco.3 1 keys",
+  "11:00:44 handle mvmaf9q1neeco.3: first_chunk=True total=1",
+  "11:00:44 request mvmaf9q1neeco.3: chunk of 1 keys done in 0s; paths {'http': 21}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 21, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 0}, audit 3/3 agree",
+  "11:00:46 request mvmaf9q1neeco.3: final sent (1/1); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
