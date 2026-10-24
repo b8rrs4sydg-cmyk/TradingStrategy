@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T06:43:06+00:00",
+ "generated_at": "2026-10-24T09:13:08+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -8760,6 +8760,28 @@
     [
      "2026-10-18",
      13018
+    ]
+   ]
+  },
+  "ow|NRT|RMQ|2027-01-19": {
+   "price": 6561,
+   "first": {
+    "dep": "2027-01-19T08:15:00+09:00",
+    "arr": "2027-01-19T18:05:00+08:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 6561,
+    "Trinity Airways": 9448,
+    "Jin Air": 10211,
+    "Korean Air": 14054
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     6561
     ]
    ]
   },
@@ -29509,6 +29531,28 @@
     [
      "2026-10-17",
      15132
+    ]
+   ]
+  },
+  "rt|TPE|NRT|2027-01-15|2027-01-19": {
+   "price": 9350,
+   "first": {
+    "dep": "2027-01-15T21:15:00+08:00",
+    "arr": "2027-01-16T15:55:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "by_airline": {
+    "Hong Kong Express": 9350,
+    "Thai Lion Air": 10413,
+    "Jetstar": 10833,
+    "Peach Aviation": 11090
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     9350
     ]
    ]
   },
