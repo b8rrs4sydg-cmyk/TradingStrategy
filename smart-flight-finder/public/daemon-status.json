@@ -1,7 +1,7 @@
 {
- "at": "2026-10-24T12:32:14+00:00",
+ "at": "2026-10-24T12:33:45+00:00",
  "publishes": {
-  "ok": 107,
+  "ok": 108,
   "r429": 0,
   "fail": 0
  },
@@ -110,6 +110,10 @@
   "12:27:13 request mvmd8wq3jwv8u: chunk of 37 keys done in 462s; paths {'http': 67, 'browser-crashed': 385}, browser waits 385 max 1037s sum 97046s; ntfy publishes {'ok': 91, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 67, 'miss': 262, 'blocked': 8, 'tries': 405, 'empty': 338}, audit 3/3 agree",
   "12:31:19 request mvmddd0tshusb.0: chunk of 13 keys done in 498s; paths {'http': 67, 'browser-crashed': 427}, browser waits 427 max 1037s sum 121441s; ntfy publishes {'ok': 103, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 67, 'miss': 262, 'blocked': 8, 'tries': 405, 'empty': 338}, audit 3/3 agree",
   "12:31:20 request mvmddd0tshusb.0: final sent (13/13); ntfy publishes {'ok': 103, 'r429': 0, 'fail': 0}",
-  "12:32:11 rtc cxjtenfc2c: answered"
+  "12:32:11 rtc cxjtenfc2c: answered",
+  "12:32:17 request mvmd8wq3jwv8u: chunk of 88 keys done in 767s; paths {'http': 67, 'browser-crashed': 438}, browser waits 438 max 1037s sum 128379s; ntfy publishes {'ok': 107, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 67, 'miss': 262, 'blocked': 8, 'tries': 405, 'empty': 338}, audit 3/3 agree",
+  "12:32:19 request mvmd8wq3jwv8u: final sent (125/125); ntfy publishes {'ok': 108, 'r429': 0, 'fail': 0}",
+  "12:33:24 request received: rid mvmdqsed3vgyo.0 15 keys",
+  "12:33:24 handle mvmdqsed3vgyo.0: first_chunk=True total=15"
  ]
 }
