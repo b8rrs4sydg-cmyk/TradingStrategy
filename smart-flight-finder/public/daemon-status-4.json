@@ -1,11 +1,11 @@
 {
- "at": "2026-10-24T06:36:41+00:00",
+ "at": "2026-10-24T06:38:13+00:00",
  "publishes": {
-  "ok": 5,
+  "ok": 6,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2081,
+ "fares_saved": 2096,
  "log": [
   "05:34:54 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:34:59 http front door: ['https://theatre-retired-prospective-achieving.trycloudflare.com', 'https://2309115a0dc2f2.lhr.life']",
@@ -30,6 +30,9 @@
   "06:34:57 rtc 6u0vngqmap: answered",
   "06:35:32 request mvm0uckasil89.3: chunk of 20 keys done in 181s; paths {'http': 27, 'browser-crashed': 15}, browser waits 15 max 150s sum 1490s; ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 27, 'miss': 15, 'blocked': 0, 'tries': 31, 'empty': 4}, audit 4/4 agree",
   "06:35:34 request mvm0uckasil89.3: final sent (20/20); ntfy publishes {'ok': 4, 'r429': 0, 'fail': 0}",
-  "06:35:56 rtc nnfegnw8ub: answered"
+  "06:35:56 rtc nnfegnw8ub: answered",
+  "06:37:45 rtc xwzjdatt2k: answered",
+  "06:37:57 request received: rid mvm11bp48pd12.3 20 keys",
+  "06:37:57 handle mvm11bp48pd12.3: first_chunk=True total=20"
  ]
 }
