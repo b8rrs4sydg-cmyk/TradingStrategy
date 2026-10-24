@@ -1,7 +1,7 @@
 {
  "schema": 2,
  "source": "google_flights",
- "generated_at": "2026-10-24T12:19:21+00:00",
+ "generated_at": "2026-10-24T12:23:53+00:00",
  "currency": "TWD",
  "adults": 1,
  "coverage": {},
@@ -23258,6 +23258,25 @@
     ]
    ]
   },
+  "rt|RMQ|ISG|2027-04-29|2027-06-13": {
+   "price": 17431,
+   "by_airline": {
+    "Hong Kong Express": 17431
+   },
+   "first": {
+    "dep": "2027-04-29T20:40:00+08:00",
+    "arr": "2027-04-30T10:30:00+09:00",
+    "stops": 1,
+    "airline": "Hong Kong Express"
+   },
+   "at": "2026-10-24",
+   "hist": [
+    [
+     "2026-10-24",
+     17431
+    ]
+   ]
+  },
   "rt|RMQ|ISG|2027-06-08|2027-06-14": {
    "price": 15046,
    "first": {
@@ -39269,7 +39288,7 @@
    "n": 1
   },
   "ow|PEN|TPE|2027-12-27": {
-   "status": "parse_error",
+   "status": "timeout",
    "at": "2026-10-24",
    "n": 1
   },
@@ -40073,11 +40092,6 @@
    "at": "2026-10-23",
    "n": 1
   },
-  "rt|RMQ|ISG|2027-04-29|2027-06-13": {
-   "status": "timeout",
-   "at": "2026-10-24",
-   "n": 1
-  },
   "rt|RMQ|ITM|2026-11-06|2026-11-29": {
    "status": "parse_error",
    "at": "2026-10-23",
@@ -40476,7 +40490,7 @@
   "rt|TPE|KUL|2027-12-23|2027-12-27": {
    "status": "parse_error",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TPE|MMY|2026-11-06|2026-11-22": {
    "status": "timeout",
@@ -41041,7 +41055,7 @@
   "rt|TSA|UEO|2027-04-29|2027-06-13": {
    "status": "timeout",
    "at": "2026-10-24",
-   "n": 1
+   "n": 2
   },
   "rt|TSA|UTP|2027-02-09|2027-06-13": {
    "status": "timeout",
