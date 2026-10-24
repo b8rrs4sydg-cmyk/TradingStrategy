@@ -816,7 +816,11 @@
   .p-badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--card-sunken); color: var(--fg-muted) }
   .p-badge.good { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); font-weight: 600 }
   .price-note { font-size: 11.5px; color: var(--fg-faint); margin-top: 1px }
-  .plan-cta { margin-top: 8px }
+  .plan-cta { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap }
+  .plan-cta .cta-btn { flex: 1 1 auto }
+  .stale { color: var(--warn) } .stale.old { color: var(--crit); font-weight: 600 }
+  button.stale { appearance: none; border: 0; background: none; padding: 4px 2px; font: inherit; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px }
+  button.stale:disabled { opacity: .6; cursor: default; text-decoration: none }
   .cta-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 0; background: var(--brand); color: #fff; font: 600 14px/1 var(--font-body); text-decoration: none; cursor: pointer }
   .cta-btn.ghost { background: var(--card-sunken); color: var(--fg) }
   .plan.open .plan-cta .cta-btn.ghost { display: none }
@@ -948,7 +952,7 @@
     .quick-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -2px; padding: 2px 2px 8px }
     .quick-chips::-webkit-scrollbar { display: none }
     .qchip { flex: none }
-    .plan-cta .cta-btn { width: 100% }
+    .plan-cta .cta-btn:first-child { flex: 1 1 100% }
     /* the list comes first; hints, the date matrix and the like follow it */
     #results:not([hidden]) { display: flex; flex-direction: column }
     #results > * { order: 5 }
@@ -3207,6 +3211,13 @@ function renderPlanList(plans, groups) {
       if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a')) return;
       node.classList.toggle('open');
     });
+    const refreshBtn = node.querySelector('[data-refresh]');
+    if (refreshBtn) refreshBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const keys = [...new Set(plan.tickets.map(t => String(t.offer_id || '')).filter(id => id.startsWith('gf-')).map(id => id.slice(3)))];
+      if (keys.length) startLookup(keys);
+      refreshBtn.disabled = true; refreshBtn.textContent = '↻ 查詢中…';
+    });
     const openBtn = node.querySelector('[data-open]');
     if (openBtn) openBtn.addEventListener('click', e => { e.stopPropagation(); node.classList.add('open'); node.querySelector('.plan-detail')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
     node.querySelector('.fav-btn').addEventListener('click', e => {
@@ -3303,6 +3314,16 @@ function sparkHtml(plan) {
   return `<span class="price-spark" title="${escapeHtml(tip)}"><svg class="spark ${dir}" viewBox="0 0 64 20" width="64" height="20" role="img" aria-label="${escapeHtml(tip)}"><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg><span class="spark-pct ${dir}">${d ? `${d < 0 ? '↓' : '↑'} ${pct}%` : '持平'}</span></span>`;
 }
 
+/* how old the oldest fare in a plan is (days): old prices get a note and a 重新查價 button */
+function fareAgeDays(plan) {
+  let age = 0;
+  for (const t of plan.tickets) {
+    const at = Date.parse(`${t.fare_at || ''}T00:00:00+08:00`);
+    if (Number.isFinite(at)) age = Math.max(age, Math.floor((Date.now() - at) / 864e5));
+  }
+  return age;
+}
+const STALE_DAYS = 3;
 function planFactsHtml(plan) {
   const f = planFacts(plan), bits = [];
   if (f.outDate) bits.push(`<span title="去程出發（當地時間）">去 ${mdDay(f.outDate)}${f.outMin != null ? ` ${pfClock(f.outMin)}` : ''}${f.arrMin != null ? `→${pfClock(f.arrMin)}` : ''}</span>`);
@@ -3313,6 +3334,12 @@ function planFactsHtml(plan) {
   if (f.airlines.length) bits.push(`<span>${escapeHtml(f.airlines.join('、'))}</span>`);
   const ch = favChange(plan);
   if (ch) bits.push(`<span class="${ch.diff < 0 ? 'good' : ''}" title="${ch.at} 收藏時的價格">收藏時 ${ch.was.toLocaleString()} → 現在 ${ch.now.toLocaleString()}（${ch.diff < 0 ? '降' : '漲'} ${Math.abs(ch.diff).toLocaleString()}）</span>`);
+  const age = fareAgeDays(plan);
+  if (age >= STALE_DAYS) {
+    const can = plan.tickets.some(t => String(t.offer_id || '').startsWith('gf-'));
+    bits.push(can ? `<button type="button" class="stale ${age >= 7 ? 'old' : ''}" data-refresh title="這個價格是 ${age} 天前查到的，之後可能漲跌；點一下請爬蟲重新查最新價格">↻ ${age} 天前查價</button>`
+      : `<span class="stale ${age >= 7 ? 'old' : ''}" title="這個價格是 ${age} 天前查到的，之後可能漲跌">${age} 天前查價</span>`);
+  }
   const spark = sparkHtml(plan);
   if (spark) bits.push(spark);
   const pos = pricePosition(plan);
