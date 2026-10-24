@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T15:35:04+00:00",
+ "at": "2026-10-24T20:33:43+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,12 @@
  },
  "fares_saved": 2203,
  "log": [
-  "15:33:29 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "15:33:34 http front door: ['https://estimates-dame-pike-barn.trycloudflare.com', 'https://3a9d8d988e4990.lhr.life']",
-  "15:33:34 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "15:34:38 request received: rid httptest1792856078 20 keys",
-  "15:34:38 handle httptest1792856078: first_chunk=True total=20",
-  "15:34:40 request httptest1792856078: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "15:34:40 request httptest1792856078: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "20:32:08 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "20:32:13 http front door: ['https://trained-attorney-essentially-bend.trycloudflare.com', 'https://2dbcc7c3896d99.lhr.life']",
+  "20:32:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "20:33:17 request received: rid httptest1792873997 20 keys",
+  "20:33:17 handle httptest1792873997: first_chunk=True total=20",
+  "20:33:19 request httptest1792873997: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "20:33:21 request httptest1792873997: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
