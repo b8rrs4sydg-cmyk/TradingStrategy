@@ -1,18 +1,18 @@
 {
- "at": "2026-10-24T20:33:41+00:00",
+ "at": "2026-10-25T00:44:33+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2050,
+ "fares_saved": 1772,
  "log": [
-  "20:32:06 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "20:32:11 http front door: ['https://tone-equations-meyer-champions.trycloudflare.com', 'https://4f3119e1b2c4c3.lhr.life']",
-  "20:32:11 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "20:33:16 request received: rid httptest1792873996 20 keys",
-  "20:33:16 handle httptest1792873996: first_chunk=True total=20",
-  "20:33:18 request httptest1792873996: chunk of 20 keys done in 2s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "20:33:19 request httptest1792873996: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:42:58 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:43:03 http front door: ['https://boulevard-talented-law-riverside.trycloudflare.com', 'https://fcb0b15907dbdd.lhr.life']",
+  "00:43:03 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:44:07 request received: rid httptest1792889047 20 keys",
+  "00:44:07 handle httptest1792889047: first_chunk=True total=20",
+  "00:44:09 request httptest1792889047: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:44:11 request httptest1792889047: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
