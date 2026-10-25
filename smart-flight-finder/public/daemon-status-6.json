@@ -1,11 +1,11 @@
 {
- "at": "2026-10-25T08:56:03+00:00",
+ "at": "2026-10-25T08:57:35+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2089,
+ "fares_saved": 2093,
  "log": [
   "05:34:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:02 http front door: ['https://votes-enquiry-outcome-upper.trycloudflare.com', 'https://1ae982a0fa16be.lhr.life']",
@@ -17,6 +17,10 @@
   "08:54:50 rtc etoesjxi04: answered",
   "08:54:52 rtc etoesjxi04: data channel open",
   "08:54:52 request received: rid mvnldjix4r08e.6 20 keys",
-  "08:54:52 handle mvnldjix4r08e.6: first_chunk=True total=20"
+  "08:54:52 handle mvnldjix4r08e.6: first_chunk=True total=20",
+  "08:56:34 request mvnldjix4r08e.6: chunk of 20 keys done in 102s; paths {'http': 32, 'browser': 4, 'browser-crashed': 4}, browser waits 8 max 77s sum 352s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 8, 'blocked': 0, 'tries': 34, 'empty': 2}, audit 2/2 agree",
+  "08:56:35 request mvnldjix4r08e.6: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "08:56:46 request received: rid mvnlg2l02s4kh.6 22 keys",
+  "08:56:46 handle mvnlg2l02s4kh.6: first_chunk=True total=22"
  ]
 }
