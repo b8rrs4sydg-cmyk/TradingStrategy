@@ -1,11 +1,11 @@
 {
- "at": "2026-10-25T08:57:59+00:00",
+ "at": "2026-10-25T08:59:31+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1912,
+ "fares_saved": 1926,
  "log": [
   "05:34:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:02 git retry 0: b\"-46zevd': is at 528eff6142837d3d2c7086938408ae8340906571 but expected 039d3761cc72a8e159bf76084a8468c7fc9505ed)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
@@ -24,6 +24,18 @@
   "08:55:15 request mvnldjix4r08e.8: chunk of 11 keys done in 23s; paths {'http': 29, 'browser': 2}, browser waits 2 max 10s sum 13s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 29, 'miss': 2, 'blocked': 0, 'tries': 29, 'empty': 0}, audit 3/3 agree",
   "08:55:16 request mvnldjix4r08e.8: final sent (11/11); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "08:56:46 request received: rid mvnlg2l02s4kh.8 14 keys",
-  "08:56:46 handle mvnlg2l02s4kh.8: first_chunk=True total=14"
+  "08:56:46 handle mvnlg2l02s4kh.8: first_chunk=True total=14",
+  "08:58:33 request mvnlg2l02s4kh.8: chunk of 14 keys done in 107s; paths {'http': 37, 'browser': 2, 'browser-crashed': 6}, browser waits 8 max 85s sum 511s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 37, 'miss': 8, 'blocked': 0, 'tries': 37, 'empty': 0}, audit 3/3 agree",
+  "08:58:34 request mvnlg2l02s4kh.8: final sent (14/14); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "08:58:40 request received: rid mvnliigyfxtqo.8 16 keys",
+  "08:58:40 handle mvnliigyfxtqo.8: first_chunk=True total=16",
+  "08:58:45 request received: rid mvnlim38wuqli.8 16 keys",
+  "08:58:45 handle mvnlim38wuqli.8: first_chunk=True total=16",
+  "08:58:56 rtc zf7tjxnqx3: answered",
+  "08:58:58 rtc zf7tjxnqx3: data channel open",
+  "08:59:00 request received: rid mvnlisfjzf9xs.1 49 keys",
+  "08:59:00 handle mvnlisfjzf9xs.1: first_chunk=True total=49",
+  "08:59:01 request received: rid mvnliz52cqh4e.3 35 keys",
+  "08:59:01 handle mvnliz52cqh4e.3: first_chunk=True total=35"
  ]
 }
