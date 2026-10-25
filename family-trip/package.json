@@ -1,0 +1,16 @@
+{
+  "name": "family-trip",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 migrations apply family-trip-db",
+    "db:init:local": "wrangler d1 migrations apply family-trip-db --local",
+    "test": "node --test test/"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250101.0",
+    "wrangler": "^4.0.0"
+  }
+}
