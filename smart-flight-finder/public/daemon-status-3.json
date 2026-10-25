@@ -1,5 +1,5 @@
 {
- "at": "2026-10-25T00:44:40+00:00",
+ "at": "2026-10-25T05:36:36+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,13 +7,12 @@
  },
  "fares_saved": 2028,
  "log": [
-  "00:43:02 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:43:06 git retry 0: b\"-46zevd': is at 475bca9d096554e2fabc6b37741745f7ebe6643f but expected 0a589d562fc772962e2ae31d69f6da90bf31975b)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
-  "00:43:10 http front door: ['https://sam-earnings-humanity-davidson.trycloudflare.com', 'https://49fbf618363247.lhr.life']",
-  "00:43:10 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:44:11 request received: rid httptest1792889051 20 keys",
-  "00:44:11 handle httptest1792889051: first_chunk=True total=20",
-  "00:44:13 request httptest1792889051: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "00:44:15 request httptest1792889051: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:34:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:35:06 http front door: ['https://investments-marine-electron-turtle.trycloudflare.com', 'https://08ad14184634fc.lhr.life']",
+  "05:35:06 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:36:08 request received: rid httptest1792906568 20 keys",
+  "05:36:08 handle httptest1792906568: first_chunk=True total=20",
+  "05:36:09 request httptest1792906568: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
+  "05:36:10 request httptest1792906568: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
