@@ -1,18 +1,18 @@
 {
- "at": "2026-10-24T21:43:19+00:00",
+ "at": "2026-10-25T00:44:43+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2189,
+ "fares_saved": 1913,
  "log": [
-  "21:41:44 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "21:41:49 http front door: ['https://openings-diary-yrs-whom.trycloudflare.com', 'https://6b8d4ede640fd0.lhr.life']",
-  "21:41:49 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "21:42:53 request received: rid httptest1792878173 20 keys",
-  "21:42:53 handle httptest1792878173: first_chunk=True total=20",
-  "21:42:55 request httptest1792878173: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
-  "21:42:55 request httptest1792878173: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "00:43:09 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "00:43:13 http front door: ['https://forecast-consolidation-character-personal.trycloudflare.com', 'https://0cb48e851e3923.lhr.life']",
+  "00:43:13 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "00:44:18 request received: rid httptest1792889057 20 keys",
+  "00:44:18 handle httptest1792889057: first_chunk=True total=20",
+  "00:44:19 request httptest1792889057: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
+  "00:44:19 request httptest1792889057: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
