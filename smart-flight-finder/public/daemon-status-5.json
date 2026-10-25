@@ -1,11 +1,11 @@
 {
- "at": "2026-10-25T08:57:52+00:00",
+ "at": "2026-10-25T08:59:24+00:00",
  "publishes": {
-  "ok": 1,
+  "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 1958,
+ "fares_saved": 1975,
  "log": [
   "05:35:07 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:12 http front door: ['https://coating-techno-keeping-ton.trycloudflare.com', 'https://4ebdc0384afbfc.lhr.life']",
@@ -22,6 +22,18 @@
   "08:55:10 request mvnldjix4r08e.5: final sent (12/12); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
   "08:56:15 git retry 0: b\"itory pushing to\\nhint: the same ref. If you want to integrate the remote changes, use\\nhint: 'git pull' before pushing again.\\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\\n\"",
   "08:56:46 request received: rid mvnlg2l02s4kh.5 18 keys",
-  "08:56:46 handle mvnlg2l02s4kh.5: first_chunk=True total=18"
+  "08:56:46 handle mvnlg2l02s4kh.5: first_chunk=True total=18",
+  "08:58:39 request mvnlg2l02s4kh.5: chunk of 18 keys done in 113s; paths {'http': 43, 'browser': 1, 'browser-crashed': 6}, browser waits 7 max 85s sum 503s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 43, 'miss': 7, 'blocked': 0, 'tries': 43, 'empty': 0}, audit 2/2 agree",
+  "08:58:40 request received: rid mvnliigyfxtqo.5 15 keys",
+  "08:58:40 handle mvnliigyfxtqo.5: first_chunk=True total=15",
+  "08:58:40 request mvnlg2l02s4kh.5: final sent (18/18); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "08:58:45 request received: rid mvnlim38wuqli.5 15 keys",
+  "08:58:45 handle mvnlim38wuqli.5: first_chunk=True total=15",
+  "08:58:56 rtc uxwm66desw: answered",
+  "08:58:58 rtc uxwm66desw: data channel open",
+  "08:59:00 request received: rid mvnlisfjzf9xs.0 52 keys",
+  "08:59:00 handle mvnlisfjzf9xs.0: first_chunk=True total=52",
+  "08:59:01 request received: rid mvnliz52cqh4e.2 25 keys",
+  "08:59:01 handle mvnliz52cqh4e.2: first_chunk=True total=25"
  ]
 }
