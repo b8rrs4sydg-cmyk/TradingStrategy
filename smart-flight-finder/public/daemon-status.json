@@ -1,5 +1,5 @@
 {
- "at": "2026-10-25T08:59:25+00:00",
+ "at": "2026-10-25T09:00:57+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -30,6 +30,10 @@
   "08:58:40 handle mvnliigyfxtqo.0: first_chunk=True total=14",
   "08:58:45 request received: rid mvnlim38wuqli.0 14 keys",
   "08:58:45 handle mvnlim38wuqli.0: first_chunk=True total=14",
-  "08:58:56 rtc 99bnxy5x1s: answered"
+  "08:58:56 rtc 99bnxy5x1s: answered",
+  "09:00:21 request mvnliigyfxtqo.0: chunk of 14 keys done in 101s; paths {'http': 59, 'browser': 1, 'browser-crashed': 5}, browser waits 6 max 84s sum 431s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 6, 'blocked': 0, 'tries': 62, 'empty': 3}, audit 5/5 agree",
+  "09:00:21 request mvnlim38wuqli.0: chunk of 14 keys done in 97s; paths {'http': 59, 'browser': 1, 'browser-crashed': 5}, browser waits 6 max 84s sum 431s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 6, 'blocked': 0, 'tries': 62, 'empty': 3}, audit 5/5 agree",
+  "09:00:22 request mvnliigyfxtqo.0: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "09:00:23 request mvnlim38wuqli.0: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
