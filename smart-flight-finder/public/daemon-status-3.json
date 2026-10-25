@@ -1,11 +1,11 @@
 {
- "at": "2026-10-25T09:00:42+00:00",
+ "at": "2026-10-25T09:02:14+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2044,
+ "fares_saved": 2065,
  "log": [
   "05:34:59 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:06 http front door: ['https://investments-marine-electron-turtle.trycloudflare.com', 'https://08ad14184634fc.lhr.life']",
@@ -37,6 +37,8 @@
   "09:00:17 request mvnliigyfxtqo.3: chunk of 14 keys done in 97s; paths {'http': 72, 'browser-crashed': 9}, browser waits 9 max 85s sum 743s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 72, 'miss': 9, 'blocked': 0, 'tries': 79, 'empty': 7}, audit 1/1 agree",
   "09:00:17 request mvnlim38wuqli.3: chunk of 14 keys done in 92s; paths {'http': 72, 'browser-crashed': 9}, browser waits 9 max 85s sum 743s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 72, 'miss': 9, 'blocked': 0, 'tries': 79, 'empty': 7}, audit 1/1 agree",
   "09:00:19 request mvnliigyfxtqo.3: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "09:00:19 request mvnlim38wuqli.3: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "09:00:19 request mvnlim38wuqli.3: final sent (14/14); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "09:00:46 request received: rid mvnll76ewde51.0 37 keys",
+  "09:00:46 handle mvnll76ewde51.0: first_chunk=True total=37"
  ]
 }
