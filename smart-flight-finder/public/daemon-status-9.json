@@ -1,5 +1,5 @@
 {
- "at": "2026-10-25T09:00:39+00:00",
+ "at": "2026-10-25T09:02:11+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -39,6 +39,8 @@
   "09:00:08 request mvnliigyfxtqo.9: chunk of 17 keys done in 88s; paths {'http': 99, 'browser': 8, 'browser-crashed': 10}, browser waits 18 max 85s sum 958s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 99, 'miss': 36, 'blocked': 0, 'tries': 101, 'empty': 2}, audit 3/3 agree",
   "09:00:08 request mvnlim38wuqli.9: chunk of 17 keys done in 84s; paths {'http': 99, 'browser': 8, 'browser-crashed': 10}, browser waits 18 max 85s sum 958s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 99, 'miss': 36, 'blocked': 0, 'tries': 101, 'empty': 2}, audit 3/3 agree",
   "09:00:09 request mvnliigyfxtqo.9: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
-  "09:00:09 request mvnlim38wuqli.9: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "09:00:09 request mvnlim38wuqli.9: final sent (17/17); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "09:00:46 request received: rid mvnll76ewde51.4 33 keys",
+  "09:00:46 handle mvnll76ewde51.4: first_chunk=True total=33"
  ]
 }
