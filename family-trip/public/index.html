@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>家人旅行規劃</title>
+<style>
+  :root {
+    --bg: #fbf7f0; --card: #ffffff; --ink: #1f1a14; --sub: #6b5f52; --line: #e3d9c8;
+    --accent: #c2410c; --accent-ink: #ffffff; --soft: #fde8d8; --ok: #166534; --err: #b91c1c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17130f; --card: #231d17; --ink: #f5ede1; --sub: #b8a998; --line: #3a3027;
+      --accent: #fb923c; --accent-ink: #1a1008; --soft: #3a2615; --ok: #86efac; --err: #fca5a5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 20px/1.5 -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 28px; margin: 8px 0 4px; }
+  h2 { font-size: 24px; margin: 28px 0 8px; }
+  p { margin: 6px 0; }
+  .sub { color: var(--sub); font-size: 18px; }
+  button, select, input, textarea { font: inherit; color: inherit; }
+  button { min-height: 52px; padding: 8px 18px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--card); cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+  button.small { min-height: 44px; padding: 4px 12px; font-size: 18px; }
+  button:disabled { opacity: .5; cursor: default; }
+  button:focus-visible, a:focus-visible, select:focus-visible, textarea:focus-visible, input:focus-visible {
+    outline: 3px solid var(--accent); outline-offset: 2px; }
+  input, textarea, select { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--card); }
+  textarea { min-height: 84px; resize: vertical; }
+  label { display: block; margin: 14px 0 4px; font-weight: 700; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .row > * { flex: 0 0 auto; }
+  .grow { flex: 1 1 200px !important; }
+  .card { background: var(--card); border: 2px solid var(--line); border-radius: 16px; padding: 14px; margin: 10px 0; }
+  .item-name { font-size: 22px; font-weight: 700; word-break: break-word; }
+  .note { background: var(--soft); border-radius: 10px; padding: 8px 10px; margin-top: 8px; }
+  .tip { background: var(--soft); border-radius: 10px; padding: 8px 12px; }
+  .empty { color: var(--sub); padding: 12px 0; }
+  a.nav { display: inline-flex; align-items: center; min-height: 44px; padding: 4px 14px; border-radius: 12px;
+    background: var(--accent); color: var(--accent-ink); font-weight: 700; text-decoration: none; font-size: 18px; }
+  #toast { position: fixed; left: 16px; right: 16px; bottom: 16px; max-width: 688px; margin: 0 auto;
+    padding: 14px 18px; border-radius: 14px; background: var(--ink); color: var(--bg); display: none; z-index: 9; }
+  #toast.err { background: var(--err); color: #fff; }
+  .hidden { display: none !important; }
+  ul.recent { list-style: none; padding: 0; margin: 0; }
+  ul.recent li { margin: 8px 0; }
+  ul.recent a { display: block; padding: 14px; border: 2px solid var(--line); border-radius: 14px;
+    background: var(--card); color: inherit; text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+  <section id="home" class="hidden">
+    <h1>家人旅行規劃</h1>
+    <p class="sub">把 Google 地圖的地點貼進來,AI 幫大家排行程。</p>
+    <div class="card">
+      <label for="newName">這趟旅行叫什麼?</label>
+      <input id="newName" value="日本旅行" maxlength="40">
+      <label for="newDays">玩幾天?</label>
+      <select id="newDays"></select>
+      <p><button class="primary" id="createBtn">開始規劃</button></p>
+    </div>
+    <div id="recentBox" class="hidden">
+      <h2>最近的行程</h2>
+      <ul class="recent" id="recent"></ul>
+    </div>
+  </section>
+
+  <section id="trip" class="hidden">
+    <h1 id="tripName"></h1>
+    <p class="sub" id="tripMeta"></p>
+    <div class="row">
+      <button class="small" id="shareBtn">分享給家人</button>
+      <button class="small" id="renameBtn">改名稱/天數</button>
+    </div>
+
+    <h2>加入地點</h2>
+    <div class="card">
+      <label for="addText">貼上 Google 地圖連結,或直接打地點名稱</label>
+      <textarea id="addText" placeholder="例如:https://maps.app.goo.gl/…"></textarea>
+      <div class="row">
+        <button class="primary" id="addBtn">加入</button>
+        <button id="pasteBtn" class="hidden">貼上剪貼簿</button>
+      </div>
+      <p class="sub">在 Google 地圖按「分享」,複製連結,回到這裡貼上就可以。</p>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+      <button class="primary grow" id="planBtn">AI 幫我排行程</button>
+    </div>
+    <p class="sub">AI 會依距離分天、排順序,排完大家還是可以手動調整。</p>
+
+    <div id="days"></div>
+  </section>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+const $ = (id) => document.getElementById(id);
+const tripId = new URLSearchParams(location.search).get('t');
+let trip = null;
+let busy = false;
+
+// ---- localStorage(失敗就當沒有)----
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* ignore */ } },
+};
+
+function toast(msg, isErr) {
+  const t = $('toast');
+  t.textContent = msg; t.className = isErr ? 'err' : ''; t.style.display = 'block';
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => { t.style.display = 'none'; }, isErr ? 6000 : 2500);
+}
+
+async function api(method, path, body) {
+  const res = await fetch('/api/trips' + path, {
+    method,
+    headers: body ? { 'content-type': 'application/json' } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || '發生問題,請再試一次');
+  return data;
+}
+
+function el(tag, props, ...kids) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (k === 'class') n.className = v;
+    else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+    else if (v != null) n.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null) n.append(k);
+  return n;
+}
+
+// ---- 首頁 ----
+function showHome() {
+  $('home').classList.remove('hidden');
+  const sel = $('newDays');
+  for (let i = 1; i <= 14; i++) sel.append(el('option', { value: i }, `${i} 天`));
+  sel.value = '5';
+  const recent = store.get('recent', []);
+  if (recent.length) {
+    $('recentBox').classList.remove('hidden');
+    for (const r of recent) $('recent').append(el('li', {}, el('a', { href: `/?t=${encodeURIComponent(r.id)}` }, r.name)));
+  }
+  $('createBtn').onclick = async () => {
+    $('createBtn').disabled = true;
+    try {
+      const { id } = await api('POST', '', { name: $('newName').value, days: $('newDays').value });
+      location.href = `/?t=${id}`;
+    } catch (e) { toast(e.message, true); $('createBtn').disabled = false; }
+  };
+}
+
+// ---- 行程頁 ----
+function rememberTrip() {
+  const recent = store.get('recent', []).filter((r) => r.id !== trip.id);
+  recent.unshift({ id: trip.id, name: trip.name });
+  store.set('recent', recent.slice(0, 8));
+}
+
+function navUrl(it) {
+  if (it.url) return it.url;
+  const q = it.lat != null ? `${it.lat},${it.lng}` : it.name;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+}
+
+function groups() {
+  const g = Array.from({ length: trip.days + 1 }, () => []);
+  for (const it of trip.items) (g[it.day] || g[0]).push(it);
+  return g;
+}
+
+async function saveLayout(g) {
+  const layout = {};
+  g.forEach((arr, d) => { layout[d] = arr.map((i) => i.id); });
+  await run(() => api('PUT', `/${tripId}/layout`, { layout }));
+}
+
+function moveWithin(day, idx, delta) {
+  const g = groups();
+  const j = idx + delta;
+  if (j < 0 || j >= g[day].length) return;
+  [g[day][idx], g[day][j]] = [g[day][j], g[day][idx]];
+  return saveLayout(g);
+}
+
+function moveToDay(it, day) {
+  const g = groups();
+  g[it.day] = g[it.day].filter((x) => x.id !== it.id);
+  g[day].push(it);
+  return saveLayout(g);
+}
+
+function itemCard(it, day, idx, count) {
+  const sel = el('select', { 'aria-label': `把「${it.name}」移到` },
+    el('option', { value: 0 }, '尚未安排'),
+    ...Array.from({ length: trip.days }, (_, i) => el('option', { value: i + 1 }, `第 ${i + 1} 天`)));
+  sel.value = String(day);
+  sel.addEventListener('change', () => moveToDay(it, +sel.value));
+  sel.style.width = 'auto';
+
+  const card = el('div', { class: 'card' },
+    el('div', { class: 'item-name' }, it.name),
+    it.note ? el('div', { class: 'note' }, it.note) : null,
+    el('div', { class: 'row', style: 'margin-top:10px' },
+      el('a', { class: 'nav', href: navUrl(it), target: '_blank', rel: 'noopener' }, '用地圖導航'),
+      day > 0 ? el('button', { class: 'small', disabled: idx === 0 ? '' : null, onclick: () => moveWithin(day, idx, -1), 'aria-label': '往前移' }, '↑') : null,
+      day > 0 ? el('button', { class: 'small', disabled: idx === count - 1 ? '' : null, onclick: () => moveWithin(day, idx, 1), 'aria-label': '往後移' }, '↓') : null,
+      sel,
+      el('button', { class: 'small', onclick: () => editNote(it) }, it.note ? '改備註' : '加備註'),
+      el('button', { class: 'small', onclick: () => removeItem(it) }, '刪除')));
+  return card;
+}
+
+function render() {
+  $('tripName').textContent = trip.name;
+  document.title = trip.name + ' - 家人旅行規劃';
+  $('tripMeta').textContent = `共 ${trip.days} 天,${trip.items.length} 個地點`;
+  const g = groups();
+  const box = $('days');
+  box.replaceChildren();
+  const section = (label, day) => {
+    const arr = g[day];
+    const nodes = [el('h2', {}, label)];
+    if (day > 0 && trip.tips[day]) nodes.push(el('div', { class: 'tip' }, '💡 ' + trip.tips[day]));
+    if (!arr.length) nodes.push(el('div', { class: 'empty' }, day === 0 ? '沒有待安排的地點' : '這天還沒有地點'));
+    arr.forEach((it, i) => nodes.push(itemCard(it, day, i, arr.length)));
+    box.append(...nodes);
+  };
+  if (g[0].length || trip.items.length === 0) section('尚未安排', 0);
+  for (let d = 1; d <= trip.days; d++) section(`第 ${d} 天`, d);
+}
+
+async function refresh(force) {
+  try {
+    const data = await api('GET', `/${tripId}` + (!force && trip ? `?v=${trip.version}` : ''));
+    if (data.unchanged) return;
+    trip = data;
+    rememberTrip();
+    render();
+  } catch (e) {
+    if (!trip) { toast(e.message, true); }
+  }
+}
+
+// 所有會改資料的動作都走這裡:避免連點、完成後立刻更新畫面
+async function run(fn, okMsg) {
+  if (busy) return;
+  busy = true;
+  try { await fn(); if (okMsg) toast(okMsg); }
+  catch (e) { toast(e.message, true); }
+  finally { busy = false; await refresh(true); }
+}
+
+function editNote(it) {
+  const v = prompt(`「${it.name}」的備註(例如:要預約、幾點開門)`, it.note || '');
+  if (v === null) return;
+  run(() => api('PATCH', `/${tripId}/items/${it.id}`, { note: v }));
+}
+
+function removeItem(it) {
+  if (!confirm(`確定要刪除「${it.name}」嗎?`)) return;
+  run(() => api('DELETE', `/${tripId}/items/${it.id}`));
+}
+
+function showTrip() {
+  $('trip').classList.remove('hidden');
+  const nameKey = 'who';
+
+  $('addBtn').onclick = () => {
+    const text = $('addText').value.trim();
+    if (!text) { toast('請先貼上連結或打地點名稱', true); return; }
+    run(async () => {
+      const r = await api('POST', `/${tripId}/items`, { text, who: store.get(nameKey, '') });
+      $('addText').value = '';
+      toast(`已加入:${r.name}`);
+    });
+  };
+
+  if (navigator.clipboard && navigator.clipboard.readText) {
+    $('pasteBtn').classList.remove('hidden');
+    $('pasteBtn').onclick = async () => {
+      try { $('addText').value = await navigator.clipboard.readText(); } catch { toast('無法讀取剪貼簿,請長按輸入框貼上', true); }
+    };
+  }
+
+  $('planBtn').onclick = () => {
+    if (!trip.items.length) { toast('請先加入一些地點', true); return; }
+    const arranged = trip.items.some((i) => i.day > 0);
+    if (arranged && !confirm('這會重新排列所有地點,確定嗎?')) return;
+    $('planBtn').textContent = 'AI 排行程中…請稍等';
+    run(async () => {
+      const r = await api('POST', `/${tripId}/plan`);
+      toast(r.usedAi ? 'AI 排好了,可以再手動調整' : 'AI 暫時沒回應,已先依距離幫你排好');
+    }).finally(() => { $('planBtn').textContent = 'AI 幫我排行程'; });
+  };
+
+  $('shareBtn').onclick = async () => {
+    const link = location.href;
+    try {
+      if (navigator.share) { await navigator.share({ title: trip.name, text: '一起來排旅行', url: link }); return; }
+    } catch { return; /* 使用者取消 */ }
+    try { await navigator.clipboard.writeText(link); toast('連結已複製,可以貼到 LINE 給家人'); }
+    catch { prompt('請複製這個連結傳給家人:', link); }
+  };
+
+  $('renameBtn').onclick = () => {
+    const name = prompt('旅行名稱', trip.name);
+    if (name === null) return;
+    const d = prompt('玩幾天?(1 到 14)', String(trip.days));
+    if (d === null) return;
+    run(() => api('PATCH', `/${tripId}`, { name, days: d }));
+  };
+
+  refresh(true);
+  // 家人同時編輯:每 4 秒看一次有沒有新版本(只有版本號,很省流量)
+  setInterval(() => { if (!document.hidden && !busy) refresh(false); }, 4000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(false); });
+}
+
+if (tripId) showTrip(); else showHome();
+</script>
+</body>
+</html>

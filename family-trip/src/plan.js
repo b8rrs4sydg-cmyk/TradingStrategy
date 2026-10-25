@@ -37,9 +37,30 @@ export function fallbackPlan(items, nDays) {
   }
   const all = [...route, ...noGeo];
   const days = Array.from({ length: nDays }, () => []);
-  const per = Math.ceil(all.length / nDays) || 1;
-  all.forEach((it, i) => days[Math.min(Math.floor(i / per), nDays - 1)].push(it.id));
+  const cuts = pickCuts(route, all.length, nDays);
+  let day = 0;
+  all.forEach((it, i) => {
+    if (cuts.includes(i)) day++;
+    days[day].push(it.id);
+  });
   return { days, tips: [] };
+}
+
+// 在路線上挑 nDays-1 個切點:優先切在相鄰兩點距離最遠處,但每天至少保留一些地點。
+function pickCuts(route, total, nDays) {
+  const even = Array.from({ length: nDays - 1 }, (_, k) => Math.ceil(((k + 1) * total) / nDays));
+  if (nDays < 2 || total < nDays) return even;
+  const min = Math.max(1, Math.floor(total / (nDays * 2)));
+  // gap[i] = 第 i 點與前一點的距離;切點 i 代表第 i 個地點是新一天的開頭
+  const cand = [];
+  for (let i = min; i <= total - min; i++) cand.push({ i, g: i < route.length ? dist(route[i - 1], route[i]) : 0 });
+  cand.sort((a, b) => b.g - a.g);
+  const picked = [];
+  for (const c of cand) {
+    if (picked.every((p) => Math.abs(p - c.i) >= min)) picked.push(c.i);
+    if (picked.length === nDays - 1) return picked;
+  }
+  return even;
 }
 
 // 驗證並修正 AI 輸出:去掉未知/重複 id,補上遺漏的,補滿天數。
@@ -62,7 +83,8 @@ export function normalizePlan(raw, items, nDays) {
 }
 
 export function parseAiResponse(result) {
-  const r = result?.response ?? result;
+  // 舊模型回 {response},較新的模型回 OpenAI 格式 {choices:[{message:{content}}]}
+  const r = result?.response ?? result?.choices?.[0]?.message?.content ?? result;
   if (r && typeof r === 'object') return r;
   if (typeof r !== 'string') return null;
   const m = r.match(/\{[\s\S]*\}/);
@@ -77,19 +99,19 @@ export async function planTrip(env, items, nDays) {
     lat: i.lat != null ? +i.lat.toFixed(4) : undefined,
     lng: i.lng != null ? +i.lng.toFixed(4) : undefined,
   }));
-  try {
-    const result = await env.AI.run(env.AI_MODEL, {
-      messages: [
-        { role: 'system', content: SYSTEM },
-        { role: 'user', content: `天數:${nDays}\n地點:${JSON.stringify(list)}\n請輸出 {"days":[[id,...],...共${nDays}天],"tips":[每天一句提醒,共${nDays}句]}` },
-      ],
-      response_format: { type: 'json_schema', json_schema: SCHEMA },
-      max_tokens: 1500,
-    });
-    const raw = parseAiResponse(result);
-    if (raw) return { ...normalizePlan(raw, items, nDays), usedAi: true };
-  } catch (e) {
-    console.error('AI plan failed', e);
+  const messages = [
+    { role: 'system', content: SYSTEM },
+    { role: 'user', content: `天數:${nDays}\n地點:${JSON.stringify(list)}\n請輸出 {"days":[[id,...],...共${nDays}天],"tips":[每天一句提醒,共${nDays}句]}` },
+  ];
+  const base = { messages, max_tokens: 1500, chat_template_kwargs: { enable_thinking: false } };
+  // 先要求 json_schema;模型不支援就退回純文字再自行解析。
+  for (const extra of [{ response_format: { type: 'json_schema', json_schema: SCHEMA } }, {}]) {
+    try {
+      const raw = parseAiResponse(await env.AI.run(env.AI_MODEL, { ...base, ...extra }));
+      if (raw) return { ...normalizePlan(raw, items, nDays), usedAi: true };
+    } catch (e) {
+      console.error('AI plan failed', e);
+    }
   }
   return { ...fallbackPlan(items, nDays), usedAi: false };
 }

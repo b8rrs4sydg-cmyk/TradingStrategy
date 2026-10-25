@@ -7,10 +7,9 @@
     "deploy": "wrangler deploy",
     "db:init": "wrangler d1 migrations apply family-trip-db",
     "db:init:local": "wrangler d1 migrations apply family-trip-db --local",
-    "test": "node --test test/"
+    "test": "node --test test/*.test.js"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250101.0",
     "wrangler": "^4.0.0"
   }
 }
