@@ -1,11 +1,11 @@
 {
- "at": "2026-10-25T08:59:06+00:00",
+ "at": "2026-10-25T09:00:38+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2097,
+ "fares_saved": 2100,
  "log": [
   "05:34:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:02 http front door: ['https://votes-enquiry-outcome-upper.trycloudflare.com', 'https://1ae982a0fa16be.lhr.life']",
@@ -26,6 +26,12 @@
   "08:58:40 handle mvnliigyfxtqo.6: first_chunk=True total=23",
   "08:58:45 request received: rid mvnlim38wuqli.6 23 keys",
   "08:58:45 handle mvnlim38wuqli.6: first_chunk=True total=23",
-  "08:58:56 rtc m0hhgipptu: answered"
+  "08:58:56 rtc m0hhgipptu: answered",
+  "08:59:45 request mvnlg2l02s4kh.6: chunk of 22 keys done in 179s; paths {'http': 59, 'browser': 10, 'browser-crashed': 13}, browser waits 23 max 141s sum 1236s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 25, 'blocked': 0, 'tries': 61, 'empty': 2}, audit 2/2 agree",
+  "08:59:46 request mvnlg2l02s4kh.6: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "09:00:28 request mvnliigyfxtqo.6: chunk of 23 keys done in 108s; paths {'http': 59, 'browser': 10, 'browser-crashed': 15}, browser waits 25 max 141s sum 1387s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 25, 'blocked': 0, 'tries': 61, 'empty': 2}, audit 2/2 agree",
+  "09:00:28 request mvnlim38wuqli.6: chunk of 23 keys done in 103s; paths {'http': 59, 'browser': 10, 'browser-crashed': 15}, browser waits 25 max 141s sum 1387s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 25, 'blocked': 0, 'tries': 61, 'empty': 2}, audit 2/2 agree",
+  "09:00:29 request mvnliigyfxtqo.6: final sent (23/23); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "09:00:29 request mvnlim38wuqli.6: final sent (23/23); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
