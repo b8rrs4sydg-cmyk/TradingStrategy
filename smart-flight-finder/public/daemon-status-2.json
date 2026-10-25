@@ -1,11 +1,11 @@
 {
- "at": "2026-10-25T08:56:13+00:00",
+ "at": "2026-10-25T08:57:45+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
   "fail": 0
  },
- "fares_saved": 2040,
+ "fares_saved": 2045,
  "log": [
   "05:35:03 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
   "05:35:11 http front door: ['https://kathy-daughter-reduction-nhs.trycloudflare.com', 'https://af569ec8dcf044.lhr.life']",
@@ -19,6 +19,8 @@
   "08:54:52 request received: rid mvnldjix4r08e.2 16 keys",
   "08:54:52 handle mvnldjix4r08e.2: first_chunk=True total=16",
   "08:55:24 request mvnldjix4r08e.2: chunk of 16 keys done in 31s; paths {'http': 29, 'browser': 7}, browser waits 7 max 10s sum 32s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 29, 'miss': 7, 'blocked': 0, 'tries': 29, 'empty': 0}, audit 2/2 agree",
-  "08:55:25 request mvnldjix4r08e.2: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}"
+  "08:55:25 request mvnldjix4r08e.2: final sent (16/16); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "08:56:46 request received: rid mvnlg2l02s4kh.2 13 keys",
+  "08:56:46 handle mvnlg2l02s4kh.2: first_chunk=True total=13"
  ]
 }
