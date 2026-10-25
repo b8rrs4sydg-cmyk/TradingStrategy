@@ -1,5 +1,5 @@
 {
- "at": "2026-10-25T09:03:59+00:00",
+ "at": "2026-10-25T09:05:30+00:00",
  "publishes": {
   "ok": 2,
   "r429": 0,
@@ -44,6 +44,8 @@
   "09:00:46 request received: rid mvnll76ewde51.2 24 keys",
   "09:00:46 handle mvnll76ewde51.2: first_chunk=True total=24",
   "09:03:25 request mvnll76ewde51.2: chunk of 24 keys done in 159s; paths {'http': 128, 'browser': 2, 'browser-crashed': 21}, browser waits 23 max 154s sum 2086s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 128, 'miss': 27, 'blocked': 0, 'tries': 131, 'empty': 3}, audit 2/2 agree",
-  "09:03:27 request mvnll76ewde51.2: final sent (24/24); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+  "09:03:27 request mvnll76ewde51.2: final sent (24/24); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "09:04:10 request mvnlisfjzf9xs.0: chunk of 52 keys done in 310s; paths {'http': 128, 'browser': 2, 'browser-crashed': 25}, browser waits 27 max 261s sum 3071s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 128, 'miss': 27, 'blocked': 0, 'tries': 131, 'empty': 3}, audit 2/2 agree",
+  "09:04:12 request mvnlisfjzf9xs.0: final sent (52/52); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
  ]
 }
