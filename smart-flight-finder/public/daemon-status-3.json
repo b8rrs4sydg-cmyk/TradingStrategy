@@ -1,5 +1,5 @@
 {
- "at": "2026-10-25T08:56:07+00:00",
+ "at": "2026-10-25T08:57:39+00:00",
  "publishes": {
   "ok": 1,
   "r429": 0,
@@ -17,6 +17,10 @@
   "08:54:50 rtc lpjvr390id: answered",
   "08:54:52 rtc lpjvr390id: data channel open",
   "08:54:52 request received: rid mvnldjix4r08e.3 13 keys",
-  "08:54:52 handle mvnldjix4r08e.3: first_chunk=True total=13"
+  "08:54:52 handle mvnldjix4r08e.3: first_chunk=True total=13",
+  "08:56:09 request mvnldjix4r08e.3: chunk of 13 keys done in 77s; paths {'http': 32, 'browser-crashed': 1}, browser waits 1 max 75s sum 75s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 1, 'blocked': 0, 'tries': 36, 'empty': 4}, audit 1/1 agree",
+  "08:56:10 request mvnldjix4r08e.3: final sent (13/13); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "08:56:46 request received: rid mvnlg2l02s4kh.3 13 keys",
+  "08:56:46 handle mvnlg2l02s4kh.3: first_chunk=True total=13"
  ]
 }
