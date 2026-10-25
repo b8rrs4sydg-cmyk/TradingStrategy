@@ -1,5 +1,5 @@
 {
- "at": "2026-10-25T00:44:36+00:00",
+ "at": "2026-10-25T05:36:50+00:00",
  "publishes": {
   "ok": 0,
   "r429": 0,
@@ -7,12 +7,14 @@
  },
  "fares_saved": 1977,
  "log": [
-  "00:43:01 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
-  "00:43:06 http front door: ['https://advance-providers-increasingly-syndication.trycloudflare.com', 'https://cf1f320d72ebb9.lhr.life']",
-  "00:43:06 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
-  "00:44:10 request received: rid httptest1792889050 20 keys",
-  "00:44:10 handle httptest1792889050: first_chunk=True total=20",
-  "00:44:11 request httptest1792889050: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 20, 'empty': 0}, audit 0/0 agree",
-  "00:44:12 request httptest1792889050: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
+  "05:35:04 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:35:09 git retry 0: b\"-46zevd': is at 000e84cc34153ae68b293c49643e141e389d31b9 but expected 44db94b098de342d9ef321c21e9f8ad78fba5e31)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "05:35:15 git retry 1: b\"-46zevd': is at 51fe0fbdcdeeedb00d213a713b15b1008164a5ce but expected 1351ed27cb57e54a14ff17be772a66812ce85716)\\nerror: failed to push some refs to 'https://github.com/b8rrs4sydg-cmyk/TradingStrategy'\\n\"",
+  "05:35:20 http front door: ['https://pmid-domain-guitar-facts.trycloudflare.com', 'https://e73d94b0652980.lhr.life']",
+  "05:35:20 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:36:13 request received: rid httptest1792906573 20 keys",
+  "05:36:13 handle httptest1792906573: first_chunk=True total=20",
+  "05:36:15 request httptest1792906573: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 21, 'empty': 1}, audit 0/0 agree",
+  "05:36:16 request httptest1792906573: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}"
  ]
 }
