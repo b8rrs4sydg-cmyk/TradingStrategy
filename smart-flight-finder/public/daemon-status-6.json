@@ -1,0 +1,37 @@
+{
+ "at": "2026-10-25T09:00:38+00:00",
+ "publishes": {
+  "ok": 2,
+  "r429": 0,
+  "fail": 0
+ },
+ "fares_saved": 2100,
+ "log": [
+  "05:34:57 peer-to-peer front door: signalling on sff-q-1dbc38bf5255bfa8b886187c-sig",
+  "05:35:02 http front door: ['https://votes-enquiry-outcome-upper.trycloudflare.com', 'https://1ae982a0fa16be.lhr.life']",
+  "05:35:02 daemon up: req=sff-q-1dbc38bf5255bfa8b886187c res=sff-r-dbe95166c8687164a93fc60e for 20400s",
+  "05:36:06 request received: rid httptest1792906566 20 keys",
+  "05:36:06 handle httptest1792906566: first_chunk=True total=20",
+  "05:36:08 request httptest1792906566: chunk of 20 keys done in 1s; paths {'http': 20}, browser waits 0 max 0s sum 0s; ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 20, 'miss': 0, 'blocked': 0, 'tries': 22, 'empty': 2}, audit 0/0 agree",
+  "05:36:08 request httptest1792906566: final sent (20/20); ntfy publishes {'ok': 0, 'r429': 0, 'fail': 0}",
+  "08:54:50 rtc etoesjxi04: answered",
+  "08:54:52 rtc etoesjxi04: data channel open",
+  "08:54:52 request received: rid mvnldjix4r08e.6 20 keys",
+  "08:54:52 handle mvnldjix4r08e.6: first_chunk=True total=20",
+  "08:56:34 request mvnldjix4r08e.6: chunk of 20 keys done in 102s; paths {'http': 32, 'browser': 4, 'browser-crashed': 4}, browser waits 8 max 77s sum 352s; ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 32, 'miss': 8, 'blocked': 0, 'tries': 34, 'empty': 2}, audit 2/2 agree",
+  "08:56:35 request mvnldjix4r08e.6: final sent (20/20); ntfy publishes {'ok': 1, 'r429': 0, 'fail': 0}",
+  "08:56:46 request received: rid mvnlg2l02s4kh.6 22 keys",
+  "08:56:46 handle mvnlg2l02s4kh.6: first_chunk=True total=22",
+  "08:58:40 request received: rid mvnliigyfxtqo.6 23 keys",
+  "08:58:40 handle mvnliigyfxtqo.6: first_chunk=True total=23",
+  "08:58:45 request received: rid mvnlim38wuqli.6 23 keys",
+  "08:58:45 handle mvnlim38wuqli.6: first_chunk=True total=23",
+  "08:58:56 rtc m0hhgipptu: answered",
+  "08:59:45 request mvnlg2l02s4kh.6: chunk of 22 keys done in 179s; paths {'http': 59, 'browser': 10, 'browser-crashed': 13}, browser waits 23 max 141s sum 1236s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 25, 'blocked': 0, 'tries': 61, 'empty': 2}, audit 2/2 agree",
+  "08:59:46 request mvnlg2l02s4kh.6: final sent (22/22); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "09:00:28 request mvnliigyfxtqo.6: chunk of 23 keys done in 108s; paths {'http': 59, 'browser': 10, 'browser-crashed': 15}, browser waits 25 max 141s sum 1387s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 25, 'blocked': 0, 'tries': 61, 'empty': 2}, audit 2/2 agree",
+  "09:00:28 request mvnlim38wuqli.6: chunk of 23 keys done in 103s; paths {'http': 59, 'browser': 10, 'browser-crashed': 15}, browser waits 25 max 141s sum 1387s; ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}; plain HTTP {'hit': 59, 'miss': 25, 'blocked': 0, 'tries': 61, 'empty': 2}, audit 2/2 agree",
+  "09:00:29 request mvnliigyfxtqo.6: final sent (23/23); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}",
+  "09:00:29 request mvnlim38wuqli.6: final sent (23/23); ntfy publishes {'ok': 2, 'r429': 0, 'fail': 0}"
+ ]
+}

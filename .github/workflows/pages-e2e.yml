@@ -1,0 +1,50 @@
+name: Pages end-to-end check
+
+# Real browser against the published demo: loads the page, searches, and watches
+# the live lookup (ntfy relay → fare daemon) stream fares back. Run it by hand
+# (workflow_dispatch) after the daemon / page changed.
+on:
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths:
+      - ".github/workflows/pages-e2e.yml"
+      - "smart-flight-finder/backend/scripts/e2e_pages.py"
+  workflow_dispatch:
+    inputs:
+      url:
+        default: "https://b8rrs4sydg-cmyk.github.io/TradingStrategy/"
+      wait_seconds:
+        default: "1800"
+
+permissions:
+  contents: read
+
+# a newer run replaces an older one: parallel runs share one crawler and starve each other
+concurrency:
+  group: pages-e2e
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/zealous-darwin-1kexus
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          pip install "playwright>=1.50,<2"
+          python -m playwright install --with-deps chromium
+      - run: python -m scripts.e2e_pages "${{ inputs.url || 'https://b8rrs4sydg-cmyk.github.io/TradingStrategy/' }}" "${{ inputs.wait_seconds || '1800' }}"
+# rerun 1792262934
+# rerun 1792263164
+# rerun 1792264178
+# rerun 1792264933
+# rerun 1792265679
+# 1792277467

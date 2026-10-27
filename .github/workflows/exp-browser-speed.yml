@@ -1,0 +1,33 @@
+name: Experiment - browser lookup speed
+
+# Not part of the product. One mode per job (= one runner IP each), so one mode's traffic cannot get the next one blocked.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths:
+      - ".github/workflows/exp-browser-speed.yml"
+      - "smart-flight-finder/backend/scripts/exp_browser_speed.py"
+
+permissions:
+  contents: read
+
+jobs:
+  speed:
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [baseline, block, block+fast]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e . "playwright>=1.50,<2"
+      - run: playwright install --with-deps chromium
+      - run: python -m scripts.exp_browser_speed ../public/fares.json "${{ matrix.mode }}"
