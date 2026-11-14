@@ -1,0 +1,13 @@
+Synthetic forward vs quarterly future: edge after capital cost on margin (25% of S tied up to expiry)
+   futures leg priced from: {'bookTicker': 3492} hours
+   option-implied forward minus quarterly future (mid, near ATM): median -4.3 bp, p5 -27.4, p95 +18.2
+BTC hurdle 0%: profitable 707  episodes 281  usd_once_per_ep 26,151  persistent 16,236
+BTC hurdle 5%: profitable 51  episodes 25  usd_once_per_ep 696  persistent 235
+BTC hurdle 10%: profitable 20  episodes 15  usd_once_per_ep 432  persistent 150
+BTC days to expiry when profitable: median 66;  edge / margin annualised: median 0.7%  p90 3.7%
+   futures leg priced from: {'bookTicker': 3493} hours
+   option-implied forward minus quarterly future (mid, near ATM): median -6.4 bp, p5 -30.5, p95 +17.4
+ETH hurdle 0%: profitable 362  episodes 199  usd_once_per_ep 4,645  persistent 2,080
+ETH hurdle 5%: profitable 95  episodes 52  usd_once_per_ep 729  persistent 142
+ETH hurdle 10%: profitable 55  episodes 22  usd_once_per_ep 227  persistent 182
+ETH days to expiry when profitable: median 77;  edge / margin annualised: median 1.4%  p90 24.9%

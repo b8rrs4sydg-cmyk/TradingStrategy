@@ -1,0 +1,32 @@
+name: Relay probe
+
+# Which anonymous public mailboxes can the page and the daemon both use?
+on:
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths:
+      - ".github/workflows/relay-probe.yml"
+      - "smart-flight-finder/backend/scripts/probe_relays.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: relay-probe
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "playwright>=1.50,<2" && python -m playwright install --with-deps chromium
+      - run: python -m scripts.probe_relays

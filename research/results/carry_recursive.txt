@@ -1,0 +1,12 @@
+2026-10-06 17:28:55,534 - freqtrade.optimize.analysis.recursive_helpers - INFO - Recursive test of FundingCarry.py started.
+2026-10-06 17:28:55,575 - freqtrade.optimize.analysis.recursive - INFO - Using pair BTCCARRY/USDT only for recursive analysis. Replacing whitelist.
+2026-10-06 17:28:55,719 - freqtrade.optimize.analysis.recursive - INFO - Calculating indicators to test lookahead on indicators.
+2026-10-06 17:28:55,802 - freqtrade.optimize.analysis.recursive - INFO - Calculating indicators using startup candle of 100.
+2026-10-06 17:28:55,879 - freqtrade.optimize.analysis.recursive - INFO - Calculating indicators using startup candle of 200.
+2026-10-06 17:28:55,972 - freqtrade.optimize.analysis.recursive - INFO - Calculating indicators using startup candle of 500.
+2026-10-06 17:28:56,052 - freqtrade.optimize.analysis.recursive - INFO - Start checking for recursive bias
+2026-10-06 17:28:56,054 - freqtrade.optimize.analysis.recursive - INFO - No variance on indicator(s) found due to recursive formula.
+2026-10-06 17:28:56,055 - freqtrade.optimize.analysis.recursive - INFO - Start checking for lookahead bias on indicators only
+2026-10-06 17:28:56,056 - freqtrade.optimize.analysis.recursive - INFO - Check indicators at 2021-01-01T10:00:00
+2026-10-06 17:28:56,057 - freqtrade.optimize.analysis.recursive - INFO - No lookahead bias on indicators found.
+2026-10-06 17:28:56,058 - freqtrade.optimize.analysis.recursive_helpers - INFO - Checking recursive and indicator-only lookahead bias of indicators of FundingCarry.py took 1 seconds.

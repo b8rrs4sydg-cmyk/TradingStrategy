@@ -1,0 +1,56 @@
+name: Fare lookup (on demand)
+
+# Live lookups for fares the database lacks. The demo page asks Claude, who
+# commits the wanted keys to public/live-request.json; this runs only those
+# Google Flights searches, reports progress as the `fare-lookup` commit
+# status (done/total) and saves results to public/fares-live.json — a
+# separate overlay, so it never collides with the 6-hourly full crawl.
+on:
+  push:
+    branches: [claude/zealous-darwin-1kexus]
+    paths: ["smart-flight-finder/public/live-request.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  statuses: write
+
+concurrency:
+  group: fare-lookup-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: smart-flight-finder/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-v1
+      - name: Install
+        run: |
+          pip install -e . "playwright>=1.50,<2"
+          python -m playwright install --with-deps chromium
+      - name: Look up fares
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m scripts.lookup_fares --request ../public/live-request.json --db ../public/fares-live.json
+      - name: Commit results
+        working-directory: .
+        run: |
+          git config user.name "fare-lookup-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add smart-flight-finder/public/fares-live.json
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -m "data: live fare lookup $(jq -r .rid smart-flight-finder/public/live-request.json)"
+          for i in 1 2 3 4; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 4; done
+          exit 1

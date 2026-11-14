@@ -1,0 +1,56 @@
+=== A) borrow USDT to buy more spot: coin-margined quarterly carry, 14 coins, 2020-09..2026-09
+  borrow 10%  L=1  : CAGR   9.0%  MDD   7.2%  Sharpe 1.52  worst year  -0.3%  years {2020: 3.5, 2021: 20.6, 2022: 1.0, 2023: -0.3, 2024: 16.6, 2025: 14.9, 2026: 0.5}
+  borrow 10%  L=1.5: CAGR  11.1%  MDD  10.9%  Sharpe 1.26  worst year  -1.6%  years {2020: 4.3, 2021: 26.6, 2022: 0.9, 2023: -1.6, 2024: 20.3, 2025: 19.7, 2026: 0.7}
+  borrow 10%  L=2  : CAGR  13.2%  MDD  14.5%  Sharpe 1.13  worst year  -2.9%  years {2020: 5.1, 2021: 32.4, 2022: 0.8, 2023: -2.9, 2024: 24.0, 2025: 24.6, 2026: 0.9}
+  borrow 10%  L=3  : CAGR  17.1%  MDD  21.5%  Sharpe 0.99  worst year  -5.6%  years {2020: 6.7, 2021: 42.9, 2022: 0.6, 2023: -5.6, 2024: 31.6, 2025: 35.1, 2026: 1.4}
+  borrow 15%  L=1  : CAGR   9.0%  MDD   7.2%  Sharpe 1.52  worst year  -0.3%  years {2020: 3.5, 2021: 20.6, 2022: 1.0, 2023: -0.3, 2024: 16.6, 2025: 14.9, 2026: 0.5}
+  borrow 15%  L=1.5: CAGR   9.9%  MDD  11.0%  Sharpe 1.13  worst year  -2.2%  years {2020: 3.9, 2021: 24.2, 2022: 0.6, 2023: -2.2, 2024: 17.6, 2025: 18.0, 2026: 0.7}
+  borrow 15%  L=2  : CAGR  10.6%  MDD  14.7%  Sharpe 0.93  worst year  -4.1%  years {2020: 4.2, 2021: 27.3, 2022: 0.2, 2023: -4.1, 2024: 18.5, 2025: 21.2, 2026: 0.9}
+  borrow 15%  L=3  : CAGR  11.8%  MDD  21.9%  Sharpe 0.73  worst year  -7.8%  years {2020: 4.8, 2021: 32.2, 2022: -0.6, 2023: -7.8, 2024: 20.1, 2025: 27.7, 2026: 1.3}
+
+=== B) long USDT-M perp + short USDT-M quarterly (BTC/ETH): realised edge = basis convergence - funding paid by the long perp
+  28 trades: mean basis capture 3.19%  mean funding paid 3.48%  mean net edge -0.29% per trade
+  net edge > 0 in 54% of trades; sum of edges -8.1% of notional over 6.5 position-years
+           sym  days  basis  funding  edge
+BTCUSDT_210326    51   3.62     9.64 -6.02
+ETHUSDT_210326    50   4.07    11.22 -7.14
+BTCUSDT_210625    71   3.03     7.44 -4.41
+ETHUSDT_210625    77   9.55     8.74  0.81
+ETHUSDT_210924    92   2.68     3.58 -0.90
+BTCUSDT_210924    57   1.03     2.26 -1.23
+BTCUSDT_211231    98   1.63     5.17 -3.55
+ETHUSDT_211231    98   1.90     4.60 -2.70
+ETHUSDT_220325    33   1.23     0.28  0.95
+BTCUSDT_220325    45   1.48     0.69  0.79
+ETHUSDT_220624    21   1.16     0.38  0.78
+BTCUSDT_220624    23   1.27     0.44  0.82
+ETHUSDT_230331    41   0.66     0.92 -0.26
+BTCUSDT_230331    39   0.80     0.68  0.12
+BTCUSDT_230929    69   0.98     1.24 -0.26
+BTCUSDT_231229    65   1.22     2.61 -1.38
+ETHUSDT_231229    59   1.30     2.75 -1.45
+BTCUSDT_240329    91   6.63     5.68  0.95
+ETHUSDT_240329    91   6.08     5.69  0.39
+ETHUSDT_240628    91   5.63     2.83  2.80
+BTCUSDT_240628    91   4.99     2.52  2.46
+ETHUSDT_240927    91   2.04     1.22  0.82
+BTCUSDT_241227   182   8.44     4.03  4.40
+ETHUSDT_250328   182   2.54     4.86 -2.32
+BTCUSDT_250627   173   6.20     2.20  4.00
+ETHUSDT_250926   166   6.21     2.52  3.70
+ETHUSDT_251226    43   0.96     0.40  0.55
+BTCUSDT_251226   178   2.03     2.82 -0.79
+
+=== C) CONDITIONAL leverage: lever a position only if its net locked yield >= borrow + 5%
+  borrow 10% L=1 FULL: CAGR   9.0%  MDD   7.2%  Sharpe 1.52  win 100.0%  years {2020: 3.5, 2021: 20.6, 2022: 1.0, 2023: -0.3, 2024: 16.6, 2025: 14.9, 2026: 0.5}
+  borrow 10% L=1 OOS : CAGR  11.3%  MDD   1.8%  Sharpe 3.6  win 100.0%  years {2024: 16.2, 2025: 14.9, 2026: 0.5}
+  borrow 10% L=2 FULL: CAGR  10.6%  MDD  13.8%  Sharpe 1.25  win 100.0%  years {2020: 3.9, 2021: 25.8, 2022: 1.0, 2023: -0.4, 2024: 19.1, 2025: 17.3, 2026: 0.5}
+  borrow 10% L=2 OOS : CAGR  13.7%  MDD   3.2%  Sharpe 3.01  win 100.0%  years {2024: 20.9, 2025: 17.3, 2026: 0.5}
+  borrow 10% L=3 FULL: CAGR  12.2%  MDD  20.5%  Sharpe 1.06  win 100.0%  years {2020: 4.4, 2021: 31.1, 2022: 1.0, 2023: -0.4, 2024: 21.5, 2025: 19.7, 2026: 0.5}
+  borrow 10% L=3 OOS : CAGR  16.2%  MDD   4.5%  Sharpe 2.63  win 100.0%  years {2024: 25.6, 2025: 19.7, 2026: 0.5}
+  borrow 15% L=1 FULL: CAGR   9.0%  MDD   7.2%  Sharpe 1.52  win 100.0%  years {2020: 3.5, 2021: 20.6, 2022: 1.0, 2023: -0.3, 2024: 16.6, 2025: 14.9, 2026: 0.5}
+  borrow 15% L=1 OOS : CAGR  11.3%  MDD   1.8%  Sharpe 3.6  win 100.0%  years {2024: 16.2, 2025: 14.9, 2026: 0.5}
+  borrow 15% L=2 FULL: CAGR   9.6%  MDD   8.4%  Sharpe 1.45  win 100.0%  years {2020: 3.6, 2021: 21.7, 2022: 1.0, 2023: -0.3, 2024: 17.2, 2025: 16.6, 2026: 0.5}
+  borrow 15% L=2 OOS : CAGR  12.3%  MDD   2.6%  Sharpe 3.17  win 100.0%  years {2024: 17.3, 2025: 16.6, 2026: 0.5}
+  borrow 15% L=3 FULL: CAGR  10.1%  MDD   9.7%  Sharpe 1.37  win 100.0%  years {2020: 3.8, 2021: 22.8, 2022: 1.0, 2023: -0.3, 2024: 17.8, 2025: 18.4, 2026: 0.5}
+  borrow 15% L=3 OOS : CAGR  13.2%  MDD   3.4%  Sharpe 2.8  win 100.0%  years {2024: 18.3, 2025: 18.4, 2026: 0.5}

@@ -1,0 +1,9 @@
+H3 small-cap funding carry, delisted perps settled at the SPOT close of their last day (Binance settles at the index)
+  IS       {'cagr': np.float64(7.8), 'mdd': 1.2, 'sharpe': 6.34}  trades 171  win 51%  mean trade +3.28%
+  OOS      {'cagr': np.float64(2.0), 'mdd': 1.9, 'sharpe': 1.38}  trades 93  win 40%  mean trade +1.09%
+  HOLDOUT  {'cagr': np.float64(-2.9), 'mdd': 4.9, 'sharpe': -1.55}  trades 120  win 19%  mean trade -0.77%
+  full {'cagr': np.float64(4.5), 'mdd': 6.7, 'sharpe': 3.09}
+  top-50 only:
+  IS       {'cagr': np.float64(9.0), 'mdd': 0.6, 'sharpe': 7.77}
+  OOS      {'cagr': np.float64(3.3), 'mdd': 0.2, 'sharpe': 7.15}
+  HOLDOUT  {'cagr': np.float64(0.0), 'mdd': 0.0, 'sharpe': 0.0}

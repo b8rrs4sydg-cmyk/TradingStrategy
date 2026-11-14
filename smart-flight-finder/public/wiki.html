@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wiki · Smart Flight Finder</title>
+<style>
+  :root { --bg:#f5f5f7; --card:#fff; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7; --accent:#0071e3; --soft:#f0f0f3; color-scheme: light dark }
+  @media (prefers-color-scheme: dark) { :root { --bg:#000; --card:#1c1c1e; --fg:#f5f5f7; --muted:#a1a1a6; --line:#38383a; --accent:#2997ff; --soft:#2c2c2e } }
+  * { box-sizing: border-box }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "PingFang TC", "Noto Sans TC", system-ui, sans-serif; -webkit-font-smoothing: antialiased }
+  nav.top { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 24px; padding: 0 max(20px, env(safe-area-inset-left)); height: 52px; background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: .5px solid var(--line) }
+  nav.top a { color: var(--fg); text-decoration: none; font-size: 14px }
+  nav.top a.brand { font-weight: 600 } nav.top a.cur { color: var(--accent) } nav.top .sp { flex: 1 }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 20px 96px }
+  h1 { font-size: clamp(34px, 6vw, 52px); line-height: 1.08; letter-spacing: -.02em; margin: 0 0 12px; font-weight: 700 }
+  .lead { font-size: 21px; color: var(--muted); margin: 0 0 40px; line-height: 1.45 }
+  h2 { font-size: 28px; letter-spacing: -.015em; margin: 72px 0 12px; font-weight: 700 }
+  h3 { font-size: 19px; margin: 28px 0 6px; font-weight: 600 }
+  p { margin: 0 0 14px } ul, ol { padding-left: 1.3em; margin: 0 0 14px } li { margin: 4px 0 }
+  code { font: 14px ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--soft); padding: 2px 6px; border-radius: 6px }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px }
+  .toc a { padding: 6px 14px; border-radius: 999px; background: var(--card); color: var(--fg); text-decoration: none; font-size: 14px }
+  .toc a:hover { color: var(--accent) }
+  .card { background: var(--card); border-radius: 18px; padding: 20px 24px; margin: 16px 0 }
+  .muted { color: var(--muted) }
+  details { background: var(--card); border-radius: 14px; padding: 4px 22px; margin: 10px 0 }
+  summary { cursor: pointer; padding: 14px 0; font-weight: 600; list-style: none } summary::-webkit-details-marker { display: none }
+  summary::after { content: "＋"; float: right; color: var(--muted); font-weight: 400 } details[open] summary::after { content: "－" }
+  details[open] summary { border-bottom: .5px solid var(--line); margin-bottom: 12px }
+  a { color: var(--accent) }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; margin: 8px 0 16px }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: .5px solid var(--line); vertical-align: top } th { color: var(--muted); font-weight: 500 }
+</style>
+</head>
+<body>
+<nav class="top"><a class="brand" href="index.html">Smart Flight Finder</a><a href="index.html">搜尋</a><a href="index.html#top100">精選</a><a href="index.html#dbcard">資料庫</a><span class="sp"></span><a class="cur" href="wiki.html">Wiki</a></nav>
+<main>
+  <h1>Wiki</h1>
+  <p class="lead">這個網站怎麼設計、演算法怎麼運作，以及常見問題。</p>
+  <div class="toc"><a href="#design">網站設計</a><a href="#data">資料與更新</a><a href="#strategies">票型策略</a><a href="#algo">搜尋演算法</a><a href="#rank">推薦與排序</a><a href="#compare">同類服務</a><a href="#faq">Q&amp;A</a></div>
+
+  <h2 id="design">網站設計</h2>
+  <p>目標很單純：在有限的查價額度內，找出符合你假期與日期條件、總成本最低的機票組合。所有票價都來自 Google Flights 的實際搜尋結果，沒有任何模擬價格；資料庫查不到的組合就是「沒有價格」，不會被估算補上。</p>
+  <div class="card"><b>三個區塊</b>
+    <ul><li><b>搜尋</b>：選出發地、目的地、備選時段與策略，立即在資料庫裡配出方案；缺的票價由爬蟲即時補查。</li>
+    <li><b>資料庫精選 Top 100</b>：不用搜尋，從全部實價挑出最值得看的票。</li>
+    <li><b>資料庫全部資料</b>：瀏覽、搜尋、下載資料庫裡的每一筆票價。</li></ul></div>
+  <h3>為什麼介面這麼簡單</h3>
+  <p>說明文字都搬到這裡。主頁只留下需要操作與判斷的資訊；想知道某個數字怎麼來的，來這裡查。</p>
+
+  <h2 id="data">資料與更新</h2>
+  <ul>
+    <li><b>來源</b>：Google Flights，1 位成人、經濟艙、含稅總價（新台幣）。每筆票價記錄抓取日期與上次價格。</li>
+    <li><b>更新</b>：10 隻常駐爬蟲處理你的即時查詢；另有排程的大規模爬取。頁面每 5 分鐘重新讀取最新資料檔。</li>
+    <li><b>只有第 1 段有實際航班時刻</b>：Google 的搜尋結果一次只帶一段航班資訊，所以去程時刻、轉機、航空公司是真實的；回程與後段航班要到訂票網站選，頁面顯示「待選」。</li>
+    <li><b>保留期限</b>：超過 7 天沒更新、或出發日已過的票價會被移除；每個查詢保留最近 14 個價格點。</li>
+  </ul>
+
+  <h2 id="strategies">票型策略</h2>
+  <table>
+    <tr><th>策略</th><th>做法</th><th>主要風險</th></tr>
+    <tr><td>一般來回／直購</td><td>同一出發點去、同一點回。</td><td>基準價，沒有特殊風險。</td></tr>
+    <tr><td>Open Jaw（不同點進出）</td><td>飛到 A、從 B 飛回；用兩張獨立單程票組成，並把 A 到 B 的地面交通計入總價。</td><td>兩張票各自獨立，沒有互相保障；地面交通是估算值。</td></tr>
+    <tr><td>反向票＋倒買法</td><td>兩趟旅行用兩張交錯的票：包覆票 <code>H→A_in</code> + <code>B_out→H</code>，反向票 <code>A_out→H</code> + <code>H→B_in</code>。</td><td>反向票須從第 1 段依序搭乘；各票獨立開立；包覆票有最長停留與效期限制。</td></tr>
+    <tr><td>外站四腿票</td><td>一張票 <code>X→TPE→D→TPE→Y</code> 串三趟旅程，前後再單買首尾補段。</td><td>多段票規因航空公司而異，能否整張開票以訂票網站報價為準。</td></tr>
+  </table>
+  <p class="muted">「倒買法」與「外站四段票」在航空業用語裡有各自的定義，本站的名稱是專案內部用法。是否可用某種購票方式取決於各航空公司的票價規則，本站只提供價格與結構，不保證可開立。</p>
+
+  <h3>Open Jaw 怎麼判斷「合理」</h3>
+  <p>「同一個國家」不代表合理。每個機場歸到都會區，兩個機場分四級：①同都會區（羽田／成田）；②有明確地面交通（東京↔大阪，計入約 4,200 元與 150 分鐘）；③需要另外搭飛機（大阪↔沖繩）；④沒有資料。預設只放行前兩級，第 3、4 級不當成一般 Open Jaw 推薦。</p>
+  <h3>四腿票的頭尾國家</h3>
+  <p>預設允許頭尾外站在同一國或不同國，主目的地必須在兩者的國家之外。要嚴格要求頭尾不同國，可設定 <code>OUTSTATION_PATTERN=different</code>。</p>
+
+  <h2 id="algo">搜尋演算法</h2>
+  <ol>
+    <li><b>日期候選</b>：每個備選時段依「彈性 ± 天數」展開成候選日期。</li>
+    <li><b>逐層剪枝</b>：組合日期時一層一層展開，一旦已選日期違反先後順序、最短或最長停留，就整支跳過，不先建出所有組合再過濾。</li>
+    <li><b>各策略生成候選</b>：每種票型依自己的規則產生行程，並逐段驗證（起訖機場、日期、銜接時間）。</li>
+    <li><b>查價</b>：先查資料庫；缺少的票價依優先順序補查（見下）。</li>
+    <li><b>基準比較</b>：每個候選用「同樣路線與日期的一般來回」當基準；沒有省錢的方案標示「不划算，僅供比較」。</li>
+    <li><b>評分與排序</b>：價格、飛行時間、請假效率、風險加權評分，再做多樣化。</li>
+  </ol>
+  <h3>為什麼不再用單程下限篩選</h3>
+  <p>早期的版本假設「多城市票價不會低於各段單程總和」，並據此略過不可能划算的組合。真實報價推翻了這個假設：長榮同航司的首爾–台北–巴黎–台北–首爾在 Google 查到 TWD 39,913，而四段單程加起來約 49,600；它也比單買三趟來回便宜。全服務航司的單程票價偏貴，聯程票卻是用來回價拆開計算，所以單程總和不是下限。現在這個篩選預設關閉，階段 2 只用「還能省多少」排序並受查價上限約束，每輪會輸出四腿票命中率，作為調整依據。</p>
+  <h3>查價額度分配</h3>
+  <p>額度有限時，優先順序是：單程／來回先於多城市；被較多候選共用的票價先查；各路線（以都會區計、不分方向）輪流取用，不會把額度全花在列舉到的第一條路線上。</p>
+  <h3>爬蟲與去重</h3>
+  <p>每個票價查詢用一致性雜湊指定給唯一一隻爬蟲，不會有兩隻重複查同一筆；同一筆同時被多人要求只查一次。爬蟲先用純 HTTP 查價（約 0.3–0.7 秒），讀不到再用瀏覽器；其中 10% 會背景比對瀏覽器價格，不一致太多就暫停 HTTP。</p>
+  <h3>查價失敗不等於沒有航班</h3>
+  <p>只有確認「沒有結果」才會記成無航班；逾時、被封鎖、解析失敗都記為失敗狀態並退避重試，不會被當成沒有票。</p>
+
+  <h2 id="rank">推薦與排序</h2>
+  <h3>搜尋結果</h3>
+  <p>預設依綜合分數排序。分數由價格、飛行時間、請假效率、風險四項加權（預設 50 / 20 / 15 / 15，可在搜尋條件調整）。多趟方案的價格、時間與請假效率會除以趟數，才能和單趟公平比較。排序後前 10 名同一組（策略與都會區目的地）最多 2 個，避免同一目的地洗版，但不會刪掉任何方案。</p>
+  <h3>資料庫精選 Top 100</h3>
+  <p>分數 = 0.8 × 比同航線中位價便宜的幅度 + 0.2 × 較上次降價幅度 + 落在 2027 連假 0.10 + 直飛 0.05。價格只跟同一條航線、同票種比較，不跨航線比；同航線少於 4 筆時不算「比中位價」。中位價取自資料庫已抓到的日期，不分淡旺季，所以是參考，不是保證現在最低價。只列台灣出發的行程；低於 1,000 元，或低於同航線中位價 30% 的價格視為讀取錯誤並排除。</p>
+  <h3>篩選與分類</h3>
+  <p>篩選面板的每個選項旁邊的數字，是套用「其他」篩選條件後會剩下的方案數。去程時刻、轉機、航空公司是真實資料；回程時刻通常未知，時間未知的方案不會被時間或轉機篩選排除。</p>
+
+  <h3>四腿票驗算</h3>
+  <p>在別的網站（例如 Trip.com）看到一張四腿票時，搜尋頁下方的「已經找到一張四腿票？貼上行程驗算」可以填入三個機場、四個日期和那張票的價格，網站用資料庫的實價算出「單買三趟來回」與「單買初段＋四腿票＋單買最後一段」的差額；資料庫缺的價格可以請爬蟲查。它不算行李、改票彈性與航班品質差異。</p>
+
+  <h2 id="compare">同類服務比較</h2>
+  <p>Google Flights／ITA Matrix 查價最完整但一次一個行程；Kayak 的 Hacker Fare 把兩張單程拼成來回，本站標準來回也會這樣比（標示「拆兩張單程」）；Kiwi.com 能拼不合作的航空公司並自動排多目的地順序；Skiplagged 的隱藏城市違反運送條款，本站不做；Going、Secret Flying 是特價通知；GitHub 上的 fli、fast-flights、gflights 等只是查價工具，沒有人做「包覆票、反向票、外站四腿票怎麼組合最省」。完整表格與來源在專案的 <code>docs/competitors.md</code>。</p>
+
+  <h2 id="faq">Q&amp;A</h2>
+  <details><summary>為什麼有些組合沒有價格？</summary><p>可能是那條航線或日期 Google 沒有班次，也可能是查價逾時或被擋。前者記為「無結果」，後者只記為失敗並會再試。畫面上只顯示有實價的方案，不會補估算值。</p></details>
+  <details><summary>為什麼四腿票、倒買法常常「不划算」？</summary><p>目前資料庫裡所有已查到的四腿票與包覆＋反向票，沒有一筆勝過一般來回票（最佳分別約 1.36 倍與 1.02 倍）。Google 對多城市票的定價大致等於各段單程相加，所以這類策略在 Google 資料下很少省錢。它們仍保留，因為不同日期與航空公司可能出現例外，不划算的會標示「僅供比較」。</p></details>
+  <details><summary>回程時間為什麼是「待選」？</summary><p>Google 搜尋結果一次只帶第一段航班的時刻；後段要在訂票網站挑選。所以回程時間篩選只對少數有時刻的方案有效，請改用回程日期。</p></details>
+  <details><summary>推薦的票可以直接訂嗎？</summary><p>每張票附 Trip.com／Google Flights 連結，但價格是爬取當下的結果，訂票前請以訂票網站的即時價格為準。多段與交錯票的票規因航空公司而異，本站不保證可以開立。</p></details>
+  <details><summary>為什麼是 10 隻爬蟲？可以更多嗎？</summary><p>每多一隻，開頁面就要多 2 則 ntfy 訊號與一條 WebRTC 連線，GitHub 免費帳號同時只能跑約 20 個 job，Google 也會依 IP 限流。10 隻是折衷，更多隻要換付費或自架的 runner。</p></details>
+  <details><summary>資料多久更新？為什麼我看到的比較舊？</summary><p>頁面載入時與之後每 5 分鐘會從 GitHub 重新讀取資料檔（有約 5 分鐘的快取）。按「資料庫全部資料」旁的「重新載入全部資料」可立即重讀。</p></details>
+  <details><summary>Open Jaw 的地面交通成本準嗎？</summary><p>那是估算值（例如東京到大阪約 4,200 元），不是報價。沒有資料的配對不會被當成 0 元，而是直接不當成一般推薦。</p></details>
+  <details><summary>以前搜尋過的時段在哪裡？</summary><p>按下搜尋後，時段、出發地與目的地會存在這個瀏覽器（最近 8 組，不會上傳）。在「備選時段」下方的「最近搜尋過」點整列可整組套用，點時段小標籤只加入那一個時段。「清除紀錄」可刪除。</p></details>
+  <details><summary>這個價格是多久前查的？還準嗎？</summary><p>每張票的詳情寫著「幾月幾日查詢」。超過 3 天的價格，卡片上會標示「N 天前查價」（超過 7 天是紅色），價格之後可能漲跌。點卡片上的「↻ N 天前查價」，爬蟲會立刻去 Google Flights 重查那張票；查到後結果會自動更新。訂票前仍請以訂票網站的即時價格為準。</p></details>
+  <details><summary>票價含托運行李嗎？</summary><p>票價不含托運行李。票卡上若有虎航台灣或酷航，會附「加購 20kg 約 +950／+820 每段」的提示；這是 funtime.com.tw 整理的參考價（日期不詳），實際依航線與日期變動，請以航空公司官網為準。提示不影響票價與排序。</p></details>
+  <details><summary>手機版怎麼用？</summary><p>手機底部有分頁列：搜尋、結果、精選、資料庫。按下搜尋後會自動切到結果；篩選以底部面板開啟，按「完成」收起。電腦版仍是同一頁往下捲動。</p></details>
+  <details><summary>可以下載資料嗎？</summary><p>可以。「資料庫全部資料」可依目前的搜尋與篩選條件下載 CSV 或 JSON。</p></details>
+</main>
+</body>
+</html>
